@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UkL-Ze-RCU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Landing View Controller-->
+        <scene sceneID="Gjv-On-9ST">
+            <objects>
+                <viewController id="UkL-Ze-RCU" customClass="LandingViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lPK-bp-Ngh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="lT4-1r-KeI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPExchange" translatesAutoresizingMaskIntoConstraints="NO" id="W2h-AD-74W">
+                                <rect key="frame" x="85" y="221" width="205" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="205" id="2r7-cW-OSs"/>
+                                    <constraint firstAttribute="height" constant="40" id="ked-L8-hpp"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHa-Hj-Pph">
+                                <rect key="frame" x="65" y="275" width="245" height="38.5"/>
+                                <string key="text">Token sale hard cap 10,800 Ether. 
+Accepted currency: ether</string>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <color key="textColor" name="DarkGrey"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MRN-Ud-kuM" userLabel="BottomView">
+                                <rect key="frame" x="0.0" y="442" width="375" height="225"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugu-Hv-Kee" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="45" y="54" width="285" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="aEZ-8f-FkF"/>
+                                        </constraints>
+                                        <color key="tintColor" name="DarkBlue"/>
+                                        <state key="normal" title="Button"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="bordered" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" name="DarkBlue"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m6V-ee-6pa">
+                                        <rect key="frame" x="85" y="146" width="205" height="29"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="Already have an account? Login">
+                                            <color key="titleColor" name="DarkBlue"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginTapped:" destination="UkL-Ze-RCU" eventType="touchUpInside" id="but-pA-zVN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCB-he-W31" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="45" y="0.0" width="285" height="44"/>
+                                        <color key="backgroundColor" name="LightBlue"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="5eI-Ud-TWR"/>
+                                        </constraints>
+                                        <state key="normal" title="Sign Up with Email">
+                                            <color key="titleColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signUpEmailTapped:" destination="UkL-Ze-RCU" eventType="touchUpInside" id="Orx-FJ-blx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="kCB-he-W31" firstAttribute="trailing" secondItem="ugu-Hv-Kee" secondAttribute="trailing" id="4ld-6O-Wo7"/>
+                                    <constraint firstItem="m6V-ee-6pa" firstAttribute="centerX" secondItem="MRN-Ud-kuM" secondAttribute="centerX" id="5if-cK-NnS"/>
+                                    <constraint firstItem="kCB-he-W31" firstAttribute="leading" secondItem="ugu-Hv-Kee" secondAttribute="leading" id="89B-iF-QvM"/>
+                                    <constraint firstItem="ugu-Hv-Kee" firstAttribute="leading" secondItem="MRN-Ud-kuM" secondAttribute="leading" constant="45" id="RUS-fN-aav"/>
+                                    <constraint firstItem="ugu-Hv-Kee" firstAttribute="centerX" secondItem="MRN-Ud-kuM" secondAttribute="centerX" id="ahN-Gd-OY7"/>
+                                    <constraint firstItem="kCB-he-W31" firstAttribute="top" secondItem="MRN-Ud-kuM" secondAttribute="top" id="bF8-Yc-88R"/>
+                                    <constraint firstAttribute="trailing" secondItem="ugu-Hv-Kee" secondAttribute="trailing" constant="45" id="dR2-xQ-oqi"/>
+                                    <constraint firstItem="m6V-ee-6pa" firstAttribute="top" secondItem="ugu-Hv-Kee" secondAttribute="bottom" constant="48" id="fyC-vT-9vA"/>
+                                    <constraint firstAttribute="bottom" secondItem="m6V-ee-6pa" secondAttribute="bottom" constant="50" id="j6g-4Y-f7n"/>
+                                    <constraint firstItem="ugu-Hv-Kee" firstAttribute="top" secondItem="kCB-he-W31" secondAttribute="bottom" constant="10" id="m4U-mV-tJO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gHa-Hj-Pph" firstAttribute="top" secondItem="W2h-AD-74W" secondAttribute="bottom" constant="14" id="BMn-NX-vQ7"/>
+                            <constraint firstItem="gHa-Hj-Pph" firstAttribute="top" secondItem="zTh-l3-rXH" secondAttribute="top" constant="255" id="QTD-dZ-Qc2"/>
+                            <constraint firstItem="zTh-l3-rXH" firstAttribute="trailing" secondItem="lT4-1r-KeI" secondAttribute="trailing" id="Qcq-cr-III"/>
+                            <constraint firstItem="MRN-Ud-kuM" firstAttribute="leading" secondItem="zTh-l3-rXH" secondAttribute="leading" id="U3a-c3-YLv"/>
+                            <constraint firstItem="MRN-Ud-kuM" firstAttribute="trailing" secondItem="zTh-l3-rXH" secondAttribute="trailing" id="cGa-mP-DH2"/>
+                            <constraint firstItem="MRN-Ud-kuM" firstAttribute="bottom" secondItem="zTh-l3-rXH" secondAttribute="bottom" id="etg-Pm-lMQ"/>
+                            <constraint firstItem="zTh-l3-rXH" firstAttribute="bottom" secondItem="lT4-1r-KeI" secondAttribute="bottom" id="gYA-wd-j1p"/>
+                            <constraint firstItem="W2h-AD-74W" firstAttribute="centerX" secondItem="lPK-bp-Ngh" secondAttribute="centerX" id="i1l-Pi-Psn"/>
+                            <constraint firstItem="gHa-Hj-Pph" firstAttribute="centerX" secondItem="lPK-bp-Ngh" secondAttribute="centerX" id="sNM-1U-SUn"/>
+                            <constraint firstItem="lT4-1r-KeI" firstAttribute="leading" secondItem="zTh-l3-rXH" secondAttribute="leading" id="wO4-KQ-QEG"/>
+                            <constraint firstItem="lT4-1r-KeI" firstAttribute="top" secondItem="zTh-l3-rXH" secondAttribute="top" id="zkr-Q4-bZY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zTh-l3-rXH"/>
+                    </view>
+                    <connections>
+                        <outlet property="bottomView" destination="MRN-Ud-kuM" id="up9-Wv-GQ7"/>
+                        <outlet property="labelTopConstraint" destination="QTD-dZ-Qc2" id="rtl-VJ-vk5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="afi-c2-hPI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="93.599999999999994" y="134.48275862068968"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Background" width="375" height="667"/>
+        <image name="IPExchange" width="206" height="40"/>
+        <namedColor name="DarkBlue">
+            <color red="0.16899999979999999" green="0.51399999860000001" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="DarkGrey">
+            <color red="0.0" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LightBlue">
+            <color red="0.16500000655651093" green="0.67500001192092896" blue="0.87800002098083496" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
