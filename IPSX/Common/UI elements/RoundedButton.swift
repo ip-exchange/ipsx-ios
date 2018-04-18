@@ -13,6 +13,12 @@ class RoundedButton: UIButton {
     
     var isBordered: Bool?
     
+    @IBInspectable open var border: Bool = false {
+        didSet {
+            isBordered = border
+        }
+    }
+    
     @IBInspectable open var borderColor: UIColor = UIColor.black {
         didSet {
             if isBordered == true {
@@ -22,9 +28,15 @@ class RoundedButton: UIButton {
         }
     }
     
-    @IBInspectable open var bordered: Bool = false {
+    @IBInspectable open var shadow: Bool = false {
         didSet {
-            isBordered = bordered
+            if shadow {
+                layer.shadowColor = UIColor.black.cgColor
+                layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+                layer.masksToBounds = false
+                layer.shadowRadius = 3.0
+                layer.shadowOpacity = 0.2
+            }
         }
     }
     
@@ -32,7 +44,6 @@ class RoundedButton: UIButton {
         
         super.layoutSubviews()
         layer.cornerRadius = bounds.height / 2
-        layer.masksToBounds = true
     }
 }
 
