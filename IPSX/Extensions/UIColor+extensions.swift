@@ -18,6 +18,14 @@ public extension UIColor {
     static var darkRed: UIColor {
         return UIColor(red: 207.0 / 255.0, green: 14.0 / 255.0, blue: 14.0 / 255.0, alpha: 1.0)
     }
+    
+    @nonobjc class var silver: UIColor {
+        return UIColor(red: 206.0 / 255.0, green: 212.0 / 255.0, blue: 218.0 / 255.0, alpha: 1.0)
+    }
+    
+    @nonobjc class var warmGrey: UIColor {
+        return UIColor(white: 112.0 / 255.0, alpha: 1.0)
+    }
 }
 
 // MARK:- Styled color
