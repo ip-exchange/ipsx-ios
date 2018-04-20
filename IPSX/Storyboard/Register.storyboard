@@ -46,7 +46,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type a valid email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhZ-6S-3Y3">
-                                                <rect key="frame" x="36" y="15" width="247" height="27"/>
+                                                <rect key="frame" x="36" y="14" width="247" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" name="DarkGrey"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -85,7 +85,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YKW-Dt-Hzb">
-                                                <rect key="frame" x="0.0" y="16" width="29" height="33"/>
+                                                <rect key="frame" x="0.0" y="15" width="29" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="snQ-lA-6jD">
@@ -128,7 +128,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyIconCheck" translatesAutoresizingMaskIntoConstraints="NO" id="vzo-GD-mak">
-                                                <rect key="frame" x="0.0" y="15" width="29" height="33"/>
+                                                <rect key="frame" x="0.0" y="14" width="29" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Retype your password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="f03-6l-DM5">
@@ -200,15 +200,19 @@
                                     <constraint firstItem="nKK-Rd-zay" firstAttribute="leading" secondItem="zhQ-Ow-7OM" secondAttribute="leading" id="LbY-Ek-gxZ"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oS-F8-qwt" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4oS-F8-qwt" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45" y="586" width="284" height="44"/>
                                 <color key="backgroundColor" name="LightBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="284" id="SWd-hC-1sN"/>
                                     <constraint firstAttribute="height" constant="44" id="mB1-az-Jek"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" name="Silver"/>
                                 </state>
                                 <connections>
                                     <segue destination="NZC-Rz-rhn" kind="show" id="xjJ-3R-nSt"/>
@@ -237,6 +241,7 @@
                     <navigationItem key="navigationItem" id="YJu-K0-HPr"/>
                     <connections>
                         <outlet property="bottomContinueConstraint" destination="N5o-eH-FFD" id="5Fu-wC-Um1"/>
+                        <outlet property="continueButton" destination="4oS-F8-qwt" id="oG1-En-NeB"/>
                         <outlet property="emailRichTextView" destination="5yo-xq-4BK" id="YCH-IR-yme"/>
                         <outlet property="passCheckRichTextField" destination="Kd6-8b-0Ri" id="FlH-H1-vdw"/>
                         <outlet property="passRichTextField" destination="d2J-hm-oQy" id="Y4Y-dN-zRP"/>
@@ -325,10 +330,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79U-ly-6mk" userLabel="ReadWPView">
                                         <rect key="frame" x="0.0" y="0.0" width="284" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkBoxEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="cvb-kX-xkQ">
-                                                <rect key="frame" x="0.0" y="12" width="20" height="20"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rR5-6h-BhI">
                                                 <rect key="frame" x="29" y="0.0" width="255" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -355,7 +356,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AUX-Qq-OFX" userLabel="Separator">
-                                                <rect key="frame" x="28" y="44" width="257" height="1"/>
+                                                <rect key="frame" x="28" y="43" width="257" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" name="Silver"/>
                                             </view>
@@ -376,10 +377,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FOw-kx-guO" userLabel="RiskView">
                                         <rect key="frame" x="0.0" y="70" width="284" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkBoxEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="Bgu-zK-HSk">
-                                                <rect key="frame" x="0.0" y="12" width="20" height="20"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMc-gR-EkD">
                                                 <rect key="frame" x="29" y="0.0" width="255" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -395,7 +392,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="be8-ma-qTb" userLabel="Separator">
-                                                <rect key="frame" x="28" y="44" width="257" height="1"/>
+                                                <rect key="frame" x="28" y="43" width="257" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" name="Silver"/>
                                             </view>
@@ -416,10 +413,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wg-6O-F3b" userLabel="NonUSView">
                                         <rect key="frame" x="0.0" y="140" width="284" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkBoxEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="50S-ZZ-bg3">
-                                                <rect key="frame" x="0.0" y="12" width="20" height="20"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kh-uE-44e">
                                                 <rect key="frame" x="29" y="0.0" width="255" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -435,7 +428,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CNI-Oy-FTX" userLabel="Separator">
-                                                <rect key="frame" x="28" y="44" width="257" height="1"/>
+                                                <rect key="frame" x="28" y="44" width="257" height="0.0"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" name="Silver"/>
                                             </view>
@@ -456,10 +449,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vui-al-Ln8" userLabel="AgreeView">
                                         <rect key="frame" x="0.0" y="210" width="284" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkBoxEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-bJ-gh5">
-                                                <rect key="frame" x="0.0" y="12" width="20" height="20"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ea-PD-dt0">
                                                 <rect key="frame" x="29" y="0.0" width="255" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -482,7 +471,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGR-wO-Cnu" userLabel="Separator">
-                                                <rect key="frame" x="29" y="44" width="257" height="1"/>
+                                                <rect key="frame" x="29" y="43" width="257" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" name="Silver"/>
                                             </view>
@@ -505,7 +494,7 @@
                                     <constraint firstAttribute="height" constant="260" id="3H1-Hr-HHi"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJr-kv-cZI" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJr-kv-cZI" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45" y="586" width="284" height="44"/>
                                 <color key="backgroundColor" name="LightBlue"/>
                                 <constraints>

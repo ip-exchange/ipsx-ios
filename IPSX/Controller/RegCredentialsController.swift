@@ -15,12 +15,15 @@ class RegCredentialsController: UIViewController {
     @IBOutlet weak var passRichTextField: RichTextFieldView!
     @IBOutlet weak var passCheckRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
+    @IBOutlet weak var continueButton: RoundedButton!
     
     var continueBottomDist: CGFloat = 0.0
+    private var fieldsStateDic: [String : Bool] = ["email" : false, "pass1" : false, "pass2" : false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
+        observreFieldsState()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +52,22 @@ class RegCredentialsController: UIViewController {
         passRichTextField.nextResponderField    = passCheckRichTextField.contentTextField
         passCheckRichTextField.validationRegex  = RichTextFieldView.validPasswordRegex
         passCheckRichTextField.mathingTextField = passRichTextField.contentTextField
+    }
+    
+    private func observreFieldsState() {
+        emailRichTextView.onFieldStateChange = { state in
+            self.fieldsStateDic["email"] = state
+            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
+        passRichTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["pass1"] = state
+            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.passCheckRichTextField.contentTextField?.text = ""
+        }
+        passCheckRichTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["pass2"] = state
+            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
     }
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }

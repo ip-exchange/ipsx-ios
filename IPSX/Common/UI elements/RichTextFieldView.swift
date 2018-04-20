@@ -13,6 +13,8 @@ class RichTextFieldView: UIView {
     static let validEmailRegex    = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     static let validPasswordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
     
+    var onFieldStateChange: ((_ newState: Bool)->())?
+    
     var nextResponderField: UIResponder? = nil
     var validationRegex: String? = nil
     var mathingTextField: UITextField? = nil
@@ -39,6 +41,7 @@ class RichTextFieldView: UIView {
     private func updateColors(isValid: Bool) {
         
         let chars = contentTextField?.text?.count ?? 0
+        onFieldStateChange?(isValid)
         
         invalidContentLabel.isHidden  = isValid || chars == 0
         titleLabel.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
