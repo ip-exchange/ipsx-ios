@@ -12,6 +12,7 @@ class RichTextFieldView: UIView {
     
     static let validEmailRegex    = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     static let validPasswordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
+    static let validEthAddress    = "(0x){1}[0-9a-fA-F]{40}"
     
     var onFieldStateChange: ((_ newState: Bool)->())?
     
@@ -25,7 +26,7 @@ class RichTextFieldView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var invalidContentLabel: UILabel!
-    @IBOutlet weak var leftIconImageView: UIView!
+    @IBOutlet weak var leftIconImageView: UIView?
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var contentTextField: UITextField? {
         didSet {
@@ -45,9 +46,9 @@ class RichTextFieldView: UIView {
         
         invalidContentLabel.isHidden  = isValid || chars == 0
         titleLabel.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
-        leftIconImageView.tintColor   = isValid || chars == 0 ? .silver   : .inputError
+        leftIconImageView?.tintColor  = isValid || chars == 0 ? .silver   : .inputError
         contentTextField?.textColor   = isValid || chars == 0 ? .black    : .inputError
-        separatorView.backgroundColor = leftIconImageView.tintColor
+        separatorView.backgroundColor = isValid || chars == 0 ? .silver   : .inputError
     }
     
     private func isMatchingOtherField() -> Bool {
