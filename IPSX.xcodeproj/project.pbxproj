@@ -27,8 +27,13 @@
 		DFE4BF18E7E4AE33B879C3D6 /* Pods_IPSXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3126A99783C544170497C950 /* Pods_IPSXUITests.framework */; };
 		EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4AAB8E2089D75B00FE149D /* Register.storyboard */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
-		EE4AAB932089D7F900FE149D /* RegCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegCredentialsController.swift */; };
-		EE4AAB952089DA9900FE149D /* RegTermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB942089DA9900FE149D /* RegTermsController.swift */; };
+		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
+		EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */; };
+		EE4AAB97208DCFE000FE149D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4AAB96208DCFE000FE149D /* Login.storyboard */; };
+		EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB98208DD34B00FE149D /* LoginCredentialsControler.swift */; };
+		EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB9A208DDA6500FE149D /* ForgotPassController.swift */; };
+		EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB9C208DDB4800FE149D /* LoginOptionsController.swift */; };
+		EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB9E208DDD0B00FE149D /* RegisterOptionsController.swift */; };
 		F6B5EBC6E8CDCD5DC17FAD5E /* Pods_IPSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5BDBF0E9CDAFB35EBD20AB8 /* Pods_IPSXTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,8 +88,13 @@
 		E13C8D7141F797750D78CBC0 /* Pods-IPSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-IPSX/Pods-IPSX.release.xcconfig"; sourceTree = "<group>"; };
 		EE4AAB8E2089D75B00FE149D /* Register.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
-		EE4AAB922089D7F900FE149D /* RegCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegCredentialsController.swift; sourceTree = "<group>"; };
-		EE4AAB942089DA9900FE149D /* RegTermsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegTermsController.swift; sourceTree = "<group>"; };
+		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
+		EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTermsController.swift; sourceTree = "<group>"; };
+		EE4AAB96208DCFE000FE149D /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		EE4AAB98208DD34B00FE149D /* LoginCredentialsControler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredentialsControler.swift; sourceTree = "<group>"; };
+		EE4AAB9A208DDA6500FE149D /* ForgotPassController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassController.swift; sourceTree = "<group>"; };
+		EE4AAB9C208DDB4800FE149D /* LoginOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginOptionsController.swift; sourceTree = "<group>"; };
+		EE4AAB9E208DDD0B00FE149D /* RegisterOptionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterOptionsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,9 +208,13 @@
 		A4FCA92B205BB01F009FF41B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EE4AAB922089D7F900FE149D /* RegCredentialsController.swift */,
-				EE4AAB942089DA9900FE149D /* RegTermsController.swift */,
 				A4E6AEA32085EAF1001787DF /* LandingViewController.swift */,
+				EE4AAB9E208DDD0B00FE149D /* RegisterOptionsController.swift */,
+				EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */,
+				EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */,
+				EE4AAB98208DD34B00FE149D /* LoginCredentialsControler.swift */,
+				EE4AAB9C208DDB4800FE149D /* LoginOptionsController.swift */,
+				EE4AAB9A208DDA6500FE149D /* ForgotPassController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -245,6 +259,7 @@
 			children = (
 				A4E6AEA12085EAD5001787DF /* Landing.storyboard */,
 				EE4AAB8E2089D75B00FE149D /* Register.storyboard */,
+				EE4AAB96208DCFE000FE149D /* Login.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -390,6 +405,7 @@
 				A43930B9205AAEE800CA7B15 /* LaunchScreen.storyboard in Resources */,
 				A43930B6205AAEE800CA7B15 /* Assets.xcassets in Resources */,
 				A4E6AEA22085EAD5001787DF /* Landing.storyboard in Resources */,
+				EE4AAB97208DCFE000FE149D /* Login.storyboard in Resources */,
 				EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,19 +507,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A473002B205AC16900488009 /* RequestModel.swift in Sources */,
+				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				A4730030205AC4F500488009 /* RequesterProtocols.swift in Sources */,
 				A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */,
 				A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */,
 				A473002C205AC16900488009 /* IPService.swift in Sources */,
+				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* IPRequestManager.swift in Sources */,
-				EE4AAB932089D7F900FE149D /* RegCredentialsController.swift in Sources */,
+				EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */,
 				EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */,
 				A4E6AEA62085F6CD001787DF /* UIColor+extensions.swift in Sources */,
+				EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */,
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
+				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				A43930AF205AAEE800CA7B15 /* AppDelegate.swift in Sources */,
-				EE4AAB952089DA9900FE149D /* RegTermsController.swift in Sources */,
+				EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

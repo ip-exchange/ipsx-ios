@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegTermsController: UIViewController {
+class RegisterTermsController: UIViewController {
 
     @IBOutlet weak var readWPLabel: UILabel!
     @IBOutlet weak var registerButton: RoundedButton!

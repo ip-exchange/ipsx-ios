@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class RegCredentialsController: UIViewController {
+class RegisterCredentialsController: UIViewController {
 
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var passRichTextField: RichTextFieldView!
@@ -70,11 +70,11 @@ class RegCredentialsController: UIViewController {
         }
     }
     
-    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
-    
-    @IBAction func allOK(_ sender: Any) {
-        print(emailRichTextView.isContentValid, " | ", passRichTextField.isContentValid, " | ", passCheckRichTextField.isContentValid)
+    @IBAction func backAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
