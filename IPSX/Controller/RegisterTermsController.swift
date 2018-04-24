@@ -25,10 +25,10 @@ class RegisterTermsController: UIViewController {
         if let titleText = sender.title(for: .selected) {
             statesDic[titleText] = sender.isSelected
         }
-        var allAgrred = true
+        var allAgreed = true
         if statesDic.values.contains(false) || statesDic.values.count < 4 {
-            allAgrred = false
+            allAgreed = false
         }
-        registerButton.isEnabled = allAgrred
+        registerButton.isEnabled = allAgreed
     }
 }
