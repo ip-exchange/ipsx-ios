@@ -21,6 +21,8 @@ class LandingViewController: UIViewController {
         
     }
     
+    @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
