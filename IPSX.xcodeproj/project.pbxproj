@@ -28,6 +28,8 @@
 		EE1A0540208F592A00522426 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE1A053F208F592A00522426 /* Main.storyboard */; };
 		EE1A0543208F593900522426 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0541208F593900522426 /* DashboardViewController.swift */; };
 		EE1A0544208F593900522426 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0542208F593900522426 /* TabBarController.swift */; };
+		EE1A0546208F650E00522426 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0545208F650E00522426 /* RoundedView.swift */; };
+		EE1A0548209078DB00522426 /* NewProxyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0547209078DB00522426 /* NewProxyController.swift */; };
 		EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4AAB8E2089D75B00FE149D /* Register.storyboard */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
 		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
@@ -94,6 +96,8 @@
 		EE1A053F208F592A00522426 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EE1A0541208F593900522426 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		EE1A0542208F593900522426 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		EE1A0545208F650E00522426 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		EE1A0547209078DB00522426 /* NewProxyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProxyController.swift; sourceTree = "<group>"; };
 		EE4AAB8E2089D75B00FE149D /* Register.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 			children = (
 				EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */,
 				A4E6AEAA20862E23001787DF /* RoundedButton.swift */,
+				EE1A0545208F650E00522426 /* RoundedView.swift */,
 			);
 			path = "UI elements";
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				EE1A0541208F593900522426 /* DashboardViewController.swift */,
+				EE1A0547209078DB00522426 /* NewProxyController.swift */,
 				EE1A0542208F593900522426 /* TabBarController.swift */,
 				A4E6AEA32085EAF1001787DF /* LandingViewController.swift */,
 				EE4AAB9E208DDD0B00FE149D /* RegisterOptionsController.swift */,
@@ -543,6 +549,8 @@
 				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				A43930AF205AAEE800CA7B15 /* AppDelegate.swift in Sources */,
+				EE1A0548209078DB00522426 /* NewProxyController.swift in Sources */,
+				EE1A0546208F650E00522426 /* RoundedView.swift in Sources */,
 				EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -707,11 +715,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3Y898X53X4;
+				DEVELOPMENT_TEAM = KQBUR46TNZ;
 				INFOPLIST_FILE = IPSX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ipsx.cvi.IPSX.kytzu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ipsx.cvi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
@@ -725,11 +733,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3Y898X53X4;
+				DEVELOPMENT_TEAM = KQBUR46TNZ;
 				INFOPLIST_FILE = IPSX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ipsx.cvi.IPSX.kytzu;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ipsx.cvi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
