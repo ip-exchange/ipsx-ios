@@ -21,6 +21,8 @@
 		A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEA32085EAF1001787DF /* LandingViewController.swift */; };
 		A4E6AEA62085F6CD001787DF /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */; };
 		A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEAA20862E23001787DF /* RoundedButton.swift */; };
+		A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2F7442090B02500515883 /* ProxyPack.swift */; };
+		A4F2F7482090B4F200515883 /* NewProxyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2F7472090B4F200515883 /* NewProxyCell.swift */; };
 		A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FCA933205BB463009FF41B /* ProxyRequest.swift */; };
 		A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FCA936205BD8F1009FF41B /* String+extenstions.swift */; };
 		CDBAB747B158113D5B44E883 /* Pods_IPSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B29ADC11750E90A4353575 /* Pods_IPSX.framework */; };
@@ -88,6 +90,8 @@
 		A4E6AEA32085EAF1001787DF /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		A4E6AEAA20862E23001787DF /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		A4F2F7442090B02500515883 /* ProxyPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyPack.swift; sourceTree = "<group>"; };
+		A4F2F7472090B4F200515883 /* NewProxyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProxyCell.swift; sourceTree = "<group>"; };
 		A4FCA933205BB463009FF41B /* ProxyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyRequest.swift; sourceTree = "<group>"; };
 		A4FCA936205BD8F1009FF41B /* String+extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extenstions.swift"; sourceTree = "<group>"; };
 		B5BDBF0E9CDAFB35EBD20AB8 /* Pods_IPSXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IPSXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +183,7 @@
 			children = (
 				A4FCA932205BB448009FF41B /* Model */,
 				A4FCA92B205BB01F009FF41B /* Controller */,
+				A4F2F7412090A22100515883 /* New Proxy */,
 				A4FCA931205BB0A9009FF41B /* Storyboard */,
 				A4FCA92C205BB02C009FF41B /* Service */,
 				A4FCA92E205BB04B009FF41B /* Protocols */,
@@ -244,9 +249,35 @@
 		A4F2F7412090A22100515883 /* New Proxy */ = {
 			isa = PBXGroup;
 			children = (
-				EE1A0547209078DB00522426 /* NewProxyController.swift */,
+				A4F2F7422090AF4000515883 /* Model */,
+				A4F2F7462090B4D600515883 /* View */,
+				A4F2F7432090AF4800515883 /* Controller */,
 			);
 			path = "New Proxy";
+			sourceTree = "<group>";
+		};
+		A4F2F7422090AF4000515883 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A4F2F7442090B02500515883 /* ProxyPack.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A4F2F7432090AF4800515883 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EE1A0547209078DB00522426 /* NewProxyController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A4F2F7462090B4D600515883 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A4F2F7472090B4F200515883 /* NewProxyCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A4FCA92B205BB01F009FF41B /* Controller */ = {
@@ -257,7 +288,6 @@
 				A4E6AEA32085EAF1001787DF /* LandingViewController.swift */,
 				A4F2F73F2090A1FD00515883 /* Login */,
 				A4F2F7402090A21B00515883 /* Register */,
-				A4F2F7412090A22100515883 /* New Proxy */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -556,8 +586,10 @@
 				A473002B205AC16900488009 /* RequestModel.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				A4730030205AC4F500488009 /* RequesterProtocols.swift in Sources */,
+				A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */,
 				A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */,
 				A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */,
+				A4F2F7482090B4F200515883 /* NewProxyCell.swift in Sources */,
 				EE4AABA3208E17AA00FE149D /* AddWalletController.swift in Sources */,
 				A473002C205AC16900488009 /* IPService.swift in Sources */,
 				EE1A0543208F593900522426 /* DashboardViewController.swift in Sources */,
