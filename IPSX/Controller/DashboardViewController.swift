@@ -11,7 +11,7 @@ import UIKit
 class DashboardViewController: UIViewController {
     
     let cellID = "DashboardCellID"
-    let transform = CGAffineTransform(scaleX: 1.0, y: 2)
+    let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
