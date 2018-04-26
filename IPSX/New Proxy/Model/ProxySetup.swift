@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ProxuSetup {
+struct ProxySetup {
     
     var pacLink: String?
     var proxyIP: String?

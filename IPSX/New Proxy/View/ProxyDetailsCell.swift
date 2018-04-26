@@ -16,8 +16,8 @@ class ProxyDetailsCell: UITableViewCell {
     
     func configure(title: String? = nil, value: String? = nil, additionalDetail: String? = nil) {
         
-        titleLabel.text = title
-        valueLabel.text = value
-        detailLabel.text = additionalDetail
+        titleLabel?.text = title
+        valueLabel?.text = value
+        detailLabel?.text = additionalDetail
     }
 }

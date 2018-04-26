@@ -10,7 +10,7 @@ import UIKit
 
 class DashboardViewController: UIViewController {
     
-    let cellID = "DashboardCellID"
+    let cellID = "ProxyActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
     
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ extension DashboardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProxyActivationDetailsCell
         cell.cellContentView.shadow = true
         cell.cellProgress1.transform = transform
         cell.cellProgress2.transform = transform
@@ -35,11 +35,4 @@ extension DashboardViewController: UITableViewDataSource {
     }
 }
 
-class DashboardCell: UITableViewCell {
-    
-    @IBOutlet weak var cellContentView: RoundedView!
-    @IBOutlet weak var cellTitleLabel: UILabel!
-    @IBOutlet weak var cellProgress1: UIProgressView!
-    @IBOutlet weak var cellProgress2: UIProgressView!
-    
-}
+

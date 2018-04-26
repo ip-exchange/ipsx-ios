@@ -13,11 +13,13 @@
 		A43930C4205AAEE800CA7B15 /* IPSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43930C3205AAEE800CA7B15 /* IPSXTests.swift */; };
 		A43930CF205AAEE800CA7B15 /* IPSXUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43930CE205AAEE800CA7B15 /* IPSXUITests.swift */; };
 		A43A5B662091EABC00B7FD3B /* ProxyDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43A5B652091EABC00B7FD3B /* ProxyDetailsCell.swift */; };
+		A4606C362092165E0008A9F3 /* ProxyActivationDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4606C352092165D0008A9F3 /* ProxyActivationDetailsCell.swift */; };
 		A46480D82091EEE600330CC9 /* ProxySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480D72091EEE600330CC9 /* ProxySummaryViewController.swift */; };
 		A46480DA2091F1CB00330CC9 /* ProxyActivationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480D92091F1CB00330CC9 /* ProxyActivationDetails.swift */; };
 		A46480DC2091F22400330CC9 /* ProxySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480DB2091F22400330CC9 /* ProxySetup.swift */; };
 		A46480DE2091F2CC00330CC9 /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480DD2091F2CC00330CC9 /* Proxy.swift */; };
 		A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480DF2091F9D500330CC9 /* UITableView+extensions.swift */; };
+		A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46480E320920A3600330CC9 /* ProxyDetailsViewController.swift */; };
 		A4730029205AC16900488009 /* IPRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730025205AC16900488009 /* IPRequestManager.swift */; };
 		A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730026205AC16900488009 /* IPInfoProtocols.swift */; };
 		A473002B205AC16900488009 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730027205AC16900488009 /* RequestModel.swift */; };
@@ -91,11 +93,13 @@
 		A43930CE205AAEE800CA7B15 /* IPSXUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPSXUITests.swift; sourceTree = "<group>"; };
 		A43930D0205AAEE800CA7B15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A43A5B652091EABC00B7FD3B /* ProxyDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyDetailsCell.swift; sourceTree = "<group>"; };
+		A4606C352092165D0008A9F3 /* ProxyActivationDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyActivationDetailsCell.swift; sourceTree = "<group>"; };
 		A46480D72091EEE600330CC9 /* ProxySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxySummaryViewController.swift; sourceTree = "<group>"; };
 		A46480D92091F1CB00330CC9 /* ProxyActivationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyActivationDetails.swift; sourceTree = "<group>"; };
 		A46480DB2091F22400330CC9 /* ProxySetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxySetup.swift; sourceTree = "<group>"; };
 		A46480DD2091F2CC00330CC9 /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		A46480DF2091F9D500330CC9 /* UITableView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+extensions.swift"; sourceTree = "<group>"; };
+		A46480E320920A3600330CC9 /* ProxyDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyDetailsViewController.swift; sourceTree = "<group>"; };
 		A4730025205AC16900488009 /* IPRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPRequestManager.swift; sourceTree = "<group>"; };
 		A4730026205AC16900488009 /* IPInfoProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPInfoProtocols.swift; sourceTree = "<group>"; };
 		A4730027205AC16900488009 /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 			children = (
 				A4E374C92090C2D100808B86 /* NewProxyController.swift */,
 				A46480D72091EEE600330CC9 /* ProxySummaryViewController.swift */,
+				A46480E320920A3600330CC9 /* ProxyDetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 			children = (
 				A4F2F7472090B4F200515883 /* ProxyPackCell.swift */,
 				A43A5B652091EABC00B7FD3B /* ProxyDetailsCell.swift */,
+				A4606C352092165D0008A9F3 /* ProxyActivationDetailsCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -645,6 +651,7 @@
 				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* IPRequestManager.swift in Sources */,
 				EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */,
+				A4606C362092165E0008A9F3 /* ProxyActivationDetailsCell.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */,
 				A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */,
@@ -653,6 +660,7 @@
 				A46480D82091EEE600330CC9 /* ProxySummaryViewController.swift in Sources */,
 				EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */,
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
+				A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */,
 				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				A46480DA2091F1CB00330CC9 /* ProxyActivationDetails.swift in Sources */,
