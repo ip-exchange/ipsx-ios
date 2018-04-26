@@ -10,7 +10,7 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
-    let cellID = "NewProxyCellID"
+    let cellID = "ProxyPackCellID"
     
     let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: 100, duration: "60 min", price: 50),
                       ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: 500, duration: "1 day", price: 100),
@@ -25,7 +25,7 @@ extension NewProxyController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! NewProxyCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProxyPackCell
         cell.cellContentView.shadow = true
         
         if dataSource.count > indexPath.row {
