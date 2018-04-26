@@ -1,5 +1,5 @@
 //
-//  ProxyDetailsViewController.swift
+//  ProxySummaryViewController.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 26/04/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProxyDetailsViewController: UIViewController {
+class ProxySummaryViewController: UIViewController {
     
     let proxyPackCellID = "ProxyPackCellID"
     let detailsCellID = "ProxyDetailsCellD"
@@ -33,7 +33,7 @@ class ProxyDetailsViewController: UIViewController {
     }
 }
 
-extension ProxyDetailsViewController: UITableViewDataSource {
+extension ProxySummaryViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -87,7 +87,7 @@ extension ProxyDetailsViewController: UITableViewDataSource {
     }
 }
 
-extension ProxyDetailsViewController: UITableViewDelegate {
+extension ProxySummaryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
