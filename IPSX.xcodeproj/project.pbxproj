@@ -43,6 +43,8 @@
 		EE1A0544208F593900522426 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0542208F593900522426 /* TabBarController.swift */; };
 		EE1A0546208F650E00522426 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1A0545208F650E00522426 /* RoundedView.swift */; };
 		EE37F8A22090BCBC00783385 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37F8A12090BCBC00783385 /* SettingsViewController.swift */; };
+		EE37F8A52091CC6F00783385 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE37F8A42091CC6F00783385 /* Search.storyboard */; };
+		EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37F8A62091F52700783385 /* SearchViewController.swift */; };
 		EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4AAB8E2089D75B00FE149D /* Register.storyboard */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
 		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
@@ -124,6 +126,9 @@
 		EE1A0542208F593900522426 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		EE1A0545208F650E00522426 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		EE37F8A12090BCBC00783385 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		EE37F8A42091CC6F00783385 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		EE37F8A62091F52700783385 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		EE37F8A82092035800783385 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EE4AAB8E2089D75B00FE149D /* Register.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
@@ -325,6 +330,7 @@
 				EE1A0542208F593900522426 /* TabBarController.swift */,
 				A4E6AEA32085EAF1001787DF /* LandingViewController.swift */,
 				A4E374CB2090C2E700808B86 /* ProfileViewController.swift */,
+				EE37F8A62091F52700783385 /* SearchViewController.swift */,
 				EE37F8A32090BCC500783385 /* Settings */,
 				A4F2F73F2090A1FD00515883 /* Login */,
 				A4F2F7402090A21B00515883 /* Register */,
@@ -373,8 +379,9 @@
 				EE1A053F208F592A00522426 /* Main.storyboard */,
 				A4E6AEA12085EAD5001787DF /* Landing.storyboard */,
 				EE4AAB8E2089D75B00FE149D /* Register.storyboard */,
-				EE4AAB96208DCFE000FE149D /* Login.storyboard */,
 				EE4AABA0208E15A200FE149D /* WalletAdd.storyboard */,
+				EE4AAB96208DCFE000FE149D /* Login.storyboard */,
+				EE37F8A42091CC6F00783385 /* Search.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -400,6 +407,7 @@
 		E4ADA5C2E44FF7B123F97D7E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE37F8A82092035800783385 /* AVFoundation.framework */,
 				65B29ADC11750E90A4353575 /* Pods_IPSX.framework */,
 				B5BDBF0E9CDAFB35EBD20AB8 /* Pods_IPSXTests.framework */,
 				3126A99783C544170497C950 /* Pods_IPSXUITests.framework */,
@@ -533,6 +541,7 @@
 				EE4AABA1208E15A200FE149D /* WalletAdd.storyboard in Resources */,
 				EE4AAB97208DCFE000FE149D /* Login.storyboard in Resources */,
 				A4ED74092091CC8D0099B9D7 /* NewProxy.storyboard in Resources */,
+				EE37F8A52091CC6F00783385 /* Search.storyboard in Resources */,
 				EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -661,6 +670,7 @@
 				EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */,
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
 				A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */,
+				EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */,
 				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				A46480DA2091F1CB00330CC9 /* ProxyActivationDetails.swift in Sources */,

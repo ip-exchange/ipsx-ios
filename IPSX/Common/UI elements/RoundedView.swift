@@ -39,10 +39,16 @@ class RoundedView: UIView {
         }
     }
     
+    @IBInspectable open var cornerRadius: CGFloat = 5 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+        }
+    }
+
     open override func layoutSubviews() {
         
         super.layoutSubviews()
-        layer.cornerRadius = 5
+        layer.cornerRadius = cornerRadius
     }
 }
 
