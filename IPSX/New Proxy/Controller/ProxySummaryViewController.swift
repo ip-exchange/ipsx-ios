@@ -15,6 +15,13 @@ class ProxySummaryViewController: UIViewController {
     var proxy: Proxy?
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    @IBAction func BackButton(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    @IBAction func CancelButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -23,12 +30,7 @@ class ProxySummaryViewController: UIViewController {
         let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain")
         proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
-    
+        
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height

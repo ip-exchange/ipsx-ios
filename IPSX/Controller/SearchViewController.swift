@@ -29,8 +29,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let isFirstVCfromNav = navigationController?.viewControllers.first?.classForCoder == SearchViewController.self
-        closeButton.isHidden = navigationController != nil && isFirstVCfromNav
+        closeButton.isHidden = (isProxyFlow == false)
         backButton.isHidden  = !closeButton.isHidden
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)

@@ -15,6 +15,10 @@ class ProxyDetailsViewController: UIViewController {
     let detailsCellID = "ProxyDetailsCellD"
     var proxy: Proxy?
     
+    @IBAction func DoneButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
