@@ -101,7 +101,7 @@ extension ProxySummaryViewController: UITableViewDelegate {
         case 0:
             return 88
         case 1:
-            return 60
+            return UITableView.IPSXTableViewDefault.smallRowHeight
         default:
             return 0
         }
@@ -119,7 +119,7 @@ extension ProxySummaryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return UITableView.IPSXTableViewDefault.sectionHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

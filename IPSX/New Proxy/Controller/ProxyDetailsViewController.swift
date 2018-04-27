@@ -115,9 +115,9 @@ extension ProxyDetailsViewController: UITableViewDelegate {
         
         switch indexPath.section {
         case 0:
-            return 100
+            return UITableView.IPSXTableViewDefault.bigRowHeight
         case 1,2:
-            return 60
+            return UITableView.IPSXTableViewDefault.smallRowHeight
         default:
             return 0
         }
@@ -137,7 +137,7 @@ extension ProxyDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         switch section {
-        case 1,2: return 60
+        case 1,2: return UITableView.IPSXTableViewDefault.sectionHeaderHeight
         default: return 0
         }
     }
@@ -145,7 +145,7 @@ extension ProxyDetailsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
         switch section {
-        case 2: return 100
+        case 2: return UITableView.IPSXTableViewDefault.bigRowHeight
         default: return 0.01
         }
     }

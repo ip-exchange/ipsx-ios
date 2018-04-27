@@ -8,7 +8,14 @@
 
 import UIKit
 
-extension UITableView {
+public extension UITableView {
+    
+    public struct IPSXTableViewDefault {
+        
+        public static let smallRowHeight: CGFloat = 60
+        public static let bigRowHeight: CGFloat = 100
+        public static let sectionHeaderHeight: CGFloat = 60
+    }
     
     func standardHeaderView(withTitle title: String,
                             textColor: UIColor = .black,
