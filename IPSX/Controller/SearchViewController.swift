@@ -11,6 +11,7 @@ import UIKit
 class SearchViewController: UIViewController {
     
     let cellID = "SearchCellID"
+    let newProxyFlowID = "NewProxyFlowSegueID"
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -19,6 +20,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     public var dismissOnSelect = false
+    var isProxyFlow: Bool?
     
     //TODO (CC): get this from API
     var countries: [String] = []
@@ -27,7 +29,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        closeButton.isHidden = navigationController != nil
+        let isFirstVCfromNav = navigationController?.viewControllers.first?.classForCoder == SearchViewController.self
+        closeButton.isHidden = navigationController != nil && isFirstVCfromNav
         backButton.isHidden  = !closeButton.isHidden
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
@@ -41,6 +44,11 @@ class SearchViewController: UIViewController {
         }
         filteredCountries = countries
         tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func BackButton(_ sender: Any) {
@@ -78,6 +86,7 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredCountries.count
     }
@@ -91,6 +100,7 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 extension SearchViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You selected:", filteredCountries[indexPath.item])
         //TODO: Do something with the selected country
@@ -101,7 +111,12 @@ extension SearchViewController: UITableViewDelegate {
                 dismiss(animated: true)
             }
         } else {
-            //TODO: Perform a segue to the next screen
+            if isProxyFlow == true {
+                performSegue(withIdentifier: newProxyFlowID, sender: nil)
+            }
+            else {
+                //TODO (CVI): perform segue to next screen on Profile flow
+            }
         }
     }
 }

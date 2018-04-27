@@ -24,6 +24,11 @@ class ProxySummaryViewController: UIViewController {
         proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
