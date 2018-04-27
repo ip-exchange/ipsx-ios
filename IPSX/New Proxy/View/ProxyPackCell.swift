@@ -1,5 +1,5 @@
 //
-//  NewProxyCell.swift
+//  ProxyPackCell.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 25/04/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewProxyCell: UITableViewCell {
+class ProxyPackCell: UITableViewCell {
     
     @IBOutlet weak var cellContentView: RoundedView!
     @IBOutlet weak var packImageView: UIImageView!

@@ -22,7 +22,7 @@
                                 <rect key="frame" x="15" y="126" width="345" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewProxyCellID" id="Ymp-gl-Ske" customClass="NewProxyCell" customModule="IPSX" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProxyPackCellID" id="Ymp-gl-Ske" customClass="ProxyPackCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="38" width="345" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ymp-gl-Ske" id="H0s-u9-PN0">
@@ -150,10 +150,39 @@
                         <viewLayoutGuide key="safeArea" id="gIv-Tu-HaQ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Proxy" image="NewProxy" id="B73-W5-OlS"/>
+                    <connections>
+                        <segue destination="adJ-7o-RXS" kind="show" identifier="CountrySearchSegueID" id="2RJ-YM-lk1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAj-hP-pBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-698.39999999999998" y="816.34182908545733"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="s5E-0c-hhg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" id="UhL-iE-BoT" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="COl-pM-E0F"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QvB-K9-N0m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-142" y="1561"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xgg-Jd-5RI">
+            <objects>
+                <navigationController id="adJ-7o-RXS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DfH-2E-64z">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="UhL-iE-BoT" kind="relationship" relationship="rootViewController" id="m1g-cs-dek"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Q1-ed-dDn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-698" y="1562"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="hoR-RX-E2W">
@@ -208,7 +237,7 @@
                                         <rect key="frame" x="15" y="127" width="345" height="514"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DashboardCellID" id="eqn-RU-vKt" customClass="DashboardCell" customModule="IPSX" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProxyActivationDetailsCellID" id="eqn-RU-vKt" customClass="ProxyActivationDetailsCell" customModule="IPSX" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="18" width="345" height="110"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eqn-RU-vKt" id="3I2-o4-FUj">
