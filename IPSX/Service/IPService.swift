@@ -38,7 +38,7 @@ class IPService {
         
         let params: [String: String] = ["action": "cclist"]
         
-        executeProxyRequest(requestType: .getCountryList, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .getCountryList, params: params, completion: { error, data in
             
             guard error == nil else {
                 completion(error, nil)
@@ -68,7 +68,7 @@ class IPService {
                                         "proxy_traffic": request.proxyTraffic,
                                         "auth_ip"      : request.authIP]
         
-        executeProxyRequest(requestType: .getProxy, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .getProxy, params: params, completion: { error, data in
             
             guard error == nil else {
                 completion(error, "")
@@ -130,4 +130,3 @@ class IPService {
     }
 }
 extension IPService: IPRetrievable {}
-extension IPService: IPRequestCapable {}

@@ -28,6 +28,8 @@ public struct Url {
     public static var publicIP = "https://api.ipify.org?format=json"
     public static var proxyAPI = "https://share.ip.sx/api/"
     public static let pacServer = "http://192.168.0.124:8000/index.php?proxy_type=%PROXY_TYPE%&ip=%IP%&port=%PORT%"
+    public static let base = "http://devapi.ip.sx:3000/api"
+    public static let registerArgs = "/Users"
 }
 
 public enum ServiceResult<T> {
@@ -73,6 +75,7 @@ public enum IPRequestType: Int {
     case getPublicIP
     case getCountryList
     case getProxy
+    case register
 }
 
 public struct ContentType {

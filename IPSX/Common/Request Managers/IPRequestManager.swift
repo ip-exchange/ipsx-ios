@@ -38,6 +38,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         case .getCountryList, .getProxy:
             let body = JSON(params)
             request = Request(url:Url.proxyAPI, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
+        case .register:
+            let body = JSON(params)
+            request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
         }
         
         if let body = request?.body as? JSON {
@@ -61,4 +65,31 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         return urlRequest
     }
     
+    public func executeRequest(requestType:IPRequestType, params: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+        
+        let requestManager = IPRequestManager.shared
+        if let request = requestManager.createRequest(requestType: requestType, params: params) {
+            
+            requestManager.session.dataTask(with: request , completionHandler: { data, response, error in
+                
+                if let error = error {
+                    completion(error, data)
+                }
+                else if let httpResponse = response as? HTTPURLResponse , let data = data {
+                    
+                    let statusCode = httpResponse.statusCode
+                    switch statusCode {
+                        
+                    case 200:
+                        print(NSDate(),"\(type(of: self)):\(#function) Request succeeded")
+                        completion(nil, data)
+                        
+                    default:
+                        print(NSDate(), "\(type(of: self)):\(#function) Request failed with status code: ", statusCode)
+                        completion(CustomError.statusCodeNOK(statusCode), data)
+                    }
+                }
+            }).resume()
+        }
+    }
 }
