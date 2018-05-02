@@ -112,13 +112,14 @@
                                     <constraint firstAttribute="height" constant="150" id="Xu7-B7-Loz"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amD-zB-icY">
-                                <rect key="frame" x="46" y="302.5" width="36" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amD-zB-icY">
+                                <rect key="frame" x="45.5" y="302.5" width="84" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hIx-JR-ILr"/>
+                                    <constraint firstAttribute="width" constant="84" id="xqi-BW-c8S"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Paste">
+                                <state key="normal" title="   Paste" image="clipboard">
                                     <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -178,12 +179,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvd-tE-d63">
-                                <rect key="frame" x="90" y="295" width="44" height="44"/>
+                                <rect key="frame" x="137.5" y="295.5" width="84" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="44" id="Ixc-pB-laF"/>
+                                    <constraint firstAttribute="width" constant="84" id="Ixc-pB-laF"/>
                                     <constraint firstAttribute="height" constant="44" id="YLS-2V-Fni"/>
                                 </constraints>
-                                <state key="normal" image="QrCode"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="   QR Code" image="QrCodeSmall">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="qrCodeAction:" destination="yUi-lt-NI4" eventType="touchUpInside" id="e1r-vq-hUP"/>
                                 </connections>
@@ -223,7 +227,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWr-33-kSH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="rQA-9F-QWr" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4262" y="133"/>
+            <point key="canvasLocation" x="4262" y="378"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="PR4-PQ-pNE">
@@ -336,11 +340,258 @@
             </objects>
             <point key="canvasLocation" x="3455.1999999999998" y="131.78410794602701"/>
         </scene>
+        <!--Add Wallet Controller-->
+        <scene sceneID="nGS-pG-AKJ">
+            <objects>
+                <viewController storyboardIdentifier="WalletEditID" id="jYx-4r-YUa" customClass="AddWalletController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r0o-cy-M4h">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your ETH address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8w-7z-z2N">
+                                <rect key="frame" x="15.5" y="91" width="223" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTD-By-icE">
+                                <rect key="frame" x="0.0" y="132.5" width="375" height="120"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1VC-3i-ZRC" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.299378301056338" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="AZq-1q-8xJ"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vzK-gR-X5a" userLabel="Separator">
+                                        <rect key="frame" x="15" y="59.5" width="360" height="1"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29937830110000002" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="bJp-EK-VWn"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9JH-lx-kCN" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="119" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29937830110000002" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="34k-xq-pwF"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="9JH-lx-kCN" secondAttribute="trailing" id="4KD-x0-CYN"/>
+                                    <constraint firstItem="9JH-lx-kCN" firstAttribute="leading" secondItem="dTD-By-icE" secondAttribute="leading" id="MBM-2j-J4T"/>
+                                    <constraint firstItem="1VC-3i-ZRC" firstAttribute="top" secondItem="dTD-By-icE" secondAttribute="top" id="YEF-ID-XBt"/>
+                                    <constraint firstAttribute="trailing" secondItem="1VC-3i-ZRC" secondAttribute="trailing" id="ar0-Dr-Rgj"/>
+                                    <constraint firstAttribute="bottom" secondItem="9JH-lx-kCN" secondAttribute="bottom" id="dWN-Zk-S3k"/>
+                                    <constraint firstItem="vzK-gR-X5a" firstAttribute="leading" secondItem="dTD-By-icE" secondAttribute="leading" constant="15" id="gQh-59-BB5"/>
+                                    <constraint firstItem="1VC-3i-ZRC" firstAttribute="leading" secondItem="dTD-By-icE" secondAttribute="leading" id="qqF-DG-Ata"/>
+                                    <constraint firstItem="vzK-gR-X5a" firstAttribute="centerY" secondItem="dTD-By-icE" secondAttribute="centerY" id="s5M-6C-Kcl"/>
+                                    <constraint firstAttribute="trailing" secondItem="vzK-gR-X5a" secondAttribute="trailing" id="yuv-dw-dOR"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZRe-2w-gCy">
+                                <rect key="frame" x="15" y="132.5" width="345" height="120"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhR-LU-jU0" userLabel="Wallet name" customClass="RichTextFieldView" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="60"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Custom Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpj-iC-8eg">
+                                                <rect key="frame" x="0.0" y="8" width="315" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The email must be a valid address." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5I-7h-7Qq">
+                                                <rect key="frame" x="0.0" y="46" width="308" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <color key="textColor" red="0.80784313730000001" green="0.054901960780000002" blue="0.054999999700000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YbA-V5-mCj" userLabel="Separator">
+                                                <rect key="frame" x="0.0" y="59" width="345" height="1"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="0.2984154929577465" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address from CryptoWallet" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-a3-MNy">
+                                                <rect key="frame" x="0.0" y="26" width="345" height="27"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="contentTextField" destination="LLI-a3-MNy" id="L9Z-Ch-6Mz"/>
+                                            <outlet property="invalidContentLabel" destination="D5I-7h-7Qq" id="ayK-F4-obD"/>
+                                            <outlet property="separatorView" destination="YbA-V5-mCj" id="hwp-8t-2xH"/>
+                                            <outlet property="titleLabel" destination="cpj-iC-8eg" id="sfN-Mt-dKc"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvX-GQ-vJ8" userLabel="ETH Address" customClass="RichTextFieldView" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="60" width="345" height="60"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0x..." minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1hb-NR-qjl">
+                                                <rect key="frame" x="0.0" y="26" width="345" height="26"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3F5-m3-jTy" userLabel="Separator">
+                                                <rect key="frame" x="0.0" y="36" width="345" height="1"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.80784313730000001" green="0.82745098039999998" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </view>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A valid ethereum public key" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpp-7H-OWk">
+                                                <rect key="frame" x="0.0" y="35" width="315" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.80784313730000001" green="0.054901960780000002" blue="0.054999999700000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ETH address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beo-DB-h3p">
+                                                <rect key="frame" x="0.0" y="8" width="352" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="contentTextField" destination="1hb-NR-qjl" id="mn4-HW-ljs"/>
+                                            <outlet property="invalidContentLabel" destination="mpp-7H-OWk" id="KSo-mQ-Edm"/>
+                                            <outlet property="separatorView" destination="3F5-m3-jTy" id="mgt-B1-Ery"/>
+                                            <outlet property="titleLabel" destination="beo-DB-h3p" id="CvQ-tP-MyT"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="tji-lI-eEc"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcK-Af-JEh">
+                                <rect key="frame" x="15" y="252.5" width="84" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="84" id="6s0-wi-6hY"/>
+                                    <constraint firstAttribute="height" constant="30" id="8VI-dP-Bzt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="   Paste" image="clipboard">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pasteAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="0ac-ao-fMd"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pSE-cg-4Dr" userLabel="Top Bar">
+                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmt-lK-1sd" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="93" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29915823063380281" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="cLs-kF-ziG"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng7-n6-rRs">
+                                        <rect key="frame" x="323" y="50" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saveAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="FvZ-ty-bNV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTA-Pa-HdV" userLabel="Close">
+                                        <rect key="frame" x="0.0" y="49" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="BackArrow">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="eEx-1C-7oI"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add your ETH address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TY-S3-kmq">
+                                        <rect key="frame" x="98" y="61" width="178" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Mmt-lK-1sd" firstAttribute="leading" secondItem="pSE-cg-4Dr" secondAttribute="leading" id="Tsm-q5-adb"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mmt-lK-1sd" secondAttribute="bottom" id="bGU-Iy-1Q4"/>
+                                    <constraint firstAttribute="height" constant="94" id="rfs-t2-TAj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mmt-lK-1sd" secondAttribute="trailing" id="whg-FG-I9C"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="La0-Dw-ufx">
+                                <rect key="frame" x="107" y="245.5" width="84" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="bl6-pq-ioI"/>
+                                    <constraint firstAttribute="width" constant="84" id="jMB-z9-hFa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="   QR Code" image="QrCodeSmall">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="qrCodeAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="spc-Is-Ax9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ldT-jy-L68" firstAttribute="top" secondItem="pSE-cg-4Dr" secondAttribute="top" constant="50" id="78a-Le-qi6"/>
+                            <constraint firstItem="La0-Dw-ufx" firstAttribute="leading" secondItem="VcK-Af-JEh" secondAttribute="trailing" constant="8" id="9o7-f8-fpD"/>
+                            <constraint firstItem="dTD-By-icE" firstAttribute="height" secondItem="ZRe-2w-gCy" secondAttribute="height" id="BmL-wy-deG"/>
+                            <constraint firstItem="La0-Dw-ufx" firstAttribute="centerY" secondItem="VcK-Af-JEh" secondAttribute="centerY" id="EbD-YV-EfY"/>
+                            <constraint firstItem="ZRe-2w-gCy" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" constant="15" id="EdM-vt-HIX"/>
+                            <constraint firstItem="pSE-cg-4Dr" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" id="Mwk-gE-ztL"/>
+                            <constraint firstItem="dTD-By-icE" firstAttribute="centerY" secondItem="ZRe-2w-gCy" secondAttribute="centerY" id="Of8-gK-031"/>
+                            <constraint firstItem="ZRe-2w-gCy" firstAttribute="top" secondItem="c8w-7z-z2N" secondAttribute="bottom" constant="15" id="Qku-H5-3Qi"/>
+                            <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="pSE-cg-4Dr" secondAttribute="trailing" id="YIm-9t-xOD"/>
+                            <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="dTD-By-icE" secondAttribute="trailing" id="YTI-4d-M5K"/>
+                            <constraint firstItem="VcK-Af-JEh" firstAttribute="leading" secondItem="ZRe-2w-gCy" secondAttribute="leading" id="eqK-dD-FcJ"/>
+                            <constraint firstItem="dTD-By-icE" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" id="ewC-IY-zjP"/>
+                            <constraint firstItem="c8w-7z-z2N" firstAttribute="top" secondItem="pSE-cg-4Dr" secondAttribute="bottom" priority="750" constant="27" id="fXD-TY-6lg"/>
+                            <constraint firstItem="dTD-By-icE" firstAttribute="centerX" secondItem="ZRe-2w-gCy" secondAttribute="centerX" id="hHK-Xm-hff"/>
+                            <constraint firstItem="ZRe-2w-gCy" firstAttribute="centerX" secondItem="ldT-jy-L68" secondAttribute="centerX" id="i6t-rd-uNK"/>
+                            <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="ZRe-2w-gCy" secondAttribute="trailing" constant="15" id="kVd-8i-IGI"/>
+                            <constraint firstItem="VcK-Af-JEh" firstAttribute="top" secondItem="ZRe-2w-gCy" secondAttribute="bottom" id="s4C-Q5-qf7"/>
+                            <constraint firstItem="c8w-7z-z2N" firstAttribute="leading" secondItem="ZRe-2w-gCy" secondAttribute="leading" id="wXo-pH-Vvo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ldT-jy-L68"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qro-63-uUw"/>
+                    <connections>
+                        <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
+                        <outlet property="walletNameRichTextField" destination="rhR-LU-jU0" id="UTY-NA-l5L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SYr-pc-Ot7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4262" y="-348"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="BackArrow" width="10" height="19"/>
         <image name="Background" width="375" height="667"/>
         <image name="CheckLarge" width="56" height="41"/>
         <image name="IPExchangeNav" width="105" height="20"/>
-        <image name="QrCode" width="20" height="20"/>
+        <image name="QrCodeSmall" width="11" height="11"/>
+        <image name="clipboard" width="11" height="11"/>
     </resources>
 </document>
