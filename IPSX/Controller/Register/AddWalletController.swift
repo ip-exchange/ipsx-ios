@@ -202,4 +202,9 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     private func found(code: String) {
         onCodeFound?(code)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        dismiss(animated: true)
+    }
 }
