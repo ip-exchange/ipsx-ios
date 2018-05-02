@@ -20,11 +20,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     public var dismissOnSelect = false
-    var isProxyFlow: Bool?
+    var isProxyFlow: Bool? = false
     
     //TODO (CC): get this from API
     var countries: [String] = []
     var filteredCountries: [String] = []
+    var selectedCountry: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,10 +102,9 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected:", filteredCountries[indexPath.item])
-        //TODO: Do something with the selected country
-       if dismissOnSelect {
-             if let nav = navigationController {
+        selectedCountry = filteredCountries[indexPath.item]
+        if dismissOnSelect {
+            if let nav = navigationController {
                 nav.popViewController(animated: true)
             } else {
                 dismiss(animated: true)
