@@ -11,12 +11,12 @@ import UIKit
 struct ProxyPack {
     
     var name: String
-    var noOfMB: Int
+    var noOfMB: String
     var duration: String
-    var price: Int
+    var price: String
     var iconName: String
     
-    init(iconName: String = "", name: String = "", noOfMB: Int = 0, duration: String = "", price: Int = 0) {
+    init(iconName: String = "", name: String = "", noOfMB: String = "", duration: String = "", price: String = "") {
         
         self.iconName = iconName
         self.name = name

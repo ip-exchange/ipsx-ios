@@ -19,6 +19,7 @@ class RegisterCredentialsController: UIViewController {
     
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass1" : false, "pass2" : false]
+    var userCredentials: [String: String] = ["email": "", "pass": ""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,17 @@ class RegisterCredentialsController: UIViewController {
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showRegistrationTermsSegueID" {
+            if let email = emailRichTextView.contentTextField?.text, let password = passRichTextField.contentTextField?.text {
+                let nextScreen = segue.destination as? RegisterTermsController
+                nextScreen?.userCredentials = ["email": email,
+                                               "pass" : password]
+            }
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -86,7 +98,6 @@ class RegisterCredentialsController: UIViewController {
         guard let keyboardFrame = notification?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
-        
         let keyboardHeight: CGFloat
         if #available(iOS 11.0, *) {
             keyboardHeight = keyboardFrame.cgRectValue.height - self.view.safeAreaInsets.bottom

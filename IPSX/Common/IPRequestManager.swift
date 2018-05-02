@@ -34,14 +34,21 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
             
         case .getPublicIP:
             request = Request(url:Url.publicIP, httpMethod: "GET")
-        
-        case .getCountryList, .getProxy:
-            let body = JSON(params)
-            request = Request(url:Url.proxyAPI, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         case .register:
             let body = JSON(params)
             request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
+        case .login:
+            let body = JSON(params)
+            request = Request(url:Url.base + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
+        case .retrieveProxies:
+            var url = Url.base + Url.proxiesArgs
+            if let params = params as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
         }
         
         if let body = request?.body as? JSON {
@@ -83,6 +90,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                     case 200:
                         print(NSDate(),"\(type(of: self)):\(#function) Request succeeded")
                         completion(nil, data)
+                    //TODO (CVI): this statusCode should be different for expired token
+                    case 401:
+                        print(NSDate(), "\(type(of: self)):\(#function) Request failed. Expired token ")
+                        completion(CustomError.expiredToken, data)
                         
                     default:
                         print(NSDate(), "\(type(of: self)):\(#function) Request failed with status code: ", statusCode)

@@ -10,13 +10,13 @@ import UIKit
 
 public extension String {
     
-    public func removeAllSpaces() -> String {
+    func removeAllSpaces() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
     
     /// Replace any match of %KEY% in self with coresponding value for same KEY in paramsDic
     
-    public func replaceKeysWithValues(paramsDict:[String:String], removeAllSpaces: Bool = true) -> String {
+    func replaceKeysWithValues(paramsDict:[String:String], removeAllSpaces: Bool = true) -> String {
         
         var urlWithParams = self
         for param in paramsDict {

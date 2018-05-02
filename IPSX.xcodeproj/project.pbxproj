@@ -24,6 +24,11 @@
 		A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730026205AC16900488009 /* IPInfoProtocols.swift */; };
 		A473002B205AC16900488009 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730027205AC16900488009 /* RequestModel.swift */; };
 		A473002C205AC16900488009 /* IPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730028205AC16900488009 /* IPService.swift */; };
+		A4AC761F2099E59800504ED9 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */; };
+		A4AC76222099E99900504ED9 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76212099E99900504ED9 /* LoginService.swift */; };
+		A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76232099F27F00504ED9 /* UserManager.swift */; };
+		A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76262099F83D00504ED9 /* ProxyService.swift */; };
+		A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC7628209A074600504ED9 /* Double+extensions.swift */; };
 		A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD0BA22097590E00D27759 /* RegisterService.swift */; };
 		A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E374C92090C2D100808B86 /* NewProxyController.swift */; };
 		A4E374CC2090C2E700808B86 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E374CB2090C2E700808B86 /* ProfileViewController.swift */; };
@@ -106,6 +111,12 @@
 		A4730026205AC16900488009 /* IPInfoProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPInfoProtocols.swift; sourceTree = "<group>"; };
 		A4730027205AC16900488009 /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		A4730028205AC16900488009 /* IPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPService.swift; sourceTree = "<group>"; };
+		A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		A4AC76202099E66300504ED9 /* IPSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IPSX.entitlements; sourceTree = "<group>"; };
+		A4AC76212099E99900504ED9 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		A4AC76232099F27F00504ED9 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		A4AC76262099F83D00504ED9 /* ProxyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyService.swift; sourceTree = "<group>"; };
+		A4AC7628209A074600504ED9 /* Double+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		A4DD0BA22097590E00D27759 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		A4E374C92090C2D100808B86 /* NewProxyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProxyController.swift; sourceTree = "<group>"; };
 		A4E374CB2090C2E700808B86 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = IPSX/Controller/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -208,6 +219,7 @@
 		A43930AD205AAEE800CA7B15 /* IPSX */ = {
 			isa = PBXGroup;
 			children = (
+				A4AC76202099E66300504ED9 /* IPSX.entitlements */,
 				A4FCA932205BB448009FF41B /* Model */,
 				A4FCA92B205BB01F009FF41B /* Controller */,
 				A4F2F7412090A22100515883 /* New Proxy */,
@@ -343,6 +355,8 @@
 			children = (
 				A4730028205AC16900488009 /* IPService.swift */,
 				A4DD0BA22097590E00D27759 /* RegisterService.swift */,
+				A4AC76212099E99900504ED9 /* LoginService.swift */,
+				A4AC76262099F83D00504ED9 /* ProxyService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -355,20 +369,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		A4FCA92F205BB075009FF41B /* Request Managers */ = {
-			isa = PBXGroup;
-			children = (
-				A4730025205AC16900488009 /* IPRequestManager.swift */,
-			);
-			path = "Request Managers";
-			sourceTree = "<group>";
-		};
 		A4FCA930205BB092009FF41B /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				A4730027205AC16900488009 /* RequestModel.swift */,
-				A4FCA92F205BB075009FF41B /* Request Managers */,
+				A4730025205AC16900488009 /* IPRequestManager.swift */,
 				A4E6AEA920862DD2001787DF /* UI elements */,
+				A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */,
+				A4AC76232099F27F00504ED9 /* UserManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -400,6 +408,7 @@
 				A4FCA936205BD8F1009FF41B /* String+extenstions.swift */,
 				A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */,
 				A46480DF2091F9D500330CC9 /* UITableView+extensions.swift */,
+				A4AC7628209A074600504ED9 /* Double+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -496,6 +505,11 @@
 					A43930AA205AAEE800CA7B15 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					A43930BE205AAEE800CA7B15 = {
 						CreatedOnToolsVersion = 9.2;
@@ -645,6 +659,7 @@
 				A473002B205AC16900488009 /* RequestModel.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */,
+				A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */,
 				A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */,
 				A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */,
 				A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */,
@@ -657,12 +672,16 @@
 				EE37F8A22090BCBC00783385 /* SettingsViewController.swift in Sources */,
 				A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */,
 				EE1A0543208F593900522426 /* DashboardViewController.swift in Sources */,
+				A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */,
 				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* IPRequestManager.swift in Sources */,
+				A4AC761F2099E59800504ED9 /* KeychainWrapper.swift in Sources */,
 				EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */,
+				A4AC76222099E99900504ED9 /* LoginService.swift in Sources */,
 				A4606C362092165E0008A9F3 /* ProxyActivationDetailsCell.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */,
+				A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */,
 				A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */,
 				EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */,
 				A4E6AEA62085F6CD001787DF /* UIColor+extensions.swift in Sources */,
@@ -840,6 +859,7 @@
 			baseConfigurationReference = BB89380DF6A3DF5B7778DBF7 /* Pods-IPSX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = IPSX/IPSX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KQBUR46TNZ;
 				INFOPLIST_FILE = IPSX/Info.plist;
@@ -858,6 +878,7 @@
 			baseConfigurationReference = E13C8D7141F797750D78CBC0 /* Pods-IPSX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = IPSX/IPSX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KQBUR46TNZ;
 				INFOPLIST_FILE = IPSX/Info.plist;

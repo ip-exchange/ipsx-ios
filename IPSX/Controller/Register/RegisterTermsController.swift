@@ -14,6 +14,7 @@ class RegisterTermsController: UIViewController {
     @IBOutlet weak var registerButton: RoundedButton!
     
     private var statesDic: [String : Bool] = [:]
+    var userCredentials: [String: String] = ["email": "", "pass": ""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,5 +31,38 @@ class RegisterTermsController: UIViewController {
             allAgreed = false
         }
         registerButton.isEnabled = allAgreed
+    }
+    
+    @IBAction func registerButtonAction(_ sender: UIButton) {
+        
+        //TODO (CVI): add activity indicator
+        
+        IPService().getPublicIPAddress(completion: { error, ipAddress in
+            
+            guard let ipAddress = ipAddress, error == nil else {
+                //TODO (CVI): remove activity indicator
+                //TODO (CVI): error handling
+                return
+            }
+            
+            if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
+                RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
+                    
+                    //TODO (CVI): remove activity indicator
+                    
+                    switch result {
+                        
+                    case .success(_):
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "showRegConfirmationSegueID", sender: nil)
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                        //TODO (CVI): error handling
+                    }
+                })
+            }
+        })
     }
 }

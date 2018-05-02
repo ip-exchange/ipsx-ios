@@ -24,8 +24,8 @@ class ProxyDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         //TODO (CVI) this is for testing
-        let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: 100, duration: "60 min")
-        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain", userIP: "192.32.50.101", remainingMB: 10, remainingDuration: "20 min", status: Status.active)
+        let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: "100", duration: "60 min")
+        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain", userIP: "192.32.50.101", remainingMB: "10", remainingDuration: "20 min", status: Status.active)
         let proxySetup = ProxySetup(pacLink: "7637653211.pac", proxyIP: "192.100.5.99", proxyPort: "532")
         proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
     }

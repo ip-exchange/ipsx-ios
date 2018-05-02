@@ -12,8 +12,18 @@ class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
+        super.viewDidAppear(animated)
+        
+        //presentLandingFlow()
     }
     
     @IBAction func unwindToTabbar(segue:UIStoryboardSegue) { }
+    
+    func presentLandingFlow() {
+        self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+    }
 }

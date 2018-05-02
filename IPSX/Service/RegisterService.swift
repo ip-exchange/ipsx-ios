@@ -11,32 +11,24 @@ import SwiftyJSON
 
 class RegisterService {
     
-    func registerUser(forParams email: String, password: String, ip: String, completion:@escaping (_ error: Error?, _ userId: String)->()) {
+    func registerUser(email: String, password: String, ip: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let params: [String: String] = ["email"      : email,
                                         "password"   : password,
-                                        "email_token": "",
-                                        "ip"         : ""]
+                                        "ip"         : ip]
         
         IPRequestManager.shared.executeRequest(requestType: .register, params: params, completion: { error, data in
             
             guard error == nil else {
-                completion(error, "")
+                completionHandler(ServiceResult.failure(error!))
                 return
             }
-            guard let data = data else {
-                completion(CustomError.noData, "")
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            let json = JSON(data: data)
-            let userId = json["id"].stringValue
-            
-            if userId != "" {
-                completion(nil, userId)
-            }
-            else {
-                completion(CustomError.invalidJson, "")
-            }
+            // TODO (CVI): deocamdata nu ne trebuie niciun camp din response
+            completionHandler(ServiceResult.success(""))
         })
     }
 }
