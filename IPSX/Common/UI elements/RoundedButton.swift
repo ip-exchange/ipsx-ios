@@ -24,6 +24,7 @@ class RoundedButton: UIButton {
             if isBordered == true {
                 self.layer.borderWidth = 1
                 self.layer.borderColor = borderColor.cgColor
+                backgroundColor = .clear
             }
         }
     }
@@ -45,6 +46,14 @@ class RoundedButton: UIButton {
         super.layoutSubviews()
         layer.cornerRadius = bounds.height / 2
     }
+    
+    open override var isEnabled: Bool {
+        
+        didSet {
+            backgroundColor = border ? .clear : isEnabled ? .lightBlue : .disabledGrey
+        }
+    }
+
 }
 
 
