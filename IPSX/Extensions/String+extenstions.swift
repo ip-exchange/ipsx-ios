@@ -26,6 +26,10 @@ public extension String {
         }
         return removeAllSpaces ? urlWithParams.removeAllSpaces() : urlWithParams
     }
+    
+    public var localized: String {
+        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
+    }
 }
 
 

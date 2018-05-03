@@ -19,6 +19,12 @@ class LoginCredentialsControler: UIViewController {
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var email: String = ""
     var password: String = ""
+    var errorMessage: String? {
+        didSet {
+            //TODO (CVI): Show toast alert
+            print(errorMessage ?? "")
+        }
+    }
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
         
@@ -32,8 +38,8 @@ class LoginCredentialsControler: UIViewController {
             case .success(let response):
                 
                 guard let response = response as? (String, String) else {
+                    self.errorMessage = "Generic Error Message".localized
                     return
-                    //TODO (CVI): error handling
                 }
                 UserManager.shared.storeUserInfo(userId: response.0, accessToken: response.1)
                 
@@ -42,8 +48,20 @@ class LoginCredentialsControler: UIViewController {
                 }
                 
             case .failure(let error):
-                print(error)
-                //TODO (CVI): error handling
+                
+                guard let customError = error as? CustomError else {
+                    self.errorMessage = "Generic Error Message".localized
+                    return
+                }
+                switch customError {
+                case .statusCodeNOK(let statusCode):
+                    if statusCode == 401 {
+                        self.errorMessage = "Login Failed Error Message".localized
+                    }
+                default:
+                    self.errorMessage = "Generic Error Message".localized
+                    break
+                }
             }
         })
     }

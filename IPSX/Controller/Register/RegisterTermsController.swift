@@ -15,6 +15,12 @@ class RegisterTermsController: UIViewController {
     
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
+    var errorMessage: String? {
+        didSet {
+            //TODO (CVI): Show toast alert
+            print(errorMessage ?? "")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +47,7 @@ class RegisterTermsController: UIViewController {
             
             guard let ipAddress = ipAddress, error == nil else {
                 //TODO (CVI): remove activity indicator
-                //TODO (CVI): error handling
+                self.errorMessage = "Generic Error Message".localized
                 return
             }
             
@@ -57,9 +63,8 @@ class RegisterTermsController: UIViewController {
                             self.performSegue(withIdentifier: "showRegConfirmationSegueID", sender: nil)
                         }
                         
-                    case .failure(let error):
-                        print(error)
-                        //TODO (CVI): error handling
+                    case .failure(_):
+                        self.errorMessage = "Generic Error Message".localized
                     }
                 })
             }
