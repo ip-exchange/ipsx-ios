@@ -23,7 +23,7 @@ class EditProfileController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyIconImageView.tintColor = .lightBule
+        keyIconImageView.tintColor = .lightBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -46,9 +46,9 @@ class RichTextFieldView: UIView {
         
         invalidContentLabel.isHidden  = isValid || chars == 0
         titleLabel.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
-        leftIconImageView?.tintColor  = isValid || chars == 0 ? .silver   : .inputError
-        contentTextField?.textColor   = isValid || chars == 0 ? .black    : .inputError
-        separatorView.backgroundColor = isValid || chars == 0 ? .silver   : .inputError
+        separatorView.backgroundColor = chars == 0 ? .silver : isValid ? .lightBlue : .inputError
+        leftIconImageView?.tintColor  = separatorView.backgroundColor
+        contentTextField?.textColor   = isValid || chars == 0 ? .darktext : .inputError
     }
     
     private func isMatchingOtherField() -> Bool {
