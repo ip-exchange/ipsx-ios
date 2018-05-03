@@ -327,7 +327,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WaM-93-tC1" kind="show" id="YN8-lG-qlM"/>
+                                    <action selector="loginButtonAction:" destination="yRO-NU-ykG" eventType="touchUpInside" id="vDd-Vc-ubg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -358,6 +358,7 @@
                         <outlet property="continueButton" destination="rF7-LN-NfW" id="cA9-q3-ro1"/>
                         <outlet property="emailRichTextView" destination="nhQ-TM-OQd" id="82Z-P6-GEY"/>
                         <outlet property="passRichTextField" destination="RzB-N1-Imc" id="HSH-mK-UVb"/>
+                        <segue destination="WaM-93-tC1" kind="show" identifier="showAddWalletSegueID" id="nNU-Zf-N1I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDm-UV-wHZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

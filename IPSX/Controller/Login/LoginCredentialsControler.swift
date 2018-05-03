@@ -17,6 +17,36 @@ class LoginCredentialsControler: UIViewController {
     
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
+    var email: String = ""
+    var password: String = ""
+    
+    @IBAction func loginButtonAction(_ sender: UIButton) {
+        
+        //TODO (CVI): add activity indicator
+        
+        LoginService().login(email: email, password: password, completionHandler: { result in
+            //TODO (CVI): remove activity indicator
+            
+            switch result {
+                
+            case .success(let response):
+                
+                guard let response = response as? (String, String) else {
+                    return
+                    //TODO (CVI): error handling
+                }
+                UserManager.shared.storeUserInfo(userId: response.0, accessToken: response.1)
+                
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                }
+                
+            case .failure(let error):
+                print(error)
+                //TODO (CVI): error handling
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

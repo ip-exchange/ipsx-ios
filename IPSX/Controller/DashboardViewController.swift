@@ -16,6 +16,36 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //TODO (CVI): add activity indicator
+        
+        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+            //TODO (CVI): remove activity indicator
+            
+            switch result {
+                
+            case .success(let success):
+                
+                guard (success as? Bool) == true else {
+                    return
+                    //TODO (CVI): error handling
+                }
+                print("SUCCESS!")
+                
+            case .failure(let error):
+                
+                //TODO (CVI): error handling
+                
+                if let error = error as? CustomError {
+                    switch error {
+                    case .expiredToken:
+                        print("Perform login automatically to generate a new token")
+                        
+                    default:
+                        print("TODO")
+                    }
+                }
+            }
+        })
     }
     
 }
