@@ -40,17 +40,17 @@ class ProxyService {
         
         for json in jsonArray {
             
-            //TODO (CV): create struct with proxy name based on noOfMB
+            //TODO (CVI): proxy name o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
             //TODO (CVI): remainingDuration trebuie calculat sau ne rugam sa ni-l puna in raspuns
             
             let noOfMB = json["traffic"].stringValue
             let duration = json["duration"].stringValue + " min" //TODO (CVI): format this (min, days, month, etc)
             let status = json["status"].stringValue
             let usage = json["usage"].doubleValue
-            let durationDouble = json["duration"].doubleValue
-            let remainingMBString = (durationDouble - usage).cleanString
+            let noOfMBDouble = json["traffic"].doubleValue
+            let remainingMBString = (noOfMBDouble - usage).cleanString
             let country = json["country"].stringValue
-            let ipAddress = json["ip"].stringValue //TODO (CV): avem ip-ul aici !!
+            let ipAddress = json["ip"].stringValue
             
             let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration)
             let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: country, userIP: ipAddress, remainingMB: remainingMBString, remainingDuration: "20 min", status: status)

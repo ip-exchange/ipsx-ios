@@ -90,8 +90,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                     case 200:
                         print(NSDate(),"\(type(of: self)):\(#function) Request succeeded")
                         completion(nil, data)
-                    //TODO (CVI): this statusCode should be different for expired token
-                    case 401:
+                        
+                    //TODO (CVI): we should use one statusCode for each request when expired token
+                        
+                    case 401 where requestType == .retrieveProxies:
                         print(NSDate(), "\(type(of: self)):\(#function) Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
                         

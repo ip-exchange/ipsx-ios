@@ -20,11 +20,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     public var dismissOnSelect = false
-    var isProxyFlow: Bool?
+    var isProxyFlow: Bool? = false
     
     //TODO (CC): get this from API
     var countries: [String] = []
     var filteredCountries: [String] = []
+    var selectedCountry: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class SearchViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         
-       //TODO (CC): Delete this when API get list is implemented
+        //TODO (CC): Delete this when API get list is implemented
         for code in NSLocale.isoCountryCodes as [String] {
             let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.countryCode.rawValue: code])
             let name = NSLocale(localeIdentifier: "en_UK").displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
@@ -81,7 +82,7 @@ class SearchViewController: UIViewController {
         bottomConstraint.constant = 0
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
-
+    
 }
 
 extension SearchViewController: UITableViewDataSource {
@@ -101,21 +102,15 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected:", filteredCountries[indexPath.item])
-        //TODO: Do something with the selected country
-       if dismissOnSelect {
-             if let nav = navigationController {
+        selectedCountry = filteredCountries[indexPath.item]
+        if dismissOnSelect {
+            if let nav = navigationController {
                 nav.popViewController(animated: true)
             } else {
                 dismiss(animated: true)
             }
-        } else {
-            if isProxyFlow == true {
-                performSegue(withIdentifier: newProxyFlowID, sender: nil)
-            }
-            else {
-                //TODO (CVI): perform segue to next screen on Profile flow
-            }
+        } else if isProxyFlow == true {
+            performSegue(withIdentifier: newProxyFlowID, sender: nil)
         }
     }
 }
@@ -138,7 +133,7 @@ extension SearchViewController: UITextFieldDelegate {
         filteredCountries = matchingTerms
         tableView.reloadData()
         tableView.setContentOffset(CGPoint.zero, animated: true)
-
+        
         return true
     }
     
@@ -167,4 +162,4 @@ extension SearchViewController: UITextFieldDelegate {
 
 class SearchCell: UITableViewCell {
     @IBOutlet weak var textlabel: UILabel!
- }
+}

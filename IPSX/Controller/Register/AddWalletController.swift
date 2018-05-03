@@ -13,14 +13,14 @@ class AddWalletController: UIViewController {
 
     @IBOutlet weak var walletNameRichTextField: RichTextFieldView!
     @IBOutlet weak var ethAddresRichTextField: RichTextFieldView!
-    @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint?
     @IBOutlet weak var loginAnotherAccButton: RoundedButton!
     
     var continueBottomDist: CGFloat = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        continueBottomDist = bottomContinueConstraint.constant
+        continueBottomDist = bottomContinueConstraint?.constant ?? 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +49,9 @@ class AddWalletController: UIViewController {
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func saveAction(_ sender: UIButton) {
     }
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
@@ -86,13 +89,13 @@ class AddWalletController: UIViewController {
             keyboardHeight = keyboardFrame.cgRectValue.height
         }
         
-        bottomContinueConstraint.constant = keyboardHeight + 10
+        bottomContinueConstraint?.constant = keyboardHeight + 10
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
     
     @objc
     func keyboardWillDisappear(notification: NSNotification?) {
-        bottomContinueConstraint.constant = continueBottomDist
+        bottomContinueConstraint?.constant = continueBottomDist
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
 
@@ -198,5 +201,10 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     private func found(code: String) {
         onCodeFound?(code)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        dismiss(animated: true)
     }
 }
