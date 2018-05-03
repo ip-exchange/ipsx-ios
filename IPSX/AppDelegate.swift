@@ -19,9 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //TODO (CVI): remove comment
         //setKeychainAccessGroup()
         
-        //TODO (CVI): remove this line
-        UserManager.shared.storeUserInfo(userId: "129", accessToken: "GqX2EG0bQAkBGj2fpQUszQFFDp6DhWB1TcYX3rn6nEVFWiDqRhraP4EoO6ffGsfc REMOVE THIS")
-        
         UserManager.shared.retrieveUserInfo()
         return true
     }

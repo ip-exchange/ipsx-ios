@@ -50,6 +50,7 @@ public enum CustomError: LocalizedError {
     case otherError(Error)
     case getPublicIP
     case notSuccessful
+    case invalidParams
     
     public var errorDescription: String? {
         switch self {

@@ -24,7 +24,7 @@ class LoginCredentialsControler: UIViewController {
         
         //TODO (CVI): add activity indicator
         
-        LoginService().login(email: email, password: password, completionHandler: { result in
+        LoginService().login(email: emailRichTextView.contentTextField?.text, password: passRichTextField.contentTextField?.text, completionHandler: { result in
             //TODO (CVI): remove activity indicator
             
             switch result {

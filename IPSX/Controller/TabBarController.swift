@@ -18,7 +18,9 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
         
-        //presentLandingFlow()
+        if !UserManager.shared.isLoggedIn() {
+            presentLandingFlow()
+        }
     }
     
     @IBAction func unwindToTabbar(segue:UIStoryboardSegue) { }

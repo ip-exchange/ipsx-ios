@@ -14,7 +14,12 @@ class LoginService {
     /**
      * Return (userId, accessToken)
      */
-    func login(email: String, password: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func login(email: String?, password: String?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        guard let email = email, let password = password else {
+            completionHandler(ServiceResult.failure(CustomError.invalidParams))
+            return
+        }
         
         let params: [String: String] = ["email"    : email,
                                         "password" : password]

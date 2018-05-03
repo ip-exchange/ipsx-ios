@@ -12,42 +12,50 @@ class DashboardViewController: UIViewController {
     
     let cellID = "ProxyActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
+    var proxies: [Proxy] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO (CVI): add activity indicator
-        
-        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-            //TODO (CVI): remove activity indicator
-            
-            switch result {
-                
-            case .success(let success):
-                
-                guard (success as? Bool) == true else {
-                    return
-                    //TODO (CVI): error handling
-                }
-                print("SUCCESS!")
-                
-            case .failure(let error):
-                
-                //TODO (CVI): error handling
-                
-                if let error = error as? CustomError {
-                    switch error {
-                    case .expiredToken:
-                        print("Perform login automatically to generate a new token")
-                        
-                    default:
-                        print("TODO")
-                    }
-                }
-            }
-        })
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        //TODO (CVI): add activity indicator
+        
+        if UserManager.shared.isLoggedIn() {
+            ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+                //TODO (CVI): remove activity indicator
+                
+                switch result {
+                    
+                case .success(let proxyArray):
+                    
+                    guard let proxyArray = proxyArray as? [Proxy] else {
+                        return
+                        //TODO (CVI): error handling
+                    }
+                    self.proxies = proxyArray
+                    print("SUCCESS! Proxies: ", self.proxies)
+                    
+                case .failure(let error):
+                    
+                    //TODO (CVI): error handling
+                    
+                    if let error = error as? CustomError {
+                        switch error {
+                        case .expiredToken:
+                            print("Perform login automatically to generate a new token")
+                            
+                        default:
+                            print("TODO")
+                        }
+                    }
+                }
+            })
+        }
+    }
 }
 
 extension DashboardViewController: UITableViewDataSource {

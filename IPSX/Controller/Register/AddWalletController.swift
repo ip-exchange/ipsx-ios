@@ -15,12 +15,17 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var ethAddresRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint?
     @IBOutlet weak var loginAnotherAccButton: RoundedButton!
+    @IBOutlet weak var doneButton: UIButton!
+    
+    //TODO (CVI): do we need validation for wallet name ?
+    private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
     var continueBottomDist: CGFloat = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint?.constant ?? 0
+        observreFieldsState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +52,17 @@ class AddWalletController: UIViewController {
         ethAddresRichTextField.validationRegex        = RichTextFieldView.validEthAddress
     }
     
+    private func observreFieldsState() {
+        walletNameRichTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["walletName"] = state
+            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
+        ethAddresRichTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["ethAddress"] = state
+            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
+    }
+    
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -55,6 +71,14 @@ class AddWalletController: UIViewController {
     }
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
+    
+    
+    @IBAction func doneAction(_ sender: UIButton) {
+        
+        //TODO (CVI): save ETH address & name for user
+        //and then:
+        performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+    }
     
     @IBAction func qrCodeAction(_ sender: Any) {
         let scannerController = QRScannViewController()
@@ -68,6 +92,15 @@ class AddWalletController: UIViewController {
     @IBAction func pasteAction(_ sender: Any) {
         if let clipboardText = UIPasteboard.general.string {
             ethAddresRichTextField.contentTextField?.text = clipboardText
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showLoginSegueID" {
+            
+            //TODO (CVI): perform logout request
+            UserManager.shared.removeUserInfo()
         }
     }
     

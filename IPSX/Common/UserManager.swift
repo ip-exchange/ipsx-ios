@@ -27,16 +27,16 @@ public class UserManager: NSObject {
         
         if let userId = userId {
             KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
-            UserManager.shared.userId = userId
+            self.userId = userId
         }
         if let accessToken = accessToken {
             KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
-            UserManager.shared.accessToken = accessToken
+            self.accessToken = accessToken
         }
     }
     
     func storeProxyDetails(proxies: [Proxy]) {
-        UserManager.shared.proxies = proxies
+        self.proxies = proxies
     }
         
     func retrieveUserInfo() {
@@ -57,6 +57,9 @@ public class UserManager: NSObject {
     
     func isLoggedIn() -> Bool {
         
+        if userId != "" && accessToken != "" {
+            return true
+        }
         return false
     }
 }

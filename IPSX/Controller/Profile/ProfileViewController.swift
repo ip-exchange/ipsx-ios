@@ -9,7 +9,15 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
+    
     let cellID = "ETHAddressCellID"
+    
+    @IBAction func logoutButtonAction(_ sender: UIButton) {
+        
+        //TODO (CVI): perform logout request
+        UserManager.shared.removeUserInfo()
+        performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
