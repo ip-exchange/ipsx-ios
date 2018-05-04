@@ -324,10 +324,12 @@
                                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nWX-wB-bTv" userLabel="Separator">
-                                                            <rect key="frame" x="0.0" y="75" width="375" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWX-wB-bTv" userLabel="Separator">
+                                                            <rect key="frame" x="0.0" y="76" width="375" height="0.0"/>
                                                             <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30105633799999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" id="fyN-Ef-crV"/>
+                                                            </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expired" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIl-Db-czL">
                                                             <rect key="frame" x="15" y="80" width="46" height="16"/>
@@ -372,7 +374,10 @@
                                             <constraints>
                                                 <constraint firstItem="8ZI-Wg-5ps" firstAttribute="top" secondItem="WRr-bs-kEZ" secondAttribute="top" id="CJx-QP-YWG"/>
                                                 <constraint firstItem="8ZI-Wg-5ps" firstAttribute="leading" secondItem="WRr-bs-kEZ" secondAttribute="leading" id="Uni-gl-Oge"/>
+                                                <constraint firstItem="nWX-wB-bTv" firstAttribute="leading" secondItem="WRr-bs-kEZ" secondAttribute="leading" id="aPJ-iA-aI2"/>
                                                 <constraint firstAttribute="bottom" secondItem="8ZI-Wg-5ps" secondAttribute="bottom" id="clb-Dp-CR3"/>
+                                                <constraint firstAttribute="trailing" secondItem="nWX-wB-bTv" secondAttribute="trailing" id="hhZ-0I-FiJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="nWX-wB-bTv" secondAttribute="bottom" constant="23.5" id="ijw-N6-1eU"/>
                                                 <constraint firstAttribute="trailing" secondItem="8ZI-Wg-5ps" secondAttribute="trailing" id="skB-rf-gbj"/>
                                             </constraints>
                                         </tableViewCellContentView>

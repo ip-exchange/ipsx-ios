@@ -8,12 +8,6 @@
 
 import UIKit
 
-struct Status {
-    static let expired = "Expired"
-    static let free = "Try it now for free!"
-    static let active = "Active"
-}
-
 struct Proxy {
     
     var proxyPack: ProxyPack?

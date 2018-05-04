@@ -10,9 +10,17 @@ import UIKit
 
 class DashboardViewController: UIViewController {
     
-    let cellID = "ProxyActivationDetailsCellID"
+    @IBOutlet weak var tableView: UITableView?
+    
+    let cellID = "ActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
-    var proxies: [Proxy] = []
+    var proxies: [Proxy] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +67,9 @@ class DashboardViewController: UIViewController {
 }
 
 extension DashboardViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return proxies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,7 +78,9 @@ extension DashboardViewController: UITableViewDataSource {
         cell.cellContentView.shadow = true
         cell.cellProgress1.transform = transform
         cell.cellProgress2.transform = transform
-       return cell
+        cell.configure(proxy: proxies[indexPath.item])
+        
+        return cell
     }
 }
 
