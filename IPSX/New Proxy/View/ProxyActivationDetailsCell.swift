@@ -31,7 +31,7 @@ class ProxyActivationDetailsCell: UITableViewCell {
         cellProgress1.progress = proxy.dataUsageProgress
         cellProgress2.progress = proxy.timeLeftProgress
         
-        cellDurationLabel.text = proxy.proxyPack?.duration
+        cellDurationLabel.text = proxy.proxyDetails?.remainingDuration
     }
     
 }
