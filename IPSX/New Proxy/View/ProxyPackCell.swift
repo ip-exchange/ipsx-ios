@@ -19,10 +19,10 @@ class ProxyPackCell: UITableViewCell {
     
     func configure(proxyPack: ProxyPack) {
         
-        packImageView.image = UIImage(named: proxyPack.iconName)
+        packImageView.image = UIImage(named: proxyPack.iconName ?? "")
         nameLabel.text = proxyPack.name
-        noOfMBLabel.text = "\(proxyPack.noOfMB)" + "MB"
+        noOfMBLabel.text = "\(proxyPack.noOfMB ?? "")" + "MB"
         durationLabel.text = proxyPack.duration
-        priceLabel.text = "\(proxyPack.price)" + " " + "IPSX"
+        priceLabel.text = "\(proxyPack.price ?? "")" + " " + "IPSX"
     }
 }

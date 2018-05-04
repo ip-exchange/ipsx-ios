@@ -45,6 +45,7 @@ class ProxyService {
         for json in jsonArray {
             
             //TODO (CVI): proxy name o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
+            //TODO (CVI): get proxy price in IPSX (with the new model for proxy plans)
             //TODO (CVI): remainingDuration trebuie calculat sau ne rugam sa ni-l puna in raspuns
             //TODO (CVI): nu avem pac link returnat de API
             
@@ -63,7 +64,7 @@ class ProxyService {
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration)
+            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration, price: "TODO")
             let proxyDetails = ProxyActivationDetails(startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), country: country, userIP: userIp, remainingMB: remainingMBString, remainingDuration: "20 min", status: status)
             let proxySetup = ProxySetup(pacLink: "TODO", proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)

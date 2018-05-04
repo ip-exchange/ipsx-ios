@@ -22,15 +22,20 @@ class ProxyActivationDetailsCell: UITableViewCell {
     func configure(proxy: Proxy) {
         
         cellTitleLabel.text = proxy.proxyPack?.name
-        cellStatusLabel.text = proxy.proxyDetails?.status
-        cellRemainingMBLabel.text = proxy.proxyDetails?.remainingMB
+        cellRemainingMBLabel.text = proxy.proxyDetails?.remainingMB ?? "0"
         
+        if UserManager.shared.userInfo?.proxyTest == "" {
+            cellStatusLabel.text = "Test Proxy Message".localized
+        }
+        else {
+            cellStatusLabel.text = proxy.proxyDetails?.status
+        }
+    
         let noOfMB = proxy.proxyPack?.noOfMB ?? "0"
         cellNoOfMBLabel.text = "/" + "\(noOfMB)" + " " + "MB"
         
         cellProgress1.progress = proxy.dataUsageProgress
         cellProgress2.progress = proxy.timeLeftProgress
-        
         cellDurationLabel.text = proxy.proxyPack?.duration
     }
     

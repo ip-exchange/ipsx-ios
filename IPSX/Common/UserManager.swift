@@ -32,6 +32,7 @@ public class UserManager: NSObject {
         
         KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
         KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
+        retrieveAccessDetails()
     }
         
     func retrieveAccessDetails() {
@@ -44,10 +45,14 @@ public class UserManager: NSObject {
         }
     }
     
-    func removeAccessDetails() {
+    func removeUserDetails() {
         
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.userId)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.accessToken)
+        userId = ""
+        accessToken = ""
+        proxies = []
+        userInfo = nil
     }
     
     func isLoggedIn() -> Bool {

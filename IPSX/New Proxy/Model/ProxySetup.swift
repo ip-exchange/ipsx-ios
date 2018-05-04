@@ -10,11 +10,11 @@ import UIKit
 
 struct ProxySetup {
     
-    var pacLink: String?
-    var proxyIP: String?
-    var proxyPort: String?
+    var pacLink: String
+    var proxyIP: String
+    var proxyPort: String
     
-    init(pacLink: String? = nil, proxyIP: String? = nil, proxyPort: String? = nil ) {
+    init(pacLink: String = "", proxyIP: String = "", proxyPort: String = "" ) {
         
         self.pacLink = pacLink
         self.proxyIP = proxyIP
