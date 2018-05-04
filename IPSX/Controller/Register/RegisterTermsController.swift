@@ -71,3 +71,13 @@ class RegisterTermsController: UIViewController {
         })
     }
 }
+
+
+class RegisterDoneController: UIViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "LoginScreenSegueID", let loginController = segue.destination as? LoginCredentialsControler {
+            loginController.hideBackButton = true
+        }
+    }
+}

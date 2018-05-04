@@ -95,6 +95,7 @@ extension SearchViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SearchCell
         cell.textlabel.text = filteredCountries[indexPath.item]
+        cell.disclousureImageView.isHidden = dismissOnSelect
         return cell
     }
 }
@@ -162,4 +163,5 @@ extension SearchViewController: UITextFieldDelegate {
 
 class SearchCell: UITableViewCell {
     @IBOutlet weak var textlabel: UILabel!
+    @IBOutlet weak var disclousureImageView: UIImageView!
 }

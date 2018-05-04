@@ -84,6 +84,7 @@ class AddWalletController: UIViewController {
         let scannerController = QRScannViewController()
         scannerController.onCodeFound = { code in
             self.ethAddresRichTextField.contentTextField?.text = code
+            self.ethAddresRichTextField.refreshStatus()
         }
         self.present(scannerController, animated: true) {
         }
@@ -92,6 +93,7 @@ class AddWalletController: UIViewController {
     @IBAction func pasteAction(_ sender: Any) {
         if let clipboardText = UIPasteboard.general.string {
             ethAddresRichTextField.contentTextField?.text = clipboardText
+            ethAddresRichTextField.refreshStatus()
         }
     }
     

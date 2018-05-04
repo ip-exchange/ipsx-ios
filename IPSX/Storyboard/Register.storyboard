@@ -87,7 +87,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YKW-Dt-Hzb">
-                                                <rect key="frame" x="0.0" y="5" width="29" height="33"/>
+                                                <rect key="frame" x="0.0" y="4" width="29" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="snQ-lA-6jD">
@@ -130,7 +130,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyIconCheck" translatesAutoresizingMaskIntoConstraints="NO" id="vzo-GD-mak">
-                                                <rect key="frame" x="0.0" y="4" width="29" height="33"/>
+                                                <rect key="frame" x="0.0" y="3" width="29" height="33"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Retype your password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="f03-6l-DM5">
@@ -520,10 +520,10 @@
             </objects>
             <point key="canvasLocation" x="3468" y="131.78410794602701"/>
         </scene>
-        <!--View Controller-->
+        <!--Register Done Controller-->
         <scene sceneID="AE8-0u-CFe">
             <objects>
-                <viewController id="R1q-eW-KM7" sceneMemberID="viewController">
+                <viewController id="R1q-eW-KM7" customClass="RegisterDoneController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rEJ-mK-QD5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -553,7 +553,7 @@
                                             <color key="titleColor" red="0.16899999979999999" green="0.51372549019607838" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="hd7-Xi-hGO" kind="show" id="6Cf-44-TPQ"/>
+                                            <segue destination="hd7-Xi-hGO" kind="show" identifier="LoginScreenSegueID" id="6Cf-44-TPQ"/>
                                         </connections>
                                     </button>
                                 </subviews>

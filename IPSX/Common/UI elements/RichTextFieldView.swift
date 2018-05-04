@@ -39,6 +39,11 @@ class RichTextFieldView: UIView {
          }
     }
     
+    public func refreshStatus() {
+        let currentText = contentTextField?.text ?? ""
+        updateColors(isValid: isValid(text: currentText))
+    }
+    
     private func updateColors(isValid: Bool) {
         
         let chars = contentTextField?.text?.count ?? 0

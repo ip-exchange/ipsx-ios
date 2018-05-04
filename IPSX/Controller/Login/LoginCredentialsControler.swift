@@ -14,7 +14,9 @@ class LoginCredentialsControler: UIViewController {
     @IBOutlet weak var passRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
+    @IBOutlet weak var backButton: UIButton!
     
+    var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var email: String = ""
@@ -69,6 +71,7 @@ class LoginCredentialsControler: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
+        backButton.isHidden = hideBackButton
         observreFieldsState()
     }
     
