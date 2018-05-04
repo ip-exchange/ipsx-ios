@@ -25,6 +25,8 @@
 		A473002A205AC16900488009 /* IPInfoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730026205AC16900488009 /* IPInfoProtocols.swift */; };
 		A473002B205AC16900488009 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730027205AC16900488009 /* RequestModel.swift */; };
 		A473002C205AC16900488009 /* IPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4730028205AC16900488009 /* IPService.swift */; };
+		A48329CC209C5B1F003B19FC /* UserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48329CB209C5B1F003B19FC /* UserInfoService.swift */; };
+		A48329CE209C5D41003B19FC /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48329CD209C5D41003B19FC /* UserInfo.swift */; };
 		A4AC761F2099E59800504ED9 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */; };
 		A4AC76222099E99900504ED9 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76212099E99900504ED9 /* LoginService.swift */; };
 		A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76232099F27F00504ED9 /* UserManager.swift */; };
@@ -120,6 +122,8 @@
 		A4730026205AC16900488009 /* IPInfoProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPInfoProtocols.swift; sourceTree = "<group>"; };
 		A4730027205AC16900488009 /* RequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		A4730028205AC16900488009 /* IPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPService.swift; sourceTree = "<group>"; };
+		A48329CB209C5B1F003B19FC /* UserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoService.swift; sourceTree = "<group>"; };
+		A48329CD209C5D41003B19FC /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		A4AC76202099E66300504ED9 /* IPSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IPSX.entitlements; sourceTree = "<group>"; };
 		A4AC76212099E99900504ED9 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -384,6 +388,7 @@
 				A4DD0BA22097590E00D27759 /* RegisterService.swift */,
 				A4AC76212099E99900504ED9 /* LoginService.swift */,
 				A4AC76262099F83D00504ED9 /* ProxyService.swift */,
+				A48329CB209C5B1F003B19FC /* UserInfoService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				A4FCA933205BB463009FF41B /* ProxyRequest.swift */,
+				A48329CD209C5D41003B19FC /* UserInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -699,9 +705,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A48329CC209C5B1F003B19FC /* UserInfoService.swift in Sources */,
 				A473002B205AC16900488009 /* RequestModel.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */,
+				A48329CE209C5D41003B19FC /* UserInfo.swift in Sources */,
 				A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */,
 				A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */,
 				A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */,

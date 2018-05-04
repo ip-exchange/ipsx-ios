@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //TODO (CVI): remove comment
         //setKeychainAccessGroup()
         
-        UserManager.shared.retrieveUserInfo()
+        UserManager.shared.retrieveAccessDetails()
         return true
     }
     

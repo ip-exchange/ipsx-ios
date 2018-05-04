@@ -37,7 +37,29 @@ class LoginService {
             let json = JSON(data: data)
             let userId = json["userId"].stringValue
             let accessToken = json["id"].stringValue
-            completionHandler(ServiceResult.success((userId, accessToken)))
+            
+            //Execute User Info request
+            UserInfoService().retrieveUserInfo(userId: userId, accessToken: accessToken, completionHandler: { result in
+                switch result {
+                    
+                case .failure(let error):
+                    completionHandler(ServiceResult.failure(error))
+                    
+                case .success(let userInfo):
+                    guard let user = userInfo as? UserInfo else {
+                        completionHandler(ServiceResult.success(false))
+                        return
+                    }
+                    
+                    //Store User Info
+                    UserManager.shared.userInfo = user
+                    
+                    //Store access details in keychain
+                    UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+                    
+                    completionHandler(ServiceResult.success(true))
+                }
+            })
         })
     }
 }
