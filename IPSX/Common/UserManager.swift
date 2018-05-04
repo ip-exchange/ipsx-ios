@@ -12,6 +12,11 @@ public class UserManager: NSObject {
 
     public static var shared = UserManager()
     
+    var userId: String
+    var accessToken: String
+    var proxies: [Proxy]
+    var userInfo: UserInfo?
+    
     private override init() {
         userId = ""
         accessToken = ""
@@ -19,27 +24,17 @@ public class UserManager: NSObject {
         super.init()
     }
     
-    var userId: String
-    var accessToken: String
-    var proxies: [Proxy]
-    
-    func storeUserInfo(userId: String? = nil, accessToken: String? = nil) {
-        
-        if let userId = userId {
-            KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
-            self.userId = userId
-        }
-        if let accessToken = accessToken {
-            KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
-            self.accessToken = accessToken
-        }
-    }
-    
     func storeProxyDetails(proxies: [Proxy]) {
         self.proxies = proxies
     }
+    
+    func storeAccessDetails(userId: String, accessToken: String) {
         
-    func retrieveUserInfo() {
+        KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
+        KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
+    }
+        
+    func retrieveAccessDetails() {
         
         if let userId = KeychainWrapper.stringForKey(keyName: KeychainKeys.userId) {
             UserManager.shared.userId = userId
@@ -49,7 +44,7 @@ public class UserManager: NSObject {
         }
     }
     
-    func removeUserInfo() {
+    func removeAccessDetails() {
         
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.userId)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.accessToken)

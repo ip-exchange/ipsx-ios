@@ -37,18 +37,17 @@ class LoginCredentialsControler: UIViewController {
             
             switch result {
                 
-            case .success(let response):
+            case .success(let success):
                 
-                guard let response = response as? (String, String) else {
+                if (success as? Bool) == true {
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                    }
+                }
+                else {
                     self.errorMessage = "Generic Error Message".localized
-                    return
                 }
-                UserManager.shared.storeUserInfo(userId: response.0, accessToken: response.1)
-                
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-                }
-                
+            
             case .failure(let error):
                 
                 guard let customError = error as? CustomError else {

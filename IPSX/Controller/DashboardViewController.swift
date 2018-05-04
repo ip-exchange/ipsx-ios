@@ -53,7 +53,6 @@ class DashboardViewController: UIViewController {
                         //TODO (CVI): error handling
                     }
                     self.proxies = proxyArray
-                    print("SUCCESS! Proxies: ", self.proxies)
                     
                 case .failure(let error):
                     

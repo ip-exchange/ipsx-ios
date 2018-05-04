@@ -49,6 +49,13 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+            
+        case .userInfo:
+            var url = Url.base + Url.userInfoArgs
+            if let params = params as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
         }
         
         if let body = request?.body as? JSON {

@@ -33,6 +33,7 @@ public struct Url {
     public static let registerArgs = "/Users"
     public static let loginArgs = "/Users/login"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
+    public static let userInfoArgs = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -84,14 +85,11 @@ public enum IPRequestType: Int {
     case register
     case login
     case retrieveProxies
+    case userInfo
 }
 
 public struct ContentType {
     public static let applicationJSON = "application/json"
-}
-
-public struct Constants {
-    static let proxyIP = "176.9.60.230"
 }
 
 public struct KeychainKeys {
