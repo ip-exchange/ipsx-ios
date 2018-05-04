@@ -23,6 +23,13 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    var filteredProxies: [Proxy] {
+        get {
+            let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active" : "expired"
+            return proxies.filter { $0.proxyDetails?.status == filterString }
+         }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +73,8 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    @IBAction func proxySegmentAction(_ sender: Any) {
+    @IBAction func proxySegmentAction(_ sender: UISegmentedControl) {
+        tableView?.reloadData()
     }
     
 }
@@ -74,7 +82,7 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return proxies.count
+        return filteredProxies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,7 +91,7 @@ extension DashboardViewController: UITableViewDataSource {
         cell.cellContentView.shadow = true
         cell.cellProgress1.transform = transform
         cell.cellProgress2.transform = transform
-        cell.configure(proxy: proxies[indexPath.item])
+        cell.configure(proxy: filteredProxies[indexPath.item])
         
         return cell
     }
