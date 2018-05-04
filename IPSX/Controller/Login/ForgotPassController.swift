@@ -15,7 +15,7 @@ class ForgotPassController: UIViewController {
     @IBOutlet weak var continueButton: RoundedButton!
     
     var continueBottomDist: CGFloat = 0.0
-    private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
+    private var fieldsStateDic: [String : Bool] = ["email" : false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
