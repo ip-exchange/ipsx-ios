@@ -25,8 +25,12 @@ class ProxyActivationDetailsCell: UITableViewCell {
         cellStatusLabel.text = proxy.proxyDetails?.status
         cellRemainingMBLabel.text = proxy.proxyDetails?.remainingMB
         
-        let noOfMB = proxy.proxyPack?.noOfMB ?? ""
+        let noOfMB = proxy.proxyPack?.noOfMB ?? "0"
         cellNoOfMBLabel.text = "/" + "\(noOfMB)" + " " + "MB"
+        
+        cellProgress1.progress = proxy.dataUsageProgress
+        cellProgress2.progress = proxy.timeLeftProgress
+        
         cellDurationLabel.text = proxy.proxyPack?.duration
     }
     

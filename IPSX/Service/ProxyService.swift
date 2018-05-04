@@ -38,6 +38,10 @@ class ProxyService {
         
         var proxies: [Proxy] = []
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
         for json in jsonArray {
             
             //TODO (CVI): proxy name o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
@@ -47,8 +51,8 @@ class ProxyService {
             let noOfMB = json["traffic"].stringValue
             let duration = json["duration"].stringValue + " min" //TODO (CVI): format this (min, days, month, etc)
             
-            let startDate = json["start_date"].stringValue //TODO (CVI): format date
-            let endDate = json["end_date"].stringValue //TODO (CVI): format date
+            let startDate = json["start_date"].stringValue
+            let endDate = json["end_date"].stringValue
             let country = json["country"].stringValue
             let userIp = json["user_ip"].stringValue
             let status = json["status"].stringValue
@@ -60,7 +64,7 @@ class ProxyService {
             let proxyPort = json["port"].stringValue
             
             let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration)
-            let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: country, userIP: userIp, remainingMB: remainingMBString, remainingDuration: "20 min", status: status)
+            let proxyDetails = ProxyActivationDetails(startDate: dateFormatter.date(from: startDate), endDate: dateFormatter.date(from: endDate), country: country, userIP: userIp, remainingMB: remainingMBString, remainingDuration: "20 min", status: status)
             let proxySetup = ProxySetup(pacLink: "TODO", proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
             proxies.append(proxy)
