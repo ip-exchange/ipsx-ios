@@ -11,6 +11,7 @@ import UIKit
 class DashboardViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
+    @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
     
     let cellID = "ActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
@@ -64,6 +65,10 @@ class DashboardViewController: UIViewController {
             })
         }
     }
+    
+    @IBAction func proxySegmentAction(_ sender: Any) {
+    }
+    
 }
 
 extension DashboardViewController: UITableViewDataSource {

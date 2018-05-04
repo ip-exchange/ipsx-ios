@@ -214,6 +214,9 @@
                                             <segment title="Expired"/>
                                         </segments>
                                         <color key="tintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="proxySegmentAction:" destination="4A6-HS-yFF" eventType="valueChanged" id="Zt4-ln-5Yl"/>
+                                        </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gON-gb-2hO" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="15" y="63" width="345" height="44"/>
@@ -436,6 +439,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="Dashboard" id="Kqr-SM-2lD"/>
                     <connections>
+                        <outlet property="proxiesSegmentController" destination="PSQ-5O-SSB" id="e42-mQ-6zM"/>
                         <outlet property="tableView" destination="0Jl-Mt-64I" id="g6v-z2-Mfx"/>
                     </connections>
                 </viewController>
