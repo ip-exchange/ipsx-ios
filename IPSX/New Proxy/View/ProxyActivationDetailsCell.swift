@@ -15,14 +15,14 @@ class ProxyActivationDetailsCell: UITableViewCell {
     @IBOutlet weak var cellProgress1: UIProgressView!
     @IBOutlet weak var cellProgress2: UIProgressView!
     @IBOutlet weak var cellStatusLabel: UILabel!
-    @IBOutlet weak var cellRemainingMBLabel: UILabel!
+    @IBOutlet weak var cellusedMBLabel: UILabel!
     @IBOutlet weak var cellNoOfMBLabel: UILabel!
     @IBOutlet weak var cellDurationLabel: UILabel!
     
     func configure(proxy: Proxy) {
         
         cellTitleLabel.text = proxy.proxyPack?.name
-        cellRemainingMBLabel.text = proxy.proxyDetails?.remainingMB ?? "0"
+        cellusedMBLabel.text = proxy.proxyDetails?.usedMB 
         
         if UserManager.shared.userInfo?.proxyTest == "" {
             cellStatusLabel.text = "Test Proxy Message".localized
@@ -31,8 +31,8 @@ class ProxyActivationDetailsCell: UITableViewCell {
             cellStatusLabel.text = proxy.proxyDetails?.status
         }
     
-        let noOfMB = proxy.proxyPack?.noOfMB ?? "0"
-        cellNoOfMBLabel.text = "/" + "\(noOfMB)" + " " + "MB"
+        let noOfMB = proxy.proxyPack?.noOfMB ?? "N/A"
+        cellNoOfMBLabel.text = "/" + noOfMB + " " + "MB"
         
         cellProgress1.progress = proxy.dataUsageProgress
         cellProgress2.progress = proxy.timeLeftProgress

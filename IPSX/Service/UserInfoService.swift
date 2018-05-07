@@ -11,8 +11,15 @@ import SwiftyJSON
 
 class UserInfoService {
     
-    func retrieveUserInfo(userId: String, accessToken: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    /// - needs userId and accessToken from Keychain as params for the request
+    func retrieveUserInfo(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
+        guard let userId      = KeychainWrapper.stringForKey(keyName: KeychainKeys.userId),
+              let accessToken = KeychainWrapper.stringForKey(keyName: KeychainKeys.accessToken) else {
+                
+                completionHandler(ServiceResult.failure(CustomError.invalidParams))
+                return
+        }
         let params: [String: String] =  ["USER_ID"      : userId,
                                          "ACCESS_TOKEN" : accessToken]
         
@@ -43,6 +50,10 @@ class UserInfoService {
         let proxyTest  = json["proxy_test"].stringValue
         
         let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest)
-        completionHandler(ServiceResult.success(user))
+        
+        //Store User Info
+        UserManager.shared.userInfo = user
+        
+        completionHandler(ServiceResult.success(""))
     }
 }

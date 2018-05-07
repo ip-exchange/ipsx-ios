@@ -14,18 +14,18 @@ struct ProxyActivationDetails {
     var endDate: Date?
     var country: String
     var userIP: String
-    var remainingMB: String
+    var usedMB: String
     var remainingDuration: String
     var status: String
     
-    init(startDate: Date? = nil, endDate: Date? = nil, country: String = "", userIP: String = "", remainingMB: String = "", remainingDuration: String = "", status: String = "") {
+    init(startDate: Date? = nil, endDate: Date? = nil, country: String = "", userIP: String = "", usedMB: String = "", remainingDuration: String = "", status: String = "") {
         
         self.startDate = startDate
         self.endDate = endDate
-        self.country = country
-        self.userIP = userIP
-        self.remainingMB = remainingMB
-        self.remainingDuration = remainingDuration
-        self.status = status
+        self.country = country != "" ? country : "N/A"
+        self.userIP = userIP != "" ? userIP : "N/A"
+        self.usedMB = usedMB != "" ? usedMB : "N/A"
+        self.remainingDuration = remainingDuration != "" ? remainingDuration : "N/A"
+        self.status = status != "" ? status : "N/A"
     }
 }

@@ -70,13 +70,13 @@ class ProxyService {
             let status = json["status"].stringValue
             let usage = json["usage"].doubleValue
             let noOfMBDouble = json["traffic"].doubleValue
-            let remainingMBString = (noOfMBDouble - usage).cleanString
+            let usedMBString = (noOfMBDouble - usage).cleanString
             
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
             let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration, price: "TODO")
-            let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, remainingMB: remainingMBString, remainingDuration: remainigDuartionString, status: status)
+            let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, usedMB: usedMBString, remainingDuration: remainigDuartionString, status: status)
             let proxySetup = ProxySetup(pacLink: "TODO", proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
             proxies.append(proxy)

@@ -16,7 +16,7 @@ struct Proxy {
     
     var dataUsageProgress: Float {
         let total = Float(proxyPack?.noOfMB ?? "0") ?? 0
-        let remaining = Float(proxyDetails?.remainingMB ?? "0") ?? 0
+        let remaining = Float(proxyDetails?.usedMB ?? "0") ?? 0
         return remaining <= 0 ? 1 : total <= 0 ? 0 : (total - remaining) / total
     }
     

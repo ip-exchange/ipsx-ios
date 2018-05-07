@@ -16,8 +16,8 @@ struct ProxySetup {
     
     init(pacLink: String = "", proxyIP: String = "", proxyPort: String = "" ) {
         
-        self.pacLink = pacLink
-        self.proxyIP = proxyIP
-        self.proxyPort = proxyPort
+        self.pacLink   = pacLink != "" ? pacLink : "N/A"
+        self.proxyIP   = proxyIP != "" ? proxyIP : "N/A"
+        self.proxyPort = proxyPort != "" ? proxyPort : "N/A"
     }
 }

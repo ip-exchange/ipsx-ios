@@ -20,14 +20,19 @@ class DashboardViewController: UIViewController {
     }
     let cellID = "ActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
-    var proxies: [Proxy] = []
+    var proxies: [Proxy] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+        }
+    }
     
     var filteredProxies: [Proxy] {
         get {
             let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active".localized : "expired".localized
             return proxies.filter { $0.proxyDetails?.status == filterString }
          }
-        set { }
     }
     
     override func viewDidLoad() {
@@ -38,56 +43,69 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
         //TODO (CVI): add activity indicator
         
         if UserManager.shared.isLoggedIn() {
-            ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-                //TODO (CVI): remove activity indicator
+            executeRequests()
+        }
+    }
+    
+    func executeRequests() {
+        
+        /*
+            Execute User Info request
+         */
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
+            switch result {
                 
-                switch result {
+            case .failure(let error):
+                //TODO (CVI): what should we do if the request for user info fails ?
+                print(error)
+                self.errorMessage = "Generic Error Message".localized
+                
+            case .success(_):
+                /*
+                    Execute Proxies Request
+                 */
+                ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+                    //TODO (CVI): remove activity indicator
                     
-                case .success(let proxyArray):
-                    
-                    guard let proxyArray = proxyArray as? [Proxy] else {
-                        self.errorMessage = "Generic Error Message".localized
-                        return
-                    }
-                    self.proxies = proxyArray
-                    self.checkForTestProxyAvailability()
-                    self.updateUI()
-                    
-                case .failure(let error):
-                    
-                    if let error = error as? CustomError {
-                        switch error {
-                        case .expiredToken:
-                            
-                            //TODO (CVI) automatically login
-                            print("Perform login automatically to generate a new token")
-                            
-                        default:
+                    switch result {
+                        
+                    case .success(let proxyArray):
+                        
+                        guard let proxyArray = proxyArray as? [Proxy] else {
                             self.errorMessage = "Generic Error Message".localized
+                            return
+                        }
+                        self.proxies = proxyArray
+                        self.checkForTestProxyAvailability()
+                        
+                    case .failure(let error):
+                        
+                        if let error = error as? CustomError {
+                            switch error {
+                            case .expiredToken:
+                                
+                                //TODO (CVI) automatically login
+                                print("Perform login automatically to generate a new token")
+                                
+                            default:
+                                self.errorMessage = "Generic Error Message".localized
+                            }
                         }
                     }
-                }
-            })
-        }
+                })
+            }
+        })
     }
-    
-    func updateUI() {
         
-        DispatchQueue.main.async {
-            let filterString = self.proxiesSegmentController.selectedSegmentIndex == 0 ? "active".localized : "expired".localized
-            self.filteredProxies = self.proxies.filter { $0.proxyDetails?.status == filterString }
-            self.tableView?.reloadData()
-        }
-    }
-    
     func checkForTestProxyAvailability() {
         
         if UserManager.shared.userInfo?.proxyTest == "" {
             let testProxyPack = ProxyPack()
-            let testProxyActivationDetails = ProxyActivationDetails(status: "active".localized)
+            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
             let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails)
             proxies.insert(testProxy, at: 0)
         }

@@ -19,10 +19,10 @@ struct ProxyPack {
     init(iconName: String = "", name: String = "", noOfMB: String = "", duration: String = "", price: String = "") {
         
         self.iconName = iconName
-        self.name = name
-        self.noOfMB = noOfMB
-        self.duration = duration
-        self.price = price
+        self.name     = name != "" ? name : "N/A"
+        self.noOfMB   = noOfMB != "" ? noOfMB : "N/A"
+        self.duration = duration != "" ? duration : "N/A"
+        self.price    = price != "" ? price : "N/A"
     }
     
     init() {
