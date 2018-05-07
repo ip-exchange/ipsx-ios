@@ -24,5 +24,14 @@ struct ProxyPack {
         self.duration = duration
         self.price = price
     }
+    
+    init() {
+        
+        self.iconName = "PackCoins"
+        self.name = "Test Proxy Name".localized
+        self.noOfMB = "20"
+        self.duration = "20 min"
+        self.price = "0"
+    }
 
 }

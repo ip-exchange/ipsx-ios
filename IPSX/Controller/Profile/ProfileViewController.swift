@@ -15,7 +15,7 @@ class ProfileViewController: UIViewController {
     @IBAction func logoutButtonAction(_ sender: UIButton) {
         
         //TODO (CVI): perform logout request
-        UserManager.shared.removeAccessDetails()
+        UserManager.shared.removeUserDetails()
         performSegue(withIdentifier: "showLandingSegueID", sender: nil)
     }
 }

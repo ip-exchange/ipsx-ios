@@ -12,22 +12,22 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
-    
-    let cellID = "ActivationDetailsCellID"
-    let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
-    var proxies: [Proxy] = [] {
+    var errorMessage: String? {
         didSet {
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
+            //TODO (CVI): Show toast alert
+            print(errorMessage ?? "")
         }
     }
+    let cellID = "ActivationDetailsCellID"
+    let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
+    var proxies: [Proxy] = []
     
     var filteredProxies: [Proxy] {
         get {
-            let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active" : "expired"
+            let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active".localized : "expired".localized
             return proxies.filter { $0.proxyDetails?.status == filterString }
          }
+        set { }
     }
     
     override func viewDidLoad() {
@@ -49,26 +49,47 @@ class DashboardViewController: UIViewController {
                 case .success(let proxyArray):
                     
                     guard let proxyArray = proxyArray as? [Proxy] else {
+                        self.errorMessage = "Generic Error Message".localized
                         return
-                        //TODO (CVI): error handling
                     }
                     self.proxies = proxyArray
+                    self.checkForTestProxyAvailability()
+                    self.updateUI()
                     
                 case .failure(let error):
-                    
-                    //TODO (CVI): error handling
                     
                     if let error = error as? CustomError {
                         switch error {
                         case .expiredToken:
+                            
+                            //TODO (CVI) automatically login
                             print("Perform login automatically to generate a new token")
                             
                         default:
-                            print("TODO")
+                            self.errorMessage = "Generic Error Message".localized
                         }
                     }
                 }
             })
+        }
+    }
+    
+    func updateUI() {
+        
+        DispatchQueue.main.async {
+            let filterString = self.proxiesSegmentController.selectedSegmentIndex == 0 ? "active".localized : "expired".localized
+            self.filteredProxies = self.proxies.filter { $0.proxyDetails?.status == filterString }
+            self.tableView?.reloadData()
+        }
+    }
+    
+    func checkForTestProxyAvailability() {
+        
+        if UserManager.shared.userInfo?.proxyTest == "" {
+            let testProxyPack = ProxyPack()
+            let testProxyActivationDetails = ProxyActivationDetails(status: "active".localized)
+            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails)
+            proxies.insert(testProxy, at: 0)
         }
     }
     

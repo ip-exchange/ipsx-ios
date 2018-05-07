@@ -10,16 +10,16 @@ import Foundation
 
 struct UserInfo {
     
-    var firstName: String?
-    var middleName: String?
-    var lastName: String?
-    var telegram: String?
-    var countryID: String?
-    var email: String?
-    var proxyTest: String?
+    var firstName: String
+    var middleName: String
+    var lastName: String
+    var telegram: String
+    var countryID: String
+    var email: String
+    var proxyTest: String
     
-    init(firstName: String? = nil, middleName: String? = nil,lastName: String? = nil,
-         telegram: String? = nil, countryID: String? = nil, email: String? = nil, proxyTest: String? = nil) {
+    init(firstName: String = "", middleName: String = "",lastName: String = "",
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "") {
         
         self.firstName = firstName
         self.middleName = middleName

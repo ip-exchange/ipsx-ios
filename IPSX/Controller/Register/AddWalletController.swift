@@ -102,7 +102,7 @@ class AddWalletController: UIViewController {
         if segue.identifier == "showLoginSegueID" {
             
             //TODO (CVI): perform logout request
-            UserManager.shared.removeAccessDetails()
+            UserManager.shared.removeUserDetails()
         }
     }
     
