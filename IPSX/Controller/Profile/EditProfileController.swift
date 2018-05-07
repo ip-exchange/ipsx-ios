@@ -19,6 +19,8 @@ class EditProfileController: UIViewController {
     
     @IBOutlet weak var selectedCountryLabel: UILabel!
     
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
     private var searchController: SearchViewController?
     
     override func viewDidLoad() {
@@ -28,7 +30,16 @@ class EditProfileController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateFields(userInfo: userInfo)
+    }
+    
+    private func updateFields(userInfo: UserInfo?) {
         selectedCountryLabel.text = searchController?.selectedCountry ?? "Select a country"
+        
+        emailTextField.text     = userInfo?.email ?? ""
+        firstNameTextField.text = userInfo?.firstName ?? ""
+        lastNameTextField.text  = userInfo?.lastName ?? ""
+        telegramTextField.text  = userInfo?.telegram ?? ""
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
