@@ -17,6 +17,7 @@ struct UserInfo {
     var countryID: String
     var email: String
     var proxyTest: String
+    var ethAddresses: [EthAddress]?
     
     init(firstName: String = "", middleName: String = "",lastName: String = "",
          telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "") {
@@ -28,5 +29,9 @@ struct UserInfo {
         self.countryID  = countryID != "" ? countryID : "N/A"
         self.email      = email != "" ? email : "N/A"
         self.proxyTest  = proxyTest
+    }
+    
+    mutating func setEthAddresses(ethAddresses: [EthAddress]) {
+        self.ethAddresses = ethAddresses
     }
 }

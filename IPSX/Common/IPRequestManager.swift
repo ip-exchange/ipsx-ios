@@ -24,7 +24,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
     public var publicIP: String?
     public var privateIP: String?
     
-    public func createRequest(requestType:IPRequestType, params: [String: Any] = [:]) -> URLRequest? {
+    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:]) -> URLRequest? {
         
         var urlRequest: URLRequest?
         var request: Request?
@@ -36,23 +36,39 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
             request = Request(url:Url.publicIP, httpMethod: "GET")
             
         case .register:
-            let body = JSON(params)
+            let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
+        case .addEthAddress:
+            
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.ethAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            }
+         
+        case .getETHaddresses:
+            var url = Url.base + Url.ethAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
         case .login:
-            let body = JSON(params)
+            let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         case .retrieveProxies:
             var url = Url.base + Url.proxiesArgs
-            if let params = params as? [String: String] {
+            if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
         case .userInfo:
             var url = Url.base + Url.userInfoArgs
-            if let params = params as? [String: String] {
+            if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
@@ -79,10 +95,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         return urlRequest
     }
     
-    public func executeRequest(requestType:IPRequestType, params: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
         
         let requestManager = IPRequestManager.shared
-        if let request = requestManager.createRequest(requestType: requestType, params: params) {
+        if let request = requestManager.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
             
             requestManager.session.dataTask(with: request , completionHandler: { data, response, error in
                 
@@ -95,7 +111,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                     switch statusCode {
                         
                     case 200:
-                        print(NSDate(),"\(type(of: self)):\(#function) Request succeeded")
+                        print(NSDate(),"\(requestType)" + "Request succeeded")
                         completion(nil, data)
                         
                     //TODO (CVI): we should use one statusCode for each request when expired token
@@ -103,6 +119,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                     case 401 where requestType == .retrieveProxies:
                         print(NSDate(), "\(type(of: self)):\(#function) Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
+                        
+                    case 422 where requestType == .addEthAddress:
+                        print(NSDate(), "\(type(of: self)):\(#function) Request failed. This ETH address is already used ")
+                        completion(CustomError.ethAddressAlreadyUsed, data)
                         
                     default:
                         print(NSDate(), "\(type(of: self)):\(#function) Request failed with status code: ", statusCode)

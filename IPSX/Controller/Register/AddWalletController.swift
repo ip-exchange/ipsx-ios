@@ -20,6 +20,13 @@ class AddWalletController: UIViewController {
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
+    var errorMessage: String? {
+        didSet {
+            //TODO (CVI): Show toast alert
+            print(errorMessage ?? "")
+        }
+    }
+    
     var continueBottomDist: CGFloat = 0.0
     
     override func viewDidLoad() {
@@ -75,9 +82,34 @@ class AddWalletController: UIViewController {
     
     @IBAction func doneAction(_ sender: UIButton) {
         
-        //TODO (CVI): save ETH address & name for user
-        //and then:
-        performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+        let alias = walletNameRichTextField.contentTextField?.text ?? ""
+        let address = ethAddresRichTextField.contentTextField?.text ?? ""
+        
+        RegisterService().addEthAdress(address: address, alias: alias, completionHandler: { result in
+            
+            switch result {
+                
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                }
+                
+            case .failure(let error):
+                
+                guard let customError = error as? CustomError else {
+                    self.errorMessage = "Generic Error Message".localized
+                    return
+                }
+                switch customError {
+                case .ethAddressAlreadyUsed:
+                    self.errorMessage = "ETH Address Already Used Error Message".localized
+                    
+                default:
+                    self.errorMessage = "Generic Error Message".localized
+                    break
+                }
+            }
+        })
     }
     
     @IBAction func qrCodeAction(_ sender: Any) {

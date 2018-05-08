@@ -16,7 +16,7 @@ class ProxyService {
         let params: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                         "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .retrieveProxies, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .retrieveProxies, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -30,11 +30,11 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
-            self.mapResponse(jsonArray: jsonArray, completionHandler: completionHandler)
+            self.mapProxiesResponse(jsonArray: jsonArray, completionHandler: completionHandler)
         })
     }
     
-    private func mapResponse(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapProxiesResponse(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         var proxies: [Proxy] = []
         

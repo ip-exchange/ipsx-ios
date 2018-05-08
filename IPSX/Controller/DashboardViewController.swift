@@ -46,7 +46,7 @@ class DashboardViewController: UIViewController {
         
         //TODO (CVI): add activity indicator
         
-        if UserManager.shared.isLoggedIn() {
+        if UserManager.shared.isLoggedIn {
             executeRequests()
         }
     }

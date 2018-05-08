@@ -18,7 +18,7 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
         
-        if !UserManager.shared.isLoggedIn() {
+        if !UserManager.shared.isLoggedIn {
             presentLandingFlow()
         }
     }
