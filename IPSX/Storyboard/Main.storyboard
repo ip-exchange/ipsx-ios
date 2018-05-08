@@ -276,8 +276,18 @@
                                                                     <color key="progressTintColor" red="0.31764705879999999" green="0.8980392157" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <color key="trackTintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </progressView>
+                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.20000000298023224" translatesAutoresizingMaskIntoConstraints="NO" id="6gi-0R-uXh" userLabel="Cell Progress 1 Bis">
+                                                                    <rect key="frame" x="15" y="41" width="315" height="2"/>
+                                                                    <color key="progressTintColor" red="0.31764705879999999" green="0.8980392157" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="trackTintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </progressView>
                                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.40000000596046448" translatesAutoresizingMaskIntoConstraints="NO" id="Qgm-uc-FBg">
                                                                     <rect key="frame" x="15" y="44" width="315" height="2"/>
+                                                                    <color key="progressTintColor" red="0.39607843139999999" green="0.39607843139999999" blue="0.39607843139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="trackTintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </progressView>
+                                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.40000000596046448" translatesAutoresizingMaskIntoConstraints="NO" id="cmS-w7-mn1">
+                                                                    <rect key="frame" x="15" y="45" width="315" height="2"/>
                                                                     <color key="progressTintColor" red="0.39607843139999999" green="0.39607843139999999" blue="0.39607843139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <color key="trackTintColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </progressView>
@@ -306,9 +316,8 @@
                                                                         <constraint firstAttribute="height" constant="0.5" id="BF4-fX-Fqo"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expired" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFc-wf-bpf">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expired" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFc-wf-bpf">
                                                                     <rect key="frame" x="15" y="79" width="46" height="16"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -320,20 +329,26 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
+                                                                <constraint firstItem="6gi-0R-uXh" firstAttribute="leading" secondItem="mTR-OD-M0S" secondAttribute="leading" id="1ei-lK-qt5"/>
                                                                 <constraint firstItem="mTR-OD-M0S" firstAttribute="top" secondItem="hqu-vV-rz5" secondAttribute="bottom" constant="5" id="AJS-FB-dSc"/>
+                                                                <constraint firstItem="cmS-w7-mn1" firstAttribute="trailing" secondItem="Qgm-uc-FBg" secondAttribute="trailing" id="AsR-8U-Ju1"/>
                                                                 <constraint firstItem="0sG-5N-fUV" firstAttribute="bottom" secondItem="1ib-WL-S7Z" secondAttribute="bottom" constant="2" id="C1Y-r4-d31"/>
                                                                 <constraint firstAttribute="trailing" secondItem="mTR-OD-M0S" secondAttribute="trailing" constant="15" id="Flw-t5-qwq"/>
                                                                 <constraint firstItem="Qgm-uc-FBg" firstAttribute="top" secondItem="mTR-OD-M0S" secondAttribute="bottom" constant="2" id="G7z-L0-ZDW"/>
                                                                 <constraint firstItem="Qgm-uc-FBg" firstAttribute="leading" secondItem="3M0-4o-MFg" secondAttribute="leading" constant="15" id="N1h-eO-L0x"/>
+                                                                <constraint firstItem="6gi-0R-uXh" firstAttribute="top" secondItem="mTR-OD-M0S" secondAttribute="bottom" constant="-1" id="O7t-Ob-Vcf"/>
                                                                 <constraint firstItem="mTR-OD-M0S" firstAttribute="top" secondItem="1ib-WL-S7Z" secondAttribute="bottom" constant="5" id="PLr-0u-nDf"/>
                                                                 <constraint firstAttribute="trailing" secondItem="1ib-WL-S7Z" secondAttribute="trailing" constant="15" id="SSg-Qr-Vlw"/>
                                                                 <constraint firstItem="hqu-vV-rz5" firstAttribute="top" secondItem="3M0-4o-MFg" secondAttribute="top" constant="15" id="bTD-96-tP0"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Qgm-uc-FBg" secondAttribute="trailing" constant="15" id="bjr-gB-sVR"/>
                                                                 <constraint firstItem="hqu-vV-rz5" firstAttribute="leading" secondItem="3M0-4o-MFg" secondAttribute="leading" constant="15" id="bpl-xy-0qm"/>
+                                                                <constraint firstItem="cmS-w7-mn1" firstAttribute="top" secondItem="Qgm-uc-FBg" secondAttribute="bottom" constant="-1" id="d6N-1v-aVQ"/>
                                                                 <constraint firstAttribute="trailing" secondItem="hdZ-NO-DtI" secondAttribute="trailing" constant="15" id="gri-Ch-vst"/>
                                                                 <constraint firstItem="1ib-WL-S7Z" firstAttribute="leading" secondItem="0sG-5N-fUV" secondAttribute="trailing" id="h3b-Ag-Bkl"/>
                                                                 <constraint firstItem="hdZ-NO-DtI" firstAttribute="top" secondItem="Qgm-uc-FBg" secondAttribute="bottom" constant="5" id="k3t-6c-ypf"/>
+                                                                <constraint firstItem="cmS-w7-mn1" firstAttribute="leading" secondItem="Qgm-uc-FBg" secondAttribute="leading" id="rfz-wT-bnz"/>
                                                                 <constraint firstItem="mTR-OD-M0S" firstAttribute="leading" secondItem="3M0-4o-MFg" secondAttribute="leading" constant="15" id="v0N-I7-3kS"/>
+                                                                <constraint firstItem="6gi-0R-uXh" firstAttribute="trailing" secondItem="mTR-OD-M0S" secondAttribute="trailing" id="wSu-pk-Uqj"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -342,7 +357,9 @@
                                                         <constraint firstAttribute="trailing" secondItem="UPL-KV-AJm" secondAttribute="trailing" id="JwC-F0-ndQ"/>
                                                         <constraint firstItem="3M0-4o-MFg" firstAttribute="top" secondItem="peo-76-41u" secondAttribute="top" id="K2k-sB-vTL"/>
                                                         <constraint firstItem="UPL-KV-AJm" firstAttribute="leading" secondItem="peo-76-41u" secondAttribute="leading" id="Yey-T3-hgj"/>
+                                                        <constraint firstAttribute="bottom" secondItem="fFc-wf-bpf" secondAttribute="bottom" constant="5" id="fDi-lm-LQN"/>
                                                         <constraint firstAttribute="bottom" secondItem="3M0-4o-MFg" secondAttribute="bottom" id="nuk-em-ReS"/>
+                                                        <constraint firstItem="fFc-wf-bpf" firstAttribute="leading" secondItem="peo-76-41u" secondAttribute="leading" constant="15" id="txB-3D-qqf"/>
                                                         <constraint firstAttribute="bottom" secondItem="UPL-KV-AJm" secondAttribute="bottom" constant="24" id="wY5-mv-JbP"/>
                                                         <constraint firstAttribute="trailing" secondItem="3M0-4o-MFg" secondAttribute="trailing" id="wlI-c9-deP"/>
                                                         <constraint firstItem="3M0-4o-MFg" firstAttribute="leading" secondItem="peo-76-41u" secondAttribute="leading" id="xX0-vs-sd4"/>
@@ -353,8 +370,10 @@
                                                     <outlet property="cellContentView" destination="3M0-4o-MFg" id="fA4-dy-zsH"/>
                                                     <outlet property="cellDurationLabel" destination="hdZ-NO-DtI" id="tCa-0b-0JN"/>
                                                     <outlet property="cellNoOfMBLabel" destination="1ib-WL-S7Z" id="aP2-mB-NX1"/>
-                                                    <outlet property="cellProgress1" destination="mTR-OD-M0S" id="ass-fH-UG0"/>
+                                                    <outlet property="cellProgress1" destination="mTR-OD-M0S" id="fLx-C5-IzW"/>
+                                                    <outlet property="cellProgress1Bis" destination="6gi-0R-uXh" id="Koh-I0-DZg"/>
                                                     <outlet property="cellProgress2" destination="Qgm-uc-FBg" id="shs-Kq-W8J"/>
+                                                    <outlet property="cellProgress2Bis" destination="cmS-w7-mn1" id="0Dx-Yl-efm"/>
                                                     <outlet property="cellStatusLabel" destination="fFc-wf-bpf" id="b6I-TE-bke"/>
                                                     <outlet property="cellTitleLabel" destination="hqu-vV-rz5" id="ZI3-Qj-rzY"/>
                                                     <outlet property="cellusedMBLabel" destination="0sG-5N-fUV" id="cyj-6r-RvV"/>

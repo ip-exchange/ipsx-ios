@@ -13,6 +13,7 @@ struct Proxy {
     var proxyPack: ProxyPack?
     var proxyDetails: ProxyActivationDetails?
     var proxySetup: ProxySetup?
+    var isTestProxy: Bool = false
     
     var dataUsageProgress: Float {
         let total = Float(proxyPack?.noOfMB ?? "0") ?? 0
@@ -30,10 +31,11 @@ struct Proxy {
     }
 
 
-    init(proxyPack: ProxyPack? = nil, proxyDetails: ProxyActivationDetails? = nil, proxySetup: ProxySetup? = nil) {
+    init(proxyPack: ProxyPack? = nil, proxyDetails: ProxyActivationDetails? = nil, proxySetup: ProxySetup? = nil, isTestProxy: Bool = false) {
         
-        self.proxyPack = proxyPack
+        self.proxyPack    = proxyPack
         self.proxyDetails = proxyDetails
-        self.proxySetup = proxySetup
+        self.proxySetup   = proxySetup
+        self.isTestProxy  = isTestProxy
     }
 }

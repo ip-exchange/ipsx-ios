@@ -15,8 +15,6 @@ class ProxyDetailsViewController: UIViewController {
     let detailsCellID = "ProxyDetailsCellD"
     var proxy: Proxy?
     
-    let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
-
     @IBAction func DoneButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -55,8 +53,6 @@ extension ProxyDetailsViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: activationDetailsCellID, for: indexPath) as! ProxyActivationDetailsCell
             guard let proxy = proxy else { return UITableViewCell() }
-            cell.cellProgress1.transform = transform
-            cell.cellProgress2.transform = transform
             cell.configure(proxy: proxy)
             return cell
           

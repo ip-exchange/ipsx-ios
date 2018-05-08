@@ -362,9 +362,11 @@
                         <outlet property="separatorView" destination="ziu-Gm-gNo" id="CzS-5B-dBt"/>
                         <outlet property="topConstraintOutlet" destination="8If-QR-3td" id="Mg7-nl-m6m"/>
                         <segue destination="WaM-93-tC1" kind="show" identifier="showAddWalletSegueID" id="nNU-Zf-N1I"/>
+                        <segue destination="gXX-ac-zLO" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToTabbarWithSegue:" id="cz0-dD-Yb0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDm-UV-wHZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="gXX-ac-zLO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3025" y="132"/>
         </scene>

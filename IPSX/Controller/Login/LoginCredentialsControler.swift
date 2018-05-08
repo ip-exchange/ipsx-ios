@@ -30,8 +30,6 @@ class LoginCredentialsControler: UIViewController {
     var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
-    var email: String = ""
-    var password: String = ""
     var errorMessage: String? {
         didSet {
             //TODO (CVI): Show toast alert
@@ -52,9 +50,7 @@ class LoginCredentialsControler: UIViewController {
             case .success(let success):
                 
                 if (success as? Bool) == true {
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-                    }
+                    self.continueFlow()
                 }
                 else {
                     self.errorMessage = "Generic Error Message".localized
@@ -75,6 +71,36 @@ class LoginCredentialsControler: UIViewController {
                     self.errorMessage = "Generic Error Message".localized
                     break
                 }
+            }
+        })
+    }
+    
+    func continueFlow() {
+        
+        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+            
+            switch result {
+                
+            case .success(let ethAddresses):
+                
+                guard let ethAddresses = ethAddresses as? [EthAddress] else {
+                    self.errorMessage = "Generic Error Message".localized
+                    return
+                }
+                UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
+                
+                DispatchQueue.main.async {
+                    if UserManager.shared.hasEthAddress {
+                        self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                    }
+                    else {
+                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                    }
+                }
+                
+            case .failure(_):
+                
+                self.errorMessage = "Generic Error Message".localized
             }
         })
     }

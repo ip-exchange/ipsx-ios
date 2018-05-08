@@ -43,6 +43,10 @@ public extension UIColor {
         return UIColor(white: 161.0 / 255.0, alpha: 1.0)
     }
 
+    @nonobjc class var textGrey: UIColor {
+        return UIColor(white: 151.0 / 255.0, alpha: 1.0)
+    }
+
 }
 
 // MARK:- Styled color

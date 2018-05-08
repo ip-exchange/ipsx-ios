@@ -16,7 +16,7 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var ethAddresRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint?
     @IBOutlet weak var loginAnotherAccButton: RoundedButton!
-    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton?
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -78,11 +78,11 @@ class AddWalletController: UIViewController {
     private func observreFieldsState() {
         walletNameRichTextField.onFieldStateChange = { state in
             self.fieldsStateDic["walletName"] = state
-            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
         }
         ethAddresRichTextField.onFieldStateChange = { state in
             self.fieldsStateDic["ethAddress"] = state
-            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
         }
     }
     

@@ -30,7 +30,6 @@ class DashboardViewController: UIViewController {
        }
     }
     let cellID = "ActivationDetailsCellID"
-    let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
     var proxies: [Proxy] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -122,7 +121,7 @@ class DashboardViewController: UIViewController {
         if UserManager.shared.userInfo?.proxyTest == "" {
             let testProxyPack = ProxyPack()
             let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
-            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails)
+            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
             proxies.insert(testProxy, at: 0)
         }
     }
@@ -153,8 +152,6 @@ extension DashboardViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProxyActivationDetailsCell
         cell.cellContentView.shadow = true
-        cell.cellProgress1.transform = transform
-        cell.cellProgress2.transform = transform
         cell.configure(proxy: filteredProxies[indexPath.item])
         
         return cell

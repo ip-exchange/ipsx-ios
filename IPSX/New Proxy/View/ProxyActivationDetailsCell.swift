@@ -13,7 +13,9 @@ class ProxyActivationDetailsCell: UITableViewCell {
     @IBOutlet weak var cellContentView: RoundedView!
     @IBOutlet weak var cellTitleLabel: UILabel!
     @IBOutlet weak var cellProgress1: UIProgressView!
+    @IBOutlet weak var cellProgress1Bis: UIProgressView!
     @IBOutlet weak var cellProgress2: UIProgressView!
+    @IBOutlet weak var cellProgress2Bis: UIProgressView!
     @IBOutlet weak var cellStatusLabel: UILabel!
     @IBOutlet weak var cellusedMBLabel: UILabel!
     @IBOutlet weak var cellNoOfMBLabel: UILabel!
@@ -23,6 +25,7 @@ class ProxyActivationDetailsCell: UITableViewCell {
         
         cellTitleLabel.text = proxy.proxyPack?.name
         cellusedMBLabel.text = proxy.proxyDetails?.usedMB 
+        cellStatusLabel.textColor = proxy.isTestProxy == true ? UIColor.darkBlue : UIColor.textGrey
         
         if UserManager.shared.userInfo?.proxyTest == "" {
             cellStatusLabel.text = "Test Proxy Message".localized
@@ -35,7 +38,9 @@ class ProxyActivationDetailsCell: UITableViewCell {
         cellNoOfMBLabel.text = "/" + noOfMB + " " + "MB"
         
         cellProgress1.progress = proxy.dataUsageProgress
+        cellProgress1Bis.progress = cellProgress1.progress
         cellProgress2.progress = proxy.timeLeftProgress
+        cellProgress2Bis.progress = cellProgress2.progress
         cellDurationLabel.text = proxy.proxyDetails?.remainingDuration
     }
     
