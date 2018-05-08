@@ -9,17 +9,29 @@
 import UIKit
 
 class LoginCredentialsControler: UIViewController {
+    
 
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var passRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
     
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
-
+    var email: String = ""
+    var password: String = ""
     var errorMessage: String? {
         didSet {
             //TODO (CVI): Show toast alert
@@ -39,7 +51,9 @@ class LoginCredentialsControler: UIViewController {
             case .success(let success):
                 
                 if (success as? Bool) == true {
-                    self.continueFlow()
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                    }
                 }
                 else {
                     self.errorMessage = "Generic Error Message".localized
@@ -64,41 +78,16 @@ class LoginCredentialsControler: UIViewController {
         })
     }
     
-    func continueFlow() {
-        
-        UserInfoService().retrieveETHaddresses(completionHandler: { result in
-            
-            switch result {
-                
-            case .success(let ethAddresses):
-                
-                guard let ethAddresses = ethAddresses as? [EthAddress] else {
-                    self.errorMessage = "Generic Error Message".localized
-                    return
-                }
-                UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
-                
-                DispatchQueue.main.async {
-                    if UserManager.shared.hasEthAddress {
-                        self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
-                    }
-                    else {
-                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-                    }
-                }
-                
-            case .failure(_):
-                
-                self.errorMessage = "Generic Error Message".localized
-            }
-        })
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
         backButton.isHidden = hideBackButton
         observreFieldsState()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +107,7 @@ class LoginCredentialsControler: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupTextViews()
+        toast?.showToastAlert()
     }
     
     private func setupTextViews() {
@@ -171,3 +161,14 @@ class LoginCredentialsControler: UIViewController {
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
 }
+
+extension LoginCredentialsControler: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
+    }
+}
+

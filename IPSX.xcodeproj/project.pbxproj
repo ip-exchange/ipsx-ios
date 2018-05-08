@@ -53,6 +53,9 @@
 		EE37F8A22090BCBC00783385 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37F8A12090BCBC00783385 /* SettingsViewController.swift */; };
 		EE37F8A52091CC6F00783385 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE37F8A42091CC6F00783385 /* Search.storyboard */; };
 		EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37F8A62091F52700783385 /* SearchViewController.swift */; };
+		EE3BDFF420A1AC71007AEB1D /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */; };
+		EE3BDFF720A1AC96007AEB1D /* ToastAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE3BDFF520A1AC96007AEB1D /* ToastAlertView.xib */; };
+		EE3BDFF820A1AC96007AEB1D /* ToastAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3BDFF620A1AC96007AEB1D /* ToastAlertView.swift */; };
 		EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE4AAB8E2089D75B00FE149D /* Register.storyboard */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
 		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
@@ -154,6 +157,9 @@
 		EE37F8A42091CC6F00783385 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		EE37F8A62091F52700783385 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EE37F8A82092035800783385 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
+		EE3BDFF520A1AC96007AEB1D /* ToastAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ToastAlertView.xib; path = "IPSX/New Proxy/View/ToastAlertView.xib"; sourceTree = SOURCE_ROOT; };
+		EE3BDFF620A1AC96007AEB1D /* ToastAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToastAlertView.swift; path = "IPSX/New Proxy/View/ToastAlertView.swift"; sourceTree = SOURCE_ROOT; };
 		EE4AAB8E2089D75B00FE149D /* Register.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Register.storyboard; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
@@ -287,6 +293,8 @@
 		A4E6AEA920862DD2001787DF /* UI elements */ = {
 			isa = PBXGroup;
 			children = (
+				EE3BDFF620A1AC96007AEB1D /* ToastAlertView.swift */,
+				EE3BDFF520A1AC96007AEB1D /* ToastAlertView.xib */,
 				EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */,
 				A4E6AEAA20862E23001787DF /* RoundedButton.swift */,
 				EE1A0545208F650E00522426 /* RoundedView.swift */,
@@ -444,6 +452,7 @@
 		A4FCA935205BD8DF009FF41B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */,
 				A4FCA936205BD8F1009FF41B /* String+extenstions.swift */,
 				A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */,
 				A46480DF2091F9D500330CC9 /* UITableView+extensions.swift */,
@@ -607,6 +616,7 @@
 				EE4AABA1208E15A200FE149D /* WalletAdd.storyboard in Resources */,
 				EE4AAB97208DCFE000FE149D /* Login.storyboard in Resources */,
 				A4ED74092091CC8D0099B9D7 /* NewProxy.storyboard in Resources */,
+				EE3BDFF720A1AC96007AEB1D /* ToastAlertView.xib in Resources */,
 				EE37F8A52091CC6F00783385 /* Search.storyboard in Resources */,
 				EE4AAB8F2089D75B00FE149D /* Register.storyboard in Resources */,
 			);
@@ -727,6 +737,7 @@
 				A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */,
 				EE1A0543208F593900522426 /* DashboardViewController.swift in Sources */,
 				A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */,
+				EE3BDFF820A1AC96007AEB1D /* ToastAlertView.swift in Sources */,
 				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* IPRequestManager.swift in Sources */,
 				A4AC761F2099E59800504ED9 /* KeychainWrapper.swift in Sources */,
@@ -744,6 +755,7 @@
 				EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */,
 				EE62F7412099A3CF00BE6120 /* ChangePasswordController.swift in Sources */,
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
+				EE3BDFF420A1AC71007AEB1D /* UIView+extensions.swift in Sources */,
 				A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */,
 				EE62F7442099C62300BE6120 /* ProfileViewController.swift in Sources */,
 				EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */,
