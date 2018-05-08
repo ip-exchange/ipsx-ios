@@ -10,15 +10,26 @@ import UIKit
 
 class RegisterTermsController: UIViewController {
 
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var readWPLabel: UILabel!
     @IBOutlet weak var registerButton: RoundedButton!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
     
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
         didSet {
             //TODO (CVI): Show toast alert
             print(errorMessage ?? "")
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -26,6 +37,11 @@ class RegisterTermsController: UIViewController {
         super.viewDidLoad()
         registerButton.isEnabled = false
      }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+    }
     
     @IBAction func checkboxButtonAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -72,6 +88,15 @@ class RegisterTermsController: UIViewController {
     }
 }
 
+extension RegisterTermsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
+    }
+}
 
 class RegisterDoneController: UIViewController {
     

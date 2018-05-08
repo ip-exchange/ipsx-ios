@@ -103,10 +103,12 @@ public class ToastAlertView: UIView {
     }
     
     public func showToastAlert(_ text: String? = "", autoHideAfter: Double = 0.0) {
-        updateInfoToastUI(visible: true, alertText: text)
-        if autoHideAfter > 0.0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + autoHideAfter) {
-                self.updateInfoToastUI(visible: false)
+        DispatchQueue.main.async {
+            self.updateInfoToastUI(visible: true, alertText: text)
+            if autoHideAfter > 0.0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + autoHideAfter) {
+                    self.updateInfoToastUI(visible: false)
+                }
             }
         }
     }
@@ -117,19 +119,21 @@ public class ToastAlertView: UIView {
     
     private func updateInfoToastUI(visible: Bool, alertText: String? = "") {
         
-        if let text = alertText, text.count > 0 {
-            alertTextLabel.text = text
-            self.frame.size.height = max(50, alertTextLabel.requiredHeight() + 6)
-        }
-
-        superview?.layoutIfNeeded()
-        underViewTopConstraint?.constant = (visible) ? initialParentConstraint + frame.size.height : initialParentConstraint
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+        DispatchQueue.main.async {
+            if let text = alertText, text.count > 0 {
+                self.alertTextLabel.text = text
+                self.frame.size.height = max(50, self.alertTextLabel.requiredHeight() + 6)
+            }
+            
             self.superview?.layoutIfNeeded()
-            self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height : -self.frame.size.height
-            self.alpha = (visible) ? 1.0 : 0.0
-        }, completion: nil)
+            self.underViewTopConstraint?.constant = (visible) ? self.initialParentConstraint + self.frame.size.height : self.initialParentConstraint
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+                self.superview?.layoutIfNeeded()
+                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height : -self.frame.size.height
+                self.alpha = (visible) ? 1.0 : 0.0
+            }, completion: nil)
+        }
     }
 
     func loadNib(withOwner: UIView) -> UIView {

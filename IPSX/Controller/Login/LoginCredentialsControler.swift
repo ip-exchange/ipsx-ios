@@ -36,6 +36,7 @@ class LoginCredentialsControler: UIViewController {
         didSet {
             //TODO (CVI): Show toast alert
             print(errorMessage ?? "")
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -58,7 +59,7 @@ class LoginCredentialsControler: UIViewController {
                 else {
                     self.errorMessage = "Generic Error Message".localized
                 }
-            
+                
             case .failure(let error):
                 
                 guard let customError = error as? CustomError else {
@@ -87,7 +88,7 @@ class LoginCredentialsControler: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +108,6 @@ class LoginCredentialsControler: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupTextViews()
-        toast?.showToastAlert()
     }
     
     private func setupTextViews() {

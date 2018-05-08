@@ -12,11 +12,22 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
+    @IBOutlet weak var slidableView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
     var errorMessage: String? {
         didSet {
             //TODO (CVI): Show toast alert
             print(errorMessage ?? "")
-        }
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+       }
     }
     let cellID = "ActivationDetailsCellID"
     let transform = CGAffineTransform(scaleX: 1.0, y: 1.5)
@@ -38,6 +49,11 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: slidableView, text: "Invalid Credentials")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +79,7 @@ class DashboardViewController: UIViewController {
                 //TODO (CVI): what should we do if the request for user info fails ?
                 print(error)
                 self.errorMessage = "Generic Error Message".localized
-                
+
             case .success(_):
                 /*
                     Execute Proxies Request
@@ -115,6 +131,16 @@ class DashboardViewController: UIViewController {
         tableView?.reloadData()
     }
     
+}
+
+extension DashboardViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
+    }
 }
 
 extension DashboardViewController: UITableViewDataSource {

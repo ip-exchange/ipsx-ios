@@ -11,12 +11,22 @@ import AVFoundation
 
 class AddWalletController: UIViewController {
 
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var walletNameRichTextField: RichTextFieldView!
     @IBOutlet weak var ethAddresRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint?
     @IBOutlet weak var loginAnotherAccButton: RoundedButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
     
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
@@ -24,6 +34,7 @@ class AddWalletController: UIViewController {
         didSet {
             //TODO (CVI): Show toast alert
             print(errorMessage ?? "")
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -52,6 +63,11 @@ class AddWalletController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupTextViews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
     }
     
     private func setupTextViews() {
@@ -168,6 +184,15 @@ class AddWalletController: UIViewController {
 
 }
 
+extension AddWalletController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
+    }
+}
 
 class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
