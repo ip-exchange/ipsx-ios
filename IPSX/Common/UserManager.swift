@@ -17,6 +17,22 @@ public class UserManager: NSObject {
     var proxies: [Proxy]
     var userInfo: UserInfo?
     
+    var hasEthAddress: Bool {
+        get {
+            let noOfEthAddresses = userInfo?.ethAddresses?.count ?? 0
+            return noOfEthAddresses > 0
+        }
+    }
+    
+    var isLoggedIn: Bool {
+        get {
+            if userId != "" && accessToken != "" {
+                return true
+            }
+            return false
+        }
+    }
+    
     private override init() {
         userId = ""
         accessToken = ""
@@ -26,6 +42,10 @@ public class UserManager: NSObject {
     
     func storeProxyDetails(proxies: [Proxy]) {
         self.proxies = proxies
+    }
+    
+    func storeEthAddresses(ethAddresses: [EthAddress]) {
+        userInfo?.setEthAddresses(ethAddresses: ethAddresses)
     }
     
     func storeAccessDetails(userId: String, accessToken: String) {
@@ -55,11 +75,4 @@ public class UserManager: NSObject {
         userInfo = nil
     }
     
-    func isLoggedIn() -> Bool {
-        
-        if userId != "" && accessToken != "" {
-            return true
-        }
-        return false
-    }
 }

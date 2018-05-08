@@ -23,7 +23,7 @@ class UserInfoService {
         let params: [String: String] =  ["USER_ID"      : userId,
                                          "ACCESS_TOKEN" : accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .userInfo, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .userInfo, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -35,11 +35,11 @@ class UserInfoService {
             }
             
             let json = JSON(data: data)
-            self.mapResponse(json: json, completionHandler: completionHandler)
+            self.mapUserInfoResponse(json: json, completionHandler: completionHandler)
         })
     }
     
-    private func mapResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapUserInfoResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let firstName  = json["first_name"].stringValue
         let middleName = json["middle_name"].stringValue
@@ -54,6 +54,42 @@ class UserInfoService {
         //Store User Info
         UserManager.shared.userInfo = user
         
-        completionHandler(ServiceResult.success(""))
+        completionHandler(ServiceResult.success(true))
+    }
+    
+    func retrieveETHaddresses(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let params: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                         "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .getETHaddresses, urlParams: params, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var ethAddresses: [EthAddress] = []
+            for json in jsonArray {
+                
+                let ethID    = json["id"].stringValue
+                let address  = json["address"].stringValue
+                let alias    = json["alias"].stringValue
+                let verified = json["verified"].intValue
+                let status   = json["status"].stringValue
+                
+                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status)
+                ethAddresses.append(ethAddress)
+            }
+            completionHandler(ServiceResult.success(ethAddresses))
+        })
     }
 }

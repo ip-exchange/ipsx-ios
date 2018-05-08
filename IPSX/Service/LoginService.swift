@@ -24,7 +24,7 @@ class LoginService {
         let params: [String: String] = ["email"    : email,
                                         "password" : password]
         
-        IPRequestManager.shared.executeRequest(requestType: .login, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .login, bodyParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

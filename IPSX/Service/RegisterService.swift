@@ -17,7 +17,7 @@ class RegisterService {
                                         "password"   : password,
                                         "ip"         : ip]
         
-        IPRequestManager.shared.executeRequest(requestType: .register, params: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -27,8 +27,29 @@ class RegisterService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            // TODO (CVI): deocamdata nu ne trebuie niciun camp din response
-            completionHandler(ServiceResult.success(""))
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func addEthAdress(address: String, alias: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let bodyParams: [String: String] = ["address" : address,
+                                            "alias"   : alias]
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
         })
     }
 }
