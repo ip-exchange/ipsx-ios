@@ -10,7 +10,6 @@ import UIKit
 
 class LoginCredentialsControler: UIViewController {
     
-
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var passRichTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
@@ -22,8 +21,6 @@ class LoginCredentialsControler: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 

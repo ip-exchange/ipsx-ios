@@ -22,9 +22,7 @@ class TabBarViewController: UITabBarController {
             presentLandingFlow()
         }
     }
-    
-    @IBAction func unwindToTabbar(segue:UIStoryboardSegue) { }
-    
+        
     func presentLandingFlow() {
         self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
     }

@@ -18,10 +18,10 @@ class DashboardViewController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var hasTriedToRefreshToken = false
+
     var errorMessage: String? {
         didSet {
             //TODO (CVI): Show toast alert
@@ -45,6 +45,8 @@ class DashboardViewController: UIViewController {
          }
     }
     
+    @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,60 +64,102 @@ class DashboardViewController: UIViewController {
         //TODO (CVI): add activity indicator
         
         if UserManager.shared.isLoggedIn {
-            executeRequests()
+            
+            executeRequests() { success in
+                
+                //TODO (CVI): remove activity indicator
+                
+                if !success {
+                    //TODO (CVI): redirect to login somehow nice
+                    //Temporary solution: display generic error
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            }
         }
     }
     
-    func executeRequests() {
+    func executeRequests(completion:@escaping (Bool) -> ()) {
         
-        /*
-            Execute User Info request
-         */
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
+        if UserManager.shared.userInfo == nil {
+            
+            UserInfoService().retrieveUserInfo(completionHandler: { result in
+                switch result {
+                    
+                case .failure(let error):
+                    
+                    switch error {
+                    case CustomError.expiredToken:
+                        
+                        if !self.hasTriedToRefreshToken {
+                            self.generateNewToken(completion: completion)
+                        }
+                        else {
+                            completion(false)
+                        }
+                    default:
+                        completion(false)
+                    }
+                    
+                case .success(_):
+                    self.getProxyDetails(completion: completion)
+                }
+            })
+        }
+        else {
+            self.getProxyDetails(completion: completion)
+        }
+    }
+    
+    func getProxyDetails(completion:@escaping (Bool) -> ()) {
+        
+        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+            
             switch result {
                 
+            case .success(let proxyArray):
+                
+                guard let proxyArray = proxyArray as? [Proxy] else {
+                    completion(false)
+                    return
+                }
+                self.proxies = proxyArray
+                self.checkForTestProxyAvailability()
+                completion(true)
+                
             case .failure(let error):
-                //TODO (CVI): what should we do if the request for user info fails ?
-                print(error)
-                self.errorMessage = "Generic Error Message".localized
-
-            case .success(_):
-                /*
-                    Execute Proxies Request
-                 */
-                ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-                    //TODO (CVI): remove activity indicator
+                
+                switch error {
+                case CustomError.expiredToken:
                     
-                    switch result {
-                        
-                    case .success(let proxyArray):
-                        
-                        guard let proxyArray = proxyArray as? [Proxy] else {
-                            self.errorMessage = "Generic Error Message".localized
-                            return
-                        }
-                        self.proxies = proxyArray
-                        self.checkForTestProxyAvailability()
-                        
-                    case .failure(let error):
-                        
-                        if let error = error as? CustomError {
-                            switch error {
-                            case .expiredToken:
-                                
-                                //TODO (CVI) automatically login
-                                print("Perform login automatically to generate a new token")
-                                
-                            default:
-                                self.errorMessage = "Generic Error Message".localized
-                            }
-                        }
+                    if !self.hasTriedToRefreshToken {
+                        self.generateNewToken(completion: completion)
                     }
-                })
+                    else {
+                        completion(false)
+                    }
+                default:
+                    completion(false)
+                }
             }
         })
     }
+    
+    func generateNewToken(completion:@escaping (Bool) -> ()) {
         
+        hasTriedToRefreshToken = true
+        LoginService().getNewAccessToken(completionHandler: { result in
+            
+            switch result {
+                
+            case .success(_):
+                self.getProxyDetails(completion: completion)
+                
+            case .failure(_):
+                completion(false)
+            }
+        })
+    }
+    
     func checkForTestProxyAvailability() {
         
         if UserManager.shared.userInfo?.proxyTest == "" {

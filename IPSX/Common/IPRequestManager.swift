@@ -116,16 +116,16 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                         
                     //TODO (CVI): we should use one statusCode for each request when expired token
                         
-                    case 401 where requestType == .retrieveProxies:
-                        print(NSDate(), "\(type(of: self)):\(#function) Request failed. Expired token ")
+                    case 401 where requestType == .retrieveProxies || requestType == .userInfo:
+                        print(NSDate(), "\(requestType)" + "Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
                         
                     case 422 where requestType == .addEthAddress:
-                        print(NSDate(), "\(type(of: self)):\(#function) Request failed. This ETH address is already used ")
+                        print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used ")
                         completion(CustomError.ethAddressAlreadyUsed, data)
                         
                     default:
-                        print(NSDate(), "\(type(of: self)):\(#function) Request failed with status code: ", statusCode)
+                        print(NSDate(), "\(requestType)" + "Request failed with status code: ", statusCode)
                         completion(CustomError.statusCodeNOK(statusCode), data)
                     }
                 }
