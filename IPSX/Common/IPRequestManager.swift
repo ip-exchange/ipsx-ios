@@ -42,6 +42,13 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         case .getUserCountryList:
             request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
             
+        case .getProxyCountryList:
+            var url = Url.base + Url.proxyCountriesArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+    
         case .addEthAddress:
             
             let body = JSON(bodyParams)

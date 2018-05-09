@@ -11,16 +11,19 @@ import UIKit
 class EditProfileController: UIViewController {
 
     @IBOutlet weak var keyIconImageView: UIImageView!
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var telegramTextField: UITextField!
     @IBOutlet weak var selectedCountryLabel: UILabel!
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
     private var searchController: SearchViewController?
+    let countrySelectionID = "SearchSegueID"
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -64,7 +67,7 @@ class EditProfileController: UIViewController {
     
     func showCountriesScreen() {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "SearchSegueID", sender: nil)
+            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
         }
     }
     
@@ -81,7 +84,7 @@ class EditProfileController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
+        if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
             srcController.dismissOnSelect = true
             srcController.countries = UserDefaults.standard.getUserCountryList()
             searchController = srcController

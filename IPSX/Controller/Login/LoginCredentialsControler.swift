@@ -58,8 +58,18 @@ class LoginCredentialsControler: UIViewController {
                     return
                 }
                 switch customError {
-                case .statusCodeNOK(let statusCode) where statusCode == 401:
-                    self.errorMessage = "Login Failed Error Message".localized
+                case .statusCodeNOK(let statusCode):
+                    
+                    switch statusCode {
+                    case 401:
+                        self.errorMessage = "Login Failed Error Message".localized
+                        
+                    case 403:
+                        self.errorMessage = "Invalid Login Error Message".localized
+                        
+                    default:
+                        self.errorMessage = "Login Failed Error Message".localized
+                    }
                     
                 default:
                     self.errorMessage = "Generic Error Message".localized

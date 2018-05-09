@@ -97,5 +97,28 @@ class ProxyService {
         if components.m > 0 { minutes = "\(components.m) min" }
         return days+hours+minutes
     }
+    
+    func getProxyCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let params: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .getProxyCountryList, urlParams: params, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json = JSON(data)
+            var countries: [String] = []
+            if let countryList = json["countries"].arrayObject as? [String] {
+                countries = countryList
+            }
+            completionHandler(ServiceResult.success(countries))
+        })
+    }
 
 }

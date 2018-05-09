@@ -12,6 +12,13 @@ class NewProxyController: UIViewController {
     
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
+    var countries: [String] = []
+    
+    var errorMessage: String? {
+        didSet {
+            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
     
     let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50"),
                       ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1 day", price: "100"),
@@ -28,7 +35,30 @@ class NewProxyController: UIViewController {
             let navController = segue.destination as? UINavigationController
             let destinationVC = navController?.viewControllers.first as? SearchViewController
             destinationVC?.isProxyFlow = true
+            destinationVC?.countries = countries
         }
+    }
+    
+    func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
+        
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            var proxyCountries: [String]?
+            switch result {
+            case .success(let countryList):
+                
+                if let countries = countryList as? [String] {
+                    proxyCountries = countries
+                }
+                else {
+                    self.errorMessage = "Generic Error Message".localized
+                }
+                
+            case .failure(_):
+                self.errorMessage = "Generic Error Message".localized
+            }
+            completion(proxyCountries)
+        })
     }
 }
 
@@ -55,7 +85,20 @@ extension NewProxyController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: false)
-        performSegue(withIdentifier: countrySelectionID, sender: nil)
+        
+        //TODO (CVI): Determine when should we load the countries
+        //Temp solution:
+        
+        retrieveProxyCountries() { countries in
+            
+            if let countries = countries {
+                
+                self.countries = countries
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+                }
+            }
+        }
     }
 }
 
