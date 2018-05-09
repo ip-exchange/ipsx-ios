@@ -30,11 +30,11 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
-            self.mapProxiesResponse(jsonArray: jsonArray, completionHandler: completionHandler)
+            self.mapResponseAndStoreInfo(jsonArray: jsonArray, completionHandler: completionHandler)
         })
     }
     
-    private func mapProxiesResponse(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapResponseAndStoreInfo(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         var proxies: [Proxy] = []
         
@@ -46,7 +46,6 @@ class ProxyService {
             
             //TODO (CVI): PROXY NAME o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
             //TODO (CVI): PROXY PRICE in IPSX (with the new model for proxy plans)
-            
             //TODO (CVI): PAC LINK -> trebuie dedus (mai ramane de testat iOS vs Android)
             
             let noOfMB = json["traffic"].stringValue

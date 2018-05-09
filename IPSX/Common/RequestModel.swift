@@ -31,6 +31,7 @@ public struct Url {
     public static let pacServer = "http://192.168.0.124:8000/index.php?proxy_type=%PROXY_TYPE%&ip=%IP%&port=%PORT%"
     public static let base = "http://devapi.ip.sx:3000/api"
     public static let registerArgs = "/Users"
+    public static let userCountriesArgs = "/countries"
     public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
@@ -90,6 +91,7 @@ public enum IPRequestType: Int {
     case userInfo
     case addEthAddress
     case getETHaddresses
+    case getUserCountryList
 }
 
 public struct ContentType {

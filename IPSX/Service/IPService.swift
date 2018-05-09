@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class IPService {
     
-    //TODO (CV): we should store the IP and make the request only when it changes
+    //TODO (CVI): we should store the IP and make the request only when it changes
     
     func getPublicIPAddress(completion:@escaping (_ error: Error?, _ ipAddress: String?)->()) {
         

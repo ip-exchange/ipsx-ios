@@ -24,8 +24,6 @@ class DashboardViewController: UIViewController {
 
     var errorMessage: String? {
         didSet {
-            //TODO (CVI): Show toast alert
-            print(errorMessage ?? "")
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
        }
     }

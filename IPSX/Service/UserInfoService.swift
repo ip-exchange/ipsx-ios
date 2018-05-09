@@ -35,11 +35,11 @@ class UserInfoService {
             }
             
             let json = JSON(data: data)
-            self.mapUserInfoResponse(json: json, completionHandler: completionHandler)
+            self.mapResponseAndStoreInfo(json: json, completionHandler: completionHandler)
         })
     }
     
-    private func mapUserInfoResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapResponseAndStoreInfo(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let firstName  = json["first_name"].stringValue
         let middleName = json["middle_name"].stringValue
@@ -90,6 +90,33 @@ class UserInfoService {
                 ethAddresses.append(ethAddress)
             }
             completionHandler(ServiceResult.success(ethAddresses))
+        })
+    }
+    
+    func getUserCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        IPRequestManager.shared.executeRequest(requestType: .getUserCountryList, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var countryList: [[String: String]] = []
+            
+            for json in jsonArray {
+                let countryID   = json["id"].stringValue
+                let countryName = json["name"].stringValue
+                countryList.append([countryID: countryName])
+            }
+            completionHandler(ServiceResult.success(countryList))
         })
     }
 }

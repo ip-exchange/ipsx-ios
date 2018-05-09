@@ -27,8 +27,6 @@ class RegisterTermsController: UIViewController {
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
         didSet {
-            //TODO (CVI): Show toast alert
-            print(errorMessage ?? "")
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }

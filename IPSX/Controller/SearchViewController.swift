@@ -22,7 +22,6 @@ class SearchViewController: UIViewController {
     public var dismissOnSelect = false
     var isProxyFlow: Bool? = false
     
-    //TODO (CC): get this from API
     var countries: [String] = []
     var filteredCountries: [String] = []
     var selectedCountry: String?
@@ -36,12 +35,6 @@ class SearchViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         
-        //TODO (CC): Delete this when API get list is implemented
-        for code in NSLocale.isoCountryCodes as [String] {
-            let id = NSLocale.localeIdentifier(fromComponents: [NSLocale.Key.countryCode.rawValue: code])
-            let name = NSLocale(localeIdentifier: "en_UK").displayName(forKey: NSLocale.Key.identifier, value: id) ?? "Country not found for code: \(code)"
-            countries.append(name)
-        }
         filteredCountries = countries
         tableView.reloadData()
     }
