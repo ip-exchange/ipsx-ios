@@ -39,7 +39,7 @@ class LoginService {
             let accessToken = json["id"].stringValue
             
             //Store access details in keychain
-            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, email: email, password: password)
             
             //Execute User Info request
             UserInfoService().retrieveUserInfo(completionHandler: { result in
@@ -52,6 +52,21 @@ class LoginService {
                     completionHandler(ServiceResult.success(true))
                 }
             })
+        })
+    }
+    
+    func getNewAccessToken(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
+            
+            switch result {
+                
+            case .success(_):
+               completionHandler(ServiceResult.success(true))
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+            }
         })
     }
 }

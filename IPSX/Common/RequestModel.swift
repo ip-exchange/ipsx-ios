@@ -99,7 +99,9 @@ public struct ContentType {
 public struct KeychainKeys {
     
     public static let accessToken = "ACCESS_TOKEN_KEY"
-    public static let userId = "USER_ID_KEY"
+    public static let userId      = "USER_ID_KEY"
+    public static let password    = "USER_PASSWORD"
+    public static let email       = "USER_EMAIL"
 }
 
 
