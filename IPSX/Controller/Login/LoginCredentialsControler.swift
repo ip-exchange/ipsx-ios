@@ -29,8 +29,6 @@ class LoginCredentialsControler: UIViewController {
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var errorMessage: String? {
         didSet {
-            //TODO (CVI): Show toast alert
-            print(errorMessage ?? "")
             self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
@@ -60,10 +58,9 @@ class LoginCredentialsControler: UIViewController {
                     return
                 }
                 switch customError {
-                case .statusCodeNOK(let statusCode):
-                    if statusCode == 401 {
-                        self.errorMessage = "Login Failed Error Message".localized
-                    }
+                case .statusCodeNOK(let statusCode) where statusCode == 401:
+                    self.errorMessage = "Login Failed Error Message".localized
+                    
                 default:
                     self.errorMessage = "Generic Error Message".localized
                     break

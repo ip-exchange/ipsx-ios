@@ -39,6 +39,9 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
+        case .getUserCountryList:
+            request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            
         case .addEthAddress:
             
             let body = JSON(bodyParams)

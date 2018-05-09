@@ -22,8 +22,6 @@ class AddWalletController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -32,8 +30,6 @@ class AddWalletController: UIViewController {
     
     var errorMessage: String? {
         didSet {
-            //TODO (CVI): Show toast alert
-            print(errorMessage ?? "")
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
