@@ -92,6 +92,7 @@ public enum IPRequestType: Int {
     case getETHaddresses
     case getUserCountryList
     case getProxyCountryList
+    case updateProfile
 }
 
 public struct ContentType {

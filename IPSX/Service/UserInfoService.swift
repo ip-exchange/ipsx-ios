@@ -119,4 +119,23 @@ class UserInfoService {
             completionHandler(ServiceResult.success(countryList))
         })
     }
+    
+    func updateUserProfile(bodyParams: [String: String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
 }

@@ -28,7 +28,7 @@
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Yv8-pZ-gdA" kind="unwind" unwindAction="unwindToDashboardWithSegue:" id="0Dx-La-EYO"/>
+                                            <segue destination="Yv8-pZ-gdA" kind="unwind" identifier="showTabBarSegueID" unwindAction="unwindToTabBarWithSegue:" id="3I7-8I-y2h"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoJ-Xx-dIb">
@@ -208,7 +208,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <connections>
-                                                    <segue destination="2Zn-LV-orH" kind="show" identifier="SearchSegueID" id="Asl-6o-yNy"/>
+                                                    <action selector="selectCountryAction:" destination="Pyt-cD-jav" eventType="touchUpInside" id="xda-Eb-4Mx"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -297,6 +297,7 @@
                         <outlet property="separatorView" destination="3Az-2p-pmY" id="kur-h6-Mj3"/>
                         <outlet property="telegramTextField" destination="lPR-YP-J9z" id="6Py-ws-xdK"/>
                         <outlet property="topConstraintOutlet" destination="vb4-He-Pd3" id="2B6-Up-uYm"/>
+                        <segue destination="2Zn-LV-orH" kind="show" identifier="SearchSegueID" id="Ztv-In-Qmr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5g-DR-tIA" userLabel="First Responder" sceneMemberID="firstResponder"/>

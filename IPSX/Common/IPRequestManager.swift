@@ -42,6 +42,14 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         case .getUserCountryList:
             request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
             
+        case .updateProfile:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.userInfoArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         case .getProxyCountryList:
             var url = Url.base + Url.proxyCountriesArgs
             if let params = urlParams as? [String: String] {
@@ -125,6 +133,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                         completion(nil, data)
                         
                     //TODO (CVI): we should use one statusCode for each request when expired token
+                    //TODO (CVI): getNewAccessToken() should be called here
                         
                     case 401 where requestType == .retrieveProxies || requestType == .userInfo:
                         print(NSDate(), "\(requestType)" + "Request failed. Expired token ")

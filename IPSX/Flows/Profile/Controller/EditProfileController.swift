@@ -35,6 +35,7 @@ class EditProfileController: UIViewController {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
+    
     @IBAction func selectCountryAction(_ sender: UIButton) {
         
         //TODO (CVI): Determine when should we load the countries
@@ -83,16 +84,62 @@ class EditProfileController: UIViewController {
     }
     
     private func updateFields(userInfo: UserInfo?) {
-        selectedCountryLabel.text = searchController?.selectedCountry ?? "Select a country"
-        
-        emailTextField.text     = userInfo?.email ?? ""
-        firstNameTextField.text = userInfo?.firstName ?? ""
-        lastNameTextField.text  = userInfo?.lastName ?? ""
-        telegramTextField.text  = userInfo?.telegram ?? ""
+    
+        var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+        if let selectedCountry = searchController?.selectedCountry {
+            countryName = selectedCountry
+        }
+        selectedCountryLabel.text = countryName ?? "Select a country"
+        emailTextField.text       = userInfo?.email
+        firstNameTextField.text   = userInfo?.firstName
+        lastNameTextField.text    = userInfo?.lastName
+        telegramTextField.text    = userInfo?.telegram
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
-     }
+        
+        let countryID = UserDefaults.standard.getCountryId(countryName: selectedCountryLabel.text ?? "")
+        let bodyParams: [String: String] =  ["email"     : emailTextField.text ?? "",
+                                             "first_name": firstNameTextField.text ?? "",
+                                             "last_name" : lastNameTextField.text ?? "",
+                                             "telegram"  : telegramTextField.text ?? "",
+                                             "country_id": countryID ?? ""]
+        
+        UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
+            
+            switch result {
+            case .success(_):
+                self.getNewUserInfo() { success in
+                    
+                     //TODO: hide activity indicator
+                    
+                    if success {
+                        self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
+                    }
+                    else {
+                        self.errorMessage = "User Info Error Message".localized
+                    }
+                }
+            case .failure(_):
+                self.errorMessage = "Generic Error Message".localized
+            }
+        })
+    }
+    
+    func getNewUserInfo(completion:@escaping (Bool) -> ()) {
+        
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
+            
+            switch result {
+                
+            case .failure(_):
+                completion(false)
+                
+            case .success(_):
+                completion(true)
+            }
+        })
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
