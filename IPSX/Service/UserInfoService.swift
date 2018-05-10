@@ -132,7 +132,7 @@ class UserInfoService {
                 completionHandler(ServiceResult.failure(error!))
                 return
             }
-            guard let data = data else {
+            guard data != nil else {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }

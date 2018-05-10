@@ -13,17 +13,31 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBAction func logoutButtonAction(_ sender: UIButton) {
-        
-        //TODO (CVI): perform logout request
-        UserManager.shared.removeUserDetails()
-        performSegue(withIdentifier: "showLandingSegueID", sender: nil)
-    }
-    
     let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
+    
+    var errorMessage: String? {
+        didSet {
+            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+
+    @IBAction func logoutButtonAction(_ sender: UIButton) {
+        
+        LoginService().logout(completionHandler: { result in
+            switch result {
+            case .success(_):
+                UserManager.shared.removeUserDetails()
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+                }
+            case .failure(_):
+                self.errorMessage = "Logout Error Message".localized
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

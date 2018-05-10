@@ -25,8 +25,8 @@ class AddWalletController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     var ethereumAddress: EthAddress?
+    var continueBottomDist: CGFloat = 0.0
     
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
@@ -37,7 +37,20 @@ class AddWalletController: UIViewController {
         }
     }
     
-    var continueBottomDist: CGFloat = 0.0
+    @IBAction func loginAnotherAccountAction(_ sender: UIButton) {
+        
+        LoginService().logout(completionHandler: { result in
+            switch result {
+            case .success(_):
+                UserManager.shared.removeUserDetails()
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+                }
+            case .failure(_):
+                self.errorMessage = "Logout Error Message".localized
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,15 +158,6 @@ class AddWalletController: UIViewController {
         if let clipboardText = UIPasteboard.general.string {
             ethAddresRichTextField.contentTextField?.text = clipboardText
             ethAddresRichTextField.refreshStatus()
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "showLoginSegueID" {
-            
-            //TODO (CVI): perform logout request
-            UserManager.shared.removeUserDetails()
         }
     }
     

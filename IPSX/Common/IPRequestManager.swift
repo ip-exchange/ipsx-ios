@@ -77,6 +77,13 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
+        case .logout:
+            var url = Url.base + Url.logoutArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
+            }
+            
         case .retrieveProxies:
             var url = Url.base + Url.proxiesArgs
             if let params = urlParams as? [String: String] {
@@ -128,7 +135,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                     let statusCode = httpResponse.statusCode
                     switch statusCode {
                         
-                    case 200:
+                    case 200, 204:
                         print(NSDate(),"\(requestType)" + "Request succeeded")
                         completion(nil, data)
                         
