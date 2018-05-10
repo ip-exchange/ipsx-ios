@@ -23,12 +23,12 @@ struct UserInfo {
     init(firstName: String = "", middleName: String = "",lastName: String = "",
          telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", ballance: Int = 0) {
         
-        self.firstName  = firstName != "" ? firstName : "N/A"
-        self.middleName = middleName != "" ? middleName : "N/A"
-        self.lastName   = lastName != "" ? lastName : "N/A"
-        self.telegram   = telegram != "" ? telegram : "N/A"
-        self.countryID  = countryID != "" ? countryID : "N/A"
-        self.email      = email != "" ? email : "N/A"
+        self.firstName  = firstName
+        self.middleName = middleName
+        self.lastName   = lastName
+        self.telegram   = telegram
+        self.countryID  = countryID
+        self.email      = email 
         self.proxyTest  = proxyTest
         self.ballance   = ballance
     }
