@@ -10,6 +10,7 @@ import UIKit
 
 class LoginCredentialsControler: UIViewController {
     
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var passRichTextField: RichTextFieldView!
@@ -36,10 +37,10 @@ class LoginCredentialsControler: UIViewController {
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
         
-        //TODO (CVI): add activity indicator
-        
+        loadingView.startAnimating()
         LoginService().login(email: emailRichTextView.contentTextField?.text, password: passRichTextField.contentTextField?.text, completionHandler: { result in
-            //TODO (CVI): remove activity indicator
+            
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
             
             switch result {
                 
