@@ -10,13 +10,19 @@ import UIKit
 
 class EditProfileController: UIViewController {
 
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var keyIconImageView: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var telegramTextField: UITextField!
     @IBOutlet weak var selectedCountryLabel: UILabel!
-    
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
@@ -60,6 +66,11 @@ class EditProfileController: UIViewController {
         keyIconImageView.tintColor = .lightBlue
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Saved")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateFields(userInfo: userInfo)
@@ -81,7 +92,7 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
-    }
+     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {

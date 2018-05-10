@@ -120,20 +120,17 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gar-De-dh8" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="94" width="375" height="0.5"/>
-                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="TqK-lE-KPx"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="gar-De-dh8" secondAttribute="bottom" id="cLm-qA-SHI"/>
-                                    <constraint firstItem="gar-De-dh8" firstAttribute="leading" secondItem="YHk-Zj-Naz" secondAttribute="leading" id="ea2-qg-3Yn"/>
                                     <constraint firstAttribute="height" constant="94" id="la7-qv-p7G"/>
-                                    <constraint firstAttribute="trailing" secondItem="gar-De-dh8" secondAttribute="trailing" id="xPn-1C-wpn"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gar-De-dh8" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29825044014084506" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="Rzn-Mu-5u8"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -141,16 +138,21 @@
                         <constraints>
                             <constraint firstItem="s7w-JR-Nif" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" constant="15" id="BGF-r9-wGa"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="s7w-JR-Nif" secondAttribute="bottom" id="EsX-hO-JFe"/>
+                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="gar-De-dh8" secondAttribute="bottom" constant="37.5" id="HIs-Ry-lVe"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="top" constant="50" id="U1X-mo-Zlz"/>
+                            <constraint firstItem="gar-De-dh8" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="bottom" id="WPI-iS-ivX"/>
+                            <constraint firstItem="gar-De-dh8" firstAttribute="trailing" secondItem="YHk-Zj-Naz" secondAttribute="trailing" id="hYD-6f-QgR"/>
+                            <constraint firstItem="gar-De-dh8" firstAttribute="leading" secondItem="YHk-Zj-Naz" secondAttribute="leading" id="iqJ-xA-hOm"/>
                             <constraint firstItem="YHk-Zj-Naz" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="nZl-8X-NcZ"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="trailing" secondItem="s7w-JR-Nif" secondAttribute="trailing" constant="15" id="sLQ-BM-7X0"/>
-                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="bottom" constant="38" id="txp-Pc-EjO"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="trailing" secondItem="YHk-Zj-Naz" secondAttribute="trailing" id="vxB-Af-YMl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gIv-Tu-HaQ"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Proxy" image="NewProxy" id="B73-W5-OlS"/>
                     <connections>
+                        <outlet property="separatorView" destination="gar-De-dh8" id="2iW-Cg-o47"/>
+                        <outlet property="topConstraintOutlet" destination="WPI-iS-ivX" id="FJR-Vn-58f"/>
                         <segue destination="adJ-7o-RXS" kind="show" identifier="CountrySearchSegueID" id="2RJ-YM-lk1"/>
                     </connections>
                 </viewController>
@@ -744,7 +746,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1fT-JE-7lr" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="57.5" width="600" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="57.5" width="375" height="0.0"/>
                                                     <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="nwH-ae-iLu"/>
