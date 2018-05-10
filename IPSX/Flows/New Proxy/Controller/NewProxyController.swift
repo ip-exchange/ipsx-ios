@@ -10,6 +10,7 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!

@@ -10,6 +10,7 @@ import UIKit
 
 class DashboardViewController: UIViewController {
     
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView?
@@ -23,7 +24,8 @@ class DashboardViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var hasTriedToRefreshToken = false
-
+    var showLoader = true
+    
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
     var errorMessage: String? {
@@ -56,6 +58,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: slidableView, text: "Invalid Credentials")
+        if showLoader { loadingView.startAnimating() }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +68,7 @@ class DashboardViewController: UIViewController {
         //TODO (CVI): add activity indicator
         
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
+        loadingView.startAnimating()
         if UserManager.shared.isLoggedIn {
             
             executeRequests() { success in
@@ -72,6 +76,8 @@ class DashboardViewController: UIViewController {
                 //TODO (CVI): remove activity indicator
                 DispatchQueue.main.async {
                     self.tokensAmountLabel.text = "\(self.userInfo?.ballance ?? 0)"
+                    self.loadingView.stopAnimating()
+                    self.showLoader = false
                 }
                 if !success {
                     //TODO (CVI): redirect to login somehow nice

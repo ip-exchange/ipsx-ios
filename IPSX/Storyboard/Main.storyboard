@@ -133,9 +133,18 @@
                                     <constraint firstAttribute="height" constant="0.5" id="Rzn-Mu-5u8"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9wh-bB-9UA" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="297" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="S7p-Cv-Egs"/>
+                                    <constraint firstAttribute="height" constant="44" id="wfh-05-dTg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="9wh-bB-9UA" firstAttribute="centerY" secondItem="gIv-Tu-HaQ" secondAttribute="centerY" id="574-gm-K5k"/>
                             <constraint firstItem="s7w-JR-Nif" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" constant="15" id="BGF-r9-wGa"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="s7w-JR-Nif" secondAttribute="bottom" id="EsX-hO-JFe"/>
                             <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="gar-De-dh8" secondAttribute="bottom" constant="37.5" id="HIs-Ry-lVe"/>
@@ -144,6 +153,7 @@
                             <constraint firstItem="gar-De-dh8" firstAttribute="trailing" secondItem="YHk-Zj-Naz" secondAttribute="trailing" id="hYD-6f-QgR"/>
                             <constraint firstItem="gar-De-dh8" firstAttribute="leading" secondItem="YHk-Zj-Naz" secondAttribute="leading" id="iqJ-xA-hOm"/>
                             <constraint firstItem="YHk-Zj-Naz" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="nZl-8X-NcZ"/>
+                            <constraint firstItem="9wh-bB-9UA" firstAttribute="centerX" secondItem="gIv-Tu-HaQ" secondAttribute="centerX" id="s6v-BE-Qgi"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="trailing" secondItem="s7w-JR-Nif" secondAttribute="trailing" constant="15" id="sLQ-BM-7X0"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="trailing" secondItem="YHk-Zj-Naz" secondAttribute="trailing" id="vxB-Af-YMl"/>
                         </constraints>
@@ -151,6 +161,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="New Proxy" image="NewProxy" id="B73-W5-OlS"/>
                     <connections>
+                        <outlet property="loadingView" destination="9wh-bB-9UA" id="LZX-c2-Kwt"/>
                         <outlet property="separatorView" destination="gar-De-dh8" id="2iW-Cg-o47"/>
                         <outlet property="tokensAmountLabel" destination="vcP-4S-e61" id="RwP-Hf-sCt"/>
                         <outlet property="topBarView" destination="YHk-Zj-Naz" id="ljL-bL-o1Y"/>
@@ -447,6 +458,14 @@
                                     <constraint firstItem="mlB-tB-4gd" firstAttribute="centerY" secondItem="L7o-ds-ASB" secondAttribute="centerY" id="yhB-xM-bOd"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGl-ma-YbP" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="297" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="TNF-dw-KGY"/>
+                                    <constraint firstAttribute="height" constant="44" id="gMk-qm-JG9"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -454,14 +473,17 @@
                             <constraint firstItem="uYX-cs-Uyf" firstAttribute="bottom" secondItem="5Xw-8d-dgg" secondAttribute="bottom" id="AeS-Nm-Lvd"/>
                             <constraint firstItem="uYX-cs-Uyf" firstAttribute="trailing" secondItem="qfQ-5h-drj" secondAttribute="trailing" id="ElG-da-zpx"/>
                             <constraint firstItem="5Xw-8d-dgg" firstAttribute="leading" secondItem="uYX-cs-Uyf" secondAttribute="leading" id="GsT-dl-b0h"/>
+                            <constraint firstItem="VGl-ma-YbP" firstAttribute="centerY" secondItem="uYX-cs-Uyf" secondAttribute="centerY" id="QKo-fN-M0A"/>
                             <constraint firstItem="uYX-cs-Uyf" firstAttribute="trailing" secondItem="5Xw-8d-dgg" secondAttribute="trailing" id="X8d-ar-r9c"/>
                             <constraint firstItem="qfQ-5h-drj" firstAttribute="leading" secondItem="uYX-cs-Uyf" secondAttribute="leading" id="ZDw-Ua-gMH"/>
                             <constraint firstItem="5Xw-8d-dgg" firstAttribute="top" secondItem="qfQ-5h-drj" secondAttribute="bottom" id="fvB-8y-qu2"/>
+                            <constraint firstItem="VGl-ma-YbP" firstAttribute="centerX" secondItem="uYX-cs-Uyf" secondAttribute="centerX" id="pHg-tT-geZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uYX-cs-Uyf"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Dashboard" image="Dashboard" id="Kqr-SM-2lD"/>
                     <connections>
+                        <outlet property="loadingView" destination="VGl-ma-YbP" id="IWn-Ql-Sqv"/>
                         <outlet property="proxiesSegmentController" destination="PSQ-5O-SSB" id="e42-mQ-6zM"/>
                         <outlet property="slidableView" destination="5Xw-8d-dgg" id="WZc-Zh-M2S"/>
                         <outlet property="tableView" destination="0Jl-Mt-64I" id="g6v-z2-Mfx"/>
@@ -577,12 +599,21 @@
                                     <constraint firstAttribute="height" constant="0.5" id="qKn-aR-DcE"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwT-vm-HtC" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="297" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="pSR-RO-mcS"/>
+                                    <constraint firstAttribute="height" constant="44" id="r7M-2Y-qeK"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="fcR-bh-uWF" secondAttribute="trailing" id="CoH-OO-5AE"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="top" secondItem="fcR-bh-uWF" secondAttribute="top" constant="50" id="DfP-k2-p6B"/>
                             <constraint firstItem="SCm-xM-aMh" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="Oin-ha-X03"/>
+                            <constraint firstItem="uwT-vm-HtC" firstAttribute="centerX" secondItem="9IB-rH-e1t" secondAttribute="centerX" id="UDJ-uo-gmv"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="SCm-xM-aMh" secondAttribute="trailing" id="VXT-z7-AeM"/>
                             <constraint firstItem="kop-Q4-f9o" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="Y5r-5n-nRn"/>
                             <constraint firstItem="sFI-ea-rBE" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="fQx-ZZ-QOn"/>
@@ -590,6 +621,7 @@
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="sFI-ea-rBE" secondAttribute="trailing" id="m8U-XZ-bUU"/>
                             <constraint firstItem="sFI-ea-rBE" firstAttribute="top" secondItem="kop-Q4-f9o" secondAttribute="bottom" id="mxi-Ew-jZQ"/>
                             <constraint firstItem="fcR-bh-uWF" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="swF-Vu-eCx"/>
+                            <constraint firstItem="uwT-vm-HtC" firstAttribute="centerY" secondItem="9IB-rH-e1t" secondAttribute="centerY" id="tdJ-ND-MKB"/>
                             <constraint firstItem="SCm-xM-aMh" firstAttribute="top" secondItem="fcR-bh-uWF" secondAttribute="bottom" constant="27" id="zAz-Xh-QQt"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="kop-Q4-f9o" secondAttribute="trailing" id="zcs-LE-aQK"/>
                         </constraints>
@@ -597,6 +629,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="Xkk-XY-EzG"/>
                     <connections>
+                        <outlet property="loadingView" destination="uwT-vm-HtC" id="8CL-It-HVo"/>
                         <outlet property="tokensAmountLabel" destination="KPJ-tJ-xHh" id="f5X-dj-cgu"/>
                     </connections>
                 </viewController>
@@ -808,10 +841,19 @@
                                     <segue destination="f4i-TE-mFB" kind="show" id="NM2-rh-ZkM"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFr-WE-xyL" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="297" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="LYT-X1-6FZ"/>
+                                    <constraint firstAttribute="height" constant="44" id="wyq-Go-kU2"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="P1s-ED-Rvm" firstAttribute="top" secondItem="vbE-wm-rj6" secondAttribute="bottom" constant="14" id="4t9-kQ-Emb"/>
+                            <constraint firstItem="KFr-WE-xyL" firstAttribute="centerX" secondItem="HwR-iC-eo1" secondAttribute="centerX" id="62L-qZ-ZSQ"/>
                             <constraint firstItem="O2y-Wn-rxH" firstAttribute="top" secondItem="NLE-h7-f1T" secondAttribute="bottom" constant="0.5" id="6qv-7R-DuJ"/>
                             <constraint firstItem="qbc-B9-2kR" firstAttribute="leading" secondItem="HwR-iC-eo1" secondAttribute="leading" constant="14" id="7kd-i9-9Gj"/>
                             <constraint firstItem="ISu-QC-Q2K" firstAttribute="leading" secondItem="HwR-iC-eo1" secondAttribute="leading" constant="16" id="GsI-KV-EAi"/>
@@ -833,6 +875,7 @@
                             <constraint firstItem="vbE-wm-rj6" firstAttribute="centerX" secondItem="JQJ-K1-EAa" secondAttribute="centerX" id="dYI-Mj-khR"/>
                             <constraint firstItem="O2y-Wn-rxH" firstAttribute="top" secondItem="7An-fk-RJ5" secondAttribute="bottom" constant="15" id="hdf-2J-l4B"/>
                             <constraint firstItem="HwR-iC-eo1" firstAttribute="trailing" secondItem="qbc-B9-2kR" secondAttribute="trailing" constant="16" id="kHy-KN-KUR"/>
+                            <constraint firstItem="KFr-WE-xyL" firstAttribute="centerY" secondItem="HwR-iC-eo1" secondAttribute="centerY" id="krn-3W-2Vt"/>
                             <constraint firstItem="JQJ-K1-EAa" firstAttribute="leading" secondItem="HwR-iC-eo1" secondAttribute="leading" id="l6W-p4-Sco"/>
                             <constraint firstItem="HwG-7N-7Tm" firstAttribute="centerX" secondItem="P1s-ED-Rvm" secondAttribute="centerX" id="mS3-gs-nMY"/>
                             <constraint firstItem="EUd-Q0-aGT" firstAttribute="trailing" secondItem="qbc-B9-2kR" secondAttribute="trailing" id="mps-mq-fcN"/>
@@ -850,6 +893,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Hmj-Yu-6es"/>
                     <connections>
+                        <outlet property="loadingView" destination="KFr-WE-xyL" id="ybD-6G-BOt"/>
                         <outlet property="tableView" destination="O2y-Wn-rxH" id="Mh6-RH-VXo"/>
                         <outlet property="userImageView" destination="vbE-wm-rj6" id="je6-LZ-bV4"/>
                         <outlet property="usernameLabel" destination="P1s-ED-Rvm" id="BvF-un-FJI"/>
