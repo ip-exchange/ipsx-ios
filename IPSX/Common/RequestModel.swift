@@ -36,6 +36,7 @@ public struct Url {
     public static let logoutArgs = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
+    public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -95,6 +96,7 @@ public enum IPRequestType: Int {
     case getUserCountryList
     case getProxyCountryList
     case updateProfile
+    case requestTokens
 }
 
 public struct ContentType {

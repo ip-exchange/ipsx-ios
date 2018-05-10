@@ -10,15 +10,40 @@ import UIKit
 
 class TokenRequestController: UIViewController {
 
+    @IBOutlet weak var amountTextField: UITextField!
+    
+    var errorMessage: String? {
+        didSet {
+            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+    
+    @IBAction func submitAction(_ sender: UIButton) {
+        
+        //TODO (CVI): this is for testing
+        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.ethID ?? ""
+        let amount = amountTextField.text ?? "0"
+        
+        ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case .failure(_):
+                self.errorMessage = ""
+            }
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
     }
     
     @IBAction func backButtonAction(_ sender: Any) {

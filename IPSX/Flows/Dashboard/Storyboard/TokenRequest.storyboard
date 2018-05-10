@@ -253,7 +253,7 @@
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="JLG-Cx-piz" kind="unwind" unwindAction="unwindToDashboardWithSegue:" id="rsb-0L-6mW"/>
+                                            <action selector="submitAction:" destination="8al-NV-Tf2" eventType="touchUpInside" id="L8w-Sn-yYN"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -393,9 +393,11 @@
                         <viewLayoutGuide key="safeArea" id="e4b-vh-9ex"/>
                     </view>
                     <navigationItem key="navigationItem" id="pCx-hp-fNl"/>
+                    <connections>
+                        <outlet property="amountTextField" destination="Yc9-1x-JSM" id="tCZ-aK-6Fa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mz6-yP-e0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="JLG-Cx-piz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="8316" y="-155.17241379310346"/>
         </scene>
