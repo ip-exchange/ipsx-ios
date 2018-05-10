@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterTermsController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var readWPLabel: UILabel!
@@ -56,21 +57,21 @@ class RegisterTermsController: UIViewController {
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
         
-        //TODO (CVI): add activity indicator
-        
+        loadingView.startAnimating()
         IPService().getPublicIPAddress(completion: { error, ipAddress in
             
             guard let ipAddress = ipAddress, error == nil else {
-                //TODO (CVI): remove activity indicator
+
                 self.errorMessage = "Generic Error Message".localized
+                DispatchQueue.main.async { self.loadingView.stopAnimating() }
                 return
             }
             
             if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
                 RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
                     
-                    //TODO (CVI): remove activity indicator
-                    
+                    DispatchQueue.main.async { self.loadingView.stopAnimating() }
+
                     switch result {
                         
                     case .success(_):

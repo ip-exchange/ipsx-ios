@@ -484,6 +484,14 @@
                                     <constraint firstAttribute="height" constant="0.5" id="RKI-lI-c4T"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c05-Gj-MdM" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="IJI-xj-hvB"/>
+                                    <constraint firstAttribute="width" constant="44" id="bIE-W6-tKD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -493,8 +501,10 @@
                             <constraint firstItem="th7-gf-lwT" firstAttribute="bottom" secondItem="Jyq-XU-knM" secondAttribute="bottom" id="B8h-OS-WcI"/>
                             <constraint firstItem="YdG-Ib-BJn" firstAttribute="leading" secondItem="iVB-OC-kfH" secondAttribute="leading" id="DdL-g7-yRe"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="bottom" secondItem="zJr-kv-cZI" secondAttribute="bottom" constant="37" id="GmH-Xv-xKg"/>
+                            <constraint firstItem="c05-Gj-MdM" firstAttribute="centerY" secondItem="th7-gf-lwT" secondAttribute="centerY" id="MJO-dp-KUo"/>
                             <constraint firstItem="7or-DF-D72" firstAttribute="leading" secondItem="hM3-yr-38q" secondAttribute="leading" id="Nw9-gd-pMr"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="Jyq-XU-knM" secondAttribute="trailing" id="OAm-pl-sgr"/>
+                            <constraint firstItem="c05-Gj-MdM" firstAttribute="centerX" secondItem="th7-gf-lwT" secondAttribute="centerX" id="P6H-K8-JgP"/>
                             <constraint firstItem="YdG-Ib-BJn" firstAttribute="centerX" secondItem="iVB-OC-kfH" secondAttribute="centerX" id="QUd-wG-thE"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="hM3-yr-38q" secondAttribute="trailing" id="QaJ-Rd-Csf"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="top" secondItem="hM3-yr-38q" secondAttribute="top" constant="50" id="RxO-3A-wgx"/>
@@ -510,6 +520,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="0e8-Db-69X"/>
                     <connections>
+                        <outlet property="loadingView" destination="c05-Gj-MdM" id="BPd-UA-RbE"/>
                         <outlet property="readWPLabel" destination="rR5-6h-BhI" id="kKQ-KW-dsy"/>
                         <outlet property="registerButton" destination="zJr-kv-cZI" id="MKM-zt-x9x"/>
                         <outlet property="separatorView" destination="7or-DF-D72" id="ybL-9x-3GV"/>
