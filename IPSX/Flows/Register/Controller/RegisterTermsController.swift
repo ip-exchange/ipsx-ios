@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterTermsController: UIViewController {
 
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var readWPLabel: UILabel!
     @IBOutlet weak var registerButton: RoundedButton!
@@ -91,7 +92,7 @@ extension RegisterTermsController: ToastAlertViewPresentable {
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
-            view.addSubview(toastView)
+            view.insertSubview(toastView, belowSubview: topBarView)
         }
     }
 }

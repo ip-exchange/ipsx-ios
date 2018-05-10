@@ -10,6 +10,7 @@ import UIKit
 
 class DashboardViewController: UIViewController {
     
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
     @IBOutlet weak var slidableView: UIView!
@@ -179,7 +180,7 @@ extension DashboardViewController: ToastAlertViewPresentable {
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
-            view.addSubview(toastView)
+            view.insertSubview(toastView, belowSubview: topBarView)
         }
     }
 }
