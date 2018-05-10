@@ -10,6 +10,8 @@ import UIKit
 
 class ChangePasswordController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

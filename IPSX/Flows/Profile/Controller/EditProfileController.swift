@@ -10,6 +10,7 @@ import UIKit
 
 class EditProfileController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var keyIconImageView: UIImageView!
@@ -106,14 +107,13 @@ class EditProfileController: UIViewController {
                                              "telegram"  : telegramTextField.text ?? "",
                                              "country_id": countryID ?? ""]
         
+        loadingView.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
             
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
             switch result {
             case .success(_):
                 self.getNewUserInfo() { success in
-                    
-                     //TODO: hide activity indicator
-                    
                     if success {
                         self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
                     }

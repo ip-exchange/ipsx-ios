@@ -11,6 +11,7 @@ import AVFoundation
 
 class AddWalletController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var walletNameRichTextField: RichTextFieldView!
@@ -117,8 +118,10 @@ class AddWalletController: UIViewController {
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         
+        loadingView.startAnimating()
         RegisterService().addEthAdress(address: address, alias: alias, completionHandler: { result in
             
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
             switch result {
                 
             case .success(_):

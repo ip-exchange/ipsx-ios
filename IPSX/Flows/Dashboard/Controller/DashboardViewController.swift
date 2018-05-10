@@ -65,15 +65,12 @@ class DashboardViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
-        //TODO (CVI): add activity indicator
-        
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
         loadingView.startAnimating()
         if UserManager.shared.isLoggedIn {
             
             executeRequests() { success in
                 
-                //TODO (CVI): remove activity indicator
                 DispatchQueue.main.async {
                     self.tokensAmountLabel.text = "\(self.userInfo?.ballance ?? 0)"
                     self.loadingView.stopAnimating()

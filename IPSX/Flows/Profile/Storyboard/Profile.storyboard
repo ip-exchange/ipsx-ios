@@ -267,6 +267,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Fn-ZY-t5U" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="JpS-KO-Qbs"/>
+                                    <constraint firstAttribute="width" constant="44" id="dh1-8B-7m2"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -274,6 +282,7 @@
                             <constraint firstItem="San-8X-eiY" firstAttribute="leading" secondItem="rGU-Ax-wKq" secondAttribute="leading" id="Psr-p2-zPf"/>
                             <constraint firstItem="rGU-Ax-wKq" firstAttribute="trailing" secondItem="San-8X-eiY" secondAttribute="trailing" id="X42-GP-x2A"/>
                             <constraint firstItem="t9R-Zo-56p" firstAttribute="top" secondItem="3Az-2p-pmY" secondAttribute="bottom" constant="26.5" id="beP-XQ-Lfc"/>
+                            <constraint firstItem="9Fn-ZY-t5U" firstAttribute="centerY" secondItem="rGU-Ax-wKq" secondAttribute="centerY" id="i3i-Ap-gHx"/>
                             <constraint firstItem="kEV-L1-7n0" firstAttribute="top" secondItem="t9R-Zo-56p" secondAttribute="bottom" constant="12" id="ntM-zO-wYH"/>
                             <constraint firstItem="3Az-2p-pmY" firstAttribute="trailing" secondItem="San-8X-eiY" secondAttribute="trailing" id="p72-8a-G9y"/>
                             <constraint firstItem="rGU-Ax-wKq" firstAttribute="trailing" secondItem="3E1-3i-z73" secondAttribute="trailing" constant="16" id="s1q-B2-2O7"/>
@@ -282,6 +291,7 @@
                             <constraint firstItem="t9R-Zo-56p" firstAttribute="leading" secondItem="rGU-Ax-wKq" secondAttribute="leading" constant="15" id="ufe-uL-mCd"/>
                             <constraint firstItem="kEV-L1-7n0" firstAttribute="leading" secondItem="rGU-Ax-wKq" secondAttribute="leading" id="vSM-sG-rwz"/>
                             <constraint firstItem="3Az-2p-pmY" firstAttribute="top" secondItem="San-8X-eiY" secondAttribute="bottom" id="vb4-He-Pd3"/>
+                            <constraint firstItem="9Fn-ZY-t5U" firstAttribute="centerX" secondItem="rGU-Ax-wKq" secondAttribute="centerX" id="vqx-OX-Ad3"/>
                             <constraint firstItem="3E1-3i-z73" firstAttribute="top" secondItem="kEV-L1-7n0" secondAttribute="bottom" constant="22" id="wLs-ME-YMi"/>
                             <constraint firstItem="rGU-Ax-wKq" firstAttribute="top" secondItem="San-8X-eiY" secondAttribute="top" constant="50" id="xQa-d4-gS0"/>
                         </constraints>
@@ -293,6 +303,7 @@
                         <outlet property="firstNameTextField" destination="gAm-WK-x0E" id="aaP-Mq-di2"/>
                         <outlet property="keyIconImageView" destination="XmE-yz-7Zq" id="rDJ-57-ssX"/>
                         <outlet property="lastNameTextField" destination="du9-hi-1ds" id="uhb-99-gER"/>
+                        <outlet property="loadingView" destination="9Fn-ZY-t5U" id="fjd-ia-Bko"/>
                         <outlet property="selectedCountryLabel" destination="qWj-Pj-swk" id="c6r-sI-8AX"/>
                         <outlet property="separatorView" destination="3Az-2p-pmY" id="kur-h6-Mj3"/>
                         <outlet property="telegramTextField" destination="lPR-YP-J9z" id="6Py-ws-xdK"/>
@@ -492,19 +503,32 @@
                                     <constraint firstItem="oSG-Ou-pzl" firstAttribute="leading" secondItem="fKC-ed-YZT" secondAttribute="leading" id="ymT-Rr-XC0"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IPp-A3-KLa" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="5v4-nl-080"/>
+                                    <constraint firstAttribute="width" constant="44" id="m2k-4J-kNS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="UF0-SW-Xmq" firstAttribute="trailing" secondItem="fKC-ed-YZT" secondAttribute="trailing" id="0mH-Hm-ckH"/>
                             <constraint firstItem="UF0-SW-Xmq" firstAttribute="trailing" secondItem="Rcj-cG-sJQ" secondAttribute="trailing" id="39t-ZN-yFx"/>
+                            <constraint firstItem="IPp-A3-KLa" firstAttribute="centerX" secondItem="UF0-SW-Xmq" secondAttribute="centerX" id="MX6-EY-wTK"/>
                             <constraint firstItem="fKC-ed-YZT" firstAttribute="leading" secondItem="UF0-SW-Xmq" secondAttribute="leading" id="Y5M-oY-7Fd"/>
                             <constraint firstItem="fKC-ed-YZT" firstAttribute="top" secondItem="Rcj-cG-sJQ" secondAttribute="bottom" constant="27" id="eCc-Ca-kJc"/>
                             <constraint firstItem="Rcj-cG-sJQ" firstAttribute="leading" secondItem="UF0-SW-Xmq" secondAttribute="leading" id="gky-6R-O0G"/>
                             <constraint firstItem="UF0-SW-Xmq" firstAttribute="top" secondItem="Rcj-cG-sJQ" secondAttribute="top" constant="50" id="jHL-tf-IDr"/>
+                            <constraint firstItem="IPp-A3-KLa" firstAttribute="centerY" secondItem="UF0-SW-Xmq" secondAttribute="centerY" id="mSr-Cd-eMy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UF0-SW-Xmq"/>
                     </view>
                     <navigationItem key="navigationItem" id="tsu-22-BYy"/>
+                    <connections>
+                        <outlet property="loadingView" destination="IPp-A3-KLa" id="erx-XW-bWh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lz2-9E-Xiy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

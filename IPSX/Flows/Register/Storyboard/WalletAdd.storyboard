@@ -192,6 +192,14 @@
                                     <action selector="loginAnotherAccountAction:" destination="yUi-lt-NI4" eventType="touchUpInside" id="h76-sF-CFw"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHK-JB-y3c" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="DZd-Fq-eqc"/>
+                                    <constraint firstAttribute="width" constant="44" id="uyl-ba-Jwb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -210,10 +218,12 @@
                             <constraint firstItem="Cvd-tE-d63" firstAttribute="leading" secondItem="amD-zB-icY" secondAttribute="trailing" constant="8" id="VrP-T2-JoW"/>
                             <constraint firstItem="cE3-m5-koF" firstAttribute="top" secondItem="qa5-bk-98A" secondAttribute="bottom" constant="38" id="biW-L6-f4d"/>
                             <constraint firstItem="Tgh-m3-8jj" firstAttribute="leading" secondItem="a3H-xu-1tI" secondAttribute="leading" id="cqX-Es-S4S"/>
+                            <constraint firstItem="kHK-JB-y3c" firstAttribute="centerX" secondItem="a3H-xu-1tI" secondAttribute="centerX" id="d0i-OJ-iLs"/>
                             <constraint firstItem="wmp-PV-9k1" firstAttribute="centerX" secondItem="a3H-xu-1tI" secondAttribute="centerX" id="dVx-60-q3p"/>
                             <constraint firstItem="8zd-6m-2Oq" firstAttribute="leading" secondItem="8jc-bn-Gqf" secondAttribute="leading" id="fpY-uk-3wp"/>
                             <constraint firstItem="a3H-xu-1tI" firstAttribute="trailing" secondItem="Tgh-m3-8jj" secondAttribute="trailing" id="kzo-pz-T5v"/>
                             <constraint firstItem="a3H-xu-1tI" firstAttribute="bottom" secondItem="wmp-PV-9k1" secondAttribute="bottom" constant="37" id="nTJ-VL-FUn"/>
+                            <constraint firstItem="kHK-JB-y3c" firstAttribute="centerY" secondItem="a3H-xu-1tI" secondAttribute="centerY" id="qAd-uC-xDg"/>
                             <constraint firstItem="8zd-6m-2Oq" firstAttribute="trailing" secondItem="8jc-bn-Gqf" secondAttribute="trailing" id="qvM-d8-cVv"/>
                             <constraint firstItem="amD-zB-icY" firstAttribute="top" secondItem="cE3-m5-koF" secondAttribute="bottom" id="yRX-VQ-crO"/>
                         </constraints>
@@ -224,6 +234,7 @@
                         <outlet property="bottomContinueConstraint" destination="nTJ-VL-FUn" id="sry-s7-RON"/>
                         <outlet property="doneButton" destination="0pm-zp-CjR" id="0cS-k5-dW9"/>
                         <outlet property="ethAddresRichTextField" destination="vI4-lj-clz" id="ELY-3l-ZDI"/>
+                        <outlet property="loadingView" destination="kHK-JB-y3c" id="2no-7g-1y5"/>
                         <outlet property="loginAnotherAccButton" destination="wmp-PV-9k1" id="sZ5-GI-anB"/>
                         <outlet property="separatorView" destination="8zd-6m-2Oq" id="TnM-7P-ldk"/>
                         <outlet property="topBarView" destination="8jc-bn-Gqf" id="flO-cy-b3C"/>
