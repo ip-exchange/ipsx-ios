@@ -34,6 +34,7 @@ class DashboardViewController: UIViewController {
        }
     }
     let cellID = "ActivationDetailsCellID"
+    var selectedProxy: Proxy? = nil
     var proxies: [Proxy] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -65,6 +66,7 @@ class DashboardViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
+        selectedProxy = nil
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
         loadingView.startAnimating()
         if UserManager.shared.isLoggedIn {
@@ -114,6 +116,12 @@ class DashboardViewController: UIViewController {
         }
         else {
             self.getProxyDetails(completion: completion)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ProxyDetailsSegueiID", let proxyDetailsController = segue.destination as? ProxyDetailsViewController {
+            proxyDetailsController.proxy = selectedProxy
         }
     }
     
@@ -209,4 +217,10 @@ extension DashboardViewController: UITableViewDataSource {
     }
 }
 
-
+extension DashboardViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedProxy = filteredProxies[indexPath.item]
+        performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+    }
+}
