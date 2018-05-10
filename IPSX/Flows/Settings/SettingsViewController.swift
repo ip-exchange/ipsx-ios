@@ -10,4 +10,11 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
- }
+    @IBOutlet weak var tokensAmountLabel: UILabel!
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
+    }
+}

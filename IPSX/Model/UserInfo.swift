@@ -17,10 +17,11 @@ struct UserInfo {
     var countryID: String
     var email: String
     var proxyTest: String
+    var ballance: Int
     var ethAddresses: [EthAddress]?
     
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "") {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", ballance: Int = 0) {
         
         self.firstName  = firstName != "" ? firstName : "N/A"
         self.middleName = middleName != "" ? middleName : "N/A"
@@ -29,6 +30,7 @@ struct UserInfo {
         self.countryID  = countryID != "" ? countryID : "N/A"
         self.email      = email != "" ? email : "N/A"
         self.proxyTest  = proxyTest
+        self.ballance   = ballance
     }
     
     mutating func setEthAddresses(ethAddresses: [EthAddress]) {

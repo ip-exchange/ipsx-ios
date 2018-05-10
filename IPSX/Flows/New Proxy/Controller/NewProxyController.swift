@@ -10,6 +10,7 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
+    @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -21,6 +22,7 @@ class NewProxyController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String] = []
@@ -44,6 +46,7 @@ class NewProxyController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "Dummy")
+        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

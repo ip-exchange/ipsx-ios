@@ -48,8 +48,9 @@ class UserInfoService {
         let countryID  = json["country_id"].stringValue
         let email      = json["email"].stringValue
         let proxyTest  = json["proxy_test"].stringValue
+        let ballance   = json["ballance"].intValue
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest)
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, ballance: ballance)
         
         //Store User Info
         UserManager.shared.userInfo = user

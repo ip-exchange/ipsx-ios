@@ -152,6 +152,7 @@
                     <tabBarItem key="tabBarItem" title="New Proxy" image="NewProxy" id="B73-W5-OlS"/>
                     <connections>
                         <outlet property="separatorView" destination="gar-De-dh8" id="2iW-Cg-o47"/>
+                        <outlet property="tokensAmountLabel" destination="vcP-4S-e61" id="RwP-Hf-sCt"/>
                         <outlet property="topBarView" destination="YHk-Zj-Naz" id="ljL-bL-o1Y"/>
                         <outlet property="topConstraintOutlet" destination="WPI-iS-ivX" id="FJR-Vn-58f"/>
                         <segue destination="adJ-7o-RXS" kind="show" identifier="CountrySearchSegueID" id="2RJ-YM-lk1"/>
@@ -464,6 +465,7 @@
                         <outlet property="proxiesSegmentController" destination="PSQ-5O-SSB" id="e42-mQ-6zM"/>
                         <outlet property="slidableView" destination="5Xw-8d-dgg" id="WZc-Zh-M2S"/>
                         <outlet property="tableView" destination="0Jl-Mt-64I" id="g6v-z2-Mfx"/>
+                        <outlet property="tokensAmountLabel" destination="e3Q-X6-BW7" id="F2D-Zh-jBX"/>
                         <outlet property="topBarView" destination="qfQ-5h-drj" id="47w-QE-xym"/>
                         <outlet property="topConstraintOutlet" destination="fvB-8y-qu2" id="mr9-zb-tBg"/>
                     </connections>
@@ -594,6 +596,9 @@
                         <viewLayoutGuide key="safeArea" id="9IB-rH-e1t"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="Xkk-XY-EzG"/>
+                    <connections>
+                        <outlet property="tokensAmountLabel" destination="KPJ-tJ-xHh" id="f5X-dj-cgu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tve-8X-fak" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

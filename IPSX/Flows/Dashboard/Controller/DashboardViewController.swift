@@ -10,6 +10,7 @@ import UIKit
 
 class DashboardViewController: UIViewController {
     
+    @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
@@ -23,6 +24,8 @@ class DashboardViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var hasTriedToRefreshToken = false
 
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -48,7 +51,6 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -62,12 +64,15 @@ class DashboardViewController: UIViewController {
         
         //TODO (CVI): add activity indicator
         
+        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
         if UserManager.shared.isLoggedIn {
             
             executeRequests() { success in
                 
                 //TODO (CVI): remove activity indicator
-                
+                DispatchQueue.main.async {
+                    self.tokensAmountLabel.text = "\(self.userInfo?.ballance ?? 0)"
+                }
                 if !success {
                     //TODO (CVI): redirect to login somehow nice
                     //Temporary solution: display generic error
