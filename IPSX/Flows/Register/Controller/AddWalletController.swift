@@ -26,6 +26,8 @@ class AddWalletController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
+    var ethereumAddress: EthAddress?
+    
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
@@ -41,6 +43,10 @@ class AddWalletController: UIViewController {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint?.constant ?? 0
         observreFieldsState()
+        if let address = ethereumAddress {
+            walletNameRichTextField.contentTextField?.text = address.alias
+            ethAddresRichTextField.contentTextField?.text = address.address
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -188,9 +188,6 @@
                                 <state key="disabled">
                                     <color key="titleColor" red="0.80784313730000001" green="0.83137254900000002" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="rQA-9F-QWr" kind="unwind" identifier="showLoginSegueID" unwindAction="unwindToLoginOptionsWithSegue:" id="X3j-MY-8Uw"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -230,6 +227,7 @@
                         <outlet property="topConstraintOutlet" destination="QRs-td-EbI" id="X8D-hx-b9W"/>
                         <outlet property="walletNameRichTextField" destination="jgt-fi-HI3" id="QOn-oV-fFk"/>
                         <segue destination="fbu-vE-IPA" kind="show" identifier="showCongratsSegueID" id="7fb-nt-66U"/>
+                        <segue destination="rQA-9F-QWr" kind="unwind" identifier="showLoginSegueID" unwindAction="unwindToLoginOptionsWithSegue:" id="XUy-jX-QKa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWr-33-kSH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -572,6 +570,7 @@
                         <outlet property="doneButton" destination="ng7-n6-rRs" id="Ajp-HA-ZeT"/>
                         <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
                         <outlet property="separatorView" destination="Mmt-lK-1sd" id="FyU-bs-fcy"/>
+                        <outlet property="topBarView" destination="pSE-cg-4Dr" id="edR-Fe-JQc"/>
                         <outlet property="topConstraintOutlet" destination="3ei-fg-bNM" id="GiK-Au-Sum"/>
                         <outlet property="walletNameRichTextField" destination="rhR-LU-jU0" id="UTY-NA-l5L"/>
                     </connections>

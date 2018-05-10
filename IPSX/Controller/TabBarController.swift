@@ -20,6 +20,19 @@ class TabBarViewController: UITabBarController {
         
         if !UserManager.shared.isLoggedIn {
             presentLandingFlow()
+        } else {
+            UserInfoService().retrieveETHaddresses(completionHandler: { result in
+                
+                switch result {
+                case .success(let ethAddresses):
+                    guard let ethAddresses = ethAddresses as? [EthAddress] else { return }
+                    UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
+                    
+                case .failure(_):
+                    print("Generic Error Message".localized)
+
+                }
+            })
         }
     }
         
