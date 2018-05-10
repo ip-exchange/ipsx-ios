@@ -10,13 +10,24 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String] = []
+
     
     var errorMessage: String? {
         didSet {
-            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -29,6 +40,11 @@ class NewProxyController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Dummy")
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID {
@@ -102,4 +118,13 @@ extension NewProxyController: UITableViewDelegate {
     }
 }
 
+extension NewProxyController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
+    }
+}
 

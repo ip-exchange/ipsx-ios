@@ -36,7 +36,10 @@ How to use:
  }
  
 ** In viewDidLyoutSubviews, call **
- - createToastAlert(onTopOf: someView, text: "Some text")
+ override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: someView, text: "Invalid Credentials")
+ }
 
 ** Display the toast with any of below **
  - toast?.showToastAlert() //will use the text passed at init
