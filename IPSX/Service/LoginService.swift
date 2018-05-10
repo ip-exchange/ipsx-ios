@@ -55,6 +55,20 @@ class LoginService {
         })
     }
     
+    func logout(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let params: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .logout, urlParams: params, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
     func getNewAccessToken(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
