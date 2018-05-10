@@ -120,5 +120,27 @@ class ProxyService {
             completionHandler(ServiceResult.success(countries))
         })
     }
+    
+    func requestTokens(ethID: String, amount: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: String] = ["usereth_id"       : ethID,
+                                            "amount_requested" : amount]
+        
+        IPRequestManager.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
 
 }
