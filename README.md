@@ -7,7 +7,7 @@ Welcome to IPSX open source iOS app!
 ## Requirements
 
 - iOS 10.0+
-- Xcode 9.1+
+- Xcode 9.3+
 - Swift 4.0+
 
 ## Getting Started
