@@ -70,21 +70,23 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
+     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: slidableView, text: "Invalid Credentials")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if showLoader { loadingView.startAnimating() }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
         selectedProxy = nil
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
-        loadingView.startAnimating()
+        showLoader = true
         if UserManager.shared.isLoggedIn {
             
             executeRequests() { success in
@@ -247,6 +249,7 @@ extension DashboardViewController: UITableViewDataSource {
 extension DashboardViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         selectedProxy = filteredProxies[indexPath.item]
         performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
     }

@@ -102,16 +102,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHk-Zj-Naz" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcP-4S-e61">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcP-4S-e61">
                                         <rect key="frame" x="306" y="66" width="35" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="IPSXRightLogo" translatesAutoresizingMaskIntoConstraints="NO" id="jgG-VW-Vpd">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPSXRightLogo" translatesAutoresizingMaskIntoConstraints="NO" id="jgG-VW-Vpd">
                                         <rect key="frame" x="346" y="64" width="21" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="21" id="7Qr-cX-cBH"/>
+                                            <constraint firstAttribute="height" constant="21" id="E5k-zE-0wy"/>
+                                        </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Proxy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7c-3L-4rb">
                                         <rect key="frame" x="144" y="64" width="86" height="21"/>
@@ -123,7 +125,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="vcP-4S-e61" firstAttribute="centerY" secondItem="jgG-VW-Vpd" secondAttribute="centerY" id="IgD-bD-DUc"/>
                                     <constraint firstAttribute="height" constant="94" id="la7-qv-p7G"/>
+                                    <constraint firstAttribute="trailing" secondItem="jgG-VW-Vpd" secondAttribute="trailing" constant="8" id="nfa-cd-gi0"/>
+                                    <constraint firstAttribute="bottom" secondItem="jgG-VW-Vpd" secondAttribute="bottom" constant="9" id="vWW-qK-oOf"/>
+                                    <constraint firstItem="jgG-VW-Vpd" firstAttribute="leading" secondItem="vcP-4S-e61" secondAttribute="trailing" constant="5" id="xPU-l7-ohU"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gar-De-dh8" userLabel="Separator">
@@ -262,7 +268,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="345" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <connections>
-                                                    <action selector="tokenRequestAction:" destination="4A6-HS-yFF" eventType="touchUpInside" id="Gs6-gw-SMv"/>
+                                                    <action selector="tokenRequestAction:" destination="4A6-HS-yFF" eventType="touchUpInside" id="UHJ-Bh-R0N"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -498,8 +504,8 @@
                         <outlet property="tokensAmountLabel" destination="e3Q-X6-BW7" id="F2D-Zh-jBX"/>
                         <outlet property="topBarView" destination="qfQ-5h-drj" id="47w-QE-xym"/>
                         <outlet property="topConstraintOutlet" destination="fvB-8y-qu2" id="mr9-zb-tBg"/>
-                        <segue destination="qSC-O9-erJ" kind="show" identifier="ProxyDetailsSegueiID" id="vlC-TX-1jM"/>
-                        <segue destination="ZZ3-69-9NQ" kind="show" identifier="showTokenRequestSegueID" id="bnn-kh-nSL"/>
+                        <segue destination="qSC-O9-erJ" kind="presentation" identifier="ProxyDetailsSegueiID" id="vlC-TX-1jM"/>
+                        <segue destination="ZZ3-69-9NQ" kind="show" identifier="showTokenRequestSegueID" id="449-lp-Zve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqh-Z5-fpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -548,16 +554,18 @@
                                             <constraint firstAttribute="height" constant="0.5" id="bgT-2s-NFz"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPJ-tJ-xHh">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5000" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPJ-tJ-xHh">
                                         <rect key="frame" x="306" y="66" width="35" height="17"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="IPSXRightLogo" translatesAutoresizingMaskIntoConstraints="NO" id="k6y-4S-ldq">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPSXRightLogo" translatesAutoresizingMaskIntoConstraints="NO" id="k6y-4S-ldq">
                                         <rect key="frame" x="346" y="64" width="21" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="21" id="hvv-nd-geg"/>
+                                            <constraint firstAttribute="height" constant="21" id="m6H-cq-DIg"/>
+                                        </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOY-fx-TGW">
                                         <rect key="frame" x="154" y="64" width="67" height="21"/>
@@ -573,6 +581,10 @@
                                     <constraint firstAttribute="height" constant="94" id="6S6-En-zOD"/>
                                     <constraint firstItem="1BY-Us-4HP" firstAttribute="leading" secondItem="fcR-bh-uWF" secondAttribute="leading" id="6eK-s9-d7p"/>
                                     <constraint firstAttribute="trailing" secondItem="1BY-Us-4HP" secondAttribute="trailing" id="HUJ-q7-Oug"/>
+                                    <constraint firstAttribute="bottom" secondItem="k6y-4S-ldq" secondAttribute="bottom" constant="9" id="KSo-00-T2i"/>
+                                    <constraint firstAttribute="trailing" secondItem="k6y-4S-ldq" secondAttribute="trailing" constant="8" id="bAy-yX-GLU"/>
+                                    <constraint firstItem="KPJ-tJ-xHh" firstAttribute="centerY" secondItem="k6y-4S-ldq" secondAttribute="centerY" id="qL3-RO-rJc"/>
+                                    <constraint firstItem="k6y-4S-ldq" firstAttribute="leading" secondItem="KPJ-tJ-xHh" secondAttribute="trailing" constant="5" id="r3F-WY-ooq"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SCm-xM-aMh" userLabel="Separator">

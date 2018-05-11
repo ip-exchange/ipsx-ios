@@ -10,6 +10,7 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    var requestOnce = false
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -20,7 +21,8 @@ class TabBarViewController: UITabBarController {
         
         if !UserManager.shared.isLoggedIn {
             presentLandingFlow()
-        } else {
+        } else if !requestOnce {
+            requestOnce = true
             UserInfoService().retrieveETHaddresses(completionHandler: { result in
                 
                 switch result {
