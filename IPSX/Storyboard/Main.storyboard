@@ -268,7 +268,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="345" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <connections>
-                                                    <segue destination="ZZ3-69-9NQ" kind="show" id="6bu-lx-Q74"/>
+                                                    <action selector="tokenRequestAction:" destination="4A6-HS-yFF" eventType="touchUpInside" id="UHJ-Bh-R0N"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -505,6 +505,7 @@
                         <outlet property="topBarView" destination="qfQ-5h-drj" id="47w-QE-xym"/>
                         <outlet property="topConstraintOutlet" destination="fvB-8y-qu2" id="mr9-zb-tBg"/>
                         <segue destination="qSC-O9-erJ" kind="presentation" identifier="ProxyDetailsSegueiID" id="vlC-TX-1jM"/>
+                        <segue destination="ZZ3-69-9NQ" kind="show" identifier="showTokenRequestSegueID" id="449-lp-Zve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqh-Z5-fpU" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -91,12 +91,13 @@ public enum IPRequestType: Int {
     case logout
     case retrieveProxies
     case userInfo
+    case updateProfile
+    case requestTokens
     case addEthAddress
     case getETHaddresses
     case getUserCountryList
     case getProxyCountryList
-    case updateProfile
-    case requestTokens
+    case getTokenRequestList
 }
 
 public struct ContentType {

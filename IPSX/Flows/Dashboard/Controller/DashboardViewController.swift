@@ -25,7 +25,6 @@ class DashboardViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var hasTriedToRefreshToken = false
     var showLoader = true
-    
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
     var errorMessage: String? {
@@ -35,6 +34,7 @@ class DashboardViewController: UIViewController {
     }
     let cellID = "ActivationDetailsCellID"
     var selectedProxy: Proxy? = nil
+    var tokenRequests: [TokenRequest]?
     var proxies: [Proxy] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -42,7 +42,6 @@ class DashboardViewController: UIViewController {
             }
         }
     }
-    
     var filteredProxies: [Proxy] {
         get {
             let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active".localized : "expired".localized
@@ -51,6 +50,23 @@ class DashboardViewController: UIViewController {
     }
     
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
+    
+    @IBAction func tokenRequestAction(_ sender: UIButton) {
+        
+        ProxyService().getTokenRequestList(completionHandler: { result in
+            switch result {
+            case .success(let tokenRequests):
+                
+                //TODO (CVI): implement persistance and call the req when necessary
+                self.tokenRequests = tokenRequests as? [TokenRequest]
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
+                }
+            case .failure(_):
+                self.errorMessage = "Generic Error Message".localized
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,8 +138,19 @@ class DashboardViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ProxyDetailsSegueiID", let proxyDetailsController = segue.destination as? ProxyDetailsViewController {
-            proxyDetailsController.proxy = selectedProxy
+        
+        switch segue.identifier {
+            
+        case "ProxyDetailsSegueiID":
+            let nextVC = segue.destination as? ProxyDetailsViewController
+            nextVC?.proxy = selectedProxy
+            
+        case "showTokenRequestSegueID":
+            let nextVC = segue.destination as? TokenRequestListController
+            nextVC?.tokenRequests = tokenRequests
+            
+        default:
+            break
         }
     }
     

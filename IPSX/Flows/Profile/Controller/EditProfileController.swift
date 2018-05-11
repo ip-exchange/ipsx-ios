@@ -115,7 +115,9 @@ class EditProfileController: UIViewController {
             case .success(_):
                 self.getNewUserInfo() { success in
                     if success {
-                        self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
+                        }
                     }
                     else {
                         self.errorMessage = "User Info Error Message".localized
