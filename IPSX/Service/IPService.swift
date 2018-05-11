@@ -11,6 +11,8 @@ import SwiftyJSON
 
 class IPService {
     
+    //TODO (CVI): we should store the IP and make the request only when it changes
+    
     func getPublicIPAddress(completion:@escaping (_ error: Error?, _ ipAddress: String?)->()) {
         
         executeIPRequest(completion: { error, data in
@@ -30,67 +32,6 @@ class IPService {
             }
             else {
                 completion(CustomError.invalidJson, nil)
-            }
-        })
-    }
-    
-    func getCountryList(completion:@escaping (_ error: Error?, _ countryList: [String]?)->()) {
-        
-        let params: [String: String] = ["action": "cclist"]
-        
-        executeProxyRequest(requestType: .getCountryList, params: params, completion: { error, data in
-            
-            guard error == nil else {
-                completion(error, nil)
-                return
-            }
-            guard let data = data else {
-                completion(CustomError.noData, nil)
-                return
-            }
-            let json = JSON(data: data)
-            
-            if let countryArray = json.arrayObject as? [String] {
-                completion(nil, countryArray)
-            }
-            else {
-                completion(CustomError.invalidJson, nil)
-            }
-        })
-    }
-    
-    func getProxy(forParams request: ProxyRequest, completion:@escaping (_ error: Error?, _ port: String)->()) {
-        
-        let params: [String: String] = ["action"       : request.action,
-                                        "country"      : request.country,
-                                        "app_uid"      : request.appUid,
-                                        "proxy_ttl"    : request.proxyTTL,
-                                        "proxy_traffic": request.proxyTraffic,
-                                        "auth_ip"      : request.authIP]
-        
-        executeProxyRequest(requestType: .getProxy, params: params, completion: { error, data in
-            
-            guard error == nil else {
-                completion(error, "")
-                return
-            }
-            guard let data = data else {
-                completion(CustomError.noData, "")
-                return
-            }
-            
-            let json = JSON(data: data)
-            let port = json["port"].stringValue
-            let status = json["status"].stringValue
-            
-            if !status.contains("success") {
-                completion(CustomError.notSuccessful, "")
-            }
-            else if port != "" {
-                completion(nil, port)
-            }
-            else {
-                completion(CustomError.invalidJson, "")
             }
         })
     }
@@ -130,4 +71,3 @@ class IPService {
     }
 }
 extension IPService: IPRetrievable {}
-extension IPService: IPRequestCapable {}

@@ -13,13 +13,7 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var labelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomView: UIView!
     
-    @IBAction func signUpEmailTapped(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func loginTapped(_ sender: UIButton) {
-        
-    }
+    @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
     
     override func viewDidLoad() {
         super.viewDidLoad()

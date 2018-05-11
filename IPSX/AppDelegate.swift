@@ -13,10 +13,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        setKeychainAccessGroup()
+        UserManager.shared.retrieveAccessDetails()
         return true
+    }
+    
+    func setKeychainAccessGroup() {
+        
+        guard let appIdentifierPrefix = Bundle.main.object(forInfoDictionaryKey: "AppIdentifierPrefix") as? String, let bundleId = Bundle.main.bundleIdentifier else{
+            print("Keychain Error: could not load AppIdentifierPrefix used for setting group access")
+            return
+        }
+        let keychainGroup = appIdentifierPrefix + bundleId
+        KeychainWrapper.accessGroup = keychainGroup
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
