@@ -146,8 +146,9 @@ class DashboardViewController: UIViewController {
             nextVC?.proxy = selectedProxy
             
         case "showTokenRequestSegueID":
-            let nextVC = segue.destination as? TokenRequestListController
-            nextVC?.tokenRequests = tokenRequests
+            if let nextVC = segue.destination as? UINavigationController, let controller = nextVC.viewControllers.first as? TokenRequestListController, let requestsList = tokenRequests {
+                 controller.tokenRequests = requestsList
+            }
             
         default:
             break

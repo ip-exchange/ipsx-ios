@@ -30,4 +30,13 @@ extension DateFormatter {
         if components.m > 0 { minutes = "\(components.m) min" }
         return days+hours+minutes
     }
+    
+    class func dateStringForTokenRequests(date: Date) -> String
+    {
+        let dateFormat = "dd MMM yyyy  HH:mm"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        return dateFormatter.string(from: date)
+    }
+
 }
