@@ -252,6 +252,12 @@ extension DashboardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedProxy = filteredProxies[indexPath.item]
-        performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+        
+        if selectedProxy?.isTestProxy == true {
+            self.errorMessage = "Not yet implemented"
+        }
+        else {
+            performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+        }
     }
 }
