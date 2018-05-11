@@ -1,6 +1,6 @@
 # IPSX - iOS
 
-![License](https://img.shields.io/hexpm/l/plug.svg)
+[![License](https://img.shields.io/hexpm/l/plug.svg)](./LICENSE)
 
 Welcome to IPSX open source iOS app!
 
