@@ -15,9 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        //TODO (CVI): remove comment when sign in with a paid Apple Account
-        //setKeychainAccessGroup()
-        
+        setKeychainAccessGroup()
         UserManager.shared.retrieveAccessDetails()
         return true
     }
