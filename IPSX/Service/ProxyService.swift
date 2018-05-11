@@ -38,6 +38,8 @@ class ProxyService {
         
         var proxies: [Proxy] = []
         
+        //TODO (CC): refactor this into an extension !
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -84,9 +86,13 @@ class ProxyService {
         completionHandler(ServiceResult.success(proxies))
     }
     
+    //TODO (CC) move this !
+    
     private func secondsToDaysHoursMinutes (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 86400, (seconds % 86400) / 3600, (seconds % 3600) / 60)
     }
+    
+    //TODO (CC) move this !
     
     private func readableDaysHoursMinutes (components: (d: Int, h: Int, m: Int)) -> String {
         var days    = ""
@@ -140,6 +146,49 @@ class ProxyService {
                 return
             }
             completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func getTokenRequestList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        IPRequestManager.shared.executeRequest(requestType: .getTokenRequestList, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var tokenRequests: [TokenRequest] = []
+            for json in jsonArray {
+                
+                let ethID = json["usereth_id"].stringValue
+                let amount = json["amount_requested"].stringValue
+                let status = json["status"].stringValue
+                
+                let createdString = json["created_at"].stringValue
+                
+                //TODO (CC) move this !
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                
+                let createdDate = dateFormatter.date(from: createdString)
+                
+                let tokenRequest = TokenRequest(ethID: ethID, amount: amount, status: status, created: createdDate)
+                tokenRequests.append(tokenRequest)
+            }
+            completionHandler(ServiceResult.success(tokenRequests))
         })
     }
 

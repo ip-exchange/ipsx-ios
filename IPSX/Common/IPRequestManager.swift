@@ -106,6 +106,14 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             }
+            
+        case .getTokenRequestList:
+            
+            var url = Url.base + Url.tokenRequestArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
         }
         
         if let body = request?.body as? JSON {

@@ -8,10 +8,13 @@
 
 import UIKit
 
+//TODO: logic for datasource & update 
+
 class TokenRequestListController: UIViewController {
 
     let cellID = "TokenRequestCellID"
-
+    var tokenRequests: [TokenRequest]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
