@@ -1,6 +1,6 @@
 # IPSX - iOS
 
-[![License](https://img.shields.io/hexpm/l/plug.svg)]
+![License](https://img.shields.io/hexpm/l/plug.svg)
 
 Welcome to IPSX open source iOS app!
 
@@ -34,7 +34,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-For more information, please check our [LICENSE.txt](./LICENSE.txt)  file.
-
+For more information, please check our [LICENSE.txt](./LICENSE)  file.
 
 
