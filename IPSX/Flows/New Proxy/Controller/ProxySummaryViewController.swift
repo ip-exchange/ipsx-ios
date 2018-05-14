@@ -26,9 +26,9 @@ class ProxySummaryViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
-        let proxyPack = ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50")
-        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain")
-        proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
+//        let proxyPack = ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50")
+//        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain")
+//        proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
     }
         
     func configureUI() {
@@ -69,14 +69,14 @@ extension ProxySummaryViewController: UITableViewDataSource {
             
             switch indexPath.row {
             case 0:
-                let startDate = "20 Apr 2018" //proxy?.proxyDetails?.startDate to String with format dd MMM yyyy
-                let startHour = "12:00" //proxy?.proxyDetails?.startDate to String with format HH:mm
+                let startDate = proxy?.proxyDetails?.startDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
+                let startHour = proxy?.proxyDetails?.startDate?.dateToString(format: "HH:mm") ?? "12:00"
                 cell.configure(title: "Start Date", value: startDate, additionalDetail: startHour)
                 return cell
                 
             case 1:
-                let endDate = "20 Apr 2018" //proxy?.proxyDetails?.endDate to String with format dd MMM yyyy
-                let endHour = "13:00" //proxy?.proxyDetails?.endDate to String with format HH:mm
+                let endDate = proxy?.proxyDetails?.endDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
+                let endHour = proxy?.proxyDetails?.endDate?.dateToString(format: "HH:mm") ?? "12:00"
                 cell.configure(title: "End Date", value: endDate, additionalDetail: endHour)
                 return cell
                 

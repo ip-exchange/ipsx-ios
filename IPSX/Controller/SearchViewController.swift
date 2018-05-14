@@ -21,6 +21,7 @@ class SearchViewController: UIViewController {
     
     public var dismissOnSelect = false
     var isProxyFlow: Bool? = false
+    var proxy: Proxy? = nil
     
     var countries: [String] = []
     var filteredCountries: [String] = []
@@ -50,6 +51,12 @@ class SearchViewController: UIViewController {
     
     @IBAction func CloseButton(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == newProxyFlowID, let nextVC = segue.destination as? ProxySummaryViewController {
+            nextVC.proxy = proxy
+        }
     }
     
     @objc
@@ -104,6 +111,7 @@ extension SearchViewController: UITableViewDelegate {
                 dismiss(animated: true)
             }
         } else if isProxyFlow == true {
+            proxy?.proxyDetails?.country = selectedCountry ?? "Romania"
             performSegue(withIdentifier: newProxyFlowID, sender: nil)
         }
     }

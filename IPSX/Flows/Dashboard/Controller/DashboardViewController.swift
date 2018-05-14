@@ -26,7 +26,8 @@ class DashboardViewController: UIViewController {
     var hasTriedToRefreshToken = false
     var showLoader = true
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    
+    var countries: [String] = []
+
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -141,6 +142,13 @@ class DashboardViewController: UIViewController {
         
         switch segue.identifier {
             
+        case "FreeProxySegueID":
+            let navController = segue.destination as? UINavigationController
+            let destinationVC = navController?.viewControllers.first as? SearchViewController
+            destinationVC?.isProxyFlow = true
+            destinationVC?.countries = countries
+            destinationVC?.proxy = selectedProxy
+            
         case "ProxyDetailsSegueiID":
             let nextVC = segue.destination as? ProxyDetailsViewController
             nextVC?.proxy = selectedProxy
@@ -155,6 +163,29 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    //TODO (CC): This method is duplicated in Newproxy, make a country retrievable extenion
+    func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
+        
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            var proxyCountries: [String]?
+            switch result {
+            case .success(let countryList):
+                
+                if let countries = countryList as? [String] {
+                    proxyCountries = countries
+                }
+                else {
+                    self.errorMessage = "Generic Error Message".localized
+                }
+                
+            case .failure(_):
+                self.errorMessage = "Generic Error Message".localized
+            }
+            completion(proxyCountries)
+        })
+    }
+
     func getProxyDetails(completion:@escaping (Bool) -> ()) {
         
         ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
@@ -254,7 +285,21 @@ extension DashboardViewController: UITableViewDelegate {
         selectedProxy = filteredProxies[indexPath.item]
         
         if selectedProxy?.isTestProxy == true {
-            self.errorMessage = "Not yet implemented"
+            selectedProxy?.proxyDetails?.startDate = Date()
+            selectedProxy?.proxyDetails?.endDate   = Date().addingTimeInterval(3600)
+            //TODO (CVI): Determine when should we load the countries
+            //Temp solution:
+            
+            retrieveProxyCountries() { countries in
+                
+                if let countries = countries {
+                    
+                    self.countries = countries
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "FreeProxySegueID", sender: self)
+                    }
+                }
+            }
         }
         else {
             performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
