@@ -31,55 +31,8 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
         var postData: Data?
         
         switch requestType {
-            
-        case .getPublicIP:
-            request = Request(url:Url.publicIP, httpMethod: "GET")
-            
-        case .register:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            
-        case .getUserCountryList:
-            request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            
-        case .updateProfile:
-            let body = JSON(bodyParams)
-            var url = Url.base + Url.userInfoArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .updateETHaddress:
-            let body = JSON(bodyParams)
-            var url = Url.base + Url.updateEthAddressArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .getProxyCountryList:
-            var url = Url.base + Url.proxyCountriesArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-    
-        case .addEthAddress:
-            
-            let body = JSON(bodyParams)
-            var url = Url.base + Url.ethAddressArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            }
-         
-        case .getETHaddresses:
-            var url = Url.base + Url.ethAddressArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
+        
+        //Login Requests
             
         case .login:
             let body = JSON(bodyParams)
@@ -92,11 +45,26 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
             
-        case .retrieveProxies:
-            var url = Url.base + Url.proxiesArgs
+        //Register Requests
+            
+        case .getPublicIP:
+            request = Request(url:Url.publicIP, httpMethod: "GET")
+            
+        case .register:
+            let body = JSON(bodyParams)
+            request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+          
+        //User Info Requests
+            
+        case .getUserCountryList:
+            request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            
+        case .updateProfile:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.userInfoArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .userInfo:
@@ -105,6 +73,57 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+            
+        //Proxy Requests
+            
+        case .getProxyCountryList:
+            var url = Url.base + Url.proxyCountriesArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .retrieveProxies:
+            var url = Url.base + Url.proxiesArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        //ETH addresses Requests
+            
+        case .updateEthAddress:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.updateEthAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .deleteEthAddress:
+            var url = Url.base + Url.updateEthAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON)
+            }
+            
+        case .addEthAddress:
+            
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.ethAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            }
+         
+        case .getEthAddress:
+            var url = Url.base + Url.ethAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+        
+        //Token Requests
             
         case .requestTokens:
             
@@ -171,7 +190,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                         print(NSDate(), "\(requestType)" + "Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
                         
-                    case 422 where requestType == .addEthAddress || requestType == .updateETHaddress:
+                    case 422 where requestType == .addEthAddress || requestType == .updateEthAddress:
                         print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used ")
                         completion(CustomError.ethAddressAlreadyUsed, data)
                         

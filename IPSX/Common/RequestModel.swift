@@ -95,8 +95,9 @@ public enum IPRequestType: Int {
     case updateProfile
     case requestTokens
     case addEthAddress
-    case getETHaddresses
-    case updateETHaddress
+    case getEthAddress
+    case updateEthAddress
+    case deleteEthAddress
     case getUserCountryList
     case getProxyCountryList
     case getTokenRequestList

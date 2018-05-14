@@ -118,7 +118,7 @@ class AddWalletController: UIViewController {
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         let ethID = ethereumAddress?.ethID ?? ""
         
-        RegisterService().updateETHaddress(ethID: ethID, alias: alias, address: address, completionHandler: { result in
+        UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             switch result {
                 
             case .success(_):

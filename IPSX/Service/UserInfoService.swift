@@ -63,7 +63,7 @@ class UserInfoService {
         let params: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                          "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .getETHaddresses, urlParams: params, completion: { error, data in
+        IPRequestManager.shared.executeRequest(requestType: .getEthAddress, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -127,6 +127,29 @@ class UserInfoService {
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         IPRequestManager.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func updateETHaddress(requestType: IPRequestType, ethID: String, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["ETH_ID"       : ethID,
+                                            "USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: String] = ["address" : address,
+                                            "alias"   : alias]
+        
+        IPRequestManager.shared.executeRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
