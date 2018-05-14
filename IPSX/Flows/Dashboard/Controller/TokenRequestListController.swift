@@ -51,7 +51,7 @@ class TokenRequestCell: UITableViewCell {
             dateLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
         }
         quantityLabel.text = "Requested: " + tokenRequest.amount
-        pendingView.isHidden   = tokenRequest.status == "pending"
-        completedView.isHidden = tokenRequest.status == "completed"
+        pendingView.isHidden   = tokenRequest.status != "pending"
+        completedView.isHidden = tokenRequest.status != "completed"
     }
 }

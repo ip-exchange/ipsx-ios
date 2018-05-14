@@ -78,7 +78,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProfileWalletCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EthWalletCell
         let ethAddress = ethAdresses[indexPath.item]
         cell.configure(address: ethAddress)
         return cell
@@ -93,7 +93,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
-class ProfileWalletCell: UITableViewCell {
+class EthWalletCell: UITableViewCell {
     
     @IBOutlet weak var aliasLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!

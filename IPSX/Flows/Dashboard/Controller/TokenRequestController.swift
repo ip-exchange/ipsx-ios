@@ -10,19 +10,50 @@ import UIKit
 
 class TokenRequestController: UIViewController {
 
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var selectedWalletAlias: UILabel!
+    @IBOutlet weak var selectedWalletAddress: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dropdownView: UIView!
+    @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
+        didSet { topConstraint = dropDownTopConstraint }
+    }
     
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    
+    let cellID = "ETHAddressCellID"
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    var ethAdresses: [EthAddress] = []
+    private var selectedAddress: EthAddress?
+
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     var errorMessage: String? {
         didSet {
-            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
     @IBAction func submitAction(_ sender: UIButton) {
         
         //TODO (CVI): this is for testing
-        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.ethID ?? ""
+        let ethID  = selectedAddress?.ethID ?? ""
         let amount = amountTextField.text ?? "0"
+        
+        guard Int(amount)! >= 20, Int(amount)! <= 5000 else {
+            toast?.showToastAlert("The amount should be between 20 and 5000".localized, autoHideAfter: 5)
+            return
+        }
+        
+        guard ethID.count > 0 else {
+            toast?.showToastAlert("Select a valid ETH wallet".localized, autoHideAfter: 5)
+            return
+        }
         
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
             switch result {
@@ -38,9 +69,26 @@ class TokenRequestController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.address ?? ""
+        selectedWalletAddress.text = ethID
+        tableViewBottomConstraint.constant = tableView.frame.size.height
+        tableViewTopConstraint.constant = -tableView.frame.size.height
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: dropdownView, text: "")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selectedAddress = nil
+        if let addresses = userInfo?.ethAddresses {
+            ethAdresses = addresses.filter { return  $0.validationState == .verified }
+            tableView.reloadData()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     
@@ -48,5 +96,58 @@ class TokenRequestController: UIViewController {
     
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func dropdownAction(_ sender: Any) {
+        updateDropDown(visible: true)
+    }
+    
+    fileprivate func updateDropDown(visible: Bool) {
+        dropDownTopConstraint.constant     = visible ? -100 : 0
+        tableViewBottomConstraint.constant = visible ?    0 : tableView.frame.size.height
+        tableViewTopConstraint.constant    = visible ?    0 : -tableView.frame.size.height
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view?.layoutIfNeeded()
+            self.tableView.alpha    = visible ? 1 : 0
+            self.dropdownView.alpha = visible ? 0 : 1
+            self.backButton.alpha   = visible ? 0 : 1
+            self.submitButton.alpha = visible ? 0 : 1
+        }, completion: { completed in
+        })
+    }
+}
+
+extension TokenRequestController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ethAdresses.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EthWalletCell
+        let ethAddress = ethAdresses[indexPath.item]
+        cell.configure(address: ethAddress)
+        return cell
+    }
+}
+
+extension TokenRequestController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedAddress = ethAdresses[indexPath.item]
+        selectedWalletAddress.text = selectedAddress?.address
+        selectedWalletAlias.text = selectedAddress?.alias
+        updateDropDown(visible: false)
+    }
+}
+
+extension TokenRequestController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }
