@@ -50,6 +50,14 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
             
+        case .updateETHaddress:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.updateEthAddressArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         case .getProxyCountryList:
             var url = Url.base + Url.proxyCountriesArgs
             if let params = urlParams as? [String: String] {
@@ -163,7 +171,7 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
                         print(NSDate(), "\(requestType)" + "Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
                         
-                    case 422 where requestType == .addEthAddress:
+                    case 422 where requestType == .addEthAddress || requestType == .updateETHaddress:
                         print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used ")
                         completion(CustomError.ethAddressAlreadyUsed, data)
                         

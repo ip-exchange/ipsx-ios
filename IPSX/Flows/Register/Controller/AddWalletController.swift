@@ -108,6 +108,29 @@ class AddWalletController: UIViewController {
     }
     
     @IBAction func saveAction(_ sender: UIButton) {
+        
+        let alias = walletNameRichTextField.contentTextField?.text ?? ""
+        let address = ethAddresRichTextField.contentTextField?.text ?? ""
+        let ethID = ethereumAddress?.ethID ?? ""
+        
+        RegisterService().updateETHaddress(ethID: ethID, alias: alias, address: address, completionHandler: { result in
+            switch result {
+                
+            case .success(_):
+                
+                //TODO (CC)
+                print("TODO (CC)")
+                
+            case .failure(let error):
+                
+                switch error {
+                case CustomError.ethAddressAlreadyUsed:
+                    self.errorMessage = "ETH Address Already Used Error Message".localized
+                default:
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            }
+        })
     }
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
@@ -131,17 +154,12 @@ class AddWalletController: UIViewController {
                 
             case .failure(let error):
                 
-                guard let customError = error as? CustomError else {
-                    self.errorMessage = "Generic Error Message".localized
-                    return
-                }
-                switch customError {
-                case .ethAddressAlreadyUsed:
+                switch error {
+                case CustomError.ethAddressAlreadyUsed:
                     self.errorMessage = "ETH Address Already Used Error Message".localized
                     
                 default:
                     self.errorMessage = "Generic Error Message".localized
-                    break
                 }
             }
         })

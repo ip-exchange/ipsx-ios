@@ -32,6 +32,7 @@ public struct Url {
     public static let userCountriesArgs = "/countries"
     public static let proxyCountriesArgs = "/proxies/countries?access_token=%ACCESS_TOKEN%"
     public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
+    public static let updateEthAddressArgs = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
     public static let logoutArgs = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
@@ -95,6 +96,7 @@ public enum IPRequestType: Int {
     case requestTokens
     case addEthAddress
     case getETHaddresses
+    case updateETHaddress
     case getUserCountryList
     case getProxyCountryList
     case getTokenRequestList
