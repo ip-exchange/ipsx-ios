@@ -12,11 +12,21 @@ import UIKit
 
 class TokenRequestListController: UIViewController {
 
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var noItemsLabel: UILabel!
+    
+    
     let cellID = "TokenRequestCellID"
     var tokenRequests: [TokenRequest] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        separatorView.isHidden = tokenRequests.count < 1
+        noItemsLabel.isHidden = tokenRequests.count > 0
     }
 
 }
@@ -43,6 +53,7 @@ class TokenRequestCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var completedView: RoundedView!
     @IBOutlet weak var pendingView: RoundedView!
+    @IBOutlet weak var canceledView: RoundedView!
     
     func configure(tokenRequest: TokenRequest) {
         //TODO (CC): Get the wallet name
@@ -53,5 +64,6 @@ class TokenRequestCell: UITableViewCell {
         quantityLabel.text = "Requested: " + tokenRequest.amount
         pendingView.isHidden   = tokenRequest.status != "pending"
         completedView.isHidden = tokenRequest.status != "completed"
+        canceledView.isHidden  = tokenRequest.status != "rejected"
     }
 }

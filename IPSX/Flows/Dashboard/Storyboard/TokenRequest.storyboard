@@ -71,6 +71,12 @@
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on the + button in the right upper corner to create a token request!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGt-lo-kkP">
+                                <rect key="frame" x="16" y="140" width="343" height="38.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXc-1c-sUJ" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="125.5" width="375" height="0.5"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
@@ -136,6 +142,25 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ppd-gd-fte" userLabel="Canceled View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                    <rect key="frame" x="285" y="21" width="75" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CANCELED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmB-BP-Tqh">
+                                                            <rect key="frame" x="10" y="4" width="55" height="12"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.81176470588235294" green="0.054901960784313725" blue="0.054901960784313725" alpha="0.099444322183098594" colorSpace="calibratedRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MxC-U5-3W6" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                     <rect key="frame" x="302" y="21" width="58" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -164,6 +189,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="aliasLabel" destination="ZLo-2v-P8T" id="jet-ra-OhT"/>
+                                            <outlet property="canceledView" destination="Ppd-gd-fte" id="GJd-fR-yKe"/>
                                             <outlet property="completedView" destination="eYD-wI-ri8" id="5Lp-OU-EU8"/>
                                             <outlet property="dateLabel" destination="rOV-Bg-xi1" id="a3f-3d-AmB"/>
                                             <outlet property="pendingView" destination="MxC-U5-3W6" id="L7I-fb-D4N"/>
@@ -183,10 +209,13 @@
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="bottom" secondItem="cOM-dK-uZM" secondAttribute="bottom" id="6Oy-Sb-pZi"/>
                             <constraint firstItem="fqy-AL-kfs" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" id="76Q-kK-QIU"/>
                             <constraint firstItem="cOM-dK-uZM" firstAttribute="top" secondItem="YI5-I1-vzb" secondAttribute="bottom" constant="13" id="9ib-0B-4k0"/>
+                            <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="HGt-lo-kkP" secondAttribute="trailing" constant="16" id="9qj-1T-h8V"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="cOM-dK-uZM" secondAttribute="trailing" id="Cvr-yA-M39"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="fqy-AL-kfs" secondAttribute="trailing" id="DGP-w4-qgi"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="jXc-1c-sUJ" secondAttribute="trailing" id="Dly-E1-dU4"/>
+                            <constraint firstItem="HGt-lo-kkP" firstAttribute="top" secondItem="YI5-I1-vzb" secondAttribute="bottom" constant="27" id="EFJ-lQ-vmw"/>
                             <constraint firstItem="cOM-dK-uZM" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" id="fbX-33-L0j"/>
+                            <constraint firstItem="HGt-lo-kkP" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" constant="16" id="gZc-cM-e7A"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="top" constant="50" id="kZ8-Mj-hYZ"/>
                             <constraint firstItem="cOM-dK-uZM" firstAttribute="top" secondItem="jXc-1c-sUJ" secondAttribute="bottom" id="qvY-5X-nu8"/>
                             <constraint firstItem="YI5-I1-vzb" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="bottom" constant="27" id="w6X-JF-RUg"/>
@@ -195,11 +224,15 @@
                         <viewLayoutGuide key="safeArea" id="Cm1-31-EpC"/>
                     </view>
                     <navigationItem key="navigationItem" id="m9f-76-UO4"/>
+                    <connections>
+                        <outlet property="noItemsLabel" destination="HGt-lo-kkP" id="dlq-Lg-6tb"/>
+                        <outlet property="separatorView" destination="jXc-1c-sUJ" id="KlJ-6w-Nec"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pq-8Y-JIy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lDk-bw-qv3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7572" y="-155"/>
+            <point key="canvasLocation" x="7572" y="-155.17241379310346"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7QT-Sd-zRa">
@@ -476,6 +509,8 @@
                         <outlet property="amountTextField" destination="Yc9-1x-JSM" id="tCZ-aK-6Fa"/>
                         <outlet property="backButton" destination="mSS-xQ-9qq" id="ivP-ZG-Rhl"/>
                         <outlet property="dropDownTopConstraint" destination="xur-9j-jbh" id="BCW-uf-LbU"/>
+                        <outlet property="dropdownArrow" destination="ZtZ-8m-RFJ" id="XWB-Ap-SZh"/>
+                        <outlet property="dropdownButton" destination="qkG-za-HGq" id="ODl-id-tN6"/>
                         <outlet property="dropdownView" destination="mHQ-f6-bq2" id="53r-uF-9jD"/>
                         <outlet property="selectedWalletAddress" destination="xdZ-yt-JL6" id="cPA-fY-GN0"/>
                         <outlet property="selectedWalletAlias" destination="f4t-k0-lbj" id="ZEP-GY-KGS"/>

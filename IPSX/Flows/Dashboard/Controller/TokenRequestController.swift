@@ -16,6 +16,8 @@ class TokenRequestController: UIViewController {
     @IBOutlet weak var selectedWalletAddress: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dropdownView: UIView!
+    @IBOutlet weak var dropdownArrow: UIImageView!
+    @IBOutlet weak var dropdownButton: UIButton!
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
         didSet { topConstraint = dropDownTopConstraint }
     }
@@ -69,10 +71,7 @@ class TokenRequestController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.address ?? ""
-        selectedWalletAddress.text = ethID
-        tableViewBottomConstraint.constant = tableView.frame.size.height
-        tableViewTopConstraint.constant = -tableView.frame.size.height
+        updateUI()
     }
 
     override func viewDidLayoutSubviews() {
@@ -85,7 +84,12 @@ class TokenRequestController: UIViewController {
         selectedAddress = nil
         if let addresses = userInfo?.ethAddresses {
             ethAdresses = addresses.filter { return  $0.validationState == .verified }
+            selectedAddress = ethAdresses.first
             tableView.reloadData()
+        }
+        if ethAdresses.count < 2 {
+            dropdownArrow.isHidden = true
+            dropdownButton.isHidden = true
         }
     }
     
@@ -100,6 +104,13 @@ class TokenRequestController: UIViewController {
     
     @IBAction func dropdownAction(_ sender: Any) {
         updateDropDown(visible: true)
+    }
+    
+    private func updateUI() {
+        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.address ?? ""
+        selectedWalletAddress.text = ethID
+        tableViewBottomConstraint.constant = tableView.frame.size.height
+        tableViewTopConstraint.constant = -tableView.frame.size.height
     }
     
     fileprivate func updateDropDown(visible: Bool) {
