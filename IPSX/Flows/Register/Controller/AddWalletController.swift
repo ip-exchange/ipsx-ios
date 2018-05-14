@@ -19,6 +19,7 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint?
     @IBOutlet weak var loginAnotherAccButton: RoundedButton!
     @IBOutlet weak var doneButton: UIButton?
+    @IBOutlet weak var saveButton: UIButton?
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -58,6 +59,7 @@ class AddWalletController: UIViewController {
         continueBottomDist = bottomContinueConstraint?.constant ?? 0
         observreFieldsState()
         if let address = ethereumAddress {
+            fieldsStateDic = ["walletName" : true, "ethAddress" : true]
             walletNameRichTextField.contentTextField?.text = address.alias
             ethAddresRichTextField.contentTextField?.text = address.address
         }
@@ -88,18 +90,21 @@ class AddWalletController: UIViewController {
     }
     
     private func setupTextViews() {
-        walletNameRichTextField.nextResponderField    = ethAddresRichTextField.contentTextField
-        ethAddresRichTextField.validationRegex        = RichTextFieldView.validEthAddress
+        walletNameRichTextField.nextResponderField = ethAddresRichTextField.contentTextField
+        walletNameRichTextField.validationRegex    = RichTextFieldView.validName
+        ethAddresRichTextField.validationRegex     = RichTextFieldView.validEthAddress
     }
     
     private func observreFieldsState() {
         walletNameRichTextField.onFieldStateChange = { state in
             self.fieldsStateDic["walletName"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.walletNameRichTextField.contentTextField?.text != self.ethereumAddress?.alias
         }
         ethAddresRichTextField.onFieldStateChange = { state in
             self.fieldsStateDic["ethAddress"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address
         }
     }
     
@@ -118,9 +123,10 @@ class AddWalletController: UIViewController {
                 
             case .success(_):
                 
-                //TODO (CC)
-                print("TODO (CC)")
-                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+
             case .failure(let error):
                 
                 switch error {
