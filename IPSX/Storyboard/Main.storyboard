@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zhc-5m-q3f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U2v-CW-dRi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -513,6 +513,45 @@
             </objects>
             <point key="canvasLocation" x="-1546.4000000000001" y="815.76354679802955"/>
         </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="5tK-Vf-qI4">
+            <objects>
+                <viewController id="U2v-CW-dRi" customClass="LoadingViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cal-BY-lai">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPExchange" translatesAutoresizingMaskIntoConstraints="NO" id="BeR-jj-Hrg">
+                                <rect key="frame" x="84" y="323" width="206" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="WlF-7j-77m"/>
+                                    <constraint firstAttribute="width" constant="206" id="nO6-3Y-Ybd"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading, please wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK4-hy-ybg">
+                                <rect key="frame" x="120" y="631" width="135" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BeR-jj-Hrg" firstAttribute="centerY" secondItem="tpc-I8-m3e" secondAttribute="centerY" id="Ril-GR-12Z"/>
+                            <constraint firstItem="aK4-hy-ybg" firstAttribute="centerX" secondItem="tpc-I8-m3e" secondAttribute="centerX" id="VBa-u0-POC"/>
+                            <constraint firstItem="BeR-jj-Hrg" firstAttribute="centerX" secondItem="tpc-I8-m3e" secondAttribute="centerX" id="uhw-Ld-Paw"/>
+                            <constraint firstItem="tpc-I8-m3e" firstAttribute="bottom" secondItem="aK4-hy-ybg" secondAttribute="bottom" constant="20" id="vZ1-5L-b6z"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tpc-I8-m3e"/>
+                    </view>
+                    <connections>
+                        <segue destination="zhc-5m-q3f" kind="presentation" identifier="TabbarSegueID" modalTransitionStyle="flipHorizontal" id="IFJ-cL-CAB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ouh-Vg-AUG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1255" y="16"/>
+        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="C2l-Kq-4bT">
             <objects>
@@ -982,6 +1021,7 @@
         <image name="CardId" width="36" height="31"/>
         <image name="Dashboard" width="24" height="28"/>
         <image name="EditProfile" width="31" height="32"/>
+        <image name="IPExchange" width="206" height="40"/>
         <image name="IPSXRightLogo" width="21" height="21"/>
         <image name="LogoLarge" width="72" height="72"/>
         <image name="NewProxy" width="28" height="28"/>
