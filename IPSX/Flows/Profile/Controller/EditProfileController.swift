@@ -71,7 +71,7 @@ class EditProfileController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Saved")
+        createToastAlert(onTopOf: separatorView, text: "Saved".localized)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -91,7 +91,7 @@ class EditProfileController: UIViewController {
         if let selectedCountry = searchController?.selectedCountry {
             countryName = selectedCountry
         }
-        selectedCountryLabel.text = countryName ?? "Select a country"
+        selectedCountryLabel.text = countryName ?? "Select a country".localized
         emailTextField.text       = userInfo?.email
         firstNameTextField.text   = userInfo?.firstName
         lastNameTextField.text    = userInfo?.lastName

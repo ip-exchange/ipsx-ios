@@ -46,7 +46,7 @@ class NewProxyController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Dummy")
+        createToastAlert(onTopOf: separatorView, text: "")
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
     }
     
@@ -127,7 +127,7 @@ extension NewProxyController: UITableViewDelegate {
         if countries.count > 0 {
             self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
         } else {
-            toast?.showToastAlert("Wait for countries list to be loaded.", autoHideAfter: 5)
+            toast?.showToastAlert("Wait for countries list to be loaded.".localized, autoHideAfter: 5)
         }
     }
 }
