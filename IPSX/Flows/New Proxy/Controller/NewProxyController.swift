@@ -46,10 +46,15 @@ class NewProxyController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Dummy")
+        createToastAlert(onTopOf: separatorView, text: "")
         tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        requestCountriesList()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID {
@@ -60,7 +65,20 @@ class NewProxyController: UIViewController {
         }
     }
     
-    func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
+    private func requestCountriesList() {
+        
+        guard self.countries.count == 0 else { return }
+        
+        loadingView.startAnimating()
+        retrieveProxyCountries() { countries in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            if let countries = countries {
+                self.countries = countries
+            }
+        }
+    }
+    
+    private func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
         
         ProxyService().getProxyCountryList(completionHandler: { result in
             
@@ -104,21 +122,12 @@ extension NewProxyController: UITableViewDataSource {
 extension NewProxyController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         tableView.deselectRow(at: indexPath, animated: false)
-        
-        //TODO (CVI): Determine when should we load the countries
-        //Temp solution:
-        
-        retrieveProxyCountries() { countries in
-            
-            if let countries = countries {
-                
-                self.countries = countries
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
-                }
-            }
+        if countries.count > 0 {
+            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+        } else {
+            toast?.showToastAlert("Wait for countries list to be loaded.".localized, autoHideAfter: 5)
         }
     }
 }
