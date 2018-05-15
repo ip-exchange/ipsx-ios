@@ -10,10 +10,21 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
@@ -21,7 +32,7 @@ class ProfileViewController: UIViewController {
     
     var errorMessage: String? {
         didSet {
-            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
 
@@ -45,6 +56,11 @@ class ProfileViewController: UIViewController {
         updateUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedAddress = nil
@@ -90,6 +106,16 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = ethAdresses[indexPath.item]
         performSegue(withIdentifier: "walletViewIdentifier", sender: self)
+    }
+}
+
+extension ProfileViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topImageView)
+        }
     }
 }
 
