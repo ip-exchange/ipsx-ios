@@ -69,6 +69,8 @@ class ProfileViewController: UIViewController {
         if let addresses = userInfo?.ethAddresses {
             ethAdresses = addresses
             tableView.reloadData()
+        } else {
+            shouldRefresh = true
         }
     }
     
