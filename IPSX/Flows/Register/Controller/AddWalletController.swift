@@ -31,6 +31,8 @@ class AddWalletController: UIViewController {
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
     
+    var profileContext = false
+    
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
@@ -116,6 +118,11 @@ class AddWalletController: UIViewController {
     
     @IBAction func saveAction(_ sender: UIButton) {
         
+        guard ethereumAddress != nil else {
+            doneAction(sender)
+            return
+        }
+        
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         let ethID = ethereumAddress?.ethID ?? ""
@@ -157,7 +164,11 @@ class AddWalletController: UIViewController {
                 
             case .success(_):
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                    if self.profileContext {
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                    }
                 }
                 
             case .failure(let error):

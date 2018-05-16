@@ -28,6 +28,8 @@ class ProfileViewController: UIViewController {
     let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
+    var shouldRefresh = false
+    
     private var selectedAddress: EthAddress?
     
     var errorMessage: String? {
@@ -73,6 +75,10 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topImageView.createParticlesAnimation()
+        if shouldRefresh {
+            shouldRefresh = false
+            refreshETHAdresses()
+        }
     }
     
     private func updateUI() {
@@ -85,10 +91,34 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func refreshETHAdresses() {
+        loadingView.startAnimating()
+        UserInfoService().retrieveETHaddresses() { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let ethAddresses):
+                guard let ethAddresses = ethAddresses as? [EthAddress] else { return }
+                UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
+                if let addresses = self.userInfo?.ethAddresses {
+                    self.ethAdresses = addresses
+                 }
+            case .failure(_):
+                print("Generic Error Message".localized)
+            }
+            DispatchQueue.main.async { self.tableView.reloadData() }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "walletViewIdentifier", let addController = segue.destination as? AddWalletController {
             addController.ethereumAddress = selectedAddress
+            addController.profileContext  = true
+            shouldRefresh = true
         }
+        if segue.identifier == "walletAddIdentifier", let addController = segue.destination as? AddWalletController {
+            addController.profileContext  = true
+            shouldRefresh = true
+       }
     }
 }
 
@@ -111,6 +141,42 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = ethAdresses[indexPath.item]
         performSegue(withIdentifier: "walletViewIdentifier", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return ethAdresses.count > 1
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            let ethAddress = ethAdresses[indexPath.item]
+            loadingView.startAnimating()
+            UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethAddress.ethID) { result in
+                
+                DispatchQueue.main.async { self.loadingView.stopAnimating() }
+                
+                switch result {
+                    
+                case .success(_):
+                    
+                    DispatchQueue.main.async {
+                        self.ethAdresses.remove(at: indexPath.item)
+                        self.refreshETHAdresses()
+                    }
+                    
+                case .failure(let error):
+                    
+                    switch error {
+                    case CustomError.ethAddressAlreadyUsed:
+                        self.errorMessage = "ETH Address Delete Failed Error Message".localized
+                    default:
+                        self.errorMessage = "Generic Error Message".localized
+                    }
+                }
+            }
+        }
     }
 }
 
