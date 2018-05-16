@@ -11,6 +11,7 @@ import UIKit
 @IBDesignable
 class RegisterCredentialsController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var passRichTextField: RichTextFieldView!
     @IBOutlet weak var passCheckRichTextField: RichTextFieldView!
@@ -43,6 +44,7 @@ class RegisterCredentialsController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
         setupTextViews()
     }
     

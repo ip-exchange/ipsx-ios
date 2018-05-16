@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 public extension UIView {
     
@@ -26,4 +27,20 @@ public extension UIView {
         return view
     }
     
+    public func createParticlesAnimation() {
+        
+        if subviews.first is WKWebView { return }
+        
+        let webConfiguration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: bounds, configuration: webConfiguration)
+        webView.alpha = 0
+        UIView.animate(withDuration: 3, delay: 0, options: .curveEaseIn, animations: {
+            webView.alpha = 1
+        })
+        insertSubview(webView, at: 0)
+        if let url = Bundle.main.url(forResource: "background", withExtension: "html") {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+    }
 }

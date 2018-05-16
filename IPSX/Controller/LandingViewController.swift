@@ -12,6 +12,7 @@ class LandingViewController: UIViewController {
     
     @IBOutlet weak var labelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
     
@@ -19,7 +20,12 @@ class LandingViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
+   }
+
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
