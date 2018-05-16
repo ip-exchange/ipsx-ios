@@ -162,4 +162,5 @@ class UserInfoService {
             completionHandler(ServiceResult.success(true))
         })
     }
+
 }
