@@ -34,7 +34,7 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             initDataForCurrentUser()
         }
         else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
                 self.performSegue(withIdentifier: "TabbarSegueID", sender: self)
             }
         }
