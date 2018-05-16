@@ -15,9 +15,17 @@ class TokenRequestListController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noItemsLabel: UILabel!
     
-    
     let cellID = "TokenRequestCellID"
     var tokenRequests: [TokenRequest] = []
+    
+    //TODO (CC): implement toast alert
+    var errorMessage: String? {
+        didSet {
+            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+    
+    //TODO (CC): add loadingView
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +36,33 @@ class TokenRequestListController: UIViewController {
         separatorView.isHidden = tokenRequests.count < 1
         noItemsLabel.isHidden = tokenRequests.count > 0
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showCreateTokenSegueID" {
+            let nextVC = segue.destination as? TokenRequestController
+            nextVC?.onDismiss = { hasSubmittedRequest in
+                
+                if hasSubmittedRequest {
+                
+//                    self.loadingView.startAnimating()
+                    
+                    ProxyService().getTokenRequestList(completionHandler: { result in
+                        
+//                      self.loadingView.stopAnimating()
+                        
+                        switch result {
+                        case .success(let tokenRequests):
+                            UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                            
+                        case .failure(_):
+                            self.errorMessage = "Refresh Data Error Message".localized
+                        }
+                    })
+                }
+            }
+        }
+    }
 }
 
 extension TokenRequestListController: UITableViewDataSource {

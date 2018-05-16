@@ -11,17 +11,22 @@ import Foundation
 public class UserManager: NSObject {
 
     public static var shared = UserManager()
+    private override init() {}
     
-    var userId: String
-    var accessToken: String
-    var email: String
-    var password: String
-    var proxies: [Proxy]
+    var userId: String = ""
+    var accessToken: String = ""
+    var email: String = ""
+    var password: String = ""
     var userInfo: UserInfo?
+    var tokenRequests: [TokenRequest]?
+    var ethAddresses: [EthAddress]?
+    var proxies: [Proxy]?
+    var userCountries: [[String: String]]?
+    var proxyCountries: [String]?
     
     var hasEthAddress: Bool {
         get {
-            let noOfEthAddresses = userInfo?.ethAddresses?.count ?? 0
+            let noOfEthAddresses = ethAddresses?.count ?? 0
             return noOfEthAddresses > 0
         }
     }
@@ -35,21 +40,10 @@ public class UserManager: NSObject {
         }
     }
     
-    private override init() {
-        userId = ""
-        accessToken = ""
-        password = ""
-        email = ""
-        proxies = []
-        super.init()
-    }
-    
-    func storeProxyDetails(proxies: [Proxy]) {
-        self.proxies = proxies
-    }
-    
-    func storeEthAddresses(ethAddresses: [EthAddress]) {
-        userInfo?.setEthAddresses(ethAddresses: ethAddresses)
+    var hasTestProxyAvailable: Bool {
+        get {
+            return UserManager.shared.userInfo?.proxyTest == ""
+        }
     }
     
     func storeAccessDetails(userId: String, accessToken: String, email: String, password: String) {
@@ -83,12 +77,16 @@ public class UserManager: NSObject {
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.accessToken)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.email)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.password)
+        
         userId = ""
         accessToken = ""
         email = ""
         password = ""
-        proxies = []
+        proxies = nil
+        tokenRequests = nil
+        userCountries = nil
+        ethAddresses = nil
+        proxyCountries = nil
         userInfo = nil
     }
-    
 }

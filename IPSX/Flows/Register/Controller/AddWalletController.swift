@@ -30,6 +30,7 @@ class AddWalletController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
+    var onDismiss: ((_ hasUpdatedETH: Bool)->())?
     
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
@@ -126,6 +127,7 @@ class AddWalletController: UIViewController {
             case .success(_):
                 
                 DispatchQueue.main.async {
+                    self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
 
@@ -152,7 +154,7 @@ class AddWalletController: UIViewController {
         loadingView.startAnimating()
         RegisterService().addEthAdress(address: address, alias: alias, completionHandler: { result in
             
-            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            self.loadingView.stopAnimating() 
             switch result {
                 
             case .success(_):

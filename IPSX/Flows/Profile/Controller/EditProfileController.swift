@@ -27,7 +27,7 @@ class EditProfileController: UIViewController {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     private var searchController: SearchViewController?
     let countrySelectionID = "SearchSegueID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
@@ -39,29 +39,7 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func selectCountryAction(_ sender: UIButton) {
-        
-        //TODO (CVI): Determine when should we load the countries
-        //Temp solution:
-        
-        if UserDefaults.standard.getUserCountryList().count == 0 {
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                switch result {
-                case .success(let countryList):
-                    guard let countryList = countryList as? [[String: String]] else {
-                        self.errorMessage = "Generic Error Message".localized
-                        return
-                    }
-                    UserDefaults.standard.storeUserCountryList(countryArray: countryList)
-                    self.showCountriesScreen()
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
-        }
-        else {
-            showCountriesScreen()
-        }
+        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
     }
     
     override func viewDidLoad() {
@@ -77,12 +55,6 @@ class EditProfileController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateFields(userInfo: userInfo)
-    }
-    
-    func showCountriesScreen() {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
-        }
     }
     
     private func updateFields(userInfo: UserInfo?) {
@@ -110,12 +82,13 @@ class EditProfileController: UIViewController {
         loadingView.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
             
-            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            self.loadingView.stopAnimating() 
             switch result {
             case .success(_):
                 self.getNewUserInfo() { success in
                     if success {
                         DispatchQueue.main.async {
+                            self.onDismiss?(true)
                             self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
                         }
                     }
@@ -138,7 +111,8 @@ class EditProfileController: UIViewController {
             case .failure(_):
                 completion(false)
                 
-            case .success(_):
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
                 completion(true)
             }
         })

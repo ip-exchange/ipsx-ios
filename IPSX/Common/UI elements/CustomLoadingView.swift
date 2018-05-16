@@ -8,23 +8,27 @@
 
 import UIKit
 
-
 class CustomLoadingView: UIView {
     
     public func startAnimating() {
-        guard subCircle1 != nil, subCircle2 != nil else { return }
-        self.alpha = 1
-        rotationAnimation(duration: 2, layer: layer)
-        rotationAnimation(duration: 1, layer: subCircle1)
-        rotationAnimation(duration: 2, layer: subCircle2)
+        
+        DispatchQueue.main.async {
+            guard self.subCircle1 != nil, self.self.subCircle2 != nil else { return }
+            self.alpha = 1
+            self.rotationAnimation(duration: 2, layer: self.self.layer)
+            self.rotationAnimation(duration: 1, layer: self.subCircle1)
+            self.rotationAnimation(duration: 2, layer: self.subCircle2)
+        }
     }
     
     public func stopAnimating() {
-        self.alpha = 0
-        guard subCircle1 != nil, subCircle2 != nil else { return }
-        layer.removeAllAnimations()
-        subCircle1.removeAllAnimations()
-        subCircle2.removeAllAnimations()
+        DispatchQueue.main.async {
+            self.alpha = 0
+            guard self.subCircle1 != nil, self.subCircle2 != nil else { return }
+            self.layer.removeAllAnimations()
+            self.subCircle1.removeAllAnimations()
+            self.subCircle2.removeAllAnimations()
+        }
     }
     
     var lineWidth: CGFloat { return frame.size.width / 33 }

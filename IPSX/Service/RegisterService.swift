@@ -17,7 +17,7 @@ class RegisterService {
                                         "password"   : password,
                                         "ip"         : ip]
         
-        IPRequestManager.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -39,7 +39,7 @@ class RegisterService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

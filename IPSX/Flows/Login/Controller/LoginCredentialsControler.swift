@@ -41,8 +41,7 @@ class LoginCredentialsControler: UIViewController {
         loadingView.startAnimating()
         LoginService().login(email: emailRichTextView.contentTextField?.text, password: passRichTextField.contentTextField?.text, completionHandler: { result in
             
-            DispatchQueue.main.async { self.loadingView.stopAnimating() }
-            
+            self.loadingView.stopAnimating()
             switch result {
                 
             case .success(let success):
@@ -89,12 +88,7 @@ class LoginCredentialsControler: UIViewController {
             switch result {
                 
             case .success(let ethAddresses):
-                
-                guard let ethAddresses = ethAddresses as? [EthAddress] else {
-                    self.errorMessage = "Generic Error Message".localized
-                    return
-                }
-                UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
+                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 
                 DispatchQueue.main.async {
                     if UserManager.shared.hasEthAddress {

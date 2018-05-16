@@ -31,7 +31,7 @@ class TokenRequestController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
-
+    var onDismiss: ((_ hasSubmittedRequest: Bool)->())?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -60,10 +60,13 @@ class TokenRequestController: UIViewController {
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
             switch result {
             case .success(_):
+                
                 DispatchQueue.main.async {
+                    self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
             case .failure(_):
+                //TODO
                 self.errorMessage = ""
             }
         })
@@ -82,7 +85,7 @@ class TokenRequestController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedAddress = nil
-        if let addresses = userInfo?.ethAddresses {
+        if let addresses = UserManager.shared.ethAddresses {
             ethAdresses = addresses.filter { return  $0.validationState == .verified }
             selectedAddress = ethAdresses.first
             tableView.reloadData()
@@ -107,7 +110,7 @@ class TokenRequestController: UIViewController {
     }
     
     private func updateUI() {
-        let ethID = UserManager.shared.userInfo?.ethAddresses?.first?.address ?? ""
+        let ethID = UserManager.shared.ethAddresses?.first?.address ?? ""
         selectedWalletAddress.text = ethID
         tableViewBottomConstraint.constant = tableView.frame.size.height
         tableViewTopConstraint.constant = -tableView.frame.size.height

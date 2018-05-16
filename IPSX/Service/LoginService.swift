@@ -24,7 +24,7 @@ class LoginService {
         let params: [String: String] = ["email"    : email,
                                         "password" : password]
         
-        IPRequestManager.shared.executeRequest(requestType: .login, bodyParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .login, bodyParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -48,7 +48,8 @@ class LoginService {
                 case .failure(let error):
                     completionHandler(ServiceResult.failure(error))
                     
-                case .success(_):
+                case .success(let user):
+                    UserManager.shared.userInfo = user as? UserInfo
                     completionHandler(ServiceResult.success(true))
                 }
             })
@@ -59,7 +60,7 @@ class LoginService {
         
         let params: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .logout, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .logout, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -68,6 +69,8 @@ class LoginService {
             completionHandler(ServiceResult.success(true))
         })
     }
+    
+    //TODO (CVI): use this for each request when necessary
     
     func getNewAccessToken(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         

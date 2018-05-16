@@ -10,7 +10,6 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    var requestOnce = false
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -21,23 +20,9 @@ class TabBarViewController: UITabBarController {
         
         if !UserManager.shared.isLoggedIn {
             presentLandingFlow()
-        } else if !requestOnce {
-            requestOnce = true
-            UserInfoService().retrieveETHaddresses(completionHandler: { result in
-                
-                switch result {
-                case .success(let ethAddresses):
-                    guard let ethAddresses = ethAddresses as? [EthAddress] else { return }
-                    UserManager.shared.storeEthAddresses(ethAddresses: ethAddresses)
-                    
-                case .failure(_):
-                    print("Generic Error Message".localized)
-
-                }
-            })
         }
     }
-        
+
     func presentLandingFlow() {
         self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
     }

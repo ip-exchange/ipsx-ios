@@ -18,10 +18,6 @@ struct UserInfo {
     var email: String
     var proxyTest: String
     var ballance: Int
-    var ethAddresses: [EthAddress]?
-    
-    //TODO (CVI): implement persistance. Not used for now
-    var tokenRequests: [TokenRequest]?
     
     init(firstName: String = "", middleName: String = "",lastName: String = "",
          telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", ballance: Int = 0) {
@@ -34,13 +30,5 @@ struct UserInfo {
         self.email      = email
         self.proxyTest  = proxyTest
         self.ballance   = ballance
-    }
-    
-    mutating func setEthAddresses(ethAddresses: [EthAddress]) {
-        self.ethAddresses = ethAddresses
-    }
-    
-    mutating func setTokenRequests(tokenRequests: [TokenRequest]) {
-        self.tokenRequests = tokenRequests
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IPProtocols.swift
+//  IPProtocol.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 13/02/2018.
@@ -15,10 +15,10 @@ extension IPRetrievable {
     
     func executeIPRequest(completion:@escaping (Error?, Data?)->Void) {
         
-        let requestManager = IPRequestManager.shared
-        if let request = requestManager.createRequest(requestType: .getPublicIP) {
+        let requestBuilder = RequestBuilder.shared
+        if let request = requestBuilder.createRequest(requestType: .getPublicIP) {
             
-            requestManager.session.dataTask(with: request , completionHandler: { data, response, error in
+            requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
                 
                 if let error = error {
                     completion(error, data)

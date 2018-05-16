@@ -23,7 +23,7 @@ class UserInfoService {
         let params: [String: String] =  ["USER_ID"      : userId,
                                          "ACCESS_TOKEN" : accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .userInfo, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .userInfo, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -35,11 +35,11 @@ class UserInfoService {
             }
             
             let json = JSON(data: data)
-            self.mapResponseAndStoreInfo(json: json, completionHandler: completionHandler)
+            self.mapResponse(json: json, completionHandler: completionHandler)
         })
     }
     
-    private func mapResponseAndStoreInfo(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let firstName  = json["first_name"].stringValue
         let middleName = json["middle_name"].stringValue
@@ -51,11 +51,7 @@ class UserInfoService {
         let ballance   = json["ballance"].intValue
         
         let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, ballance: ballance)
-        
-        //Store User Info
-        UserManager.shared.userInfo = user
-        
-        completionHandler(ServiceResult.success(true))
+        completionHandler(ServiceResult.success(user))
     }
     
     func retrieveETHaddresses(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
@@ -63,7 +59,7 @@ class UserInfoService {
         let params: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                          "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .getEthAddress, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .getEthAddress, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -96,7 +92,7 @@ class UserInfoService {
     
     func getUserCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        IPRequestManager.shared.executeRequest(requestType: .getUserCountryList, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .getUserCountryList, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -126,7 +122,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -149,7 +145,7 @@ class UserInfoService {
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]
         
-        IPRequestManager.shared.executeRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

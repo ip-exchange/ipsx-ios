@@ -69,15 +69,14 @@ class RegisterTermsController: UIViewController {
             guard let ipAddress = ipAddress, error == nil else {
 
                 self.errorMessage = "Generic Error Message".localized
-                DispatchQueue.main.async { self.loadingView.stopAnimating() }
+                self.loadingView.stopAnimating()
                 return
             }
             
             if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
                 RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
                     
-                    DispatchQueue.main.async { self.loadingView.stopAnimating() }
-
+                    self.loadingView.stopAnimating()
                     switch result {
                         
                     case .success(_):

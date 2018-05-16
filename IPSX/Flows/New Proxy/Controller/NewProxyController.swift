@@ -22,13 +22,11 @@ class NewProxyController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
-    var countries: [String] = []
+    var countries: [String]?
 
-    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -52,7 +50,7 @@ class NewProxyController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestCountriesList()
+        countries = UserManager.shared.proxyCountries
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -65,38 +63,18 @@ class NewProxyController: UIViewController {
         }
     }
     
-    private func requestCountriesList() {
-        
-        guard self.countries.count == 0 else { return }
-        
-        loadingView.startAnimating()
-        retrieveProxyCountries() { countries in
-            DispatchQueue.main.async { self.loadingView.stopAnimating() }
-            if let countries = countries {
-                self.countries = countries
-            }
-        }
-    }
-    
-    private func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
+    private func retrieveProxyCountries(completion:@escaping () -> ()) {
         
         ProxyService().getProxyCountryList(completionHandler: { result in
             
-            var proxyCountries: [String]?
             switch result {
             case .success(let countryList):
-                
-                if let countries = countryList as? [String] {
-                    proxyCountries = countries
-                }
-                else {
-                    self.errorMessage = "Generic Error Message".localized
-                }
+                UserManager.shared.proxyCountries = countryList as? [String]
                 
             case .failure(_):
                 self.errorMessage = "Generic Error Message".localized
             }
-            completion(proxyCountries)
+            completion()
         })
     }
 }
@@ -124,7 +102,8 @@ extension NewProxyController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: false)
-        if countries.count > 0 {
+        let noOfCountries = countries?.count ?? 0
+        if noOfCountries > 0 {
             self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
         } else {
             toast?.showToastAlert("Wait for countries list to be loaded.".localized, autoHideAfter: 5)
