@@ -14,6 +14,7 @@ class TokenRequestListController: UIViewController {
 
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noItemsLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     let cellID = "TokenRequestCellID"
     var tokenRequests: [TokenRequest] = []
@@ -31,10 +32,39 @@ class TokenRequestListController: UIViewController {
         super.viewDidLoad()
     }
     
+    func updateUI() {
+        
+        DispatchQueue.main.async {
+            self.tokenRequests = UserManager.shared.tokenRequests ?? []
+            self.separatorView.isHidden = self.tokenRequests.count < 1
+            self.noItemsLabel.isHidden = self.tokenRequests.count > 0
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
-        separatorView.isHidden = tokenRequests.count < 1
-        noItemsLabel.isHidden = tokenRequests.count > 0
+      
+        if UserManager.shared.tokenRequests == nil {
+            
+            //self.loadingView.startAnimating()
+            ProxyService().getTokenRequestList(completionHandler: { result in
+                
+                //self.loadingView.stopAnimating()
+                switch result {
+                case .success(let tokenRequests):
+                    UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                    self.updateUI()
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
+        }
+        else {
+            updateUI()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -54,6 +84,7 @@ class TokenRequestListController: UIViewController {
                         switch result {
                         case .success(let tokenRequests):
                             UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                            self.updateUI()
                             
                         case .failure(_):
                             self.errorMessage = "Refresh Data Error Message".localized

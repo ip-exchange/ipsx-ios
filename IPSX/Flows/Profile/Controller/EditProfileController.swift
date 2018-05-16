@@ -30,7 +30,6 @@ class EditProfileController: UIViewController {
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     private var searchController: SearchViewController?
     let countrySelectionID = "SearchSegueID"
-    var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
     var errorMessage: String? {
         didSet {
@@ -54,20 +53,45 @@ class EditProfileController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateFields(userInfo: userInfo)
+        updateFields()
     }
     
-    private func updateFields(userInfo: UserInfo?) {
-    
-        var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
-        if let selectedCountry = searchController?.selectedCountry {
-            countryName = selectedCountry
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserManager.shared.userCountries == nil {
+            
+            loadingView.startAnimating()
+            UserInfoService().getUserCountryList(completionHandler: { result in
+                
+                self.loadingView.stopAnimating()
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    self.updateFields()
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
         }
-        selectedCountryLabel.text = countryName ?? "Select a country".localized
-        emailTextField.text       = userInfo?.email
-        firstNameTextField.text   = userInfo?.firstName
-        lastNameTextField.text    = userInfo?.lastName
-        telegramTextField.text    = userInfo?.telegram
+    }
+    
+    private func updateFields() {
+        
+        DispatchQueue.main.async {
+            
+            let userInfo = UserManager.shared.userInfo
+            var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+            if let selectedCountry = self.searchController?.selectedCountry {
+                countryName = selectedCountry
+            }
+            self.selectedCountryLabel.text = countryName ?? "Select a country".localized
+            self.emailTextField.text       = userInfo?.email
+            self.firstNameTextField.text   = userInfo?.firstName
+            self.lastNameTextField.text    = userInfo?.lastName
+            self.telegramTextField.text    = userInfo?.telegram
+        }
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {

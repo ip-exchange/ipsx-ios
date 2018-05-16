@@ -51,6 +51,23 @@ class NewProxyController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         countries = UserManager.shared.proxyCountries
+        
+        if UserManager.shared.proxyCountries == nil {
+            
+            loadingView.startAnimating()
+            ProxyService().getProxyCountryList(completionHandler: { result in
+                
+                self.loadingView.stopAnimating()
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.proxyCountries = countryList as? [String]
+                    self.countries = UserManager.shared.proxyCountries
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -61,21 +78,6 @@ class NewProxyController: UIViewController {
             destinationVC?.isProxyFlow = true
             destinationVC?.countries = countries
         }
-    }
-    
-    private func retrieveProxyCountries(completion:@escaping () -> ()) {
-        
-        ProxyService().getProxyCountryList(completionHandler: { result in
-            
-            switch result {
-            case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
-                
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
-            }
-            completion()
-        })
     }
 }
 
@@ -102,12 +104,7 @@ extension NewProxyController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: false)
-        let noOfCountries = countries?.count ?? 0
-        if noOfCountries > 0 {
-            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
-        } else {
-            toast?.showToastAlert("Wait for countries list to be loaded.".localized, autoHideAfter: 5)
-        }
+        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
     }
 }
 

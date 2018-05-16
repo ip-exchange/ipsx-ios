@@ -24,7 +24,14 @@ class DashboardViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var countries: [String] = []
-
+        
+    var ballance: String = "" {
+        didSet {
+            DispatchQueue.main.async {
+                self.tokensAmountLabel.text = self.ballance
+            }
+        }
+    }
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -58,7 +65,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO (CVI): refresh data when needed
+        //TODO (CVI): refresh data when needed (proxy usage -> x sec & ballance after token requests / activate proxy)
      }
     
     override func viewDidLayoutSubviews() {
@@ -66,22 +73,51 @@ class DashboardViewController: UIViewController {
         createToastAlert(onTopOf: slidableView, text: "Invalid Credentials")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         selectedProxy = nil
+        updateProxyDataSource()
+        self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
         
         if UserManager.shared.isLoggedIn {
+            initializeData()
+        }
+    }
+    
+    func initializeData() {
+        
+        if UserManager.shared.userInfo == nil {
             
-            //TODO (CVI): refresh ballance when needed
+            UserInfoService().retrieveUserInfo(completionHandler: { result in
+                
+                switch result {
+                case .success(let user):
+                    UserManager.shared.userInfo = user as? UserInfo
+                    self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
+        }
+        
+        if UserManager.shared.proxies == nil {
             
-            tokensAmountLabel.text = "\(UserManager.shared.userInfo?.ballance ?? 0)"
-            proxies = UserManager.shared.proxies ?? []
-            
-            if UserManager.shared.hasTestProxyAvailable {
-                let testProxy = ProxyService().retrieveTestProxy()
-                proxies.insert(testProxy, at: 0)
-            }
+            loadingView.startAnimating()
+            ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+                self.loadingView.stopAnimating()
+                
+                switch result {
+                    
+                case .success(let proxyArray):
+                    UserManager.shared.proxies = proxyArray as? [Proxy]
+                    self.updateProxyDataSource()
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
         }
     }
     
@@ -112,6 +148,15 @@ class DashboardViewController: UIViewController {
     
     @IBAction func proxySegmentAction(_ sender: UISegmentedControl) {
         tableView?.reloadData()
+    }
+    
+    func updateProxyDataSource() {
+        
+        proxies = UserManager.shared.proxies ?? []
+        if UserManager.shared.hasTestProxyAvailable {
+            let testProxy = ProxyService().retrieveTestProxy()
+            proxies.insert(testProxy, at: 0)
+        }
     }
 }
 
