@@ -8,23 +8,14 @@
 
 import Foundation
 
+//TODO: change this
+
 public extension UserDefaults {
-    
-    public enum UserDefaultsKey: String {
-        
-        case userCountryList = "USER_COUNTRIES_KEY"
-    }
-    
-    func storeUserCountryList(countryArray: [[String: String]]) {
-        
-        UserDefaults.standard.set(countryArray, forKey: UserDefaultsKey.userCountryList.rawValue)
-        UserDefaults.standard.synchronize()
-    }
-    
+ 
     func getUserCountryList() -> [String] {
         
         var countryArray: [String] = []
-        if let countries = UserDefaults.standard.object(forKey: UserDefaultsKey.userCountryList.rawValue) as? [[String: String]] {
+        if let countries = UserManager.shared.userCountries {
             
             for country in countries {
                 if let key = country.keys.first, let countryName = country[key] {
@@ -38,7 +29,7 @@ public extension UserDefaults {
     func getCountryId(countryName: String?) -> String? {
         
         var countryID: String?
-        if let countries = UserDefaults.standard.object(forKey: UserDefaultsKey.userCountryList.rawValue) as? [[String: String]] {
+        if let countries = UserManager.shared.userCountries {
             
             for country in countries {
                 if let key = country.keys.first, let value = country[key], value == countryName {
@@ -52,7 +43,7 @@ public extension UserDefaults {
     func getCountryName(countryID: String?) -> String? {
         
         var countryName: String?
-        if let countries = UserDefaults.standard.object(forKey: UserDefaultsKey.userCountryList.rawValue) as? [[String: String]] {
+        if let countries = UserManager.shared.userCountries {
             
             for country in countries {
                 if let key = country.keys.first, let value = country[key], key == countryID {

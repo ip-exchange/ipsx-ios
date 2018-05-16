@@ -27,10 +27,9 @@ class EditProfileController: UIViewController {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     private var searchController: SearchViewController?
     let countrySelectionID = "SearchSegueID"
-    var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
     var errorMessage: String? {
         didSet {
@@ -39,29 +38,7 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func selectCountryAction(_ sender: UIButton) {
-        
-        //TODO (CVI): Determine when should we load the countries
-        //Temp solution:
-        
-        if UserDefaults.standard.getUserCountryList().count == 0 {
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                switch result {
-                case .success(let countryList):
-                    guard let countryList = countryList as? [[String: String]] else {
-                        self.errorMessage = "Generic Error Message".localized
-                        return
-                    }
-                    UserDefaults.standard.storeUserCountryList(countryArray: countryList)
-                    self.showCountriesScreen()
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
-        }
-        else {
-            showCountriesScreen()
-        }
+        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
     }
     
     override func viewDidLoad() {
@@ -76,26 +53,45 @@ class EditProfileController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateFields(userInfo: userInfo)
+        updateFields()
     }
     
-    func showCountriesScreen() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if UserManager.shared.userCountries == nil {
+            
+            loadingView.startAnimating()
+            UserInfoService().getUserCountryList(completionHandler: { result in
+                
+                self.loadingView.stopAnimating()
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    self.updateFields()
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
+        }
+    }
+    
+    private func updateFields() {
+        
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+            
+            let userInfo = UserManager.shared.userInfo
+            var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+            if let selectedCountry = self.searchController?.selectedCountry {
+                countryName = selectedCountry
+            }
+            self.selectedCountryLabel.text = countryName ?? "Select a country".localized
+            self.emailTextField.text       = userInfo?.email
+            self.firstNameTextField.text   = userInfo?.firstName
+            self.lastNameTextField.text    = userInfo?.lastName
+            self.telegramTextField.text    = userInfo?.telegram
         }
-    }
-    
-    private func updateFields(userInfo: UserInfo?) {
-    
-        var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
-        if let selectedCountry = searchController?.selectedCountry {
-            countryName = selectedCountry
-        }
-        selectedCountryLabel.text = countryName ?? "Select a country".localized
-        emailTextField.text       = userInfo?.email
-        firstNameTextField.text   = userInfo?.firstName
-        lastNameTextField.text    = userInfo?.lastName
-        telegramTextField.text    = userInfo?.telegram
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
@@ -110,12 +106,13 @@ class EditProfileController: UIViewController {
         loadingView.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
             
-            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            self.loadingView.stopAnimating() 
             switch result {
             case .success(_):
                 self.getNewUserInfo() { success in
                     if success {
                         DispatchQueue.main.async {
+                            self.onDismiss?(true)
                             self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
                         }
                     }
@@ -138,7 +135,8 @@ class EditProfileController: UIViewController {
             case .failure(_):
                 completion(false)
                 
-            case .success(_):
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
                 completion(true)
             }
         })

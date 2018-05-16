@@ -16,7 +16,7 @@ class ProxyService {
         let params: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                         "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .retrieveProxies, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .retrieveProxies, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -30,11 +30,11 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
-            self.mapResponseAndStoreInfo(jsonArray: jsonArray, completionHandler: completionHandler)
+            self.mapResponse(jsonArray: jsonArray, completionHandler: completionHandler)
         })
     }
     
-    private func mapResponseAndStoreInfo(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapResponse(jsonArray: [JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         var proxies: [Proxy] = []
         
@@ -78,7 +78,6 @@ class ProxyService {
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
             proxies.append(proxy)
         }
-        UserManager.shared.storeProxyDetails(proxies: proxies)
         completionHandler(ServiceResult.success(proxies))
     }
     
@@ -86,7 +85,7 @@ class ProxyService {
         
         let params: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .getProxyCountryList, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .getProxyCountryList, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -113,7 +112,7 @@ class ProxyService {
         let bodyParams: [String: String] = ["usereth_id"       : ethID,
                                             "amount_requested" : amount]
         
-        IPRequestManager.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -132,7 +131,7 @@ class ProxyService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        IPRequestManager.shared.executeRequest(requestType: .getTokenRequestList, urlParams: urlParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .getTokenRequestList, urlParams: urlParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -165,5 +164,13 @@ class ProxyService {
             completionHandler(ServiceResult.success(tokenRequests))
         })
     }
-
+    
+    //TODO (CVI): this should come from the API
+    func retrieveTestProxy() -> Proxy {
+        
+        let testProxyPack = ProxyPack()
+        let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
+        let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
+        return testProxy
+    }
 }

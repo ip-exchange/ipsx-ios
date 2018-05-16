@@ -23,11 +23,15 @@ class DashboardViewController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    var hasTriedToRefreshToken = false
-    var showLoader = true
-    var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var countries: [String] = []
-
+        
+    var ballance: String = "" {
+        didSet {
+            DispatchQueue.main.async {
+                self.tokensAmountLabel.text = self.ballance
+            }
+        }
+    }
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -54,23 +58,14 @@ class DashboardViewController: UIViewController {
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
-        ProxyService().getTokenRequestList(completionHandler: { result in
-            switch result {
-            case .success(let tokenRequests):
-                
-                //TODO (CVI): implement persistance and call the req when necessary
-                self.tokenRequests = tokenRequests as? [TokenRequest]
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
-                }
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
-            }
-        })
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //TODO (CVI): refresh data when needed (proxy usage -> x sec & ballance after token requests / activate proxy)
      }
     
     override func viewDidLayoutSubviews() {
@@ -79,62 +74,50 @@ class DashboardViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
-        if showLoader { loadingView.startAnimating() }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         selectedProxy = nil
-        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
-        showLoader = true
+        updateProxyDataSource()
+        self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
+        
         if UserManager.shared.isLoggedIn {
-            
-            executeRequests() { success in
-                
-                DispatchQueue.main.async {
-                    self.tokensAmountLabel.text = "\(self.userInfo?.ballance ?? 0)"
-                    self.loadingView.stopAnimating()
-                    self.showLoader = false
-                }
-                if !success {
-                    //TODO (CVI): redirect to login somehow nice
-                    //Temporary solution: display generic error
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            }
+            initializeData()
         }
     }
     
-    func executeRequests(completion:@escaping (Bool) -> ()) {
+    func initializeData() {
         
         if UserManager.shared.userInfo == nil {
             
             UserInfoService().retrieveUserInfo(completionHandler: { result in
+                
                 switch result {
+                case .success(let user):
+                    UserManager.shared.userInfo = user as? UserInfo
+                    self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
                     
-                case .failure(let error):
-                    
-                    switch error {
-                    case CustomError.expiredToken:
-                        
-                        if !self.hasTriedToRefreshToken {
-                            self.generateNewToken(completion: completion)
-                        }
-                        else {
-                            completion(false)
-                        }
-                    default:
-                        completion(false)
-                    }
-                    
-                case .success(_):
-                    self.getProxyDetails(completion: completion)
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
                 }
             })
         }
-        else {
-            self.getProxyDetails(completion: completion)
+        
+        if UserManager.shared.proxies == nil {
+            
+            loadingView.startAnimating()
+            ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+                self.loadingView.stopAnimating()
+                
+                switch result {
+                    
+                case .success(let proxyArray):
+                    UserManager.shared.proxies = proxyArray as? [Proxy]
+                    self.updateProxyDataSource()
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
         }
     }
     
@@ -163,93 +146,18 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    //TODO (CC): This method is duplicated in Newproxy, make a country retrievable extenion
-    func retrieveProxyCountries(completion:@escaping ([String]?) -> ()) {
-        
-        ProxyService().getProxyCountryList(completionHandler: { result in
-            
-            var proxyCountries: [String]?
-            switch result {
-            case .success(let countryList):
-                
-                if let countries = countryList as? [String] {
-                    proxyCountries = countries
-                }
-                else {
-                    self.errorMessage = "Generic Error Message".localized
-                }
-                
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
-            }
-            completion(proxyCountries)
-        })
-    }
-
-    func getProxyDetails(completion:@escaping (Bool) -> ()) {
-        
-        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-            
-            switch result {
-                
-            case .success(let proxyArray):
-                
-                guard let proxyArray = proxyArray as? [Proxy] else {
-                    completion(false)
-                    return
-                }
-                self.proxies = proxyArray
-                self.checkForTestProxyAvailability()
-                completion(true)
-                
-            case .failure(let error):
-                
-                switch error {
-                case CustomError.expiredToken:
-                    
-                    if !self.hasTriedToRefreshToken {
-                        self.generateNewToken(completion: completion)
-                    }
-                    else {
-                        completion(false)
-                    }
-                default:
-                    completion(false)
-                }
-            }
-        })
-    }
-    
-    func generateNewToken(completion:@escaping (Bool) -> ()) {
-        
-        hasTriedToRefreshToken = true
-        LoginService().getNewAccessToken(completionHandler: { result in
-            
-            switch result {
-                
-            case .success(_):
-                self.getProxyDetails(completion: completion)
-                
-            case .failure(_):
-                completion(false)
-            }
-        })
-    }
-    
-    func checkForTestProxyAvailability() {
-        
-        if UserManager.shared.userInfo?.proxyTest == "" {
-            let testProxyPack = ProxyPack()
-            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
-            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
-            proxies.insert(testProxy, at: 0)
-        }
-    }
-    
     @IBAction func proxySegmentAction(_ sender: UISegmentedControl) {
         tableView?.reloadData()
     }
     
+    func updateProxyDataSource() {
+        
+        proxies = UserManager.shared.proxies ?? []
+        if UserManager.shared.hasTestProxyAvailable {
+            let testProxy = ProxyService().retrieveTestProxy()
+            proxies.insert(testProxy, at: 0)
+        }
+    }
 }
 
 extension DashboardViewController: ToastAlertViewPresentable {
@@ -285,21 +193,11 @@ extension DashboardViewController: UITableViewDelegate {
         selectedProxy = filteredProxies[indexPath.item]
         
         if selectedProxy?.isTestProxy == true {
+            
             selectedProxy?.proxyDetails?.startDate = Date()
             selectedProxy?.proxyDetails?.endDate   = Date().addingTimeInterval(3600)
-            //TODO (CVI): Determine when should we load the countries
-            //Temp solution:
-            
-            retrieveProxyCountries() { countries in
-                
-                if let countries = countries {
-                    
-                    self.countries = countries
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "FreeProxySegueID", sender: self)
-                    }
-                }
-            }
+            countries = UserManager.shared.proxyCountries ?? []
+            self.performSegue(withIdentifier: "FreeProxySegueID", sender: self)
         }
         else {
             performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)

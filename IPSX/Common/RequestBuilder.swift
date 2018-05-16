@@ -1,5 +1,5 @@
 //
-//  IPRequestManager.swift
+//  RequestBuilder.swift
 //  Test
 //
 //  Created by Cristina Virlan on 13/02/2018.
@@ -8,9 +8,9 @@
 import Foundation
 import SwiftyJSON
 
-public class IPRequestManager: NSObject, URLSessionDelegate {
+public class RequestBuilder: NSObject, URLSessionDelegate {
     
-    public static let shared = IPRequestManager()
+    public static let shared = RequestBuilder()
     private override init(){}
     
     public var session : URLSession {
@@ -166,10 +166,10 @@ public class IPRequestManager: NSObject, URLSessionDelegate {
     
     public func executeRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
         
-        let requestManager = IPRequestManager.shared
-        if let request = requestManager.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
+        let requestBuilder = RequestBuilder.shared
+        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
             
-            requestManager.session.dataTask(with: request , completionHandler: { data, response, error in
+            requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
                 
                 if let error = error {
                     completion(error, data)

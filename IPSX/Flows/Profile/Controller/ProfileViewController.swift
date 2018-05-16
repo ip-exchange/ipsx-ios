@@ -24,7 +24,6 @@ class ProfileViewController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
     let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
@@ -53,7 +52,9 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
+        configureUI()
+        refreshProfileUI()
+        refreshETHaddressesUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,10 +65,6 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedAddress = nil
-        if let addresses = userInfo?.ethAddresses {
-            ethAdresses = addresses
-            tableView.reloadData()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,19 +72,85 @@ class ProfileViewController: UIViewController {
         topImageView.createParticlesAnimation()
     }
     
-    private func updateUI() {
+    private func configureUI() {
         userImageView.layer.cornerRadius = userImageView.frame.size.height / 2
         userImageView.layer.borderColor  = UIColor.darkBlue.cgColor
         userImageView.layer.borderWidth  = 1
-        if let firstName = userInfo?.firstName {
-            let lastName = userInfo?.lastName ?? ""
-            usernameLabel.text = firstName + " " + lastName
+    }
+    
+    func refreshProfileUI() {
+        
+        DispatchQueue.main.async {
+            if let firstName = self.userInfo?.firstName {
+                let lastName = self.userInfo?.lastName ?? ""
+                self.usernameLabel.text = firstName + " " + lastName
+            }
+        }
+    }
+    
+    func refreshETHaddressesUI() {
+        
+        DispatchQueue.main.async {
+            if let addresses = UserManager.shared.ethAddresses {
+                self.ethAdresses = addresses
+                self.tableView.reloadData()
+            }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "walletViewIdentifier", let addController = segue.destination as? AddWalletController {
-            addController.ethereumAddress = selectedAddress
+        
+        switch segue.identifier {
+            
+        case "showProfileSegueID":
+            let navController = segue.destination as? UINavigationController
+            let editProfileVC = navController?.viewControllers.first as? EditProfileController
+            editProfileVC?.onDismiss = { hasUpdatedProfile in
+                
+                if hasUpdatedProfile {
+                    
+                    self.loadingView.startAnimating()
+                    UserInfoService().retrieveUserInfo(completionHandler: { result in
+                        
+                        self.loadingView.stopAnimating()
+                        
+                        switch result {
+                        case .success(let user):
+                            UserManager.shared.userInfo = user as? UserInfo
+                            self.refreshProfileUI()
+                        
+                        case .failure(_):
+                            self.errorMessage = "Refresh Data Error Message".localized
+                        }
+                    })
+                }
+            }
+        case "walletViewIdentifier":
+            let addController = segue.destination as? AddWalletController
+            addController?.ethereumAddress = selectedAddress
+            addController?.onDismiss = { hasUpdatedETH in
+                
+                if hasUpdatedETH {
+                    
+                    self.loadingView.startAnimating()
+                    
+                    UserInfoService().retrieveETHaddresses(completionHandler: { result in
+                        
+                        self.loadingView.stopAnimating()
+                        
+                        switch result {
+                        case .success(let ethAddresses):
+                            UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                            self.refreshETHaddressesUI()
+                            
+                        case .failure(_):
+                            self.errorMessage = "Refresh Data Error Message".localized
+                        }
+                    })
+                }
+            }
+        default:
+            break
         }
     }
 }

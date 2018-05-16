@@ -23,8 +23,8 @@ class SearchViewController: UIViewController {
     var isProxyFlow: Bool? = false
     var proxy: Proxy? = nil
     
-    var countries: [String] = []
-    var filteredCountries: [String] = []
+    var countries: [String]?
+    var filteredCountries: [String]?
     var selectedCountry: String?
     
     override func viewDidLoad() {
@@ -88,13 +88,13 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCountries.count
+        return filteredCountries?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SearchCell
-        cell.textlabel.text = filteredCountries[indexPath.item]
+        cell.textlabel.text = filteredCountries?[indexPath.item]
         cell.disclousureImageView.isHidden = dismissOnSelect
         return cell
     }
@@ -103,7 +103,7 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCountry = filteredCountries[indexPath.item]
+        selectedCountry = filteredCountries?[indexPath.item]
         if dismissOnSelect {
             if let nav = navigationController {
                 nav.popViewController(animated: true)
@@ -129,7 +129,7 @@ extension SearchViewController: UITextFieldDelegate {
             tableView.setContentOffset(CGPoint.zero, animated: true)
             return true
         }
-        let matchingTerms = countries.filter({
+        let matchingTerms = countries?.filter({
             $0.range(of: newString, options: .caseInsensitive) != nil
         })
         filteredCountries = matchingTerms
