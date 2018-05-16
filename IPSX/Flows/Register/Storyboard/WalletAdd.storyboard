@@ -231,6 +231,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Iwm-ju-KsI"/>
                     <connections>
+                        <outlet property="backgroundImageView" destination="Tgh-m3-8jj" id="5je-8L-rle"/>
                         <outlet property="bottomContinueConstraint" destination="nTJ-VL-FUn" id="sry-s7-RON"/>
                         <outlet property="doneButton" destination="0pm-zp-CjR" id="0cS-k5-dW9"/>
                         <outlet property="ethAddresRichTextField" destination="vI4-lj-clz" id="ELY-3l-ZDI"/>
@@ -249,10 +250,10 @@
             </objects>
             <point key="canvasLocation" x="4262" y="378"/>
         </scene>
-        <!--View Controller-->
+        <!--First Wallet Done Controller-->
         <scene sceneID="PR4-PQ-pNE">
             <objects>
-                <viewController id="fbu-vE-IPA" sceneMemberID="viewController">
+                <viewController id="fbu-vE-IPA" customClass="FirstWalletDoneController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7X7-y1-6Xs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,6 +336,9 @@
                         <viewLayoutGuide key="safeArea" id="mtG-lB-exG"/>
                     </view>
                     <navigationItem key="navigationItem" id="RQl-KU-qbm"/>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="ZSc-ve-Cog" id="sKD-ey-lim"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cou-BA-IEd" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="3V7-ST-knj" userLabel="Exit" sceneMemberID="exit"/>

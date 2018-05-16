@@ -10,6 +10,7 @@ import UIKit
 
 class ForgotPassController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
@@ -40,6 +41,7 @@ class ForgotPassController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
         setupTextViews()
     }
     

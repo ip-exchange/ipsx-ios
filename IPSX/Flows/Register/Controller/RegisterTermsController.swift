@@ -10,6 +10,7 @@ import UIKit
 
 class RegisterTermsController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -41,6 +42,11 @@ class RegisterTermsController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
     }
     
     @IBAction func checkboxButtonAction(_ sender: UIButton) {
@@ -100,6 +106,13 @@ extension RegisterTermsController: ToastAlertViewPresentable {
 
 class RegisterDoneController: UIViewController {
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "LoginScreenSegueID", let loginController = segue.destination as? LoginCredentialsControler {
             loginController.hideBackButton = true

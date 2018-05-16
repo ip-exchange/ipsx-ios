@@ -10,5 +10,12 @@ import UIKit
 
 class LoginOptionsController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
+    }
+
     @IBAction func unwindToLoginOptions(segue:UIStoryboardSegue) { }
 }

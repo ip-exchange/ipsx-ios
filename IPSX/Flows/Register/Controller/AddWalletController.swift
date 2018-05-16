@@ -11,6 +11,7 @@ import AVFoundation
 
 class AddWalletController: UIViewController {
 
+    @IBOutlet weak var backgroundImageView: UIImageView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -58,7 +59,7 @@ class AddWalletController: UIViewController {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint?.constant ?? 0
         observreFieldsState()
-        if let address = ethereumAddress {
+         if let address = ethereumAddress {
             fieldsStateDic = ["walletName" : true, "ethAddress" : true]
             walletNameRichTextField.contentTextField?.text = address.alias
             ethAddresRichTextField.contentTextField?.text = address.address
@@ -81,6 +82,7 @@ class AddWalletController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundImageView?.createParticlesAnimation()
         setupTextViews()
     }
     
@@ -332,5 +334,15 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         dismiss(animated: true)
+    }
+}
+
+class FirstWalletDoneController: UIViewController {
+    
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
     }
 }

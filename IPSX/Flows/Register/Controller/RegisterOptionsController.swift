@@ -10,4 +10,11 @@ import UIKit
 
 class RegisterOptionsController: UIViewController {
 
- }
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
+    }
+
+}

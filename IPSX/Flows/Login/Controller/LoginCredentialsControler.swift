@@ -10,6 +10,7 @@ import UIKit
 
 class LoginCredentialsControler: UIViewController {
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
@@ -139,6 +140,7 @@ class LoginCredentialsControler: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundImageView.createParticlesAnimation()
         setupTextViews()
     }
     

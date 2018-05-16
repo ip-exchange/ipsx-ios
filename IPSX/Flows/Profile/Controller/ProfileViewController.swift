@@ -70,6 +70,11 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        topImageView.createParticlesAnimation()
+    }
+    
     private func updateUI() {
         userImageView.layer.cornerRadius = userImageView.frame.size.height / 2
         userImageView.layer.borderColor  = UIColor.darkBlue.cgColor
