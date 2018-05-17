@@ -104,7 +104,18 @@ extension NewProxyController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: false)
-        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+        
+        let balance = UserManager.shared.userInfo?.balance ?? 0
+        
+        //TODO (CVI): dummy price (update after integrating proxy plans API)
+        let packagePrice = 0
+        
+        if balance >= packagePrice {
+            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+        }
+        else {
+            self.errorMessage = "Insufficient Balance Error Message".localized
+        }
     }
 }
 
