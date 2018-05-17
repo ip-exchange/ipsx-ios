@@ -19,6 +19,32 @@ class ForgotPassController: UIViewController {
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false]
     
+    //TODO (CC): implement toast alert view
+    
+    var errorMessage: String? {
+        didSet {
+            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+    
+    @IBAction func resetPassAction(_ sender: UIButton) {
+        
+        loadingView.startAnimating()
+        LoginService().resetPassword(email: emailRichTextView.contentTextField?.text ?? "", completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+                }
+                
+            case .failure(_):
+                self.errorMessage = "Generic Error Message".localized
+            }
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
@@ -46,7 +72,7 @@ class ForgotPassController: UIViewController {
     }
     
     private func setupTextViews() {
-        emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
+        emailRichTextView.validationRegex = RichTextFieldView.validEmailRegex
     }
     
     private func observreFieldsState() {

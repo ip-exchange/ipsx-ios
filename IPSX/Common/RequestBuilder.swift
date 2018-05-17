@@ -45,6 +45,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
             
+        case .resetPassword:
+            let body = JSON(bodyParams)
+            request = Request(url:Url.base + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
         //Register Requests
             
         case .getPublicIP:

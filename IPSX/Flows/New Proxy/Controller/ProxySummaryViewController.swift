@@ -40,6 +40,8 @@ class ProxySummaryViewController: UIViewController {
     }
     
     @IBAction func confirmOrderAction(_ sender: Any) {
+        
+        //TODO: make API request to create proxy and then:
         performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
     }
 }

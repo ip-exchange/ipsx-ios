@@ -70,6 +70,20 @@ class LoginService {
         })
     }
     
+    func resetPassword(email: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let bodyParams: [String: String] = ["email" : email]
+        
+        RequestBuilder.shared.executeRequest(requestType: .resetPassword, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
     //TODO (CVI): use this for each request when necessary
     
     func getNewAccessToken(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
