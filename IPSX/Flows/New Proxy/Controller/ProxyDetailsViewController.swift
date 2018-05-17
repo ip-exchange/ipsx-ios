@@ -61,17 +61,37 @@ class ProxyDetailsViewController: UIViewController {
     
     private func configureUI() {
         self.openSettingsOverlayView.alpha = 0
+        self.openSettingsCenterConstraint.constant = 500
     }
     
     @IBAction func closeOverlayAction(_ sender: Any) {
-        UIView.animate(withDuration: 0.3) {
-            self.openSettingsOverlayView.alpha = 0
-        }
+        hideOverlay()
     }
     
     @IBAction func openSettingsAction(_ sender: Any) {
+        
+        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+            hideOverlay()
+            toast?.showToastAlert("Can't redirect, please open the Settings manually.".localized, type: .error)
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl)
+        } else {
+            hideOverlay()
+            toast?.showToastAlert("Can't redirect, please open the Settings manually.".localized, type: .error)
+        }
     }
     
+    private func hideOverlay() {
+        view.layoutIfNeeded()
+        self.openSettingsCenterConstraint.constant = 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.openSettingsOverlayView.alpha = 0
+        })
+    }
 }
 
 extension ProxyDetailsViewController: UITableViewDataSource {
@@ -158,10 +178,15 @@ extension ProxyDetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == IndexPath(item: 0, section: 1) {
+            toast?.hideToastAlert()
             tableView.deselectRow(at: indexPath, animated: true)
-            UIView.animate(withDuration: 0.3) {
+            view.layoutIfNeeded()
+            self.openSettingsCenterConstraint.constant = 0
+            UIPasteboard.general.string = proxy?.proxySetup?.pacLink ?? "http://ip.sx"
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+                self.view.layoutIfNeeded()
                 self.openSettingsOverlayView.alpha = 1
-            }
+            })
         }
     }
     
