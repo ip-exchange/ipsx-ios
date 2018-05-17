@@ -38,7 +38,7 @@ How to use:
 ** In viewDidLyoutSubviews, call **
  override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: someView, text: "Invalid Credentials")
+        createToastAlert(onTopOf: someView, text: "")
  }
 
 ** Display the toast with any of below **

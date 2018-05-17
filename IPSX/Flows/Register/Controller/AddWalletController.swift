@@ -90,7 +90,7 @@ class AddWalletController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+        createToastAlert(onTopOf: separatorView, text: "")
     }
     
     private func setupTextViews() {

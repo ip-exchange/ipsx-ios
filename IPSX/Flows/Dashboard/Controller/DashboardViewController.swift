@@ -70,7 +70,7 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: slidableView, text: "Invalid Credentials")
+        createToastAlert(onTopOf: slidableView, text: "")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,9 +137,9 @@ class DashboardViewController: UIViewController {
             nextVC?.proxy = selectedProxy
             
         case "showTokenRequestSegueID":
-            if let nextVC = segue.destination as? UINavigationController, let controller = nextVC.viewControllers.first as? TokenRequestListController, let requestsList = tokenRequests {
-                 controller.tokenRequests = requestsList
-            }
+            let nextVC = segue.destination as? UINavigationController
+            let controller = nextVC?.viewControllers.first as? TokenRequestListController
+            controller?.tokenRequests = tokenRequests ?? []
             
         default:
             break

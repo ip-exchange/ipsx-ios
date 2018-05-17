@@ -41,7 +41,7 @@ class RegisterTermsController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Invalid Credentials")
+        createToastAlert(onTopOf: separatorView, text: "")
     }
     
     override func viewDidAppear(_ animated: Bool) {
