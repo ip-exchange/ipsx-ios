@@ -70,7 +70,7 @@ class ProxyDetailsViewController: UIViewController {
     
     @IBAction func openSettingsAction(_ sender: Any) {
         
-        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+        guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
             hideOverlay()
             toast?.showToastAlert("Can't redirect, please open the Settings manually.".localized, type: .error)
             return
