@@ -7,29 +7,17 @@
 //
 
 import UIKit
-import WebKit
 
-class LoadingViewController: UIViewController, WKUIDelegate {
+class LoadingViewController: UIViewController {
 
-    let dispatchGroup = DispatchGroup()
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var progressView: UIProgressView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let webConfiguration = WKWebViewConfiguration()
-        let webView = WKWebView(frame: view.frame, configuration: webConfiguration)
-        webView.uiDelegate = self
-        view.insertSubview(webView, at: 0)
-        
-        if let url = Bundle.main.url(forResource: "background", withExtension: "html") {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-    }
+    let dispatchGroup = DispatchGroup()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        backgroundImageView.createParticlesAnimation()
         if UserManager.shared.isLoggedIn {
             initDataForCurrentUser()
         }
@@ -50,7 +38,7 @@ class LoadingViewController: UIViewController, WKUIDelegate {
         proxyCountryList()
         
         dispatchGroup.notify(queue: .main) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.performSegue(withIdentifier: "TabbarSegueID", sender: self)
             }
         }
@@ -65,7 +53,7 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             switch result {
             case .success(let countryList):
                 UserManager.shared.userCountries = countryList as? [[String: String]]
-                
+                DispatchQueue.main.async { self.progressView.progress += 0.16 }
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -82,7 +70,8 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             switch result {
             case .success(let ethAddresses):
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                
+                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -99,7 +88,8 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                
+                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -117,7 +107,8 @@ class LoadingViewController: UIViewController, WKUIDelegate {
                 
             case .success(let proxyArray):
                 UserManager.shared.proxies = proxyArray as? [Proxy]
-                
+                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -134,7 +125,8 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             switch result {
             case .success(let tokenRequests):
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                
+                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -151,7 +143,8 @@ class LoadingViewController: UIViewController, WKUIDelegate {
             switch result {
             case .success(let countryList):
                 UserManager.shared.proxyCountries = countryList as? [String]
-                
+                DispatchQueue.main.async { self.progressView.progress +=  0.16 }
+
             case .failure(_):
                 print("Generic Error Message".localized)
             }

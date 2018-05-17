@@ -521,6 +521,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="SnG-5v-wAn">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPExchange" translatesAutoresizingMaskIntoConstraints="NO" id="BeR-jj-Hrg">
                                 <rect key="frame" x="84" y="323" width="206" height="41"/>
                                 <constraints>
@@ -534,23 +537,37 @@
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="eXh-IL-aYB">
+                                <rect key="frame" x="84" y="372.5" width="206" height="2.5"/>
+                                <color key="progressTintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="trackTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="eXh-IL-aYB" firstAttribute="leading" secondItem="BeR-jj-Hrg" secondAttribute="leading" id="HwV-ah-H6h"/>
+                            <constraint firstItem="tpc-I8-m3e" firstAttribute="bottom" secondItem="SnG-5v-wAn" secondAttribute="bottom" id="OEv-Q9-Kql"/>
                             <constraint firstItem="BeR-jj-Hrg" firstAttribute="centerY" secondItem="tpc-I8-m3e" secondAttribute="centerY" id="Ril-GR-12Z"/>
                             <constraint firstItem="aK4-hy-ybg" firstAttribute="centerX" secondItem="tpc-I8-m3e" secondAttribute="centerX" id="VBa-u0-POC"/>
+                            <constraint firstItem="eXh-IL-aYB" firstAttribute="trailing" secondItem="BeR-jj-Hrg" secondAttribute="trailing" id="bAv-U4-SCh"/>
+                            <constraint firstItem="eXh-IL-aYB" firstAttribute="top" secondItem="BeR-jj-Hrg" secondAttribute="bottom" constant="8" id="f2g-L0-t6a"/>
+                            <constraint firstItem="tpc-I8-m3e" firstAttribute="top" secondItem="SnG-5v-wAn" secondAttribute="top" constant="20" id="iwe-OI-BSi"/>
                             <constraint firstItem="BeR-jj-Hrg" firstAttribute="centerX" secondItem="tpc-I8-m3e" secondAttribute="centerX" id="uhw-Ld-Paw"/>
                             <constraint firstItem="tpc-I8-m3e" firstAttribute="bottom" secondItem="aK4-hy-ybg" secondAttribute="bottom" constant="20" id="vZ1-5L-b6z"/>
+                            <constraint firstItem="SnG-5v-wAn" firstAttribute="leading" secondItem="tpc-I8-m3e" secondAttribute="leading" id="xKW-J4-9ri"/>
+                            <constraint firstItem="tpc-I8-m3e" firstAttribute="trailing" secondItem="SnG-5v-wAn" secondAttribute="trailing" id="ykg-NQ-jlN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tpc-I8-m3e"/>
                     </view>
                     <connections>
+                        <outlet property="backgroundImageView" destination="SnG-5v-wAn" id="Un8-Ic-ga8"/>
+                        <outlet property="progressView" destination="eXh-IL-aYB" id="OHm-uH-AEV"/>
                         <segue destination="zhc-5m-q3f" kind="presentation" identifier="TabbarSegueID" modalTransitionStyle="flipHorizontal" id="IFJ-cL-CAB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouh-Vg-AUG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1255" y="16"/>
+            <point key="canvasLocation" x="-1255.2" y="15.742128935532236"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="C2l-Kq-4bT">
@@ -1017,6 +1034,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Background" width="375" height="667"/>
         <image name="BackgroundProfile" width="375" height="235"/>
         <image name="CardId" width="36" height="31"/>
         <image name="Dashboard" width="24" height="28"/>
