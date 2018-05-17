@@ -84,16 +84,7 @@ class TokenRequestController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        selectedAddress = nil
-        if let addresses = UserManager.shared.ethAddresses {
-            ethAdresses = addresses.filter { return  $0.validationState == .verified }
-            selectedAddress = ethAdresses.first
-            tableView.reloadData()
-        }
-        if ethAdresses.count < 2 {
-            dropdownArrow.isHidden = true
-            dropdownButton.isHidden = true
-        }
+        loadAndSetDefaultAddres()
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,11 +100,40 @@ class TokenRequestController: UIViewController {
         updateDropDown(visible: true)
     }
     
+    private func loadAndSetDefaultAddres() {
+        selectedAddress = nil
+        if let addresses = UserManager.shared.ethAddresses {
+            ethAdresses = addresses.filter { return  $0.validationState == .verified }
+            if let defaultAddrID = UserDefaults.standard.loadDelfaultETHAddressID() {
+                let matches = addresses.filter { return $0.ethID == defaultAddrID }
+                if matches.count == 1 {
+                    selectedAddress = matches.first
+                } else {
+                    selectedAddress = ethAdresses.first
+                }
+            } else if let firstAddr = ethAdresses.first {
+                selectedAddress = firstAddr
+            }
+            if let validAddress = selectedAddress {
+                UserDefaults.standard.storeDelfaultETHAddressID(ethAddressID: validAddress.ethID)
+                updateSelectedAddresUI(ethAddres: validAddress)
+            }
+            tableView.reloadData()
+        }
+        if ethAdresses.count < 2 {
+            dropdownArrow.isHidden = true
+            dropdownButton.isHidden = true
+        }
+    }
+    
     private func updateUI() {
-        let ethID = UserManager.shared.ethAddresses?.first?.address ?? ""
-        selectedWalletAddress.text = ethID
         tableViewBottomConstraint.constant = tableView.frame.size.height
         tableViewTopConstraint.constant = -tableView.frame.size.height
+    }
+    
+    private func updateSelectedAddresUI(ethAddres: EthAddress) {
+        selectedWalletAlias.text   = ethAddres.alias
+        selectedWalletAddress.text = ethAddres.address
     }
     
     fileprivate func updateDropDown(visible: Bool) {
@@ -150,8 +170,10 @@ extension TokenRequestController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = ethAdresses[indexPath.item]
-        selectedWalletAddress.text = selectedAddress?.address
-        selectedWalletAlias.text = selectedAddress?.alias
+        if let validAddres = selectedAddress {
+            UserDefaults.standard.storeDelfaultETHAddressID(ethAddressID: validAddres.ethID)
+            updateSelectedAddresUI(ethAddres: validAddres)
+        }
         updateDropDown(visible: false)
     }
 }

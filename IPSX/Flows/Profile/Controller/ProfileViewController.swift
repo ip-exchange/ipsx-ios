@@ -53,8 +53,6 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        refreshProfileUI()
-        refreshETHaddressesUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,6 +63,8 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedAddress = nil
+        refreshProfileUI()
+        refreshETHaddressesUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
