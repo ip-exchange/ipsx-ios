@@ -38,6 +38,10 @@ class ProxySummaryViewController: UIViewController {
             bottomConstraint.constant = bottomConstraint.constant - 70
         }
     }
+    
+    @IBAction func confirmOrderAction(_ sender: Any) {
+        performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+    }
 }
 
 extension ProxySummaryViewController: UITableViewDataSource {

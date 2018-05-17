@@ -8,8 +8,24 @@
 
 import UIKit
 
+@IBDesignable
 class ProxyDetailsViewController: UIViewController {
     
+    @IBOutlet weak var openSettingsOverlayView: UIView!
+    @IBOutlet weak var openSettingsCenterConstraint: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     let activationDetailsCellID = "ActivationDetailsCellID"
     let pacDetailsCellID = "PACDetailsCellID"
     let detailsCellID = "ProxyDetailsCellD"
@@ -22,7 +38,7 @@ class ProxyDetailsViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        configureUI()
         //TODO (CC) for test proxy navigate to summary screen, confirm order (call request to activate test proxy) and then display details
         
 //        if proxy == nil {
@@ -32,6 +48,30 @@ class ProxyDetailsViewController: UIViewController {
 //            proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
 //        }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: tableView, text: "New proxy created! Copy pac link to continue")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        toast?.showToastAlert(type: .info)
+    }
+    
+    private func configureUI() {
+        self.openSettingsOverlayView.alpha = 0
+    }
+    
+    @IBAction func closeOverlayAction(_ sender: Any) {
+        UIView.animate(withDuration: 0.3) {
+            self.openSettingsOverlayView.alpha = 0
+        }
+    }
+    
+    @IBAction func openSettingsAction(_ sender: Any) {
+    }
+    
 }
 
 extension ProxyDetailsViewController: UITableViewDataSource {
@@ -86,14 +126,14 @@ extension ProxyDetailsViewController: UITableViewDataSource {
             switch indexPath.row {
                 
             case 0:
-                let startDate = "20 Apr 2018" //proxy?.proxyDetails?.startDate to String with format dd MMM yyyy
-                let startHour = "12:00" //proxy?.proxyDetails?.startDate to String with format HH:mm
+                let startDate = proxy?.proxyDetails?.startDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
+                let startHour = proxy?.proxyDetails?.startDate?.dateToString(format: "HH:mm") ?? "12:00"
                 cell.configure(title: "Start Date", value: startDate, additionalDetail: startHour)
                 return cell
                 
             case 1:
-                let endDate = "20 Apr 2018" //proxy?.proxyDetails?.endDate to String with format dd MMM yyyy
-                let endHour = "13:00" //proxy?.proxyDetails?.endDate to String with format HH:mm
+                let endDate = proxy?.proxyDetails?.endDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
+                let endHour = proxy?.proxyDetails?.endDate?.dateToString(format: "HH:mm") ?? "12:00"
                 cell.configure(title: "End Date", value: endDate, additionalDetail: endHour)
                 return cell
                 
@@ -115,6 +155,15 @@ extension ProxyDetailsViewController: UITableViewDataSource {
 }
 
 extension ProxyDetailsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath == IndexPath(item: 0, section: 1) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            UIView.animate(withDuration: 0.3) {
+                self.openSettingsOverlayView.alpha = 1
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -152,6 +201,16 @@ extension ProxyDetailsViewController: UITableViewDelegate {
         switch section {
         case 2: return UITableView.IPSXTableViewDefault.bigRowHeight
         default: return 0.01
+        }
+    }
+}
+
+extension ProxyDetailsViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
         }
     }
 }
