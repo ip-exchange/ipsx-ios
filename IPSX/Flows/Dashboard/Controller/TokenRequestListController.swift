@@ -67,6 +67,17 @@ class TokenRequestListController: UIViewController {
         }
     }
     
+    private func ethAddressFor(tokenRequest: TokenRequest) -> EthAddress? {
+        var ethAddress: EthAddress? = nil
+        if let addresses = UserManager.shared.ethAddresses {
+            let matches = addresses.filter { return $0.ethID == tokenRequest.ethID }
+            if matches.count == 1 {
+                ethAddress = matches.first
+            }
+        }
+        return ethAddress
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "showCreateTokenSegueID" {
@@ -105,7 +116,10 @@ extension TokenRequestListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TokenRequestCell
-        cell.configure(tokenRequest: tokenRequests[indexPath.item])
+        let tokenRequest = tokenRequests[indexPath.item]
+        let address      = ethAddressFor(tokenRequest: tokenRequest)
+        cell.configure(tokenRequest: tokenRequest, ethAdrress: address)
+        
         return cell
     }
 }
@@ -120,12 +134,13 @@ class TokenRequestCell: UITableViewCell {
     @IBOutlet weak var pendingView: RoundedView!
     @IBOutlet weak var canceledView: RoundedView!
     
-    func configure(tokenRequest: TokenRequest) {
+    func configure(tokenRequest: TokenRequest, ethAdrress: EthAddress? = nil) {
         //TODO (CC): Get the wallet name
         //aliasLabel.text = tokenRequest.ethID
         if let date = tokenRequest.created {
             dateLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
         }
+        aliasLabel.text = ethAdrress?.alias ?? "My Address".localized
         quantityLabel.text = "Requested: " + tokenRequest.amount
         pendingView.isHidden   = tokenRequest.status != "pending"
         completedView.isHidden = tokenRequest.status != "completed"
