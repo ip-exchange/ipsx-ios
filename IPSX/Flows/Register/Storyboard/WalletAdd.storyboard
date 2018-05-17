@@ -556,6 +556,14 @@
                                     <action selector="qrCodeAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="spc-Is-Ax9"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-sc-Rhj" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="t5L-Uy-tef"/>
+                                    <constraint firstAttribute="height" constant="44" id="vy8-oy-g0z"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -571,6 +579,8 @@
                             <constraint firstItem="ZRe-2w-gCy" firstAttribute="top" secondItem="c8w-7z-z2N" secondAttribute="bottom" constant="15" id="Qku-H5-3Qi"/>
                             <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="pSE-cg-4Dr" secondAttribute="trailing" id="YIm-9t-xOD"/>
                             <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="dTD-By-icE" secondAttribute="trailing" id="YTI-4d-M5K"/>
+                            <constraint firstItem="xp3-sc-Rhj" firstAttribute="centerX" secondItem="ldT-jy-L68" secondAttribute="centerX" id="aLI-g9-CJt"/>
+                            <constraint firstItem="xp3-sc-Rhj" firstAttribute="centerY" secondItem="ldT-jy-L68" secondAttribute="centerY" id="cor-e1-0wb"/>
                             <constraint firstItem="VcK-Af-JEh" firstAttribute="leading" secondItem="ZRe-2w-gCy" secondAttribute="leading" id="eqK-dD-FcJ"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" id="ewC-IY-zjP"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="centerX" secondItem="ZRe-2w-gCy" secondAttribute="centerX" id="hHK-Xm-hff"/>
@@ -586,6 +596,7 @@
                     <navigationItem key="navigationItem" id="qro-63-uUw"/>
                     <connections>
                         <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
+                        <outlet property="loadingView" destination="xp3-sc-Rhj" id="GcH-fd-xLA"/>
                         <outlet property="saveButton" destination="ng7-n6-rRs" id="TGt-rf-Gcp"/>
                         <outlet property="separatorView" destination="Mmt-lK-1sd" id="FyU-bs-fcy"/>
                         <outlet property="topBarView" destination="pSE-cg-4Dr" id="edR-Fe-JQc"/>

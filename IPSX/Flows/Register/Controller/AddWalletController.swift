@@ -31,6 +31,7 @@ class AddWalletController: UIViewController {
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
     var onDismiss: ((_ hasUpdatedETH: Bool)->())?
+    var shouldPop = false
     
     //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
@@ -100,14 +101,16 @@ class AddWalletController: UIViewController {
     
     private func observreFieldsState() {
         walletNameRichTextField.onFieldStateChange = { state in
+            let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
             self.fieldsStateDic["walletName"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
-            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.walletNameRichTextField.contentTextField?.text != self.ethereumAddress?.alias
+            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
         }
         ethAddresRichTextField.onFieldStateChange = { state in
+            let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
             self.fieldsStateDic["ethAddress"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
-            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address
+            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address && curentNameText.count > 0
         }
     }
     
@@ -116,6 +119,12 @@ class AddWalletController: UIViewController {
     }
     
     @IBAction func saveAction(_ sender: UIButton) {
+        
+        guard ethereumAddress != nil else {
+            shouldPop = true
+            doneAction(sender)
+            return
+        }
         
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
@@ -159,7 +168,12 @@ class AddWalletController: UIViewController {
                 
             case .success(_):
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                    if self.shouldPop {
+                        self.onDismiss?(true)
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                    }
                 }
                 
             case .failure(let error):

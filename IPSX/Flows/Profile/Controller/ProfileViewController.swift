@@ -125,7 +125,7 @@ class ProfileViewController: UIViewController {
                     })
                 }
             }
-        case "walletViewIdentifier":
+        case "walletViewIdentifier", "walletAddIdentifier":
             let addController = segue.destination as? AddWalletController
             addController?.ethereumAddress = selectedAddress
             addController?.onDismiss = { hasUpdatedETH in
@@ -185,6 +185,57 @@ extension ProfileViewController: ToastAlertViewPresentable {
             view.insertSubview(toastView, belowSubview: topImageView)
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return ethAdresses.count > 1
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            let ethAddress = ethAdresses[indexPath.item]
+            loadingView.startAnimating()
+            UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethAddress.ethID) { result in
+                
+                DispatchQueue.main.async { self.loadingView.stopAnimating() }
+                
+                switch result {
+                    
+                case .success(_):
+                    
+                    DispatchQueue.main.async {
+                        self.loadingView.startAnimating()
+                        
+                        UserInfoService().retrieveETHaddresses() { result in
+                            
+                            self.loadingView.stopAnimating()
+                            
+                            switch result {
+                            case .success(let ethAddresses):
+                                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                                self.refreshETHaddressesUI()
+                                
+                            case .failure(_):
+                                self.errorMessage = "Refresh Data Error Message".localized
+                            }
+                        }
+                    }
+                    
+                case .failure(let error):
+                    
+                    switch error {
+                    case CustomError.ethAddressAlreadyUsed:
+                        self.errorMessage = "ETH Address Delete Failed Error Message".localized
+                    default:
+                        self.errorMessage = "Generic Error Message".localized
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 class EthWalletCell: UITableViewCell {
