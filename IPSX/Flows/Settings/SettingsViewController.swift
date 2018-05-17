@@ -16,6 +16,6 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
+        tokensAmountLabel.text = "\(userInfo?.balance ?? 0)"
     }
 }

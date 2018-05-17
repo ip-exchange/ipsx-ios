@@ -25,10 +25,10 @@ class DashboardViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var countries: [String] = []
         
-    var ballance: String = "" {
+    var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
-                self.tokensAmountLabel.text = self.ballance
+                self.tokensAmountLabel.text = self.balance
             }
         }
     }
@@ -65,7 +65,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO (CVI): refresh data when needed (proxy usage -> x sec & ballance after token requests / activate proxy)
+        //TODO (CVI): refresh data when needed (proxy usage -> x sec & balance after token requests / activate proxy)
      }
     
     override func viewDidLayoutSubviews() {
@@ -78,7 +78,7 @@ class DashboardViewController: UIViewController {
         super.viewDidAppear(animated)
         selectedProxy = nil
         updateProxyDataSource()
-        self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
+        self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
         
         if UserManager.shared.isLoggedIn {
             initializeData()
@@ -94,7 +94,7 @@ class DashboardViewController: UIViewController {
                 switch result {
                 case .success(let user):
                     UserManager.shared.userInfo = user as? UserInfo
-                    self.ballance = "\(UserManager.shared.userInfo?.ballance ?? 0)"
+                    self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
                     
                 case .failure(_):
                     self.errorMessage = "Generic Error Message".localized

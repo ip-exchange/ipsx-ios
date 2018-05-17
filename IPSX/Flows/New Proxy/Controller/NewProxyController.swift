@@ -45,7 +45,7 @@ class NewProxyController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        tokensAmountLabel.text = "\(userInfo?.ballance ?? 0)"
+        tokensAmountLabel.text = "\(userInfo?.balance ?? 0)"
     }
     
     override func viewDidAppear(_ animated: Bool) {

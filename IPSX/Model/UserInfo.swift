@@ -17,10 +17,10 @@ struct UserInfo {
     var countryID: String
     var email: String
     var proxyTest: String
-    var ballance: Int
+    var balance: Int
     
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", ballance: Int = 0) {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Int = 0) {
         
         self.firstName  = firstName
         self.middleName = middleName
@@ -29,6 +29,6 @@ struct UserInfo {
         self.countryID  = countryID
         self.email      = email
         self.proxyTest  = proxyTest
-        self.ballance   = ballance
+        self.balance   = balance
     }
 }
