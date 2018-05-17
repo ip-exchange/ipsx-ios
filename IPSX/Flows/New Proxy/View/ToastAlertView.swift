@@ -63,9 +63,16 @@ public protocol ToastAlertViewPresentable {
     func createToastAlert(onTopOf parentUnderView: UIView, text: String)
 }
 
+public enum ToastAlertType {
+    case error
+    case info
+    case success
+}
+
 public class ToastAlertView: UIView {
     
     @IBOutlet weak var alertTextLabel: UILabel!
+    @IBOutlet weak var leftImageView: UIImageView!
     
     private weak var view: UIView!
     private weak var parent: UIView!
@@ -105,9 +112,9 @@ public class ToastAlertView: UIView {
         updateInfoToastUI(visible: false)
     }
     
-    public func showToastAlert(_ text: String? = "", autoHideAfter: Double = 0.0) {
+    public func showToastAlert(_ text: String? = "", autoHideAfter: Double = 0.0, type: ToastAlertType = .error) {
         DispatchQueue.main.async {
-            self.updateInfoToastUI(visible: true, alertText: text)
+            self.updateInfoToastUI(visible: true, alertText: text, type: type)
             if autoHideAfter > 0.0 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + autoHideAfter) {
                     self.updateInfoToastUI(visible: false)
@@ -120,9 +127,24 @@ public class ToastAlertView: UIView {
         updateInfoToastUI(visible: false)
     }
     
-    private func updateInfoToastUI(visible: Bool, alertText: String? = "") {
+    private func updateInfoToastUI(visible: Bool, alertText: String? = "", type: ToastAlertType? = nil) {
         
         DispatchQueue.main.async {
+            if let toastType = type {
+                self.view.backgroundColor = .green
+                var imageName = "warningWhite"
+                switch toastType {
+                case .error:
+                    self.view.backgroundColor = UIColor.darkRed
+                case .info:
+                    self.view.backgroundColor = UIColor.lightBlue
+                    imageName = "infoWhite"
+                case .success:
+                    self.view.backgroundColor = UIColor.lightBlue
+                    imageName = "successWhite"
+                }
+                self.leftImageView.image = UIImage(named: imageName)
+            }
             if let text = alertText, text.count > 0 {
                 self.alertTextLabel.text = text
                 self.frame.size.height = max(50, self.alertTextLabel.requiredHeight() + 6)
