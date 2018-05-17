@@ -135,8 +135,6 @@ class TokenRequestCell: UITableViewCell {
     @IBOutlet weak var canceledView: RoundedView!
     
     func configure(tokenRequest: TokenRequest, ethAdrress: EthAddress? = nil) {
-        //TODO (CC): Get the wallet name
-        //aliasLabel.text = tokenRequest.ethID
         if let date = tokenRequest.created {
             dateLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
         }
