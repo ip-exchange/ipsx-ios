@@ -26,6 +26,7 @@ class TokenRequestController: UIViewController {
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var walletImageView: UIImageView!
     
     let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
@@ -117,6 +118,9 @@ class TokenRequestController: UIViewController {
             if let validAddress = selectedAddress {
                 UserDefaults.standard.storeDelfaultETHAddressID(ethAddressID: validAddress.ethID)
                 updateSelectedAddresUI(ethAddres: validAddress)
+            } else {
+                walletImageView.image = UIImage(named: "walletRejected")
+                submitButton.isEnabled = false
             }
             tableView.reloadData()
         }

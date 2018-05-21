@@ -108,7 +108,7 @@ class EditProfileController: UIViewController {
     private func detectChangesAndValidity(textfield: UITextField? = nil, newText: String = "") {
         
         let userInfo = UserManager.shared.userInfo
-        let countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+        let countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID) ?? "Select a country".localized
         var dataChanged = countryName != selectedCountryLabel.text
         
         switch textfield {
@@ -140,7 +140,7 @@ class EditProfileController: UIViewController {
             break
         }
         
-        saveButton.isEnabled = dataChanged
+        saveButton.isEnabled = dataChanged && selectedCountryLabel.text != "Select a country".localized
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
