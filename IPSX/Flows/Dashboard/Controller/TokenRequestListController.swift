@@ -47,24 +47,30 @@ class TokenRequestListController: UIViewController {
         super.viewWillAppear(animated)
       
         if UserManager.shared.tokenRequests == nil {
-            
-            //self.loadingView.startAnimating()
-            ProxyService().getTokenRequestList(completionHandler: { result in
-                
-                //self.loadingView.stopAnimating()
-                switch result {
-                case .success(let tokenRequests):
-                    UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                    self.updateUI()
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
+            getTokenRequestList()
         }
         else {
             updateUI()
         }
+    }
+    
+    func getTokenRequestList() {
+        
+        //self.loadingView.startAnimating()
+        ProxyService().getTokenRequestList(completionHandler: { result in
+            
+            //self.loadingView.stopAnimating()
+            switch result {
+            case .success(let tokenRequests):
+                UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                self.updateUI()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .getTokenRequestList, completion: {
+                    self.getTokenRequestList()
+                })
+            }
+        })
     }
     
     private func ethAddressFor(tokenRequest: TokenRequest) -> EthAddress? {
@@ -85,22 +91,7 @@ class TokenRequestListController: UIViewController {
             nextVC?.onDismiss = { hasSubmittedRequest in
                 
                 if hasSubmittedRequest {
-                
-//                    self.loadingView.startAnimating()
-                    
-                    ProxyService().getTokenRequestList(completionHandler: { result in
-                        
-//                      self.loadingView.stopAnimating()
-                        
-                        switch result {
-                        case .success(let tokenRequests):
-                            UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                            self.updateUI()
-                            
-                        case .failure(_):
-                            self.errorMessage = "Refresh Data Error Message".localized
-                        }
-                    })
+                    self.getTokenRequestList()
                 }
             }
         }
@@ -143,5 +134,25 @@ class TokenRequestCell: UITableViewCell {
         pendingView.isHidden   = tokenRequest.status != "pending"
         completedView.isHidden = tokenRequest.status != "completed"
         canceledView.isHidden  = tokenRequest.status != "rejected"
+    }
+}
+
+extension TokenRequestListController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
+        }
     }
 }
