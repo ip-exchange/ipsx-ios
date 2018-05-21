@@ -135,6 +135,7 @@ class DashboardViewController: UIViewController {
         case "ProxyDetailsSegueiID":
             let nextVC = segue.destination as? ProxyDetailsViewController
             nextVC?.proxy = selectedProxy
+            nextVC?.presentedFromDashboard = true
             
         case "showTokenRequestSegueID":
             let nextVC = segue.destination as? UINavigationController

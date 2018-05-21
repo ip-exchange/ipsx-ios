@@ -30,7 +30,8 @@ class ProxyDetailsViewController: UIViewController {
     let pacDetailsCellID = "PACDetailsCellID"
     let detailsCellID = "ProxyDetailsCellD"
     var proxy: Proxy?
-    
+    var presentedFromDashboard = false
+
     @IBAction func DoneButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -56,7 +57,9 @@ class ProxyDetailsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        toast?.showToastAlert(type: .info)
+        if !presentedFromDashboard {
+            toast?.showToastAlert(type: .info)
+        }
     }
     
     private func configureUI() {
