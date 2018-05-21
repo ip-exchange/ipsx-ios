@@ -24,7 +24,8 @@ class DashboardViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var countries: [String] = []
-        
+    var showAmountAlert = true
+    
     var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -78,7 +79,12 @@ class DashboardViewController: UIViewController {
         super.viewDidAppear(animated)
         selectedProxy = nil
         updateProxyDataSource()
-        self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
+        balance = "\(balanceValue)"
+        if balanceValue == 0, showAmountAlert == true {
+            showAmountAlert = false
+            toast?.showToastAlert("Your current balance is empty! Please request tokens.".localized, type: .info)
+        }
         
         if UserManager.shared.isLoggedIn {
             initializeData()
@@ -138,6 +144,7 @@ class DashboardViewController: UIViewController {
             nextVC?.presentedFromDashboard = true
             
         case "showTokenRequestSegueID":
+            toast?.hideToastAlert()
             let nextVC = segue.destination as? UINavigationController
             let controller = nextVC?.viewControllers.first as? TokenRequestListController
             controller?.tokenRequests = tokenRequests ?? []

@@ -114,13 +114,13 @@ class AddWalletController: UIViewController {
         walletNameRichTextField.onFieldStateChange = { state in
             let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
             self.fieldsStateDic["walletName"] = state
-            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
             self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
         }
         ethAddresRichTextField.onFieldStateChange = { state in
             let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
             self.fieldsStateDic["ethAddress"] = state
-            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false)
+            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address && curentNameText.count > 0
             self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address && curentNameText.count > 0
         }
     }
