@@ -38,12 +38,15 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-fy-wpx">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghf-fy-wpx">
                                         <rect key="frame" x="329" y="57" width="38" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.80784313730000001" green="0.83137254900000002" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="saveButtonAction:" destination="Pyt-cD-jav" eventType="touchUpInside" id="0GC-oa-67a"/>
@@ -63,13 +66,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9R-Zo-56p">
-                                <rect key="frame" x="15" y="91" width="91" height="22"/>
+                                <rect key="frame" x="15" y="84.5" width="91" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kEV-L1-7n0" userLabel="Holder View">
-                                <rect key="frame" x="0.0" y="125" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="118.5" width="375" height="300"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1n-K1-kbq" userLabel="Top Separator">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
@@ -94,7 +97,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Pyt-cD-jav" id="dXA-yb-oT4"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qTM-4M-0iq" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="59" width="360" height="1"/>
@@ -120,7 +126,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Pyt-cD-jav" id="tAM-jK-oOJ"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U8v-yf-K9c" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="59" width="360" height="1"/>
@@ -146,7 +155,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Pyt-cD-jav" id="Z5S-Lg-Opw"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ixY-go-qOc" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="59" width="360" height="1"/>
@@ -172,7 +184,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Pyt-cD-jav" id="pNO-Es-Nmt"/>
+                                                </connections>
                                             </textField>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fbi-Qi-LXB" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="59" width="360" height="1"/>
@@ -234,7 +249,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3E1-3i-z73" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="16" y="447" width="343" height="66"/>
+                                <rect key="frame" x="16" y="440.5" width="343" height="66"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keyIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XmE-yz-7Zq">
                                         <rect key="frame" x="19" y="18" width="29" height="30"/>
@@ -281,7 +296,7 @@
                             <constraint firstItem="rGU-Ax-wKq" firstAttribute="trailing" secondItem="kEV-L1-7n0" secondAttribute="trailing" id="IZW-se-eHj"/>
                             <constraint firstItem="San-8X-eiY" firstAttribute="leading" secondItem="rGU-Ax-wKq" secondAttribute="leading" id="Psr-p2-zPf"/>
                             <constraint firstItem="rGU-Ax-wKq" firstAttribute="trailing" secondItem="San-8X-eiY" secondAttribute="trailing" id="X42-GP-x2A"/>
-                            <constraint firstItem="t9R-Zo-56p" firstAttribute="top" secondItem="3Az-2p-pmY" secondAttribute="bottom" constant="26.5" id="beP-XQ-Lfc"/>
+                            <constraint firstItem="t9R-Zo-56p" firstAttribute="top" secondItem="3Az-2p-pmY" secondAttribute="bottom" constant="20" id="beP-XQ-Lfc"/>
                             <constraint firstItem="9Fn-ZY-t5U" firstAttribute="centerY" secondItem="rGU-Ax-wKq" secondAttribute="centerY" id="i3i-Ap-gHx"/>
                             <constraint firstItem="kEV-L1-7n0" firstAttribute="top" secondItem="t9R-Zo-56p" secondAttribute="bottom" constant="12" id="ntM-zO-wYH"/>
                             <constraint firstItem="3Az-2p-pmY" firstAttribute="trailing" secondItem="San-8X-eiY" secondAttribute="trailing" id="p72-8a-G9y"/>
@@ -300,10 +315,11 @@
                     <navigationItem key="navigationItem" id="MOe-bb-j0w"/>
                     <connections>
                         <outlet property="emailTextField" destination="0Ww-Hu-VEN" id="8Zh-eE-Unl"/>
-                        <outlet property="firstNameTextField" destination="gAm-WK-x0E" id="aaP-Mq-di2"/>
+                        <outlet property="firstNameTextField" destination="gAm-WK-x0E" id="Puk-iJ-T7f"/>
                         <outlet property="keyIconImageView" destination="XmE-yz-7Zq" id="rDJ-57-ssX"/>
                         <outlet property="lastNameTextField" destination="du9-hi-1ds" id="uhb-99-gER"/>
                         <outlet property="loadingView" destination="9Fn-ZY-t5U" id="fjd-ia-Bko"/>
+                        <outlet property="saveButton" destination="ghf-fy-wpx" id="yd7-Vb-dLE"/>
                         <outlet property="selectedCountryLabel" destination="qWj-Pj-swk" id="c6r-sI-8AX"/>
                         <outlet property="separatorView" destination="3Az-2p-pmY" id="kur-h6-Mj3"/>
                         <outlet property="telegramTextField" destination="lPR-YP-J9z" id="6Py-ws-xdK"/>
