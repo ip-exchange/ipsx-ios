@@ -94,37 +94,49 @@ class DashboardViewController: UIViewController {
     func initializeData() {
         
         if UserManager.shared.userInfo == nil {
-            
-            UserInfoService().retrieveUserInfo(completionHandler: { result in
-                
-                switch result {
-                case .success(let user):
-                    UserManager.shared.userInfo = user as? UserInfo
-                    self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
+            retrieveUserInfo()
         }
-        
         if UserManager.shared.proxies == nil {
-            
-            loadingView.startAnimating()
-            ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-                self.loadingView.stopAnimating()
-                
-                switch result {
-                    
-                case .success(let proxyArray):
-                    UserManager.shared.proxies = proxyArray as? [Proxy]
-                    self.updateProxyDataSource()
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
+            retrieveProxiesForCurrentUser()
         }
+    }
+    
+    func retrieveUserInfo() {
+        
+        loadingView.startAnimating()
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
+                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .userInfo, completion: {
+                    self.retrieveUserInfo()
+                })
+            }
+        })
+    }
+    
+    func retrieveProxiesForCurrentUser() {
+        
+        loadingView.startAnimating()
+        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let proxyArray):
+                UserManager.shared.proxies = proxyArray as? [Proxy]
+                self.updateProxyDataSource()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveProxies, completion: {
+                    self.retrieveProxiesForCurrentUser()
+                })
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -209,6 +221,26 @@ extension DashboardViewController: UITableViewDelegate {
         }
         else {
             performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+        }
+    }
+}
+
+extension DashboardViewController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }
