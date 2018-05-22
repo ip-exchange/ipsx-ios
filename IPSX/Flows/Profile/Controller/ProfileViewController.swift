@@ -25,7 +25,6 @@ class ProfileViewController: UIViewController {
     var previousScrollOffset: CGFloat = 0;
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
@@ -221,7 +220,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EthWalletCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
         let ethAddress = ethAdresses[indexPath.item]
         cell.configure(address: ethAddress)
         return cell
@@ -337,26 +336,6 @@ extension ProfileViewController: ToastAlertViewPresentable {
             
             let ethAddress = ethAdresses[indexPath.item]
             self.updateETHaddresses(ethID: ethAddress.ethID)
-        }
-    }
-}
-
-class EthWalletCell: UITableViewCell {
-    
-    @IBOutlet weak var aliasLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var statsuImageView: UIImageView!
-    
-    func configure(address: EthAddress) {
-        aliasLabel.text = address.alias
-        addressLabel.text = address.address
-        switch address.validationState {
-        case .verified:
-            statsuImageView.image = UIImage(named: "walletAccepted")
-        case .pending:
-            statsuImageView.image = UIImage(named: "walletPending")
-        case .rejected:
-            statsuImageView.image = UIImage(named: "walletRejected")
         }
     }
 }
