@@ -22,4 +22,10 @@ struct TokenRequest {
         self.status = status
         self.created = created
     }
+    
+    func isFromToday() -> Bool {
+        
+        //TODO(CC): implement this
+        return false
+    }
 }

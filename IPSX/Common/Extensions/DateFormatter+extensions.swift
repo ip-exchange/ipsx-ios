@@ -31,12 +31,10 @@ extension DateFormatter {
         return days+hours+minutes
     }
     
-    class func dateStringForTokenRequests(date: Date) -> String
-    {
+    class func dateStringForTokenRequests(date: Date) -> String {
         let dateFormat = "dd MMM yyyy  HH:mm"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
         return dateFormatter.string(from: date)
     }
-
 }

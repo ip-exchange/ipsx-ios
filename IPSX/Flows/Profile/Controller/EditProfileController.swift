@@ -92,7 +92,7 @@ class EditProfileController: UIViewController {
     private func updateFields() {
         
         let userInfo = UserManager.shared.userInfo
-        var countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+        var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         if let selectedCountry = self.searchController?.selectedCountry {
             countryName = selectedCountry
          } else {
@@ -108,7 +108,7 @@ class EditProfileController: UIViewController {
     private func detectChangesAndValidity(textfield: UITextField? = nil, newText: String = "") {
         
         let userInfo = UserManager.shared.userInfo
-        let countryName = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID) ?? "Select a country".localized
+        let countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID) ?? "Select a country".localized
         var dataChanged = countryName != selectedCountryLabel.text
         
         switch textfield {
@@ -145,7 +145,7 @@ class EditProfileController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
-        let countryID = UserDefaults.standard.getCountryId(countryName: selectedCountryLabel.text ?? "")
+        let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
         let bodyParams: [String: String] =  ["email"     : emailTextField.text ?? "",
                                              "first_name": firstNameTextField.text ?? "",
                                              "last_name" : lastNameTextField.text ?? "",
@@ -205,10 +205,10 @@ class EditProfileController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
             srcController.dismissOnSelect = true
-            srcController.countries = UserDefaults.standard.getUserCountryList()
+            srcController.countries = UserManager.shared.getUserCountryList()
             let userInfo = UserManager.shared.userInfo
             searchController = srcController
-            searchController?.selectedCountry = UserDefaults.standard.getCountryName(countryID: userInfo?.countryID)
+            searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         }
     }
 }

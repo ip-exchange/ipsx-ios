@@ -59,8 +59,22 @@ class DashboardViewController: UIViewController {
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
-        self.tokenRequests = UserManager.shared.tokenRequests
-        self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
+        let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
+        var noOfTokenRequests: Int = 1
+        
+        if let tokenRequests = UserManager.shared.tokenRequests {
+            for tokenRequest in tokenRequests {
+                if tokenRequest.isFromToday() {
+                    noOfTokenRequests = noOfTokenRequests + 1
+                }
+            }
+        }
+        if noOfTokenRequests < maxTokenRequests {
+            self.tokenRequests = UserManager.shared.tokenRequests
+            self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
+        } else {
+            self.errorMessage = "Max Token Requests Error Message".localized
+        }
     }
     
     override func viewDidLoad() {
@@ -86,17 +100,9 @@ class DashboardViewController: UIViewController {
             toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
         }
         
+        //TODO (CVI): change this for updating every 30s
         if UserManager.shared.isLoggedIn {
-            initializeData()
-        }
-    }
-    
-    func initializeData() {
-        
-        if UserManager.shared.userInfo == nil {
             retrieveUserInfo()
-        }
-        if UserManager.shared.proxies == nil {
             retrieveProxiesForCurrentUser()
         }
     }

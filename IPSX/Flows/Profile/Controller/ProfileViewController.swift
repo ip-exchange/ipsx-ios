@@ -45,6 +45,17 @@ class ProfileViewController: UIViewController {
         logout()
     }
     
+    @IBAction func addWalletAction(_ sender: UIButton) {
+        
+        let maxETHaddresses = UserManager.shared.options?.maxETHaddresses ?? 5
+        let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0
+        
+        if ethAddresses < maxETHaddresses {
+            performSegue(withIdentifier: "walletViewIdentifier", sender: nil)
+        } else {
+            self.errorMessage = "Max ETH addresses Error Message".localized
+        }
+    }
     //TODO (CVI): if logout fails randomly, we should redirect to login and start from the beginning
     
     func logout() {
@@ -140,7 +151,7 @@ class ProfileViewController: UIViewController {
                     self.retrieveUserInfo()
                 }
             }
-        case "walletViewIdentifier", "walletAddIdentifier":
+        case "walletViewIdentifier":
             let addController = segue.destination as? AddWalletController
             addController?.ethereumAddress = selectedAddress
             addController?.onDismiss = { hasUpdatedETH in

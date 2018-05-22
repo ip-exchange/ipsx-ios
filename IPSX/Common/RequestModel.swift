@@ -39,6 +39,7 @@ public struct Url {
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
+    public static let optionsArgs = "/options?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -96,6 +97,7 @@ public func ==(lhs: CustomError, rhs: CustomError) -> Bool {
 public enum IPRequestType: Int {
     
     case getPublicIP
+    case options
     case register
     case login
     case logout
