@@ -75,7 +75,7 @@ class ProxyDetailsViewController: UIViewController {
         
         guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
             hideOverlay()
-            toast?.showToastAlert("Can't redirect, please open the Settings manually.".localized, type: .error)
+            toast?.showToastAlert("Select Valid ETH Wallet Message".localized, type: .error)
             return
         }
         
@@ -83,7 +83,7 @@ class ProxyDetailsViewController: UIViewController {
             UIApplication.shared.open(settingsUrl)
         } else {
             hideOverlay()
-            toast?.showToastAlert("Can't redirect, please open the Settings manually.".localized, type: .error)
+            toast?.showToastAlert("Redirect to Settings Error Message".localized, type: .error)
         }
     }
     

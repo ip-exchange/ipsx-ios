@@ -83,7 +83,7 @@ class DashboardViewController: UIViewController {
         balance = "\(balanceValue)"
         if balanceValue == 0, showAmountAlert == true {
             showAmountAlert = false
-            toast?.showToastAlert("Your current balance is empty! Please request tokens.".localized, type: .info)
+            toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
         }
         
         if UserManager.shared.isLoggedIn {

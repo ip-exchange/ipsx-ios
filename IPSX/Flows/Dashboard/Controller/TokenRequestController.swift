@@ -51,12 +51,12 @@ class TokenRequestController: UIViewController {
         let amount = amountTextField.text ?? "0"
         
         guard Int(amount)! >= 20, Int(amount)! <= 5000 else {
-            toast?.showToastAlert("The amount should be between 20 and 5000".localized, autoHideAfter: 5)
+            toast?.showToastAlert("Amount Limits Error Message".localized, autoHideAfter: 5)
             return
         }
         
         guard ethID.count > 0 else {
-            toast?.showToastAlert("Select a valid ETH wallet".localized, autoHideAfter: 5)
+            toast?.showToastAlert("Select Valid ETH Wallet Message".localized, autoHideAfter: 5)
             return
         }
         requestTokens(ethID: ethID, amount: amount)
