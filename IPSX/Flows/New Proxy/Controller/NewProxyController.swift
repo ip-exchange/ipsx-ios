@@ -53,21 +53,27 @@ class NewProxyController: UIViewController {
         countries = UserManager.shared.proxyCountries
         
         if UserManager.shared.proxyCountries == nil {
-            
-            loadingView.startAnimating()
-            ProxyService().getProxyCountryList(completionHandler: { result in
-                
-                self.loadingView.stopAnimating()
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.proxyCountries = countryList as? [String]
-                    self.countries = UserManager.shared.proxyCountries
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
+            getProxyCountryList()
         }
+    }
+    
+    func getProxyCountryList() {
+        
+        loadingView.startAnimating()
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let countryList):
+                UserManager.shared.proxyCountries = countryList as? [String]
+                self.countries = UserManager.shared.proxyCountries
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                    self.getProxyCountryList()
+                })
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,6 +131,26 @@ extension NewProxyController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension NewProxyController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

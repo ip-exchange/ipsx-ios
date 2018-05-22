@@ -40,7 +40,7 @@ class LoginService {
             
             //Store access details in keychain
             UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, email: email, password: password)
-            
+                        
             //Execute User Info request
             UserInfoService().retrieveUserInfo(completionHandler: { result in
                 switch result {
@@ -84,19 +84,17 @@ class LoginService {
         })
     }
     
-    //TODO (CVI): use this for each request when necessary
-    
-    func getNewAccessToken(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func getNewAccessToken(errorHandler: @escaping (Error?)->Void, successHandler:@escaping () -> ()) {
         
         login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
             
             switch result {
                 
             case .success(_):
-               completionHandler(ServiceResult.success(true))
+               successHandler()
                 
             case .failure(let error):
-                completionHandler(ServiceResult.failure(error))
+                errorHandler(error)
             }
         })
     }

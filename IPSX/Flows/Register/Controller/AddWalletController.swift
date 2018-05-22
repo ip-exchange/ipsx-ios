@@ -43,16 +43,27 @@ class AddWalletController: UIViewController {
     }
     
     @IBAction func loginAnotherAccountAction(_ sender: UIButton) {
+        loginAnotherAccount()
+    }
+    
+    func loginAnotherAccount() {
         
+        loadingView.startAnimating()
         LoginService().logout(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
             switch result {
+                
             case .success(_):
                 UserManager.shared.removeUserDetails()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
                 }
-            case .failure(_):
-                self.errorMessage = "Logout Error Message".localized
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .logout, completion: {
+                    self.loginAnotherAccount()
+                })
             }
         })
     }
@@ -125,12 +136,19 @@ class AddWalletController: UIViewController {
             doneAction(sender)
             return
         }
-        
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         let ethID = ethereumAddress?.ethID ?? ""
         
+        updateETHaddress(alias: alias, address: address, ethID: ethID)
+    }
+    
+    func updateETHaddress(alias: String, address: String, ethID: String) {
+    
+        loadingView.startAnimating()
         UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -139,15 +157,12 @@ class AddWalletController: UIViewController {
                     self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
-
-            case .failure(let error):
                 
-                switch error {
-                case CustomError.ethAddressAlreadyUsed:
-                    self.errorMessage = "ETH Address Already Used Error Message".localized
-                default:
-                    self.errorMessage = "Generic Error Message".localized
-                }
+            case .failure(let error):
+
+                self.handleError(error, requestType: .updateEthAddress, completion: {
+                    self.updateETHaddress(alias: alias, address: address, ethID: ethID)
+                })
             }
         })
     }
@@ -156,6 +171,10 @@ class AddWalletController: UIViewController {
     
     
     @IBAction func doneAction(_ sender: UIButton) {
+        addEthAdress()
+    }
+    
+    func addEthAdress() {
         
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
@@ -163,7 +182,7 @@ class AddWalletController: UIViewController {
         loadingView.startAnimating()
         RegisterService().addEthAdress(address: address, alias: alias, completionHandler: { result in
             
-            self.loadingView.stopAnimating() 
+            self.loadingView.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -177,14 +196,9 @@ class AddWalletController: UIViewController {
                 }
                 
             case .failure(let error):
-                
-                switch error {
-                case CustomError.ethAddressAlreadyUsed:
-                    self.errorMessage = "ETH Address Already Used Error Message".localized
-                    
-                default:
-                    self.errorMessage = "Generic Error Message".localized
-                }
+                self.handleError(error, requestType: .addEthAddress, completion: {
+                    self.addEthAdress()
+                })
             }
         })
     }
@@ -360,5 +374,36 @@ class FirstWalletDoneController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
+    }
+}
+
+extension AddWalletController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            
+            switch requestType {
+            case .logout:
+                self.errorMessage = "Logout Error Message".localized
+                
+            case .updateEthAddress, .addEthAddress:
+                if let customErr = error as? CustomError, customErr == .ethAddressAlreadyUsed {
+                    self.errorMessage = "ETH Address Already Used Error Message".localized
+                }
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
+        }
     }
 }

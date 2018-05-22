@@ -13,13 +13,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var hidableDownView: UIView!
-
-    let maxHeaderHeight: CGFloat = 215;
-    let minHeaderHeight: CGFloat = 44;
-    
-    var previousScrollOffset: CGFloat = 0;
-    
-    
     @IBOutlet weak var topRootView: UIView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tableView: UITableView!
@@ -27,11 +20,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var usernameTopLabel: UILabel!
     
-    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
-        didSet {
-            topConstraint = topConstraintOutlet
-        }
-    }
+    let maxHeaderHeight: CGFloat = 215;
+    let minHeaderHeight: CGFloat = 44;
+    var previousScrollOffset: CGFloat = 0;
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     let cellID = "ETHAddressCellID"
@@ -39,6 +30,12 @@ class ProfileViewController: UIViewController {
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
     
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+  
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -46,16 +43,27 @@ class ProfileViewController: UIViewController {
     }
 
     @IBAction func logoutButtonAction(_ sender: UIButton) {
+        logout()
+    }
+    
+    //TODO (CVI): if logout fails randomly, we should redirect to login and start from the beginning
+    
+    func logout() {
         
+        loadingView.startAnimating()
         LoginService().logout(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
             switch result {
             case .success(_):
                 UserManager.shared.removeUserDetails()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
                 }
-            case .failure(_):
-                self.errorMessage = "Logout Error Message".localized
+            case .failure(let error):
+                self.handleError(error, requestType: .logout, completion: {
+                    self.logout()
+                })
             }
         })
     }
@@ -130,21 +138,7 @@ class ProfileViewController: UIViewController {
             editProfileVC?.onDismiss = { hasUpdatedProfile in
                 
                 if hasUpdatedProfile {
-                    
-                    self.loadingView.startAnimating()
-                    UserInfoService().retrieveUserInfo(completionHandler: { result in
-                        
-                        self.loadingView.stopAnimating()
-                        
-                        switch result {
-                        case .success(let user):
-                            UserManager.shared.userInfo = user as? UserInfo
-                            self.refreshProfileUI()
-                        
-                        case .failure(_):
-                            self.errorMessage = "Refresh Data Error Message".localized
-                        }
-                    })
+                    self.retrieveUserInfo()
                 }
             }
         case "walletViewIdentifier", "walletAddIdentifier":
@@ -153,26 +147,69 @@ class ProfileViewController: UIViewController {
             addController?.onDismiss = { hasUpdatedETH in
                 
                 if hasUpdatedETH {
-                    
-                    self.loadingView.startAnimating()
-                    
-                    UserInfoService().retrieveETHaddresses(completionHandler: { result in
-                        
-                        self.loadingView.stopAnimating()
-                        
-                        switch result {
-                        case .success(let ethAddresses):
-                            UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                            self.refreshETHaddressesUI()
-                            
-                        case .failure(_):
-                            self.errorMessage = "Refresh Data Error Message".localized
-                        }
-                    })
+                    self.retrieveETHaddresses()
                 }
             }
         default:
             break
+        }
+    }
+    
+    func retrieveUserInfo() {
+        
+        loadingView.startAnimating()
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
+                self.refreshProfileUI()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .userInfo, completion: {
+                    self.retrieveUserInfo()
+                })
+            }
+        })
+    }
+    
+    func retrieveETHaddresses() {
+        
+        loadingView.startAnimating()
+        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let ethAddresses):
+                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                self.refreshETHaddressesUI()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .getEthAddress, completion: {
+                    self.retrieveETHaddresses()
+                })
+            }
+        })
+    }
+    
+    func updateETHaddresses(ethID: String) {
+        
+        loadingView.startAnimating()
+        UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethID) { result in
+            
+            self.loadingView.stopAnimating()
+            
+            switch result {
+                
+            case .success(_):
+                self.retrieveETHaddresses()
+
+            case .failure(let error):
+                self.handleError(error, requestType: .deleteEthAddress, completion: {
+                    self.updateETHaddresses(ethID: ethID)
+                })
+            }
         }
     }
 }
@@ -278,7 +315,6 @@ extension ProfileViewController: UITableViewDelegate {
     func setScrollPosition(_ position: CGFloat) {
         self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
     }
-
 }
 
 extension ProfileViewController: ToastAlertViewPresentable {
@@ -300,46 +336,9 @@ extension ProfileViewController: ToastAlertViewPresentable {
         if editingStyle == .delete {
             
             let ethAddress = ethAdresses[indexPath.item]
-            loadingView.startAnimating()
-            UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethAddress.ethID) { result in
-                
-                DispatchQueue.main.async { self.loadingView.stopAnimating() }
-                
-                switch result {
-                    
-                case .success(_):
-                    
-                    DispatchQueue.main.async {
-                        self.loadingView.startAnimating()
-                        
-                        UserInfoService().retrieveETHaddresses() { result in
-                            
-                            self.loadingView.stopAnimating()
-                            
-                            switch result {
-                            case .success(let ethAddresses):
-                                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                                self.refreshETHaddressesUI()
-                                
-                            case .failure(_):
-                                self.errorMessage = "Refresh Data Error Message".localized
-                            }
-                        }
-                    }
-                    
-                case .failure(let error):
-                    
-                    switch error {
-                    case CustomError.ethAddressAlreadyUsed:
-                        self.errorMessage = "ETH Address Delete Failed Error Message".localized
-                    default:
-                        self.errorMessage = "Generic Error Message".localized
-                    }
-                }
-            }
+            self.updateETHaddresses(ethID: ethAddress.ethID)
         }
     }
-
 }
 
 class EthWalletCell: UITableViewCell {
@@ -360,150 +359,36 @@ class EthWalletCell: UITableViewCell {
             statsuImageView.image = UIImage(named: "walletRejected")
         }
     }
-    
 }
 
-
-
-
-
-
-class Profile1ViewController: UIViewController {
+extension ProfileViewController: ErrorPresentable {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
-    
-    let maxHeaderHeight: CGFloat = 215;
-    let minHeaderHeight: CGFloat = 44;
-    
-    var previousScrollOffset: CGFloat = 0;
-    
-    @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var hidableDownView: UIView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
         
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.headerHeightConstraint.constant = self.maxHeaderHeight
-        updateHeader()
-    }
-}
-
-extension Profile1ViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel!.text = "Cell \(indexPath.row)"
-        return cell
-    }
-    
-    //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //        return 300
-    //    }
-}
-
-extension Profile1ViewController: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
-        
-        let absoluteTop: CGFloat = 0;
-        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
-        
-        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
-        
-        if canAnimateHeader(scrollView) {
+        switch error {
             
-            // Calculate new header height
-            var newHeight = self.headerHeightConstraint.constant
-            if isScrollingDown {
-                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-            } else if isScrollingUp {
-                newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+
+        default:
+            
+            switch requestType {
+            case .logout:
+                self.errorMessage = "Logout Error Message".localized
+            case .userInfo, .getEthAddress:
+                self.errorMessage = "Refresh Data Error Message".localized
+            case .deleteEthAddress:
+                self.errorMessage = "ETH Address Delete Failed Error Message".localized
+            default:
+                self.errorMessage = "Generic Error Message".localized
             }
-            
-            // Header needs to animate
-            if newHeight != self.headerHeightConstraint.constant {
-                self.headerHeightConstraint.constant = newHeight
-                self.updateHeader()
-                self.setScrollPosition(self.previousScrollOffset)
-            }
-            
-            self.previousScrollOffset = scrollView.contentOffset.y
         }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.scrollViewDidStopScrolling()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.scrollViewDidStopScrolling()
-        }
-    }
-    
-    func scrollViewDidStopScrolling() {
-        let range = self.maxHeaderHeight - self.minHeaderHeight
-        let midPoint = self.minHeaderHeight + (range / 2)
-        
-        if self.headerHeightConstraint.constant > midPoint {
-            self.expandHeader()
-        } else {
-            self.collapseHeader()
-        }
-    }
-    
-    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
-        // Calculate the size of the scrollView when header is collapsed
-        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
-        
-        // Make sure that when header is collapsed, there is still room to scroll
-        return scrollView.contentSize.height > scrollViewMaxHeight
-    }
-    
-    func collapseHeader() {
-        self.view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.headerHeightConstraint.constant = self.minHeaderHeight
-            self.updateHeader()
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    func expandHeader() {
-        self.view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.headerHeightConstraint.constant = self.maxHeaderHeight
-            self.updateHeader()
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    func setScrollPosition(_ position: CGFloat) {
-        self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
-    }
-    
-    func updateHeader() {
-        let range = self.maxHeaderHeight - self.minHeaderHeight
-        let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight
-        let percentage = openAmount / range
-        
-        self.titleTopConstraint.constant = -openAmount + 10
-        self.hidableDownView.alpha = percentage
     }
 }
 

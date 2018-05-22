@@ -47,7 +47,7 @@ public enum ServiceResult<T> {
     case failure(Error)
 }
 
-public enum CustomError: LocalizedError {
+public enum CustomError: Error {
     
     case noData
     case invalidJson
@@ -83,6 +83,14 @@ public enum CustomError: LocalizedError {
             return self.localizedDescription
         }
     }
+    public var errorCode: String {
+        return self.errorCode
+    }
+}
+
+extension CustomError : Equatable {}
+public func ==(lhs: CustomError, rhs: CustomError) -> Bool {
+    return lhs.errorCode == rhs.errorCode && lhs.localizedDescription == rhs.localizedDescription
 }
 
 public enum IPRequestType: Int {

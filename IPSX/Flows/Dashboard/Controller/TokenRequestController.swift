@@ -42,6 +42,8 @@ class TokenRequestController: UIViewController {
         }
     }
     
+    //TODO (CC): add loadingView
+    
     @IBAction func submitAction(_ sender: UIButton) {
         
         //TODO (CVI): this is for testing
@@ -57,8 +59,15 @@ class TokenRequestController: UIViewController {
             toast?.showToastAlert("Select a valid ETH wallet".localized, autoHideAfter: 5)
             return
         }
+        requestTokens(ethID: ethID, amount: amount)
+    }
+    
+    func requestTokens(ethID: String, amount: String) {
         
+        //loadingView.startAnimating()
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
+            
+            //self.loadingView.stopAnimating()
             switch result {
             case .success(_):
                 
@@ -66,9 +75,11 @@ class TokenRequestController: UIViewController {
                     self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
-            case .failure(_):
-                //TODO
-                self.errorMessage = ""
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .requestTokens, completion: {
+                    self.requestTokens(ethID: ethID, amount: amount)
+                })
             }
         })
     }
@@ -188,6 +199,26 @@ extension TokenRequestController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension TokenRequestController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

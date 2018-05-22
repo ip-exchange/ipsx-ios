@@ -188,9 +188,8 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                         completion(nil, data)
                         
                     //TODO (CVI): we should use one statusCode for each request when expired token
-                    //TODO (CVI): getNewAccessToken() should be called here
                         
-                    case 401 where requestType == .retrieveProxies || requestType == .userInfo:
+                    case 401 where requestType != .login && requestType != .register:
                         print(NSDate(), "\(requestType)" + "Request failed. Expired token ")
                         completion(CustomError.expiredToken, data)
                         

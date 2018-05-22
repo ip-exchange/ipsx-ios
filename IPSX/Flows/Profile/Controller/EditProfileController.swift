@@ -152,41 +152,47 @@ class EditProfileController: UIViewController {
                                              "telegram"  : telegramTextField.text ?? "",
                                              "country_id": countryID ?? ""]
         
+        updateUserProfile(bodyParams: bodyParams)
+    }
+    
+    func updateUserProfile(bodyParams: [String: String]) {
+        
         loadingView.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
             
-            self.loadingView.stopAnimating() 
+            self.loadingView.stopAnimating()
             switch result {
             case .success(_):
-                self.getNewUserInfo() { success in
-                    if success {
-                        DispatchQueue.main.async {
-                            self.onDismiss?(true)
-                            self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
-                        }
-                    }
-                    else {
-                        self.errorMessage = "User Info Error Message".localized
+                self.getNewUserInfo() {
+                    DispatchQueue.main.async {
+                        self.onDismiss?(true)
+                        self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
                     }
                 }
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                self.handleError(error, requestType: .updateProfile, completion: {
+                    self.updateUserProfile(bodyParams: bodyParams)
+                })
             }
         })
     }
     
-    func getNewUserInfo(completion:@escaping (Bool) -> ()) {
+    func getNewUserInfo(successCompletion: @escaping () -> ()) {
         
+        self.loadingView.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
+            self.loadingView.stopAnimating()
             switch result {
-                
-            case .failure(_):
-                completion(false)
                 
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                completion(true)
+                successCompletion()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .userInfo, completion: {
+                    self.getNewUserInfo(successCompletion: successCompletion)
+                })
             }
         })
     }
@@ -260,6 +266,32 @@ extension EditProfileController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+extension EditProfileController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            
+            switch requestType {
+            case .userInfo:
+                self.errorMessage = "User Info Error Message".localized
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
+            
         }
     }
 }

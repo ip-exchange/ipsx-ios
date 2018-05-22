@@ -12,9 +12,8 @@ class LoadingViewController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
-    
     let dispatchGroup = DispatchGroup()
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
@@ -72,8 +71,11 @@ class LoadingViewController: UIViewController {
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 DispatchQueue.main.async { self.progressView.progress += 0.16 }
 
-            case .failure(_):
-                print("Generic Error Message".localized)
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getEthAddress, completion: {
+                    self.ethAddresses()
+                })
             }
         })
     }
@@ -90,8 +92,11 @@ class LoadingViewController: UIViewController {
                 UserManager.shared.userInfo = user as? UserInfo
                 DispatchQueue.main.async { self.progressView.progress += 0.16 }
 
-            case .failure(_):
-                print("Generic Error Message".localized)
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .userInfo, completion: {
+                    self.userInfo()
+                })
             }
         })
     }
@@ -109,8 +114,11 @@ class LoadingViewController: UIViewController {
                 UserManager.shared.proxies = proxyArray as? [Proxy]
                 DispatchQueue.main.async { self.progressView.progress += 0.16 }
 
-            case .failure(_):
-                print("Generic Error Message".localized)
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .retrieveProxies, completion: {
+                    self.proxies()
+                })
             }
         })
     }
@@ -127,8 +135,11 @@ class LoadingViewController: UIViewController {
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
                 DispatchQueue.main.async { self.progressView.progress += 0.16 }
 
-            case .failure(_):
-                print("Generic Error Message".localized)
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getTokenRequestList, completion: {
+                    self.tokenRequestList()
+                })
             }
         })
     }
@@ -145,8 +156,11 @@ class LoadingViewController: UIViewController {
                 UserManager.shared.proxyCountries = countryList as? [String]
                 DispatchQueue.main.async { self.progressView.progress +=  0.16 }
 
-            case .failure(_):
-                print("Generic Error Message".localized)
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                    self.proxyCountryList()
+                })
             }
         })
     }
@@ -155,5 +169,24 @@ class LoadingViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+extension LoadingViewController: ErrorPresentable {
     
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                print("Generic Error Message".localized)
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            print("Generic Error Message".localized)
+        }
+    }
 }
