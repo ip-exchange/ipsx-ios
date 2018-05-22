@@ -561,9 +561,11 @@
                                             <constraint firstAttribute="height" constant="0.5" id="wEH-Xt-LIF"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-R8-Juk">
-                                        <rect key="frame" x="323" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-R8-Juk">
+                                        <rect key="frame" x="326" y="50" width="41" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="iaO-bH-fJh"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.16899999979999999" green="0.51372549019607838" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -577,8 +579,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="94" id="4Yf-Ld-4TD"/>
                                     <constraint firstItem="0QY-7C-ld4" firstAttribute="leading" secondItem="ufK-dU-AgE" secondAttribute="leading" id="D9o-oe-7BD"/>
+                                    <constraint firstAttribute="bottom" secondItem="hLy-R8-Juk" secondAttribute="bottom" id="Mex-uZ-aFk"/>
                                     <constraint firstAttribute="trailing" secondItem="0QY-7C-ld4" secondAttribute="trailing" id="fzB-I4-Vsy"/>
                                     <constraint firstAttribute="bottom" secondItem="0QY-7C-ld4" secondAttribute="bottom" id="jnd-2e-gFr"/>
+                                    <constraint firstAttribute="trailing" secondItem="hLy-R8-Juk" secondAttribute="trailing" constant="8" id="zXT-4T-466"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your account was successfully created! Check your email address to validate it and automatically be logged in." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFC-Z9-Pxo">
@@ -679,9 +683,11 @@
                                             <constraint firstAttribute="height" constant="0.5" id="3us-s1-b06"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="626-p6-04Z">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="626-p6-04Z">
                                         <rect key="frame" x="8" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="ulN-EH-xGQ"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Close">
                                             <color key="titleColor" red="0.16862745098039217" green="0.51372549019607838" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -695,7 +701,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="94" id="99A-EN-vhh"/>
                                     <constraint firstItem="22K-AQ-Usn" firstAttribute="leading" secondItem="mZj-xu-9D4" secondAttribute="leading" id="OJO-yI-nbW"/>
+                                    <constraint firstItem="626-p6-04Z" firstAttribute="leading" secondItem="mZj-xu-9D4" secondAttribute="leading" constant="8" id="Y5a-zM-FRI"/>
                                     <constraint firstAttribute="bottom" secondItem="22K-AQ-Usn" secondAttribute="bottom" id="dK6-gF-6yK"/>
+                                    <constraint firstAttribute="bottom" secondItem="626-p6-04Z" secondAttribute="bottom" id="qQS-99-Gps"/>
                                     <constraint firstAttribute="trailing" secondItem="22K-AQ-Usn" secondAttribute="trailing" id="qTw-Si-oO3"/>
                                 </constraints>
                             </view>

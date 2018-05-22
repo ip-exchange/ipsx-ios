@@ -67,9 +67,11 @@
                                             <constraint firstAttribute="height" constant="0.5" id="b53-km-WLf"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THk-VM-aCB">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THk-VM-aCB">
                                         <rect key="frame" x="8" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="jVl-dh-Jk0"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Close">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,6 +88,8 @@
                                 <constraints>
                                     <constraint firstItem="QTH-f1-mMr" firstAttribute="leading" secondItem="IDt-vf-HrN" secondAttribute="leading" id="42e-iD-9Ld"/>
                                     <constraint firstAttribute="bottom" secondItem="QTH-f1-mMr" secondAttribute="bottom" id="827-OR-eHy"/>
+                                    <constraint firstAttribute="bottom" secondItem="THk-VM-aCB" secondAttribute="bottom" id="P0E-IB-i4x"/>
+                                    <constraint firstItem="THk-VM-aCB" firstAttribute="leading" secondItem="IDt-vf-HrN" secondAttribute="leading" constant="8" id="gcP-5W-iZU"/>
                                     <constraint firstAttribute="height" constant="94" id="mam-AX-pDZ"/>
                                     <constraint firstAttribute="trailing" secondItem="QTH-f1-mMr" secondAttribute="trailing" id="nhv-24-Avc"/>
                                 </constraints>
