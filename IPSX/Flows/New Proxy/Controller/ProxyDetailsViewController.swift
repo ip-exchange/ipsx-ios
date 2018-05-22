@@ -52,7 +52,7 @@ class ProxyDetailsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: tableView, text: "New proxy created! Copy pac link to continue")
+        createToastAlert(onTopOf: tableView, text: "New proxy created! Copy pac link to continue".localized)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -157,15 +157,15 @@ extension ProxyDetailsViewController: UITableViewDataSource {
             case 1:
                 let endDate = proxy?.proxyDetails?.endDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
                 let endHour = proxy?.proxyDetails?.endDate?.dateToString(format: "HH:mm") ?? "12:00"
-                cell.configure(title: "End Date", value: endDate, additionalDetail: endHour)
+                cell.configure(title: "End Date".localized, value: endDate, additionalDetail: endHour)
                 return cell
                 
             case 2:
-                cell.configure(title: "Country", value: proxy?.proxyDetails?.country)
+                cell.configure(title: "Country".localized, value: proxy?.proxyDetails?.country)
                 return cell
                 
             case 3:
-                cell.configure(title: "User IP", value:  proxy?.proxyDetails?.userIP)
+                cell.configure(title: "User IP".localized, value:  proxy?.proxyDetails?.userIP)
                 return cell
                 
             default:

@@ -147,9 +147,11 @@
                                         <rect key="frame" x="135" y="62" width="105" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pm-zp-CjR">
-                                        <rect key="frame" x="323" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pm-zp-CjR">
+                                        <rect key="frame" x="326" y="50" width="41" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="xXM-9a-FZ9"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -164,7 +166,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="0pm-zp-CjR" secondAttribute="bottom" id="0ZC-Cm-5K8"/>
                                     <constraint firstAttribute="height" constant="94" id="4tr-jb-X1W"/>
+                                    <constraint firstAttribute="trailing" secondItem="0pm-zp-CjR" secondAttribute="trailing" constant="8" id="Fqg-MC-qmC"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zd-6m-2Oq" userLabel="Separator">
@@ -193,7 +197,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHK-JB-y3c" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="DZd-Fq-eqc"/>
@@ -281,9 +285,11 @@
                                             <constraint firstAttribute="height" constant="0.5" id="SKH-0b-azY"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgw-Ls-nkT">
-                                        <rect key="frame" x="323" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgw-Ls-nkT">
+                                        <rect key="frame" x="326" y="50" width="41" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="r63-Ub-lfr"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.16899999979999999" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -297,8 +303,10 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Rhm-18-oXD" secondAttribute="bottom" id="1t4-48-esF"/>
                                     <constraint firstAttribute="height" constant="94" id="F2r-Rs-Y2p"/>
+                                    <constraint firstAttribute="trailing" secondItem="tgw-Ls-nkT" secondAttribute="trailing" constant="8" id="IKK-Nm-ZKf"/>
                                     <constraint firstItem="Rhm-18-oXD" firstAttribute="leading" secondItem="ary-xX-MEV" secondAttribute="leading" id="LlV-cN-WIB"/>
                                     <constraint firstAttribute="trailing" secondItem="Rhm-18-oXD" secondAttribute="trailing" id="sb7-lQ-frd"/>
+                                    <constraint firstAttribute="bottom" secondItem="tgw-Ls-nkT" secondAttribute="bottom" id="yAK-Bb-FMk"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're officially member of our community." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yU7-rU-aRV">
@@ -498,9 +506,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pSE-cg-4Dr" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng7-n6-rRs" userLabel="Save Button">
-                                        <rect key="frame" x="323" y="50" width="44" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ng7-n6-rRs" userLabel="Save Button">
+                                        <rect key="frame" x="330" y="50" width="37" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Is0-JF-I26"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -532,6 +542,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ng7-n6-rRs" secondAttribute="trailing" constant="8" id="Dnu-jD-55M"/>
+                                    <constraint firstAttribute="bottom" secondItem="ng7-n6-rRs" secondAttribute="bottom" id="hn9-7G-e1y"/>
                                     <constraint firstAttribute="height" constant="94" id="rfs-t2-TAj"/>
                                 </constraints>
                             </view>
@@ -557,7 +569,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-sc-Rhj" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321" width="44" height="44"/>
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="t5L-Uy-tef"/>

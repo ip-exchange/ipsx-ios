@@ -77,17 +77,17 @@ extension ProxySummaryViewController: UITableViewDataSource {
             case 0:
                 let startDate = proxy?.proxyDetails?.startDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
                 let startHour = proxy?.proxyDetails?.startDate?.dateToString(format: "HH:mm") ?? "12:00"
-                cell.configure(title: "Start Date", value: startDate, additionalDetail: startHour)
+                cell.configure(title: "Start Date".localized, value: startDate, additionalDetail: startHour)
                 return cell
                 
             case 1:
                 let endDate = proxy?.proxyDetails?.endDate?.dateToString(format: "dd MMM yyyy") ?? "20 Apr 2018"
                 let endHour = proxy?.proxyDetails?.endDate?.dateToString(format: "HH:mm") ?? "12:00"
-                cell.configure(title: "End Date", value: endDate, additionalDetail: endHour)
+                cell.configure(title: "End Date".localized, value: endDate, additionalDetail: endHour)
                 return cell
                 
             case 2:
-                cell.configure(title: "Country", value: proxy?.proxyDetails?.country)
+                cell.configure(title: "Country".localized, value: proxy?.proxyDetails?.country)
                 return cell
                 
             default:
@@ -117,8 +117,8 @@ extension ProxySummaryViewController: UITableViewDelegate {
         
         var title = ""
         switch section {
-            case 0: title = "Package"
-            case 1: title = "Other Details"
+            case 0: title = "Package".localized
+            case 1: title = "Other Details".localized
             default: return nil
         }
         return tableView.standardHeaderView(withTitle: title)
