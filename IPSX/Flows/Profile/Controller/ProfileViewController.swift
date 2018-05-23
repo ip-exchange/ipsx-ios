@@ -345,9 +345,25 @@ extension ProfileViewController: ToastAlertViewPresentable {
         
         if editingStyle == .delete {
             
-            let ethAddress = ethAdresses[indexPath.item]
+            showDeleteConfirmationAlert(index: indexPath)
+        }
+    }
+    
+    private func showDeleteConfirmationAlert(index: IndexPath) {
+        let ethAddress = ethAdresses[index.item]
+        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: ethAddress.address, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
+            self.tableView.reloadData()
+        }
+        
+        let deleteAction = UIAlertAction(title: "Delete".localized, style: .destructive) { (action:UIAlertAction) in
             self.updateETHaddresses(ethID: ethAddress.ethID)
         }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
