@@ -9,14 +9,27 @@
 import UIKit
 
 class LoadingViewController: UIViewController {
-
+    
+    @IBOutlet weak var toastHolderView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     let dispatchGroup = DispatchGroup()
     
-    //TODO (CC): add banner
     //TODO (CVI): add reachability & implement retry for internet connection error (banner) and other errors (alert)
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: toastHolderView, text: "")
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
@@ -191,6 +204,16 @@ class LoadingViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension LoadingViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.addSubview(toastView)
+        }
     }
 }
 
