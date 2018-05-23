@@ -23,6 +23,7 @@ public class UserManager: NSObject {
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
+    var options: Options?
     
     var hasEthAddress: Bool {
         get {
@@ -89,4 +90,44 @@ public class UserManager: NSObject {
         proxyCountries = nil
         userInfo = nil
     }
+    
+    func getUserCountryList() -> [String] {
+        
+        var countryArray: [String] = []
+        if let countries = UserManager.shared.userCountries {
+            for country in countries {
+                if let key = country.keys.first, let countryName = country[key] {
+                    countryArray.append(countryName)
+                }
+            }
+        }
+        return countryArray
+    }
+    
+    func getCountryId(countryName: String?) -> String? {
+        
+        var countryID: String?
+        if let countries = UserManager.shared.userCountries {
+            for country in countries {
+                if let key = country.keys.first, let value = country[key], value == countryName {
+                    countryID = key
+                }
+            }
+        }
+        return countryID
+    }
+    
+    func getCountryName(countryID: String?) -> String? {
+        
+        var countryName: String?
+        if let countries = UserManager.shared.userCountries {
+            for country in countries {
+                if let key = country.keys.first, let value = country[key], key == countryID {
+                    countryName = value
+                }
+            }
+        }
+        return countryName
+    }
+    
 }

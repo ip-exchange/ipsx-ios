@@ -145,6 +145,16 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+        
+        //Options
+        
+        case .options:
+        
+        var url = Url.base + Url.optionsArgs
+        if let params = urlParams as? [String: String] {
+            url = url.replaceKeysWithValues(paramsDict: params)
+            request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+        }
         }
         
         if let body = request?.body as? JSON {

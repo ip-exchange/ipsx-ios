@@ -35,6 +35,7 @@ class LoadingViewController: UIViewController {
         proxies()
         tokenRequestList()
         proxyCountryList()
+        options()
         
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -160,6 +161,25 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: .getProxyCountryList, completion: {
                     self.proxyCountryList()
+                })
+            }
+        })
+    }
+    
+    func options() {
+        
+        dispatchGroup.enter()
+        OptionsService().retrieveOptions(completionHandler: { result in
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let options):
+                UserManager.shared.options = options as? Options
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .options, completion: {
+                    self.options()
                 })
             }
         })

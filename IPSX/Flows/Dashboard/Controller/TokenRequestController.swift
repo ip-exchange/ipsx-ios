@@ -46,11 +46,11 @@ class TokenRequestController: UIViewController {
     
     @IBAction func submitAction(_ sender: UIButton) {
         
-        //TODO (CVI): this is for testing
         let ethID  = selectedAddress?.ethID ?? ""
         let amount = amountTextField.text ?? "0"
+        let options = UserManager.shared.options
         
-        guard Int(amount)! >= 20, Int(amount)! <= 5000 else {
+        guard Int(amount)! >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
             toast?.showToastAlert("Amount Limits Error Message".localized, autoHideAfter: 5)
             return
         }

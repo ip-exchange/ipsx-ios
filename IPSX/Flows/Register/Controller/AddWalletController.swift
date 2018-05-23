@@ -33,7 +33,6 @@ class AddWalletController: UIViewController {
     var onDismiss: ((_ hasUpdatedETH: Bool)->())?
     var shouldPop = false
     
-    //TODO (CVI): do we need validation for wallet name ?
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
     var errorMessage: String? {
