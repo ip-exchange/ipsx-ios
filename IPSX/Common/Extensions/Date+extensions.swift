@@ -16,4 +16,10 @@ extension Date {
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
+    
+    func isFromToday() -> Bool
+    {
+        let calendar = NSCalendar.current
+        return calendar.isDateInToday(self)
+    }
 }
