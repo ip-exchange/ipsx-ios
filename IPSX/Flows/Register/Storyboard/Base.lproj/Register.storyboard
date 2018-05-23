@@ -205,7 +205,7 @@
                                 <rect key="frame" x="45.5" y="586" width="284" height="44"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="284" id="SWd-hC-1sN"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="SWd-hC-1sN"/>
                                     <constraint firstAttribute="height" constant="44" id="mB1-az-Jek"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -222,6 +222,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OlJ-gJ-q0K" secondAttribute="trailing" constant="20" symbolic="YES" id="1CS-g8-7Zg"/>
                             <constraint firstItem="hKY-Za-IyV" firstAttribute="top" secondItem="zhQ-Ow-7OM" secondAttribute="top" constant="50" id="9OE-Wt-xTh"/>
                             <constraint firstItem="OlJ-gJ-q0K" firstAttribute="top" secondItem="zhQ-Ow-7OM" secondAttribute="bottom" priority="750" constant="24" id="DaD-eM-Ti9"/>
                             <constraint firstItem="hKY-Za-IyV" firstAttribute="bottom" secondItem="G34-ca-zlr" secondAttribute="bottom" id="I73-D4-e0g"/>
@@ -267,7 +268,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration Terms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVB-OC-kfH">
                                 <rect key="frame" x="45.5" y="88" width="284" height="26.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="284" id="thr-GL-GBs"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="thr-GL-GBs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -442,7 +443,7 @@
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="QUW-sa-pxI"/>
-                                    <constraint firstAttribute="width" constant="284" id="pff-Ix-kUu"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="pff-Ix-kUu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Register">
@@ -509,7 +510,6 @@
                             <constraint firstItem="YdG-Ib-BJn" firstAttribute="centerX" secondItem="iVB-OC-kfH" secondAttribute="centerX" id="QUd-wG-thE"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="hM3-yr-38q" secondAttribute="trailing" id="QaJ-Rd-Csf"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="top" secondItem="hM3-yr-38q" secondAttribute="top" constant="50" id="RxO-3A-wgx"/>
-                            <constraint firstItem="YdG-Ib-BJn" firstAttribute="trailing" secondItem="iVB-OC-kfH" secondAttribute="trailing" id="Usu-Ii-rBY"/>
                             <constraint firstItem="iVB-OC-kfH" firstAttribute="centerX" secondItem="th7-gf-lwT" secondAttribute="centerX" id="X4Y-9t-wnY"/>
                             <constraint firstItem="zJr-kv-cZI" firstAttribute="centerX" secondItem="th7-gf-lwT" secondAttribute="centerX" id="Z2r-k0-mYr"/>
                             <constraint firstItem="hM3-yr-38q" firstAttribute="leading" secondItem="th7-gf-lwT" secondAttribute="leading" id="ZTu-Dv-QVT"/>
@@ -578,6 +578,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="94" id="4Yf-Ld-4TD"/>
+                                    <constraint firstItem="hLy-R8-Juk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ufK-dU-AgE" secondAttribute="leading" constant="20" symbolic="YES" id="6NU-cg-oHY"/>
                                     <constraint firstItem="0QY-7C-ld4" firstAttribute="leading" secondItem="ufK-dU-AgE" secondAttribute="leading" id="D9o-oe-7BD"/>
                                     <constraint firstAttribute="bottom" secondItem="hLy-R8-Juk" secondAttribute="bottom" id="Mex-uZ-aFk"/>
                                     <constraint firstAttribute="trailing" secondItem="0QY-7C-ld4" secondAttribute="trailing" id="fzB-I4-Vsy"/>
@@ -640,7 +641,6 @@
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbU-NO-i18" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45" y="586" width="285" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="285" id="h3M-5O-sHq"/>
                                     <constraint firstAttribute="height" constant="44" id="zml-Rh-d2x"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -705,10 +705,14 @@
                                     <constraint firstAttribute="bottom" secondItem="22K-AQ-Usn" secondAttribute="bottom" id="dK6-gF-6yK"/>
                                     <constraint firstAttribute="bottom" secondItem="626-p6-04Z" secondAttribute="bottom" id="qQS-99-Gps"/>
                                     <constraint firstAttribute="trailing" secondItem="22K-AQ-Usn" secondAttribute="trailing" id="qTw-Si-oO3"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="626-p6-04Z" secondAttribute="trailing" constant="20" symbolic="YES" id="wwU-vp-Jfs"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick the registration method you prefer (email or facebook)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcS-Hq-YXV">
                                 <rect key="frame" x="45" y="135" width="285" height="38.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="285" id="eua-hu-er8"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -733,7 +737,7 @@
                             <constraint firstItem="rbU-NO-i18" firstAttribute="top" secondItem="yN7-LQ-cC1" secondAttribute="bottom" constant="15" id="UxF-mU-aXZ"/>
                             <constraint firstItem="fgG-du-es1" firstAttribute="top" secondItem="mZj-xu-9D4" secondAttribute="bottom" constant="24" id="YUt-ED-GLj"/>
                             <constraint firstItem="WcS-Hq-YXV" firstAttribute="leading" secondItem="yN7-LQ-cC1" secondAttribute="leading" id="cS2-BZ-oTl"/>
-                            <constraint firstItem="WcS-Hq-YXV" firstAttribute="trailing" secondItem="yN7-LQ-cC1" secondAttribute="trailing" id="dtc-Jc-UZN"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fgG-du-es1" secondAttribute="trailing" constant="20" symbolic="YES" id="etP-Vg-J4d"/>
                             <constraint firstItem="upd-gp-bcO" firstAttribute="bottom" secondItem="rbU-NO-i18" secondAttribute="bottom" constant="37" id="hCz-aE-zZK"/>
                             <constraint firstItem="upd-gp-bcO" firstAttribute="trailing" secondItem="74b-ZJ-UEf" secondAttribute="trailing" id="k8n-fb-NK3"/>
                             <constraint firstItem="yN7-LQ-cC1" firstAttribute="centerX" secondItem="rbU-NO-i18" secondAttribute="centerX" id="kxn-wd-kFV"/>
