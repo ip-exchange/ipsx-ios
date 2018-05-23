@@ -25,7 +25,6 @@ struct TokenRequest {
     
     func isFromToday() -> Bool {
         
-        //TODO(CC): implement this
-        return false
+        return created?.isFromToday() ?? false
     }
 }
