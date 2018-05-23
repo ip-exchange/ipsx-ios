@@ -6,7 +6,6 @@
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 import Foundation
-import SwiftyJSON
 
 public class RequestBuilder: NSObject, URLSessionDelegate {
     
