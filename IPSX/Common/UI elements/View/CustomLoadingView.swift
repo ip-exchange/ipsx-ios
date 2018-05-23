@@ -15,6 +15,7 @@ class CustomLoadingView: UIView {
     public func startAnimating() {
         
         DispatchQueue.main.async {
+            UIApplication.shared.beginIgnoringInteractionEvents()
             guard self.subCircle1 != nil, self.self.subCircle2 != nil else { return }
             self.alpha = 1
             self.rotationAnimation(duration: 2, layer: self.self.layer)
@@ -25,6 +26,7 @@ class CustomLoadingView: UIView {
     
     public func stopAnimating() {
         DispatchQueue.main.async {
+            UIApplication.shared.endIgnoringInteractionEvents()
             self.alpha = 0
             guard self.subCircle1 != nil, self.subCircle2 != nil else { return }
             self.layer.removeAllAnimations()
@@ -33,7 +35,7 @@ class CustomLoadingView: UIView {
         }
     }
     
-    var lineWidth: CGFloat { return frame.size.width / 33 }
+    var lineWidth: CGFloat { return frame.size.width / 15 }
     
     private var subCircle1: CAShapeLayer!
     private var subCircle2: CAShapeLayer!
@@ -63,7 +65,7 @@ class CustomLoadingView: UIView {
         let path3 = UIBezierPath(arcCenter: centery, radius: (layer.frame.size.width / 2) - (lineWidth / 2) - (lineWidth * 4), startAngle: 0, endAngle: CGFloat(Double.pi), clockwise: true)
         
         layer.fillColor = nil
-        layer.strokeColor = UIColor.darkBlue.cgColor
+        layer.strokeColor = UIColor.darkRed.cgColor
         layer.lineWidth = lineWidth
         layer.path = path1.cgPath
         
@@ -79,7 +81,7 @@ class CustomLoadingView: UIView {
         subCircle2.frame = layer.bounds
         subCircle2.path = path3.cgPath
         subCircle2.fillColor = nil
-        subCircle2.strokeColor = UIColor.darkRed.cgColor
+        subCircle2.strokeColor = UIColor.lightBlue.cgColor
         subCircle2.lineWidth = lineWidth
         layer.addSublayer(subCircle2)
     }

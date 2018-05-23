@@ -53,7 +53,8 @@ class ProfileViewController: UIViewController {
         if ethAddresses < maxETHaddresses {
             performSegue(withIdentifier: "walletViewIdentifier", sender: nil)
         } else {
-            self.errorMessage = "Max ETH addresses Error Message".localized
+            let formatedMessage = String(format: "Max %@ ETH addresses Error Message".localized, "\(maxETHaddresses)")
+            self.errorMessage = formatedMessage.localized
         }
     }
     //TODO (CVI): if logout fails randomly, we should redirect to login and start from the beginning

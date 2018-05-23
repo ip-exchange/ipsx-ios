@@ -73,7 +73,8 @@ class DashboardViewController: UIViewController {
             self.tokenRequests = UserManager.shared.tokenRequests
             self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
         } else {
-            self.errorMessage = "Max Token Requests Error Message".localized
+            let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
+            self.errorMessage = formatedMessage
         }
     }
     

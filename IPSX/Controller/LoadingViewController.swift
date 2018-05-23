@@ -53,7 +53,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let countryList):
                 UserManager.shared.userCountries = countryList as? [[String: String]]
-                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -70,7 +70,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let ethAddresses):
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
 
             case .failure(let error):
                 
@@ -91,7 +91,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
 
             case .failure(let error):
                 
@@ -113,7 +113,7 @@ class LoadingViewController: UIViewController {
                 
             case .success(let proxyArray):
                 UserManager.shared.proxies = proxyArray as? [Proxy]
-                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
 
             case .failure(let error):
                 
@@ -134,7 +134,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let tokenRequests):
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                DispatchQueue.main.async { self.progressView.progress += 0.16 }
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
 
             case .failure(let error):
                 
@@ -155,7 +155,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let countryList):
                 UserManager.shared.proxyCountries = countryList as? [String]
-                DispatchQueue.main.async { self.progressView.progress +=  0.16 }
+                DispatchQueue.main.async { self.progressView.progress +=  0.166 }
 
             case .failure(let error):
                 
