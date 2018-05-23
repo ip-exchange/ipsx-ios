@@ -12,13 +12,84 @@ class ChangePasswordController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var oldPassRTField: RichTextFieldView!
+    @IBOutlet weak var newPassRTField: RichTextFieldView!
+    @IBOutlet weak var newPassBisRTField: RichTextFieldView!
+    
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
     }
     
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
+    @IBOutlet weak var saveButton: UIButton!
+    
+    private var fieldsStateDic: [String : Bool] = ["oldPass" : false, "newPass" : false, "newPassBis" : false]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        observreFieldsState()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+         setupTextViews()
+    }
+    
+    private func setupTextViews() {
+        oldPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
+        oldPassRTField.nextResponderField    = newPassRTField.contentTextField
+        newPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
+        newPassRTField.nextResponderField    = newPassBisRTField.contentTextField
+        newPassBisRTField.validationRegex    = RichTextFieldView.validPasswordRegex
+        newPassBisRTField.mathingTextField   = newPassRTField.contentTextField
+    }
+
+    private func observreFieldsState() {
+        oldPassRTField.onFieldStateChange = { state in
+            self.fieldsStateDic["oldPass"] = state
+            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
+            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+        }
+        newPassRTField.onFieldStateChange = { state in
+            self.fieldsStateDic["newPass"] = state
+            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
+            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+            self.newPassBisRTField.contentTextField?.text = ""
+        }
+        newPassBisRTField.onFieldStateChange = { state in
+            self.fieldsStateDic["newPassBis"] = state
+            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
+            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+        }
+    }
+
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func saveButtonAction(_ sender: Any) {
+        let passToSend = newPassBisRTField.contentTextField?.text ?? ""
+        toast?.showToastAlert(passToSend, autoHideAfter: 5)
+    }
+}
+
+extension ChangePasswordController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }

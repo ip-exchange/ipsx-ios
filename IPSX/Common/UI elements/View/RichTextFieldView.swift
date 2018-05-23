@@ -25,10 +25,10 @@ class RichTextFieldView: UIView {
         return isValid(text: contentTextField?.text ?? "")
     }
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var invalidContentLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel?
+    @IBOutlet weak var invalidContentLabel: UILabel?
     @IBOutlet weak var leftIconImageView: UIView?
-    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var separatorView: UIView?
     @IBOutlet weak var contentTextField: UITextField? {
         didSet {
             contentTextField?.delegate = self
@@ -50,11 +50,11 @@ class RichTextFieldView: UIView {
         let chars = contentTextField?.text?.count ?? 0
         onFieldStateChange?(isValid)
         
-        invalidContentLabel.isHidden  = isValid || chars == 0
-        titleLabel.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
-        separatorView.backgroundColor = chars == 0 ? .silver : isValid ? .lightBlue : .inputError
-        leftIconImageView?.tintColor  = separatorView.backgroundColor
-        contentTextField?.textColor   = isValid || chars == 0 ? .darktext : .inputError
+        invalidContentLabel?.isHidden  = isValid || chars == 0
+        titleLabel?.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
+        separatorView?.backgroundColor = chars == 0 ? .silver : isValid ? .lightBlue : .inputError
+        leftIconImageView?.tintColor   = separatorView?.backgroundColor
+        contentTextField?.textColor    = isValid || chars == 0 ? .darktext : .inputError
     }
     
     private func isMatchingOtherField() -> Bool {
