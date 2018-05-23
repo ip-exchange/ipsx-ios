@@ -25,6 +25,10 @@ class DashboardViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var countries: [String] = []
     var showAmountAlert = true
+    private var timer: Timer?
+    let cellID = "ActivationDetailsCellID"
+    var selectedProxy: Proxy? = nil
+    var tokenRequests: [TokenRequest]?
     
     var balance: String = "" {
         didSet {
@@ -38,9 +42,6 @@ class DashboardViewController: UIViewController {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
        }
     }
-    let cellID = "ActivationDetailsCellID"
-    var selectedProxy: Proxy? = nil
-    var tokenRequests: [TokenRequest]?
     var proxies: [Proxy] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -80,9 +81,21 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //TODO (CVI): refresh data when needed (proxy usage -> x sec & balance after token requests / activate proxy)
+            
      }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.updateData()
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.timer?.invalidate()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -100,12 +113,11 @@ class DashboardViewController: UIViewController {
             showAmountAlert = false
             toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
         }
-        
-        //TODO (CVI): change this for updating every 30s
-        if UserManager.shared.isLoggedIn {
-            retrieveUserInfo()
-            retrieveProxiesForCurrentUser()
-        }
+    }
+    
+    @objc func updateData() {
+        retrieveUserInfo()
+        retrieveProxiesForCurrentUser()
     }
     
     func retrieveUserInfo() {
@@ -241,13 +253,13 @@ extension DashboardViewController: ErrorPresentable {
         case CustomError.expiredToken:
             
             LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
+                self.errorMessage = "Refresh Data Error Message".localized
                 
             }, successHandler: {
                 completion?()
             })
         default:
-            self.errorMessage = "Generic Error Message".localized
+            self.errorMessage = "Refresh Data Error Message".localized
         }
     }
 }

@@ -45,13 +45,7 @@ class TokenRequestListController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-      
-        if UserManager.shared.tokenRequests == nil {
-            getTokenRequestList()
-        }
-        else {
-            updateUI()
-        }
+        updateUI()
     }
     
     func getTokenRequestList() {

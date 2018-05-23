@@ -67,28 +67,7 @@ class EditProfileController: UIViewController {
         updateFields()
         detectChangesAndValidity()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        if UserManager.shared.userCountries == nil {
-            
-            loadingView.startAnimating()
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                
-                self.loadingView.stopAnimating()
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.userCountries = countryList as? [[String: String]]
-                    DispatchQueue.main.async { self.updateFields() }
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
-        }
-    }
-    
     private func updateFields() {
         
         let userInfo = UserManager.shared.userInfo

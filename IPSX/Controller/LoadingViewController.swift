@@ -14,6 +14,9 @@ class LoadingViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     let dispatchGroup = DispatchGroup()
     
+    //TODO (CC): add banner
+    //TODO (CVI): add reachability & implement retry for internet connection error (banner) and other errors (alert)
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()

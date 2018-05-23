@@ -26,7 +26,13 @@ class NewProxyController: UIViewController {
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String]?
-
+    var balance: String = "" {
+        didSet {
+            DispatchQueue.main.async {
+                self.tokensAmountLabel.text = self.balance
+            }
+        }
+    }
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -45,32 +51,31 @@ class NewProxyController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        tokensAmountLabel.text = "\(userInfo?.balance ?? 0)"
+        balance = "\(userInfo?.balance ?? 0)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         countries = UserManager.shared.proxyCountries
-        
-        if UserManager.shared.proxyCountries == nil {
-            getProxyCountryList()
-        }
     }
     
-    func getProxyCountryList() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        retrieveUserInfo()
+    }
+    
+    func retrieveUserInfo() {
         
-        loadingView.startAnimating()
-        ProxyService().getProxyCountryList(completionHandler: { result in
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
             switch result {
-            case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
-                self.countries = UserManager.shared.proxyCountries
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
+                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getProxyCountryList, completion: {
-                    self.getProxyCountryList()
+                self.handleError(error, requestType: .userInfo, completion: {
+                    self.retrieveUserInfo()
                 })
             }
         })
@@ -136,16 +141,16 @@ extension NewProxyController: ToastAlertViewPresentable {
 }
 
 extension NewProxyController: ErrorPresentable {
-    
+
     func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
-        
+
         switch error {
-            
+
         case CustomError.expiredToken:
-            
+
             LoginService().getNewAccessToken(errorHandler: { error in
                 self.errorMessage = "Generic Error Message".localized
-                
+
             }, successHandler: {
                 completion?()
             })
