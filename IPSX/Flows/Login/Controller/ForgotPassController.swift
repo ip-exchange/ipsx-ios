@@ -16,14 +16,22 @@ class ForgotPassController: UIViewController {
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
     
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false]
     
-    //TODO (CC): implement toast alert view
-    
     var errorMessage: String? {
         didSet {
-            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -49,6 +57,11 @@ class ForgotPassController: UIViewController {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
         observreFieldsState()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,5 +127,15 @@ class ForgotPassController: UIViewController {
     func keyboardWillDisappear(notification: NSNotification?) {
         bottomContinueConstraint.constant = continueBottomDist
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
+    }
+}
+
+extension ForgotPassController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }
