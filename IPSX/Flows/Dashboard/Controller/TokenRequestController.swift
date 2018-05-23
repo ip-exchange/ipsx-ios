@@ -51,7 +51,12 @@ class TokenRequestController: UIViewController {
         let options = UserManager.shared.options
         
         guard Int(amount)! >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
-            toast?.showToastAlert("Amount Limits Error Message".localized, autoHideAfter: 5)
+            let min = options?.depositMin ?? 20
+            let max = options?.depositMax ?? 5000
+            let limitsString = String(format: "Amount Limits Error Message Min %@ Max %@".localized, "\(min)", "\(max)")
+            toast?.hideToastAlert() {
+                self.toast?.showToastAlert(limitsString, autoHideAfter: 5)
+            }
             return
         }
         

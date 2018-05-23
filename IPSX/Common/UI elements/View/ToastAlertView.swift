@@ -79,6 +79,7 @@ public class ToastAlertView: UIView {
     private weak var underViewTopConstraint: NSLayoutConstraint!
 
     private var initialParentConstraint:  CGFloat!
+    private var hideTimer: Timer?
     
     public init?(parentUnderView: UIView, parentUnderViewConstraint: NSLayoutConstraint, alertText: String) {
         
@@ -116,18 +117,23 @@ public class ToastAlertView: UIView {
         DispatchQueue.main.async {
             self.updateInfoToastUI(visible: true, alertText: text, type: type)
             if autoHideAfter > 0.0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + autoHideAfter) {
-                    self.updateInfoToastUI(visible: false)
-                }
+                self.hideTimer?.invalidate()
+                self.hideTimer = Timer.scheduledTimer(timeInterval: autoHideAfter, target: self, selector: #selector(self.hideToast), userInfo: nil, repeats: false)
             }
         }
     }
     
-    public func hideToastAlert() {
+    @objc func hideToast() {
+        hideTimer?.invalidate()
+        hideTimer = nil
         updateInfoToastUI(visible: false)
     }
     
-    private func updateInfoToastUI(visible: Bool, alertText: String? = "", type: ToastAlertType? = nil) {
+    public func hideToastAlert(completion: (()->())? = nil) {
+        updateInfoToastUI(visible: false, completion: completion)
+    }
+    
+    private func updateInfoToastUI(visible: Bool, alertText: String? = "", type: ToastAlertType? = nil, completion: (()->())? = nil) {
         
         DispatchQueue.main.async {
             if let toastType = type {
@@ -157,7 +163,9 @@ public class ToastAlertView: UIView {
                 self.superview?.layoutIfNeeded()
                 self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height : -self.frame.size.height
                 self.alpha = (visible) ? 1.0 : 0.0
-            }, completion: nil)
+            }, completion: {success in
+                completion?()
+            })
         }
     }
 
