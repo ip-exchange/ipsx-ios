@@ -10,8 +10,6 @@ import UIKit
 
 class CustomLoadingView: UIView {
     
-    //TODO (CC): we should change isUserInteractionEnabled = false while the loading is animated
-    
     public func startAnimating() {
         
         DispatchQueue.main.async {

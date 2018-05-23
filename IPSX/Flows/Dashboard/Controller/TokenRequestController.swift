@@ -10,6 +10,7 @@ import UIKit
 
 class TokenRequestController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var selectedWalletAlias: UILabel!
@@ -42,8 +43,6 @@ class TokenRequestController: UIViewController {
         }
     }
     
-    //TODO (CC): add loadingView
-    
     @IBAction func submitAction(_ sender: UIButton) {
         
         let ethID  = selectedAddress?.ethID ?? ""
@@ -69,10 +68,10 @@ class TokenRequestController: UIViewController {
     
     func requestTokens(ethID: String, amount: String) {
         
-        //loadingView.startAnimating()
+        loadingView.startAnimating()
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
             
-            //self.loadingView.stopAnimating()
+            self.loadingView.stopAnimating()
             switch result {
             case .success(_):
                 

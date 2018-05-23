@@ -12,24 +12,42 @@ import UIKit
 
 class TokenRequestListController: UIViewController {
 
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    let cellID = "TokenRequestCellID"
-    var tokenRequests: [TokenRequest] = []
-    
-    //TODO (CC): implement toast alert
-    var errorMessage: String? {
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var toastHolderView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
-            //toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            topConstraint = topConstraintOutlet
         }
     }
     
-    //TODO (CC): add loadingView
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    var tokenRequests: [TokenRequest] = []
+    
+    var errorMessage: String? {
+        didSet {
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: toastHolderView, text: "")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        updateUI()
     }
     
     func updateUI() {
@@ -42,23 +60,17 @@ class TokenRequestListController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        updateUI()
-    }
-    
     func getTokenRequestList() {
         
-        //self.loadingView.startAnimating()
+        self.loadingView.startAnimating()
         ProxyService().getTokenRequestList(completionHandler: { result in
             
-            //self.loadingView.stopAnimating()
+            self.loadingView.stopAnimating()
             switch result {
             case .success(let tokenRequests):
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
                 self.updateUI()
-                
+                 
             case .failure(let error):
                 self.handleError(error, requestType: .getTokenRequestList, completion: {
                     self.getTokenRequestList()
@@ -100,7 +112,7 @@ extension TokenRequestListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TokenRequestCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TokenRequestCell.cellID, for: indexPath) as! TokenRequestCell
         let tokenRequest = tokenRequests[indexPath.item]
         let address      = ethAddressFor(tokenRequest: tokenRequest)
         cell.configure(tokenRequest: tokenRequest, ethAdrress: address)
@@ -112,6 +124,8 @@ extension TokenRequestListController: UITableViewDataSource {
 
 class TokenRequestCell: UITableViewCell {
     
+    static let cellID = "TokenRequestCellID"
+
     @IBOutlet weak var aliasLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -128,6 +142,16 @@ class TokenRequestCell: UITableViewCell {
         pendingView.isHidden   = tokenRequest.status != "pending"
         completedView.isHidden = tokenRequest.status != "completed"
         canceledView.isHidden  = tokenRequest.status != "rejected"
+    }
+}
+
+extension TokenRequestListController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }
 
