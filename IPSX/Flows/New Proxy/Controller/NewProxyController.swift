@@ -46,6 +46,11 @@ class NewProxyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // After Logout
+        if UserManager.shared.proxyCountries == nil {
+            getProxyCountryList()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -57,6 +62,25 @@ class NewProxyController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         countries = UserManager.shared.proxyCountries
+    }
+    
+    func getProxyCountryList() {
+        
+        loadingView.startAnimating()
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let countryList):
+                UserManager.shared.proxyCountries = countryList as? [String]
+                self.countries = UserManager.shared.proxyCountries
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                    self.getProxyCountryList()
+                })
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {

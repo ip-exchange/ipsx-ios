@@ -55,6 +55,24 @@ class EditProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         keyIconImageView.tintColor = .lightBlue
+        
+        // After Logout
+        if UserManager.shared.userCountries == nil {
+            
+            loadingView.startAnimating()
+            UserInfoService().getUserCountryList(completionHandler: { result in
+                
+                self.loadingView.stopAnimating()
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    DispatchQueue.main.async { self.updateFields() }
+                    
+                case .failure(_):
+                    self.errorMessage = "Generic Error Message".localized
+                }
+            })
+        }
     }
     
     override func viewDidLayoutSubviews() {
