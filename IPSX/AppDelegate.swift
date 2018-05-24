@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setKeychainAccessGroup()
         UserManager.shared.retrieveAccessDetails()
+        let _ = ReachabilityManager.shared
         return true
     }
     

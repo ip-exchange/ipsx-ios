@@ -20,7 +20,6 @@ class LoadingViewController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
     let dispatchGroup = DispatchGroup()
     
     //TODO (CVI): add reachability & implement retry for internet connection error (banner) and other errors (alert)
@@ -33,8 +32,18 @@ class LoadingViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
+        
+        if !ReachabilityManager.shared.isReachable() {
+            self.toast?.showToastAlert("No internet connection".localized)
+        }
+        else {
+            continueFlow()
+        }
+    }
+    
+    func continueFlow() {
         if UserManager.shared.isLoggedIn {
-            initDataForCurrentUser()
+            initDataAndContinueFlow()
         }
         else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
@@ -43,7 +52,30 @@ class LoadingViewController: UIViewController {
         }
     }
     
-    func initDataForCurrentUser() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized)
+            } else {
+                self.toast?.hideToastAlert()
+                self.continueFlow()
+            }
+        }
+    }
+    
+    func initDataAndContinueFlow() {
         
         userCountryList()
         ethAddresses()
