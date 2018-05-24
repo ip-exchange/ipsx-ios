@@ -87,9 +87,12 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.updateData()
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+        // Because Login will be displayed from Tab Bar Controller and this is the first VC
+        if UserManager.shared.isLoggedIn {
+            self.updateData()
+            self.timer?.invalidate()
+            self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

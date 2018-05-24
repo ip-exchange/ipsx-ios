@@ -37,6 +37,11 @@ class TokenRequestListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // After Logout
+        if UserManager.shared.tokenRequests == nil {
+            getTokenRequestList()
+        }
     }
     
     override func viewDidLayoutSubviews() {
