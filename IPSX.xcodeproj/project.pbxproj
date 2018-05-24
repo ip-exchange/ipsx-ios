@@ -85,6 +85,10 @@
 		EE7AD96120B413240022259D /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7AD96320B413240022259D /* Profile.storyboard */; };
 		EEA08C452099E97C00684F33 /* TokenRequestListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA08C442099E97C00684F33 /* TokenRequestListController.swift */; };
 		EEAAD49920B5A81F001A2FAE /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD49820B5A81F001A2FAE /* SwiftyJSON.swift */; };
+		EEAAD49E20B6AD6E001A2FAE /* EnrolTestCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD49D20B6AD6E001A2FAE /* EnrolTestCreateController.swift */; };
+		EEAAD4A320B6CB57001A2FAE /* EnrolTestLandingController .swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD4A220B6CB56001A2FAE /* EnrolTestLandingController .swift */; };
+		EEAAD4A520B6CB8F001A2FAE /* EnrolTestSummaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAAD4A420B6CB8F001A2FAE /* EnrolTestSummaryController.swift */; };
+		EEAAD4A620B6D0A3001A2FAE /* EnrolTesting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEAAD4A820B6D0A3001A2FAE /* EnrolTesting.storyboard */; };
 		EED38F2120A5B1CD004DA2CC /* DateFormatter+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED38F2020A5B1CD004DA2CC /* DateFormatter+extensions.swift */; };
 		EEDB132420A9BE9C00FBFFD0 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB132320A9BE9C00FBFFD0 /* Date+extensions.swift */; };
 		EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEBF04A20999259008AB061 /* EditProfileController.swift */; };
@@ -205,6 +209,11 @@
 		EE8D6AFA20B5653D004CA547 /* ro-RO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ro-RO"; path = "ro-RO.lproj/Profile.strings"; sourceTree = "<group>"; };
 		EEA08C442099E97C00684F33 /* TokenRequestListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRequestListController.swift; sourceTree = "<group>"; };
 		EEAAD49820B5A81F001A2FAE /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		EEAAD49D20B6AD6E001A2FAE /* EnrolTestCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolTestCreateController.swift; sourceTree = "<group>"; };
+		EEAAD4A220B6CB56001A2FAE /* EnrolTestLandingController .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnrolTestLandingController .swift"; sourceTree = "<group>"; };
+		EEAAD4A420B6CB8F001A2FAE /* EnrolTestSummaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolTestSummaryController.swift; sourceTree = "<group>"; };
+		EEAAD4A720B6D0A3001A2FAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EnrolTesting.storyboard; sourceTree = "<group>"; };
+		EEAAD4AA20B6D0A7001A2FAE /* ro-RO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ro-RO"; path = "ro-RO.lproj/EnrolTesting.strings"; sourceTree = "<group>"; };
 		EED38F2020A5B1CD004DA2CC /* DateFormatter+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+extensions.swift"; sourceTree = "<group>"; };
 		EEDB132320A9BE9C00FBFFD0 /* Date+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extensions.swift"; sourceTree = "<group>"; };
 		EEEBF04A20999259008AB061 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
@@ -303,6 +312,7 @@
 		A46A614A20A32AC900F25CC1 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				EEAAD49A20B6A396001A2FAE /* EnrolTesting */,
 				A46A614B20A32AE600F25CC1 /* Login */,
 				A4F2F7402090A21B00515883 /* Register */,
 				A46A615320A32BB700F25CC1 /* Dashboard */,
@@ -627,6 +637,33 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		EEAAD49A20B6A396001A2FAE /* EnrolTesting */ = {
+			isa = PBXGroup;
+			children = (
+				EEAAD49F20B6ADC0001A2FAE /* Controller */,
+				EEAAD4A120B6ADD0001A2FAE /* Storyboard */,
+			);
+			path = EnrolTesting;
+			sourceTree = "<group>";
+		};
+		EEAAD49F20B6ADC0001A2FAE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EEAAD49D20B6AD6E001A2FAE /* EnrolTestCreateController.swift */,
+				EEAAD4A220B6CB56001A2FAE /* EnrolTestLandingController .swift */,
+				EEAAD4A420B6CB8F001A2FAE /* EnrolTestSummaryController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EEAAD4A120B6ADD0001A2FAE /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EEAAD4A820B6D0A3001A2FAE /* EnrolTesting.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -754,6 +791,7 @@
 				EE7AD95220B406A40022259D /* WalletAdd.storyboard in Resources */,
 				EE354FC820AB10A6002A8132 /* style.css in Resources */,
 				EE7AD94820B403ED0022259D /* Login.storyboard in Resources */,
+				EEAAD4A620B6D0A3001A2FAE /* EnrolTesting.storyboard in Resources */,
 				EE7AD95C20B40E6B0022259D /* NewProxy.storyboard in Resources */,
 				EE7AD93B20B402790022259D /* Search.storyboard in Resources */,
 				EE7AD94D20B406930022259D /* Register.storyboard in Resources */,
@@ -807,8 +845,10 @@
 				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* RequestBuilder.swift in Sources */,
 				A4AC761F2099E59800504ED9 /* KeychainWrapper.swift in Sources */,
+				EEAAD4A520B6CB8F001A2FAE /* EnrolTestSummaryController.swift in Sources */,
 				A45F0ED920AEF485009C55F2 /* ErrorHandlingProtocols.swift in Sources */,
 				EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */,
+				EEAAD4A320B6CB57001A2FAE /* EnrolTestLandingController .swift in Sources */,
 				A4AC76222099E99900504ED9 /* LoginService.swift in Sources */,
 				A4DFBFFE20B44AD200FFC28F /* Options.swift in Sources */,
 				A4606C362092165E0008A9F3 /* ProxyActivationDetailsCell.swift in Sources */,
@@ -840,6 +880,7 @@
 				A43A5B662091EABC00B7FD3B /* ProxyDetailsCell.swift in Sources */,
 				A479DC9520A48CAF00D5C601 /* TokenRequest.swift in Sources */,
 				EE1A0546208F650E00522426 /* RoundedView.swift in Sources */,
+				EEAAD49E20B6AD6E001A2FAE /* EnrolTestCreateController.swift in Sources */,
 				EE7AD92820B3F5510022259D /* EthWalletCell.swift in Sources */,
 				EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */,
 			);
@@ -974,6 +1015,15 @@
 				EE8D6AFA20B5653D004CA547 /* ro-RO */,
 			);
 			name = Profile.storyboard;
+			sourceTree = "<group>";
+		};
+		EEAAD4A820B6D0A3001A2FAE /* EnrolTesting.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEAAD4A720B6D0A3001A2FAE /* Base */,
+				EEAAD4AA20B6D0A7001A2FAE /* ro-RO */,
+			);
+			name = EnrolTesting.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

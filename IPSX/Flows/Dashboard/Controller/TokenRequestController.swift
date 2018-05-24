@@ -29,7 +29,6 @@ class TokenRequestController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
     
-    let cellID = "ETHAddressCellID"
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
@@ -178,7 +177,7 @@ extension TokenRequestController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EthWalletCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
         let ethAddress = ethAdresses[indexPath.item]
         cell.configure(address: ethAddress)
         return cell
