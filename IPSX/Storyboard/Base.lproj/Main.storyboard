@@ -747,7 +747,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHB-S1-cvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2621" y="783"/>
+            <point key="canvasLocation" x="2592" y="850"/>
         </scene>
         <!--Landing-->
         <scene sceneID="MA1-Jg-3H6">
@@ -755,7 +755,7 @@
                 <viewControllerPlaceholder storyboardName="Landing" id="grr-34-nBj" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MpH-XF-AqQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2602" y="412"/>
+            <point key="canvasLocation" x="2511" y="466"/>
         </scene>
         <!--WalletEditID-->
         <scene sceneID="9Ib-PD-nFm">
@@ -763,7 +763,7 @@
                 <viewControllerPlaceholder storyboardName="WalletAdd" referencedIdentifier="WalletEditID" id="f4i-TE-mFB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8R-Sg-vJf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2622" y="922"/>
+            <point key="canvasLocation" x="2620" y="1056"/>
         </scene>
         <!--EnrolTesting-->
         <scene sceneID="5Tl-oK-6Ba">
@@ -771,7 +771,15 @@
                 <viewControllerPlaceholder storyboardName="EnrolTesting" id="sXt-2s-6Qg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ne-4F-IQ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2583" y="1006"/>
+            <point key="canvasLocation" x="2621" y="920"/>
+        </scene>
+        <!--EnrolStaking-->
+        <scene sceneID="r9K-gN-8el">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EnrolStaking" id="t5L-Xq-3ez" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GFP-Dt-GOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2624" y="992"/>
         </scene>
         <!--Profile-->
         <scene sceneID="e5X-ZR-dkq">
@@ -1006,11 +1014,21 @@
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O28-sY-gTv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
+                                                    <connections>
+                                                        <segue destination="t5L-Xq-3ez" kind="show" id="IUE-nb-IH3"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="Jya-kR-rBZ" firstAttribute="top" secondItem="chU-zn-PyY" secondAttribute="bottom" constant="-2" id="1Jd-sF-cQq"/>
                                                 <constraint firstAttribute="trailing" secondItem="Jya-kR-rBZ" secondAttribute="trailing" constant="10" id="5Q1-3O-gOT"/>
+                                                <constraint firstAttribute="trailing" secondItem="O28-sY-gTv" secondAttribute="trailing" id="Aey-8a-tdZ"/>
+                                                <constraint firstItem="O28-sY-gTv" firstAttribute="leading" secondItem="1iZ-T7-7em" secondAttribute="leading" id="Co4-6i-H5Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="O28-sY-gTv" secondAttribute="bottom" id="Gza-zi-SRo"/>
+                                                <constraint firstItem="O28-sY-gTv" firstAttribute="top" secondItem="1iZ-T7-7em" secondAttribute="top" id="K0U-q0-WuV"/>
                                                 <constraint firstAttribute="height" constant="67" id="Wez-x0-6zR"/>
                                                 <constraint firstItem="Jya-kR-rBZ" firstAttribute="leading" secondItem="dmY-Jv-pIp" secondAttribute="trailing" constant="22" id="X8X-XI-gJi"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="chU-zn-PyY" secondAttribute="trailing" constant="20" symbolic="YES" id="YzQ-fL-af6"/>

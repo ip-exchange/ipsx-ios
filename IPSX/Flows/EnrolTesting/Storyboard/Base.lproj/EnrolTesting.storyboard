@@ -58,20 +58,20 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="threeTestTubes" translatesAutoresizingMaskIntoConstraints="NO" id="I11-jg-nh4">
-                                <rect key="frame" x="152" y="217" width="70" height="62"/>
+                                <rect key="frame" x="152.5" y="217" width="70" height="62"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="3Cs-za-YBb"/>
                                     <constraint firstAttribute="height" constant="62" id="h0V-eB-W8a"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Every person that enrolls for the testing program will receive 250 IPSX. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DiP-I3-UtB">
-                                <rect key="frame" x="33" y="324.5" width="308" height="38.5"/>
+                                <rect key="frame" x="34" y="324.5" width="307" height="38.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join IPSX Product Testing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpS-DU-WoV">
-                                <rect key="frame" x="78.5" y="294" width="218" height="21.5"/>
+                                <rect key="frame" x="79" y="294" width="218" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -162,12 +162,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y1a-8Y-CNA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="47" y="116"/>
+            <point key="canvasLocation" x="33" y="127"/>
         </scene>
-        <!--Enrol Test Create Controller-->
+        <!--Enrol Test Subscribe Controller-->
         <scene sceneID="FD9-Ee-0ei">
             <objects>
-                <viewController id="RW9-TF-NmT" customClass="EnrolTestCreateController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RW9-TF-NmT" customClass="EnrolTestSubscribeController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YIL-Ai-0x2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -342,9 +342,8 @@
                                             <action selector="backButtonAction:" destination="RW9-TF-NmT" eventType="touchUpInside" id="Mo9-rZ-6vT"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Join IPSX Product Testing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkV-N2-8Cd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join IPSX Product Testing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkV-N2-8Cd">
                                         <rect key="frame" x="84.5" y="62" width="206" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -352,6 +351,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="xkV-N2-8Cd" secondAttribute="bottom" constant="11" id="6wi-O3-uxo"/>
+                                    <constraint firstItem="xkV-N2-8Cd" firstAttribute="centerX" secondItem="Kfe-go-nXd" secondAttribute="centerX" id="Dxz-1u-9TW"/>
                                     <constraint firstAttribute="height" constant="94" id="vxP-WV-xv2"/>
                                 </constraints>
                             </view>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EnrolTestCreateController: UIViewController {
+class EnrolTestSubscribeController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -102,7 +102,7 @@ class EnrolTestCreateController: UIViewController {
 
 }
 
-extension EnrolTestCreateController: UITableViewDataSource {
+extension EnrolTestSubscribeController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ethAdresses.count
@@ -117,7 +117,7 @@ extension EnrolTestCreateController: UITableViewDataSource {
     }
 }
 
-extension EnrolTestCreateController: UITableViewDelegate {
+extension EnrolTestSubscribeController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = ethAdresses[indexPath.item]
