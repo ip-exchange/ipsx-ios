@@ -11,13 +11,12 @@ import UIKit
 class ChangePasswordController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!
-    
     @IBOutlet weak var oldPassRTField: RichTextFieldView!
     @IBOutlet weak var newPassRTField: RichTextFieldView!
     @IBOutlet weak var newPassBisRTField: RichTextFieldView!
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -31,9 +30,6 @@ class ChangePasswordController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
-    @IBOutlet weak var saveButton: UIButton!
-    
     private var fieldsStateDic: [String : Bool] = ["oldPass" : false, "newPass" : false, "newPassBis" : false]
 
     override func viewDidLoad() {
