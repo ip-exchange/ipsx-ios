@@ -26,6 +26,7 @@ class NewProxyController: UIViewController {
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String]?
+    var selectedPack: ProxyPack?
     var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -112,6 +113,7 @@ class NewProxyController: UIViewController {
             let destinationVC = navController?.viewControllers.first as? SearchViewController
             destinationVC?.isProxyFlow = true
             destinationVC?.countries = countries
+            destinationVC?.proxyPack = selectedPack
         }
     }
 }
@@ -146,6 +148,10 @@ extension NewProxyController: UITableViewDelegate {
         let packagePrice = 0
         
         if balance >= packagePrice {
+            
+            if dataSource.count > indexPath.row {
+                self.selectedPack = dataSource[indexPath.row]
+            }
             self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
         }
         else {

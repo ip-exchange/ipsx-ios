@@ -26,9 +26,6 @@ class ProxySummaryViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
-//        let proxyPack = ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50")
-//        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain")
-//        proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
     }
         
     func configureUI() {
