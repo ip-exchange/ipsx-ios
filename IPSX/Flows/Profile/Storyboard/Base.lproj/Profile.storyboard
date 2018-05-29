@@ -337,7 +337,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5g-DR-tIA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Yv8-pZ-gdA" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6336.8000000000002" y="-154.27286356821591"/>
+            <point key="canvasLocation" x="6337" y="-154"/>
+        </scene>
+        <!--Login-->
+        <scene sceneID="rsL-1Y-KeO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" id="AWN-li-dF4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H5M-v3-3iy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7734" y="-155"/>
         </scene>
         <!--Search-->
         <scene sceneID="xbQ-eH-Ebc">
@@ -457,7 +465,7 @@
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cVZ-yz-5oE" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="56" width="360" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="1" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67441406250000002" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -487,7 +495,7 @@
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pk5-SZ-mnk" userLabel="Bottom Separator">
                                                 <rect key="frame" x="15" y="56" width="360" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="1" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67363281249999996" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -514,11 +522,6 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4CC-Cm-dfz" userLabel="Bottom Separator">
-                                                <rect key="frame" x="15" y="56" width="360" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="1" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
-                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
@@ -589,6 +592,7 @@
                         <outlet property="separatorView" destination="nkc-3h-JfJ" id="OCl-ou-Ryh"/>
                         <outlet property="topBarView" destination="Rcj-cG-sJQ" id="W6R-gw-VGH"/>
                         <outlet property="topConstraintOutlet" destination="2Sy-As-Hyb" id="dE5-BA-DPk"/>
+                        <segue destination="AWN-li-dF4" kind="modal" identifier="LoginSegueID" id="35n-rZ-m9D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lz2-9E-Xiy" userLabel="First Responder" sceneMemberID="firstResponder"/>
