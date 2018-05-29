@@ -116,6 +116,7 @@ class ProfileViewController: UIViewController {
         userImageView.layer.borderColor  = UIColor.darkBlue.cgColor
         userImageView.layer.borderWidth  = 1
         self.headerHeightConstraint.constant = self.maxHeaderHeight
+        tableView.tableFooterView = UIView()
     }
     
     func refreshProfileUI() {
