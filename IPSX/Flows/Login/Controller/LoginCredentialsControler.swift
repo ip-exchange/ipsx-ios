@@ -44,14 +44,8 @@ class LoginCredentialsControler: UIViewController {
             self.loadingView.stopAnimating()
             switch result {
                 
-            case .success(let success):
-                
-                if (success as? Bool) == true {
-                    self.continueFlow()
-                }
-                else {
-                    self.errorMessage = "Generic Error Message".localized
-                }
+            case .success(_):
+                self.continueFlow()
                 
             case .failure(let error):
                 

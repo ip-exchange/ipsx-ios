@@ -98,16 +98,54 @@ class ChangePasswordController: UIViewController {
             
             self.loadingView.stopAnimating()
             switch result {
-            case .success(_):
-                print("perform auto login with new password & display toast notification")
-                // fallback to be safe: display alert: "Password changed. Tap OK go Login" -> redirect to Login screen
                 
+            case .success(_):
+                self.autologin(password: newPassword)
+            
             case .failure(let error):
                 self.handleError(error, requestType: .changePassword, completion: {
                     self.changePassword(oldPassword: oldPassword, newPassword: newPassword)
                 })
             }
         })
+    }
+    
+    func autologin(password: String) {
+        
+        let email = UserManager.shared.email
+        loadingView.startAnimating()
+        LoginService().login(email: email, password: password, completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                self.toast?.showToastAlert("Change Password Success Message".localized, autoHideAfter: 5, type: .info)
+                
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self.autologinFailed()
+                }
+            }
+        })
+    }
+    
+    func autologinFailed() {
+        
+        let ac = UIAlertController(title: "Login After Change Password Alert Message".localized, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK".localized, style: .default) { (action:UIAlertAction) in
+            self.performSegue(withIdentifier: "LoginSegueID", sender: nil)
+        }
+        ac.addAction(okAction)
+        present(ac, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "LoginSegueID" {
+            let loginController = segue.destination as? LoginCredentialsControler
+            loginController?.hideBackButton = true
+        }
     }
 }
 
