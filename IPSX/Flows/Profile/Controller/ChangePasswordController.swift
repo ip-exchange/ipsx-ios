@@ -88,11 +88,11 @@ class ChangePasswordController: UIViewController {
     
     func changePassword(oldPassword: String, newPassword: String) {
         
-        self.loadingView.startAnimating()
+        self.loadingView?.startAnimating()
         
         LoginService().changePassword(oldPassword: oldPassword, newPassword: newPassword, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -109,10 +109,10 @@ class ChangePasswordController: UIViewController {
     func autologin(password: String) {
         
         let email = UserManager.shared.email
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         LoginService().login(email: email, password: password, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):

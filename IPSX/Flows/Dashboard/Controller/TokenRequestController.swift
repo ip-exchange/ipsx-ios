@@ -67,10 +67,10 @@ class TokenRequestController: UIViewController {
     
     func requestTokens(ethID: String, amount: String) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 

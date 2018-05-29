@@ -119,7 +119,7 @@ extension SearchViewController: UITableViewDelegate {
                 dismiss(animated: true)
             }
         } else if isProxyFlow == true {
-            proxy?.proxyDetails?.country = selectedCountry ?? "Romania"
+            proxy?.proxyDetails?.country = selectedCountry ?? ""
             performSegue(withIdentifier: newProxyFlowID, sender: nil)
         }
     }

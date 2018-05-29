@@ -38,10 +38,10 @@ class LoginCredentialsControler: UIViewController {
     
     @IBAction func loginButtonAction(_ sender: UIButton) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         LoginService().login(email: emailRichTextView.contentTextField?.text, password: passRichTextField.contentTextField?.text, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):

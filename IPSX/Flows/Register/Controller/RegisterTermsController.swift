@@ -63,20 +63,20 @@ class RegisterTermsController: UIViewController {
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         IPService().getPublicIPAddress(completion: { error, ipAddress in
             
             guard let ipAddress = ipAddress, error == nil else {
 
                 self.errorMessage = "Generic Error Message".localized
-                self.loadingView.stopAnimating()
+                self.loadingView?.stopAnimating()
                 return
             }
             
             if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
                 RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
                     
-                    self.loadingView.stopAnimating()
+                    self.loadingView?.stopAnimating()
                     switch result {
                         
                     case .success(_):

@@ -40,10 +40,10 @@ class NewProxyController: UIViewController {
         }
     }
     
-    let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50"),
-                      ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1 day", price: "100"),
-                      ProxyPack(iconName: "PackCoins", name: "Platinum Pack", noOfMB: "1024", duration: "7 days", price: "200"),
-                      ProxyPack(iconName: "PackCoins", name: "Diamond Pack", noOfMB: "10240", duration: "30 days", price: "500")]
+    let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60", price: "50"),
+                      ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1440", price: "100"),
+                      ProxyPack(iconName: "PackCoins", name: "Platinum Pack", noOfMB: "1024", duration: "10080", price: "200"),
+                      ProxyPack(iconName: "PackCoins", name: "Diamond Pack", noOfMB: "10240", duration: "43200", price: "500")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,10 +62,10 @@ class NewProxyController: UIViewController {
     
     func getProxyCountryList() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         ProxyService().getProxyCountryList(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let countryList):
                 UserManager.shared.proxyCountries = countryList as? [String]
