@@ -55,6 +55,17 @@ class EditProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         keyIconImageView.tintColor = .lightBlue
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "Saved".localized)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateFields()
+        detectChangesAndValidity()
         
         // After Logout
         if UserManager.shared.userCountries == nil {
@@ -73,17 +84,6 @@ class EditProfileController: UIViewController {
                 }
             })
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: separatorView, text: "Saved".localized)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateFields()
-        detectChangesAndValidity()
     }
         
     private func updateFields() {

@@ -46,11 +46,6 @@ class NewProxyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // After Logout
-        if UserManager.shared.proxyCountries == nil {
-            getProxyCountryList()
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -86,6 +81,11 @@ class NewProxyController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         retrieveUserInfo()
+        
+        // After Logout
+        if UserManager.shared.proxyCountries == nil {
+            getProxyCountryList()
+        }
     }
     
     func retrieveUserInfo() {
