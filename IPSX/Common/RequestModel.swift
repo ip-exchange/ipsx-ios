@@ -36,6 +36,7 @@ public struct Url {
     public static let loginArgs = "/Users/login"
     public static let logoutArgs = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let resetPassArgs = "/Users/reset"
+    public static let changePassArgs = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
@@ -59,6 +60,9 @@ public enum CustomError: Error {
     case notSuccessful
     case invalidParams
     case ethAddressAlreadyUsed
+    case wrongOldPassword
+    case loginFailed
+    case invalidLogin
     
     public var errorDescription: String? {
         switch self {
@@ -102,6 +106,7 @@ public enum IPRequestType: Int {
     case login
     case logout
     case resetPassword
+    case changePassword
     case retrieveProxies
     case userInfo
     case updateProfile

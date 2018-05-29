@@ -48,6 +48,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
+        case .changePassword:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.changePassArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            }
+            
         //Register Requests
             
         case .getPublicIP:
@@ -190,28 +198,79 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 else if let httpResponse = response as? HTTPURLResponse , let data = data {
                     
                     let statusCode = httpResponse.statusCode
-                    switch statusCode {
-                        
-                    case 200, 204:
-                        print(NSDate(),"\(requestType)" + "Request succeeded")
-                        completion(nil, data)
-                        
-                    //TODO (CVI): we should use one statusCode for each request when expired token
-                        
-                    case 401 where requestType != .login && requestType != .register:
-                        print(NSDate(), "\(requestType)" + "Request failed. Expired token ")
-                        completion(CustomError.expiredToken, data)
-                        
-                    case 422 where requestType == .addEthAddress || requestType == .updateEthAddress:
-                        print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used ")
-                        completion(CustomError.ethAddressAlreadyUsed, data)
-                        
-                    default:
-                        print(NSDate(), "\(requestType)" + "Request failed with status code: ", statusCode)
-                        completion(CustomError.statusCodeNOK(statusCode), data)
-                    }
+                    self.handleError(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
                 }
             }).resume()
+        }
+    }
+    
+    func handleError(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
+        
+        switch statusCode {
+            
+        case 200, 204:
+            print(NSDate(),"\(requestType)" + "Request succeeded")
+            completion(nil, data)
+            
+        case 401:
+            
+            switch requestType {
+                
+            case .login:
+                print(NSDate(), "\(requestType)" + "Request failed. Login failed")
+                completion(CustomError.loginFailed, data)
+                
+            case .register:
+                print(NSDate(), "\(requestType)" + "Request failed. Register failed")
+                completion(CustomError.statusCodeNOK(statusCode), data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed. Expired token")
+                completion(CustomError.expiredToken, data)
+            }
+
+        case 403:
+            
+            switch requestType {
+                
+            case .login:
+                print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. Email not confirmed")
+                completion(CustomError.invalidLogin, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
+
+        case 402:
+            
+            switch requestType {
+                
+            case .changePassword:
+                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
+                completion(CustomError.wrongOldPassword, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
+        
+        case 422:
+            
+            switch requestType {
+                
+            case .addEthAddress, .updateEthAddress:
+                print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used")
+                completion(CustomError.ethAddressAlreadyUsed, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
+        
+        default:
+            print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+            completion(CustomError.statusCodeNOK(statusCode), data)
         }
     }
 }
