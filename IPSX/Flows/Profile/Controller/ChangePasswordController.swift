@@ -23,6 +23,11 @@ class ChangePasswordController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
+    var errorMessage: String? {
+        didSet {
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -79,8 +84,30 @@ class ChangePasswordController: UIViewController {
     }
     
     @IBAction func saveButtonAction(_ sender: Any) {
-        let passToSend = newPassBisRTField.contentTextField?.text ?? ""
-        toast?.showToastAlert(passToSend, autoHideAfter: 5)
+        
+        let oldPassword = oldPassRTField.contentTextField?.text ?? ""
+        let newPassword = newPassRTField.contentTextField?.text ?? ""
+        changePassword(oldPassword: oldPassword, newPassword: newPassword)
+    }
+    
+    func changePassword(oldPassword: String, newPassword: String) {
+        
+        self.loadingView.startAnimating()
+        
+        LoginService().changePassword(oldPassword: oldPassword, newPassword: newPassword, completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(_):
+                print("perform auto login with new password & display toast notification")
+                // fallback to be safe: display alert: "Password changed. Tap OK go Login" -> redirect to Login screen
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .changePassword, completion: {
+                    self.changePassword(oldPassword: oldPassword, newPassword: newPassword)
+                })
+            }
+        })
     }
 }
 
@@ -90,6 +117,30 @@ extension ChangePasswordController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension ChangePasswordController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+            
+        case CustomError.wrongOldPassword:
+            self.errorMessage = "Wrong Old Password Error Message".localized
+            
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

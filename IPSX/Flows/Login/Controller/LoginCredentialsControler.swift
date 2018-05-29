@@ -55,27 +55,16 @@ class LoginCredentialsControler: UIViewController {
                 
             case .failure(let error):
                 
-                guard let customError = error as? CustomError else {
-                    self.errorMessage = "Generic Error Message".localized
-                    return
-                }
-                switch customError {
-                case .statusCodeNOK(let statusCode):
+                switch error {
                     
-                    switch statusCode {
-                    case 401:
-                        self.errorMessage = "Login Failed Error Message".localized
-                        
-                    case 403:
-                        self.errorMessage = "Invalid Login Error Message".localized
-                        
-                    default:
-                        self.errorMessage = "Login Failed Error Message".localized
-                    }
+                case CustomError.loginFailed:
+                    self.errorMessage = "Login Failed Error Message".localized
+                    
+                case CustomError.invalidLogin:
+                    self.errorMessage = "Invalid Login Error Message".localized
                     
                 default:
                     self.errorMessage = "Generic Error Message".localized
-                    break
                 }
             }
         })
@@ -100,7 +89,6 @@ class LoginCredentialsControler: UIViewController {
                 }
                 
             case .failure(_):
-                
                 self.errorMessage = "Generic Error Message".localized
             }
         })

@@ -83,6 +83,25 @@ class LoginService {
         })
     }
     
+    func changePassword(oldPassword: String, newPassword: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let bodyParams: [String: String] = ["oldPassword"             : oldPassword,
+                                            "newPassword"             : newPassword,
+                                            "newPasswordConfirmation" : newPassword]
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        RequestBuilder.shared.executeRequest(requestType: .changePassword, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
     func getNewAccessToken(errorHandler: @escaping (Error?)->Void, successHandler:@escaping () -> ()) {
         
         login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
