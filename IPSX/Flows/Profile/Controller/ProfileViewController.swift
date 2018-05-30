@@ -57,26 +57,11 @@ class ProfileViewController: UIViewController {
             self.errorMessage = formatedMessage.localized
         }
     }
-    //TODO (CVI): if logout fails randomly, we should redirect to login and start from the beginning
     
     func logout() {
         
-        loadingView?.startAnimating()
-        LoginService().logout(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(_):
-                UserManager.shared.removeUserDetails()
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
-                }
-            case .failure(let error):
-                self.handleError(error, requestType: .logout, completion: {
-                    self.logout()
-                })
-            }
-        })
+        UserManager.shared.removeUserDetails()
+        self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
@@ -387,8 +372,6 @@ extension ProfileViewController: ErrorPresentable {
         default:
             
             switch requestType {
-            case .logout:
-                self.errorMessage = "Logout Error Message".localized
             case .userInfo, .getEthAddress:
                 self.errorMessage = "Refresh Data Error Message".localized
             case .deleteEthAddress:

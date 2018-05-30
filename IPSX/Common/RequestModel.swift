@@ -89,15 +89,11 @@ public enum CustomError: Error {
             return self.localizedDescription
         }
     }
-    public var errorCode: String {
+    public var errorCode: String? {
         return self.errorCode
     }
 }
 
-extension CustomError : Equatable {}
-public func ==(lhs: CustomError, rhs: CustomError) -> Bool {
-    return lhs.errorCode == rhs.errorCode && lhs.localizedDescription == rhs.localizedDescription
-}
 
 public enum IPRequestType: Int {
     

@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        if UserDefaults.standard.isFreshInstall() {
+            UserManager.shared.removeUserDetails()
+        }
         setKeychainAccessGroup()
         UserManager.shared.retrieveAccessDetails()
         let _ = ReachabilityManager.shared
