@@ -11,7 +11,6 @@ import UIKit
 class ProxySummaryViewController: UIViewController {
     
     let proxyPackCellID = "ProxyPackCellID"
-    let detailsCellID = "ProxyDetailsCellD"
     var proxy: Proxy?
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
@@ -52,10 +51,10 @@ class ProxySummaryViewController: UIViewController {
         loadingView?.startAnimating()
         IPService().getPublicIPAddress(completion: { error, ipAddress in
             
+            self.loadingView?.stopAnimating()
             guard let ipAddress = ipAddress, error == nil else {
                 
                 self.errorMessage = "Generic Error Message".localized
-                self.loadingView?.stopAnimating()
                 return
             }
             self.createProxy(userIP: ipAddress, proxy: self.proxy)
@@ -118,7 +117,7 @@ extension ProxySummaryViewController: UITableViewDataSource {
             return cell
 
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID, for: indexPath) as! ProxyDetailsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProxyDetailsCell.cellID, for: indexPath) as! ProxyDetailsCell
             
             switch indexPath.row {
             case 0:

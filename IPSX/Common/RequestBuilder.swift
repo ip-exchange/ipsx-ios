@@ -103,7 +103,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .createProxy:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.createProxyArgs
+            var url = Url.base + Url.proxiesArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)

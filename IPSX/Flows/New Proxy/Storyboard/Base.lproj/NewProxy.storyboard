@@ -439,8 +439,8 @@
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8712673728.pac" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xt-Ga-vHU">
-                                                    <rect key="frame" x="15" y="29.5" width="122" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8712673728.pac" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2Xt-Ga-vHU">
+                                                    <rect key="frame" x="15" y="30.5" width="309" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -455,15 +455,19 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7RB-lY-VCz" secondAttribute="trailing" constant="20" symbolic="YES" id="0BP-ze-Gw0"/>
                                                 <constraint firstAttribute="bottom" secondItem="2Xt-Ga-vHU" secondAttribute="bottom" constant="10" id="7Dc-kC-2HX"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Xt-Ga-vHU" secondAttribute="trailing" constant="20" symbolic="YES" id="DVh-5d-7gO"/>
                                                 <constraint firstItem="roj-Ny-AcO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dfM-Us-kF9" secondAttribute="leading" constant="20" symbolic="YES" id="FMB-om-2fA"/>
                                                 <constraint firstItem="roj-Ny-AcO" firstAttribute="centerY" secondItem="dfM-Us-kF9" secondAttribute="centerY" id="HoO-7q-hm4"/>
                                                 <constraint firstItem="7RB-lY-VCz" firstAttribute="leading" secondItem="dfM-Us-kF9" secondAttribute="leading" constant="15" id="If3-dC-Ujw"/>
                                                 <constraint firstAttribute="trailing" secondItem="roj-Ny-AcO" secondAttribute="trailing" constant="15" id="SIH-1Z-ovz"/>
                                                 <constraint firstItem="2Xt-Ga-vHU" firstAttribute="leading" secondItem="7RB-lY-VCz" secondAttribute="leading" id="TO5-m8-fXx"/>
+                                                <constraint firstAttribute="trailing" secondItem="2Xt-Ga-vHU" secondAttribute="trailing" constant="51" id="e1e-9z-NKe"/>
                                                 <constraint firstItem="7RB-lY-VCz" firstAttribute="top" secondItem="dfM-Us-kF9" secondAttribute="top" constant="10" id="eek-07-psN"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="7RB-lY-VCz" id="ckX-wT-f2a"/>
+                                            <outlet property="valueLabel" destination="2Xt-Ga-vHU" id="spX-5h-Zu8"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProxyDetailsCellD" rowHeight="60" id="O7C-Jf-5Sc" customClass="ProxyDetailsCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="215.5" width="375" height="60"/>
@@ -479,7 +483,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 Apr 2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTJ-kh-5xb">
-                                                    <rect key="frame" x="15" y="29.5" width="89.5" height="20"/>
+                                                    <rect key="frame" x="15" y="30" width="89.5" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

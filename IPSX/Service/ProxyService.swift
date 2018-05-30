@@ -44,16 +44,20 @@ class ProxyService {
             
             //TODO (CVI): PROXY NAME o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
             //TODO (CVI): PROXY PRICE in IPSX (with the new model for proxy plans)
-            //TODO (CVI): PAC LINK -> trebuie dedus (mai ramane de testat iOS vs Android)
             
+            //TODO (CC): format duration using Date extension. Ex: for "43200" min -> display "30 days"
+            let duration = json["duration"].stringValue + " min"
+            
+            let proxyID = json["id"].stringValue
             let noOfMB = json["traffic"].stringValue
-            let duration = json["duration"].stringValue + " min" //TODO (CVI): format this (min, days, month, etc)
-            
             let startDateString = json["start_date"].stringValue
             let endDateString = json["end_date"].stringValue
+            let createdDateString = json["created_at"].stringValue
             
             let startDate = dateFormatter.date(from: startDateString)
             let endDate = dateFormatter.date(from: endDateString)
+            
+            let pacLink = String.generatePacLink(createdDate: createdDateString, proxyId: proxyID)
             
             var remainigDuartionString = "0 min"
             if let eDate = endDate, eDate.timeIntervalSince(Date()) > 0 {
@@ -74,7 +78,7 @@ class ProxyService {
             
             let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration, price: "TODO")
             let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, usedMB: usedMBString, remainingDuration: remainigDuartionString, status: status)
-            let proxySetup = ProxySetup(pacLink: "TODO", proxyIP: proxyIp, proxyPort: proxyPort)
+            let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
             proxies.append(proxy)
         }
@@ -204,7 +208,7 @@ class ProxyService {
         
         let dateFormatter = DateFormatter.backendResponseParse()
         
-        let pacLink = "TODO: we should generate this"
+        let proxyID = json["id"].stringValue
         let proxyIP = json["ip"].stringValue
         let proxyPort = json["port"].stringValue
         let country = json["country"].stringValue
@@ -213,8 +217,11 @@ class ProxyService {
         
         let startDateString = json["start_date"].stringValue
         let endDateString = json["end_date"].stringValue
+        let createdString = json["created_at"].stringValue
         let startDate = dateFormatter.date(from: startDateString)
         let endDate = dateFormatter.date(from: endDateString)
+        
+        let pacLink = String.generatePacLink(createdDate: createdString, proxyId: proxyID)
         
         var remainigDuartionString = "0 min"
         if let eDate = endDate, eDate.timeIntervalSince(Date()) > 0 {

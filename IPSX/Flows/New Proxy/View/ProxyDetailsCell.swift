@@ -10,6 +10,8 @@ import UIKit
 
 class ProxyDetailsCell: UITableViewCell {
     
+    static let cellID = "ProxyDetailsCellD"
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!

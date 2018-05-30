@@ -28,6 +28,7 @@ public struct Url {
     
     public static var publicIP = "https://api.ipify.org?format=json"
     public static let base = "http://devapi.ip.sx:3000/api"
+    public static let pacBaseUrl = "https://devapp.ip.sx/proxy/pac/"
     public static let registerArgs = "/Users"
     public static let userCountriesArgs = "/countries"
     public static let proxyCountriesArgs = "/proxies/countries?access_token=%ACCESS_TOKEN%"
@@ -38,7 +39,6 @@ public struct Url {
     public static let resetPassArgs = "/Users/reset"
     public static let changePassArgs = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
-    public static let createProxyArgs = "/Users/%USER_ID%/proxies?request_type=ios&access_token=%ACCESS_TOKEN%" 
     public static let userInfoArgs = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
     public static let optionsArgs = "/options?access_token=%ACCESS_TOKEN%"

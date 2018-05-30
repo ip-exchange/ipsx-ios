@@ -13,8 +13,6 @@ class ProxyDetailsViewController: UIViewController {
     
     @IBOutlet weak var openSettingsOverlayView: UIView!
     @IBOutlet weak var openSettingsCenterConstraint: NSLayoutConstraint!
-    
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -25,10 +23,8 @@ class ProxyDetailsViewController: UIViewController {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     let activationDetailsCellID = "ActivationDetailsCellID"
     let pacDetailsCellID = "PACDetailsCellID"
-    let detailsCellID = "ProxyDetailsCellD"
     var proxy: Proxy?
     var presentedFromDashboard = false
 
@@ -123,12 +119,12 @@ extension ProxyDetailsViewController: UITableViewDataSource {
                 return cell
 
             case 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID, for: indexPath) as! ProxyDetailsCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ProxyDetailsCell.cellID, for: indexPath) as! ProxyDetailsCell
                 cell.configure(title: "IP", value: proxy?.proxySetup?.proxyIP)
                 return cell
 
             case 2:
-                let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID, for: indexPath) as! ProxyDetailsCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ProxyDetailsCell.cellID, for: indexPath) as! ProxyDetailsCell
                 cell.configure(title: "Port", value:  proxy?.proxySetup?.proxyPort)
                 return cell
 
@@ -137,7 +133,7 @@ extension ProxyDetailsViewController: UITableViewDataSource {
             }
             
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID, for: indexPath) as! ProxyDetailsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProxyDetailsCell.cellID, for: indexPath) as! ProxyDetailsCell
             switch indexPath.row {
                 
             case 0:
