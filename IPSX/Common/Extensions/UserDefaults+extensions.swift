@@ -13,7 +13,7 @@ public extension UserDefaults {
     public enum UserDefaultsKey: String {
         
         case defaultETHAddressID   = "DEFAULT_ETH_ADDRESS_KEY"
-        case defaultFreshInstallID = "DEFAULT_FRESH_INSTALL_KEY"
+        case freshInstallID = "DEFAULT_FRESH_INSTALL_KEY"
    }
     
     func storeDelfaultETHAddressID(ethAddressID: String?) {
@@ -22,11 +22,11 @@ public extension UserDefaults {
     }
     
     func loadDelfaultETHAddressID() -> String? {
-        return UserDefaults.standard.string(forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
+        return UserDefaults.standard.string(forKey: UserDefaultsKey.freshInstallID.rawValue)
     }
     
     func isFreshInstall() -> Bool {
-        let isFreshInstall = !UserDefaults.standard.bool(forKey: UserDefaultsKey.defaultFreshInstallID.rawValue)
+        let isFreshInstall = !UserDefaults.standard.bool(forKey: UserDefaultsKey.freshInstallID.rawValue)
         UserDefaults.standard.set(true, forKey:  UserDefaultsKey.defaultFreshInstallID.rawValue)
         UserDefaults.standard.synchronize()
         return isFreshInstall
