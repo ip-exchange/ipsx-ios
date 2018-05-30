@@ -89,7 +89,7 @@ public enum CustomError: Error {
             return self.localizedDescription
         }
     }
-    public var errorCode: String? {
+    public var errorCode: String {
         return self.errorCode
     }
 }
