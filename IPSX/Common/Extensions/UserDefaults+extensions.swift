@@ -22,12 +22,12 @@ public extension UserDefaults {
     }
     
     func loadDelfaultETHAddressID() -> String? {
-        return UserDefaults.standard.string(forKey: UserDefaultsKey.freshInstallID.rawValue)
+        return UserDefaults.standard.string(forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
     }
     
     func isFreshInstall() -> Bool {
         let isFreshInstall = !UserDefaults.standard.bool(forKey: UserDefaultsKey.freshInstallID.rawValue)
-        UserDefaults.standard.set(true, forKey:  UserDefaultsKey.defaultFreshInstallID.rawValue)
+        UserDefaults.standard.set(true, forKey:  UserDefaultsKey.freshInstallID.rawValue)
         UserDefaults.standard.synchronize()
         return isFreshInstall
     }
