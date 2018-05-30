@@ -37,10 +37,10 @@ class ForgotPassController: UIViewController {
     
     @IBAction func resetPassAction(_ sender: UIButton) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         LoginService().resetPassword(email: emailRichTextView.contentTextField?.text ?? "", completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 DispatchQueue.main.async {

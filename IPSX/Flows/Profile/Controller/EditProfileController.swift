@@ -70,10 +70,10 @@ class EditProfileController: UIViewController {
         // After Logout
         if UserManager.shared.userCountries == nil {
             
-            loadingView.startAnimating()
+            loadingView?.startAnimating()
             UserInfoService().getUserCountryList(completionHandler: { result in
                 
-                self.loadingView.stopAnimating()
+                self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let countryList):
                     UserManager.shared.userCountries = countryList as? [[String: String]]
@@ -154,10 +154,10 @@ class EditProfileController: UIViewController {
     
     func updateUserProfile(bodyParams: [String: String]) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 self.getNewUserInfo() {
@@ -176,10 +176,10 @@ class EditProfileController: UIViewController {
     
     func getNewUserInfo(successCompletion: @escaping () -> ()) {
         
-        self.loadingView.startAnimating()
+        self.loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(let user):

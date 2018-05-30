@@ -15,6 +15,17 @@ class ProxySummaryViewController: UIViewController {
     var proxy: Proxy?
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    //TODO (CC): add loadingView
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
+    //TODO (CC): add toast alert
+    var toast: ToastAlertView?
+    var errorMessage: String? {
+        didSet {
+            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+    
     @IBAction func BackButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -26,9 +37,6 @@ class ProxySummaryViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
-//        let proxyPack = ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60 min", price: "50")
-//        let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "Spain")
-//        proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
     }
         
     func configureUI() {
@@ -41,8 +49,47 @@ class ProxySummaryViewController: UIViewController {
     
     @IBAction func confirmOrderAction(_ sender: Any) {
         
-        //TODO: make API request to create proxy and then:
-        performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+        loadingView?.startAnimating()
+        IPService().getPublicIPAddress(completion: { error, ipAddress in
+            
+            guard let ipAddress = ipAddress, error == nil else {
+                
+                self.errorMessage = "Generic Error Message".localized
+                self.loadingView?.stopAnimating()
+                return
+            }
+            self.createProxy(userIP: ipAddress, proxy: self.proxy)
+        })
+    }
+    
+    func createProxy(userIP: String, proxy: Proxy?) {
+        
+        self.loadingView?.startAnimating()
+        ProxyService().createProxy(userIP: userIP, proxy: proxy, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(let proxy):
+                
+                DispatchQueue.main.async {
+                    self.proxy = proxy as? Proxy
+                    self.performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .createProxy, completion: {
+                    self.createProxy(userIP: userIP, proxy: proxy)
+                })
+            }
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ProxyDetailsSegueiID" {
+            let nextVC = segue.destination as? ProxyDetailsViewController
+            nextVC?.proxy = proxy
+        }
     }
 }
 
@@ -130,6 +177,26 @@ extension ProxySummaryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
+    }
+}
+
+extension ProxySummaryViewController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
+        }
     }
 }
 

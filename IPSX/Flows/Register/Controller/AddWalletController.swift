@@ -47,10 +47,10 @@ class AddWalletController: UIViewController {
     
     func loginAnotherAccount() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         LoginService().logout(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -144,10 +144,10 @@ class AddWalletController: UIViewController {
     
     func updateETHaddress(alias: String, address: String, ethID: String) {
     
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -178,10 +178,10 @@ class AddWalletController: UIViewController {
         let alias = walletNameRichTextField.contentTextField?.text ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         RegisterService().addEthAdress(address: address, alias: alias, completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):

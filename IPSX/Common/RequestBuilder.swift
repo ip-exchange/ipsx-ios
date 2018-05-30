@@ -101,6 +101,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
+        case .createProxy:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.createProxyArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         //ETH addresses Requests
             
         case .updateEthAddress:

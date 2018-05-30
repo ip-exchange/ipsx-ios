@@ -67,10 +67,10 @@ class TokenRequestListController: UIViewController {
     
     func getTokenRequestList() {
         
-        self.loadingView.startAnimating()
+        self.loadingView?.startAnimating()
         ProxyService().getTokenRequestList(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let tokenRequests):
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]

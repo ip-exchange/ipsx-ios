@@ -21,8 +21,8 @@ class SearchViewController: UIViewController {
     
     public var dismissOnSelect = false
     var isProxyFlow: Bool? = false
-    var proxy: Proxy? = nil
-    
+    var proxyPack: ProxyPack?
+    var proxy: Proxy?
     var countries: [String]?
     var filteredCountries: [String]?
     var selectedCountry: String?
@@ -41,8 +41,16 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
+        if isProxyFlow == true {
+            
+            //TODO (CC): replace endDate with Date() + proxy.duration (min)
+            let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "")
+            proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
+        }
     }
     
     @IBAction func BackButton(_ sender: Any) {
@@ -111,7 +119,7 @@ extension SearchViewController: UITableViewDelegate {
                 dismiss(animated: true)
             }
         } else if isProxyFlow == true {
-            proxy?.proxyDetails?.country = selectedCountry ?? "Romania"
+            proxy?.proxyDetails?.country = selectedCountry ?? ""
             performSegue(withIdentifier: newProxyFlowID, sender: nil)
         }
     }

@@ -125,10 +125,10 @@ class DashboardViewController: UIViewController {
     
     func retrieveUserInfo() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
@@ -144,10 +144,10 @@ class DashboardViewController: UIViewController {
     
     func retrieveProxiesForCurrentUser() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let proxyArray):
                 UserManager.shared.proxies = proxyArray as? [Proxy]

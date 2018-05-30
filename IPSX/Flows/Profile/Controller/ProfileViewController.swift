@@ -61,10 +61,10 @@ class ProfileViewController: UIViewController {
     
     func logout() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         LoginService().logout(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 UserManager.shared.removeUserDetails()
@@ -169,10 +169,10 @@ class ProfileViewController: UIViewController {
     
     func retrieveUserInfo() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
@@ -188,10 +188,10 @@ class ProfileViewController: UIViewController {
     
     func retrieveETHaddresses() {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().retrieveETHaddresses(completionHandler: { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let ethAddresses):
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
@@ -207,10 +207,10 @@ class ProfileViewController: UIViewController {
     
     func updateETHaddresses(ethID: String) {
         
-        loadingView.startAnimating()
+        loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethID) { result in
             
-            self.loadingView.stopAnimating()
+            self.loadingView?.stopAnimating()
             
             switch result {
                 
