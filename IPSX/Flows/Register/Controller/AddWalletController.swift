@@ -47,24 +47,8 @@ class AddWalletController: UIViewController {
     
     func loginAnotherAccount() {
         
-        loadingView?.startAnimating()
-        LoginService().logout(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-                
-            case .success(_):
-                UserManager.shared.removeUserDetails()
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
-                }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: .logout, completion: {
-                    self.loginAnotherAccount()
-                })
-            }
-        })
+        UserManager.shared.removeUserDetails()
+        self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
@@ -393,11 +377,9 @@ extension AddWalletController: ErrorPresentable {
         default:
             
             switch requestType {
-            case .logout:
-                self.errorMessage = "Logout Error Message".localized
                 
             case .updateEthAddress, .addEthAddress:
-                if let customErr = error as? CustomError, customErr == .ethAddressAlreadyUsed {
+                if let customErr = error as? CustomError, case .ethAddressAlreadyUsed = customErr {
                     self.errorMessage = "ETH Address Already Used Error Message".localized
                 }
             default:
