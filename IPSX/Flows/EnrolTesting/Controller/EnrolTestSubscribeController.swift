@@ -30,6 +30,8 @@ class EnrolTestSubscribeController: UIViewController {
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
     
+    //TODO (CC): logic to determine ethAddresses to delete for testing
+    
     //TODO (CC)
     var errorMessage: String? {
         didSet {

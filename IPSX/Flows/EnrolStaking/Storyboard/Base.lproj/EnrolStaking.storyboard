@@ -194,7 +194,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="hRf-V5-KyD" kind="show" id="sdK-KZ-2wp"/>
+                                    <action selector="submitAction:" destination="ed8-iD-6e1" eventType="touchUpInside" id="MYC-Kt-FjS"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbv-hV-Cnm">
@@ -352,6 +352,7 @@
                     <connections>
                         <outlet property="joinStakingButton" destination="5Eq-Q2-Cpl" id="jA5-dJ-XRr"/>
                         <outlet property="tableView" destination="kca-Wx-HEL" id="U3H-hN-bEK"/>
+                        <segue destination="hRf-V5-KyD" kind="show" identifier="showEnrollmentDetailsID" id="QH1-Va-fRM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnE-Nh-k3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
