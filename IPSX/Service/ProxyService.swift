@@ -45,8 +45,12 @@ class ProxyService {
             //TODO (CVI): PROXY NAME o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
             //TODO (CVI): PROXY PRICE in IPSX (with the new model for proxy plans)
             
-            //TODO (CC): format duration using Date extension. Ex: for "43200" min -> display "30 days"
-            let duration = json["duration"].stringValue + " min"
+            let duration = json["duration"].stringValue
+            var formatedDuration = duration + " min"
+            if let intDuration = Int(duration) {
+                let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(intDuration * 60))
+                formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
+            }
             
             let proxyID = json["id"].stringValue
             let noOfMB = json["traffic"].stringValue
@@ -76,7 +80,7 @@ class ProxyService {
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: duration, price: "TODO")
+            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: formatedDuration, price: "TODO")
             let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, usedMB: usedMBString, remainingDuration: remainigDuartionString, status: status)
             let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
