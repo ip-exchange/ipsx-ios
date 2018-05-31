@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class OptionsService {
     
     func retrieveOptions(completionHandler: @escaping (ServiceResult<Any>) -> ()) {

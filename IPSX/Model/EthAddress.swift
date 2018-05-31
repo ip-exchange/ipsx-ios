@@ -22,6 +22,8 @@ struct EthAddress {
     var alias: String
     var validationState: EthAddressState = .pending
     var status: String
+    var testingEnrollmentDate: Date?
+    var stakingEnrollmentDate: Date?
     
     init(ethID: String = "", ethAddress: String = "", ethAlias: String = "", ethValidation: Int = 0, ethStatus: String = "") {
         
@@ -33,5 +35,13 @@ struct EthAddress {
         if let validation = EthAddressState(rawValue: ethValidation) {
             self.validationState = validation
         }
+    }
+    
+    mutating func setTestEnrollmentDate(date: Date?) {
+        self.testingEnrollmentDate = date
+    }
+    
+    mutating func setStakingEnrollmentDate(date: Date?) {
+        self.stakingEnrollmentDate = date
     }
 }

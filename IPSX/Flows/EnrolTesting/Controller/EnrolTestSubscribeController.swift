@@ -11,10 +11,12 @@ import UIKit
 class EnrolTestSubscribeController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    
+    //TODO (CC)
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var selectedWalletAlias: UILabel!
     @IBOutlet weak var selectedWalletAddress: UILabel!
     @IBOutlet weak var dropdownView: UIView!
@@ -27,6 +29,15 @@ class EnrolTestSubscribeController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
+    
+    //TODO (CC): logic to determine ethAddresses to delete for testing
+    
+    //TODO (CC)
+    var errorMessage: String? {
+        didSet {
+            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +57,37 @@ class EnrolTestSubscribeController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
+    @IBAction func submitAction(_ sender: UIButton) {
+        enrollTesting()
+    }
+    
+    func enrollTesting() {
+        
+        guard let ethAddress = selectedAddress?.address else {
+            self.errorMessage = "Generic Error Message".localized
+            return
+        }
+        loadingView?.startAnimating()
+        EnrollmentService().enrollTesting(ethAddress: ethAddress, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            
+            switch result {
+            case .success(let createdDate):
+                
+                print("TODO (CC)", ethAddress, createdDate)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .enrollTesting, completion: {
+                    self.enrollTesting()
+                })
+            }
+        })
+    }
+    
     private func updateUI() {
         tableViewBottomConstraint.constant = tableView.frame.size.height
         tableViewTopConstraint.constant = -tableView.frame.size.height
@@ -126,5 +168,25 @@ extension EnrolTestSubscribeController: UITableViewDelegate {
             updateSelectedAddresUI(ethAddres: validAddres)
         }
         updateDropDown(visible: false)
+    }
+}
+
+extension EnrolTestSubscribeController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })            
+        default:
+            self.errorMessage = "Generic Error Message".localized
+        }
     }
 }
