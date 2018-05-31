@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U2v-CW-dRi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="97x-rt-BAG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -581,18 +581,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tpc-I8-m3e"/>
                     </view>
+                    <navigationItem key="navigationItem" id="gPV-H4-ALq"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="SnG-5v-wAn" id="ML8-4a-qwn"/>
                         <outlet property="loadingBottomLabel" destination="aK4-hy-ybg" id="yep-nd-e0S"/>
                         <outlet property="progressView" destination="eXh-IL-aYB" id="OHm-uH-AEV"/>
                         <outlet property="toastHolderView" destination="ckb-Qp-y65" id="hDk-Ff-1SB"/>
                         <outlet property="topConstraintOutlet" destination="Vvf-VD-dkK" id="5PK-Fd-Oxe"/>
-                        <segue destination="zhc-5m-q3f" kind="presentation" identifier="TabbarSegueID" modalTransitionStyle="flipHorizontal" id="IFJ-cL-CAB"/>
+                        <segue destination="zhc-5m-q3f" kind="show" identifier="TabbarSegueID" id="IFJ-cL-CAB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ouh-Vg-AUG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1255.2" y="15.742128935532236"/>
+            <point key="canvasLocation" x="-316" y="15.742128935532236"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="C2l-Kq-4bT">
@@ -611,12 +612,12 @@
                         <segue destination="6jc-WL-DqT" kind="relationship" relationship="viewControllers" id="lZb-l8-eDA"/>
                         <segue destination="f0C-Rr-AGY" kind="relationship" relationship="viewControllers" id="cu0-ty-GJw"/>
                         <segue destination="RbI-qU-2hi" kind="relationship" relationship="viewControllers" id="Roy-su-mpx"/>
-                        <segue destination="grr-34-nBj" kind="show" identifier="showLandingSegueID" id="TtS-cb-UUJ"/>
+                        <segue destination="grr-34-nBj" kind="presentation" identifier="showLandingSegueID" id="TtS-cb-UUJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USP-3f-e11" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-482" y="16"/>
+            <point key="canvasLocation" x="456.80000000000001" y="15.742128935532236"/>
         </scene>
         <!--Settings-->
         <scene sceneID="5Ev-y6-7Xb">
@@ -1197,6 +1198,24 @@
             </objects>
             <point key="canvasLocation" x="1980" y="812.74362818590714"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="C25-eV-rDn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="97x-rt-BAG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fXi-Bc-6of">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="U2v-CW-dRi" kind="relationship" relationship="rootViewController" id="WXr-bP-j8p"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k0m-vg-zh1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1116" y="16"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Background" width="375" height="667"/>
@@ -1218,7 +1237,7 @@
         <image name="Wallet" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Kc9-Od-4gN"/>
+        <segue reference="TtS-cb-UUJ"/>
         <segue reference="eg6-mz-aaC"/>
     </inferredMetricsTieBreakers>
 </document>
