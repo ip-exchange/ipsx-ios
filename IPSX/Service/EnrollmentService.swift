@@ -91,16 +91,25 @@ class EnrollmentService {
                 
             case .enrollTestingDetails:
                 
-                let json          = JSON(data: data)
-                let ethAddress    = json["usereth"].stringValue
-                let createdString = json["created_at"].stringValue
-                let dateFormatter = DateFormatter.backendResponseParse()
-                
-                if let createdDate = dateFormatter.date(from: createdString) {
-                    completionHandler(ServiceResult.success((ethAddress, createdDate)))
-                }
-                else {
+                guard let jsonArray = JSON(data: data).array else {
                     completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                    return
+                }
+                
+                for json in jsonArray {
+                    
+                    let status        = json["status"].stringValue
+                    let ethAddress    = json["usereth"].stringValue
+                    let createdString = json["created_at"].stringValue
+                    let dateFormatter = DateFormatter.backendResponseParse()
+                    
+                    // Only one address can be accepted for Testing
+                    if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
+                        completionHandler(ServiceResult.success((ethAddress, createdDate)))
+                    }
+                    else {
+                        completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                    }
                 }
                 
             case .enrollStakingDetails:
@@ -110,17 +119,17 @@ class EnrollmentService {
                     return
                 }
                 
-                // [eth address : enrollment Date]
-                var enrollmentDetails: [[String: Date]] = []
+                var enrollmentDetails: [(String, Date)] = []
                 
                 for json in jsonArray {
                     
+                    let status        = json["status"].stringValue
                     let ethAddress    = json["usereth"].stringValue
                     let createdString = json["created_at"].stringValue
                     let dateFormatter = DateFormatter.backendResponseParse()
                     
-                    if let createdDate = dateFormatter.date(from: createdString) {
-                        enrollmentDetails.append([ethAddress: createdDate])
+                    if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
+                        enrollmentDetails.append((ethAddress, createdDate))
                     }
                     else {
                         completionHandler(ServiceResult.failure(CustomError.invalidJson))

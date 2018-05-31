@@ -81,7 +81,6 @@ class LoginCredentialsControler: UIViewController {
                         self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
                     }
                 }
-                
             case .failure(_):
                 self.errorMessage = "Generic Error Message".localized
             }

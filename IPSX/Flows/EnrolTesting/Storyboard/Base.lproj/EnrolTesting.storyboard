@@ -193,7 +193,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="ont-lw-TIQ" kind="show" id="WAV-gd-aTP"/>
+                                    <action selector="submitAction:" destination="RW9-TF-NmT" eventType="touchUpInside" id="kxa-0i-XAh"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yC-ft-jQC">
@@ -417,6 +417,7 @@
                         <outlet property="tableViewBottomConstraint" destination="uxp-28-Go2" id="Pil-8y-Hy8"/>
                         <outlet property="tableViewTopConstraint" destination="aMO-g0-IfI" id="sXh-HL-NFC"/>
                         <outlet property="walletImageView" destination="NbV-wn-IKs" id="PNL-Wg-hrA"/>
+                        <segue destination="ont-lw-TIQ" kind="show" identifier="showEnrollmentDetailsID" id="Ocp-M6-4e4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FRz-wq-VnS" userLabel="First Responder" sceneMemberID="firstResponder"/>
