@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LP8-BI-u9L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LP8-BI-u9L">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -190,6 +190,14 @@
                                     <outlet property="delegate" destination="LP8-BI-u9L" id="Ku7-df-gDv"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rnd-y6-gHa" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="16c-gk-WNN"/>
+                                    <constraint firstAttribute="height" constant="44" id="UJq-rn-TX5"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQw-Fw-cGU" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="15" y="502" width="345" height="44"/>
                                 <color key="backgroundColor" red="0.1647058824" green="0.67450980390000004" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -224,6 +232,7 @@
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="TQw-Fw-cGU" firstAttribute="top" secondItem="bFb-4r-0Ye" secondAttribute="bottom" constant="20" id="1H4-NF-7k3"/>
+                            <constraint firstItem="Rnd-y6-gHa" firstAttribute="centerY" secondItem="wbs-PU-8hd" secondAttribute="centerY" id="4Q1-C5-XQH"/>
                             <constraint firstItem="1vB-kY-LNk" firstAttribute="leading" secondItem="TQw-Fw-cGU" secondAttribute="leading" id="4fk-mT-Z9J"/>
                             <constraint firstItem="bFb-4r-0Ye" firstAttribute="leading" secondItem="wbs-PU-8hd" secondAttribute="leading" id="Cof-me-0p7"/>
                             <constraint firstItem="1vB-kY-LNk" firstAttribute="top" secondItem="TQw-Fw-cGU" secondAttribute="bottom" constant="5" id="NWy-2U-5FK"/>
@@ -233,6 +242,7 @@
                             <constraint firstItem="bFb-4r-0Ye" firstAttribute="top" secondItem="0b9-W1-Wf1" secondAttribute="bottom" id="ZPz-z1-D6f"/>
                             <constraint firstItem="wbs-PU-8hd" firstAttribute="bottom" secondItem="1vB-kY-LNk" secondAttribute="bottom" constant="72" id="b9c-uz-ldF"/>
                             <constraint firstItem="TQw-Fw-cGU" firstAttribute="leading" secondItem="wbs-PU-8hd" secondAttribute="leading" constant="15" id="dDz-jj-dk5"/>
+                            <constraint firstItem="Rnd-y6-gHa" firstAttribute="centerX" secondItem="wbs-PU-8hd" secondAttribute="centerX" id="fnt-xz-7d7"/>
                             <constraint firstItem="0b9-W1-Wf1" firstAttribute="leading" secondItem="wbs-PU-8hd" secondAttribute="leading" id="gVB-Nc-IqZ"/>
                             <constraint firstItem="wbs-PU-8hd" firstAttribute="trailing" secondItem="TQw-Fw-cGU" secondAttribute="trailing" constant="15" id="hXI-Zt-e2O"/>
                             <constraint firstItem="1vB-kY-LNk" firstAttribute="trailing" secondItem="TQw-Fw-cGU" secondAttribute="trailing" id="t0x-XD-4I0"/>
@@ -242,6 +252,10 @@
                     <navigationItem key="navigationItem" title="Summary" id="ExB-ky-QJv"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="b9c-uz-ldF" id="0Jl-C5-Pv7"/>
+                        <outlet property="loadingView" destination="Rnd-y6-gHa" id="Sks-bJ-b3A"/>
+                        <outlet property="tableView" destination="bFb-4r-0Ye" id="FCg-Vh-Jsn"/>
+                        <outlet property="topBarView" destination="0b9-W1-Wf1" id="lVT-R3-lNe"/>
+                        <outlet property="topConstraintOutlet" destination="ZPz-z1-D6f" id="sO5-Nv-Bf3"/>
                         <segue destination="DVS-15-PVw" kind="show" identifier="ProxyDetailsSegueiID" id="ckb-Pe-QWV"/>
                     </connections>
                 </viewController>
