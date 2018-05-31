@@ -15,6 +15,7 @@ class ForgotPassController: UIViewController {
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
+    @IBOutlet weak var alreadyHaveAccount: UIButton!
     
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -25,7 +26,8 @@ class ForgotPassController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
+    var noLandingScreen = false
+    
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["email" : false]
     
@@ -97,6 +99,14 @@ class ForgotPassController: UIViewController {
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func haveAnAccountAction(_ sender: Any) {
+        if noLandingScreen {
+            performSegue(withIdentifier: "UnwindToLandingID", sender: self)
+        } else {
+            performSegue(withIdentifier: "UnwindToLoginOptionsID", sender: self)
+        }
     }
     
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
