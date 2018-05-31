@@ -119,7 +119,7 @@ class AddWalletController: UIViewController {
             doneAction(sender)
             return
         }
-        let alias = walletNameRichTextField.contentTextField?.text ?? ""
+        let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         let ethID = ethereumAddress?.ethID ?? ""
         
@@ -159,7 +159,7 @@ class AddWalletController: UIViewController {
     
     func addEthAdress() {
         
-        let alias = walletNameRichTextField.contentTextField?.text ?? ""
+        let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
         
         loadingView?.startAnimating()

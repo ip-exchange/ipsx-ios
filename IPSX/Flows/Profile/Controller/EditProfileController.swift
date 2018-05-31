@@ -144,9 +144,9 @@ class EditProfileController: UIViewController {
         
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
         let bodyParams: [String: String] =  ["email"     : emailTextField.text ?? "",
-                                             "first_name": firstNameTextField.text ?? "",
-                                             "last_name" : lastNameTextField.text ?? "",
-                                             "telegram"  : telegramTextField.text ?? "",
+                                             "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                             "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                             "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                              "country_id": countryID ?? ""]
         
         updateUserProfile(bodyParams: bodyParams)

@@ -30,6 +30,12 @@ public extension String {
         return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
     }
     
+    public func trimLeadingAndTrailingSpaces() -> String {
+        let trimmedString = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        print(trimmedString)
+        return trimmedString
+    }
+    
     ///  PAC file naming convention: /proxy/pac/1361527085819.pac?type=ios
     ///  1361527085819 = {id_proxy}{timestamp_created_at}
     static func generatePacLink(createdDate: String, proxyId: String) -> String {
