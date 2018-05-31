@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ProxyService {
     
     func retrieveProxiesForCurrentUser(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
