@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U2v-CW-dRi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U2v-CW-dRi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -541,7 +541,7 @@
                                     <constraint firstAttribute="width" constant="206" id="nO6-3Y-Ybd"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading, please wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK4-hy-ybg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading, please wait..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aK4-hy-ybg">
                                 <rect key="frame" x="120" y="631" width="135" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -562,11 +562,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="tpc-I8-m3e" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aK4-hy-ybg" secondAttribute="trailing" constant="20" id="AVw-1q-nTP"/>
                             <constraint firstItem="ckb-Qp-y65" firstAttribute="leading" secondItem="tpc-I8-m3e" secondAttribute="leading" id="EqK-JY-Mw9"/>
                             <constraint firstItem="tpc-I8-m3e" firstAttribute="trailing" secondItem="ckb-Qp-y65" secondAttribute="trailing" id="HO9-0v-57x"/>
                             <constraint firstItem="eXh-IL-aYB" firstAttribute="leading" secondItem="BeR-jj-Hrg" secondAttribute="leading" id="HwV-ah-H6h"/>
                             <constraint firstItem="tpc-I8-m3e" firstAttribute="bottom" secondItem="SnG-5v-wAn" secondAttribute="bottom" id="OEv-Q9-Kql"/>
                             <constraint firstItem="BeR-jj-Hrg" firstAttribute="centerY" secondItem="tpc-I8-m3e" secondAttribute="centerY" id="Ril-GR-12Z"/>
+                            <constraint firstItem="aK4-hy-ybg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tpc-I8-m3e" secondAttribute="leading" constant="20" id="UlV-wL-6ba"/>
                             <constraint firstItem="aK4-hy-ybg" firstAttribute="centerX" secondItem="tpc-I8-m3e" secondAttribute="centerX" id="VBa-u0-POC"/>
                             <constraint firstItem="ckb-Qp-y65" firstAttribute="top" secondItem="tpc-I8-m3e" secondAttribute="top" id="Vvf-VD-dkK"/>
                             <constraint firstItem="eXh-IL-aYB" firstAttribute="trailing" secondItem="BeR-jj-Hrg" secondAttribute="trailing" id="bAv-U4-SCh"/>
@@ -581,6 +583,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="SnG-5v-wAn" id="ML8-4a-qwn"/>
+                        <outlet property="loadingBottomLabel" destination="aK4-hy-ybg" id="yep-nd-e0S"/>
                         <outlet property="progressView" destination="eXh-IL-aYB" id="OHm-uH-AEV"/>
                         <outlet property="toastHolderView" destination="ckb-Qp-y65" id="hDk-Ff-1SB"/>
                         <outlet property="topConstraintOutlet" destination="Vvf-VD-dkK" id="5PK-Fd-Oxe"/>

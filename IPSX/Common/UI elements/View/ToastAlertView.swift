@@ -73,6 +73,7 @@ public class ToastAlertView: UIView {
     
     @IBOutlet weak var alertTextLabel: UILabel!
     @IBOutlet weak var leftImageView: UIImageView!
+    @IBOutlet weak var dismissButton: UIButton!
     
     private weak var view: UIView!
     private weak var parent: UIView!
@@ -113,8 +114,9 @@ public class ToastAlertView: UIView {
         updateInfoToastUI(visible: false)
     }
     
-    public func showToastAlert(_ text: String? = "", autoHideAfter: Double = 0.0, type: ToastAlertType = .error) {
+    public func showToastAlert(_ text: String? = "", autoHideAfter: Double = 0.0, type: ToastAlertType = .error, dismissable: Bool = true) {
         DispatchQueue.main.async {
+            self.dismissButton.isHidden = !dismissable
             self.updateInfoToastUI(visible: true, alertText: text, type: type)
             if autoHideAfter > 0.0 {
                 self.hideTimer?.invalidate()

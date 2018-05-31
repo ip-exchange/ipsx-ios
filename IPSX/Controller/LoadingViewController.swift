@@ -10,6 +10,7 @@ import UIKit
 
 class LoadingViewController: UIViewController {
     
+    @IBOutlet weak var loadingBottomLabel: UILabel!
     @IBOutlet weak var toastHolderView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var progressView: UIProgressView!
@@ -34,9 +35,11 @@ class LoadingViewController: UIViewController {
         backgroundImageView.createParticlesAnimation()
         
         if !ReachabilityManager.shared.isReachable() {
-            self.toast?.showToastAlert("No internet connection".localized)
+            toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            loadingBottomLabel.text = "Connect to the internet message".localized
         }
         else {
+            loadingBottomLabel.text = "Loading message".localized
             continueFlow()
         }
     }
@@ -67,9 +70,11 @@ class LoadingViewController: UIViewController {
             let reachability = note.object as! Reachability
             
             if !reachability.isReachable {
-                self.toast?.showToastAlert("No internet connection".localized)
+                self.loadingBottomLabel.text = "Connect to the internet message".localized
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
                 self.toast?.hideToastAlert()
+                self.loadingBottomLabel.text = "Loading message".localized
                 self.continueFlow()
             }
         }
