@@ -12,13 +12,21 @@ class ProxySummaryViewController: UIViewController {
     
     let proxyPackCellID = "ProxyPackCellID"
     var proxy: Proxy?
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
-    //TODO (CC): add loadingView
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var loadingView: CustomLoadingView!
     
-    //TODO (CC): add toast alert
     var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -37,7 +45,12 @@ class ProxySummaryViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
-        
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: tableView, text: "")
+    }
+
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
@@ -199,6 +212,15 @@ extension ProxySummaryViewController: ErrorPresentable {
     }
 }
 
+extension ProxySummaryViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
 
 
 

@@ -119,6 +119,13 @@ class LoginCredentialsControler: UIViewController {
         setupTextViews()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ForgotPasswordSegueID", let nextController = segue.destination as? ForgotPassController {
+            nextController.noLandingScreen = backButton.isHidden
+        }
+    }
+    
+
     private func setupTextViews() {
         emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
         emailRichTextView.nextResponderField    = passRichTextField.contentTextField

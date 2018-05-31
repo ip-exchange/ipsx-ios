@@ -24,7 +24,6 @@ class DashboardViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var countries: [String] = []
-    var showAmountAlert = true
     private var timer: Timer?
     let cellID = "ActivationDetailsCellID"
     var selectedProxy: Proxy? = nil
@@ -110,17 +109,21 @@ class DashboardViewController: UIViewController {
         super.viewDidAppear(animated)
         selectedProxy = nil
         updateProxyDataSource()
-        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
-        balance = "\(balanceValue)"
-        if balanceValue == 0, showAmountAlert == true {
-            showAmountAlert = false
-            toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
-        }
     }
     
     @objc func updateData() {
         retrieveUserInfo()
         retrieveProxiesForCurrentUser()
+    }
+    
+    private func showZeroBalanceToastIfNeeded() {
+        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
+        balance = "\(balanceValue)"
+        if balanceValue == 0, UserManager.shared.isLoggedIn {
+            toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
+        } else {
+            toast?.hideToast()
+        }
     }
     
     func retrieveUserInfo() {
@@ -133,6 +136,7 @@ class DashboardViewController: UIViewController {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
                 self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                self.showZeroBalanceToastIfNeeded()
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {

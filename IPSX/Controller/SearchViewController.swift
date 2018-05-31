@@ -47,8 +47,10 @@ class SearchViewController: UIViewController {
         
         if isProxyFlow == true {
             
-            //TODO (CC): replace endDate with Date() + proxy.duration (min)
-            let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: Date(), country: "")
+            let calendar = Calendar.current
+            let minDurationString = proxyPack?.duration ?? "0"
+            let endDate = calendar.date(byAdding: .minute, value: Int(minDurationString) ?? 0, to: Date())
+            let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: endDate, country: "")
             proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
         }
     }
