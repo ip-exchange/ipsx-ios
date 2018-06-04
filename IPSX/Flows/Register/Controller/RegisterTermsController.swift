@@ -44,11 +44,33 @@ class RegisterTermsController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+ 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
     
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     @IBAction func checkboxButtonAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         if let titleText = sender.title(for: .selected) {

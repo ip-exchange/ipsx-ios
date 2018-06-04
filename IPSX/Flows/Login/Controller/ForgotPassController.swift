@@ -71,6 +71,7 @@ class ForgotPassController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,6 +79,7 @@ class ForgotPassController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +88,18 @@ class ForgotPassController: UIViewController {
         setupTextViews()
     }
     
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     private func setupTextViews() {
         emailRichTextView.validationRegex = RichTextFieldView.validEmailRegex
     }

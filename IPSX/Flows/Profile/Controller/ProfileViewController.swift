@@ -77,6 +77,7 @@ class ProfileViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         selectedAddress = nil
         refreshProfileUI()
         retrieveETHaddresses()
@@ -87,6 +88,23 @@ class ProfileViewController: UIViewController {
         topRootView.createParticlesAnimation()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     func updateHeader() {
         let range = self.maxHeaderHeight - self.minHeaderHeight
         let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight

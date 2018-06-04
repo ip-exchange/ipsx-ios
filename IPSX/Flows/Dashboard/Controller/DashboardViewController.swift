@@ -92,10 +92,12 @@ class DashboardViewController: UIViewController {
             self.timer?.invalidate()
             self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
         self.timer?.invalidate()
     }
     
@@ -111,6 +113,18 @@ class DashboardViewController: UIViewController {
         updateProxyDataSource()
     }
     
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     @objc func updateData() {
         retrieveUserInfo()
         retrieveProxiesForCurrentUser()
