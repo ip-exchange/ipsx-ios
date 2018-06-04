@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qhd-zV-qAa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qhd-zV-qAa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -312,11 +312,19 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Ethereum Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPV-x2-NkY">
-                                <rect key="frame" x="16" y="92" width="214" height="22"/>
+                                <rect key="frame" x="16" y="87" width="214" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ty-9w-hlM" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="JZu-A9-Jxa"/>
+                                    <constraint firstAttribute="width" constant="44" id="Yhh-3k-5Ev"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -329,6 +337,7 @@
                             <constraint firstItem="ugv-f9-2G7" firstAttribute="leading" secondItem="Dta-d8-Uai" secondAttribute="leading" id="5hl-PV-gDn"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nPV-x2-NkY" secondAttribute="trailing" constant="20" symbolic="YES" id="66p-FP-LQI"/>
                             <constraint firstItem="YHr-N2-HI7" firstAttribute="leading" secondItem="Dta-d8-Uai" secondAttribute="leading" id="6oy-o6-g8Z"/>
+                            <constraint firstItem="9Ty-9w-hlM" firstAttribute="centerX" secondItem="Dta-d8-Uai" secondAttribute="centerX" id="GmC-t9-Vfj"/>
                             <constraint firstItem="Dta-d8-Uai" firstAttribute="top" secondItem="YHr-N2-HI7" secondAttribute="top" constant="50" id="Hah-u2-hln"/>
                             <constraint firstItem="Dta-d8-Uai" firstAttribute="trailing" secondItem="kca-Wx-HEL" secondAttribute="trailing" id="HcF-me-j1q"/>
                             <constraint firstItem="Dta-d8-Uai" firstAttribute="trailing" secondItem="Tbn-50-k62" secondAttribute="trailing" id="JC4-oT-ZsP"/>
@@ -338,12 +347,13 @@
                             <constraint firstItem="5Eq-Q2-Cpl" firstAttribute="leading" secondItem="Dta-d8-Uai" secondAttribute="leading" constant="16" id="Xa2-an-vT6"/>
                             <constraint firstItem="5Eq-Q2-Cpl" firstAttribute="top" secondItem="ANx-SQ-J7t" secondAttribute="bottom" constant="23.5" id="Ysu-PM-5BS"/>
                             <constraint firstItem="Dta-d8-Uai" firstAttribute="bottom" secondItem="vbv-hV-Cnm" secondAttribute="bottom" constant="30" id="aI0-tT-cEM"/>
-                            <constraint firstItem="nPV-x2-NkY" firstAttribute="top" secondItem="Tbn-50-k62" secondAttribute="bottom" constant="27.5" id="b7O-eO-3vd"/>
                             <constraint firstItem="vbv-hV-Cnm" firstAttribute="top" secondItem="5Eq-Q2-Cpl" secondAttribute="bottom" constant="27" id="c2o-e0-q0H"/>
                             <constraint firstItem="kca-Wx-HEL" firstAttribute="leading" secondItem="Dta-d8-Uai" secondAttribute="leading" id="ceD-0S-Zr5"/>
                             <constraint firstItem="vbv-hV-Cnm" firstAttribute="leading" secondItem="5Eq-Q2-Cpl" secondAttribute="leading" id="gSr-fE-TDe"/>
+                            <constraint firstItem="nPV-x2-NkY" firstAttribute="top" secondItem="ugv-f9-2G7" secondAttribute="top" constant="23" id="l3R-O4-a68"/>
                             <constraint firstItem="Dta-d8-Uai" firstAttribute="trailing" secondItem="ugv-f9-2G7" secondAttribute="trailing" id="mJ8-eZ-a5i"/>
                             <constraint firstItem="Tbn-50-k62" firstAttribute="leading" secondItem="Dta-d8-Uai" secondAttribute="leading" id="ua0-Mc-Rk6"/>
+                            <constraint firstItem="9Ty-9w-hlM" firstAttribute="centerY" secondItem="Dta-d8-Uai" secondAttribute="centerY" id="xBo-HI-7AO"/>
                             <constraint firstItem="ugv-f9-2G7" firstAttribute="top" secondItem="Tbn-50-k62" secondAttribute="bottom" id="yAc-6G-Tnu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dta-d8-Uai"/>
@@ -351,7 +361,11 @@
                     <navigationItem key="navigationItem" id="gox-0q-6sZ"/>
                     <connections>
                         <outlet property="joinStakingButton" destination="5Eq-Q2-Cpl" id="jA5-dJ-XRr"/>
+                        <outlet property="loadingView" destination="9Ty-9w-hlM" id="Ila-jp-aOF"/>
                         <outlet property="tableView" destination="kca-Wx-HEL" id="U3H-hN-bEK"/>
+                        <outlet property="topBarView" destination="YHr-N2-HI7" id="rLd-pQ-AtL"/>
+                        <outlet property="topConstraintOutlet" destination="yAc-6G-Tnu" id="nZ6-oY-Zlw"/>
+                        <outlet property="topMaskview" destination="ugv-f9-2G7" id="szD-ef-DbW"/>
                         <segue destination="hRf-V5-KyD" kind="show" identifier="showEnrollmentDetailsID" id="QH1-Va-fRM"/>
                     </connections>
                 </viewController>
@@ -552,6 +566,14 @@
                                     <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhE-Qu-Wmm" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="B1d-tB-EQp"/>
+                                    <constraint firstAttribute="height" constant="44" id="vIf-Qx-gQ7"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -561,6 +583,7 @@
                             <constraint firstItem="0Lw-CV-d3o" firstAttribute="top" secondItem="sui-iP-z1h" secondAttribute="bottom" constant="13" id="GOo-nQ-wgW"/>
                             <constraint firstItem="0Lw-CV-d3o" firstAttribute="leading" secondItem="ldR-SK-ezF" secondAttribute="leading" id="HMx-bL-eI3"/>
                             <constraint firstItem="Qf0-5Y-lrA" firstAttribute="top" secondItem="Yu3-Xe-ZPv" secondAttribute="bottom" constant="27.5" id="Iv9-JS-qqw"/>
+                            <constraint firstItem="NhE-Qu-Wmm" firstAttribute="centerY" secondItem="ldR-SK-ezF" secondAttribute="centerY" id="PKB-Md-C1o"/>
                             <constraint firstItem="Ols-0q-EfN" firstAttribute="top" secondItem="0Lw-CV-d3o" secondAttribute="bottom" constant="26" id="R60-hl-UGj"/>
                             <constraint firstItem="dG4-eo-QCH" firstAttribute="top" secondItem="u90-kq-KGS" secondAttribute="bottom" constant="8" id="S3I-pa-f3Z"/>
                             <constraint firstItem="u90-kq-KGS" firstAttribute="leading" secondItem="ldR-SK-ezF" secondAttribute="leading" id="Sow-P3-XyW"/>
@@ -570,6 +593,7 @@
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sui-iP-z1h" secondAttribute="trailing" constant="20" symbolic="YES" id="XkU-Zd-78Y"/>
                             <constraint firstItem="ldR-SK-ezF" firstAttribute="trailing" secondItem="Ols-0q-EfN" secondAttribute="trailing" constant="16" id="akS-2h-Etc"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qf0-5Y-lrA" secondAttribute="trailing" constant="20" symbolic="YES" id="cu2-6Z-Hds"/>
+                            <constraint firstItem="NhE-Qu-Wmm" firstAttribute="centerX" secondItem="ldR-SK-ezF" secondAttribute="centerX" id="dTO-cQ-cWU"/>
                             <constraint firstItem="sui-iP-z1h" firstAttribute="leading" secondItem="dG4-eo-QCH" secondAttribute="leading" id="hiP-Gf-S7p"/>
                             <constraint firstItem="Ols-0q-EfN" firstAttribute="leading" secondItem="ldR-SK-ezF" secondAttribute="leading" constant="16" id="i4a-H9-FRh"/>
                             <constraint firstItem="sui-iP-z1h" firstAttribute="top" secondItem="dG4-eo-QCH" secondAttribute="bottom" constant="26" id="jMz-xm-eyI"/>
@@ -586,6 +610,12 @@
                         <viewLayoutGuide key="safeArea" id="ldR-SK-ezF"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZPo-BT-L4y"/>
+                    <connections>
+                        <outlet property="loadingView" destination="NhE-Qu-Wmm" id="vgu-US-Mqn"/>
+                        <outlet property="separatorView" destination="Yu3-Xe-ZPv" id="IEJ-IN-J7Y"/>
+                        <outlet property="topBarView" destination="qmo-WD-GgI" id="CLA-2G-lhn"/>
+                        <outlet property="topConstraintOutlet" destination="0gb-cF-2Ms" id="AlC-ir-Kid"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7iB-Zc-QQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="rY9-GZ-bSi" userLabel="Exit" sceneMemberID="exit"/>

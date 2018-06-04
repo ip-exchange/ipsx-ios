@@ -11,9 +11,20 @@ import UIKit
 class EnrolStakeSummaryController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     var errorMessage: String? {
         didSet {
-            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -27,6 +38,11 @@ class EnrolStakeSummaryController: UIViewController {
         enrollmentDetails() 
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
+
     func enrollmentDetails() {
         
         loadingView?.startAnimating()
@@ -51,6 +67,16 @@ class EnrolStakeSummaryController: UIViewController {
                 })
             }
         })
+    }
+}
+
+extension EnrolStakeSummaryController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }
 

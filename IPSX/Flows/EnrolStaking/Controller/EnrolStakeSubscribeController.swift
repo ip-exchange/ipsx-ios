@@ -12,19 +12,28 @@ class EnrolStakeSubscribeController: UIViewController {
 
     @IBOutlet weak var joinStakingButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
-    //TODO (CC)
     @IBOutlet weak var loadingView: CustomLoadingView!
     
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topMaskview: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     
     //TODO (CC): logic to determine ethAddresses to delete from staking
     //TODO (CC): logic to determine ethAddresses to add for staking
     
-    //TODO (CC)
     var errorMessage: String? {
         didSet {
-            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -38,6 +47,11 @@ class EnrolStakeSubscribeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: topMaskview, text: "")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -98,6 +112,16 @@ extension EnrolStakeSubscribeController: UITableViewDataSource {
 extension EnrolStakeSubscribeController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+}
+
+extension EnrolStakeSubscribeController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
     }
 }
 
