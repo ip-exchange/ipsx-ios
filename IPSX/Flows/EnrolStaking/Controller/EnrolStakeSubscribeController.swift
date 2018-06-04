@@ -111,6 +111,17 @@ extension EnrolStakeSubscribeController: UITableViewDataSource {
 
 extension EnrolStakeSubscribeController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows
+        let rowIsSelected = selectedIndexPaths != nil && selectedIndexPaths!.contains(indexPath)
+        if rowIsSelected {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return nil
+        } else {
+            return indexPath
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }

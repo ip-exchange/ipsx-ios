@@ -243,7 +243,11 @@
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="ESM-el-Nb9">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkbox" translatesAutoresizingMaskIntoConstraints="NO" id="5cf-RN-YSk">
+                                                    <rect key="frame" x="32" y="14" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ESM-el-Nb9">
                                                     <rect key="frame" x="32" y="14" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -263,7 +267,7 @@
                                         <connections>
                                             <outlet property="addressLabel" destination="V67-jd-SFE" id="0Aj-cc-hLN"/>
                                             <outlet property="aliasLabel" destination="5rq-Qr-wSS" id="c1b-YZ-3br"/>
-                                            <outlet property="statsuImageView" destination="ESM-el-Nb9" id="LjE-WE-Q1O"/>
+                                            <outlet property="selectedImageView" destination="ESM-el-Nb9" id="K3Z-lA-xB9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -628,6 +632,8 @@
         <image name="CloseBut" width="27" height="27"/>
         <image name="RightDisclosure" width="9" height="16"/>
         <image name="Wallet" width="26" height="26"/>
+        <image name="checkIcon" width="12" height="9"/>
+        <image name="checkbox" width="21" height="21"/>
         <image name="stakingLogo" width="62" height="62"/>
     </resources>
 </document>
