@@ -505,7 +505,7 @@
                                             <constraint firstAttribute="height" constant="0.5" id="VZI-YW-X89"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="b2g-ex-xvf">
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="walletAccepted" translatesAutoresizingMaskIntoConstraints="NO" id="b2g-ex-xvf">
                                         <rect key="frame" x="32" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -666,6 +666,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="b0Y-VX-AG3"/>
                     <connections>
+                        <outlet property="enroledDate" destination="mA2-tw-6mY" id="BIa-0B-7kK"/>
+                        <outlet property="enroledTime" destination="sgT-xq-RXg" id="25u-yW-lwA"/>
+                        <outlet property="ethAddresAlias" destination="9CP-en-ApU" id="IXK-tn-4UW"/>
+                        <outlet property="ethAddress" destination="zil-92-WL7" id="IHS-uQ-NBp"/>
                         <outlet property="loadingView" destination="JPP-nt-Jmh" id="AJp-vw-bTD"/>
                         <outlet property="separatorView" destination="4Lr-dU-iPt" id="bd6-V2-lLj"/>
                         <outlet property="topBarView" destination="FDi-Li-9vI" id="Vue-0d-3NE"/>
@@ -685,5 +689,6 @@
         <image name="RightDisclosure" width="9" height="16"/>
         <image name="Wallet" width="26" height="26"/>
         <image name="threeTestTubes" width="70" height="61"/>
+        <image name="walletAccepted" width="32" height="32"/>
     </resources>
 </document>

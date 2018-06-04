@@ -10,6 +10,12 @@ import UIKit
 
 class EnrolTestSummaryController: UIViewController {
     
+    
+    @IBOutlet weak var ethAddresAlias: UILabel!
+    @IBOutlet weak var ethAddress: UILabel!
+    @IBOutlet weak var enroledDate: UILabel!
+    @IBOutlet weak var enroledTime: UILabel!
+    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -19,6 +25,7 @@ class EnrolTestSummaryController: UIViewController {
         }
     }
     
+    var enroledAddress: EthAddress?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -33,6 +40,7 @@ class EnrolTestSummaryController: UIViewController {
         super.viewDidLoad()
         
         //TODO: for testing
+        updateUI()
         enrollmentDetails()
     }
     
@@ -63,6 +71,13 @@ class EnrolTestSummaryController: UIViewController {
         }
     }
     
+    private func updateUI() {
+        ethAddresAlias.text = enroledAddress?.alias
+        ethAddress.text     = enroledAddress?.address
+        enroledDate.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "dd MMM yyyy") ?? "-- --- --"
+        enroledTime.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "HH:mm") ?? "--:--"
+    }
+    
     func enrollmentDetails() {
         
         loadingView?.startAnimating()
@@ -75,8 +90,12 @@ class EnrolTestSummaryController: UIViewController {
                     let ethAddress  = details.0
                     let createdDate = details.1
                     
-                    print("TODO (CC): display",ethAddress, createdDate)
-                    
+                    DispatchQueue.main.async {
+                        self.enroledDate.text = createdDate.dateToString(format: "dd MMM yyyy")
+                        self.enroledTime.text = createdDate.dateToString(format: "HH:mm")
+                        self.ethAddress.text  = ethAddress
+                    }
+
                 }
                 else {
                     self.errorMessage = "Generic Error Message".localized

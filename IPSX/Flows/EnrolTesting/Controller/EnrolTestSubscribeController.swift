@@ -81,6 +81,12 @@ class EnrolTestSubscribeController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? EnrolTestSummaryController {
+            dest.enroledAddress = selectedAddress
+        }
+    }
+    
     @IBAction func dropdownAction(_ sender: Any) {
         updateDropDown(visible: true)
     }
@@ -100,24 +106,28 @@ class EnrolTestSubscribeController: UIViewController {
             return
         }
         loadingView?.startAnimating()
-        EnrollmentService().enrollTesting(ethAddress: ethAddress, completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            
-            switch result {
-            case .success(let createdDate):
+        EnrollmentService().enrollTestingDelete() { result in
+            EnrollmentService().enrollTesting(ethAddress: ethAddress) { result in
                 
-                print("TODO (CC)", ethAddress, createdDate)
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                self.loadingView?.stopAnimating()
+                
+                switch result {
+                case .success(let createdDate):
+                    
+                    if let created = createdDate as? Date {
+                        self.selectedAddress?.testingEnrollmentDate = created
+                    }
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                    }
+                    
+                case .failure(let error):
+                    self.handleError(error, requestType: .enrollTesting, completion: {
+                        self.enrollTesting()
+                    })
                 }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: .enrollTesting, completion: {
-                    self.enrollTesting()
-                })
             }
-        })
+        }
     }
     
     private func updateUI() {

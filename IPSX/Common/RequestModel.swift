@@ -119,6 +119,7 @@ public enum IPRequestType: Int {
     case getProxyCountryList
     case getTokenRequestList
     case enrollTesting
+    case enrollTestingDelete
     case enrollStaking
     case enrollTestingDetails
     case enrollStakingDetails

@@ -41,6 +41,34 @@ class EnrollmentService {
         })
     }
     
+    func enrollTestingDelete(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        RequestBuilder.shared.executeRequest(requestType: .enrollTestingDelete, urlParams: urlParams,  completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            let createdString = json["created_at"].stringValue
+            let dateFormatter = DateFormatter.backendResponseParse()
+            
+            if let createdDate = dateFormatter.date(from: createdString) {
+                completionHandler(ServiceResult.success(createdDate))
+            }
+            else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+            }
+        })
+    }
+    
     func enrollStaking(ethID: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
