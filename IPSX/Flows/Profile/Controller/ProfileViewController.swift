@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         selectedAddress = nil
         refreshProfileUI()
-        refreshETHaddressesUI()
+        retrieveETHaddresses()
     }
     
     override func viewDidAppear(_ animated: Bool) {
