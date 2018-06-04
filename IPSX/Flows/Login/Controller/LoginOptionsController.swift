@@ -23,6 +23,7 @@ class LoginOptionsController: UIViewController {
     @IBAction func unwindToLoginOptions(segue:UIStoryboardSegue) { }
     
     @IBAction func facebookLoginAction(_ sender: UIButton) {
+        
         if let accessToken = FBSDKAccessToken.current(){
             print("Already logged in. Access token:",accessToken)
             getFBUserData()
@@ -41,14 +42,14 @@ class LoginOptionsController: UIViewController {
                 print(error)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let _, let _, let accessToken):
+            case .success(_,  _, let accessToken):
                 print("FB ACCESS TOKEN:", accessToken)
                 self.getFBUserData()
             }
         })
     }
     
-    //function is fetching the user data
+    //fetch fb user data
     func getFBUserData(){
         if((FBSDKAccessToken.current()) != nil){
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
