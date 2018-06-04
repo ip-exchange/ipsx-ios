@@ -46,7 +46,7 @@ class ForgotPassController: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }
                 
             case .failure(_):
