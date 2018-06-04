@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OJb-9w-QVR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OJb-9w-QVR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -369,6 +369,14 @@
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Yj-BZ-tRV" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="BTi-Rg-fs0"/>
+                                    <constraint firstAttribute="width" constant="44" id="NX4-Hi-2nw"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -384,8 +392,10 @@
                             <constraint firstItem="RQr-ZA-fHk" firstAttribute="trailing" secondItem="Kfe-go-nXd" secondAttribute="trailing" id="Jup-lZ-DwV"/>
                             <constraint firstItem="h24-99-B5n" firstAttribute="leading" secondItem="RQr-ZA-fHk" secondAttribute="leading" id="LQZ-yk-v7Z"/>
                             <constraint firstItem="RQr-ZA-fHk" firstAttribute="trailing" secondItem="h24-99-B5n" secondAttribute="trailing" id="Nys-Lm-vxV"/>
+                            <constraint firstItem="4Yj-BZ-tRV" firstAttribute="centerY" secondItem="RQr-ZA-fHk" secondAttribute="centerY" id="Okz-ab-YW4"/>
                             <constraint firstItem="Kfe-go-nXd" firstAttribute="leading" secondItem="RQr-ZA-fHk" secondAttribute="leading" id="PBI-pI-6gI"/>
                             <constraint firstItem="Mt8-Py-2ut" firstAttribute="top" secondItem="AkY-rO-Z4A" secondAttribute="bottom" constant="8" id="SiJ-V6-efT"/>
+                            <constraint firstItem="4Yj-BZ-tRV" firstAttribute="centerX" secondItem="RQr-ZA-fHk" secondAttribute="centerX" id="UkM-f2-5UM"/>
                             <constraint firstItem="KvQ-75-tlu" firstAttribute="leading" secondItem="RQr-ZA-fHk" secondAttribute="leading" constant="16" id="XGn-J3-qSa"/>
                             <constraint firstItem="h24-99-B5n" firstAttribute="top" secondItem="n4h-uX-ggz" secondAttribute="bottom" constant="-600" id="aMO-g0-IfI"/>
                             <constraint firstItem="2yC-ft-jQC" firstAttribute="leading" secondItem="hIE-vj-EUu" secondAttribute="leading" id="fgk-EF-nQY"/>
@@ -410,12 +420,16 @@
                         <outlet property="dropdownArrow" destination="kUZ-4U-IrW" id="rzo-DX-tQL"/>
                         <outlet property="dropdownButton" destination="XqK-5l-c3G" id="rNd-rt-WrC"/>
                         <outlet property="dropdownView" destination="AkY-rO-Z4A" id="kxG-3w-FBz"/>
+                        <outlet property="loadingView" destination="4Yj-BZ-tRV" id="F8X-Yn-084"/>
                         <outlet property="selectedWalletAddress" destination="AoX-bW-M97" id="IOf-Ea-xr7"/>
                         <outlet property="selectedWalletAlias" destination="xrn-3F-kNf" id="1Yo-U8-hfU"/>
+                        <outlet property="separatorView" destination="6NY-WN-uQ5" id="S7m-4a-X7i"/>
                         <outlet property="submitButton" destination="hIE-vj-EUu" id="c0a-WM-POL"/>
                         <outlet property="tableView" destination="h24-99-B5n" id="7af-iB-Qfo"/>
                         <outlet property="tableViewBottomConstraint" destination="uxp-28-Go2" id="Pil-8y-Hy8"/>
                         <outlet property="tableViewTopConstraint" destination="aMO-g0-IfI" id="sXh-HL-NFC"/>
+                        <outlet property="topBarView" destination="Kfe-go-nXd" id="b3U-E9-b0S"/>
+                        <outlet property="topConstraintOutlet" destination="CwX-Zj-w6U" id="33i-j2-OMC"/>
                         <outlet property="walletImageView" destination="NbV-wn-IKs" id="PNL-Wg-hrA"/>
                         <segue destination="ont-lw-TIQ" kind="show" identifier="showEnrollmentDetailsID" id="Ocp-M6-4e4"/>
                     </connections>
@@ -610,12 +624,21 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPP-nt-Jmh" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ATn-2Z-qWZ"/>
+                                    <constraint firstAttribute="width" constant="44" id="WAK-AL-mq7"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="olH-hR-6PL" firstAttribute="leading" secondItem="tth-nc-IPA" secondAttribute="leading" id="3oY-ot-5XV"/>
                             <constraint firstItem="Q38-CH-MuW" firstAttribute="top" secondItem="5v4-BB-0X3" secondAttribute="bottom" constant="26" id="4OM-aE-bmn"/>
                             <constraint firstItem="Q38-CH-MuW" firstAttribute="leading" secondItem="p6L-9D-iSS" secondAttribute="leading" constant="16" id="FWM-k0-E4a"/>
+                            <constraint firstItem="JPP-nt-Jmh" firstAttribute="centerX" secondItem="p6L-9D-iSS" secondAttribute="centerX" id="Gv5-zx-pSs"/>
                             <constraint firstItem="p6L-9D-iSS" firstAttribute="trailing" secondItem="FDi-Li-9vI" secondAttribute="trailing" id="H8w-CN-aug"/>
                             <constraint firstItem="5v4-BB-0X3" firstAttribute="top" secondItem="olH-hR-6PL" secondAttribute="bottom" constant="13" id="IG1-Sz-utV"/>
                             <constraint firstItem="p6L-9D-iSS" firstAttribute="trailing" secondItem="4Lr-dU-iPt" secondAttribute="trailing" id="LLS-Tq-2Br"/>
@@ -635,12 +658,19 @@
                             <constraint firstItem="olH-hR-6PL" firstAttribute="top" secondItem="tth-nc-IPA" secondAttribute="bottom" constant="26" id="o2u-ZF-y7m"/>
                             <constraint firstItem="FS8-yl-YRD" firstAttribute="leading" secondItem="p6L-9D-iSS" secondAttribute="leading" constant="16" id="oSO-Cz-7cg"/>
                             <constraint firstItem="PVq-jE-On9" firstAttribute="leading" secondItem="p6L-9D-iSS" secondAttribute="leading" id="ooS-XY-vNR"/>
+                            <constraint firstItem="JPP-nt-Jmh" firstAttribute="centerY" secondItem="p6L-9D-iSS" secondAttribute="centerY" id="ryV-ZK-H0I"/>
                             <constraint firstItem="PVq-jE-On9" firstAttribute="top" secondItem="FS8-yl-YRD" secondAttribute="bottom" constant="13" id="yVe-C9-9U4"/>
                             <constraint firstItem="5v4-BB-0X3" firstAttribute="leading" secondItem="p6L-9D-iSS" secondAttribute="leading" id="yx2-ZW-yQS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="p6L-9D-iSS"/>
                     </view>
                     <navigationItem key="navigationItem" id="b0Y-VX-AG3"/>
+                    <connections>
+                        <outlet property="loadingView" destination="JPP-nt-Jmh" id="AJp-vw-bTD"/>
+                        <outlet property="separatorView" destination="4Lr-dU-iPt" id="bd6-V2-lLj"/>
+                        <outlet property="topBarView" destination="FDi-Li-9vI" id="Vue-0d-3NE"/>
+                        <outlet property="topConstraintOutlet" destination="bKm-iM-flh" id="X6K-wq-wZf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXS-31-XO2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Dss-0d-bmW" userLabel="Exit" sceneMemberID="exit"/>

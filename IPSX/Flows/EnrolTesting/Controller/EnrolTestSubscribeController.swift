@@ -15,7 +15,6 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
-    //TODO (CC)
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var selectedWalletAlias: UILabel!
     @IBOutlet weak var selectedWalletAddress: UILabel!
@@ -26,16 +25,26 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
 
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
     
     //TODO (CC): logic to determine ethAddresses to delete for testing
     
-    //TODO (CC)
-    var errorMessage: String? {
+     var errorMessage: String? {
         didSet {
-            //self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
@@ -44,6 +53,11 @@ class EnrolTestSubscribeController: UIViewController {
         updateUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadAndSetDefaultAddres()
@@ -170,6 +184,17 @@ extension EnrolTestSubscribeController: UITableViewDelegate {
         updateDropDown(visible: false)
     }
 }
+
+extension EnrolTestSubscribeController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
 
 extension EnrolTestSubscribeController: ErrorPresentable {
     
