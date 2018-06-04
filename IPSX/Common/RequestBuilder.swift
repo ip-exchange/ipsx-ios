@@ -93,6 +93,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
             }
             
+        case .enrollTestingDelete:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.enrollTestingArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         case .enrollStaking:
             let body = JSON(bodyParams)
             var url = Url.base + Url.enrollStakingArgs
