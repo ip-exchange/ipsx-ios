@@ -101,13 +101,13 @@ class EnrolTestSubscribeController: UIViewController {
     
     func enrollTesting() {
         
-        guard let ethAddress = selectedAddress?.address else {
+        guard let ethID = selectedAddress?.ethID else {
             self.errorMessage = "Generic Error Message".localized
             return
         }
         loadingView?.startAnimating()
         EnrollmentService().enrollTestingDelete() { result in
-            EnrollmentService().enrollTesting(ethAddress: ethAddress) { result in
+            EnrollmentService().enrollTesting(ethID: ethID) { result in
                 
                 self.loadingView?.stopAnimating()
                 

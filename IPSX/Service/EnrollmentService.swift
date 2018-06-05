@@ -10,12 +10,12 @@ import UIKit
 
 class EnrollmentService {
     
-    func enrollTesting(ethAddress: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func enrollTesting(ethID: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["usereth": ethAddress,
+        let bodyParams: [String: String] = ["usereth_id": ethID,
                                             "status" : "accepted"]
         
         RequestBuilder.shared.executeRequest(requestType: .enrollTesting, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
