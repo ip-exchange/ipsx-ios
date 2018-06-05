@@ -15,6 +15,7 @@ public class UserManager: NSObject {
     
     var userId: String = ""
     var accessToken: String = ""
+    var facebookToken: String = ""
     var email: String = ""
     var password: String = ""
     var userInfo: UserInfo?
@@ -41,18 +42,28 @@ public class UserManager: NSObject {
         }
     }
     
+    var isLoggedInWithFB: Bool {
+        get {
+            if isLoggedIn && email == "" && password == "" {
+                return true
+            }
+            return false
+        }
+    }
+    
     var hasTestProxyAvailable: Bool {
         get {
             return UserManager.shared.userInfo?.proxyTest == ""
         }
     }
     
-    func storeAccessDetails(userId: String, accessToken: String, email: String = "", password: String = "") {
+    func storeAccessDetails(userId: String, accessToken: String, email: String = "", password: String = "", facebookToken: String = "") {
         
         KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
         KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
         KeychainWrapper.setString(value: email, forKey: KeychainKeys.email)
         KeychainWrapper.setString(value: password, forKey: KeychainKeys.password)
+        KeychainWrapper.setString(value: facebookToken, forKey: KeychainKeys.facebookToken)
         retrieveAccessDetails()
     }
         
@@ -70,6 +81,9 @@ public class UserManager: NSObject {
         if let password = KeychainWrapper.stringForKey(keyName: KeychainKeys.password) {
             UserManager.shared.password = password
         }
+        if let facebookToken = KeychainWrapper.stringForKey(keyName: KeychainKeys.facebookToken) {
+            UserManager.shared.facebookToken = facebookToken
+        }
     }
     
     func removeUserDetails() {
@@ -78,9 +92,11 @@ public class UserManager: NSObject {
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.accessToken)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.email)
         let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.password)
+        let _ = KeychainWrapper.removeObjectForKey(keyName: KeychainKeys.facebookToken)
         
         userId = ""
         accessToken = ""
+        facebookToken = ""
         email = ""
         password = ""
         proxies = nil

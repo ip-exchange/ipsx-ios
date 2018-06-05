@@ -101,17 +101,33 @@ class LoginService {
     
     func getNewAccessToken(errorHandler: @escaping (Error?)->Void, successHandler:@escaping () -> ()) {
         
-        login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
+        if UserManager.shared.isLoggedInWithFB {
             
-            switch result {
+            loginWithFB(fbToken: UserManager.shared.facebookToken, completionHandler: { result in
                 
-            case .success(_):
-               successHandler()
+                switch result {
+                    
+                case .success(_):
+                    successHandler()
+                    
+                case .failure(let error):
+                    errorHandler(error)
+                }
+            })
+        }
+        else {
+            login(email: UserManager.shared.email, password: UserManager.shared.password, completionHandler: { result in
                 
-            case .failure(let error):
-                errorHandler(error)
-            }
-        })
+                switch result {
+                    
+                case .success(_):
+                    successHandler()
+                    
+                case .failure(let error):
+                    errorHandler(error)
+                }
+            })
+        }
     }
     
     func loginWithFB(fbToken: String?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
@@ -137,8 +153,13 @@ class LoginService {
             let accessToken = json["accessToken"]["id"].stringValue
             let userId      = json["accessToken"]["userId"].stringValue
             
+            if accessToken == "" || userId == "" {
+                
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
             //Store access details in keychain
-            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, facebookToken: fbToken)
             
             //Execute User Info request
             UserInfoService().retrieveUserInfo(completionHandler: { result in
