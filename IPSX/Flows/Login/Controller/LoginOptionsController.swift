@@ -12,6 +12,8 @@ import FBSDKLoginKit
 
 class LoginOptionsController: UIViewController {
 
+    //TODO (CC): loadingView & errorMessage
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
     var dict: [String : AnyObject] = [:]
     
@@ -24,9 +26,8 @@ class LoginOptionsController: UIViewController {
     
     @IBAction func facebookLoginAction(_ sender: UIButton) {
         
-        if let accessToken = FBSDKAccessToken.current(){
-            print("Already logged in. Access token:",accessToken.tokenString)
-            getFBUserData()
+        if let accessToken = FBSDKAccessToken.current() {
+            self.executeLogin(withFBtoken: accessToken.tokenString)
         }
         else {
             facebookLogin()
@@ -37,28 +38,62 @@ class LoginOptionsController: UIViewController {
         
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: { loginResult in
+            
             switch loginResult {
-            case .failed(let error):
-                print(error)
+                
+            case .failed(_):
+                print("fb error")
+                //self.errorMessage = "Facebook Login Error Message".localized
+                
             case .cancelled:
                 print("User cancelled login.")
+                
             case .success(_,  _, let accessToken):
-                print("FB ACCESS TOKEN:", accessToken)
-                self.getFBUserData()
+                self.executeLogin(withFBtoken: accessToken.authenticationToken)
             }
         })
     }
     
-    //fetch fb user data
-    func getFBUserData(){
-        if((FBSDKAccessToken.current()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
-                if (error == nil){
-                    self.dict = result as! [String : AnyObject]
-                    print(self.dict)
+    func executeLogin(withFBtoken fbToken: String) {
+        
+        //self.loadingView?.startAnimating()
+        LoginService().loginWithFB(fbToken: fbToken, completionHandler: { result in
+            
+            //self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                self.continueFlow()
+                
+            case .failure(_):
+                //self.errorMessage = "Generic Error Message".localized
+                print("error")
+            }
+        })
+    }
+    
+    func continueFlow() {
+        
+        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+            
+            switch result {
+                
+            case .success(let ethAddresses):
+                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                
+                DispatchQueue.main.async {
+                    if UserManager.shared.hasEthAddress {
+                        self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                    }
+                    else {
+                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                    }
                 }
-            })
-        }
+            case .failure(_):
+                print("error")
+                //self.errorMessage = "Generic Error Message".localized
+            }
+        })
     }
     
 }

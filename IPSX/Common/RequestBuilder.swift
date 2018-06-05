@@ -37,6 +37,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
+        case .fbLogin:
+            let body = JSON(bodyParams)
+            request = Request(url:Url.base + Url.fbLoginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
         case .logout:
             var url = Url.base + Url.logoutArgs
             if let params = urlParams as? [String: String] {

@@ -10,9 +10,6 @@ import UIKit
 
 class LoginService {
     
-    /**
-     * Return (userId, accessToken)
-     */
     func login(email: String?, password: String?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let email = email, let password = password else {
@@ -114,6 +111,47 @@ class LoginService {
             case .failure(let error):
                 errorHandler(error)
             }
+        })
+    }
+    
+    func loginWithFB(fbToken: String?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        guard let fbToken = fbToken else {
+            completionHandler(ServiceResult.failure(CustomError.invalidParams))
+            return
+        }
+        
+        let params: [String: String] = ["token" : fbToken]
+        
+        RequestBuilder.shared.executeRequest(requestType: .fbLogin, bodyParams: params, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json        = JSON(data: data)
+            let accessToken = json["accessToken"]["id"].stringValue
+            let userId      = json["accessToken"]["userId"].stringValue
+            
+            //Store access details in keychain
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            
+            //Execute User Info request
+            UserInfoService().retrieveUserInfo(completionHandler: { result in
+                switch result {
+                    
+                case .failure(let error):
+                    completionHandler(ServiceResult.failure(error))
+                    
+                case .success(let user):
+                    UserManager.shared.userInfo = user as? UserInfo
+                    completionHandler(ServiceResult.success(true))
+                }
+            })
         })
     }
 }

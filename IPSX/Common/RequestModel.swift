@@ -35,6 +35,7 @@ public struct Url {
     public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
     public static let updateEthAddressArgs = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
+    public static let fbLoginArgs = "/Users/login/social/facebook"
     public static let logoutArgs = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let resetPassArgs = "/Users/reset"
     public static let changePassArgs = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
@@ -103,6 +104,7 @@ public enum IPRequestType: Int {
     case options
     case register
     case login
+    case fbLogin
     case logout
     case resetPassword
     case changePassword

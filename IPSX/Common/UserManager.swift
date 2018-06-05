@@ -47,7 +47,7 @@ public class UserManager: NSObject {
         }
     }
     
-    func storeAccessDetails(userId: String, accessToken: String, email: String, password: String) {
+    func storeAccessDetails(userId: String, accessToken: String, email: String = "", password: String = "") {
         
         KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)
         KeychainWrapper.setString(value: accessToken, forKey: KeychainKeys.accessToken)
