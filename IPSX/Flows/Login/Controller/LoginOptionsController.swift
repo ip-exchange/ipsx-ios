@@ -25,7 +25,7 @@ class LoginOptionsController: UIViewController {
     @IBAction func facebookLoginAction(_ sender: UIButton) {
         
         if let accessToken = FBSDKAccessToken.current(){
-            print("Already logged in. Access token:",accessToken)
+            print("Already logged in. Access token:",accessToken.tokenString)
             getFBUserData()
         }
         else {
@@ -36,7 +36,7 @@ class LoginOptionsController: UIViewController {
     func facebookLogin() {
         
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [.publicProfile], viewController: self, completion: { loginResult in
+        loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: { loginResult in
             switch loginResult {
             case .failed(let error):
                 print(error)
