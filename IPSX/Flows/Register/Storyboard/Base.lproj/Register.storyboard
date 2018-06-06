@@ -252,7 +252,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jvv-xK-5lw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2640.8000000000002" y="131.78410794602701"/>
+            <point key="canvasLocation" x="2628" y="-280"/>
         </scene>
         <!--Register Terms Controller-->
         <scene sceneID="KPb-l0-ncc">
@@ -470,7 +470,7 @@
                                             <color key="titleColor" red="0.16899999979999999" green="0.51372549019607838" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="IVQ-OJ-hHf" kind="unwind" unwindAction="unwindToRegCredentialsWithSegue:" id="LHb-7q-Nnh"/>
+                                            <action selector="backAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="I7X-JB-d3J"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -529,6 +529,7 @@
                         <outlet property="topBarView" destination="hM3-yr-38q" id="xcq-Bb-FpN"/>
                         <outlet property="topConstraintOutlet" destination="lHQ-Cf-5kj" id="Rss-Ja-vxd"/>
                         <segue destination="R1q-eW-KM7" kind="show" identifier="showRegConfirmationSegueID" id="AcT-LT-hvw"/>
+                        <segue destination="IVQ-OJ-hHf" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="xlX-v8-zit"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVn-Vo-kvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -638,7 +639,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="74b-ZJ-UEf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbU-NO-i18" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbU-NO-i18" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45" y="586" width="285" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="zml-Rh-d2x"/>
@@ -653,6 +654,9 @@
                                         <color key="value" red="0.16899999979999999" green="0.51372549019607838" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="registerWithFacebookAction:" destination="V7N-ET-Mwg" eventType="touchUpInside" id="yaC-aK-RYe"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yN7-LQ-cC1" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45" y="527" width="285" height="44"/>
@@ -751,6 +755,7 @@
                     <navigationItem key="navigationItem" id="G27-0A-fiU"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="74b-ZJ-UEf" id="Hlr-W9-5rA"/>
+                        <segue destination="NZC-Rz-rhn" kind="show" identifier="showRegistrationTermsSegueID" id="1vA-HG-zbM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IZX-np-Lbh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -789,4 +794,7 @@
         <image name="keyIconCheck" width="26" height="24"/>
         <image name="mail" width="72" height="43"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="1vA-HG-zbM"/>
+    </inferredMetricsTieBreakers>
 </document>
