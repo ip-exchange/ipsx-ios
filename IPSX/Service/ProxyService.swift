@@ -37,6 +37,7 @@ class ProxyService {
         
         var proxies: [Proxy] = []
         
+        // TODO (CC): fix this shit and use it by default
         let dateFormatter = DateFormatter.backendResponseParse()
         
         for json in jsonArray {
