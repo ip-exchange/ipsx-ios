@@ -68,21 +68,28 @@ class UserInfoService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
+            let json = JSON(data)
+            let jsonArray = json["eths"].arrayValue
             
-            guard let jsonArray = JSON(data: data).array else {
-                completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                return
-            }
             var ethAddresses: [EthAddress] = []
             for json in jsonArray {
-                
+
                 let ethID    = json["id"].stringValue
                 let address  = json["address"].stringValue
                 let alias    = json["alias"].stringValue
                 let verified = json["verified"].intValue
                 let status   = json["status"].stringValue
                 
-                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status)
+                let testingEnrolledDate = json["tester"].stringValue
+                let stakingEnrolledDate = json["staking"].stringValue
+
+                let dateFormatter = DateFormatter.backendResponseParse()
+                
+                // null if not enrolled
+                let testingDate = dateFormatter.date(from: testingEnrolledDate)
+                let stakingDate = dateFormatter.date(from: stakingEnrolledDate)
+                
+                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate)
                 ethAddresses.append(ethAddress)
             }
             completionHandler(ServiceResult.success(ethAddresses))

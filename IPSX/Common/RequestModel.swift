@@ -33,7 +33,7 @@ public struct Url {
     public static let fbRegisterArgs = "/Users/social/register/facebook"
     public static let userCountriesArgs = "/countries"
     public static let proxyCountriesArgs = "/proxies/countries?access_token=%ACCESS_TOKEN%"
-    public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
+    public static let ethAddressArgs = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
     public static let updateEthAddressArgs = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
     public static let fbLoginArgs = "/Users/social/login/facebook"
