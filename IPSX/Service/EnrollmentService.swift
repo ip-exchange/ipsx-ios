@@ -41,65 +41,6 @@ class EnrollmentService {
         })
     }
     
-    func enrollTestingDelete(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
-                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
-        
-        RequestBuilder.shared.executeRequest(requestType: .enrollTestingDelete, urlParams: urlParams,  completion: { error, data in
-            
-            guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
-            }
-            guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
-                return
-            }
-            let json = JSON(data: data)
-            let createdString = json["created_at"].stringValue
-            let dateFormatter = DateFormatter.backendResponseParse()
-            
-            if let createdDate = dateFormatter.date(from: createdString) {
-                completionHandler(ServiceResult.success(createdDate))
-            }
-            else {
-                completionHandler(ServiceResult.failure(CustomError.invalidJson))
-            }
-        })
-    }
-    
-    // TODO: delete this and use bulk request 
-    func enrollStaking(ethID: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
-                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
-        
-        let bodyParams: [String: String] = ["usereth_id": ethID]
-        
-        RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
-            
-            guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
-            }
-            guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
-                return
-            }
-            let json = JSON(data: data)
-            let createdString = json["created_at"].stringValue
-            let dateFormatter = DateFormatter.backendResponseParse()
-            
-            if let createdDate = dateFormatter.date(from: createdString) {
-                completionHandler(ServiceResult.success(createdDate))
-            }
-            else {
-                completionHandler(ServiceResult.failure(CustomError.invalidJson))
-            }
-        })
-    }
-    
     func enrollStaking(ethsArray: [String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
@@ -113,16 +54,11 @@ class EnrollmentService {
                 completionHandler(ServiceResult.failure(error!))
                 return
             }
-            guard let data = data else {
+            guard data != nil else {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            
-            let json = JSON(data: data)
-            
-            //TODO: json useless .. need API update
-            
-            //TODO: completion
+            completionHandler(ServiceResult.success(true))
         })
     }
     
@@ -154,7 +90,7 @@ class EnrollmentService {
                 for json in jsonArray {
                     
                     let status        = json["status"].stringValue
-                    let ethAddress    = json["usereth"].stringValue
+                    let ethAddress    = json["usereth_id"].stringValue
                     let createdString = json["created_at"].stringValue
                     let dateFormatter = DateFormatter.backendResponseParse()
                     
@@ -179,12 +115,12 @@ class EnrollmentService {
                 for json in jsonArray {
                     
                     let status        = json["status"].stringValue
-                    let ethAddress    = json["usereth"].stringValue
+                    let ethId         = json["usereth_id"].stringValue
                     let createdString = json["created_at"].stringValue
                     let dateFormatter = DateFormatter.backendResponseParse()
                     
                     if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
-                        enrollmentDetails.append((ethAddress, createdDate))
+                        enrollmentDetails.append((ethId, createdDate))
                     }
                     else {
                         completionHandler(ServiceResult.failure(CustomError.invalidJson))

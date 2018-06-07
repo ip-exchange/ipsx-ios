@@ -40,8 +40,6 @@ class EnrolTestSubscribeController: UIViewController {
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
     
-    //TODO (CC): logic to determine ethAddresses to delete for testing
-    
      var errorMessage: String? {
         didSet {
             self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -106,26 +104,24 @@ class EnrolTestSubscribeController: UIViewController {
             return
         }
         loadingView?.startAnimating()
-        EnrollmentService().enrollTestingDelete() { result in
-            EnrollmentService().enrollTesting(ethID: ethID) { result in
+        EnrollmentService().enrollTesting(ethID: ethID) { result in
+            
+            self.loadingView?.stopAnimating()
+            
+            switch result {
+            case .success(let createdDate):
                 
-                self.loadingView?.stopAnimating()
-                
-                switch result {
-                case .success(let createdDate):
-                    
-                    if let created = createdDate as? Date {
-                        self.selectedAddress?.testingEnrollmentDate = created
-                    }
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
-                    }
-                    
-                case .failure(let error):
-                    self.handleError(error, requestType: .enrollTesting, completion: {
-                        self.enrollTesting()
-                    })
+                if let created = createdDate as? Date {
+                    self.selectedAddress?.testingEnrollmentDate = created
                 }
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .enrollTesting, completion: {
+                    self.enrollTesting()
+                })
             }
         }
     }

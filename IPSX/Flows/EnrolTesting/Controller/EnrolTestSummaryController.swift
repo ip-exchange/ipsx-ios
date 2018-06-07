@@ -15,7 +15,6 @@ class EnrolTestSummaryController: UIViewController {
     @IBOutlet weak var ethAddress: UILabel!
     @IBOutlet weak var enroledDate: UILabel!
     @IBOutlet weak var enroledTime: UILabel!
-    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -95,7 +94,6 @@ class EnrolTestSummaryController: UIViewController {
                         self.enroledTime.text = createdDate.dateToString(format: "HH:mm")
                         self.ethAddress.text  = ethAddress
                     }
-
                 }
                 else {
                     self.errorMessage = "Generic Error Message".localized

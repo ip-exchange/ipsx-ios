@@ -28,7 +28,7 @@ class EnrolStakeSummaryController: UIViewController {
         }
     }
     
-    // [(ethAdddress, createdDate)]
+    // [(ethId, createdDate)]
     var enrollment: [(String, Date)] = []
     
     override func viewDidLoad() {
@@ -76,8 +76,7 @@ class EnrolStakeSummaryController: UIViewController {
                 if let details = details as? [(String, Date)] {
                     self.enrollment = details
                     
-                    print("TODO (CC): display",self.enrollment)
-                    
+                    print("TODO (CC): display eth address and first date: ",self.enrollment)
                 }
                 else {
                     self.errorMessage = "Generic Error Message".localized

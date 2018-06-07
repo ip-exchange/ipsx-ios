@@ -13,7 +13,6 @@ class EnrolStakeSubscribeController: UIViewController {
     @IBOutlet weak var joinStakingButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: CustomLoadingView!
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topMaskview: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -21,15 +20,13 @@ class EnrolStakeSubscribeController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     
-    //TODO (CC): logic to determine ethAddresses to delete from staking
-    //TODO (CC): logic to determine ethAddresses to add for staking
+    //TODO (CC): array with selected ethIDs (and logic to disable submit button)
+    var selectedEths: [String] = []
     
     var errorMessage: String? {
         didSet {
@@ -38,14 +35,7 @@ class EnrolStakeSubscribeController: UIViewController {
     }
     
     @IBAction func submitAction(_ sender: UIButton) {
-
-        //TODO: make request for each eth
-        //this is for testing
-        
-        let ethID = "92"
-        
-        //TODO: send array of ethIDs
-        enrollStaking(ethID: ethID)
+        enrollStaking()
     }
     
     override func viewDidLoad() {
@@ -91,24 +81,22 @@ class EnrolStakeSubscribeController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func enrollStaking(ethID: String) {
+    func enrollStaking() {
         
         loadingView?.startAnimating()
-        EnrollmentService().enrollStaking(ethID: ethID, completionHandler: { result in
+        EnrollmentService().enrollStaking(ethsArray: selectedEths, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             
             switch result {
-            case .success(let createdDate):
-                
-                print("TODO (CC)", ethID, createdDate)
+            case .success(_):
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
                 }
                 
             case .failure(let error):
                 self.handleError(error, requestType: .enrollStaking, completion: {
-                    self.enrollStaking(ethID: ethID)
+                    self.enrollStaking()
                 })
             }
         })
