@@ -86,13 +86,13 @@ class EnrolTestSummaryController: UIViewController {
             switch result {
             case .success(let details):
                 if let details = details as? (String, Date) {
-                    let ethAddress  = details.0
+                    let ethId = details.0
                     let createdDate = details.1
                     
                     DispatchQueue.main.async {
                         self.enroledDate.text = createdDate.dateToString(format: "dd MMM yyyy")
                         self.enroledTime.text = createdDate.dateToString(format: "HH:mm")
-                        self.ethAddress.text  = ethAddress
+                        self.ethAddress.text  = "TODO (CC): get address from ethID: " + ethId
                     }
                 }
                 else {

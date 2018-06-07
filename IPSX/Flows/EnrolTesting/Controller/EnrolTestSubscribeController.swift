@@ -14,7 +14,6 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var selectedWalletAlias: UILabel!
     @IBOutlet weak var selectedWalletAddress: UILabel!
@@ -24,7 +23,6 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
-
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -94,6 +92,8 @@ class EnrolTestSubscribeController: UIViewController {
     }
 
     @IBAction func submitAction(_ sender: UIButton) {
+        
+        //TODO (CC): create logic for submit button -> the user can enroll for testing only one time
         enrollTesting()
     }
     
