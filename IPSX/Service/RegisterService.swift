@@ -44,11 +44,23 @@ class RegisterService {
                 completionHandler(ServiceResult.failure(error!))
                 return
             }
-            guard data != nil else {
+            guard let data = data else {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            completionHandler(ServiceResult.success(true))
+            let json = JSON(data: data)
+            let ethID    = json["id"].stringValue
+            let address  = json["address"].stringValue
+            let alias    = json["alias"].stringValue
+            let verified = json["verified"].intValue
+            let status   = json["status"].stringValue
+            
+            if ethID == "" || address == "" || alias == "" {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status)
+            completionHandler(ServiceResult.success(ethAddress))
         })
     }
 

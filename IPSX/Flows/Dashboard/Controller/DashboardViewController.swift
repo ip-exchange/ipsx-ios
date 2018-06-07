@@ -86,8 +86,11 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Because Login will be displayed from Tab Bar Controller and this is the first VC
-        if UserManager.shared.isLoggedIn {
+        /*  No need to submit requests:
+            - When no eth address: Close the app from Add Eth Address screen after Login (the user remains loggedIn)
+            - When the user is not yet logged in: Login will be displayed from Tab Bar Controller (this is the first VC)
+         */
+        if UserManager.shared.isLoggedIn && UserManager.shared.hasEthAddress {
             self.updateData()
             self.timer?.invalidate()
             self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)

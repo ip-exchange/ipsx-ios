@@ -182,8 +182,13 @@ class AddWalletController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
                 
-            case .success(_):
+            case .success(let ethAddress):
+                
                 DispatchQueue.main.async {
+                    
+                    if let ethAddress = ethAddress as? EthAddress {
+                        UserManager.shared.ethAddresses = [ethAddress]
+                    }
                     if self.shouldPop {
                         self.onDismiss?(true)
                         self.navigationController?.popViewController(animated: true)

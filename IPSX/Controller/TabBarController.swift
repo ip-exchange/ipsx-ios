@@ -21,6 +21,11 @@ class TabBarViewController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
+
+        // When closing the app from Add Eth Address screen after Login, the user remains loggedIn
+        if !UserManager.shared.hasEthAddress {
+            UserManager.shared.logout()
+        }
         if !UserManager.shared.isLoggedIn {
             presentLandingFlow()
         }
