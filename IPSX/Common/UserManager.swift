@@ -146,4 +146,7 @@ public class UserManager: NSObject {
         return countryName
     }
     
+    func logout() {
+        removeUserDetails()
+    }
 }

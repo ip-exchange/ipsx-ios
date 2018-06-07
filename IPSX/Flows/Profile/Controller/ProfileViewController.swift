@@ -60,7 +60,7 @@ class ProfileViewController: UIViewController {
     
     func logout() {
         
-        UserManager.shared.removeUserDetails()
+        UserManager.shared.logout()
         self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
     }
     

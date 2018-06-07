@@ -47,7 +47,7 @@ class AddWalletController: UIViewController {
     
     func loginAnotherAccount() {
         
-        UserManager.shared.removeUserDetails()
+        UserManager.shared.logout()
         self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
     }
     
@@ -285,7 +285,6 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
     
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -395,6 +394,9 @@ extension AddWalletController: ErrorPresentable {
             case .updateEthAddress, .addEthAddress:
                 if let customErr = error as? CustomError, case .alreadyExists = customErr {
                     self.errorMessage = "ETH Address Already Used Error Message".localized
+                }
+                else {
+                    self.errorMessage = "Generic Error Message".localized
                 }
             default:
                 self.errorMessage = "Generic Error Message".localized

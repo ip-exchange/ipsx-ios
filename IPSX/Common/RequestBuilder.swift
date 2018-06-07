@@ -41,13 +41,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.fbLoginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
-        case .logout:
-            var url = Url.base + Url.logoutArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
-            }
-            
         case .resetPassword:
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
