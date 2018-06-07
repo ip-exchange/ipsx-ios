@@ -30,12 +30,13 @@ public struct Url {
     public static let base = "http://devapi.ip.sx:3000/api"
     public static let pacBaseUrl = "https://devapp.ip.sx/proxy/pac/"
     public static let registerArgs = "/Users"
+    public static let fbRegisterArgs = "/Users/social/register/facebook"
     public static let userCountriesArgs = "/countries"
     public static let proxyCountriesArgs = "/proxies/countries?access_token=%ACCESS_TOKEN%"
     public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
     public static let updateEthAddressArgs = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
-    public static let fbLoginArgs = "/Users/login/social/facebook"
+    public static let fbLoginArgs = "/Users/social/login/facebook"
     public static let logoutArgs = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let resetPassArgs = "/Users/reset"
     public static let changePassArgs = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
@@ -63,7 +64,7 @@ public enum CustomError: Error {
     case getPublicIP
     case notSuccessful
     case invalidParams
-    case ethAddressAlreadyUsed
+    case alreadyExists
     case wrongOldPassword
     case loginFailed
     case invalidLogin
@@ -103,6 +104,7 @@ public enum IPRequestType: Int {
     case getPublicIP
     case options
     case register
+    case fbRegister
     case login
     case fbLogin
     case logout

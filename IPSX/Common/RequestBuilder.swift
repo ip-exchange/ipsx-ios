@@ -69,6 +69,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             let body = JSON(bodyParams)
             request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
           
+        case .fbRegister:
+            let body = JSON(bodyParams)
+            request = Request(url:Url.base + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            
         //User Info Requests
             
         case .getUserCountryList:
@@ -308,9 +312,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
             switch requestType {
                 
-            case .addEthAddress, .updateEthAddress:
-                print(NSDate(), "\(requestType)" + "Request failed. This ETH address is already used")
-                completion(CustomError.ethAddressAlreadyUsed, data)
+            case .addEthAddress, .updateEthAddress, .fbRegister:
+                print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
+                completion(CustomError.alreadyExists, data)
                 
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)

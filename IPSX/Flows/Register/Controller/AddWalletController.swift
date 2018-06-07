@@ -393,7 +393,7 @@ extension AddWalletController: ErrorPresentable {
             switch requestType {
                 
             case .updateEthAddress, .addEthAddress:
-                if let customErr = error as? CustomError, case .ethAddressAlreadyUsed = customErr {
+                if let customErr = error as? CustomError, case .alreadyExists = customErr {
                     self.errorMessage = "ETH Address Already Used Error Message".localized
                 }
             default:

@@ -122,7 +122,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        LoginService().loginWithFB(fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -130,9 +130,8 @@ class RegisterTermsController: UIViewController {
             case .success(_):
                 self.continueFlow()
                 
-            case .failure(_):
-                //self.errorMessage = "Generic Error Message".localized
-                print("error")
+            case .failure(let error):
+                self.handleError(error, requestType: .fbRegister)
             }
         })
     }
@@ -148,8 +147,8 @@ class RegisterTermsController: UIViewController {
             case .success(_):
                 self.continueFlow()
                 
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                self.handleError(error, requestType: .register)
             }
         })
     }
@@ -190,6 +189,27 @@ class RegisterDoneController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "LoginScreenSegueID", let loginController = segue.destination as? LoginCredentialsControler {
             loginController.hideBackButton = true
+        }
+    }
+}
+
+extension RegisterTermsController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch requestType {
+            
+        case .fbRegister:
+            
+            switch error {
+            case CustomError.alreadyExists:
+                self.errorMessage = "User already registered Error Message".localized
+                
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

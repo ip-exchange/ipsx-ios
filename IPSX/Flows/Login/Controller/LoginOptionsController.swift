@@ -59,7 +59,7 @@ class LoginOptionsController: UIViewController {
     func executeLogin(withFBtoken fbToken: String) {
         
         //self.loadingView?.startAnimating()
-        LoginService().loginWithFB(fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbLogin, fbToken: fbToken, completionHandler: { result in
             
             //self.loadingView?.stopAnimating()
             switch result {
