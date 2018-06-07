@@ -151,7 +151,6 @@ class ProfileViewController: UIViewController {
             let navController = segue.destination as? UINavigationController
             let editProfileVC = navController?.viewControllers.first as? EditProfileController
             editProfileVC?.onDismiss = { hasUpdatedProfile in
-                
                 if hasUpdatedProfile {
                     self.retrieveUserInfo()
                 }
@@ -160,11 +159,29 @@ class ProfileViewController: UIViewController {
             let addController = segue.destination as? AddWalletController
             addController?.ethereumAddress = selectedAddress
             addController?.onDismiss = { hasUpdatedETH in
-                
                 if hasUpdatedETH {
                     self.retrieveETHaddresses()
                 }
             }
+            
+        case "enrollTestingSegueID":
+            print("TODO (CC)")
+            // do something similar
+            /*
+             if hasUpdatedETH {
+                self.retrieveETHaddresses()
+             }
+             */
+            
+        case "enrollStakingSegueID":
+            print("TODO (CC)")
+            // do something similar
+            /*
+             if hasUpdatedETH {
+             self.retrieveETHaddresses()
+             }
+             */
+            
         default:
             break
         }
