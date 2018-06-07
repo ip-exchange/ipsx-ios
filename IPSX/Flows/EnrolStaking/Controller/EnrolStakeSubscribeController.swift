@@ -41,7 +41,10 @@ class EnrolStakeSubscribeController: UIViewController {
 
         //TODO: make request for each eth
         //this is for testing
+        
         let ethID = "92"
+        
+        //TODO: send array of ethIDs
         enrollStaking(ethID: ethID)
     }
     

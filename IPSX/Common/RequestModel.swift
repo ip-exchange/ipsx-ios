@@ -44,7 +44,7 @@ public struct Url {
     public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
     public static let optionsArgs = "/options?access_token=%ACCESS_TOKEN%"
     public static let enrollTestingArgs = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
-    public static let enrollStakingArgs = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
+    public static let enrollStakingArgs = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {

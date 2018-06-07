@@ -69,6 +69,7 @@ class EnrollmentService {
         })
     }
     
+    // TODO: delete this and use bulk request 
     func enrollStaking(ethID: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
@@ -96,6 +97,32 @@ class EnrollmentService {
             else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
             }
+        })
+    }
+    
+    func enrollStaking(ethsArray: [String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: [String]] = ["eths": ethsArray]
+        
+        RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            
+            let json = JSON(data: data)
+            
+            //TODO: json useless .. need API update
+            
+            //TODO: completion
         })
     }
     
