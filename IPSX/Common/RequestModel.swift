@@ -65,6 +65,7 @@ public enum CustomError: Error {
     case notSuccessful
     case invalidParams
     case alreadyExists
+    case notFound
     case wrongOldPassword
     case loginFailed
     case invalidLogin

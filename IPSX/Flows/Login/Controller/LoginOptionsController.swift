@@ -8,7 +8,6 @@
 
 import UIKit
 import FacebookLogin
-import FBSDKLoginKit
 
 class LoginOptionsController: UIViewController {
 
@@ -36,11 +35,11 @@ class LoginOptionsController: UIViewController {
             switch loginResult {
                 
             case .failed(_):
-                print("fb error")
+                print("remove comment")
                 //self.errorMessage = "Facebook Login Error Message".localized
                 
             case .cancelled:
-                print("User cancelled login.")
+                print("User cancelled login")
                 
             case .success(_,  _, let accessToken):
                 self.executeLogin(withFBtoken: accessToken.authenticationToken)
@@ -59,9 +58,8 @@ class LoginOptionsController: UIViewController {
             case .success(_):
                 self.continueFlow()
                 
-            case .failure(_):
-                //self.errorMessage = "Generic Error Message".localized
-                print("error")
+            case .failure(let error):
+                self.handleError(error, requestType: .fbLogin)
             }
         })
     }
@@ -83,11 +81,33 @@ class LoginOptionsController: UIViewController {
                         self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
                     }
                 }
-            case .failure(_):
-                print("error")
-                //self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                self.handleError(error, requestType: .getEthAddress)
             }
         })
     }
+}
+
+extension LoginOptionsController: ErrorPresentable {
     
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch requestType {
+            
+        case .fbLogin:
+            
+            switch error {
+            case CustomError.notFound:
+                print("remove comment")
+                //self.errorMessage = "User Not Registered Error Message".localized
+                
+            default:
+                print("remove comment")
+                //self.errorMessage = "Generic Error Message".localized
+            }
+        default:
+            print("remove comment")
+            //self.errorMessage = "Generic Error Message".localized
+        }
+    }
 }
