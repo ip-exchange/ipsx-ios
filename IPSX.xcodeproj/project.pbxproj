@@ -40,7 +40,6 @@
 		A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76232099F27F00504ED9 /* UserManager.swift */; };
 		A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76262099F83D00504ED9 /* ProxyService.swift */; };
 		A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC7628209A074600504ED9 /* Double+extensions.swift */; };
-		A4CCCFF020C570D5005FA14F /* Pods_IPSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */; };
 		A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD0BA22097590E00D27759 /* RegisterService.swift */; };
 		A4DFBFFE20B44AD200FFC28F /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DFBFFD20B44AD200FFC28F /* Options.swift */; };
 		A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E374C92090C2D100808B86 /* NewProxyController.swift */; };
@@ -145,6 +144,7 @@
 		A43CEC8120BFF254005198A5 /* EnrollmentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrollmentService.swift; sourceTree = "<group>"; };
 		A4524C1620A094C600F7BD84 /* EthAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthAddress.swift; sourceTree = "<group>"; };
 		A45331CB20C926710038E0E2 /* SocialIntegrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialIntegrationService.swift; sourceTree = "<group>"; };
+		A45331CD20C944790038E0E2 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A45F0ED820AEF485009C55F2 /* ErrorHandlingProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingProtocols.swift; sourceTree = "<group>"; };
 		A4606C352092165D0008A9F3 /* ProxyActivationDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyActivationDetailsCell.swift; sourceTree = "<group>"; };
 		A46480D72091EEE600330CC9 /* ProxySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxySummaryViewController.swift; sourceTree = "<group>"; };
@@ -257,7 +257,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4CCCFF020C570D5005FA14F /* Pods_IPSX.framework in Frameworks */,
 				EE354FCF20AB1345002A8132 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +627,7 @@
 		E4ADA5C2E44FF7B123F97D7E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A45331CD20C944790038E0E2 /* FacebookLogin.framework */,
 				A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */,
 				A4CCCFED20C56FCC005FA14F /* Pods_IPSX.framework */,
 				A4F26D1620C56E4400134CAD /* FBSDKLoginKit.framework */,
@@ -764,7 +764,7 @@
 				A43930A7205AAEE800CA7B15 /* Sources */,
 				A43930A8205AAEE800CA7B15 /* Frameworks */,
 				A43930A9205AAEE800CA7B15 /* Resources */,
-				025565B4968BF81D19B4CBA9 /* [CP] Embed Pods Frameworks */,
+				09C381433DBEE5C6A0BA578B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -909,7 +909,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		025565B4968BF81D19B4CBA9 /* [CP] Embed Pods Frameworks */ = {
+		09C381433DBEE5C6A0BA578B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

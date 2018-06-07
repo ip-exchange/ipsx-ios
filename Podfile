@@ -7,7 +7,6 @@ target 'IPSX' do
 
   # Pods for IPSX
 
-  pod 'FacebookCore'
   pod 'FacebookLogin'
 
   target 'IPSXTests' do
