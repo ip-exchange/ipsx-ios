@@ -25,15 +25,7 @@ class LoginOptionsController: UIViewController {
     @IBAction func unwindToLoginOptions(segue:UIStoryboardSegue) { }
     
     @IBAction func facebookLoginAction(_ sender: UIButton) {
-        
-        //TODO: we need to make sure the user is already Registered with Facebook (he needs to agree Terms & Conditions first)
-        
-        if let accessToken = FBSDKAccessToken.current() {
-            self.executeLogin(withFBtoken: accessToken.tokenString)
-        }
-        else {
-            facebookLogin()
-        }
+        facebookLogin()
     }
     
     func facebookLogin() {
