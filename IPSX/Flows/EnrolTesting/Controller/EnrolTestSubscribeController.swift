@@ -93,7 +93,6 @@ class EnrolTestSubscribeController: UIViewController {
 
     @IBAction func submitAction(_ sender: UIButton) {
         
-        //TODO (CC): create logic for submit button -> the user can enroll for testing only one time
         enrollTesting()
     }
     

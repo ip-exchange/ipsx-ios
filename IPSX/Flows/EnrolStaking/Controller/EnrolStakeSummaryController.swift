@@ -10,6 +10,12 @@ import UIKit
 
 class EnrolStakeSummaryController: UIViewController {
 
+    @IBOutlet weak var walletAlliasLabel: UILabel!
+    @IBOutlet weak var walletAddressLabel: UILabel!
+    @IBOutlet weak var enrolmentDateLabel: UILabel!
+    @IBOutlet weak var enrolmentTimeLabel: UILabel!
+    
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -21,6 +27,7 @@ class EnrolStakeSummaryController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var enroledAddresses: [EthAddress]? = nil
     
     var errorMessage: String? {
         didSet {
@@ -29,13 +36,12 @@ class EnrolStakeSummaryController: UIViewController {
     }
     
     // [(ethId, createdDate)]
-    var enrollment: [(String, Date)] = []
+    var enrollment: [(ethID: String, createdDate: Date)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //TODO: for testing
-        enrollmentDetails() 
+        editButton.isHidden = enroledAddresses == nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,11 +52,20 @@ class EnrolStakeSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        enrollmentDetails()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editStakingsSegueID" {
+            let enrolController = segue.destination as? EnrolStakeSubscribeController
+            enrolController?.editMode = true
+            enrolController?.enroledAddresses = self.enroledAddresses
+        }
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -68,24 +83,34 @@ class EnrolStakeSummaryController: UIViewController {
     func enrollmentDetails() {
         
         loadingView?.startAnimating()
+        self.enrolmentDateLabel.text = "-- --- --"
+        self.enrolmentTimeLabel.text = "--:--"
+        self.walletAlliasLabel.text  = "Loading message".localized
+        self.walletAddressLabel.text = "..."
         EnrollmentService().getEnrollmentDetails(requestType: .enrollStakingDetails, completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let details):
-                if let details = details as? [(String, Date)] {
-                    self.enrollment = details
+            DispatchQueue.main.async {
+                self.loadingView?.stopAnimating()
+                switch result {
+                case .success(let details):
+                    if let details = details as? [(ethID: String, createdDate: Date)], let firstEnroled = details.first {
+                        self.enrollment = details
+                        let ethToDisplay = UserManager.shared.ethAddres(forID: firstEnroled.ethID)
+                        let letDateToDisplay = firstEnroled.createdDate
+                        self.walletAlliasLabel.text  = ethToDisplay?.alias
+                        self.walletAddressLabel.text = ethToDisplay?.address
+                        self.enrolmentDateLabel.text = letDateToDisplay.dateToString(format: "dd MMM yyyy")
+                        self.enrolmentTimeLabel.text = letDateToDisplay.dateToString(format: "HH:mm")
+                        
+                    }
+                    else {
+                        self.errorMessage = "Generic Error Message".localized
+                    }
                     
-                    print("TODO (CC): display eth address and first date: ",self.enrollment)
+                case .failure(let error):
+                    self.handleError(error, requestType: .enrollTesting, completion: {
+                        self.enrollmentDetails()
+                    })
                 }
-                else {
-                    self.errorMessage = "Generic Error Message".localized
-                }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: .enrollTesting, completion: {
-                    self.enrollmentDetails()
-                })
             }
         })
     }
