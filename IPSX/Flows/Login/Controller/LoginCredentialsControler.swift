@@ -66,8 +66,10 @@ class LoginCredentialsControler: UIViewController {
     
     func continueFlow() {
         
+        loadingView?.startAnimating()
         UserInfoService().retrieveETHaddresses(completionHandler: { result in
             
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(let ethAddresses):
