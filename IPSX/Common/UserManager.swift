@@ -48,6 +48,14 @@ public class UserManager: NSObject {
         }
     }
 
+    var ethsEnroledForTesting: [EthAddress]? {
+        get {
+            guard let addresses = ethAddresses else { return nil }
+            let filtered = addresses.filter { $0.stakingEnrollmentDate != nil }
+            return filtered
+        }
+    }
+    
     var isEnroledForStaking: Bool {
         get {
             guard let addresses = ethAddresses else { return false }
@@ -55,6 +63,13 @@ public class UserManager: NSObject {
         }
     }
     
+    func ethAddres(forID ethId: String) -> EthAddress? {
+        
+            guard let addresses = ethAddresses else { return nil }
+            let filtered = addresses.filter { $0.ethID == ethId }
+            return filtered.count == 1 ? filtered.first : nil
+    }
+
     var isLoggedIn: Bool {
         get {
             if userId != "" && accessToken != "" {

@@ -24,13 +24,15 @@ class EnrolStakeSubscribeController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
-    
+    var editMode = false
+    var enroledAddresses: [EthAddress]? = nil
+
     var selectedEths: [String]  {
         var selected: [String] = []
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for path in selectedIndexPaths {
                 let ethAddr = ethAdresses[path.item]
-                selected.append(ethAddr.address)
+                selected.append(ethAddr.ethID)
             }
         }
         return selected
@@ -60,6 +62,25 @@ class EnrolStakeSubscribeController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         loadValidAddresses()
+        if editMode {
+            loadingView.startAnimating()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if editMode {
+            var index = 0
+            for validAddres in ethAdresses {
+                if validAddres.stakingEnrollmentDate != nil {
+                    tableView.selectRow(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .none)
+                }
+                index += 1
+            }
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) {
+                self.loadingView.stopAnimating()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -100,7 +121,16 @@ class EnrolStakeSubscribeController: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                    if self.editMode {
+                        if (self.tableView.indexPathsForSelectedRows != nil) {
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            self.parent?.dismiss(animated: true, completion:nil)
+                        }
+                    }
+                    else {
+                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                    }
                 }
                 
             case .failure(let error):
@@ -133,11 +163,21 @@ extension EnrolStakeSubscribeController: UITableViewDelegate {
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         let rowIsSelected = selectedIndexPaths != nil && selectedIndexPaths!.contains(indexPath)
         if rowIsSelected {
-            joinStakingButton.isEnabled = selectedIndexPaths?.count ?? 0 > 1
+            if editMode {
+                joinStakingButton.isEnabled = true
+                let title = selectedIndexPaths?.count ?? 0 > 1 ? "Join Staking Program".localized : "Abandon Staking Program".localized
+                joinStakingButton.setTitle(title.localized, for: .normal)
+            } else {
+                joinStakingButton.isEnabled = selectedIndexPaths?.count ?? 0 > 1
+            }
             tableView.deselectRow(at: indexPath, animated: true)
             return nil
         } else {
-            joinStakingButton.isEnabled = true
+            if editMode {
+                joinStakingButton.setTitle("Join Staking Program".localized, for: .normal)
+            } else {
+                joinStakingButton.isEnabled = true
+            }
             return indexPath
         }
     }

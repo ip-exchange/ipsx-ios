@@ -48,7 +48,11 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func EnrolStakingAction(_ sender: Any) {
-        performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
+        if UserManager.shared.isEnroledForStaking {
+            performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
+        } else {
+            performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
+        }
     }
     
     var errorMessage: String? {
@@ -188,15 +192,11 @@ class ProfileViewController: UIViewController {
             let summaryController = segue.destination as? EnrolTestSummaryController
             summaryController?.enroledAddress = UserManager.shared.ethEnroledForTesting
             
-        case "enrollStakingSegueID":
-            print("TODO (CC)")
-            // do something similar
-            /*
-             if hasUpdatedETH {
-             self.retrieveETHaddresses()
-             }
-             */
-            
+        case "enrollStakingSummarySegueID":
+            let navController = segue.destination as? UINavigationController
+            let summaryController = navController?.viewControllers.first as? EnrolStakeSummaryController
+            summaryController?.enroledAddresses = UserManager.shared.ethsEnroledForTesting
+
         default:
             break
         }
@@ -231,6 +231,7 @@ class ProfileViewController: UIViewController {
             case .success(let ethAddresses):
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 self.refreshETHaddressesUI()
+                self.refreshProfileUI()
                 
             case .failure(let error):
                 self.handleError(error, requestType: .getEthAddress, completion: {
