@@ -25,8 +25,16 @@ class EnrolStakeSubscribeController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     
-    //TODO (CC): array with selected ethIDs (and logic to disable submit button)
-    var selectedEths: [String] = []
+    var selectedEths: [String]  {
+        var selected: [String] = []
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for path in selectedIndexPaths {
+                let ethAddr = ethAdresses[path.item]
+                selected.append(ethAddr.address)
+            }
+        }
+        return selected
+    }
     
     var errorMessage: String? {
         didSet {
@@ -40,6 +48,7 @@ class EnrolStakeSubscribeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        joinStakingButton.isEnabled = false
     }
 
     override func viewDidLayoutSubviews() {
@@ -124,14 +133,23 @@ extension EnrolStakeSubscribeController: UITableViewDelegate {
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         let rowIsSelected = selectedIndexPaths != nil && selectedIndexPaths!.contains(indexPath)
         if rowIsSelected {
+            joinStakingButton.isEnabled = selectedIndexPaths?.count ?? 0 > 1
             tableView.deselectRow(at: indexPath, animated: true)
             return nil
         } else {
+            joinStakingButton.isEnabled = true
             return indexPath
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows
+        joinStakingButton.isEnabled = selectedIndexPaths != nil
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let selectedIndexPaths = tableView.indexPathsForSelectedRows
+        joinStakingButton.isEnabled = selectedIndexPaths != nil
     }
 }
 

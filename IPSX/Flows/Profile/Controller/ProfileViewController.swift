@@ -185,7 +185,6 @@ class ProfileViewController: UIViewController {
             }
             
         case "enrollTestingSummarySegueID":
-            print("TODO (CC)")
             let summaryController = segue.destination as? EnrolTestSummaryController
             summaryController?.enroledAddress = UserManager.shared.ethEnroledForTesting
             
