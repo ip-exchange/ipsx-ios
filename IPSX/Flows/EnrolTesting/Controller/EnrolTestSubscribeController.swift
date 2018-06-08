@@ -14,7 +14,6 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var selectedWalletAlias: UILabel!
     @IBOutlet weak var selectedWalletAddress: UILabel!
@@ -24,7 +23,6 @@ class EnrolTestSubscribeController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
-
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -39,8 +37,6 @@ class EnrolTestSubscribeController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
-    
-    //TODO (CC): logic to determine ethAddresses to delete for testing
     
      var errorMessage: String? {
         didSet {
@@ -96,6 +92,8 @@ class EnrolTestSubscribeController: UIViewController {
     }
 
     @IBAction func submitAction(_ sender: UIButton) {
+        
+        //TODO (CC): create logic for submit button -> the user can enroll for testing only one time
         enrollTesting()
     }
     
@@ -106,26 +104,24 @@ class EnrolTestSubscribeController: UIViewController {
             return
         }
         loadingView?.startAnimating()
-        EnrollmentService().enrollTestingDelete() { result in
-            EnrollmentService().enrollTesting(ethID: ethID) { result in
+        EnrollmentService().enrollTesting(ethID: ethID) { result in
+            
+            self.loadingView?.stopAnimating()
+            
+            switch result {
+            case .success(let createdDate):
                 
-                self.loadingView?.stopAnimating()
-                
-                switch result {
-                case .success(let createdDate):
-                    
-                    if let created = createdDate as? Date {
-                        self.selectedAddress?.testingEnrollmentDate = created
-                    }
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
-                    }
-                    
-                case .failure(let error):
-                    self.handleError(error, requestType: .enrollTesting, completion: {
-                        self.enrollTesting()
-                    })
+                if let created = createdDate as? Date {
+                    self.selectedAddress?.testingEnrollmentDate = created
                 }
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .enrollTesting, completion: {
+                    self.enrollTesting()
+                })
             }
         }
     }

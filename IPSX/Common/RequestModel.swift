@@ -33,7 +33,7 @@ public struct Url {
     public static let fbRegisterArgs = "/Users/social/register/facebook"
     public static let userCountriesArgs = "/countries"
     public static let proxyCountriesArgs = "/proxies/countries?access_token=%ACCESS_TOKEN%"
-    public static let ethAddressArgs = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
+    public static let ethAddressArgs = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
     public static let updateEthAddressArgs = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs = "/Users/login"
     public static let fbLoginArgs = "/Users/social/login/facebook"
@@ -44,6 +44,7 @@ public struct Url {
     public static let tokenRequestArgs = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
     public static let optionsArgs = "/options?access_token=%ACCESS_TOKEN%"
     public static let enrollTestingArgs = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
+    public static let enrollStakingBulkArgs = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
 }
 
@@ -122,7 +123,6 @@ public enum IPRequestType: Int {
     case getProxyCountryList
     case getTokenRequestList
     case enrollTesting
-    case enrollTestingDelete
     case enrollStaking
     case enrollTestingDetails
     case enrollStakingDetails
