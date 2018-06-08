@@ -767,7 +767,7 @@
                 <viewControllerPlaceholder storyboardName="WalletAdd" referencedIdentifier="WalletEditID" id="f4i-TE-mFB" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8R-Sg-vJf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2620" y="1056"/>
+            <point key="canvasLocation" x="2626" y="1078"/>
         </scene>
         <!--EnrolTesting-->
         <scene sceneID="5Tl-oK-6Ba">
@@ -777,13 +777,39 @@
             </objects>
             <point key="canvasLocation" x="2621" y="920"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jmj-Iy-rg5">
+            <objects>
+                <navigationController navigationBarHidden="YES" toolbarHidden="NO" id="NuM-8C-s9N" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zta-ir-g4O">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="yLA-or-joi" kind="relationship" relationship="rootViewController" id="Knb-5w-D3x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZjJ-ay-cQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3282" y="813"/>
+        </scene>
         <!--EnrolTestSummaryControllerID-->
         <scene sceneID="4s8-E1-atJ">
             <objects>
                 <viewControllerPlaceholder storyboardName="EnrolTesting" referencedIdentifier="EnrolTestSummaryControllerID" id="5il-XE-IfM" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85b-vn-z6G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2710" y="948"/>
+            <point key="canvasLocation" x="2710" y="951"/>
+        </scene>
+        <!--EnrolStakeSummaryControllerID-->
+        <scene sceneID="VJJ-K1-m3I">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EnrolStaking" referencedIdentifier="EnrolStakeSummaryControllerID" id="yLA-or-joi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="EC5-bQ-lfY"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UfD-ys-492" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3970" y="812"/>
         </scene>
         <!--EnrolStaking-->
         <scene sceneID="r9K-gN-8el">
@@ -791,7 +817,7 @@
                 <viewControllerPlaceholder storyboardName="EnrolStaking" id="t5L-Xq-3ez" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFP-Dt-GOh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2624" y="992"/>
+            <point key="canvasLocation" x="2624" y="1002"/>
         </scene>
         <!--Profile-->
         <scene sceneID="e5X-ZR-dkq">
@@ -1215,6 +1241,7 @@
                         <segue destination="sXt-2s-6Qg" kind="show" identifier="enrollTestingSegueID" id="iC9-7B-bQV"/>
                         <segue destination="t5L-Xq-3ez" kind="show" identifier="enrollStakingSegueID" id="VDd-2w-D7l"/>
                         <segue destination="5il-XE-IfM" kind="presentation" identifier="enrollTestingSummarySegueID" id="LiP-e5-bPp"/>
+                        <segue destination="NuM-8C-s9N" kind="presentation" identifier="enrollStakingSummarySegueID" id="gVx-c3-pVh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D2m-gf-wB9" sceneMemberID="firstResponder"/>
