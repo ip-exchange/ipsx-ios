@@ -33,6 +33,28 @@ public class UserManager: NSObject {
         }
     }
     
+    var isEnroledForTesting: Bool {
+        get {
+            guard let addresses = ethAddresses else { return false }
+            return addresses.contains() { address in address.testingEnrollmentDate != nil }
+        }
+    }
+    
+    var ethEnroledForTesting: EthAddress? {
+        get {
+            guard let addresses = ethAddresses else { return nil }
+            let filtered = addresses.filter { $0.testingEnrollmentDate != nil }
+            return filtered.count == 1 ? filtered.first : nil
+        }
+    }
+
+    var isEnroledForStaking: Bool {
+        get {
+            guard let addresses = ethAddresses else { return false }
+            return addresses.contains() { address in address.stakingEnrollmentDate != nil }
+        }
+    }
+    
     var isLoggedIn: Bool {
         get {
             if userId != "" && accessToken != "" {

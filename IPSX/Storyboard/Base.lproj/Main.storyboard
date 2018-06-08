@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="97x-rt-BAG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="97x-rt-BAG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -777,6 +777,14 @@
             </objects>
             <point key="canvasLocation" x="2621" y="920"/>
         </scene>
+        <!--EnrolTestSummaryControllerID-->
+        <scene sceneID="4s8-E1-atJ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EnrolTesting" referencedIdentifier="EnrolTestSummaryControllerID" id="5il-XE-IfM" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="85b-vn-z6G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2710" y="948"/>
+        </scene>
         <!--EnrolStaking-->
         <scene sceneID="r9K-gN-8el">
             <objects>
@@ -977,10 +985,14 @@
                                                     <rect key="frame" x="19" y="18" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Enrolled" translatesAutoresizingMaskIntoConstraints="NO" id="kuQ-ec-fql">
+                                                    <rect key="frame" x="11" y="33" width="21" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3F-oO-1zn">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <connections>
-                                                        <segue destination="sXt-2s-6Qg" kind="show" identifier="enrollTestingSegueID" id="x1N-Wf-OOW"/>
+                                                        <action selector="enrolTestingAction:" destination="pEl-nG-Fp4" eventType="touchUpInside" id="rDk-bF-WuX"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1006,6 +1018,10 @@
                                                         <constraint firstAttribute="width" constant="30" id="kcS-K7-rpF"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Enrolled" translatesAutoresizingMaskIntoConstraints="NO" id="fGV-l3-Jjn">
+                                                    <rect key="frame" x="11" y="33" width="21" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enroll for Staking" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chU-zn-PyY">
                                                     <rect key="frame" x="71" y="13" width="130" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
@@ -1021,7 +1037,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O28-sY-gTv">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <connections>
-                                                        <segue destination="t5L-Xq-3ez" kind="show" identifier="enrollStakingSegueID" id="IUE-nb-IH3"/>
+                                                        <action selector="EnrolStakingAction:" destination="pEl-nG-Fp4" eventType="touchUpInside" id="XLk-Mj-req"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1180,6 +1196,10 @@
                     <navigationItem key="navigationItem" id="xO7-LD-VFV"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="enrolStakingTitleLabel" destination="chU-zn-PyY" id="89I-BF-vwV"/>
+                        <outlet property="enrolTestingTitleLabel" destination="PX4-pp-Lql" id="TGJ-yf-hjk"/>
+                        <outlet property="enroledStakingImageView" destination="fGV-l3-Jjn" id="gt6-W5-5vu"/>
+                        <outlet property="enroledTestingImageView" destination="kuQ-ec-fql" id="pna-Vb-UB1"/>
                         <outlet property="headerHeightConstraint" destination="Fhh-FM-aIX" id="vxr-hv-SHV"/>
                         <outlet property="hidableDownView" destination="jpt-Ua-Mrz" id="gbO-ko-GDi"/>
                         <outlet property="loadingView" destination="smJ-7h-ibg" id="go5-Ob-RnE"/>
@@ -1192,6 +1212,9 @@
                         <outlet property="usernameTopLabel" destination="gBl-vJ-0cj" id="HRp-GB-Hja"/>
                         <segue destination="f4i-TE-mFB" kind="show" identifier="walletViewIdentifier" id="TUj-iw-bz7"/>
                         <segue destination="grr-34-nBj" kind="presentation" identifier="showLandingSegueID" id="Kc9-Od-4gN"/>
+                        <segue destination="sXt-2s-6Qg" kind="show" identifier="enrollTestingSegueID" id="iC9-7B-bQV"/>
+                        <segue destination="t5L-Xq-3ez" kind="show" identifier="enrollStakingSegueID" id="VDd-2w-D7l"/>
+                        <segue destination="5il-XE-IfM" kind="presentation" identifier="enrollTestingSummarySegueID" id="LiP-e5-bPp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D2m-gf-wB9" sceneMemberID="firstResponder"/>
@@ -1224,6 +1247,7 @@
         <image name="EditProfile" width="31" height="32"/>
         <image name="EnrolStaking" width="30" height="30"/>
         <image name="EnrolTesting" width="30" height="27"/>
+        <image name="Enrolled" width="20" height="20"/>
         <image name="IPExchange" width="206" height="40"/>
         <image name="IPSXRightLogo" width="21" height="21"/>
         <image name="LogoLarge" width="72" height="72"/>

@@ -19,6 +19,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var usernameTopLabel: UILabel!
+    @IBOutlet weak var enrolTestingTitleLabel: UILabel!
+    @IBOutlet weak var enroledTestingImageView: UIImageView!
+    @IBOutlet weak var enrolStakingTitleLabel: UILabel!
+    @IBOutlet weak var enroledStakingImageView: UIImageView!
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -35,6 +39,18 @@ class ProfileViewController: UIViewController {
         }
     }
   
+    @IBAction func enrolTestingAction(_ sender: Any) {
+        if UserManager.shared.isEnroledForTesting {
+            performSegue(withIdentifier: "enrollTestingSummarySegueID", sender: self)
+        } else {
+            performSegue(withIdentifier: "enrollTestingSegueID", sender: self)
+        }
+    }
+    
+    @IBAction func EnrolStakingAction(_ sender: Any) {
+        performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
+    }
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -130,9 +146,13 @@ class ProfileViewController: UIViewController {
                 self.usernameLabel.text    = firstName + " " + lastName
                 self.usernameTopLabel.text = self.usernameLabel.text
             }
+            self.enroledStakingImageView.isHidden = !UserManager.shared.isEnroledForStaking
+            self.enroledTestingImageView.isHidden = !UserManager.shared.isEnroledForTesting
+            self.enrolStakingTitleLabel.text = UserManager.shared.isEnroledForStaking ? "Enrolled for Staking Title".localized : "Enroll for Staking Title".localized
+            self.enrolTestingTitleLabel.text = UserManager.shared.isEnroledForTesting ? "Enrolled for Testing Title".localized : "Enroll for Testing Title".localized
         }
     }
-    
+
     func refreshETHaddressesUI() {
         
         DispatchQueue.main.async {
@@ -164,14 +184,10 @@ class ProfileViewController: UIViewController {
                 }
             }
             
-        case "enrollTestingSegueID":
+        case "enrollTestingSummarySegueID":
             print("TODO (CC)")
-            // do something similar
-            /*
-             if hasUpdatedETH {
-                self.retrieveETHaddresses()
-             }
-             */
+            let summaryController = segue.destination as? EnrolTestSummaryController
+            summaryController?.enroledAddress = UserManager.shared.ethEnroledForTesting
             
         case "enrollStakingSegueID":
             print("TODO (CC)")
