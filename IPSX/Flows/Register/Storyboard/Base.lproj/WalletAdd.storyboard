@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUi-lt-NI4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yUi-lt-NI4">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -535,9 +535,8 @@
                                             <action selector="backAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="eEx-1C-7oI"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add your ETH address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TY-S3-kmq">
-                                        <rect key="frame" x="98" y="61" width="178" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add ETH address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TY-S3-kmq">
+                                        <rect key="frame" x="118" y="61" width="138" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -545,8 +544,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="8TY-S3-kmq" secondAttribute="bottom" constant="12" id="8dp-t8-yfo"/>
                                     <constraint firstAttribute="trailing" secondItem="ng7-n6-rRs" secondAttribute="trailing" constant="8" id="Dnu-jD-55M"/>
                                     <constraint firstItem="ng7-n6-rRs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pSE-cg-4Dr" secondAttribute="leading" constant="20" symbolic="YES" id="RS7-1g-yHp"/>
+                                    <constraint firstItem="8TY-S3-kmq" firstAttribute="centerX" secondItem="pSE-cg-4Dr" secondAttribute="centerX" id="aSC-TS-dfy"/>
                                     <constraint firstAttribute="bottom" secondItem="ng7-n6-rRs" secondAttribute="bottom" id="hn9-7G-e1y"/>
                                     <constraint firstAttribute="height" constant="94" id="rfs-t2-TAj"/>
                                 </constraints>
@@ -616,6 +617,8 @@
                         <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
                         <outlet property="loadingView" destination="xp3-sc-Rhj" id="GcH-fd-xLA"/>
                         <outlet property="saveButton" destination="ng7-n6-rRs" id="TGt-rf-Gcp"/>
+                        <outlet property="screenTitleLabel" destination="8TY-S3-kmq" id="xPP-Sh-Y4D"/>
+                        <outlet property="sectionTitleLabel" destination="c8w-7z-z2N" id="u1O-KT-rU9"/>
                         <outlet property="separatorView" destination="Mmt-lK-1sd" id="FyU-bs-fcy"/>
                         <outlet property="topBarView" destination="pSE-cg-4Dr" id="edR-Fe-JQc"/>
                         <outlet property="topConstraintOutlet" destination="3ei-fg-bNM" id="GiK-Au-Sum"/>

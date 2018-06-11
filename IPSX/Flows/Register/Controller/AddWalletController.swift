@@ -11,6 +11,9 @@ import AVFoundation
 
 class AddWalletController: UIViewController {
 
+    @IBOutlet weak var screenTitleLabel: UILabel!
+    @IBOutlet weak var sectionTitleLabel: UILabel!
+    
     @IBOutlet weak var backgroundImageView: UIImageView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
@@ -55,10 +58,15 @@ class AddWalletController: UIViewController {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint?.constant ?? 0
         observreFieldsState()
-         if let address = ethereumAddress {
+        if let address = ethereumAddress {
             fieldsStateDic = ["walletName" : true, "ethAddress" : true]
             walletNameRichTextField.contentTextField?.text = address.alias
             ethAddresRichTextField.contentTextField?.text = address.address
+            screenTitleLabel.text = "Edit ETH Address text".localized
+            sectionTitleLabel.text = "Edit your ETH address text".localized
+        } else {
+            screenTitleLabel.text = "Add ETH Address text".localized
+            sectionTitleLabel.text = "Add your ETH address text".localized
         }
     }
     
