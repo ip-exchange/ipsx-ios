@@ -116,6 +116,21 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
+        case .getSettings:
+            var url = Url.base + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .updateSettings:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         //Proxy Requests
             
         case .getProxyCountryList:

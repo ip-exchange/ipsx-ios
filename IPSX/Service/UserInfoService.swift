@@ -164,4 +164,53 @@ class UserInfoService {
             completionHandler(ServiceResult.success(true))
         })
     }
+    
+    func getSettings(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        RequestBuilder.shared.executeRequest(requestType: .getSettings, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            let emailNotifValue = json["email_notifications"].stringValue
+            
+            if emailNotifValue == EmailNotifications.on || emailNotifValue == EmailNotifications.off {
+                completionHandler(ServiceResult.success(emailNotifValue))
+            }
+            else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+            }
+        })
+    }
+    
+    func updateSettings(emailNotif: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let emailNotifValue = emailNotif == true ? EmailNotifications.on : EmailNotifications.off
+        let bodyParams: [String: String] =  ["email_notifications": emailNotifValue]
+        
+        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
 }

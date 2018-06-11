@@ -46,6 +46,7 @@ public struct Url {
     public static let enrollTestingArgs = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingBulkArgs = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
+    public static let metaArgs = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -126,6 +127,8 @@ public enum IPRequestType: Int {
     case enrollStaking
     case enrollTestingDetails
     case enrollStakingDetails
+    case getSettings
+    case updateSettings
 }
 
 public struct ContentType {
@@ -139,6 +142,12 @@ public struct KeychainKeys {
     public static let userId        = "USER_ID_KEY"
     public static let password      = "USER_PASSWORD"
     public static let email         = "USER_EMAIL"
+}
+
+public struct EmailNotifications {
+    
+    public static let on = "all"
+    public static let off = "disable"
 }
 
 
