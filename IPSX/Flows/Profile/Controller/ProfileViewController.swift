@@ -57,7 +57,9 @@ class ProfileViewController: UIViewController {
     
     var errorMessage: String? {
         didSet {
-            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
         }
     }
 
