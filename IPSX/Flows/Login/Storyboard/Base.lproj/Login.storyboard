@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PpC-zs-M2V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PpC-zs-M2V">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -107,6 +107,14 @@
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4V-eW-ZKN" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Ypb-Ai-lWS"/>
+                                    <constraint firstAttribute="width" constant="44" id="c3S-yA-bJ6"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -114,14 +122,15 @@
                             <constraint firstItem="QTH-f1-mMr" firstAttribute="top" secondItem="IDt-vf-HrN" secondAttribute="bottom" id="ANj-Mf-9gX"/>
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="trailing" secondItem="nnt-XC-RHm" secondAttribute="trailing" id="BBQ-aK-Wv6"/>
                             <constraint firstItem="5c7-TE-Gj8" firstAttribute="width" relation="greaterThanOrEqual" secondItem="RG0-PZ-h1M" secondAttribute="width" id="DIL-n2-RGI"/>
+                            <constraint firstItem="h4V-eW-ZKN" firstAttribute="centerX" secondItem="Vkr-YJ-wId" secondAttribute="centerX" id="EpV-rp-awa"/>
                             <constraint firstItem="RG0-PZ-h1M" firstAttribute="top" secondItem="5c7-TE-Gj8" secondAttribute="bottom" constant="15" id="Grk-Kc-1aR"/>
                             <constraint firstItem="E3V-S1-mjQ" firstAttribute="top" secondItem="xWE-ka-htc" secondAttribute="bottom" constant="20" id="O6a-l4-2O7"/>
                             <constraint firstItem="RG0-PZ-h1M" firstAttribute="centerX" secondItem="Vkr-YJ-wId" secondAttribute="centerX" id="ReH-Ft-RtU"/>
+                            <constraint firstItem="xWE-ka-htc" firstAttribute="top" secondItem="QTH-f1-mMr" secondAttribute="bottom" constant="23.5" id="Vov-Hn-egS"/>
                             <constraint firstItem="E3V-S1-mjQ" firstAttribute="centerX" secondItem="5c7-TE-Gj8" secondAttribute="centerX" id="fZa-yU-Sj8"/>
                             <constraint firstItem="QTH-f1-mMr" firstAttribute="leading" secondItem="Vkr-YJ-wId" secondAttribute="leading" id="gbq-Ti-zYS"/>
                             <constraint firstItem="E3V-S1-mjQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5c7-TE-Gj8" secondAttribute="leading" id="gle-vt-6Xb"/>
                             <constraint firstItem="nnt-XC-RHm" firstAttribute="leading" secondItem="Vkr-YJ-wId" secondAttribute="leading" id="hOn-wp-jAt"/>
-                            <constraint firstItem="xWE-ka-htc" firstAttribute="top" secondItem="IDt-vf-HrN" secondAttribute="bottom" constant="24" id="hef-rB-v3u"/>
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="top" secondItem="IDt-vf-HrN" secondAttribute="top" constant="50" id="jrN-la-8G8"/>
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="trailing" secondItem="IDt-vf-HrN" secondAttribute="trailing" id="mLG-NZ-vDv"/>
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="top" secondItem="nnt-XC-RHm" secondAttribute="top" constant="20" id="pPV-Qj-NAp"/>
@@ -131,6 +140,7 @@
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="bottom" secondItem="nnt-XC-RHm" secondAttribute="bottom" id="svu-xe-1fc"/>
                             <constraint firstItem="5c7-TE-Gj8" firstAttribute="centerX" secondItem="RG0-PZ-h1M" secondAttribute="centerX" id="vPZ-rz-m9y"/>
                             <constraint firstItem="xWE-ka-htc" firstAttribute="leading" secondItem="E3V-S1-mjQ" secondAttribute="leading" id="xy4-93-O0t"/>
+                            <constraint firstItem="h4V-eW-ZKN" firstAttribute="centerY" secondItem="Vkr-YJ-wId" secondAttribute="centerY" id="yUr-D9-WDQ"/>
                             <constraint firstItem="Vkr-YJ-wId" firstAttribute="bottom" secondItem="RG0-PZ-h1M" secondAttribute="bottom" constant="37" id="yqs-xn-nsX"/>
                             <constraint firstItem="E3V-S1-mjQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5c7-TE-Gj8" secondAttribute="trailing" id="zbU-ik-c4Y"/>
                         </constraints>
@@ -139,6 +149,10 @@
                     <navigationItem key="navigationItem" id="289-tN-zXf"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="nnt-XC-RHm" id="4Qj-zb-AIs"/>
+                        <outlet property="loadingView" destination="h4V-eW-ZKN" id="oUf-Us-WoC"/>
+                        <outlet property="separatorView" destination="QTH-f1-mMr" id="wFw-Zz-HaQ"/>
+                        <outlet property="topBarView" destination="IDt-vf-HrN" id="dvW-gX-H2K"/>
+                        <outlet property="topConstraintOutlet" destination="ANj-Mf-9gX" id="ldf-NV-0FR"/>
                         <segue destination="Vks-3f-bfz" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="Ze8-f2-tBR"/>
                         <segue destination="WaM-93-tC1" kind="show" identifier="showAddWalletSegueID" id="5cu-zl-FKV"/>
                     </connections>
