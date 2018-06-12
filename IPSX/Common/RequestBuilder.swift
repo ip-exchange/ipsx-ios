@@ -116,6 +116,21 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
+        case .getSettings:
+            var url = Url.base + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .updateSettings:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         //Proxy Requests
             
         case .getProxyCountryList:
@@ -160,14 +175,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .addEthAddress:
             
             let body = JSON(bodyParams)
-            var url = Url.base + Url.ethAddressArgs
+            var url = Url.base + Url.ethArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             }
          
         case .getEthAddress:
-            var url = Url.base + Url.ethAddressArgs
+            var url = Url.base + Url.ethEnrolmentsArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
