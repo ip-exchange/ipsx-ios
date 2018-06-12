@@ -82,7 +82,7 @@ class EnrollmentService {
                 
             case .enrollTestingDetails:
                 
-                guard let jsonArray = JSON(data: data).array else {
+                guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
                     completionHandler(ServiceResult.failure(CustomError.invalidJson))
                     return
                 }
@@ -105,7 +105,7 @@ class EnrollmentService {
                 
             case .enrollStakingDetails:
                 
-                guard let jsonArray = JSON(data: data).array else {
+                guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
                     completionHandler(ServiceResult.failure(CustomError.invalidJson))
                     return
                 }

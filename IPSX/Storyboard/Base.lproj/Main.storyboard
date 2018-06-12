@@ -708,6 +708,9 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JU3-hU-DmW">
                                         <rect key="frame" x="312" y="13" width="49" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="emailNotificationSwitchAction:" destination="f0C-Rr-AGY" eventType="valueChanged" id="jdx-hB-f5g"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -755,6 +758,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="Xkk-XY-EzG"/>
                     <connections>
+                        <outlet property="emailNotificationsSwitch" destination="JU3-hU-DmW" id="AsC-4K-4Fu"/>
                         <outlet property="loadingView" destination="uwT-vm-HtC" id="8CL-It-HVo"/>
                         <outlet property="separatorView" destination="1BY-Us-4HP" id="C9g-Ev-TI8"/>
                         <outlet property="tokensAmountLabel" destination="KPJ-tJ-xHh" id="f5X-dj-cgu"/>
