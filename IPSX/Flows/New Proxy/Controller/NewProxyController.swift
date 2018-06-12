@@ -42,6 +42,7 @@ class NewProxyController: UIViewController {
             }
         }
     }
+    var shouldRefreshIp = true
     
     let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60", price: "50"),
                       ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1440", price: "100"),
@@ -50,7 +51,8 @@ class NewProxyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.currentIpInfoLabel.text = "Getting IP info..."
+        self.currentIpInfoLabel.text = "Getting IP info...".localized
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -62,7 +64,6 @@ class NewProxyController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         retrieveUserInfo()
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         
         // After Logout
         if UserManager.shared.proxyCountries == nil {
@@ -76,22 +77,21 @@ class NewProxyController: UIViewController {
         countries = UserManager.shared.proxyCountries
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    deinit {
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
-    
 
     func updateReachabilityInfo() {
+        guard shouldRefreshIp else { return }
         DispatchQueue.main.async {
-            //TODO (CC): get the final texts and localize
+            self.shouldRefreshIp = false
             switch ReachabilityManager.shared.connectionType {
             case .wifi, .cellular:
-                self.currentIpInfoLabel.text = "Getting IP info..."
+                self.currentIpInfoLabel.text = "Getting IP info...".localized
                 IPService().getPublicIPAddress() { error, ipAddress in
                     DispatchQueue.main.async {
                         if let ip = ipAddress {
-                            self.currentIpInfoLabel.text = "The proxy will be locked on your current IP address: " + ip
+                            self.currentIpInfoLabel.text = String(format: "Proxy locked on IP %@ message".localized, "\(ip)")
                         } else {
                             self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
                         }
@@ -125,6 +125,7 @@ class NewProxyController: UIViewController {
     
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
+            self.shouldRefreshIp = true
             let reachability = note.object as! Reachability
             
             if !reachability.isReachable {
@@ -205,9 +206,9 @@ extension NewProxyController: UITableViewDelegate {
                 }
                 self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
             case .cellular:
-                self.errorMessage = "Please connect to a WiFi network"
+                self.errorMessage = "Connect to WiFi network message".localized
             case .none:
-                self.errorMessage = "Not connected"
+                self.errorMessage = "No internet connection".localized
             }
         }
         else {
