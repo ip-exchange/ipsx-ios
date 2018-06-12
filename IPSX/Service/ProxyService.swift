@@ -25,7 +25,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array else {
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
@@ -149,7 +149,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array else {
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
