@@ -27,7 +27,7 @@ class ProxyActivationDetailsCell: UITableViewCell {
         cellusedMBLabel.text = proxy.proxyDetails?.usedMB 
         cellStatusLabel.textColor = proxy.isTestProxy == true ? UIColor.darkBlue : UIColor.textGrey
         
-        if UserManager.shared.userInfo?.proxyTest == "" {
+        if proxy.isTestProxy {
             cellStatusLabel.text = "Test Proxy Message".localized
         }
         else {

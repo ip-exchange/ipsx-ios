@@ -16,7 +16,6 @@ class TokenRequestListController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var toastHolderView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -47,13 +46,8 @@ class TokenRequestListController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        updateUI()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
-
-        // After Logout
-        if UserManager.shared.tokenRequests == nil {
-            getTokenRequestList()
-        }
+        getTokenRequestList()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -112,19 +106,6 @@ class TokenRequestListController: UIViewController {
         }
         return ethAddress
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "showCreateTokenSegueID" {
-            let nextVC = segue.destination as? TokenRequestController
-            nextVC?.onDismiss = { hasSubmittedRequest in
-                
-                if hasSubmittedRequest {
-                    self.getTokenRequestList()
-                }
-            }
-        }
-    }
 }
 
 extension TokenRequestListController: UITableViewDataSource {
@@ -139,11 +120,9 @@ extension TokenRequestListController: UITableViewDataSource {
         let tokenRequest = tokenRequests[indexPath.item]
         let address      = ethAddressFor(tokenRequest: tokenRequest)
         cell.configure(tokenRequest: tokenRequest, ethAdrress: address)
-        
         return cell
     }
 }
-
 
 class TokenRequestCell: UITableViewCell {
     

@@ -32,7 +32,6 @@ class TokenRequestController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
-    var onDismiss: ((_ hasSubmittedRequest: Bool)->())?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -75,7 +74,6 @@ class TokenRequestController: UIViewController {
             case .success(_):
                 
                 DispatchQueue.main.async {
-                    self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
