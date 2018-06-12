@@ -175,14 +175,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .addEthAddress:
             
             let body = JSON(bodyParams)
-            var url = Url.base + Url.ethAddressArgs
+            var url = Url.base + Url.ethArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             }
          
         case .getEthAddress:
-            var url = Url.base + Url.ethAddressArgs
+            var url = Url.base + Url.ethEnrolmentsArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
