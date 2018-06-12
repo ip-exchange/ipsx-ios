@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="99" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="99" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
                                 <rect key="frame" x="15" y="145" width="345" height="473"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -756,7 +756,10 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="Xkk-XY-EzG"/>
                     <connections>
                         <outlet property="loadingView" destination="uwT-vm-HtC" id="8CL-It-HVo"/>
+                        <outlet property="separatorView" destination="1BY-Us-4HP" id="C9g-Ev-TI8"/>
                         <outlet property="tokensAmountLabel" destination="KPJ-tJ-xHh" id="f5X-dj-cgu"/>
+                        <outlet property="topBarView" destination="fcR-bh-uWF" id="Mcf-xW-Usz"/>
+                        <outlet property="topConstraintOutlet" destination="tTA-h3-Nke" id="fBo-2f-vEw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tve-8X-fak" userLabel="First Responder" sceneMemberID="firstResponder"/>

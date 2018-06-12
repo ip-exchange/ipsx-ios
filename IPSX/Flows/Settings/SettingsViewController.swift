@@ -10,6 +10,17 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
@@ -24,6 +35,11 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         balance = "\(userInfo?.balance ?? 0)"
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
     }
     
     func retrieveUserInfo() {
@@ -43,6 +59,17 @@ class SettingsViewController: UIViewController {
         })
     }
 }
+
+extension SettingsViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
 extension SettingsViewController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
