@@ -941,11 +941,11 @@
                                 <rect key="frame" x="0.0" y="235" width="375" height="383"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="n2r-iV-TAw">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="383"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="321"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ngo-0q-bqD" userLabel="Prrof of ID" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="22" width="345" height="67"/>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ngo-0q-bqD" userLabel="Prrof of ID" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                            <rect key="frame" x="15" y="-45" width="345" height="67"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Proof of ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RK6-aX-7IY">
                                                     <rect key="frame" x="71" y="16" width="266" height="20"/>
@@ -975,7 +975,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rjx-Xm-317" userLabel="Edit Profile" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="99" width="345" height="67"/>
+                                            <rect key="frame" x="15" y="32" width="345" height="67"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FE3-qZ-pic">
                                                     <rect key="frame" x="71" y="16" width="266" height="20"/>
@@ -1012,7 +1012,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtm-IY-N6q" userLabel="Enroll Testing" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="176" width="345" height="67"/>
+                                            <rect key="frame" x="15" y="109" width="345" height="67"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enroll for Testing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="PX4-pp-Lql">
                                                     <rect key="frame" x="71" y="16" width="266" height="20"/>
@@ -1056,7 +1056,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iZ-T7-7em" userLabel="Enroll Staking" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                            <rect key="frame" x="15" y="253" width="345" height="67"/>
+                                            <rect key="frame" x="15" y="186" width="345" height="67"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EnrolStaking" translatesAutoresizingMaskIntoConstraints="NO" id="dmY-Jv-pIp">
                                                     <rect key="frame" x="19" y="18" width="30" height="30"/>
@@ -1109,18 +1109,18 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Ethereum Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuC-Ih-saw">
-                                            <rect key="frame" x="15" y="349" width="199" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <rect key="frame" x="15" y="286" width="199" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlusSymbol" translatesAutoresizingMaskIntoConstraints="NO" id="SJE-6m-6C7">
-                                            <rect key="frame" x="341" y="350" width="19" height="19"/>
+                                            <rect key="frame" x="341" y="288" width="19" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2K-hC-vsg" userLabel="Plus Button">
-                                            <rect key="frame" x="326" y="336" width="49" height="47"/>
+                                            <rect key="frame" x="326" y="274" width="49" height="47"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="49" id="VdZ-Ra-ISJ"/>
                                                 <constraint firstAttribute="height" constant="47" id="dMp-hk-4zP"/>
@@ -1137,7 +1137,7 @@
                                         <constraint firstItem="1iZ-T7-7em" firstAttribute="leading" secondItem="gtm-IY-N6q" secondAttribute="leading" id="K3X-uc-wC3"/>
                                         <constraint firstItem="rjx-Xm-317" firstAttribute="trailing" secondItem="Ngo-0q-bqD" secondAttribute="trailing" id="PDz-zj-2Uc"/>
                                         <constraint firstItem="rjx-Xm-317" firstAttribute="top" secondItem="Ngo-0q-bqD" secondAttribute="bottom" constant="10" id="SyX-4x-bmQ"/>
-                                        <constraint firstItem="Ngo-0q-bqD" firstAttribute="top" secondItem="n2r-iV-TAw" secondAttribute="top" constant="22" id="UQn-IJ-jry"/>
+                                        <constraint firstItem="Ngo-0q-bqD" firstAttribute="top" secondItem="n2r-iV-TAw" secondAttribute="top" constant="-45" id="UQn-IJ-jry"/>
                                         <constraint firstItem="1iZ-T7-7em" firstAttribute="top" secondItem="gtm-IY-N6q" secondAttribute="bottom" constant="10" id="b4V-bF-ACi"/>
                                         <constraint firstItem="rjx-Xm-317" firstAttribute="leading" secondItem="Ngo-0q-bqD" secondAttribute="leading" id="ei2-4a-HJJ"/>
                                         <constraint firstItem="1iZ-T7-7em" firstAttribute="trailing" secondItem="gtm-IY-N6q" secondAttribute="trailing" id="ho1-XM-DeT"/>
@@ -1150,10 +1150,10 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETHAddressCellID" id="MEt-hk-FUa" customClass="EthWalletCell" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="407" width="375" height="58"/>
+                                        <rect key="frame" x="0.0" y="345" width="375" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MEt-hk-FUa" id="MFV-AD-8RI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="57.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhl-mv-Piw" userLabel="Separator">
