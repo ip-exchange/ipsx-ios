@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     
+    @IBOutlet weak var emailNotificationsSwitch: UISwitch!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -40,6 +41,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
+    }
+    
+    @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
     }
     
     func retrieveUserInfo() {
