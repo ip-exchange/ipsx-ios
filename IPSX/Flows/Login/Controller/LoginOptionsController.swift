@@ -11,10 +11,29 @@ import FacebookLogin
 
 class LoginOptionsController: UIViewController {
 
-    //TODO (CC): loadingView & errorMessage
-    
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    var errorMessage: String? {
+        didSet {
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+
     @IBOutlet weak var backgroundImageView: UIImageView!
     var dict: [String : AnyObject] = [:]
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -35,8 +54,7 @@ class LoginOptionsController: UIViewController {
             switch loginResult {
                 
             case .failed(_):
-                print("remove comment")
-                //self.errorMessage = "Facebook Login Error Message".localized
+                self.errorMessage = "Facebook Login Error Message".localized
                 
             case .cancelled:
                 print("User cancelled login")
@@ -49,10 +67,10 @@ class LoginOptionsController: UIViewController {
     
     func executeLogin(withFBtoken fbToken: String) {
         
-        //self.loadingView?.startAnimating()
+        self.loadingView?.startAnimating()
         SocialIntegrationService().facebook(requestType: .fbLogin, fbToken: fbToken, completionHandler: { result in
             
-            //self.loadingView?.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
                 
             case .success(_):
@@ -88,6 +106,16 @@ class LoginOptionsController: UIViewController {
     }
 }
 
+extension LoginOptionsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
 extension LoginOptionsController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
@@ -98,16 +126,13 @@ extension LoginOptionsController: ErrorPresentable {
             
             switch error {
             case CustomError.notFound:
-                print("remove comment")
-                //self.errorMessage = "User Not Registered Error Message".localized
+                self.errorMessage = "User Not Registered Error Message".localized
                 
             default:
-                print("remove comment")
-                //self.errorMessage = "Generic Error Message".localized
+                self.errorMessage = "Generic Error Message".localized
             }
         default:
-            print("remove comment")
-            //self.errorMessage = "Generic Error Message".localized
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

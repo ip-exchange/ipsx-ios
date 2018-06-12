@@ -10,6 +10,7 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
+    @IBOutlet weak var currentIpInfoLabel: UILabel!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
@@ -36,9 +37,12 @@ class NewProxyController: UIViewController {
     }
     var errorMessage: String? {
         didSet {
-            toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
         }
     }
+    var shouldRefreshIp = true
     
     let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60", price: "50"),
                       ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1440", price: "100"),
@@ -47,6 +51,8 @@ class NewProxyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.currentIpInfoLabel.text = "Getting IP info...".localized
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -55,9 +61,47 @@ class NewProxyController: UIViewController {
         balance = "\(userInfo?.balance ?? 0)"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        retrieveUserInfo()
+        
+        // After Logout
+        if UserManager.shared.proxyCountries == nil {
+            getProxyCountryList()
+        }
+        updateReachabilityInfo()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         countries = UserManager.shared.proxyCountries
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+
+    func updateReachabilityInfo() {
+        guard shouldRefreshIp else { return }
+        DispatchQueue.main.async {
+            self.shouldRefreshIp = false
+            switch ReachabilityManager.shared.connectionType {
+            case .wifi, .cellular:
+                self.currentIpInfoLabel.text = "Getting IP info...".localized
+                IPService().getPublicIPAddress() { error, ipAddress in
+                    DispatchQueue.main.async {
+                        if let ip = ipAddress {
+                            self.currentIpInfoLabel.text = String(format: "Proxy locked on IP %@ message".localized, "\(ip)")
+                        } else {
+                            self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+                        }
+                    }
+                }
+            case .none:
+                self.currentIpInfoLabel.text = "No internet connection".localized
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
     }
     
     func getProxyCountryList() {
@@ -79,31 +123,18 @@ class NewProxyController: UIViewController {
         })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        retrieveUserInfo()
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
-
-        // After Logout
-        if UserManager.shared.proxyCountries == nil {
-            getProxyCountryList()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
-    }
-    
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
+            self.shouldRefreshIp = true
             let reachability = note.object as! Reachability
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+                self.currentIpInfoLabel.text = "No internet connection".localized
             } else {
                 self.toast?.hideToastAlert()
             }
+            self.updateReachabilityInfo()
         }
     }
     
@@ -164,13 +195,21 @@ extension NewProxyController: UITableViewDelegate {
         
         //TODO (CVI): dummy price (update after integrating proxy plans API)
         let packagePrice = 0
-        
+
         if balance >= packagePrice {
-            
-            if dataSource.count > indexPath.row {
-                self.selectedPack = dataSource[indexPath.row]
+
+            //TODO (CC): get the final texts and localize
+            switch ReachabilityManager.shared.connectionType {
+            case .wifi:
+                if self.dataSource.count > indexPath.row {
+                    self.selectedPack = self.dataSource[indexPath.row]
+                }
+                self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+            case .cellular:
+                self.errorMessage = "Connect to WiFi network message".localized
+            case .none:
+                self.errorMessage = "No internet connection".localized
             }
-            self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
         }
         else {
             self.errorMessage = "Insufficient Balance Error Message".localized

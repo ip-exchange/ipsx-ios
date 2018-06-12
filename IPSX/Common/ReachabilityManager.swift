@@ -12,6 +12,10 @@ import SystemConfiguration
 public class ReachabilityManager: NSObject {
     
     public static var shared = ReachabilityManager()
+    public var connectionType: Reachability.Connection {
+        return reachability.connection
+    }
+    
     private var reachability: Reachability
     
     private override init() {

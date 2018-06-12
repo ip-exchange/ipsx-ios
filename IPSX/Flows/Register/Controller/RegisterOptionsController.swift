@@ -11,7 +11,21 @@ import FacebookLogin
 
 class RegisterOptionsController: UIViewController {
 
-     //TODO (CC): loadingView & errorMessage
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    var errorMessage: String? {
+        didSet {
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     
@@ -30,8 +44,7 @@ class RegisterOptionsController: UIViewController {
             switch loginResult {
                 
             case .failed(_):
-                print("fb error")
-                //self.errorMessage = "Facebook Login Error Message".localized
+                self.errorMessage = "Facebook Login Error Message".localized
                 
             case .cancelled:
                 print("User cancelled login.")
@@ -53,9 +66,24 @@ class RegisterOptionsController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
 
+}
+
+extension RegisterOptionsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
 }
