@@ -10,7 +10,6 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    
     @IBOutlet weak var emailNotificationsSwitch: UISwitch!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
@@ -32,6 +31,13 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +49,21 @@ class SettingsViewController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSettings()
+    }
+    
     @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
+        updateSettings(emailNotif: sender.isOn)
     }
     
     func retrieveUserInfo() {
         
+        loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
@@ -61,6 +75,56 @@ class SettingsViewController: UIViewController {
                 })
             }
         })
+    }
+    
+    func loadSettings() {
+        
+        loadingView?.startAnimating()
+        UserInfoService().getSettings(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let emailNotifValue):
+                
+                if let emailNotifValue = emailNotifValue as? String, emailNotifValue == EmailNotifications.on {
+                    self.updateSwitchValue(value: true)
+                }
+                else {
+                    self.updateSwitchValue(value: false)
+                }
+               
+            case .failure(let error):
+                self.handleError(error, requestType: .getSettings, completion: {
+                    self.loadSettings()
+                })
+            }
+        })
+    }
+    
+    func updateSettings(emailNotif: Bool = false) {
+        
+        loadingView?.startAnimating()
+        UserInfoService().updateSettings(emailNotif: emailNotif, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                print("success")
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .updateSettings, completion: {
+                    self.updateSettings(emailNotif: emailNotif)
+                })
+            }
+        })
+    }
+    
+    func updateSwitchValue(value: Bool = false, error: Bool = false) {
+        
+        DispatchQueue.main.async {
+            self.emailNotificationsSwitch.isEnabled = !error
+            self.emailNotificationsSwitch.setOn(value, animated: true)
+        }
     }
 }
 
@@ -83,13 +147,13 @@ extension SettingsViewController: ErrorPresentable {
         case CustomError.expiredToken:
             
             LoginService().getNewAccessToken(errorHandler: { error in
-                print("Get New Access Token Failed")
+                self.updateSwitchValue(error: true)
                 
             }, successHandler: {
                 completion?()
             })
         default:
-            print("Error updating balance")
+            self.updateSwitchValue(error: true)
         }
     }
 }
