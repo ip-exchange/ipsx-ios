@@ -25,7 +25,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+            guard let jsonArray = JSON(data: data).array else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
@@ -149,7 +149,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+            guard let jsonArray = JSON(data: data).array else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
@@ -241,6 +241,42 @@ class ProxyService {
         let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
         
         completionHandler(ServiceResult.success(proxy))
+    }
+    
+    func retrieveProxyPackages(testPackage: Bool = false, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let requestType = testPackage ? IPRequestType.retrieveTestProxyPackage : IPRequestType.retrieveProxyPackages
+        
+        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var packages: [ProxyPack] = []
+            for json in jsonArray {
+                
+                let packId   = json["id"].stringValue
+                let name     = json["name"].stringValue
+                let noOfMB   = json["traffic"].stringValue
+                let duration = json["duration"].stringValue
+                let price    = json["cost"].stringValue
+                
+                let package = ProxyPack(packId: packId, name: name, noOfMB: noOfMB, duration: duration, price: price)
+                packages.append(package)
+            }
+            completionHandler(ServiceResult.success(packages))
+        })
     }
     
 }
