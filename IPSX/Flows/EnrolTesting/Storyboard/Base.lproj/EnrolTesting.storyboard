@@ -95,6 +95,9 @@
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Txs-3L-gCE" kind="presentation" id="Wfr-eR-y9J"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vns-s1-2om" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="16" y="398" width="343" height="44"/>
@@ -438,6 +441,14 @@
             </objects>
             <point key="canvasLocation" x="1565.5999999999999" y="115.59220389805098"/>
         </scene>
+        <!--SimpleWebView-->
+        <scene sceneID="MDt-Fs-v6J">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SimpleWebView" id="Txs-3L-gCE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lLp-jF-lyA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1613" y="602"/>
+        </scene>
         <!--Enrol Test Summary Controller-->
         <scene sceneID="ndH-kd-L7p">
             <objects>
@@ -623,6 +634,9 @@
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Txs-3L-gCE" kind="presentation" id="noa-fJ-tO5"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPP-nt-Jmh" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="165" y="321.5" width="44" height="44"/>
@@ -691,4 +705,7 @@
         <image name="threeTestTubes" width="70" height="61"/>
         <image name="walletAccepted" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Wfr-eR-y9J"/>
+    </inferredMetricsTieBreakers>
 </document>
