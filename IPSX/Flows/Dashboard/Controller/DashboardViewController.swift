@@ -28,6 +28,7 @@ class DashboardViewController: UIViewController {
     let cellID = "ActivationDetailsCellID"
     var selectedProxy: Proxy? = nil
     var tokenRequests: [TokenRequest]?
+    let dispatchGroup = DispatchGroup()
     
     var balance: String = "" {
         didSet {
@@ -86,18 +87,29 @@ class DashboardViewController: UIViewController {
      }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         
         /*  No need to submit requests:
             - When no eth address: Close the app from Add Eth Address screen after Login (the user remains loggedIn)
             - When the user is not yet logged in: Login will be displayed from Tab Bar Controller (this is the first VC)
          */
         if UserManager.shared.isLoggedIn && UserManager.shared.hasEthAddress {
-            self.updateData()
-            self.timer?.invalidate()
-            self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+            
+            if UserManager.shared.testProxyPack == nil && UserManager.shared.hasTestProxyAvailable {
+                retrieveTestProxyPackage()
+            }
+            // After Logout we should load the proxy countries if needed for Test Proxy
+            if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
+                getProxyCountryList()
+            }
+            dispatchGroup.notify(queue: .main) {
+                self.updateData()
+                self.timer?.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+            }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -133,6 +145,26 @@ class DashboardViewController: UIViewController {
     @objc func updateData() {
         retrieveUserInfo()
         retrieveProxiesForCurrentUser()
+    }
+    
+    func retrieveTestProxyPackage() {
+        
+        dispatchGroup.enter()
+        loadingView?.startAnimating()
+        ProxyService().retrieveProxyPackages(testPackage: true, completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
+                    self.retrieveTestProxyPackage()
+                })
+            }
+        })
     }
     
     private func showZeroBalanceToastIfNeeded() {
@@ -219,9 +251,42 @@ class DashboardViewController: UIViewController {
         
         proxies = UserManager.shared.proxies ?? []
         if UserManager.shared.hasTestProxyAvailable {
-            let testProxy = ProxyService().retrieveTestProxy()
+            
+            let testProxyPack = UserManager.shared.testProxyPack
+            
+            //TODO (CVI): simplify this formatting for duration -> move to extension
+            
+            let duration = testProxyPack?.duration ?? "0"
+            var formatedDuration = duration + " min"
+            if let intDuration = Int(duration) {
+                let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(intDuration * 60))
+                formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
+            }
+            
+            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active".localized)
+            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
             proxies.insert(testProxy, at: 0)
         }
+    }
+    
+    func getProxyCountryList() {
+        
+        dispatchGroup.enter()
+        loadingView?.startAnimating()
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let countryList):
+                UserManager.shared.proxyCountries = countryList as? [String]
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                    self.getProxyCountryList()
+                })
+            }
+        })
     }
 }
 

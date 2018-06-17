@@ -91,6 +91,7 @@ class LoadingViewController: UIViewController {
         tokenRequestList()
         proxyCountryList()
         retrieveProxyPackages()
+        retrieveTestProxyPackage()
         options()
         
         dispatchGroup.notify(queue: .main) {
@@ -194,6 +195,25 @@ class LoadingViewController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
+                })
+            }
+        })
+    }
+    
+    func retrieveTestProxyPackage() {
+        
+        dispatchGroup.enter()
+        ProxyService().retrieveProxyPackages(testPackage: true, completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
+                    self.retrieveTestProxyPackage()
                 })
             }
         })

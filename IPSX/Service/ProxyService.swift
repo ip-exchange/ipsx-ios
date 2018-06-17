@@ -173,15 +173,6 @@ class ProxyService {
         })
     }
     
-    //TODO (CVI): this should come from the API
-    func retrieveTestProxy() -> Proxy {
-        
-        let testProxyPack = ProxyPack()
-        let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
-        let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
-        return testProxy
-    }
-    
     func createProxy(userIP: String, proxy: Proxy?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,

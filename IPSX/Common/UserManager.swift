@@ -22,6 +22,7 @@ public class UserManager: NSObject {
     var tokenRequests: [TokenRequest]?
     var ethAddresses: [EthAddress]?
     var proxyPacks: [ProxyPack]?
+    var testProxyPack: ProxyPack?
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
@@ -144,6 +145,7 @@ public class UserManager: NSObject {
         proxyCountries = nil
         userInfo = nil
         proxyPacks = nil
+        testProxyPack = nil
     }
     
     func getUserCountryList() -> [String] {
