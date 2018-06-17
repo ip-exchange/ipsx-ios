@@ -347,8 +347,11 @@ extension DashboardViewController: UITableViewDelegate {
         
         if selectedProxy?.isTestProxy == true {
             
+            let calendar = Calendar.current
+            let minDurationString = selectedProxy?.proxyPack?.duration ?? "0"
             selectedProxy?.proxyDetails?.startDate = Date()
-            selectedProxy?.proxyDetails?.endDate   = Date().addingTimeInterval(3600)
+            selectedProxy?.proxyDetails?.endDate = calendar.date(byAdding: .minute, value: Int(minDurationString) ?? 0, to: Date())
+            
             countries = UserManager.shared.proxyCountries ?? []
             self.performSegue(withIdentifier: "FreeProxySegueID", sender: self)
         }

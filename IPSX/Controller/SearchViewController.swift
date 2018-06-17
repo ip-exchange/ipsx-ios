@@ -45,7 +45,7 @@ class SearchViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         
-        if isProxyFlow == true {
+        if isProxyFlow == true && proxy == nil {
             
             let calendar = Calendar.current
             let minDurationString = proxyPack?.duration ?? "0"
