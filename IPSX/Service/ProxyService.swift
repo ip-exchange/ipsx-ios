@@ -80,10 +80,11 @@ class ProxyService {
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: formatedDuration, price: "TODO")
+            let packageID = json["package_id"].stringValue
+            let proxyPack = UserManager.shared.proxyPacks?.filter { return  $0.packId == packageID }
             let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, usedMB: usedMBString, remainingDuration: remainigDuartionString, status: status)
             let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIp, proxyPort: proxyPort)
-            let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
+            let proxy = Proxy(proxyPack: proxyPack?.first, proxyDetails: proxyDetails, proxySetup: proxySetup)
             proxies.append(proxy)
         }
         completionHandler(ServiceResult.success(proxies))

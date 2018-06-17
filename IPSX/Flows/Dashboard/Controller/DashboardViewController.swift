@@ -100,6 +100,9 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.testProxyPack == nil && UserManager.shared.hasTestProxyAvailable {
                 retrieveTestProxyPackage()
             }
+            if UserManager.shared.proxyPacks == nil {
+                retrieveProxyPackages()
+            }
             // After Logout we should load the proxy countries if needed for Test Proxy
             if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
                 getProxyCountryList()
@@ -162,6 +165,26 @@ class DashboardViewController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
                     self.retrieveTestProxyPackage()
+                })
+            }
+        })
+    }
+    
+    func retrieveProxyPackages() {
+        
+        dispatchGroup.enter()
+        loadingView?.startAnimating()
+        ProxyService().retrieveProxyPackages(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.proxyPacks = packages as? [ProxyPack]
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                    self.retrieveProxyPackages()
                 })
             }
         })

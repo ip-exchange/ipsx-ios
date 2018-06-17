@@ -28,6 +28,13 @@ class NewProxyController: UIViewController {
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String]?
+    var proxyPacks : [ProxyPack]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var selectedPack: ProxyPack?
     var balance: String = "" {
         didSet {
@@ -44,13 +51,6 @@ class NewProxyController: UIViewController {
         }
     }
     var shouldRefreshIp = true
-    var proxyPacks: [ProxyPack]? = UserManager.shared.proxyPacks {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +81,8 @@ class NewProxyController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        countries = UserManager.shared.proxyCountries
+        countries  = UserManager.shared.proxyCountries
+        proxyPacks = UserManager.shared.proxyPacks
     }
     
     deinit {
@@ -140,7 +141,7 @@ class NewProxyController: UIViewController {
             case .success(let packages):
                 UserManager.shared.proxyPacks = packages as? [ProxyPack]
                 self.proxyPacks = UserManager.shared.proxyPacks
-                
+            
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
