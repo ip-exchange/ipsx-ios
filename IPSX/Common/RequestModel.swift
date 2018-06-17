@@ -41,6 +41,7 @@ public struct Url {
     public static let resetPassArgs         = "/Users/reset"
     public static let changePassArgs        = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs           = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
+    public static let createProxyArgs       = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
     public static let proxyPackagesArgs     = "/packages?filter[where][cost][gt]=0&filter[where][user_id]=1?access_token=%ACCESS_TOKEN%"
     public static let proxyTestPackageArgs  = "/packages?filter[where][cost]=0&filter[where][user_id]=1?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs          = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"

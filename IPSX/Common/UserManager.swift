@@ -22,7 +22,7 @@ public class UserManager: NSObject {
     var tokenRequests: [TokenRequest]?
     var ethAddresses: [EthAddress]?
     var proxyPacks: [ProxyPack]?
-    var testProxyPack: ProxyPack?
+    var testProxyPack: ProxyPack? //TODO (CVI): refactor this -> should be included in the same array
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
