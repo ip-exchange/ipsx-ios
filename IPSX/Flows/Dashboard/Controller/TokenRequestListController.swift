@@ -8,8 +8,6 @@
 
 import UIKit
 
-//TODO: logic for datasource & update 
-
 class TokenRequestListController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!

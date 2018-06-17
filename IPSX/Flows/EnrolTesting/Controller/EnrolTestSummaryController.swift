@@ -38,7 +38,6 @@ class EnrolTestSummaryController: UIViewController {
         
         super.viewDidLoad()
         
-        //TODO: for testing
         updateUI()
         enrollmentDetails()
     }

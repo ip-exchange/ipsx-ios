@@ -218,19 +218,17 @@ extension NewProxyController: UITableViewDelegate {
 
         tableView.deselectRow(at: indexPath, animated: false)
         
-        let balance = UserManager.shared.userInfo?.balance ?? 0
+        if let proxyPack = proxyPacks?[indexPath.row] {
+            self.selectedPack = proxyPack
+        }
         
-        //TODO (CVI): dummy price (update after integrating proxy plans API)
-        let packagePrice = 0
+        let balance = UserManager.shared.userInfo?.balance ?? 0
+        let packagePrice = Int(self.selectedPack?.price ?? "0") ?? 0
 
         if balance >= packagePrice {
 
-            //TODO (CC): get the final texts and localize
             switch ReachabilityManager.shared.connectionType {
             case .wifi:
-                if let proxyPack = proxyPacks?[indexPath.row] {
-                    self.selectedPack = proxyPack
-                }
                 self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
             case .cellular:
                 self.errorMessage = "Connect to WiFi network message".localized
