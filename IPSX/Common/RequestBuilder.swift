@@ -139,6 +139,20 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+          
+        case .retrieveProxyPackages:
+            var url = Url.base + Url.proxyPackagesArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .retrieveTestProxyPackage:
+            var url = Url.base + Url.proxyTestPackageArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
             
         case .retrieveProxies:
             var url = Url.base + Url.proxiesArgs
@@ -149,7 +163,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .createProxy:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.proxiesArgs
+            var url = Url.base + Url.createProxyArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)

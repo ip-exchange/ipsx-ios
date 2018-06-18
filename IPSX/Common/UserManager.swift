@@ -21,6 +21,8 @@ public class UserManager: NSObject {
     var userInfo: UserInfo?
     var tokenRequests: [TokenRequest]?
     var ethAddresses: [EthAddress]?
+    var proxyPacks: [ProxyPack]?
+    var testProxyPack: ProxyPack? //TODO (CVI): refactor this -> should be included in the same array
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
@@ -142,6 +144,8 @@ public class UserManager: NSObject {
         ethAddresses = nil
         proxyCountries = nil
         userInfo = nil
+        proxyPacks = nil
+        testProxyPack = nil
     }
     
     func getUserCountryList() -> [String] {

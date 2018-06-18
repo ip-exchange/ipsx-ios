@@ -25,7 +25,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+            guard let jsonArray = JSON(data: data).array else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
@@ -42,18 +42,7 @@ class ProxyService {
         
         for json in jsonArray {
             
-            //TODO (CVI): PROXY NAME o sa fie updatat later in API (se creeaza model nou pt proxy plans si vor returna un proxyId de unde ne scoatem numele)
-            //TODO (CVI): PROXY PRICE in IPSX (with the new model for proxy plans)
-            
-            let duration = json["duration"].stringValue
-            var formatedDuration = duration + " min"
-            if let intDuration = Int(duration) {
-                let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(intDuration * 60))
-                formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
-            }
-            
             let proxyID = json["id"].stringValue
-            let noOfMB = json["traffic"].stringValue
             let startDateString = json["start_date"].stringValue
             let endDateString = json["end_date"].stringValue
             let createdDateString = json["created_at"].stringValue
@@ -80,7 +69,15 @@ class ProxyService {
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: noOfMB, duration: formatedDuration, price: "TODO")
+            let packageID = json["package_id"].stringValue
+            var proxyPack: ProxyPack?
+            if UserManager.shared.testProxyPack?.packId == packageID {
+                proxyPack = UserManager.shared.testProxyPack
+            }
+            else {
+                let packs = UserManager.shared.proxyPacks?.filter { return  $0.packId == packageID }
+                proxyPack = packs?.first
+            }
             let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIp, usedMB: usedMBString, remainingDuration: remainigDuartionString, status: status)
             let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIp, proxyPort: proxyPort)
             let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
@@ -149,7 +146,7 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+            guard let jsonArray = JSON(data: data).array else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
@@ -173,25 +170,14 @@ class ProxyService {
         })
     }
     
-    //TODO (CVI): this should come from the API
-    func retrieveTestProxy() -> Proxy {
-        
-        let testProxyPack = ProxyPack()
-        let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: "20 min", status: "active".localized)
-        let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
-        return testProxy
-    }
-    
     func createProxy(userIP: String, proxy: Proxy?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["user_ip"  : userIP,
-                                            "country"  : proxy?.proxyDetails?.country ?? "",
-                                            "traffic"  : proxy?.proxyPack?.noOfMB ?? "0",
-                                            "status"   : "activate",
-                                            "duration" : proxy?.proxyPack?.duration ?? "0"]
+        let bodyParams: [String: String] = ["user_ip"    : userIP,
+                                            "country"    : proxy?.proxyDetails?.country ?? "",
+                                            "package_id" : proxy?.proxyPack?.packId ?? ""]
         
         RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
@@ -203,30 +189,45 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(CustomError.noData))
                 return
             }
-            let json = JSON(data)
-            self.mapCreateProxyResponse(json: json, completionHandler: completionHandler)
+            guard let jsonDict = JSON(data)["proxy"].dictionary, jsonDict.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            self.mapCreateProxyResponse(json: jsonDict, completionHandler: completionHandler)
         })
     }
     
-    private func mapCreateProxyResponse(json: JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    private func mapCreateProxyResponse(json: [String: JSON], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let dateFormatter = DateFormatter.backendResponseParse()
         
-        let proxyID = json["id"].stringValue
-        let proxyIP = json["ip"].stringValue
-        let proxyPort = json["port"].stringValue
-        let country = json["country"].stringValue
-        let userIP = json["user_ip"].stringValue
-        let duration = json["duration"].stringValue
+        guard let proxyID       = json["id"]?.stringValue,
+            let proxyIP         = json["ip"]?.stringValue,
+            let proxyPort       = json["port"]?.stringValue,
+            let country         = json["country"]?.stringValue,
+            let userIP          = json["user_ip"]?.stringValue,
+            let packageID       = json["package_id"]?.stringValue,
+            let startDateString = json["start_date"]?.stringValue,
+            let endDateString   = json["end_date"]?.stringValue,
+            let createdString   = json["created_at"]?.stringValue else {
+                
+            completionHandler(ServiceResult.failure(CustomError.invalidJson))
+            return
+        }
         
-        let startDateString = json["start_date"].stringValue
-        let endDateString = json["end_date"].stringValue
-        let createdString = json["created_at"].stringValue
         let startDate = dateFormatter.date(from: startDateString)
         let endDate = dateFormatter.date(from: endDateString)
-        
         let pacLink = String.generatePacLink(createdDate: createdString, proxyId: proxyID)
         
+        var proxyPack: ProxyPack?
+        if UserManager.shared.testProxyPack?.packId == packageID {
+            proxyPack = UserManager.shared.testProxyPack
+        }
+        else {
+            let packs = UserManager.shared.proxyPacks?.filter { return  $0.packId == packageID }
+            proxyPack = packs?.first
+        }
+    
         var remainigDuartionString = "0 min"
         if let eDate = endDate, eDate.timeIntervalSince(Date()) > 0 {
             let remainingDuration = eDate.timeIntervalSince(Date())
@@ -234,13 +235,47 @@ class ProxyService {
             remainigDuartionString = DateFormatter.readableDaysHoursMinutes(components:components)
         }
         
-        //TODO (CVI): proxy pack hardcoded for now. Waiting for API
-        let proxyPack = ProxyPack(name: "Silver Pack", noOfMB: "200", duration: duration, price: "TODO")
         let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIP, proxyPort: proxyPort)
         let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIP, usedMB: "0", remainingDuration: remainigDuartionString, status: "active".localized)
         let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
         
         completionHandler(ServiceResult.success(proxy))
+    }
+    
+    func retrieveProxyPackages(testPackage: Bool = false, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let requestType = testPackage ? IPRequestType.retrieveTestProxyPackage : IPRequestType.retrieveProxyPackages
+        
+        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var packages: [ProxyPack] = []
+            for json in jsonArray {
+                
+                let packId   = json["id"].stringValue
+                let name     = json["name"].stringValue
+                let noOfMB   = json["traffic"].stringValue
+                let duration = json["duration"].stringValue
+                let price    = json["cost"].stringValue
+                
+                let package = ProxyPack(packId: packId, name: name, noOfMB: noOfMB, duration: duration, price: price)
+                packages.append(package)
+            }
+            completionHandler(ServiceResult.success(packages))
+        })
     }
     
 }

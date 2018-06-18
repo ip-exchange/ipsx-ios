@@ -25,6 +25,8 @@ class LoadingViewController: UIViewController {
     
     //TODO (CVI): add reachability & implement retry for internet connection error (banner) and other errors (alert)
     
+    //TODO (CC): self.progressView.progress += 0.166  ?
+ 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: toastHolderView, text: "")
@@ -88,6 +90,8 @@ class LoadingViewController: UIViewController {
         proxies()
         tokenRequestList()
         proxyCountryList()
+        retrieveProxyPackages()
+        retrieveTestProxyPackage()
         options()
         
         dispatchGroup.notify(queue: .main) {
@@ -172,6 +176,44 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: .retrieveProxies, completion: {
                     self.proxies()
+                })
+            }
+        })
+    }
+    
+    func retrieveProxyPackages() {
+        
+        dispatchGroup.enter()
+        ProxyService().retrieveProxyPackages(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.proxyPacks = packages as? [ProxyPack]
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                    self.retrieveProxyPackages()
+                })
+            }
+        })
+    }
+    
+    func retrieveTestProxyPackage() {
+        
+        dispatchGroup.enter()
+        ProxyService().retrieveProxyPackages(testPackage: true, completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
+                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
+                    self.retrieveTestProxyPackage()
                 })
             }
         })

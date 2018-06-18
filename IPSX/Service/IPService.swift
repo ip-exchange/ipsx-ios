@@ -10,8 +10,6 @@ import UIKit
 
 class IPService {
     
-    //TODO (CVI): we should store the IP and make the request only when it changes
-    
     func getPublicIPAddress(completion:@escaping (_ error: Error?, _ ipAddress: String?)->()) {
         
         executeIPRequest(completion: { error, data in

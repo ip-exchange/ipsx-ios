@@ -10,6 +10,7 @@ import UIKit
 
 class NewProxyController: UIViewController {
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentIpInfoLabel: UILabel!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
@@ -27,6 +28,13 @@ class NewProxyController: UIViewController {
     let cellID = "ProxyPackCellID"
     let countrySelectionID = "CountrySearchSegueID"
     var countries: [String]?
+    var proxyPacks : [ProxyPack]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var selectedPack: ProxyPack?
     var balance: String = "" {
         didSet {
@@ -44,11 +52,6 @@ class NewProxyController: UIViewController {
     }
     var shouldRefreshIp = true
     
-    let dataSource = [ProxyPack(iconName: "PackCoins", name: "Silver Pack", noOfMB: "100", duration: "60", price: "50"),
-                      ProxyPack(iconName: "PackCoins", name: "Gold Pack", noOfMB: "500", duration: "1440", price: "100"),
-                      ProxyPack(iconName: "PackCoins", name: "Platinum Pack", noOfMB: "1024", duration: "10080", price: "200"),
-                      ProxyPack(iconName: "PackCoins", name: "Diamond Pack", noOfMB: "10240", duration: "43200", price: "500")]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.currentIpInfoLabel.text = "Getting IP info...".localized
@@ -62,19 +65,24 @@ class NewProxyController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         retrieveUserInfo()
+        updateReachabilityInfo()
         
         // After Logout
         if UserManager.shared.proxyCountries == nil {
             getProxyCountryList()
         }
-        updateReachabilityInfo()
+        if UserManager.shared.proxyPacks == nil {
+            retrieveProxyPackages()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        countries = UserManager.shared.proxyCountries
+        countries  = UserManager.shared.proxyCountries
+        proxyPacks = UserManager.shared.proxyPacks
     }
     
     deinit {
@@ -118,6 +126,25 @@ class NewProxyController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .getProxyCountryList, completion: {
                     self.getProxyCountryList()
+                })
+            }
+        })
+    }
+    
+    func retrieveProxyPackages() {
+        
+        loadingView?.startAnimating()
+        ProxyService().retrieveProxyPackages(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let packages):
+                UserManager.shared.proxyPacks = packages as? [ProxyPack]
+                self.proxyPacks = UserManager.shared.proxyPacks
+            
+            case .failure(let error):
+                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                    self.retrieveProxyPackages()
                 })
             }
         })
@@ -170,7 +197,7 @@ class NewProxyController: UIViewController {
 extension NewProxyController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return proxyPacks?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,8 +205,8 @@ extension NewProxyController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProxyPackCell
         cell.cellContentView.shadow = true
         
-        if dataSource.count > indexPath.row {
-            cell.configure(proxyPack: dataSource[indexPath.row])
+        if let proxyPack = proxyPacks?[indexPath.row] {
+            cell.configure(proxyPack: proxyPack)
         }
         return cell
     }
@@ -191,19 +218,17 @@ extension NewProxyController: UITableViewDelegate {
 
         tableView.deselectRow(at: indexPath, animated: false)
         
-        let balance = UserManager.shared.userInfo?.balance ?? 0
+        if let proxyPack = proxyPacks?[indexPath.row] {
+            self.selectedPack = proxyPack
+        }
         
-        //TODO (CVI): dummy price (update after integrating proxy plans API)
-        let packagePrice = 0
+        let balance = UserManager.shared.userInfo?.balance ?? 0
+        let packagePrice = Int(self.selectedPack?.price ?? "0") ?? 0
 
         if balance >= packagePrice {
 
-            //TODO (CC): get the final texts and localize
             switch ReachabilityManager.shared.connectionType {
             case .wifi:
-                if self.dataSource.count > indexPath.row {
-                    self.selectedPack = self.dataSource[indexPath.row]
-                }
                 self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
             case .cellular:
                 self.errorMessage = "Connect to WiFi network message".localized

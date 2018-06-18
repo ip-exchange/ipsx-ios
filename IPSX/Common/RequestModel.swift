@@ -41,6 +41,9 @@ public struct Url {
     public static let resetPassArgs         = "/Users/reset"
     public static let changePassArgs        = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs           = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
+    public static let createProxyArgs       = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
+    public static let proxyPackagesArgs     = "/packages?filter[where][cost][gt]=0&filter[where][user_id]=1?access_token=%ACCESS_TOKEN%"
+    public static let proxyTestPackageArgs  = "/packages?filter[where][cost]=0&filter[where][user_id]=1?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs          = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs      = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
     public static let optionsArgs           = "/options?access_token=%ACCESS_TOKEN%"
@@ -114,6 +117,8 @@ public enum IPRequestType: Int {
     case changePassword
     case retrieveProxies
     case createProxy
+    case retrieveProxyPackages
+    case retrieveTestProxyPackage
     case userInfo
     case updateProfile
     case requestTokens
