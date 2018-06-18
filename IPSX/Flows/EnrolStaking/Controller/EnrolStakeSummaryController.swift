@@ -10,6 +10,8 @@ import UIKit
 
 class EnrolStakeSummaryController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var walletAlliasLabel: UILabel!
     @IBOutlet weak var walletAddressLabel: UILabel!
     @IBOutlet weak var enrolmentDateLabel: UILabel!
@@ -28,6 +30,9 @@ class EnrolStakeSummaryController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var enroledAddresses: [EthAddress]? = nil
+    var ethAdresses: [EthAddress] = []
+    
+    let cellHeight: Int = 58
     
     var errorMessage: String? {
         didSet {
@@ -52,6 +57,7 @@ class EnrolStakeSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        loadValidAddresses()
         enrollmentDetails()
     }
     
@@ -92,7 +98,7 @@ class EnrolStakeSummaryController: UIViewController {
                 self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let details):
-                    if let details = details as? [(ethID: String, createdDate: Date)], let firstEnroled = details.first {
+                    if let details = details as? [(ethID: String, createdDate: Date)], let firstEnroled = details.min(by: { $0.createdDate < $1.createdDate }) {
                         self.enrollment = details
                         let ethToDisplay = UserManager.shared.ethAddres(forID: firstEnroled.ethID)
                         let letDateToDisplay = firstEnroled.createdDate
@@ -100,6 +106,15 @@ class EnrolStakeSummaryController: UIViewController {
                         self.walletAddressLabel.text = ethToDisplay?.address
                         self.enrolmentDateLabel.text = letDateToDisplay.dateToString(format: "dd MMM yyyy")
                         self.enrolmentTimeLabel.text = letDateToDisplay.dateToString(format: "HH:mm")
+                        self.ethAdresses = []
+                        for detail in details {
+                            if let ethAddr = UserManager.shared.ethAddres(forID: detail.ethID) {
+                                self.ethAdresses.append(ethAddr)
+                            }
+                        }
+                        self.tableViewHeightConstraint.constant = CGFloat(self.cellHeight * details.count)
+                        self.view.layoutIfNeeded()
+                        self.tableView.reloadData()
                         
                     }
                     else {
@@ -113,6 +128,29 @@ class EnrolStakeSummaryController: UIViewController {
                 }
             }
         })
+    }
+    
+    private func loadValidAddresses() {
+        if let addresses = UserManager.shared.ethAddresses {
+            ethAdresses = addresses.filter { return  $0.validationState == .verified }
+            tableView.reloadData()
+        }
+    }
+
+}
+
+extension EnrolStakeSummaryController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ethAdresses.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
+        let ethAddress = ethAdresses[indexPath.item]
+        cell.configure(address: ethAddress, forceSelect: true)
+        return cell
     }
 }
 

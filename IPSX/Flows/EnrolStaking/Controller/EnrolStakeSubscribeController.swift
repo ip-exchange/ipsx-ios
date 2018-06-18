@@ -122,11 +122,19 @@ class EnrolStakeSubscribeController: UIViewController {
             case .success(_):
                 DispatchQueue.main.async {
                     if self.editMode {
-                        if (self.tableView.indexPathsForSelectedRows != nil) {
-                            self.navigationController?.popViewController(animated: true)
-                        } else {
-                            self.parent?.dismiss(animated: true, completion:nil)
-                        }
+                        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+                            switch result {
+                            case .success(let ethAddresses): UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                            case .failure(_): break
+                            }
+                            DispatchQueue.main.async {
+                                if (self.tableView.indexPathsForSelectedRows != nil) {
+                                    self.navigationController?.popViewController(animated: true)
+                                } else {
+                                    self.parent?.dismiss(animated: true, completion:nil)
+                                }
+                            }
+                       })
                     }
                     else {
                         self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
