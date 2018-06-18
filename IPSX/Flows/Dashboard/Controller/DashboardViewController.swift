@@ -90,6 +90,7 @@ class DashboardViewController: UIViewController {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        tableView?.setContentOffset(.zero, animated: false)
         
         /*  No need to submit requests:
             - When no eth address: Close the app from Add Eth Address screen after Login (the user remains loggedIn)
@@ -268,6 +269,9 @@ class DashboardViewController: UIViewController {
     
     @IBAction func proxySegmentAction(_ sender: UISegmentedControl) {
         tableView?.reloadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.tableView?.setContentOffset(.zero, animated: true)
+        }
     }
     
     func updateProxyDataSource() {

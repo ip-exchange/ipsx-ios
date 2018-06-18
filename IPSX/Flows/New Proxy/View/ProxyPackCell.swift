@@ -22,7 +22,12 @@ class ProxyPackCell: UITableViewCell {
         packImageView.image = UIImage(named: proxyPack.iconName)
         nameLabel.text = proxyPack.name
         noOfMBLabel.text = "\(proxyPack.noOfMB)" + "MB"
-        durationLabel.text = proxyPack.duration
+        if let minDuration = Int(proxyPack.duration) {
+            let components = DateFormatter.secondsToDaysHoursMinutes(seconds: minDuration * 60)
+            durationLabel.text = DateFormatter.readableDaysHoursMinutes(components:components)
+        } else {
+            durationLabel.text = "0 min"
+        }
         priceLabel.text = "\(proxyPack.price)" + " " + "IPSX"
     }
 }

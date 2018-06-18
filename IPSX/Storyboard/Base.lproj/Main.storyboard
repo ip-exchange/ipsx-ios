@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="99" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
-                                <rect key="frame" x="15" y="151" width="345" height="467"/>
+                                <rect key="frame" x="15" y="101.5" width="345" height="516.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProxyPackCellID" id="Ymp-gl-Ske" customClass="ProxyPackCell" customModule="IPSX" customModuleProvider="target">
@@ -103,7 +103,7 @@
                                     <outlet property="delegate" destination="6jc-WL-DqT" id="mGv-hv-lxC"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcK-Rb-CpR" userLabel="IP Info View">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcK-Rb-CpR" userLabel="IP Info View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The proxy will be locked on your current IP address: X.X.X.X" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbF-bo-8QL">
@@ -175,9 +175,9 @@
                             <constraint firstItem="bcK-Rb-CpR" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="5xY-AW-7j0"/>
                             <constraint firstItem="s7w-JR-Nif" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" constant="15" id="BGF-r9-wGa"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="s7w-JR-Nif" secondAttribute="bottom" id="EsX-hO-JFe"/>
-                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="bcK-Rb-CpR" secondAttribute="bottom" constant="37" id="GjK-xQ-GrS"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="top" constant="50" id="U1X-mo-Zlz"/>
                             <constraint firstItem="gar-De-dh8" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="bottom" id="WPI-iS-ivX"/>
+                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="gar-De-dh8" secondAttribute="bottom" constant="37" id="ZSn-lN-ias"/>
                             <constraint firstItem="gar-De-dh8" firstAttribute="trailing" secondItem="YHk-Zj-Naz" secondAttribute="trailing" id="hYD-6f-QgR"/>
                             <constraint firstItem="gar-De-dh8" firstAttribute="leading" secondItem="YHk-Zj-Naz" secondAttribute="leading" id="iqJ-xA-hOm"/>
                             <constraint firstItem="bcK-Rb-CpR" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="bottom" id="msv-RB-FSK"/>
@@ -1165,7 +1165,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hhl-mv-Piw" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="57" width="375" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="57.5" width="375" height="0.0"/>
                                                     <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="Ykr-sJ-gYc"/>

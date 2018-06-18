@@ -13,6 +13,9 @@ class ProxySummaryViewController: UIViewController {
     let proxyPackCellID = "ProxyPackCellID"
     var proxy: Proxy?
     
+    @IBOutlet weak var confirmButton: RoundedButton!
+    @IBOutlet weak var currentIpInfoLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -26,7 +29,8 @@ class ProxySummaryViewController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var shouldRefreshIp = true
+
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -48,33 +52,39 @@ class ProxySummaryViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: tableView, text: "")
+        createToastAlert(onTopOf: separatorView, text: "")
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    deinit {
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
-    
+
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
+            self.shouldRefreshIp = true
             let reachability = note.object as! Reachability
             
             if !reachability.isReachable {
+                self.confirmButton.isEnabled = false
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+                self.currentIpInfoLabel.text = "No internet connection".localized
             } else {
+                self.confirmButton.isEnabled = ReachabilityManager.shared.connectionType == .wifi
                 self.toast?.hideToastAlert()
             }
+            self.updateReachabilityInfo()
         }
     }
     
     func configureUI() {
         
+        self.currentIpInfoLabel.text = "Getting IP info...".localized
         let deviceHeight = UIScreen.main.bounds.height
         if deviceHeight <= 568 {
             bottomConstraint.constant = bottomConstraint.constant - 70
@@ -83,17 +93,24 @@ class ProxySummaryViewController: UIViewController {
     
     @IBAction func confirmOrderAction(_ sender: Any) {
         
-        loadingView?.startAnimating()
-        IPService().getPublicIPAddress(completion: { error, ipAddress in
-            
-            self.loadingView?.stopAnimating()
-            guard let ipAddress = ipAddress, error == nil else {
+        switch ReachabilityManager.shared.connectionType {
+        case .wifi:
+            loadingView?.startAnimating()
+            IPService().getPublicIPAddress(completion: { error, ipAddress in
                 
-                self.errorMessage = "Generic Error Message".localized
-                return
-            }
-            self.createProxy(userIP: ipAddress, proxy: self.proxy)
-        })
+                self.loadingView?.stopAnimating()
+                guard let ipAddress = ipAddress, error == nil else {
+                    
+                    self.errorMessage = "Generic Error Message".localized
+                    return
+                }
+                self.createProxy(userIP: ipAddress, proxy: self.proxy)
+            })
+        case .cellular:
+            self.errorMessage = "Connect to WiFi network message".localized
+        case .none:
+            self.errorMessage = "No internet connection".localized
+        }
     }
     
     func createProxy(userIP: String, proxy: Proxy?) {
@@ -125,6 +142,31 @@ class ProxySummaryViewController: UIViewController {
             nextVC?.proxy = proxy
         }
     }
+    
+    func updateReachabilityInfo() {
+        guard shouldRefreshIp else { return }
+        DispatchQueue.main.async {
+            self.shouldRefreshIp = false
+            switch ReachabilityManager.shared.connectionType {
+            case .wifi, .cellular:
+                self.currentIpInfoLabel.text = "Getting IP info...".localized
+                IPService().getPublicIPAddress() { error, ipAddress in
+                    DispatchQueue.main.async {
+                        if let ip = ipAddress {
+                            self.confirmButton.isEnabled = ReachabilityManager.shared.connectionType == .wifi
+                            self.currentIpInfoLabel.text = (ReachabilityManager.shared.connectionType == .wifi) ? String(format: "Proxy locked on IP %@ message".localized, "\(ip)") : "Connect to WiFi network message".localized
+                        } else {
+                            self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+                        }
+                    }
+                }
+            case .none:
+                self.currentIpInfoLabel.text = "No internet connection".localized
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
 }
 
 extension ProxySummaryViewController: UITableViewDataSource {
