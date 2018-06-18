@@ -96,6 +96,9 @@
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="IHE-Si-r4Q" kind="presentation" id="oC6-FP-yJX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKu-qh-qq9" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="16" y="426.5" width="343" height="44"/>
@@ -562,6 +565,9 @@
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="IHE-Si-r4Q" kind="presentation" id="vGQ-Zb-a4J"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXX-WC-jci">
                                 <rect key="frame" x="337" y="88" width="30" height="32"/>
@@ -634,6 +640,14 @@
             </objects>
             <point key="canvasLocation" x="2308" y="115.59220389805098"/>
         </scene>
+        <!--SimpleWebView-->
+        <scene sceneID="qES-N2-AcU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SimpleWebView" id="IHE-Si-r4Q" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t8G-DL-s97" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1584" y="575"/>
+        </scene>
     </scenes>
     <resources>
         <image name="BackArrow" width="10" height="19"/>
@@ -645,6 +659,7 @@
         <image name="stakingLogo" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="vGQ-Zb-a4J"/>
         <segue reference="6Wn-Rd-q24"/>
     </inferredMetricsTieBreakers>
 </document>
