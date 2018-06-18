@@ -78,59 +78,28 @@ class EnrollmentService {
                 return
             }
             
-            switch requestType {
-                
-            case .enrollTestingDetails:
-                
-                guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
-                    completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                    return
-                }
-                
-                for json in jsonArray {
-                    
-                    let status        = json["status"].stringValue
-                    let ethId         = json["usereth_id"].stringValue
-                    let createdString = json["created_at"].stringValue
-                    let dateFormatter = DateFormatter.backendResponseParse()
-                    
-                    // Only one address can be accepted for Testing
-                    if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
-                        completionHandler(ServiceResult.success((ethId, createdDate)))
-                    }
-                    else {
-                        completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                    }
-                }
-                
-            case .enrollStakingDetails:
-                
-                guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
-                    completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                    return
-                }
-                
-                var enrollmentDetails: [(String, Date)] = []
-                
-                for json in jsonArray {
-                    
-                    let status        = json["status"].stringValue
-                    let ethId         = json["usereth_id"].stringValue
-                    let createdString = json["created_at"].stringValue
-                    let dateFormatter = DateFormatter.backendResponseParse()
-                    
-                    if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
-                        enrollmentDetails.append((ethId, createdDate))
-                    }
-                    else {
-                        completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                    }
-                }
-                completionHandler(ServiceResult.success(enrollmentDetails))
-                
-            default:
-                break
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
             }
+            
+            var enrollmentDetails: [(String, Date)] = []
+            
+            for json in jsonArray {
+                
+                let status        = json["status"].stringValue
+                let ethId         = json["usereth_id"].stringValue
+                let createdString = json["created_at"].stringValue
+                let dateFormatter = DateFormatter.backendResponseParse()
+                
+                if status == "accepted", let createdDate = dateFormatter.date(from: createdString) {
+                    enrollmentDetails.append((ethId, createdDate))
+                }
+                else {
+                    completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                }
+            }
+            completionHandler(ServiceResult.success(enrollmentDetails))
         })
     }
 }

@@ -102,13 +102,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
             }
             
-        case .enrollTestingDetails:
-            var url = Url.base + Url.enrollTestingArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
         case .enrollStakingDetails:
             var url = Url.base + Url.enrollStakingArgs
             if let params = urlParams as? [String: String] {

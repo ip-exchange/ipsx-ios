@@ -25,8 +25,7 @@ class EnrolStakeSubscribeController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     var editMode = false
-    var enroledAddresses: [EthAddress]? = nil
-
+    var onDismiss: ((_ hasUpdatedStaking: Bool)->())?
     var selectedEths: [String]  {
         var selected: [String] = []
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
@@ -124,7 +123,12 @@ class EnrolStakeSubscribeController: UIViewController {
                     if self.editMode {
                         UserInfoService().retrieveETHaddresses(completionHandler: { result in
                             switch result {
-                            case .success(let ethAddresses): UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                            case .success(let ethAddresses):
+                                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                                DispatchQueue.main.async {
+                                    self.onDismiss?(true)
+                                }
+
                             case .failure(_): break
                             }
                             DispatchQueue.main.async {

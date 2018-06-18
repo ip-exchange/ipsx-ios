@@ -131,7 +131,6 @@ public enum IPRequestType: Int {
     case getTokenRequestList
     case enrollTesting
     case enrollStaking
-    case enrollTestingDetails
     case enrollStakingDetails
     case getSettings
     case updateSettings
