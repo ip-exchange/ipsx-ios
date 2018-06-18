@@ -16,10 +16,14 @@ class EthWalletCell: UITableViewCell {
     @IBOutlet weak var statsuImageView: UIImageView?
     @IBOutlet weak var selectedImageView: UIImageView?
     
-    func configure(address: EthAddress) {
+    private var forceSel = false
+    
+    func configure(address: EthAddress, forceSelect: Bool = false) {
+        forceSel = forceSelect
         aliasLabel.text = address.alias
         addressLabel.text = address.address
         selectedImageView?.isHidden = !isSelected
+        if forceSel { selectedImageView?.isHidden = false }
         switch address.validationState {
         case .verified:
             statsuImageView?.image = UIImage(named: "walletAccepted")
@@ -32,10 +36,12 @@ class EthWalletCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         selectedImageView?.isHidden = !selected
+        if forceSel { selectedImageView?.isHidden = false }
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         selectedImageView?.isHidden = !highlighted
+        if forceSel { selectedImageView?.isHidden = false }
     }
 }
 
