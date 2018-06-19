@@ -184,11 +184,6 @@ class ProfileViewController: UIViewController {
         case "walletViewIdentifier":
             let addController = segue.destination as? AddWalletController
             addController?.ethereumAddress = selectedAddress
-            addController?.onDismiss = { hasUpdatedETH in
-                if hasUpdatedETH {
-                    self.retrieveETHaddresses()
-                }
-            }
             
         case "enrollTestingSummarySegueID":
             let summaryController = segue.destination as? EnrolTestSummaryController

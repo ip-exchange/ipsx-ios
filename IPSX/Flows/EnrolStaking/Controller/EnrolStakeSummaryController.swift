@@ -16,7 +16,6 @@ class EnrolStakeSummaryController: UIViewController {
     @IBOutlet weak var walletAddressLabel: UILabel!
     @IBOutlet weak var enrolmentDateLabel: UILabel!
     @IBOutlet weak var enrolmentTimeLabel: UILabel!
-    
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
@@ -26,7 +25,6 @@ class EnrolStakeSummaryController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var enroledAddresses: [EthAddress]? = nil
@@ -44,9 +42,10 @@ class EnrolStakeSummaryController: UIViewController {
     var enrollment: [(ethID: String, createdDate: Date)] = []
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
         editButton.isHidden = enroledAddresses == nil
+        enrollmentDetails()
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,7 +57,6 @@ class EnrolStakeSummaryController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         loadValidAddresses()
-        enrollmentDetails()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,7 +68,11 @@ class EnrolStakeSummaryController: UIViewController {
         if segue.identifier == "editStakingsSegueID" {
             let enrolController = segue.destination as? EnrolStakeSubscribeController
             enrolController?.editMode = true
-            enrolController?.enroledAddresses = self.enroledAddresses
+            enrolController?.onDismiss = { hasUpdatedStaking in
+                if hasUpdatedStaking {
+                    self.enrollmentDetails()
+                }
+            }
         }
     }
     

@@ -33,7 +33,6 @@ class AddWalletController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
-    var onDismiss: ((_ hasUpdatedETH: Bool)->())?
     var shouldPop = false
     
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
@@ -159,7 +158,6 @@ class AddWalletController: UIViewController {
             case .success(_):
                 
                 DispatchQueue.main.async {
-                    self.onDismiss?(true)
                     self.navigationController?.popViewController(animated: true)
                 }
                 
@@ -198,7 +196,6 @@ class AddWalletController: UIViewController {
                         UserManager.shared.ethAddresses = [ethAddress]
                     }
                     if self.shouldPop {
-                        self.onDismiss?(true)
                         self.navigationController?.popViewController(animated: true)
                     } else {
                         self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
