@@ -132,30 +132,26 @@ class EditProfileController: UIViewController {
             dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
             dataChanged = dataChanged || (lastNameTextField.text  != userInfo?.lastName)
             dataChanged = dataChanged || (telegramTextField.text  != userInfo?.telegram)
-            dataChanged = dataChanged && firstNameTextField.text  != "" && lastNameTextField.text != "" && telegramTextField.text != "" && newText.count > 0
         case firstNameTextField:
             dataChanged = dataChanged || newText != userInfo?.firstName
             dataChanged = dataChanged || (emailTextField.text    != userInfo?.email)
             dataChanged = dataChanged || (lastNameTextField.text != userInfo?.lastName)
             dataChanged = dataChanged || (telegramTextField.text != userInfo?.telegram)
-            dataChanged = dataChanged && lastNameTextField.text != "" && telegramTextField.text != "" && isEmailValid(text: emailTextField.text ?? "") && newText.count > 0
         case lastNameTextField:
             dataChanged = dataChanged || newText != userInfo?.lastName
             dataChanged = dataChanged || (emailTextField.text     != userInfo?.email)
             dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
             dataChanged = dataChanged || (telegramTextField.text  != userInfo?.telegram)
-            dataChanged = dataChanged && firstNameTextField.text  != "" && telegramTextField.text != "" && isEmailValid(text: emailTextField.text ?? "") && newText.count > 0
         case telegramTextField:
             dataChanged = dataChanged || newText != userInfo?.telegram
             dataChanged = dataChanged || (emailTextField.text     != userInfo?.email)
             dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
             dataChanged = dataChanged || (lastNameTextField.text  != userInfo?.lastName)
-            dataChanged = dataChanged && firstNameTextField.text  != "" && lastNameTextField.text != "" && isEmailValid(text: emailTextField.text ?? "") && newText.count > 0
         default:
             break
         }
         
-        saveButton.isEnabled = dataChanged && selectedCountryLabel.text != "Select a country".localized
+        saveButton.isEnabled = dataChanged
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
