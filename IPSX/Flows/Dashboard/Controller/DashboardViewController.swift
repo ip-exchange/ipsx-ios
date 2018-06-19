@@ -83,7 +83,7 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        tableView?.layer.cornerRadius = 5
      }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -340,6 +340,16 @@ extension DashboardViewController: UITableViewDataSource {
         cell.configure(proxy: filteredProxies[indexPath.item])
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 18
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
+        headerView.backgroundColor = .clear
+        return headerView
     }
 }
 
