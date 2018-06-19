@@ -63,8 +63,7 @@ class ProxyService {
             let userIp = json["user_ip"].stringValue
             let status = json["status"].stringValue
             let usage = json["usage"].doubleValue
-            let noOfMBDouble = json["traffic"].doubleValue
-            let usedMBString = (noOfMBDouble - usage).cleanString
+            let usedMBString = usage.cleanString
             
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
