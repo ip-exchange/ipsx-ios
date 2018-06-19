@@ -46,7 +46,9 @@ class EnrollmentService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: [String]] = ["eths": ethsArray]
+        let ethsIntArray = ethsArray.map { Int($0) ?? 0 }
+        
+        let bodyParams: [String: [Int]] = ["eths": ethsIntArray]
         
         RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
             
