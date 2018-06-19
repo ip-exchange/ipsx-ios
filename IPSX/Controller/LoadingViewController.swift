@@ -23,10 +23,8 @@ class LoadingViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     let dispatchGroup = DispatchGroup()
     
-    //TODO (CVI): add reachability & implement retry for internet connection error (banner) and other errors (alert)
+    var noOfRequests: Float = 9
     
-    //TODO (CC): self.progressView.progress += 0.166  ?
- 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: toastHolderView, text: "")
@@ -110,7 +108,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let countryList):
                 UserManager.shared.userCountries = countryList as? [[String: String]]
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
             case .failure(_):
                 print("Generic Error Message".localized)
             }
@@ -127,7 +125,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let ethAddresses):
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
 
             case .failure(let error):
                 
@@ -148,7 +146,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
 
             case .failure(let error):
                 
@@ -170,7 +168,7 @@ class LoadingViewController: UIViewController {
                 
             case .success(let proxyArray):
                 UserManager.shared.proxies = proxyArray as? [Proxy]
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
 
             case .failure(let error):
                 
@@ -190,7 +188,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let packages):
                 UserManager.shared.proxyPacks = packages as? [ProxyPack]
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveProxyPackages, completion: {
@@ -209,7 +207,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let packages):
                 UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
@@ -229,7 +227,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let tokenRequests):
                 UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                DispatchQueue.main.async { self.progressView.progress += 0.166 }
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
 
             case .failure(let error):
                 
@@ -250,7 +248,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let countryList):
                 UserManager.shared.proxyCountries = countryList as? [String]
-                DispatchQueue.main.async { self.progressView.progress +=  0.166 }
+                DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
 
             case .failure(let error):
                 
@@ -270,6 +268,7 @@ class LoadingViewController: UIViewController {
             switch result {
             case .success(let options):
                 UserManager.shared.options = options as? Options
+                DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
                 
             case .failure(let error):
                 
