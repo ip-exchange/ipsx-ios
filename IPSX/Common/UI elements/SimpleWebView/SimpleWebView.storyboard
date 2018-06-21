@@ -35,9 +35,8 @@
                                             <action selector="closeAction:" destination="TkE-9W-sgn" eventType="touchUpInside" id="lrD-ar-vFM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FAQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAC-Gx-MDo">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAC-Gx-MDo">
                                         <rect key="frame" x="170" y="62" width="34" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -45,7 +44,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="XAC-Gx-MDo" secondAttribute="bottom" constant="11" id="GPF-VH-kAk"/>
                                     <constraint firstAttribute="height" constant="94" id="Vz4-IT-7J3"/>
+                                    <constraint firstItem="XAC-Gx-MDo" firstAttribute="centerX" secondItem="2ic-Q4-teT" secondAttribute="centerX" id="xui-Vi-6Fn"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DF7-Bb-tKw" userLabel="Separator">
@@ -84,6 +85,7 @@
                     <navigationItem key="navigationItem" id="P3V-m0-3NH"/>
                     <connections>
                         <outlet property="loadingView" destination="UFe-5U-xuL" id="f9P-aL-ROG"/>
+                        <outlet property="topBarTitleLabel" destination="XAC-Gx-MDo" id="g2r-jW-nsg"/>
                         <outlet property="webViewHolder" destination="QQ9-Rk-qQ2" id="Lhe-SK-diH"/>
                     </connections>
                 </viewController>

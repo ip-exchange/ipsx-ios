@@ -29,7 +29,7 @@ class LandingViewController: UIViewController {
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
-        labelTopConstraint.constant = (deviceHeight - bottomView.frame.height) / 2
+        labelTopConstraint.constant = ((deviceHeight - bottomView.frame.height) / 2) - 30
     }
     
 }

@@ -11,6 +11,7 @@ import WebKit
 
 class SimpleWebView: UIViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var topBarTitleLabel: UILabel!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var webViewHolder: UIView!
     
@@ -18,19 +19,21 @@ class SimpleWebView: UIViewController, WKNavigationDelegate {
     
     //Update in prepareForSegeue if the screen is reused
     var loadingURLString: String? = "https://devapp.ip.sx/webview/faq/staking"
+    var titleString = "FAQ"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         webView = WKWebView()
         webView.navigationDelegate = self
         
         if let stringUrl = loadingURLString, let url = URL(string: stringUrl) {
             webView.load(URLRequest(url: url))
             webView.allowsBackForwardNavigationGestures = true
-         }
+        }
+        topBarTitleLabel.text = titleString
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)

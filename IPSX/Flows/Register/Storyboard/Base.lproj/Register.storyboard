@@ -186,8 +186,8 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKK-Rd-zay" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="93" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="0.5"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29613226232394368" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="SOO-bU-Vvg"/>
                                         </constraints>
@@ -195,7 +195,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="nKK-Rd-zay" secondAttribute="bottom" id="4rg-yw-Uee"/>
+                                    <constraint firstAttribute="bottom" secondItem="nKK-Rd-zay" secondAttribute="bottom" constant="1" id="4rg-yw-Uee"/>
                                     <constraint firstAttribute="height" constant="94" id="FmO-mg-ehL"/>
                                     <constraint firstAttribute="trailing" secondItem="nKK-Rd-zay" secondAttribute="trailing" id="HGu-Ph-NMI"/>
                                     <constraint firstItem="nKK-Rd-zay" firstAttribute="leading" secondItem="zhQ-Ow-7OM" secondAttribute="leading" id="LbY-Ek-gxZ"/>
@@ -274,170 +274,56 @@
                                 <color key="textColor" red="0.0" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YdG-Ib-BJn">
-                                <rect key="frame" x="45.5" y="152.5" width="284" height="260"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vui-al-Ln8" userLabel="AgreeView">
+                                <rect key="frame" x="45" y="158.5" width="284" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79U-ly-6mk" userLabel="ReadWPView">
-                                        <rect key="frame" x="0.0" y="0.0" width="284" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rR5-6h-BhI">
-                                                <rect key="frame" x="29" y="0.0" width="255" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="I confirm that I've read ">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.16470588235294117" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="THE WHITEPAPER">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AUX-Qq-OFX" userLabel="Separator">
-                                                <rect key="frame" x="28" y="42" width="257" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.80784313725490198" green="0.83137254901960778" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ax-2O-DpZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="45"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="checkBoxEmpty"/>
-                                                <state key="selected" title="ReadWP" image="checkBoxChecked">
-                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="CFb-0B-sVk"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FOw-kx-guO" userLabel="RiskView">
-                                        <rect key="frame" x="0.0" y="70" width="284" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMc-gR-EkD">
-                                                <rect key="frame" x="29" y="0.0" width="255" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="I understant the risks involved by the type of investment">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="be8-ma-qTb" userLabel="Separator">
-                                                <rect key="frame" x="28" y="42" width="257" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.80784313725490198" green="0.83099997039999995" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evG-EO-NtR">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="45"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="checkBoxEmpty"/>
-                                                <state key="selected" title="UnderstandRisk" image="checkBoxChecked">
-                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="SFY-MY-GyA"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wg-6O-F3b" userLabel="NonUSView">
-                                        <rect key="frame" x="0.0" y="140" width="284" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Kh-uE-44e">
-                                                <rect key="frame" x="29" y="0.0" width="255" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="I confirm that I'm not a resident of China, Taiwan or US/Canada">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CNI-Oy-FTX" userLabel="Separator">
-                                                <rect key="frame" x="28" y="43" width="257" height="0.0"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.80784313725490198" green="0.83137254901960778" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b92-1b-Uo3">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="45"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="checkBoxEmpty"/>
-                                                <state key="selected" title="ConfirmNonUS" image="checkBoxChecked">
-                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="8YD-h3-QD2"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vui-al-Ln8" userLabel="AgreeView">
-                                        <rect key="frame" x="0.0" y="210" width="284" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ea-PD-dt0">
-                                                <rect key="frame" x="29" y="0.0" width="255" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="I agree with ">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="TERMS AND CONDITIONS">
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.16551339285714287" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" metaFont="system"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGR-wO-Cnu" userLabel="Separator">
-                                                <rect key="frame" x="29" y="42" width="257" height="1"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.80800002810000005" green="0.83137254901960778" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvU-me-LDY">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="45"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="checkBoxEmpty"/>
-                                                <state key="selected" title="AgreeTerms" image="checkBoxChecked">
-                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="ZIX-Rv-kCB"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ea-PD-dt0">
+                                        <rect key="frame" x="29" y="0.0" width="255" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="I confirm that I agree with ">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="TERMS AND CONDITIONS">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.16551339285714287" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvU-me-LDY">
+                                        <rect key="frame" x="0.0" y="0.0" width="31" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                        <state key="normal" title="Agreement" image="checkBoxEmpty">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="selected" image="checkBoxChecked">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="ZIX-Rv-kCB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zsm-7G-Wdy">
+                                        <rect key="frame" x="29" y="0.0" width="255" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
+                                        <connections>
+                                            <action selector="termsAndConditionsAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="BS8-Sd-y9q"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="260" id="3H1-Hr-HHi"/>
+                                    <constraint firstAttribute="height" constant="50" id="RSh-Xe-D8A"/>
                                 </constraints>
-                            </stackView>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJr-kv-cZI" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="45.5" y="586" width="284" height="44"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -481,7 +367,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7or-DF-D72" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
-                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.296324823943662" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="RKI-lI-c4T"/>
                                 </constraints>
@@ -497,17 +383,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="YdG-Ib-BJn" firstAttribute="top" secondItem="iVB-OC-kfH" secondAttribute="bottom" constant="38" id="2OC-0a-Xcb"/>
                             <constraint firstItem="Jyq-XU-knM" firstAttribute="leading" secondItem="th7-gf-lwT" secondAttribute="leading" id="4qi-Jc-7ra"/>
                             <constraint firstItem="iVB-OC-kfH" firstAttribute="top" secondItem="7or-DF-D72" secondAttribute="bottom" constant="23.5" id="8c9-66-IHG"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="bottom" secondItem="Jyq-XU-knM" secondAttribute="bottom" id="B8h-OS-WcI"/>
-                            <constraint firstItem="YdG-Ib-BJn" firstAttribute="leading" secondItem="iVB-OC-kfH" secondAttribute="leading" id="DdL-g7-yRe"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="bottom" secondItem="zJr-kv-cZI" secondAttribute="bottom" constant="37" id="GmH-Xv-xKg"/>
                             <constraint firstItem="c05-Gj-MdM" firstAttribute="centerY" secondItem="th7-gf-lwT" secondAttribute="centerY" id="MJO-dp-KUo"/>
+                            <constraint firstItem="Vui-al-Ln8" firstAttribute="leading" secondItem="th7-gf-lwT" secondAttribute="leading" constant="45" id="NSk-rT-KQa"/>
                             <constraint firstItem="7or-DF-D72" firstAttribute="leading" secondItem="hM3-yr-38q" secondAttribute="leading" id="Nw9-gd-pMr"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="Jyq-XU-knM" secondAttribute="trailing" id="OAm-pl-sgr"/>
                             <constraint firstItem="c05-Gj-MdM" firstAttribute="centerX" secondItem="th7-gf-lwT" secondAttribute="centerX" id="P6H-K8-JgP"/>
-                            <constraint firstItem="YdG-Ib-BJn" firstAttribute="centerX" secondItem="iVB-OC-kfH" secondAttribute="centerX" id="QUd-wG-thE"/>
+                            <constraint firstItem="Vui-al-Ln8" firstAttribute="top" secondItem="iVB-OC-kfH" secondAttribute="bottom" constant="44" id="Pt7-Np-m2B"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="hM3-yr-38q" secondAttribute="trailing" id="QaJ-Rd-Csf"/>
                             <constraint firstItem="th7-gf-lwT" firstAttribute="top" secondItem="hM3-yr-38q" secondAttribute="top" constant="50" id="RxO-3A-wgx"/>
                             <constraint firstItem="iVB-OC-kfH" firstAttribute="centerX" secondItem="th7-gf-lwT" secondAttribute="centerX" id="X4Y-9t-wnY"/>
@@ -516,6 +401,7 @@
                             <constraint firstItem="th7-gf-lwT" firstAttribute="top" secondItem="Jyq-XU-knM" secondAttribute="top" constant="20" id="dfi-0X-TKz"/>
                             <constraint firstItem="7or-DF-D72" firstAttribute="top" secondItem="hM3-yr-38q" secondAttribute="bottom" id="lHQ-Cf-5kj"/>
                             <constraint firstItem="7or-DF-D72" firstAttribute="trailing" secondItem="hM3-yr-38q" secondAttribute="trailing" id="oRU-gw-fev"/>
+                            <constraint firstItem="th7-gf-lwT" firstAttribute="trailing" secondItem="Vui-al-Ln8" secondAttribute="trailing" constant="46" id="zOg-cw-Pqo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="th7-gf-lwT"/>
                     </view>
@@ -523,19 +409,27 @@
                     <connections>
                         <outlet property="backgroundImageView" destination="Jyq-XU-knM" id="4Be-5B-wFP"/>
                         <outlet property="loadingView" destination="c05-Gj-MdM" id="BPd-UA-RbE"/>
-                        <outlet property="readWPLabel" destination="rR5-6h-BhI" id="kKQ-KW-dsy"/>
                         <outlet property="registerButton" destination="zJr-kv-cZI" id="MKM-zt-x9x"/>
                         <outlet property="separatorView" destination="7or-DF-D72" id="ybL-9x-3GV"/>
                         <outlet property="topBarView" destination="hM3-yr-38q" id="xcq-Bb-FpN"/>
                         <outlet property="topConstraintOutlet" destination="lHQ-Cf-5kj" id="Rss-Ja-vxd"/>
                         <segue destination="R1q-eW-KM7" kind="show" identifier="showRegConfirmationSegueID" id="AcT-LT-hvw"/>
                         <segue destination="IVQ-OJ-hHf" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="xlX-v8-zit"/>
+                        <segue destination="T1P-fu-tvH" kind="presentation" identifier="TermsWebViewSegueID" id="TNl-m6-ngZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVn-Vo-kvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IVQ-OJ-hHf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3468" y="131.78410794602701"/>
+        </scene>
+        <!--SimpleWebView-->
+        <scene sceneID="oRg-GR-iCh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SimpleWebView" id="T1P-fu-tvH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vc9-To-GUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4075" y="-320"/>
         </scene>
         <!--Register Done Controller-->
         <scene sceneID="AE8-0u-CFe">
@@ -557,7 +451,7 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0QY-7C-ld4" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="93" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.299378301056338" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="wEH-Xt-LIF"/>
                                         </constraints>
@@ -688,7 +582,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="626-p6-04Z">
-                                        <rect key="frame" x="8" y="50" width="44" height="44"/>
+                                        <rect key="frame" x="12" y="50" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="ulN-EH-xGQ"/>
                                         </constraints>
@@ -704,7 +598,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="94" id="99A-EN-vhh"/>
-                                    <constraint firstItem="626-p6-04Z" firstAttribute="leading" secondItem="mZj-xu-9D4" secondAttribute="leading" constant="8" id="Y5a-zM-FRI"/>
+                                    <constraint firstItem="626-p6-04Z" firstAttribute="leading" secondItem="mZj-xu-9D4" secondAttribute="leading" constant="12" id="Y5a-zM-FRI"/>
                                     <constraint firstAttribute="bottom" secondItem="626-p6-04Z" secondAttribute="bottom" id="qQS-99-Gps"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="626-p6-04Z" secondAttribute="trailing" constant="20" symbolic="YES" id="wwU-vp-Jfs"/>
                                 </constraints>

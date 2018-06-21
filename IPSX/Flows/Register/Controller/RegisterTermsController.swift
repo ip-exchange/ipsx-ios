@@ -41,6 +41,18 @@ class RegisterTermsController: UIViewController {
         }
     }
     
+    @IBAction func termsAndConditionsAction(_ sender: Any) {
+        performSegue(withIdentifier: "TermsWebViewSegueID", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TermsWebViewSegueID" {
+            let destinationWebController = segue.destination as? SimpleWebView
+            destinationWebController?.loadingURLString = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
+            destinationWebController?.titleString = "T&C".localized
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerButton.isEnabled = false
@@ -84,7 +96,7 @@ class RegisterTermsController: UIViewController {
             statesDic[titleText] = sender.isSelected
         }
         var allAgreed = true
-        if statesDic.values.contains(false) || statesDic.values.count < 4 {
+        if statesDic.values.contains(false) {
             allAgreed = false
         }
         registerButton.isEnabled = allAgreed
