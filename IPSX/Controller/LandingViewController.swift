@@ -32,4 +32,5 @@ class LandingViewController: UIViewController {
         labelTopConstraint.constant = ((deviceHeight - bottomView.frame.height) / 2) - 30
     }
     
+    @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }
 }

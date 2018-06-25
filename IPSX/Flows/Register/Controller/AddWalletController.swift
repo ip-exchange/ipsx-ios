@@ -34,6 +34,7 @@ class AddWalletController: UIViewController {
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
     var shouldPop = false
+    var registerFlow = false
     
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
@@ -50,7 +51,12 @@ class AddWalletController: UIViewController {
     func loginAnotherAccount() {
         
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+        
+        if registerFlow {
+            self.performSegue(withIdentifier: "UnwindToLandingID", sender: nil)
+        } else {
+            self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+        }
     }
     
     override func viewDidLoad() {

@@ -29,6 +29,8 @@ class LoginCredentialsControler: UIViewController {
 
     var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
+    var registerFlow = false
+
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var errorMessage: String? {
         didSet {
@@ -136,8 +138,12 @@ class LoginCredentialsControler: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ForgotPasswordSegueID", let nextController = segue.destination as? ForgotPassController {
-            nextController.noLandingScreen = backButton.isHidden
+        if segue.identifier == "ForgotPasswordSegueID" {
+            let nextController = segue.destination as? ForgotPassController
+            nextController?.noLandingScreen = backButton.isHidden
+        } else if segue.identifier == "showAddWalletSegueID" {
+            let nextController = segue.destination as? AddWalletController
+            nextController?.registerFlow = registerFlow
         }
     }
     

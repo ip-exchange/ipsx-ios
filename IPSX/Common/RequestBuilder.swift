@@ -259,13 +259,13 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 else if let httpResponse = response as? HTTPURLResponse , let data = data {
                     
                     let statusCode = httpResponse.statusCode
-                    self.handleError(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
+                    self.handleResponse(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
                 }
             }).resume()
         }
     }
     
-    func handleError(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
+    func handleResponse(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
         
         switch statusCode {
             
