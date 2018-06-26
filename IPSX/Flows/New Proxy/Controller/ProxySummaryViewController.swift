@@ -48,12 +48,12 @@ class ProxySummaryViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
