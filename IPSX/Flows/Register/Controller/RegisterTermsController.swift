@@ -212,7 +212,7 @@ extension RegisterTermsController: ErrorPresentable {
         
         switch requestType {
             
-        case .fbRegister:
+        case .fbRegister, .register:
             
             switch error {
             case CustomError.alreadyExists:

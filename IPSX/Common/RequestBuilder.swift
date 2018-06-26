@@ -320,7 +320,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
             switch requestType {
                 
-            case .addEthAddress, .updateEthAddress, .fbRegister:
+            case .addEthAddress, .updateEthAddress, .fbRegister, .register:
                 print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
                 completion(CustomError.alreadyExists, data)
                
