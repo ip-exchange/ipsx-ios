@@ -96,6 +96,13 @@ public class UserManager: NSObject {
         }
     }
     
+    var hasValidAddress: Bool {
+        if let validAddresses = ethAddresses?.filter({ return  $0.validationState == .verified }) {
+            return validAddresses.count > 0
+        }
+        return false
+    }
+    
     func storeAccessDetails(userId: String, accessToken: String, email: String = "", password: String = "", facebookToken: String = "") {
         
         KeychainWrapper.setString(value: userId, forKey: KeychainKeys.userId)

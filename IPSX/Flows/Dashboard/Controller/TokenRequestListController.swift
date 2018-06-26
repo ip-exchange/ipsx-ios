@@ -54,6 +54,12 @@ class TokenRequestListController: UIViewController {
     }
     
     @IBAction func createRequestAction(_ sender: Any) {
+        
+        guard UserManager.shared.hasValidAddress else {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            return
+        }
+        
         let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
         var noOfTokenRequests: Int = 1
         
