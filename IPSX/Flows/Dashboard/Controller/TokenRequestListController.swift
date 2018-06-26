@@ -53,6 +53,31 @@ class TokenRequestListController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
+    @IBAction func createRequestAction(_ sender: Any) {
+        
+        guard UserManager.shared.hasValidAddress else {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            return
+        }
+        
+        let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
+        var noOfTokenRequests: Int = 1
+        
+        if let tokenRequests = UserManager.shared.tokenRequests {
+            for tokenRequest in tokenRequests {
+                if tokenRequest.isFromToday() {
+                    noOfTokenRequests = noOfTokenRequests + 1
+                }
+            }
+        }
+        if noOfTokenRequests <= maxTokenRequests {
+            self.performSegue(withIdentifier: "showCreateTokenSegueID", sender: self)
+        } else {
+            let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
+            self.errorMessage = formatedMessage
+        }
+     }
+    
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
             let reachability = note.object as! Reachability
@@ -104,6 +129,7 @@ class TokenRequestListController: UIViewController {
         }
         return ethAddress
     }
+    
 }
 
 extension TokenRequestListController: UITableViewDataSource {

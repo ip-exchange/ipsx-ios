@@ -46,7 +46,7 @@
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="8al-NV-Tf2" kind="show" identifier="showCreateTokenSegueID" id="X2L-px-HTF"/>
+                                            <action selector="createRequestAction:" destination="9x0-LF-Zd9" eventType="touchUpInside" id="pVI-co-8tH"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T2-NX-UlG">
@@ -243,6 +243,7 @@
                         <outlet property="toastHolderView" destination="tri-Ec-HJv" id="KnU-9K-vqB"/>
                         <outlet property="topBarView" destination="fqy-AL-kfs" id="l7O-DY-Zes"/>
                         <outlet property="topConstraintOutlet" destination="itf-A7-p2M" id="xra-hL-fAH"/>
+                        <segue destination="8al-NV-Tf2" kind="show" identifier="showCreateTokenSegueID" id="SFn-t8-M4G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6pq-8Y-JIy" userLabel="First Responder" sceneMemberID="firstResponder"/>

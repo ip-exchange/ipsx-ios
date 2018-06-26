@@ -72,7 +72,7 @@ class DashboardViewController: UIViewController {
                 }
             }
         }
-        if noOfTokenRequests < maxTokenRequests {
+        if noOfTokenRequests <= maxTokenRequests {
             self.tokenRequests = UserManager.shared.tokenRequests
             self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
         } else {

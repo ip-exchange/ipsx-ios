@@ -40,7 +40,9 @@ class ProfileViewController: UIViewController {
     }
   
     @IBAction func enrolTestingAction(_ sender: Any) {
-        if UserManager.shared.isEnroledForTesting {
+        if !UserManager.shared.hasValidAddress {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+        } else if UserManager.shared.isEnroledForTesting {
             performSegue(withIdentifier: "enrollTestingSummarySegueID", sender: self)
         } else {
             performSegue(withIdentifier: "enrollTestingSegueID", sender: self)
@@ -48,7 +50,9 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func EnrolStakingAction(_ sender: Any) {
-        if UserManager.shared.isEnroledForStaking {
+        if !UserManager.shared.hasValidAddress {
+            toast?.showToastAlert("You need to have at least one validated ETH address if the user doesn't have any validated ETH address.", autoHideAfter: 5)
+        } else if UserManager.shared.isEnroledForStaking {
             performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
         } else {
             performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
