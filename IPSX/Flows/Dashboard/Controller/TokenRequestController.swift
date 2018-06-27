@@ -136,7 +136,7 @@ class TokenRequestController: UIViewController {
         if let addresses = UserManager.shared.ethAddresses {
             ethAdresses = addresses.filter { return  $0.validationState == .verified }
             if let defaultAddrID = UserDefaults.standard.loadDelfaultETHAddressID() {
-                let matches = addresses.filter { return $0.ethID == defaultAddrID }
+                let matches = ethAdresses.filter { return $0.ethID == defaultAddrID }
                 if matches.count == 1 {
                     selectedAddress = matches.first
                 } else {
