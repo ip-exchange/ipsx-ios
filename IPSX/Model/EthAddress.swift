@@ -21,6 +21,8 @@ struct EthAddress {
     var address: String
     var alias: String
     var validationState: EthAddressState = .pending
+    
+    //"active" / "locked"
     var status: String
     var testingEnrollmentDate: Date?
     var stakingEnrollmentDate: Date?
