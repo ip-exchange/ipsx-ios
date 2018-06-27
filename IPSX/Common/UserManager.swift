@@ -38,7 +38,7 @@ public class UserManager: NSObject {
     var isEnroledForTesting: Bool {
         get {
             guard let addresses = ethAddresses else { return false }
-            return addresses.contains() { address in address.testingEnrollmentDate != nil }
+            return addresses.contains() { address in (address.testingEnrollmentDate != nil && address.validationState == .verified) }
         }
     }
     
@@ -61,7 +61,7 @@ public class UserManager: NSObject {
     var isEnroledForStaking: Bool {
         get {
             guard let addresses = ethAddresses else { return false }
-            return addresses.contains() { address in address.stakingEnrollmentDate != nil }
+            return addresses.contains() { address in (address.stakingEnrollmentDate != nil && address.validationState == .verified) }
         }
     }
     
