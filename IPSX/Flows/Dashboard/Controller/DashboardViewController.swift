@@ -55,30 +55,15 @@ class DashboardViewController: UIViewController {
         get {
             let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active" : "expired"
             return proxies.filter { $0.proxyDetails?.status == filterString }
-         }
+        }
     }
     
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
-        let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
-        var noOfTokenRequests: Int = 1
-        
-        if let tokenRequests = UserManager.shared.tokenRequests {
-            for tokenRequest in tokenRequests {
-                if tokenRequest.isFromToday() {
-                    noOfTokenRequests = noOfTokenRequests + 1
-                }
-            }
-        }
-        if noOfTokenRequests <= maxTokenRequests {
-            self.tokenRequests = UserManager.shared.tokenRequests
-            self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
-        } else {
-            let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
-            self.errorMessage = formatedMessage
-        }
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
