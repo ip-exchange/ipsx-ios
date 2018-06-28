@@ -69,6 +69,7 @@ class AddWalletController: UIViewController {
             ethAddresRichTextField.contentTextField?.text = address.address
             screenTitleLabel?.text = "Edit ETH Address text".localized
             sectionTitleLabel?.text = "Edit your ETH address text".localized
+            ethAddresRichTextField.contentTextField?.isEnabled = false
         } else {
             screenTitleLabel?.text = "Add ETH Address text".localized
             sectionTitleLabel?.text = "Add your ETH address text".localized
