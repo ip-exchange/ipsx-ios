@@ -74,6 +74,7 @@ public enum CustomError: Error {
     case wrongOldPassword
     case loginFailed
     case invalidLogin
+    case userDeleted
     
     public var errorDescription: String? {
         switch self {

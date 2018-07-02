@@ -289,6 +289,19 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed. Expired token")
                 completion(CustomError.expiredToken, data)
             }
+            
+        case 402:
+            
+            switch requestType {
+                
+            case .changePassword:
+                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
+                completion(CustomError.wrongOldPassword, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
 
         case 403:
             
@@ -303,19 +316,19 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
 
-        case 402:
+        case 405:
             
             switch requestType {
                 
-            case .changePassword:
-                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
-                completion(CustomError.wrongOldPassword, data)
+            case .login, .fbLogin:
+                print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. User deleted.")
+                completion(CustomError.userDeleted, data)
                 
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
-        
+            
         case 422:
             
             switch requestType {

@@ -97,7 +97,13 @@ class LoginService {
                     successHandler()
                     
                 case .failure(let error):
-                    errorHandler(error)
+                    switch error {
+                    case CustomError.userDeleted:
+                        NotificationCenter.default.post(name: .userDeleted, object: nil)
+                        
+                    default:
+                        errorHandler(error)
+                    }
                 }
             })
         }
@@ -110,7 +116,13 @@ class LoginService {
                     successHandler()
                     
                 case .failure(let error):
-                    errorHandler(error)
+                    switch error {
+                    case CustomError.userDeleted:
+                        NotificationCenter.default.post(name: .userDeleted, object: nil)
+                        
+                    default:
+                        errorHandler(error)
+                    }
                 }
             })
         }

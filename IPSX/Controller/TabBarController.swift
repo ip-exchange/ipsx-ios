@@ -10,14 +10,13 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    var hasReceivedUsedDeletedNotif = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(performActionFor), name: .userDeleted, object: nil)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
@@ -26,8 +25,26 @@ class TabBarViewController: UITabBarController {
         if !UserManager.shared.hasEthAddress {
             UserManager.shared.logout()
         }
-        if !UserManager.shared.isLoggedIn {
+        if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
             presentLandingFlow()
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .userDeleted, object: nil)
+    }
+    
+    @objc fileprivate func performActionFor(_ notification: NSNotification) {
+        
+        if notification.name == .userDeleted {
+            
+            DispatchQueue.main.async {
+                
+                UserManager.shared.logout()
+                self.hasReceivedUsedDeletedNotif = true
+                self.navigationController?.dismiss(animated: true, completion: nil)
+                self.presentLandingFlow()
+            }
         }
     }
 

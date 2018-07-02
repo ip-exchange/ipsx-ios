@@ -59,6 +59,9 @@ class LoginCredentialsControler: UIViewController {
                 case CustomError.invalidLogin:
                     self.errorMessage = "Invalid Login Error Message".localized
                     
+                case CustomError.userDeleted:
+                    self.errorMessage = "User Deleted Error Message".localized
+                    
                 default:
                     self.errorMessage = "Generic Error Message".localized
                 }
