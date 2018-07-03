@@ -320,7 +320,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
             switch requestType {
                 
-            case .login, .fbLogin:
+            case .login, .fbLogin, .resetPassword:
                 print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. User deleted.")
                 completion(CustomError.userDeleted, data)
                 

@@ -49,8 +49,13 @@ class ForgotPassController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
                 
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                switch error {
+                case CustomError.userDeleted:
+                    self.errorMessage = "User Deleted Error Message".localized
+                default:
+                    self.errorMessage = "Generic Error Message".localized
+                }
             }
         })
     }
