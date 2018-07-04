@@ -17,6 +17,8 @@ class TokenDepositsListController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var particlesHolder: UIView!
+    @IBOutlet weak var amountLabelSmall: UILabel!
+    @IBOutlet weak var amountLabelLarge: UILabel!
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -26,6 +28,15 @@ class TokenDepositsListController: UIViewController {
     
     //TODO (CVI): Replace with deposits
     var tokenRequests: [TokenRequest] = []
+
+    var balance: String = "" {
+        didSet {
+            DispatchQueue.main.async {
+                self.amountLabelSmall.text = self.balance
+                self.amountLabelLarge.text = self.balance
+            }
+        }
+    }
 
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -60,6 +71,7 @@ class TokenDepositsListController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         //TODO (CVI): Replace with deposits
         getTokenRequestList()
+        self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
