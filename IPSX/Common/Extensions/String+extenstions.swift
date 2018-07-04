@@ -32,7 +32,6 @@ public extension String {
     
     public func trimLeadingAndTrailingSpaces() -> String {
         let trimmedString = self.trimmingCharacters(in: .whitespacesAndNewlines)
-        print(trimmedString)
         return trimmedString
     }
     
