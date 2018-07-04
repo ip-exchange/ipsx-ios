@@ -56,8 +56,12 @@ class TokenDepositController: UIViewController {
 
     @IBAction func submitAction(_ sender: UIButton) {
         
-        //TODO (CVI): Create the deposit request here
-        self.navigationController?.popViewController(animated: true)
+        if amountTextField.text == "0" {
+            toast?.showToastAlert("The amount can't be zero")
+        } else {
+            //TODO (CVI): Create the deposit request here
+            performSegue(withIdentifier: "showSummarySegueID", sender: self)
+        }
     }
     
     override func viewDidLoad() {
@@ -86,6 +90,14 @@ class TokenDepositController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSummarySegueID" {
+            let dest = segue.destination as? TokenDepositSummaryController
+            //TODO (CVI): Pass here the data needed to dipslay in summary
+            dest?.presentedFromCreateScreen = true
+        }
+    }
+
     func retrieveProxyPackages() {
         
         loadingView?.startAnimating()
@@ -170,6 +182,7 @@ class TokenDepositController: UIViewController {
         tableViewTopConstraint.constant    = visible ?    0 : -tableView.frame.size.height
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.5, options: [], animations: {
             self.view?.layoutIfNeeded()
+            self.proxyPacksTableView.alpha = visible ? 0 : 1
             self.tableView.alpha    = visible ? 1 : 0
             self.dropdownView.alpha = visible ? 0 : 1
             self.backButton.alpha   = visible ? 0 : 1

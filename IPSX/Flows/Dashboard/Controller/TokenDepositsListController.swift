@@ -113,7 +113,10 @@ class TokenDepositsListController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "showSummarySegueID" {
+            let dest = segue.destination as? TokenDepositSummaryController
+            dest?.presentedFromCreateScreen = false
+        }
     }
     
     
@@ -203,6 +206,15 @@ extension TokenDepositsListController: UITableViewDataSource {
         cell.configure(tokenRequest: tokenRequest, ethAdrress: address)
         return cell
     }
+}
+
+extension TokenDepositsListController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //TODO (CVI): Extract the actual tokenDeposit object and pass in prepare forsegue
+        performSegue(withIdentifier: "showSummarySegueID", sender: self)
+    }
+    
 }
 
 extension TokenDepositsListController: UIScrollViewDelegate {
