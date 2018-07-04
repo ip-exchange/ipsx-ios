@@ -45,6 +45,7 @@ class TokenDepositsListController: UIViewController {
     }
     
     @IBAction func createDepositAction(_ sender: Any) {
+        performSegue(withIdentifier: "createDepositSegueID", sender: self)
     }
     
     var errorMessage: String? {
