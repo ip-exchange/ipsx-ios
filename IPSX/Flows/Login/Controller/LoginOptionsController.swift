@@ -128,6 +128,9 @@ extension LoginOptionsController: ErrorPresentable {
             case CustomError.notFound:
                 self.errorMessage = "User Not Registered Error Message".localized
                 
+            case CustomError.userDeleted:
+                self.errorMessage = "User Deleted Error Message".localized
+                
             default:
                 self.errorMessage = "Generic Error Message".localized
             }
