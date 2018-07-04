@@ -66,6 +66,11 @@ class DashboardViewController: UIViewController {
         self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
     }
     
+    @IBAction func tokenDepositAction(_ sender: Any) {
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "tokenDepositSegueID", sender: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView?.layer.cornerRadius = 5
