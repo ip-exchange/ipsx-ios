@@ -26,8 +26,9 @@ class SimpleWebView: UIViewController, WKNavigationDelegate {
         
         webView = WKWebView()
         webView.navigationDelegate = self
-        
+
         if let stringUrl = loadingURLString, let url = URL(string: stringUrl) {
+
             webView.load(URLRequest(url: url))
             webView.allowsBackForwardNavigationGestures = true
         }
@@ -37,7 +38,6 @@ class SimpleWebView: UIViewController, WKNavigationDelegate {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        loadingView.startAnimating()
         webView.frame = webViewHolder.bounds
         webViewHolder.addSubview(webView)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -45,8 +45,12 @@ class SimpleWebView: UIViewController, WKNavigationDelegate {
         }
     }
     
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        loadingView?.startAnimating()
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        loadingView.stopAnimating()
+        loadingView?.stopAnimating()
     }
     
     @IBAction func closeAction(_ sender: Any) {
