@@ -14,6 +14,8 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var screenTitleLabel: UILabel?
     @IBOutlet weak var sectionTitleLabel: UILabel?
     
+    @IBOutlet weak var pasteAddrButton: UIButton!
+    @IBOutlet weak var qrcodeButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
@@ -70,6 +72,8 @@ class AddWalletController: UIViewController {
             screenTitleLabel?.text = "Edit ETH Address text".localized
             sectionTitleLabel?.text = "Edit your ETH address text".localized
             ethAddresRichTextField.contentTextField?.isEnabled = false
+            qrcodeButton.isHidden = true
+            pasteAddrButton.isHidden = true
         } else {
             screenTitleLabel?.text = "Add ETH Address text".localized
             sectionTitleLabel?.text = "Add your ETH address text".localized

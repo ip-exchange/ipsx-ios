@@ -360,7 +360,7 @@
         <!--Add Wallet Controller-->
         <scene sceneID="nGS-pG-AKJ">
             <objects>
-                <viewController storyboardIdentifier="WalletEditID" id="jYx-4r-YUa" customClass="AddWalletController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WalletEditID" hidesBottomBarWhenPushed="YES" id="jYx-4r-YUa" customClass="AddWalletController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r0o-cy-M4h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -614,9 +614,12 @@
                         <viewLayoutGuide key="safeArea" id="ldT-jy-L68"/>
                     </view>
                     <navigationItem key="navigationItem" id="qro-63-uUw"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
                         <outlet property="loadingView" destination="xp3-sc-Rhj" id="GcH-fd-xLA"/>
+                        <outlet property="pasteAddrButton" destination="VcK-Af-JEh" id="laK-O5-HIy"/>
+                        <outlet property="qrcodeButton" destination="La0-Dw-ufx" id="fkW-qO-MEd"/>
                         <outlet property="saveButton" destination="ng7-n6-rRs" id="TGt-rf-Gcp"/>
                         <outlet property="screenTitleLabel" destination="8TY-S3-kmq" id="xPP-Sh-Y4D"/>
                         <outlet property="sectionTitleLabel" destination="c8w-7z-z2N" id="u1O-KT-rU9"/>
