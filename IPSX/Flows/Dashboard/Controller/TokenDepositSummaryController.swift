@@ -10,6 +10,7 @@ import UIKit
 
 class TokenDepositSummaryController: UIViewController {
     
+    @IBOutlet weak var screenTitleLabel: UILabel!
     @IBOutlet weak var ethDepositAddressLabel: UILabel!
     @IBOutlet weak var ethAddresAlias: UILabel!
     @IBOutlet weak var ethAddress: UILabel!
@@ -63,6 +64,7 @@ class TokenDepositSummaryController: UIViewController {
     }
     
     private func updateUI() {
+        //TODO (CVI): Update with datasource items
         backButton.isHidden = presentedFromCreateScreen
     }
 
