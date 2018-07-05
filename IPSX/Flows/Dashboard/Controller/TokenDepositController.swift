@@ -177,6 +177,7 @@ class TokenDepositController: UIViewController {
     }
     
     fileprivate func updateDropDown(visible: Bool) {
+        view.endEditing(true)
         dropDownTopConstraint.constant     = visible ? -100 : 0
         tableViewBottomConstraint.constant = visible ?    0 : tableView.frame.size.height
         tableViewTopConstraint.constant    = visible ?    0 : -tableView.frame.size.height
@@ -190,6 +191,11 @@ class TokenDepositController: UIViewController {
         }, completion: { completed in
         })
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
 }
 
 extension TokenDepositController: UITableViewDataSource {
@@ -219,11 +225,23 @@ extension TokenDepositController: UITableViewDataSource {
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 18
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
+        headerView.backgroundColor = .clear
+        return headerView
+    }
+
 }
 
 extension TokenDepositController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        view.endEditing(true)
         if tableView == proxyPacksTableView {
             tableView.deselectRow(at: indexPath, animated: false)
             
