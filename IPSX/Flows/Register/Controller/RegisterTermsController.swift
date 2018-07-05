@@ -46,10 +46,20 @@ class RegisterTermsController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "TermsWebViewSegueID" {
+        
+        switch segue.identifier {
+            
+        case "showAddWalletSegueID":
+            let nextController = segue.destination as? AddWalletController
+            nextController?.registerFlow = true
+            
+        case "TermsWebViewSegueID":
             let destinationWebController = segue.destination as? SimpleWebView
             destinationWebController?.loadingURLString = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
             destinationWebController?.titleString = "T&C".localized
+            
+        default:
+            break
         }
     }
     
@@ -170,7 +180,7 @@ class RegisterTermsController: UIViewController {
         DispatchQueue.main.async {
             
             if self.fbToken != "" {
-                self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
             }
             else {
                 self.performSegue(withIdentifier: "showRegConfirmationSegueID", sender: nil)
