@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Options {
+public struct GeneralSettings {
 
     //per day
     var maxTokenRequests: Int? //using default = 5

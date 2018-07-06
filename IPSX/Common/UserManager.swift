@@ -26,7 +26,7 @@ public class UserManager: NSObject {
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
-    var options: Options?
+    var generalSettings: GeneralSettings?
     
     var hasEthAddress: Bool {
         get {

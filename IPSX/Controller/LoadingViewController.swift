@@ -90,7 +90,7 @@ class LoadingViewController: UIViewController {
         proxyCountryList()
         retrieveProxyPackages()
         retrieveTestProxyPackage()
-        options()
+        generalSettings()
         
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -259,21 +259,21 @@ class LoadingViewController: UIViewController {
         })
     }
     
-    func options() {
+    func generalSettings() {
         
         dispatchGroup.enter()
-        OptionsService().retrieveOptions(completionHandler: { result in
+        GeneralSettingsService().retrieveSettings(completionHandler: { result in
             self.dispatchGroup.leave()
             
             switch result {
-            case .success(let options):
-                UserManager.shared.options = options as? Options
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
                 DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .options, completion: {
-                    self.options()
+                self.handleError(error, requestType: .generalSettings, completion: {
+                    self.generalSettings()
                 })
             }
         })

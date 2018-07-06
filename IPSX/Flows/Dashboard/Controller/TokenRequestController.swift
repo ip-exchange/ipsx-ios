@@ -45,7 +45,7 @@ class TokenRequestController: UIViewController {
         
         let ethID  = selectedAddress?.ethID ?? ""
         let amount = amountTextField.text ?? "0"
-        let options = UserManager.shared.options
+        let options = UserManager.shared.generalSettings
         let amountInt = Int(amount) ?? 0
         
         guard amountInt >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
