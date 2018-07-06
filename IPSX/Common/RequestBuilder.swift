@@ -76,7 +76,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             var url = Url.base + Url.userInfoArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+                request = Request(url:url, httpMethod: "PATCH", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .userInfo:
