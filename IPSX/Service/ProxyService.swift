@@ -68,7 +68,7 @@ class ProxyService {
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let packageID = json["package_id"].stringValue
+            let packageID = json["package_id"].intValue
             var proxyPack: ProxyPack?
             if UserManager.shared.testProxyPack?.packId == packageID {
                 proxyPack = UserManager.shared.testProxyPack
@@ -174,9 +174,9 @@ class ProxyService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["user_ip"    : userIP,
-                                            "country"    : proxy?.proxyDetails?.country ?? "",
-                                            "package_id" : proxy?.proxyPack?.packId ?? ""]
+        let bodyParams: [String: Any] = ["user_ip"    : userIP,
+                                         "country"    : proxy?.proxyDetails?.country ?? "",
+                                         "package_id" : proxy?.proxyPack?.packId as Any]
         
         RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
@@ -205,7 +205,7 @@ class ProxyService {
             let proxyPort       = json["port"]?.stringValue,
             let country         = json["country"]?.stringValue,
             let userIP          = json["user_ip"]?.stringValue,
-            let packageID       = json["package_id"]?.stringValue,
+            let packageID       = json["package_id"]?.intValue,
             let startDateString = json["start_date"]?.stringValue,
             let endDateString   = json["end_date"]?.stringValue,
             let createdString   = json["created_at"]?.stringValue else {
@@ -264,7 +264,7 @@ class ProxyService {
             var packages: [ProxyPack] = []
             for json in jsonArray {
                 
-                let packId   = json["id"].stringValue
+                let packId   = json["id"].intValue
                 let name     = json["name"].stringValue
                 let noOfMB   = json["traffic"].stringValue
                 let duration = json["duration"].stringValue
