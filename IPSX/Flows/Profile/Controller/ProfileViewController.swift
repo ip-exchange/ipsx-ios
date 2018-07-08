@@ -73,7 +73,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func addWalletAction(_ sender: UIButton) {
         
-        let maxETHaddresses = UserManager.shared.options?.maxETHaddresses ?? 5
+        let maxETHaddresses = UserManager.shared.generalSettings?.maxETHaddresses ?? 5
         let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0
         
         if ethAddresses < maxETHaddresses {

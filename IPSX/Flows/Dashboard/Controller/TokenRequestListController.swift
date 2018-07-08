@@ -60,7 +60,7 @@ class TokenRequestListController: UIViewController {
             return
         }
         
-        let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
+        let maxTokenRequests = UserManager.shared.generalSettings?.maxTokenRequests ?? 5
         var noOfTokenRequests: Int = 1
         
         if let tokenRequests = UserManager.shared.tokenRequests {

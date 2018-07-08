@@ -76,7 +76,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             var url = Url.base + Url.userInfoArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+                request = Request(url:url, httpMethod: "PATCH", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .userInfo:
@@ -214,11 +214,11 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
         
-        //Options
+        //General Settings (Options)
         
-        case .options:
+        case .generalSettings:
         
-        var url = Url.base + Url.optionsArgs
+        var url = Url.base + Url.generalSettingsArgs
         if let params = urlParams as? [String: String] {
             url = url.replaceKeysWithValues(paramsDict: params)
             request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)

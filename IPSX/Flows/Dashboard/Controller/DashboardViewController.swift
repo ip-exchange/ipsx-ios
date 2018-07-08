@@ -88,7 +88,7 @@ class DashboardViewController: UIViewController {
          */
         if UserManager.shared.isLoggedIn && UserManager.shared.hasEthAddress {
             
-            if UserManager.shared.testProxyPack == nil && UserManager.shared.hasTestProxyAvailable {
+            if UserManager.shared.testProxyPack == nil {
                 retrieveTestProxyPackage()
             }
             if UserManager.shared.proxyPacks == nil {

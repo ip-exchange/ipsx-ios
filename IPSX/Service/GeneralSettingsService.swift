@@ -1,5 +1,5 @@
 //
-//  OptionsService.swift
+//  GeneralSettingsService.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 22/05/2018.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class OptionsService {
+class GeneralSettingsService {
     
-    func retrieveOptions(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func retrieveSettings(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let accessToken = KeychainWrapper.stringForKey(keyName: KeychainKeys.accessToken) else {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
@@ -18,7 +18,7 @@ class OptionsService {
         }
         let params: [String: String] =  ["ACCESS_TOKEN" : accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .options, urlParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .generalSettings, urlParams: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -33,7 +33,7 @@ class OptionsService {
                 return
             }
             
-            var options = Options()
+            var settings = GeneralSettings()
             
             for json in jsonArray {
                 
@@ -42,22 +42,22 @@ class OptionsService {
                 
                 switch key {
                 case "deposit_min":
-                    options.depositMin = value
+                    settings.depositMin = value
                     
                 case "deposit_max":
-                    options.depositMax = value
+                    settings.depositMax = value
                     
                 case "max_eth_addresses_allowed":
-                    options.maxETHaddresses = value
+                    settings.maxETHaddresses = value
                     
                 case "max_token_request_day":
-                    options.maxTokenRequests = value
+                    settings.maxTokenRequests = value
                     
                 default:
                     break
                 }
             }
-            completionHandler(ServiceResult.success(options))
+            completionHandler(ServiceResult.success(settings))
         })
     }
 }
