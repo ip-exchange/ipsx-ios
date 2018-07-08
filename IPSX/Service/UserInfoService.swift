@@ -74,7 +74,7 @@ class UserInfoService {
             var ethAddresses: [EthAddress] = []
             for json in jsonArray {
 
-                let ethID    = json["id"].stringValue
+                let ethID    = json["id"].intValue
                 let address  = json["address"].stringValue
                 let alias    = json["alias"].stringValue
                 let verified = json["verified"].intValue
@@ -142,11 +142,11 @@ class UserInfoService {
         })
     }
     
-    func updateETHaddress(requestType: IPRequestType, ethID: String, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateETHaddress(requestType: IPRequestType, ethID: Int, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let urlParams: [String: String] =  ["ETH_ID"       : ethID,
-                                            "USER_ID"      : UserManager.shared.userId,
-                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        let urlParams: [String: String] = ["ETH_ID"       : String(ethID),
+                                           "USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]

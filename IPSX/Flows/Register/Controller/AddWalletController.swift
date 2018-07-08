@@ -153,12 +153,12 @@ class AddWalletController: UIViewController {
         }
         let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
-        let ethID = ethereumAddress?.ethID ?? ""
+        let ethID = ethereumAddress?.ethID ?? 0
         
         updateETHaddress(alias: alias, address: address, ethID: ethID)
     }
     
-    func updateETHaddress(alias: String, address: String, ethID: String) {
+    func updateETHaddress(alias: String, address: String, ethID: Int) {
     
         loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in

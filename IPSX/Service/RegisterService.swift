@@ -49,13 +49,13 @@ class RegisterService {
                 return
             }
             let json = JSON(data: data)
-            let ethID    = json["id"].stringValue
+            let ethID    = json["id"].intValue
             let address  = json["address"].stringValue
             let alias    = json["alias"].stringValue
             let verified = json["verified"].intValue
             let status   = json["status"].stringValue
             
-            if ethID == "" || address == "" || alias == "" {
+            if ethID == 0 || address == "" || alias == "" {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }

@@ -242,7 +242,7 @@ class ProfileViewController: UIViewController {
         })
     }
     
-    func updateETHaddresses(ethID: String) {
+    func updateETHaddresses(ethID: Int) {
         
         loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethID) { result in

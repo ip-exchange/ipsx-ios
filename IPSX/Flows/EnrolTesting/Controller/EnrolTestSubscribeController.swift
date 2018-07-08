@@ -92,7 +92,6 @@ class EnrolTestSubscribeController: UIViewController {
     }
 
     @IBAction func submitAction(_ sender: UIButton) {
-        
         enrollTesting()
     }
     

@@ -10,12 +10,12 @@ import Foundation
 
 struct TokenRequest {
     
-    var ethID: String
+    var ethID: Int
     var amount: String
     var status: String
     var created: Date?
     
-    init(ethID: String = "", amount: String = "", status: String = "",created: Date? = nil) {
+    init(ethID: Int = 0, amount: String = "", status: String = "",created: Date? = nil) {
         
         self.ethID = ethID
         self.amount = amount

@@ -26,8 +26,8 @@ class EnrolStakeSubscribeController: UIViewController {
     var ethAdresses: [EthAddress] = []
     var editMode = false
     var onDismiss: ((_ hasUpdatedStaking: Bool)->())?
-    var selectedEths: [String]  {
-        var selected: [String] = []
+    var selectedEths: [Int]  {
+        var selected: [Int] = []
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for path in selectedIndexPaths {
                 let ethAddr = ethAdresses[path.item]
