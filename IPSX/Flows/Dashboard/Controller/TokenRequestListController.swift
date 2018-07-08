@@ -103,7 +103,7 @@ class TokenRequestListController: UIViewController {
     func getTokenRequestList() {
         
         self.loadingView?.startAnimating()
-        ProxyService().getTokenRequestList(completionHandler: { result in
+        TokenDepositService().getTokenRequestList(completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {

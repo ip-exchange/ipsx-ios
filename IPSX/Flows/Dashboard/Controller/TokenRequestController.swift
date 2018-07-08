@@ -68,7 +68,7 @@ class TokenRequestController: UIViewController {
     func requestTokens(ethID: Int, amount: String) {
         
         loadingView?.startAnimating()
-        ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
+        TokenDepositService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
