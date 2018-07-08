@@ -70,6 +70,39 @@ class TokenDepositService {
             completionHandler(ServiceResult.success(tokenRequests))
         })
     }
+    
+    func createDeposit(ethID: Int, amount: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: Any] = ["usereth_id"       : ethID,
+                                         "amount_requested" : amount]
+        
+        RequestBuilder.shared.executeRequest(requestType: .createDeposit, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            let watchUntilString = json["watch_until"].stringValue
+            
+            //TODO (CVI) this format is different -> ask Alin
+            let dateFormatter = DateFormatter.backendResponseParse(format: "yyyy-MM-dd HH:mm:ss")
+            let watchUntilDate = dateFormatter.date(from: watchUntilString)
+            let ethId = json["usereth_id"].intValue
+            let amount = json["amount_requested"].stringValue
+            let status = json["status"].stringValue
+        
+            let deposit = Deposit(ethID: ethId, amount: amount, status: status, watchUntil: watchUntilDate)
+            completionHandler(ServiceResult.success(deposit))
+        })
+    }
 }
 
 

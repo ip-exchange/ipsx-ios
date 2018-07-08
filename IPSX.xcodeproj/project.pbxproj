@@ -42,6 +42,7 @@
 		A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC76262099F83D00504ED9 /* ProxyService.swift */; };
 		A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC7628209A074600504ED9 /* Double+extensions.swift */; };
 		A4B57C2D20F24FE300EEE433 /* TokenDepositService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B57C2C20F24FE300EEE433 /* TokenDepositService.swift */; };
+		A4B57C3120F268C700EEE433 /* Deposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B57C3020F268C700EEE433 /* Deposit.swift */; };
 		A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD0BA22097590E00D27759 /* RegisterService.swift */; };
 		A4DFBFFE20B44AD200FFC28F /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DFBFFD20B44AD200FFC28F /* GeneralSettings.swift */; };
 		A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E374C92090C2D100808B86 /* NewProxyController.swift */; };
@@ -178,6 +179,7 @@
 		A4AC7628209A074600504ED9 /* Double+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+extensions.swift"; sourceTree = "<group>"; };
 		A4AD5FAA20A5BF630056D2ED /* IPSX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IPSX.entitlements; sourceTree = "<group>"; };
 		A4B57C2C20F24FE300EEE433 /* TokenDepositService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDepositService.swift; sourceTree = "<group>"; };
+		A4B57C3020F268C700EEE433 /* Deposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deposit.swift; sourceTree = "<group>"; };
 		A4CCCFED20C56FCC005FA14F /* Pods_IPSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_IPSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_IPSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4DD0BA22097590E00D27759 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
@@ -469,11 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				EE1A0541208F593900522426 /* DashboardViewController.swift */,
-				EEA08C442099E97C00684F33 /* TokenRequestListController.swift */,
-				EE6FC03A2099EF67007971DC /* TokenRequestController.swift */,
-				EECEB9CA20ECA92D0081748F /* TokenDepositsListController.swift */,
-				EECEB9CC20ECF8250081748F /* TokenDepositController.swift */,
-				EECEB9CE20ED00780081748F /* TokenDepositSummaryController.swift */,
+				A4B57C2E20F256F800EEE433 /* Token Request */,
+				A4B57C2F20F2570E00EEE433 /* Deposit */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -485,6 +484,25 @@
 				EECEB9C820ECA6B90081748F /* TokenDeposit.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		A4B57C2E20F256F800EEE433 /* Token Request */ = {
+			isa = PBXGroup;
+			children = (
+				EEA08C442099E97C00684F33 /* TokenRequestListController.swift */,
+				EE6FC03A2099EF67007971DC /* TokenRequestController.swift */,
+			);
+			path = "Token Request";
+			sourceTree = "<group>";
+		};
+		A4B57C2F20F2570E00EEE433 /* Deposit */ = {
+			isa = PBXGroup;
+			children = (
+				EECEB9CA20ECA92D0081748F /* TokenDepositsListController.swift */,
+				EECEB9CC20ECF8250081748F /* TokenDepositController.swift */,
+				EECEB9CE20ED00780081748F /* TokenDepositSummaryController.swift */,
+			);
+			path = Deposit;
 			sourceTree = "<group>";
 		};
 		A4E6AEA920862DD2001787DF /* UI elements */ = {
@@ -627,6 +645,7 @@
 				A48329CD209C5D41003B19FC /* UserInfo.swift */,
 				A4524C1620A094C600F7BD84 /* EthAddress.swift */,
 				A479DC9420A48CAF00D5C601 /* TokenRequest.swift */,
+				A4B57C3020F268C700EEE433 /* Deposit.swift */,
 				A4DFBFFD20B44AD200FFC28F /* GeneralSettings.swift */,
 			);
 			path = Model;
@@ -1097,6 +1116,7 @@
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				EEA08C452099E97C00684F33 /* TokenRequestListController.swift in Sources */,
 				A46480DA2091F1CB00330CC9 /* ProxyActivationDetails.swift in Sources */,
+				A4B57C3120F268C700EEE433 /* Deposit.swift in Sources */,
 				A43930AF205AAEE800CA7B15 /* AppDelegate.swift in Sources */,
 				A4524C1720A094C600F7BD84 /* EthAddress.swift in Sources */,
 				EECEB9CD20ECF8250081748F /* TokenDepositController.swift in Sources */,

@@ -213,6 +213,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+            
+        case .createDeposit:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.depositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
+            }
         
         //General Settings (Options)
         
@@ -347,7 +355,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
-        
+          
         default:
             print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
             completion(CustomError.statusCodeNOK(statusCode), data)

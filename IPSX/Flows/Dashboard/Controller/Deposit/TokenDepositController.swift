@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class TokenDepositController: UIViewController {
     
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -21,28 +20,28 @@ class TokenDepositController: UIViewController {
     @IBOutlet weak var dropdownView: UIView!
     @IBOutlet weak var dropdownArrow: UIImageView!
     @IBOutlet weak var dropdownButton: UIButton!
-    @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
-        didSet { topConstraint = dropDownTopConstraint }
-    }
-    
     @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
-    
+    @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
+        didSet { topConstraint = dropDownTopConstraint }
+    }
+
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
+    var deposits: [Deposit] = []
     private var selectedAddress: EthAddress?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var deposit: Deposit?
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
-    
+    var selectedPack: ProxyPack?
     let cellID = "ProxyPackCellID"
     var proxyPacks : [ProxyPack]? {
         didSet {
@@ -52,16 +51,50 @@ class TokenDepositController: UIViewController {
         }
     }
     
-    var selectedPack: ProxyPack?
-
     @IBAction func submitAction(_ sender: UIButton) {
         
-        if amountTextField.text == "0" {
-            toast?.showToastAlert("The amount can't be zero")
-        } else {
-            //TODO (CVI): Create the deposit request here
-            performSegue(withIdentifier: "showSummarySegueID", sender: self)
+        for deposit in deposits {
+            
+            guard deposit.status != "pending" else {
+                self.errorMessage = "Create Deposit Not Possible Message".localized
+                return
+            }
         }
+        
+        if amountTextField.text == "0" {
+            
+            //TODO (CC): localise
+            self.errorMessage = "The amount can't be zero"
+            
+        } else {
+            let ethID = selectedAddress?.ethID ?? 0
+            let amount = amountTextField.text ?? ""
+            createDeposit(ethID: ethID, amount: amount)
+        }
+    }
+    
+    func createDeposit(ethID: Int, amount: String) {
+        
+        loadingView?.startAnimating()
+        TokenDepositService().createDeposit(ethID: ethID, amount: amount, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(let deposit):
+                
+                self.deposit = deposit as? Deposit
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showSummarySegueID", sender: self)
+                }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .requestTokens, completion: {
+                    self.createDeposit(ethID: ethID, amount: amount)
+                })
+            }
+        })
     }
     
     override func viewDidLoad() {
@@ -93,8 +126,8 @@ class TokenDepositController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showSummarySegueID" {
             let dest = segue.destination as? TokenDepositSummaryController
-            //TODO (CVI): Pass here the data needed to dipslay in summary
             dest?.presentedFromCreateScreen = true
+            dest?.deposit = self.deposit
         }
     }
 
@@ -286,6 +319,7 @@ extension TokenDepositController: ErrorPresentable {
             }, successHandler: {
                 completion?()
             })
+            
         default:
             self.errorMessage = "Generic Error Message".localized
         }
