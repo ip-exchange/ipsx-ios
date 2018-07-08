@@ -65,7 +65,7 @@ public class UserManager: NSObject {
         }
     }
     
-    func ethAddres(forID ethId: String) -> EthAddress? {
+    func ethAddres(forID ethId: Int) -> EthAddress? {
         
             guard let addresses = ethAddresses else { return nil }
             let filtered = addresses.filter { $0.ethID == ethId }

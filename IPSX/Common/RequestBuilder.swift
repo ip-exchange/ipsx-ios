@@ -246,7 +246,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         return urlRequest
     }
     
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+    /// urlParams should be [String: String]
+    
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
         
         let requestBuilder = RequestBuilder.shared
         if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {

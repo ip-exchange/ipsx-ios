@@ -39,7 +39,7 @@ class EnrolStakeSummaryController: UIViewController {
     }
     
     // [(ethId, createdDate)]
-    var enrollment: [(ethID: String, createdDate: Date)] = []
+    var enrollment: [(ethID: Int, createdDate: Date)] = []
     
     override func viewDidLoad() {
         
@@ -100,7 +100,7 @@ class EnrolStakeSummaryController: UIViewController {
                 self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let details):
-                    if let details = details as? [(ethID: String, createdDate: Date)], let firstEnroled = details.min(by: { $0.createdDate < $1.createdDate }) {
+                    if let details = details as? [(ethID: Int, createdDate: Date)], let firstEnroled = details.min(by: { $0.createdDate < $1.createdDate }) {
                         self.enrollment = details
                         let ethToDisplay = UserManager.shared.ethAddres(forID: firstEnroled.ethID)
                         let letDateToDisplay = firstEnroled.createdDate

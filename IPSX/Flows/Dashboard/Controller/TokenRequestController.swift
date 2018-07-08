@@ -43,7 +43,7 @@ class TokenRequestController: UIViewController {
     
     @IBAction func submitAction(_ sender: UIButton) {
         
-        let ethID  = selectedAddress?.ethID ?? ""
+        let ethID  = selectedAddress?.ethID ?? 0
         let amount = amountTextField.text ?? "0"
         let options = UserManager.shared.generalSettings
         let amountInt = Int(amount) ?? 0
@@ -58,14 +58,14 @@ class TokenRequestController: UIViewController {
             return
         }
         
-        guard ethID.count > 0 else {
+        guard ethID != 0 else {
             toast?.showToastAlert("Select Valid ETH Wallet Message".localized, autoHideAfter: 5)
             return
         }
         requestTokens(ethID: ethID, amount: amount)
     }
     
-    func requestTokens(ethID: String, amount: String) {
+    func requestTokens(ethID: Int, amount: String) {
         
         loadingView?.startAnimating()
         ProxyService().requestTokens(ethID: ethID, amount: amount, completionHandler: { result in
