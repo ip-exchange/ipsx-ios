@@ -31,7 +31,6 @@ class TokenDepositController: UIViewController {
 
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
-    var deposits: [Deposit] = []
     private var selectedAddress: EthAddress?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -52,14 +51,6 @@ class TokenDepositController: UIViewController {
     }
     
     @IBAction func submitAction(_ sender: UIButton) {
-        
-        for deposit in deposits {
-            
-            guard deposit.status != "pending" else {
-                self.errorMessage = "Create Deposit Not Possible Message".localized
-                return
-            }
-        }
         
         let invalidInputs = ["0", ".", ".0", "0.", "0.0"]
         if invalidInputs.contains(amountTextField.text ?? "0") {
