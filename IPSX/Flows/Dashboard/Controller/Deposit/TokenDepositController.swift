@@ -61,10 +61,10 @@ class TokenDepositController: UIViewController {
             }
         }
         
-        if amountTextField.text == "0" {
+        let invalidInputs = ["0", ".", ".0", "0.", "0.0"]
+        if invalidInputs.contains(amountTextField.text ?? "0") {
             
-            //TODO (CC): localise
-            self.errorMessage = "The amount can't be zero"
+            self.errorMessage = "Deposit Wrong Amount Error Message".localized
             
         } else {
             let ethID = selectedAddress?.ethID ?? 0
@@ -99,6 +99,7 @@ class TokenDepositController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createKeyboardToolbar()
         updateUI()
     }
     
@@ -225,6 +226,20 @@ class TokenDepositController: UIViewController {
         })
     }
     
+    private func createKeyboardToolbar() {
+        let tooBar: UIToolbar = UIToolbar()
+        tooBar.barStyle = UIBarStyle.default
+        tooBar.items=[
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(TokenDepositController.donePressed))]
+        tooBar.sizeToFit()
+        amountTextField.inputAccessoryView = tooBar
+    }
+    
+    @objc func donePressed () {
+        view.endEditing(true)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -292,6 +307,13 @@ extension TokenDepositController: UITableViewDelegate {
             }
             updateDropDown(visible: false)
         }
+    }
+}
+
+extension TokenDepositController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
 }
 
