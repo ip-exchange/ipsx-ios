@@ -198,7 +198,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         //Token Requests
             
         case .requestTokens:
-            
             let body = JSON(bodyParams)
             var url = Url.base + Url.tokenRequestArgs
             if let params = urlParams as? [String: String] {
@@ -207,8 +206,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
             
         case .getTokenRequestList:
-            
             var url = Url.base + Url.tokenRequestArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .getDepositList:
+            var url = Url.base + Url.depositArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)

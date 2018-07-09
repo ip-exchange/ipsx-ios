@@ -71,6 +71,33 @@ class TokenDepositService {
         })
     }
     
+    func getDepositList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        RequestBuilder.shared.executeRequest(requestType: .getDepositList, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var deposits: [Deposit] = []
+            for json in jsonArray {
+                deposits.append(self.mapDepositResponse(json: json))
+            }
+            completionHandler(ServiceResult.success(deposits))
+        })
+    }
+    
     func createDeposit(ethID: Int, amount: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
@@ -90,18 +117,23 @@ class TokenDepositService {
                 return
             }
             let json = JSON(data: data)
-            
-            let depositID        = json["id"].intValue
-            let ethId            = json["usereth_id"].intValue
-            let amount           = json["amount_requested"].stringValue
-            let status           = json["status"].stringValue
-            let watchUntilString = json["watch_until"].stringValue
-            let dateFormatter = DateFormatter.backendResponseParse()
-            let watchUntilDate = dateFormatter.date(from: watchUntilString)
-            
-            let deposit = Deposit(depositID: depositID, ethID: ethId, amount: amount, status: status, watchUntil: watchUntilDate)
+            let deposit = self.mapDepositResponse(json: json)
             completionHandler(ServiceResult.success(deposit))
         })
+    }
+    
+    func mapDepositResponse(json: JSON) -> Deposit {
+        
+        let depositID        = json["id"].intValue
+        let ethId            = json["usereth_id"].intValue
+        let amount           = json["amount_requested"].stringValue
+        let status           = json["status"].stringValue
+        let watchUntilString = json["watch_until"].stringValue
+        let dateFormatter = DateFormatter.backendResponseParse()
+        let watchUntilDate = dateFormatter.date(from: watchUntilString)
+        
+        let deposit = Deposit(depositID: depositID, ethID: ethId, amount: amount, status: status, watchUntil: watchUntilDate)
+        return deposit
     }
     
     func cancelDeposit(depositID: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {

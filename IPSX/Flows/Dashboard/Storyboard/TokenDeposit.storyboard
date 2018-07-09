@@ -40,7 +40,7 @@
                                     <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TokenRequestCellID" id="5hd-nz-sxH" customClass="TokenRequestCell" customModule="IPSX" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DepositDetailsCellID" id="5hd-nz-sxH" customClass="DepositDetailsCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="375" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5hd-nz-sxH" id="mMB-v4-lMM">
@@ -54,7 +54,7 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="NTb-S2-kgW"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address from CryptoWallet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWf-PU-Six">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remove this (need UI)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWf-PU-Six">
                                                     <rect key="frame" x="15" y="21" width="262" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
@@ -144,7 +144,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="aliasLabel" destination="cWf-PU-Six" id="4VZ-hF-DOr"/>
                                             <outlet property="canceledView" destination="44n-i9-ik2" id="4yO-g9-KDD"/>
                                             <outlet property="completedView" destination="vjF-Ld-ZHu" id="cWc-Um-kh0"/>
                                             <outlet property="dateLabel" destination="gMI-xG-P9N" id="jvD-9E-wbU"/>
@@ -1081,6 +1080,6 @@
         <image name="walletAccepted" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5OV-46-10Z"/>
+        <segue reference="Tr8-7C-1cg"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -26,9 +26,10 @@ class TokenDepositsListController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
-    //TODO (CVI): Replace with deposits
-    var tokenRequests: [TokenRequest] = []
+    var selectedDeposit: Deposit?
 
+    var deposits: [Deposit]? = []
+    
     var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -71,7 +72,7 @@ class TokenDepositsListController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         //TODO (CVI): Replace with deposits
-        getTokenRequestList()
+        getDepositList()
         self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
     }
     
@@ -116,6 +117,7 @@ class TokenDepositsListController: UIViewController {
         if segue.identifier == "showSummarySegueID" {
             let dest = segue.destination as? TokenDepositSummaryController
             dest?.presentedFromCreateScreen = false
+            dest?.deposit = self.selectedDeposit
         }
     }
     
@@ -150,41 +152,27 @@ class TokenDepositsListController: UIViewController {
         self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
     }
     
-    //TODO (CVI): Replace with deposits
-    func getTokenRequestList() {
+    func getDepositList() {
         
         self.loadingView?.startAnimating()
-        TokenDepositService().getTokenRequestList(completionHandler: { result in
-            
+        TokenDepositService().getDepositList(completionHandler: { result in
             self.loadingView?.stopAnimating()
             switch result {
-            case .success(let tokenRequests):
-                UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+            case .success(let deposits):
+                self.deposits = deposits as? [Deposit]
                 self.updateUI()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getTokenRequestList, completion: {
-                    self.getTokenRequestList()
+                self.handleError(error, requestType: .getDepositList, completion: {
+                    self.getDepositList()
                 })
             }
         })
-    }
-    
-    private func ethAddressFor(tokenRequest: TokenRequest) -> EthAddress? {
-        var ethAddress: EthAddress? = nil
-        if let addresses = UserManager.shared.ethAddresses {
-            let matches = addresses.filter { return $0.ethID == tokenRequest.ethID }
-            if matches.count == 1 {
-                ethAddress = matches.first
-            }
-        }
-        return ethAddress
     }
 
     func updateUI() {
         
         DispatchQueue.main.async {
-            self.tokenRequests = UserManager.shared.tokenRequests ?? []
             self.tableView.reloadData()
         }
     }
@@ -196,26 +184,49 @@ class TokenDepositsListController: UIViewController {
 extension TokenDepositsListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tokenRequests.count
+        return deposits?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: TokenRequestCell.cellID, for: indexPath) as! TokenRequestCell
-        let tokenRequest = tokenRequests[indexPath.item]
-        let address      = ethAddressFor(tokenRequest: tokenRequest)
-        cell.configure(tokenRequest: tokenRequest, ethAdrress: address)
+        let cell = tableView.dequeueReusableCell(withIdentifier: DepositDetailsCell.cellID, for: indexPath) as! DepositDetailsCell
+        if let deposit = deposits?[indexPath.item] {
+            cell.configure(deposit: deposit)
+        }
         return cell
+    }
+}
+
+class DepositDetailsCell: UITableViewCell {
+    
+    static let cellID = "DepositDetailsCellID"
+    
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var completedView: RoundedView!
+    @IBOutlet weak var pendingView: RoundedView!
+    @IBOutlet weak var canceledView: RoundedView!
+    
+    func configure(deposit: Deposit) {
+        if let date = deposit.watchUntil {
+            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
+        }
+        quantityLabel.text = "Requested: " + deposit.amount + " IPSX"
+        pendingView.isHidden   = deposit.status != "pending"
+        completedView.isHidden = deposit.status != "complete"
+        canceledView.isHidden  = deposit.status != "canceled"
     }
 }
 
 extension TokenDepositsListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO (CVI): Extract the actual tokenDeposit object and pass in prepare forsegue
+        
+        if deposits?.count ?? 0 > indexPath.row {
+            selectedDeposit = deposits?[indexPath.row]
+        }
         performSegue(withIdentifier: "showSummarySegueID", sender: self)
     }
-    
 }
 
 extension TokenDepositsListController: UIScrollViewDelegate {

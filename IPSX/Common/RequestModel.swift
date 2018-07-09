@@ -125,6 +125,7 @@ public enum IPRequestType: Int {
     case userInfo
     case updateProfile
     case requestTokens
+    case getDepositList
     case createDeposit
     case cancelDeposit
     case addEthAddress
