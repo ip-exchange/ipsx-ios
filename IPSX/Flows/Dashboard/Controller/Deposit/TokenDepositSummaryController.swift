@@ -86,6 +86,8 @@ class TokenDepositSummaryController: UIViewController {
         detailsStateCompletedView.isHidden = deposit?.status != "completed"
         detailsStateCanceledView.isHidden  = deposit?.status != "rejected"
         
+        ethDepositAddressLabel.text = UserManager.shared.generalSettings?.depositEthAddress
+        
         let ethAddress = UserManager.shared.ethAddres(forID: deposit?.ethID ?? 0)
         ethAddressLabel.text = ethAddress?.address
         ethAddresAlias.text = ethAddress?.alias

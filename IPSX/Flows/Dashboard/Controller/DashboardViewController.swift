@@ -94,6 +94,9 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.proxyPacks == nil {
                 retrieveProxyPackages()
             }
+            if UserManager.shared.generalSettings == nil {
+                generalSettings()
+            }
             // After Logout we should load the proxy countries if needed for Test Proxy
             if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
                 getProxyCountryList()
@@ -176,6 +179,25 @@ class DashboardViewController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
+                })
+            }
+        })
+    }
+    
+    func generalSettings() {
+        
+        dispatchGroup.enter()
+        GeneralSettingsService().retrieveSettings(completionHandler: { result in
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .generalSettings, completion: {
+                    self.generalSettings()
                 })
             }
         })

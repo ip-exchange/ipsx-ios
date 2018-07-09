@@ -37,21 +37,25 @@ class GeneralSettingsService {
             
             for json in jsonArray {
                 
-                let key = json["key"].stringValue
-                let value = json["value"].intValue
+                let key         = json["key"].stringValue
+                let valueInt    = json["value"].intValue
+                let valueString = json["value"].stringValue
                 
                 switch key {
                 case "deposit_min":
-                    settings.depositMin = value
+                    settings.depositMin = valueInt
                     
                 case "deposit_max":
-                    settings.depositMax = value
+                    settings.depositMax = valueInt
                     
                 case "max_eth_addresses_allowed":
-                    settings.maxETHaddresses = value
+                    settings.maxETHaddresses = valueInt
                     
                 case "max_token_request_day":
-                    settings.maxTokenRequests = value
+                    settings.maxTokenRequests = valueInt
+                    
+                case "deposit_eth":
+                    settings.depositEthAddress = valueString
                     
                 default:
                     break
