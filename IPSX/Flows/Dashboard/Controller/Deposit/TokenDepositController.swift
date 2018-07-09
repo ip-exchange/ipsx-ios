@@ -90,7 +90,7 @@ class TokenDepositController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .requestTokens, completion: {
+                self.handleError(error, requestType: .createDeposit, completion: {
                     self.createDeposit(ethID: ethID, amount: amount)
                 })
             }

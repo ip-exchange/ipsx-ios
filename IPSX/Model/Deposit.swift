@@ -10,13 +10,15 @@ import Foundation
 
 struct Deposit {
     
+    var depositID: Int
     var ethID: Int
     var amount: String
     var status: String
     var watchUntil: Date?
     
-    init(ethID: Int = 0, amount: String = "", status: String = "",watchUntil: Date? = nil) {
+    init(depositID: Int = 0, ethID: Int = 0, amount: String = "", status: String = "",watchUntil: Date? = nil) {
         
+        self.depositID = depositID
         self.ethID = ethID
         self.amount = amount
         self.status = status

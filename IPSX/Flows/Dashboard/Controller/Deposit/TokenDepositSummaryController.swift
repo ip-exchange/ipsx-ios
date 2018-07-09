@@ -24,15 +24,13 @@ class TokenDepositSummaryController: UIViewController {
     @IBOutlet weak var detailsStatePendingView: RoundedView!
     @IBOutlet weak var detailsStateCompletedView: RoundedView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var cancelDepositButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
 
-    //TODO (CVI): This is visible only if status is pending
-    @IBOutlet weak var cancelDeposit: UIButton!
-    
     //TODO (CC): add Copy button for payment address
     
     var deposit: Deposit?
@@ -50,7 +48,7 @@ class TokenDepositSummaryController: UIViewController {
     }
     
     @IBAction func cancelDepositAction(_ sender: Any) {
-        //TODO (CVI): magic happens here :)
+        cancelDeposit()
     }
     
     override func viewDidLoad() {
@@ -80,7 +78,7 @@ class TokenDepositSummaryController: UIViewController {
     private func updateUI() {
         
         backButton.isHidden = presentedFromCreateScreen
-        cancelDeposit.isHidden = deposit?.status != "pending"
+        cancelDepositButton.isHidden = deposit?.status != "pending"
         
         detailsStatePendingView.isHidden   = deposit?.status != "pending"
         detailsStateCompletedView.isHidden = deposit?.status != "completed"
@@ -100,7 +98,28 @@ class TokenDepositSummaryController: UIViewController {
         
         //TODO (CC): fix autolayout for detailsRemainingTimeLabel (text truncated)
         detailsRemainingTimeLabel.text = String(format: "Time Remaining %@".localized, "\(expirationDate)")
-        
+    }
+    
+    func cancelDeposit() {
+
+        loadingView?.startAnimating()
+        TokenDepositService().cancelDeposit(depositID: deposit?.depositID ?? 0, completionHandler: { result in
+            self.loadingView?.stopAnimating()
+            switch result {
+
+            case .success(_):
+
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showTokenDepositList", sender: nil)
+                }
+
+            case .failure(let error):
+
+                self.handleError(error, requestType: .cancelDeposit, completion: {
+                    self.cancelDeposit()
+                })
+            }
+        })
     }
 }
 
@@ -110,6 +129,27 @@ extension TokenDepositSummaryController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension TokenDepositSummaryController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+            
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

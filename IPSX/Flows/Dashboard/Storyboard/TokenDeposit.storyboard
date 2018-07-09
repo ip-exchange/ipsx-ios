@@ -1046,7 +1046,7 @@
                     <navigationItem key="navigationItem" id="cDP-AQ-1p1"/>
                     <connections>
                         <outlet property="backButton" destination="Niq-UW-mlh" id="0wF-5o-M42"/>
-                        <outlet property="cancelDeposit" destination="1Yd-z0-Q5W" id="Bpe-hf-oDp"/>
+                        <outlet property="cancelDepositButton" destination="1Yd-z0-Q5W" id="c3Q-ZX-0Y2"/>
                         <outlet property="detailsAmountLabel" destination="Bbo-mj-bGt" id="AAb-iu-WwE"/>
                         <outlet property="detailsRemainingTimeLabel" destination="IqU-Oj-CiU" id="rys-bG-QNX"/>
                         <outlet property="detailsStateCanceledView" destination="NXE-a8-KxZ" id="Xps-2k-rMt"/>
@@ -1061,6 +1061,7 @@
                         <outlet property="separatorView" destination="ZYG-xF-qr4" id="cOa-UE-VT9"/>
                         <outlet property="topBarView" destination="frT-Cu-9eN" id="2Tq-n4-h3r"/>
                         <outlet property="topConstraintOutlet" destination="dyH-7m-qhC" id="16T-gK-8gr"/>
+                        <segue destination="NLv-zF-cOd" kind="unwind" identifier="showTokenDepositList" unwindAction="unwindToTokenDepositListWithSegue:" id="7Xa-1x-diL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ae-S8-eND" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1080,6 +1081,6 @@
         <image name="walletAccepted" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Tr8-7C-1cg"/>
+        <segue reference="5OV-46-10Z"/>
     </inferredMetricsTieBreakers>
 </document>

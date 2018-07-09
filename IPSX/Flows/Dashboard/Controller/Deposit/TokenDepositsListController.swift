@@ -188,7 +188,8 @@ class TokenDepositsListController: UIViewController {
             self.tableView.reloadData()
         }
     }
-
+    
+    @IBAction func unwindToTokenDepositList(segue:UIStoryboardSegue) { }
 }
 
 

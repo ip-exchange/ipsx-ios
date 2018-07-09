@@ -90,17 +90,37 @@ class TokenDepositService {
                 return
             }
             let json = JSON(data: data)
-            let watchUntilString = json["watch_until"].stringValue
             
-            //TODO (CVI) this format is different -> ask Alin
-            let dateFormatter = DateFormatter.backendResponseParse(format: "yyyy-MM-dd HH:mm:ss")
+            let depositID        = json["id"].intValue
+            let ethId            = json["usereth_id"].intValue
+            let amount           = json["amount_requested"].stringValue
+            let status           = json["status"].stringValue
+            let watchUntilString = json["watch_until"].stringValue
+            let dateFormatter = DateFormatter.backendResponseParse()
             let watchUntilDate = dateFormatter.date(from: watchUntilString)
-            let ethId = json["usereth_id"].intValue
-            let amount = json["amount_requested"].stringValue
-            let status = json["status"].stringValue
-        
-            let deposit = Deposit(ethID: ethId, amount: amount, status: status, watchUntil: watchUntilDate)
+            
+            let deposit = Deposit(depositID: depositID, ethID: ethId, amount: amount, status: status, watchUntil: watchUntilDate)
             completionHandler(ServiceResult.success(deposit))
+        })
+    }
+    
+    func cancelDeposit(depositID: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken,
+                                           "DEPOSIT_ID"   : String(depositID)]
+        
+        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
         })
     }
 }
