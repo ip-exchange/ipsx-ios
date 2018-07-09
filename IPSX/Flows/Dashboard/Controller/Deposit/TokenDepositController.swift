@@ -69,7 +69,7 @@ class TokenDepositController: UIViewController {
         } else {
             let ethID = selectedAddress?.ethID ?? 0
             let amount = amountTextField.text ?? ""
-            createDeposit(ethID: ethID, amount: amount)
+            createDeposit(ethID: ethID, amount: amount.replacingOccurrences(of: ",", with: "."))
         }
     }
     
@@ -307,6 +307,22 @@ extension TokenDepositController: UITableViewDelegate {
             }
             updateDropDown(visible: false)
         }
+    }
+}
+
+extension TokenDepositController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField.text == "0" && string != "." && string != "," {
+            textField.text = string
+            return false
+        }
+        let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string).replacingOccurrences(of: ",", with: ".")
+        if Double(newString) != nil || string == "" {
+            return true
+        }
+        return false
     }
 }
 
