@@ -21,10 +21,6 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
         
-        if hasReceivedUsedDeletedNotif {
-            NotificationCenter.default.addObserver(self, selector: #selector(performActionFor), name: .userDeleted, object: nil)
-        }
-        
         // When closing the app from Add Eth Address screen after Login, the user remains loggedIn
         if !UserManager.shared.hasEthAddress {
             UserManager.shared.logout()
@@ -42,14 +38,17 @@ class TabBarViewController: UITabBarController {
         
         if notification.name == .userDeleted {
             
-            NotificationCenter.default.removeObserver(self, name: .userDeleted, object: nil)
-            
             DispatchQueue.main.async {
                 
-                self.hasReceivedUsedDeletedNotif = true
-                UserManager.shared.logout()
-                self.navigationController?.dismiss(animated: true, completion: nil)
-                self.presentLandingFlow()
+                if !self.hasReceivedUsedDeletedNotif {
+                    self.hasReceivedUsedDeletedNotif = true
+                    UserManager.shared.logout()
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                    self.presentLandingFlow()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    self.hasReceivedUsedDeletedNotif = false
+                }
             }
         }
     }

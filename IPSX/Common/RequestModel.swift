@@ -8,6 +8,14 @@
 
 import Foundation
 
+/// CURRENT ENVIRONMENT (DEV / DEMO):
+let environment = Environment.demo
+
+enum Environment: String {
+    case dev = "DEV"
+    case demo = "DEMO"
+}
+
 public struct Request {
     
     public var url: String
@@ -25,10 +33,37 @@ public struct Request {
 }
 
 public struct Url {
+
+    // DEV ENV:
+    public static let baseDEV       = "http://devapi.ip.sx:3000/api"
+    public static let pacBaseUrlDEV = "https://devapp.ip.sx/proxy/pac/"
     
+    // DEMO ENV:
+    public static let baseDEMO       = "https://api.ipsx.io/api"
+    public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
+    
+    public static var base: String {
+        get {
+            switch environment {
+            case .dev:
+                return baseDEV
+            case .demo:
+                return baseDEMO
+            }
+        }
+    }
+    
+    public static var pacBaseUrl: String {
+        get {
+            switch environment {
+            case .dev:
+                return pacBaseUrlDEV
+            case .demo:
+                return pacBaseUrlDEMO
+            }
+        }
+    }
     public static var publicIP              = "https://api.ipify.org?format=json"
-    public static let base                  = "http://devapi.ip.sx:3000/api"
-    public static let pacBaseUrl            = "https://devapp.ip.sx/proxy/pac/"
     public static let registerArgs          = "/Users"
     public static let fbRegisterArgs        = "/Users/social/register/facebook"
     public static let userCountriesArgs     = "/countries"
