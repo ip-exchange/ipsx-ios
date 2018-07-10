@@ -45,7 +45,6 @@ class EnrolStakeSummaryController: UIViewController {
         
         super.viewDidLoad()
         editButton.isHidden = enroledAddresses == nil
-        enrollmentDetails()
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,7 +55,7 @@ class EnrolStakeSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
-        loadValidAddresses()
+        enrollmentDetails()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,7 +109,7 @@ class EnrolStakeSummaryController: UIViewController {
                         self.enrolmentTimeLabel.text = letDateToDisplay.dateToString(format: "HH:mm")
                         self.ethAdresses = []
                         for detail in details {
-                            if let ethAddr = UserManager.shared.ethAddres(forID: detail.ethID) {
+                            if let ethAddr = UserManager.shared.ethAddres(forID: detail.ethID), ethAddr.validationState == .verified {
                                 self.ethAdresses.append(ethAddr)
                             }
                         }
@@ -132,13 +131,6 @@ class EnrolStakeSummaryController: UIViewController {
         })
     }
     
-    private func loadValidAddresses() {
-        if let addresses = UserManager.shared.ethAddresses {
-            ethAdresses = addresses.filter { return  $0.validationState == .verified }
-            tableView.reloadData()
-        }
-    }
-
 }
 
 extension EnrolStakeSummaryController: UITableViewDataSource {
