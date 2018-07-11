@@ -53,6 +53,10 @@ class ForgotPassController: UIViewController {
                 switch error {
                 case CustomError.userDeleted:
                     self.errorMessage = "User Deleted Error Message".localized
+                    
+                case CustomError.notPossible:
+                    self.errorMessage = "Reset Password Not Possible Message".localized
+                    
                 default:
                     self.errorMessage = "Generic Error Message".localized
                 }
