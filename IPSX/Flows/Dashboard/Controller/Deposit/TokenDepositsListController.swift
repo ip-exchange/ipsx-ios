@@ -216,6 +216,8 @@ class DepositDetailsCell: UITableViewCell {
     @IBOutlet weak var completedView: RoundedView!
     @IBOutlet weak var pendingView: RoundedView!
     @IBOutlet weak var canceledView: RoundedView!
+    @IBOutlet weak var expiredView: RoundedView!
+    @IBOutlet weak var walletAliasLabel: UILabel!
     
     func configure(deposit: Deposit) {
         if let date = deposit.watchUntil {
@@ -225,6 +227,10 @@ class DepositDetailsCell: UITableViewCell {
         pendingView.isHidden   = deposit.status != "pending"
         completedView.isHidden = deposit.status != "complete"
         canceledView.isHidden  = deposit.status != "canceled"
+        expiredView.isHidden   = deposit.status != "expired"
+        
+        let ethAddress = UserManager.shared.ethAddres(forID: deposit.ethID)
+        walletAliasLabel.text = ethAddress?.alias
     }
 }
 

@@ -20,9 +20,12 @@ class TokenDepositSummaryController: UIViewController {
     @IBOutlet weak var detailsTitleLabel: UILabel!
     @IBOutlet weak var detailsAmountLabel: UILabel!
     @IBOutlet weak var detailsRemainingTimeLabel: UILabel!
+    
     @IBOutlet weak var detailsStateCanceledView: RoundedView!
     @IBOutlet weak var detailsStatePendingView: RoundedView!
     @IBOutlet weak var detailsStateCompletedView: RoundedView!
+    @IBOutlet weak var detailsStateExpiredView: RoundedView!
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cancelDepositButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -45,6 +48,16 @@ class TokenDepositSummaryController: UIViewController {
 
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func copyDepositAddressAction(_ sender: Any) {
+        if let depositAddress = ethDepositAddressLabel.text {
+            UIPasteboard.general.string = depositAddress
+            let depositCopiedMessage = String(format: "%@ copied to cplipboard".localized, "\(depositAddress)")
+            self.toast?.hideToastAlert() {
+                self.toast?.showToastAlert(depositCopiedMessage, type: .info)
+            }
+        }
     }
     
     @IBAction func cancelDepositAction(_ sender: Any) {
@@ -81,23 +94,39 @@ class TokenDepositSummaryController: UIViewController {
         cancelDepositButton.isHidden = deposit?.status != "pending"
         
         detailsStatePendingView.isHidden   = deposit?.status != "pending"
-        detailsStateCompletedView.isHidden = deposit?.status != "completed"
-        detailsStateCanceledView.isHidden  = deposit?.status != "rejected"
+        detailsStateCompletedView.isHidden = deposit?.status != "complete"
+        detailsStateCanceledView.isHidden  = deposit?.status != "canceled"
+        detailsStateExpiredView.isHidden   = deposit?.status != "expired"
         
         ethDepositAddressLabel.text = UserManager.shared.generalSettings?.depositEthAddress
         
         let ethAddress = UserManager.shared.ethAddres(forID: deposit?.ethID ?? 0)
         ethAddressLabel.text = ethAddress?.address
         ethAddresAlias.text = ethAddress?.alias
+        detailsTitleLabel.text = ethAddresAlias.text
         
         let amount = deposit?.amount ?? "-"
         detailsAmountLabel.text = amount + " IPSX"
         
-        //TODO (CC): format expirationDate to display "11 min" / "1 h 10 min / ..."
-        let expirationDate = deposit?.watchUntil?.dateToString(format: "dd MMM yyyy") ?? "N/A"
-        
-        //TODO (CC): fix autolayout for detailsRemainingTimeLabel (text truncated)
-        detailsRemainingTimeLabel.text = String(format: "Time Remaining %@".localized, "\(expirationDate)")
+        if let date = deposit?.watchUntil {
+            if deposit?.status == "pending" {
+                
+                if date.timeIntervalSince(Date()) > 0 {
+                    let remainingDuration = date.timeIntervalSince(Date())
+                    let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(remainingDuration))
+                    let remainigDuartionString = DateFormatter.readableDaysHoursMinutes(components:components)
+                    detailsRemainingTimeLabel.text = String(format: "Time Remaining %@".localized, "\(remainigDuartionString)")
+                } else {
+                    detailsRemainingTimeLabel.text = String(format: "Time Remaining %@ min".localized, "\(0)")
+                }
+            } else {
+                detailsRemainingTimeLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
+            }
+            
+        } else {
+            detailsRemainingTimeLabel.text = String(format: "Time Remaining %@ min".localized, "\(0)")
+        }
+
     }
     
     func cancelDeposit() {
