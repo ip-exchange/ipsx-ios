@@ -112,6 +112,7 @@ public enum CustomError: Error {
     case loginFailed
     case invalidLogin
     case userDeleted
+    case notPossible
     
     public var errorDescription: String? {
         switch self {

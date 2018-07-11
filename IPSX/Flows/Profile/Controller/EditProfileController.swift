@@ -28,6 +28,8 @@ class EditProfileController: UIViewController {
     }
     @IBOutlet weak var selectedCountryLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var changePasswordHolderView: RoundedView!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -108,6 +110,8 @@ class EditProfileController: UIViewController {
         
         let userInfo = UserManager.shared.userInfo
         var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
+        changePasswordHolderView.isHidden = userInfo?.socialName != nil
+        
         if let selectedCountry = self.searchController?.selectedCountry {
             countryName = selectedCountry
          } else {

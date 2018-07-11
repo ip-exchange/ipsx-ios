@@ -333,6 +333,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. Email not confirmed")
                 completion(CustomError.invalidLogin, data)
                 
+            case .resetPassword:
+                print(NSDate(), "\(requestType)" + "Request failed. Can't reset password from IPSX app.")
+                completion(CustomError.notPossible, data)
+                
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)

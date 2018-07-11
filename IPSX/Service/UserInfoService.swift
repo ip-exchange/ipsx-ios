@@ -49,8 +49,9 @@ class UserInfoService {
         let proxyTest  = json["proxy_test"].stringValue
         let balance    = json["ballance"].intValue
         let kycStatus  = json["kyc_status"].intValue
-
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus)
+        let socialName = json["social_name"].string
+        
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName)
         completionHandler(ServiceResult.success(user))
     }
     
