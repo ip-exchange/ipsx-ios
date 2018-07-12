@@ -68,9 +68,8 @@
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="13 Apr 2018   08:22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMI-xG-P9N">
-                                                    <rect key="frame" x="200" y="42" width="145" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13 Apr 2018   08:22" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMI-xG-P9N">
+                                                    <rect key="frame" x="217" y="42" width="128" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -121,11 +120,11 @@
                                                             <rect key="frame" x="16" y="4" width="43" height="12"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                            <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="0.099444322180000003" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="0.099444322180000003" colorSpace="calibratedRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="10"/>
@@ -159,7 +158,9 @@
                                             <constraints>
                                                 <constraint firstItem="8id-73-fOO" firstAttribute="leading" secondItem="mMB-v4-lMM" secondAttribute="leading" id="E5X-cv-Imk"/>
                                                 <constraint firstAttribute="bottom" secondItem="8id-73-fOO" secondAttribute="bottom" id="GPJ-az-4bz"/>
+                                                <constraint firstAttribute="trailing" secondItem="gMI-xG-P9N" secondAttribute="trailing" constant="30" id="gAL-mn-IFT"/>
                                                 <constraint firstAttribute="trailing" secondItem="8id-73-fOO" secondAttribute="trailing" id="prD-4e-r6m"/>
+                                                <constraint firstAttribute="bottom" secondItem="gMI-xG-P9N" secondAttribute="bottom" constant="20" id="yZ4-AB-u35"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -651,6 +652,16 @@
                                             <action selector="backButtonAction:" destination="N4z-zM-Rxe" eventType="touchUpInside" id="5u2-5k-T8y"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G6F-4g-EmS" userLabel="Pick Close">
+                                        <rect key="frame" x="0.0" y="50" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeEthPickAction:" destination="N4z-zM-Rxe" eventType="touchUpInside" id="Vjl-dO-Q9H"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hE5-LS-i9b" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="93" width="375" height="1"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -724,6 +735,7 @@
                     <connections>
                         <outlet property="amountTextField" destination="J3o-cw-HyF" id="9GN-Lm-eeH"/>
                         <outlet property="backButton" destination="PWj-N0-EcQ" id="tcI-By-ECe"/>
+                        <outlet property="closeEthPickButton" destination="G6F-4g-EmS" id="rQq-tq-piV"/>
                         <outlet property="dropDownTopConstraint" destination="EIi-TJ-2w8" id="HZb-fb-tN8"/>
                         <outlet property="dropdownArrow" destination="PdA-sl-pfV" id="CCX-h8-zNz"/>
                         <outlet property="dropdownButton" destination="fC2-ul-SHT" id="CUh-F1-lnc"/>
@@ -763,8 +775,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frT-Cu-9eN" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending Deposit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDV-x9-NMN">
-                                        <rect key="frame" x="121" y="65" width="132" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deposit Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDV-x9-NMN">
+                                        <rect key="frame" x="127" y="65" width="121" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -975,11 +987,11 @@
                                                 <rect key="frame" x="16" y="4" width="43" height="12"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="0.099444322180000003" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.36470588235294116" green="0.36470588235294116" blue="0.36470588235294116" alpha="0.099444322180000003" colorSpace="calibratedRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="10"/>
@@ -1141,6 +1153,6 @@
         <image name="walletAccepted" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Tr8-7C-1cg"/>
+        <segue reference="5OV-46-10Z"/>
     </inferredMetricsTieBreakers>
 </document>

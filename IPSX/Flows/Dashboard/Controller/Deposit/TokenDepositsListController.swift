@@ -220,17 +220,26 @@ class DepositDetailsCell: UITableViewCell {
     @IBOutlet weak var walletAliasLabel: UILabel!
     
     func configure(deposit: Deposit) {
-        if let date = deposit.watchUntil {
-            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
+        if let watchDate = deposit.watchUntil, let createdDate = deposit.createdAt {
+            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: createdDate)
+            
+            if deposit.status == "pending" {
+                if watchDate.timeIntervalSince(Date()) > 0 {
+                    let remainingDuration = watchDate.timeIntervalSince(Date())
+                    let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(remainingDuration))
+                    let remainigDuartionString = DateFormatter.readableDaysHoursMinutes(components:components)
+                    dateLabel.text = String(format: "Time Remaining %@".localized, "\(remainigDuartionString)")
+                }
+            }
         }
-        quantityLabel.text = "Requested: " + deposit.amount + " IPSX"
+        
+        quantityLabel.text = deposit.status == "complete" ? "Received".localized : "Requested".localized
         pendingView.isHidden   = deposit.status != "pending"
         completedView.isHidden = deposit.status != "complete"
         canceledView.isHidden  = deposit.status != "canceled"
         expiredView.isHidden   = deposit.status != "expired"
         
-        let ethAddress = UserManager.shared.ethAddres(forID: deposit.ethID)
-        walletAliasLabel.text = ethAddress?.alias
+        walletAliasLabel.text =  deposit.amount + " IPSX"
     }
 }
 

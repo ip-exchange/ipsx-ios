@@ -15,13 +15,15 @@ struct Deposit {
     var amount: String
     var status: String
     var watchUntil: Date?
-    
-    init(depositID: Int = 0, ethID: Int = 0, amount: String = "", status: String = "",watchUntil: Date? = nil) {
+    var createdAt: Date?
+
+    init(depositID: Int = 0, ethID: Int = 0, amount: String = "", status: String = "",watchUntil: Date? = nil, createdAt: Date? = nil) {
         
-        self.depositID = depositID
-        self.ethID = ethID
-        self.amount = amount
-        self.status = status
+        self.depositID  = depositID
+        self.ethID      = ethID
+        self.amount     = amount
+        self.status     = status
         self.watchUntil = watchUntil
+        self.createdAt  = createdAt
     }
 }

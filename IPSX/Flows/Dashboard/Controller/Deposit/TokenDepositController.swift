@@ -24,6 +24,7 @@ class TokenDepositController: UIViewController {
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var closeEthPickButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
         didSet { topConstraint = dropDownTopConstraint }
@@ -162,6 +163,10 @@ class TokenDepositController: UIViewController {
         updateDropDown(visible: true)
     }
     
+    @IBAction func closeEthPickAction(_ sender: Any) {
+        updateDropDown(visible: false)
+    }
+    
     private func loadAndSetDefaultAddres() {
         selectedAddress = nil
         if let addresses = UserManager.shared.ethAddresses {
@@ -212,6 +217,7 @@ class TokenDepositController: UIViewController {
             self.tableView.alpha    = visible ? 1 : 0
             self.dropdownView.alpha = visible ? 0 : 1
             self.backButton.alpha   = visible ? 0 : 1
+            self.closeEthPickButton.alpha = visible ? 1 : 0
             self.submitButton.alpha = visible ? 0 : 1
         }, completion: { completed in
         })

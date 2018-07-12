@@ -103,16 +103,16 @@ class TokenDepositSummaryController: UIViewController {
         let ethAddress = UserManager.shared.ethAddres(forID: deposit?.ethID ?? 0)
         ethAddressLabel.text = ethAddress?.address
         ethAddresAlias.text = ethAddress?.alias
-        detailsTitleLabel.text = ethAddresAlias.text
         
         let amount = deposit?.amount ?? "-"
-        detailsAmountLabel.text = amount + " IPSX"
+        detailsTitleLabel.text = amount + " IPSX"
+        detailsAmountLabel.text = deposit?.status == "complete" ? "Received".localized : "Requested".localized
         
-        if let date = deposit?.watchUntil {
+        if let watchUntilDate = deposit?.watchUntil, let createdAtDate = deposit?.createdAt {
             if deposit?.status == "pending" {
                 
-                if date.timeIntervalSince(Date()) > 0 {
-                    let remainingDuration = date.timeIntervalSince(Date())
+                if watchUntilDate.timeIntervalSince(Date()) > 0 {
+                    let remainingDuration = watchUntilDate.timeIntervalSince(Date())
                     let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(remainingDuration))
                     let remainigDuartionString = DateFormatter.readableDaysHoursMinutes(components:components)
                     detailsRemainingTimeLabel.text = String(format: "Time Remaining %@".localized, "\(remainigDuartionString)")
@@ -120,7 +120,7 @@ class TokenDepositSummaryController: UIViewController {
                     detailsRemainingTimeLabel.text = String(format: "Time Remaining %@ min".localized, "\(0)")
                 }
             } else {
-                detailsRemainingTimeLabel.text = DateFormatter.dateStringForTokenRequests(date: date)
+                detailsRemainingTimeLabel.text = DateFormatter.dateStringForTokenRequests(date: createdAtDate)
             }
             
         } else {
