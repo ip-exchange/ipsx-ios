@@ -13,7 +13,7 @@ class RichTextFieldView: UIView {
     static let validEmailRegex    = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     static let validPasswordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
     static let validEthAddress    = "(0x){1}[0-9a-fA-F]{40}"
-    static let validName          = ".{1,}"
+    static let validName          = "^[A-Za-z0-9- ]+$"
 
     var onFieldStateChange: ((_ newState: Bool)->())?
     

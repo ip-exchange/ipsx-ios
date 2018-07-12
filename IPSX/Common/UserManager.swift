@@ -196,5 +196,6 @@ public class UserManager: NSObject {
     
     func logout() {
         removeUserDetails()
+        SocialIntegrationService().facebookLogout()
     }
 }

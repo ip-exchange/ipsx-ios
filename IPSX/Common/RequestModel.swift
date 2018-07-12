@@ -63,7 +63,7 @@ public struct Url {
             }
         }
     }
-    public static var publicIP              = "https://api.ipify.org?format=json"
+    public static let publicIPArgs          = "/Users/ip"
     public static let registerArgs          = "/Users"
     public static let fbRegisterArgs        = "/Users/social/register/facebook"
     public static let userCountriesArgs     = "/countries"

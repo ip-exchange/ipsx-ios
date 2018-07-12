@@ -127,7 +127,7 @@ class AddWalletController: UIViewController {
     
     private func observreFieldsState() {
         walletNameRichTextField.onFieldStateChange = { state in
-            let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
+            let curentNameText = self.walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
             self.fieldsStateDic["walletName"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
             self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
