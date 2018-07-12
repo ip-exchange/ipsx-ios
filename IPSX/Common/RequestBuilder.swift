@@ -56,7 +56,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         //Register Requests
             
         case .getPublicIP:
-            request = Request(url:Url.publicIP, httpMethod: "GET")
+            request = Request(url:Url.base + Url.publicIPArgs, httpMethod: "GET")
             
         case .register:
             let body = JSON(bodyParams)
