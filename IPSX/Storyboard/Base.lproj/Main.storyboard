@@ -237,7 +237,15 @@
                 <viewControllerPlaceholder storyboardName="TokenRequest" id="ZZ3-69-9NQ" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goG-Au-rdK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1715" y="1288"/>
+            <point key="canvasLocation" x="-1797" y="1288"/>
+        </scene>
+        <!--TokenDeposit-->
+        <scene sceneID="9Yi-LI-qqe">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TokenDeposit" id="zUu-Hn-Ofc" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hoI-Nz-L6J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1546" y="1288"/>
         </scene>
         <!--ProxyDetailsControllerID-->
         <scene sceneID="DLv-lT-FbC">
@@ -245,7 +253,7 @@
                 <viewControllerPlaceholder storyboardName="NewProxy" referencedIdentifier="ProxyDetailsControllerID" id="qSC-O9-erJ" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mf9-hA-eQf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1366" y="1288"/>
+            <point key="canvasLocation" x="-1256" y="1288"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="hoR-RX-E2W">
@@ -306,8 +314,42 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vpc-yV-9lQ" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="15" y="112" width="345" height="44"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Token Deposit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7z1-KK-S1y">
+                                                <rect key="frame" x="8" y="12" width="295" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="＋" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Znh-Fz-vlP">
+                                                <rect key="frame" x="311" y="7" width="26" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm4-IN-H4J">
+                                                <rect key="frame" x="0.0" y="0.0" width="345" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <connections>
+                                                    <action selector="tokenDepositAction:" destination="4A6-HS-yFF" eventType="touchUpInside" id="0ro-ZE-Jly"/>
+                                                    <action selector="tokenRequestAction:" destination="4A6-HS-yFF" eventType="touchUpInside" id="VeL-aE-oIZ"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Jrn-yP-lrN"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="110" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="0Jl-Mt-64I">
-                                        <rect key="frame" x="15" y="109" width="345" height="532"/>
+                                        <rect key="frame" x="15" y="161" width="345" height="480"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ActivationDetailsCellID" rowHeight="100" id="XqS-PS-Aar" customClass="ProxyActivationDetailsCell" customModule="IPSX" customModuleProvider="target">
@@ -452,9 +494,12 @@
                                     <constraint firstItem="PSQ-5O-SSB" firstAttribute="top" secondItem="5Xw-8d-dgg" secondAttribute="top" constant="11" id="Hgd-I5-hb7"/>
                                     <constraint firstItem="gON-gb-2hO" firstAttribute="leading" secondItem="5Xw-8d-dgg" secondAttribute="leading" constant="15" id="Iv5-kK-8YF"/>
                                     <constraint firstAttribute="trailing" secondItem="gON-gb-2hO" secondAttribute="trailing" constant="15" id="Jcg-BO-qUJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vpc-yV-9lQ" secondAttribute="trailing" constant="15" id="OeX-b1-emN"/>
                                     <constraint firstAttribute="bottom" secondItem="0Jl-Mt-64I" secondAttribute="bottom" id="Tbv-ap-ebu"/>
+                                    <constraint firstItem="Vpc-yV-9lQ" firstAttribute="top" secondItem="gON-gb-2hO" secondAttribute="bottom" constant="5" id="UaZ-sn-Re8"/>
+                                    <constraint firstItem="Vpc-yV-9lQ" firstAttribute="leading" secondItem="5Xw-8d-dgg" secondAttribute="leading" constant="15" id="aIe-pm-ixQ"/>
                                     <constraint firstItem="0Jl-Mt-64I" firstAttribute="trailing" secondItem="gON-gb-2hO" secondAttribute="trailing" id="hof-h4-mNB"/>
-                                    <constraint firstItem="0Jl-Mt-64I" firstAttribute="top" secondItem="gON-gb-2hO" secondAttribute="bottom" constant="2" id="sEs-60-ePP"/>
+                                    <constraint firstItem="0Jl-Mt-64I" firstAttribute="top" secondItem="gON-gb-2hO" secondAttribute="bottom" constant="54" id="sEs-60-ePP"/>
                                     <constraint firstItem="gON-gb-2hO" firstAttribute="top" secondItem="PSQ-5O-SSB" secondAttribute="bottom" constant="24" id="src-Kw-AnD"/>
                                 </constraints>
                             </view>
@@ -538,6 +583,7 @@
                         <segue destination="qSC-O9-erJ" kind="presentation" identifier="ProxyDetailsSegueiID" id="vlC-TX-1jM"/>
                         <segue destination="ZZ3-69-9NQ" kind="show" identifier="showTokenRequestSegueID" id="449-lp-Zve"/>
                         <segue destination="adJ-7o-RXS" kind="presentation" identifier="FreeProxySegueID" id="eg6-mz-aaC"/>
+                        <segue destination="zUu-Hn-Ofc" kind="show" identifier="tokenDepositSegueID" id="jJo-g5-NxO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqh-Z5-fpU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1137,11 +1183,19 @@
                                                 <action selector="addWalletAction:" destination="pEl-nG-Fp4" eventType="touchUpInside" id="Qi7-9o-qKa"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEx-U1-XRT" userLabel="Separator">
+                                            <rect key="frame" x="0.0" y="320.33333333333331" width="375" height="0.66666666666668561"/>
+                                            <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="ncP-3g-rUh"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="r2K-hC-vsg" secondAttribute="trailing" id="8YB-FF-oUi"/>
                                         <constraint firstAttribute="trailing" secondItem="Ngo-0q-bqD" secondAttribute="trailing" constant="15" id="EkK-gi-DMZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="hEx-U1-XRT" secondAttribute="bottom" id="I7k-kr-JCD"/>
                                         <constraint firstItem="1iZ-T7-7em" firstAttribute="leading" secondItem="gtm-IY-N6q" secondAttribute="leading" id="K3X-uc-wC3"/>
                                         <constraint firstItem="rjx-Xm-317" firstAttribute="trailing" secondItem="Ngo-0q-bqD" secondAttribute="trailing" id="PDz-zj-2Uc"/>
                                         <constraint firstItem="rjx-Xm-317" firstAttribute="top" secondItem="Ngo-0q-bqD" secondAttribute="bottom" constant="10" id="SyX-4x-bmQ"/>
@@ -1153,6 +1207,8 @@
                                         <constraint firstItem="gtm-IY-N6q" firstAttribute="top" secondItem="rjx-Xm-317" secondAttribute="bottom" constant="10" id="l3g-OE-Zve"/>
                                         <constraint firstItem="Ngo-0q-bqD" firstAttribute="leading" secondItem="n2r-iV-TAw" secondAttribute="leading" constant="15" id="oDW-hh-sTl"/>
                                         <constraint firstAttribute="bottom" secondItem="r2K-hC-vsg" secondAttribute="bottom" id="qHb-dS-P1r"/>
+                                        <constraint firstAttribute="trailing" secondItem="hEx-U1-XRT" secondAttribute="trailing" id="wZh-Y4-lEh"/>
+                                        <constraint firstItem="hEx-U1-XRT" firstAttribute="leading" secondItem="n2r-iV-TAw" secondAttribute="leading" id="xBB-vE-hGB"/>
                                         <constraint firstItem="gtm-IY-N6q" firstAttribute="leading" secondItem="rjx-Xm-317" secondAttribute="leading" id="xRL-60-4ol"/>
                                     </constraints>
                                 </view>

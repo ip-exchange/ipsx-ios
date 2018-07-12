@@ -81,6 +81,8 @@ public struct Url {
     public static let proxyTestPackageArgs  = "/packages/admin/test?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs          = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs      = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
+    public static let depositArgs           = "/Users/%USER_ID%/deposits?access_token=%ACCESS_TOKEN%"
+    public static let deleteDepositArgs     = "/Users/%USER_ID%/deposits/%DEPOSIT_ID%?access_token=%ACCESS_TOKEN%"
     public static let generalSettingsArgs   = "/settings?access_token=%ACCESS_TOKEN%"
     public static let enrollTestingArgs     = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingBulkArgs = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
@@ -159,6 +161,9 @@ public enum IPRequestType: Int {
     case userInfo
     case updateProfile
     case requestTokens
+    case getDepositList
+    case createDeposit
+    case cancelDeposit
     case addEthAddress
     case getEthAddress
     case updateEthAddress

@@ -66,6 +66,11 @@ class DashboardViewController: UIViewController {
         self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
     }
     
+    @IBAction func tokenDepositAction(_ sender: Any) {
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "tokenDepositSegueID", sender: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView?.layer.cornerRadius = 5
@@ -88,6 +93,9 @@ class DashboardViewController: UIViewController {
             }
             if UserManager.shared.proxyPacks == nil {
                 retrieveProxyPackages()
+            }
+            if UserManager.shared.generalSettings == nil {
+                generalSettings()
             }
             // After Logout we should load the proxy countries if needed for Test Proxy
             if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
@@ -171,6 +179,25 @@ class DashboardViewController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
+                })
+            }
+        })
+    }
+    
+    func generalSettings() {
+        
+        dispatchGroup.enter()
+        GeneralSettingsService().retrieveSettings(completionHandler: { result in
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .generalSettings, completion: {
+                    self.generalSettings()
                 })
             }
         })

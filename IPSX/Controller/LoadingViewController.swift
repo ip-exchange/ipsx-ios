@@ -220,7 +220,7 @@ class LoadingViewController: UIViewController {
     func tokenRequestList() {
         
         dispatchGroup.enter()
-        ProxyService().getTokenRequestList(completionHandler: { result in
+        TokenDepositService().getTokenRequestList(completionHandler: { result in
             
             self.dispatchGroup.leave()
             

@@ -198,7 +198,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         //Token Requests
             
         case .requestTokens:
-            
             let body = JSON(bodyParams)
             var url = Url.base + Url.tokenRequestArgs
             if let params = urlParams as? [String: String] {
@@ -207,11 +206,32 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
             
         case .getTokenRequestList:
-            
             var url = Url.base + Url.tokenRequestArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .getDepositList:
+            var url = Url.base + Url.depositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .createDeposit:
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.depositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .cancelDeposit:
+            var url = Url.base + Url.deleteDepositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON)
             }
         
         //General Settings (Options)
@@ -351,7 +371,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
-        
+          
         default:
             print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
             completion(CustomError.statusCodeNOK(statusCode), data)
