@@ -161,16 +161,16 @@ class EditProfileController: UIViewController {
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
-        let bodyParams: [String: String] =  ["email"     : emailTextField.text ?? "",
-                                             "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "country_id": countryID ?? ""]
+        let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
+                                          "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "country_id": countryID as Any]
         
         updateUserProfile(bodyParams: bodyParams)
     }
     
-    func updateUserProfile(bodyParams: [String: String]) {
+    func updateUserProfile(bodyParams: [String: Any]) {
         
         loadingView?.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in

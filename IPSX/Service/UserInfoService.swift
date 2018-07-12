@@ -125,7 +125,7 @@ class UserInfoService {
         })
     }
     
-    func updateUserProfile(bodyParams: [String: String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateUserProfile(bodyParams: [String: Any], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
