@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import FacebookLogin
+import FBSDKLoginKit
 
 class SocialIntegrationService {
     
@@ -54,5 +56,12 @@ class SocialIntegrationService {
                 }
             })
         })
+    }
+    
+    func facebookLogout() {
+        
+        FBSDKAccessToken.setCurrent(nil)
+        FBSDKProfile.setCurrent(nil)
+        LoginManager().logOut()
     }
 }
