@@ -19,6 +19,7 @@ class TokenRequestController: UIViewController {
     @IBOutlet weak var dropdownView: UIView!
     @IBOutlet weak var dropdownArrow: UIImageView!
     @IBOutlet weak var dropdownButton: UIButton!
+    @IBOutlet weak var dropdownCloseButton: UIButton!
     @IBOutlet weak var dropDownTopConstraint: NSLayoutConstraint! {
         didSet { topConstraint = dropDownTopConstraint }
     }
@@ -132,6 +133,10 @@ class TokenRequestController: UIViewController {
         updateDropDown(visible: true)
     }
     
+    @IBAction func dropdownCloseAction(_ sender: Any) {
+        updateDropDown(visible: false)
+    }
+    
     private func loadAndSetDefaultAddres() {
         selectedAddress = nil
         if let addresses = UserManager.shared.ethAddresses {
@@ -179,6 +184,7 @@ class TokenRequestController: UIViewController {
             self.view?.layoutIfNeeded()
             self.tableView.alpha    = visible ? 1 : 0
             self.dropdownView.alpha = visible ? 0 : 1
+            self.dropdownCloseButton.alpha = visible ? 1 : 0
             self.backButton.alpha   = visible ? 0 : 1
             self.submitButton.alpha = visible ? 0 : 1
         }, completion: { completed in

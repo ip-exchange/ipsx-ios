@@ -470,6 +470,16 @@
                                             <action selector="backButtonAction:" destination="8al-NV-Tf2" eventType="touchUpInside" id="oPj-fL-vYi"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ss4-pa-B5w" userLabel="PickClose">
+                                        <rect key="frame" x="0.0" y="50" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dropdownCloseAction:" destination="8al-NV-Tf2" eventType="touchUpInside" id="bOv-hk-1J4"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tBw-BG-SCk" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="93" width="375" height="1"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -541,6 +551,7 @@
                         <outlet property="dropDownTopConstraint" destination="xur-9j-jbh" id="BCW-uf-LbU"/>
                         <outlet property="dropdownArrow" destination="ZtZ-8m-RFJ" id="XWB-Ap-SZh"/>
                         <outlet property="dropdownButton" destination="qkG-za-HGq" id="ODl-id-tN6"/>
+                        <outlet property="dropdownCloseButton" destination="Ss4-pa-B5w" id="CXR-gU-Bqt"/>
                         <outlet property="dropdownView" destination="mHQ-f6-bq2" id="53r-uF-9jD"/>
                         <outlet property="loadingView" destination="AJc-0c-HBC" id="a5d-O1-vEK"/>
                         <outlet property="selectedWalletAddress" destination="xdZ-yt-JL6" id="cPA-fY-GN0"/>
