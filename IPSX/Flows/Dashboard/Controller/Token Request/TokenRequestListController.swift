@@ -26,14 +26,21 @@ class TokenRequestListController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var tokenRequests: [TokenRequest] = []
     
+    private var timer: Timer?
+    private let refreshInterval: TimeInterval = 30
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshControl.addTarget(self, action: #selector(self.pulltoRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,13 +53,26 @@ class TokenRequestListController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         getTokenRequestList()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: refreshInterval, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+        timer?.invalidate()
     }
     
+    @objc func pulltoRefresh() {
+        timer?.invalidate()
+        getTokenRequestList(tableviewPull: true)
+    }
+
+    @objc func updateData() {
+        getTokenRequestList()
+    }
+
     @IBAction func createRequestAction(_ sender: Any) {
         
         guard UserManager.shared.hasValidAddress else {
@@ -100,23 +120,32 @@ class TokenRequestListController: UIViewController {
         }
     }
     
-    func getTokenRequestList() {
+    func getTokenRequestList(tableviewPull: Bool = false) {
         
-        self.loadingView?.startAnimating()
-        TokenDepositService().getTokenRequestList(completionHandler: { result in
+        if !tableviewPull { self.loadingView?.startAnimating() }
+        
+        TokenDepositService().getTokenRequestList() { result in
             
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let tokenRequests):
-                UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                self.updateUI()
-                 
-            case .failure(let error):
-                self.handleError(error, requestType: .getTokenRequestList, completion: {
-                    self.getTokenRequestList()
-                })
+            DispatchQueue.main.async {
+                self.loadingView?.stopAnimating()
+                self.refreshControl.endRefreshing()
+                
+                if tableviewPull {
+                    self.timer = Timer.scheduledTimer(timeInterval: self.refreshInterval, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+                }
+                
+                switch result {
+                case .success(let tokenRequests):
+                    UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                    self.updateUI()
+                    
+                case .failure(let error):
+                    self.handleError(error, requestType: .getTokenRequestList, completion: {
+                        self.getTokenRequestList()
+                    })
+                }
             }
-        })
+        }
     }
     
     private func ethAddressFor(tokenRequest: TokenRequest) -> EthAddress? {
