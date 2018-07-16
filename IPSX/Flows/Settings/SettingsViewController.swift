@@ -42,12 +42,12 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        balance = "\(userInfo?.balance ?? 0)"
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
+        balance = "\(userInfo?.balance ?? 0)"
     }
     
     override func viewWillAppear(_ animated: Bool) {
