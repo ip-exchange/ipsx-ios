@@ -60,7 +60,11 @@ class TokenDepositController: UIViewController {
             
         } else {
             let ethID = selectedAddress?.ethID ?? 0
-            let amount = amountTextField.text ?? ""
+            var amount = amountTextField.text ?? ""
+            let amountDouble = Double(amount) ?? 0
+            if floor(amountDouble) == amountDouble {
+                amount = "\(Int(amountDouble))"
+            }
             createDeposit(ethID: ethID, amount: amount.replacingOccurrences(of: ",", with: "."))
         }
     }
