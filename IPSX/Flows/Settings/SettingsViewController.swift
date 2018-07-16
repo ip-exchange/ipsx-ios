@@ -38,6 +38,7 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    private var shouldLogout = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,11 @@ class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadSettings()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if shouldLogout { logout() }
     }
     
     @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
@@ -124,6 +130,22 @@ class SettingsViewController: UIViewController {
         DispatchQueue.main.async {
             self.emailNotificationsSwitch.isEnabled = !error
             self.emailNotificationsSwitch.setOn(value, animated: true)
+        }
+    }
+    
+    func logout() {
+        
+        shouldLogout = false
+        UserManager.shared.logout()
+        self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DeleteAccountSegueID" {
+            let deleteAccController = segue.destination as? DeleteAccountController
+            deleteAccController?.onDismiss = { success in
+                if success { self.shouldLogout = true }
+            }
         }
     }
 }
