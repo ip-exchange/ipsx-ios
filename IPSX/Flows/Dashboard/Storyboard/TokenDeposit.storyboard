@@ -36,6 +36,13 @@
                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap on the Create Deposit to prepare a token transfer form your ethereum wallet to the application account." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxu-2P-TNQ">
+                                            <rect key="frame" x="16" y="91" width="343" height="69"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vkU-Q1-KyR" userLabel="Separator">
                                             <rect key="frame" x="0.0" y="80.5" width="375" height="0.5"/>
                                             <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
@@ -355,11 +362,13 @@
                         <outlet property="amountLabelLarge" destination="vfl-7k-h3M" id="6vl-kR-w4i"/>
                         <outlet property="amountLabelSmall" destination="Yww-15-e4n" id="lMH-YN-3Z4"/>
                         <outlet property="headerHeightConstraint" destination="izM-iL-cnU" id="pjV-Yf-5n4"/>
+                        <outlet property="headerSeparatorView" destination="vkU-Q1-KyR" id="Fpx-3a-nTa"/>
                         <outlet property="hidableDownView" destination="H3G-AJ-E1w" id="hi2-Ud-4pH"/>
                         <outlet property="loadingView" destination="9jH-j8-SeT" id="btm-d4-MWE"/>
                         <outlet property="particlesHolder" destination="twm-dQ-z3c" id="aT3-q7-jk2"/>
                         <outlet property="tableView" destination="sHv-gb-7WK" id="6qw-gc-hBR"/>
                         <outlet property="titleTopConstraint" destination="vKg-sL-YAS" id="3CF-qi-afW"/>
+                        <outlet property="tokenDepositHelpLabel" destination="Hxu-2P-TNQ" id="jnn-d2-FOv"/>
                         <outlet property="topConstraintOutlet" destination="i9g-AI-m7o" id="Y4p-jo-kao"/>
                         <outlet property="topRootView" destination="UAy-LC-rNp" id="24L-eW-Pov"/>
                         <segue destination="N4z-zM-Rxe" kind="show" identifier="createDepositSegueID" id="0zg-Fa-CDO"/>
