@@ -97,8 +97,16 @@ class TokenDepositController: UIViewController {
         super.viewDidLoad()
         createKeyboardToolbar()
         updateUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: dropdownView, text: "")
@@ -108,6 +116,7 @@ class TokenDepositController: UIViewController {
         super.viewWillAppear(animated)
         loadAndSetDefaultAddres()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         if UserManager.shared.proxyPacks == nil {
             retrieveProxyPackages()
         } else {
@@ -159,6 +168,16 @@ class TokenDepositController: UIViewController {
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

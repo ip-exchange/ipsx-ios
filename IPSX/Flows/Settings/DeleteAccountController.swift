@@ -34,8 +34,16 @@ class DeleteAccountController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         observreFieldsState()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -49,6 +57,7 @@ class DeleteAccountController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,6 +76,17 @@ class DeleteAccountController: UIViewController {
             }
         }
     }
+    
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     private func setupTextViews() {
         passworldRTField.validationRegex = RichTextFieldView.validPasswordRegex
     }

@@ -95,8 +95,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         updateHeader()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topRootView, text: "")
@@ -105,6 +113,7 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         selectedAddress = nil
         refreshProfileUI()
         retrieveETHaddresses()
@@ -128,6 +137,16 @@ class ProfileViewController: UIViewController {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
                 self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             }
         }
     }

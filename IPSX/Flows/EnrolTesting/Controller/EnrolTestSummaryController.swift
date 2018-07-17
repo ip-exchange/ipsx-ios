@@ -37,8 +37,16 @@ class EnrolTestSummaryController: UIViewController {
         
         super.viewDidLoad()
         updateUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -47,6 +55,7 @@ class EnrolTestSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +75,16 @@ class EnrolTestSummaryController: UIViewController {
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     private func updateUI() {
         ethAddresAlias.text = enroledAddress?.alias ?? "-"
         ethAddress.text     = enroledAddress?.address ?? "-"

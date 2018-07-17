@@ -45,8 +45,16 @@ class EnrolStakeSummaryController: UIViewController {
         
         super.viewDidLoad()
         editButton.isHidden = enroledAddresses == nil
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -55,6 +63,7 @@ class EnrolStakeSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         enrollmentDetails()
     }
     
@@ -83,6 +92,16 @@ class EnrolStakeSummaryController: UIViewController {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
                 self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             }
         }
     }

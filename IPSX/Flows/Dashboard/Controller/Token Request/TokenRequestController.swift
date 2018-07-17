@@ -90,6 +90,14 @@ class TokenRequestController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
+
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
     }
 
     override func viewDidLayoutSubviews() {
@@ -101,6 +109,7 @@ class TokenRequestController: UIViewController {
         super.viewWillAppear(animated)
         loadAndSetDefaultAddres()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,6 +134,16 @@ class TokenRequestController: UIViewController {
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

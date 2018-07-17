@@ -74,12 +74,21 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView?.layer.cornerRadius = 5
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
      }
     
-    override func viewWillAppear(_ animated: Bool) {
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+    
+        override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         tableView?.setContentOffset(.zero, animated: false)
         
         /*  No need to submit requests:
@@ -135,6 +144,16 @@ class DashboardViewController: UIViewController {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
                 self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             }
         }
     }

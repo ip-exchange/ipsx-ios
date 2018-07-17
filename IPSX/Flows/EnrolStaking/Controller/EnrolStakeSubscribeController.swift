@@ -50,6 +50,14 @@ class EnrolStakeSubscribeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         joinStakingButton.isEnabled = false
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
+
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
     }
 
     override func viewDidLayoutSubviews() {
@@ -60,6 +68,7 @@ class EnrolStakeSubscribeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         loadValidAddresses()
         if editMode {
             loadingView.startAnimating()
@@ -98,6 +107,17 @@ class EnrolStakeSubscribeController: UIViewController {
             }
         }
     }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
 
     private func loadValidAddresses() {
         if let addresses = UserManager.shared.ethAddresses {

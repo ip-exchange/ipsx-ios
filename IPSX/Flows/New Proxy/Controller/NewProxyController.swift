@@ -55,9 +55,16 @@ class NewProxyController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.currentIpInfoLabel.text = "Getting IP info...".localized
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -67,6 +74,7 @@ class NewProxyController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         retrieveUserInfo()
         updateReachabilityInfo()
         
@@ -85,11 +93,20 @@ class NewProxyController: UIViewController {
         proxyPacks = UserManager.shared.proxyPacks
     }
     
-    deinit {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
-    }
+     }
 
     func updateReachabilityInfo() {
+        
+        if !ReachabilityManager.shared.isReachable() {
+            self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            self.currentIpInfoLabel.text = "No internet connection".localized
+        } else {
+            self.toast?.hideToastAlert()
+        }
+
         guard shouldRefreshIp else { return }
         DispatchQueue.main.async {
             self.shouldRefreshIp = false

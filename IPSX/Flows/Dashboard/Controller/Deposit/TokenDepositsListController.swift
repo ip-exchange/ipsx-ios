@@ -82,8 +82,16 @@ class TokenDepositsListController: UIViewController {
         super.viewDidLoad()
         configureUI()
         updateHeader()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topRootView, text: "")
@@ -94,6 +102,7 @@ class TokenDepositsListController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         getDepositList()
         self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+        updateReachabilityInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -119,6 +128,16 @@ class TokenDepositsListController: UIViewController {
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     func updateHeader() {
         let range = self.maxHeaderHeight - self.minHeaderHeight
         let openAmount = self.headerHeightConstraint.constant - self.minHeaderHeight

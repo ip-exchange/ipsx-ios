@@ -41,8 +41,16 @@ class TokenRequestListController: UIViewController {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(self.pulltoRefresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: toastHolderView, text: "")
@@ -52,6 +60,7 @@ class TokenRequestListController: UIViewController {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         getTokenRequestList()
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: refreshInterval, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
@@ -110,6 +119,16 @@ class TokenRequestListController: UIViewController {
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if ReachabilityManager.shared.isReachable() {
+                self.toast?.hideToastAlert()
+            } else {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            }
+        }
+    }
+
     func updateUI() {
         
         DispatchQueue.main.async {
