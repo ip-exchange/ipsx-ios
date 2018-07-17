@@ -228,10 +228,11 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
             
         case .cancelDeposit:
-            var url = Url.base + Url.deleteDepositArgs
+            let body = JSON(bodyParams)
+            var url = Url.base + Url.cancelDepositArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
         
         //General Settings (Options)

@@ -145,7 +145,9 @@ class TokenDepositService {
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken,
                                            "DEPOSIT_ID"   : String(depositID)]
         
-        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, completion: { error, data in
+        let bodyParams: [String: Any] = ["status" : "canceled"]
+        
+        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
