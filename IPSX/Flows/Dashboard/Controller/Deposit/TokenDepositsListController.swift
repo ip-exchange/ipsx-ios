@@ -19,6 +19,9 @@ class TokenDepositsListController: UIViewController {
     @IBOutlet weak var particlesHolder: UIView!
     @IBOutlet weak var amountLabelSmall: UILabel!
     @IBOutlet weak var amountLabelLarge: UILabel!
+    @IBOutlet weak var tokenDepositHelpLabel: UILabel!
+    @IBOutlet weak var headerSeparatorView: UIView!
+    
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -28,7 +31,15 @@ class TokenDepositsListController: UIViewController {
     
     var selectedDeposit: Deposit?
 
-    var deposits: [Deposit]? = []
+    var deposits: [Deposit]? = [] {
+        didSet {
+            DispatchQueue.main.async {
+                let items = self.deposits?.count ?? 0
+                self.tokenDepositHelpLabel.isHidden = items > 0
+                self.headerSeparatorView.isHidden = items == 0
+            }
+        }
+    }
     
     var balance: String = "" {
         didSet {
