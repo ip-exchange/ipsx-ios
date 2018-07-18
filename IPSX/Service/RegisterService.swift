@@ -14,7 +14,8 @@ class RegisterService {
         
         let params: [String: String] = ["email"      : email,
                                         "password"   : password,
-                                        "ip"         : ip]
+                                        "ip"         : ip,
+                                        "source"     : "ios"]
         
         RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             

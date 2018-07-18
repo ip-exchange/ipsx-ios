@@ -12,7 +12,7 @@ struct TokenRequest {
     
     var ethID: Int
     var amount: String
-    var status: String
+    var status: String //pending, completed, rejected
     var created: Date?
     
     init(ethID: Int = 0, amount: String = "", status: String = "",created: Date? = nil) {

@@ -13,7 +13,7 @@ struct Deposit {
     var depositID: Int
     var ethID: Int
     var amount: String
-    var status: String
+    var status: String //pending, complete, canceled, expired
     var watchUntil: Date?
     var createdAt: Date?
 
