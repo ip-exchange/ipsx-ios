@@ -53,8 +53,15 @@ class DashboardViewController: UIViewController {
     }
     var filteredProxies: [Proxy] {
         get {
-            let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active" : "expired"
-            return proxies.filter { $0.proxyDetails?.status == filterString }
+            let filterString = "active"
+            return proxies.filter {
+                if proxiesSegmentController.selectedSegmentIndex == 0 {
+                    return $0.proxyDetails?.status == filterString
+                } else {
+                    return $0.proxyDetails?.status != filterString
+
+                }
+            }
         }
     }
     
