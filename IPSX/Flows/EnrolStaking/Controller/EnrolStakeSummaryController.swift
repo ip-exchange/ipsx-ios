@@ -40,6 +40,9 @@ class EnrolStakeSummaryController: UIViewController {
     
     // [(ethId, createdDate)]
     var enrollment: [(ethID: Int, createdDate: Date)] = []
+    var stakingEnded: Bool {
+        return UserManager.shared.generalSettings?.stakingStatus == false
+    }
     
     override func viewDidLoad() {
         
@@ -65,12 +68,13 @@ class EnrolStakeSummaryController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         enrollmentDetails()
+        if stakingEnded { editButton.isHidden = true }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if UserManager.shared.generalSettings?.stakingStatus == false, let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate {
-            editButton.isHidden = true
+        if stakingEnded {
+            let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
             let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
             toast?.showToastAlert(stakingEndAlertText, type: .info, dismissable: false)
         }
