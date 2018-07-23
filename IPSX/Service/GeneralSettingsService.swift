@@ -1,5 +1,5 @@
 //
-//  GeneralSettingsService.swift
+//  SettingsService.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 22/05/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GeneralSettingsService {
+class SettingsService {
     
     func retrieveSettings(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         

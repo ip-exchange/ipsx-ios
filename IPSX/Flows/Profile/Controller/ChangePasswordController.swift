@@ -211,7 +211,7 @@ extension ChangePasswordController: ErrorPresentable {
                 completion?()
             })
             
-        case CustomError.wrongOldPassword:
+        case CustomError.wrongPassword:
             self.errorMessage = "Wrong Old Password Error Message".localized
             
         default:

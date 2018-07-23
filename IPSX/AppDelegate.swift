@@ -31,7 +31,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        switch url.host {
+            
+        case "registration":
+            let url = url.absoluteURL
+            let accessToken = url.valueOf("token")
+            print("token = ",accessToken)
+            return true
+            
+        default:
+            return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        }
     }
     
     func setKeychainAccessGroup() {

@@ -262,7 +262,7 @@ class LoadingViewController: UIViewController {
     func generalSettings() {
         
         dispatchGroup.enter()
-        GeneralSettingsService().retrieveSettings(completionHandler: { result in
+        SettingsService().retrieveSettings(completionHandler: { result in
             self.dispatchGroup.leave()
             
             switch result {

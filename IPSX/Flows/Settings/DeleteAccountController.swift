@@ -141,8 +141,8 @@ extension DeleteAccountController: ErrorPresentable {
                 completion?()
             })
             
-        case CustomError.wrongOldPassword:
-            self.errorMessage = "Wrong Old Password Error Message".localized
+        case CustomError.wrongPassword:
+            self.errorMessage = "Wrong Password Error Message".localized
             
         default:
             self.errorMessage = "Generic Error Message".localized

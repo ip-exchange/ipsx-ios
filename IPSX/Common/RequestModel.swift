@@ -108,7 +108,7 @@ public enum CustomError: Error {
     case invalidParams
     case alreadyExists
     case notFound
-    case wrongOldPassword
+    case wrongPassword
     case loginFailed
     case invalidLogin
     case userDeleted
@@ -168,6 +168,7 @@ public enum IPRequestType: Int {
     case getEthAddress
     case updateEthAddress
     case deleteEthAddress
+    case deleteAccount
     case getUserCountryList
     case getProxyCountryList
     case getTokenRequestList
