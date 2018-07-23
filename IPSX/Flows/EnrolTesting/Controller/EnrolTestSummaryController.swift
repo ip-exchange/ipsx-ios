@@ -91,6 +91,14 @@ class EnrolTestSummaryController: UIViewController {
         enroledDate.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "dd MMM yyyy") ?? "-- --- --"
         enroledTime.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "HH:mm") ?? "--:--"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationWebController = segue.destination as? SimpleWebView {
+            destinationWebController.loadingURLString = Url.faqPageUrl
+            destinationWebController.titleString = "FAQ".localized
+        }
+    }
+
 }
 
 extension EnrolTestSummaryController: ToastAlertViewPresentable {

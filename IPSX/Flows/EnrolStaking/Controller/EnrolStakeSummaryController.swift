@@ -81,6 +81,10 @@ class EnrolStakeSummaryController: UIViewController {
                     self.enrollmentDetails()
                 }
             }
+        } else if segue.identifier == "WebViewSegueID" {
+            let destinationWebController = segue.destination as? SimpleWebView
+            destinationWebController?.loadingURLString = Url.faqPageUrl
+            destinationWebController?.titleString = "FAQ".localized
         }
     }
     

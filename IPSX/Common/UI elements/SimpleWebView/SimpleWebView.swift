@@ -17,8 +17,7 @@ class SimpleWebView: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
     
-    //Update in prepareForSegeue if the screen is reused
-    var loadingURLString: String? = "https://devapp.ip.sx/webview/faq/staking"
+    var loadingURLString: String?
     var titleString = "FAQ"
     
     override func viewDidLoad() {

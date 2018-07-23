@@ -55,7 +55,7 @@ class RegisterTermsController: UIViewController {
             
         case "TermsWebViewSegueID":
             let destinationWebController = segue.destination as? SimpleWebView
-            destinationWebController?.loadingURLString = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
+            destinationWebController?.loadingURLString = Url.termsUrl
             destinationWebController?.titleString = "T&C".localized
             
         default:
