@@ -238,7 +238,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
             
         case .generalSettings:
-        
         var url = Url.baseApi + Url.generalSettingsArgs
         if let params = urlParams as? [String: String] {
             url = url.replaceKeysWithValues(paramsDict: params)
@@ -251,6 +250,13 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .abortDeleteAccount:
+            var url = Url.baseApi + Url.abortDeleteAccountArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
             
         }

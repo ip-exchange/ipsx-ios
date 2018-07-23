@@ -31,6 +31,21 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func deleteAction(_ sender: UIButton) {
+        
+        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
+        
+        switch deleteAccountState {
+            
+        case .notRequested:
+            performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
+            
+        case .pending, .confirmed:
+            abortDelete()
+        }
+    }
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -77,6 +92,25 @@ class SettingsViewController: UIViewController {
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {
                     self.retrieveUserInfo()
+                })
+            }
+        })
+    }
+    
+    func abortDelete() {
+        
+        loadingView?.startAnimating()
+        SettingsService().abortDeleteAccount(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                self.retrieveUserInfo()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .abortDeleteAccount, completion: {
+                    self.abortDelete()
                 })
             }
         })

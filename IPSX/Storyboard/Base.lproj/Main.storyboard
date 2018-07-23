@@ -785,7 +785,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="66"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <connections>
-                                            <segue destination="9Hr-VI-Dkc" kind="show" identifier="DeleteAccountSegueID" id="ebe-gV-wKV"/>
+                                            <action selector="deleteAction:" destination="f0C-Rr-AGY" eventType="touchUpInside" id="BQp-ft-Qky"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -850,6 +850,7 @@
                         <outlet property="topBarView" destination="fcR-bh-uWF" id="Mcf-xW-Usz"/>
                         <outlet property="topConstraintOutlet" destination="tTA-h3-Nke" id="fBo-2f-vEw"/>
                         <segue destination="grr-34-nBj" kind="presentation" identifier="showLandingSegueID" id="fqj-8c-i0g"/>
+                        <segue destination="9Hr-VI-Dkc" kind="show" identifier="DeleteAccountSegueID" id="3fP-vK-Fyg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tve-8X-fak" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1610,7 +1611,7 @@
         <image name="locked" width="8" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TtS-cb-UUJ"/>
+        <segue reference="fqj-8c-i0g"/>
         <segue reference="eg6-mz-aaC"/>
     </inferredMetricsTieBreakers>
 </document>
