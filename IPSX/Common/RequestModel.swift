@@ -37,22 +37,31 @@ public struct Url {
      public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
     
     // DEV ENV:
-    public static let baseDEV       = "http://devapi.ip.sx:3000/api"
+    public static let baseDEVApi       = "http://devapi.ip.sx:3000/api"
     public static let pacBaseUrlDEV = "https://devapp.ip.sx/proxy/pac/"
     public static let faqUrlDev     = "https://devapp.ip.sx/webview/faq/staking"
 
     // DEMO ENV:
-    public static let baseDEMO       = "https://api.ipsx.io/api"
+    public static let baseDEMOApi       = "https://api.ipsx.io/api"
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
     public static let faqUrlDemo     = "https://demo.ip.sx/webview/faq/staking"
 
-    public static var base: String {
+    public static var baseUrl: String {
+        get {
+            switch environment {
+            case .dev:  return "https://devapp.ip.sx"
+            case .demo: return "https://demo.ip.sx"
+            }
+        }
+    }
+
+    public static var baseApi: String {
         get {
             switch environment {
             case .dev:
-                return baseDEV
+                return baseDEVApi
             case .demo:
-                return baseDEMO
+                return baseDEMOApi
             }
         }
     }
@@ -69,16 +78,13 @@ public struct Url {
     }
     
     public static var faqPageUrl: String {
-        get {
-            switch environment {
-            case .dev:
-                return faqUrlDev
-            case .demo:
-                return faqUrlDemo
-            }
-        }
+        get { return baseUrl + "/webview/faq/staking" }
     }
 
+    public static var referalCodeUrl: String {
+        get { return baseUrl + "/register?referral=" }
+    }
+    
     public static let publicIPArgs          = "/Users/ip"
     public static let registerArgs          = "/Users"
     public static let fbRegisterArgs        = "/Users/social/register/facebook"

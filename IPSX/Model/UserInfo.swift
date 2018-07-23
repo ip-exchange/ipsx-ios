@@ -29,10 +29,11 @@ struct UserInfo {
     var balance: Int
     var kycStatus: String = "Unknown Status Text".localized
     var socialName: String?
+    var refferalCode: String?
 
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Int = 0, kycStatus: Int = -1, socialName: String? = nil) {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Int = 0, kycStatus: Int = -1, socialName: String? = nil, refferalCode: String? = nil) {
         
         self.firstName  = firstName
         self.middleName = middleName
@@ -43,6 +44,8 @@ struct UserInfo {
         self.proxyTest  = proxyTest
         self.balance    = balance
         self.socialName = socialName
+        self.refferalCode = refferalCode
+        
         if let statusString = kycStausedDic[kycStatus] {
             self.kycStatus = statusString.localized
         }
