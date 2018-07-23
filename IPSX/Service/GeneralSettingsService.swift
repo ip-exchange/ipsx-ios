@@ -57,6 +57,13 @@ class GeneralSettingsService {
                 case "deposit_eth":
                     settings.depositEthAddress = valueString
                     
+                case "system_staking_status":
+                    settings.stakingStatus = valueInt == 1 ? true : false
+                    
+                case "system_staking_end_date":
+                    //TODO: This is a date string format that cant be parsed atm, changes to come.
+                    settings.stakingEndDate = valueString
+                    
                 default:
                     break
                 }

@@ -53,6 +53,10 @@ class ProfileViewController: UIViewController {
     @IBAction func EnrolStakingAction(_ sender: Any) {
         if UserManager.shared.isEnroledForStaking {
             performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
+        } else if UserManager.shared.generalSettings?.stakingStatus == false {
+            let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
+            let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
+            toast?.showToastAlert(stakingEndAlertText, autoHideAfter: 5, type: .info)
         } else if !UserManager.shared.hasValidAddress {
             toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
         } else {

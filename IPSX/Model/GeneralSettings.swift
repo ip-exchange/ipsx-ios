@@ -17,6 +17,8 @@ public struct GeneralSettings {
     var depositMin: Int? //using default = 20
     var depositMax: Int? //using default = 5000
     var depositEthAddress: String?
+    var stakingStatus: Bool = false
+    var stakingEndDate: String?
     
     init(depositMin: Int? = nil, depositMax: Int? = nil, maxETHaddresses: Int? = nil,maxTokenRequests: Int? = nil, depositEthAddress: String? = nil) {
         

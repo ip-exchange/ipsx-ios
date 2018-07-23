@@ -41,7 +41,7 @@ class ReferFriendController: UIViewController {
     
     @IBAction func copyLinkAction(_ sender: Any) {
         UIPasteboard.general.string = referalLinkLabel.text
-        toast?.showToastAlert("The refferal link has been copied, send it to your friends for register.", autoHideAfter: 5, type: .info, dismissable: true)
+        toast?.showToastAlert("Reflink Copied Message".localized, autoHideAfter: 5, type: .info, dismissable: true)
     }
 }
 

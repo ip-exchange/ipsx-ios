@@ -67,6 +67,15 @@ class EnrolStakeSummaryController: UIViewController {
         enrollmentDetails()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserManager.shared.generalSettings?.stakingStatus == false, let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate {
+            editButton.isHidden = true
+            let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
+            toast?.showToastAlert(stakingEndAlertText, type: .info, dismissable: false)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
