@@ -51,6 +51,7 @@ class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        retrieveUserInfo()
         loadSettings()
     }
     
@@ -59,15 +60,19 @@ class SettingsViewController: UIViewController {
     }
     
     func retrieveUserInfo() {
-        
+
         loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
-            
+
             self.loadingView?.stopAnimating()
             switch result {
+                
             case .success(let user):
+                
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {
@@ -101,6 +106,28 @@ class SettingsViewController: UIViewController {
         })
     }
     
+    func updateUI() {
+        
+        self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+        
+        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
+        
+        switch deleteAccountState {
+            
+        case .notRequested:
+            print("default")
+            //TODO(CC): Delete Account button with no banner
+            
+        case .pending:
+            print("pending")
+            //TODO(CC): Abort button with "Check your email to confirm your delete account action." banner
+            
+        case .confirmed:
+            print("confirmed")
+            //TODO (CC): Abort button with banner "Your account is scheduled to be deleted on @deleteAccountDate"
+        }
+    }
+    
     func updateSettings(emailNotif: Bool = false) {
         
         loadingView?.startAnimating()
@@ -132,7 +159,7 @@ class SettingsViewController: UIViewController {
             let deleteAccController = segue.destination as? DeleteAccountController
             deleteAccController?.onDismiss = { success in
                 if success {
-                    //TODO: and display alert with "Check your email to confirm your delete account action."
+                    self.retrieveUserInfo()
                 }
             }
         }

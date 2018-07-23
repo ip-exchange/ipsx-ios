@@ -8,7 +8,16 @@
 
 import Foundation
 
+enum DeleteAccountState: Int {
+    
+    case notRequested = 0
+    case pending = 1
+    case confirmed = 2
+}
+
 struct UserInfo {
+    
+    var deleteAccountState: DeleteAccountState = .notRequested
     
     let kycStausedDic: [Int : String] = [0 : "Registered Status Text",
                                          1 : "Approved Status Text",
@@ -30,24 +39,31 @@ struct UserInfo {
     var kycStatus: String = "Unknown Status Text".localized
     var socialName: String?
     var refferalCode: String?
-
+    
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Int = 0, kycStatus: Int = -1, socialName: String? = nil, refferalCode: String? = nil) {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Int = 0, kycStatus: Int = -1, socialName: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false) {
         
-        self.firstName  = firstName
-        self.middleName = middleName
-        self.lastName   = lastName
-        self.telegram   = telegram
-        self.countryID  = countryID
-        self.email      = email
-        self.proxyTest  = proxyTest
-        self.balance    = balance
-        self.socialName = socialName
+        self.firstName    = firstName
+        self.middleName   = middleName
+        self.lastName     = lastName
+        self.telegram     = telegram
+        self.countryID    = countryID
+        self.email        = email
+        self.proxyTest    = proxyTest
+        self.balance      = balance
+        self.socialName   = socialName
         self.refferalCode = refferalCode
         
         if let statusString = kycStausedDic[kycStatus] {
             self.kycStatus = statusString.localized
+        }
+        
+        if deleteAccountDate != nil {
+            deleteAccountState = .confirmed
+        }
+        else if pendingDeleteAccount {
+            deleteAccountState = .pending
         }
     }
 }

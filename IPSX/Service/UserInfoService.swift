@@ -40,19 +40,42 @@ class UserInfoService {
     
     private func mapResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let firstName  = json["first_name"].stringValue
-        let middleName = json["middle_name"].stringValue
-        let lastName   = json["last_name"].stringValue
-        let telegram   = json["telegram"].stringValue
-        let countryID  = json["country_id"].stringValue
-        let email      = json["email"].stringValue
-        let proxyTest  = json["proxy_test"].stringValue
-        let balance    = json["ballance"].intValue
-        let kycStatus  = json["kyc_status"].intValue
-        let socialName = json["social_name"].string
-        let refCode    = json["referral_code"].string
+        let firstName           = json["first_name"].stringValue
+        let middleName          = json["middle_name"].stringValue
+        let lastName            = json["last_name"].stringValue
+        let telegram            = json["telegram"].stringValue
+        let countryID           = json["country_id"].stringValue
+        let email               = json["email"].stringValue
+        let proxyTest           = json["proxy_test"].stringValue
+        let balance             = json["ballance"].intValue
+        let kycStatus           = json["kyc_status"].intValue
+        let socialName          = json["social_name"].string
+        let refCode             = json["referral_code"].string
+        let deleteAccountString = json["self_deleted_at_confirmation"].stringValue
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, refferalCode: refCode)
+        let dateFormatter     = DateFormatter.backendResponseParse(format: "yyyy-MM-dd HH:mm:ss")
+        let deleteAccountDate = dateFormatter.date(from: deleteAccountString)
+        
+        /*
+         Bad API (let's hope for something better)
+         
+         1. No delete action:
+         "self_deleted_at_confirmation": null
+         
+         2. After Delete account action:
+         "self_deleted_at_confirmation": "xer8bDLDA5soJISP05stNHc8cGevNgleo9DewfrH"
+         
+         3. After confirming the deletion from email:
+         "self_deleted_at_confirmation": "2018-07-23 00:00:00"
+         */
+        
+        var pendingDeleteAccount = false
+        
+        if deleteAccountString != "" && deleteAccountDate == nil {
+            pendingDeleteAccount = true
+        }
+        
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
         completionHandler(ServiceResult.success(user))
     }
     
