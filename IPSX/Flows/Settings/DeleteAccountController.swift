@@ -104,15 +104,30 @@ class DeleteAccountController: UIViewController {
     @IBAction func deleteButtonAction(_ sender: Any) {
         
         let password = passworldRTField.contentTextField?.text ?? ""
-        print(password)
-        loadingView.startAnimating()
-        //TODO (CVI): Delete logic here. If success, should dismiss this screen and invoke landing page segue from tabbar
-        //TODO (CVI): Dummy code to simulate a delete request, replace it with the actual request
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.loadingView.stopAnimating()
-            self.onDismiss?(true)
-            self.navigationController?.popViewController(animated: true)
-        }
+        deleteAccount(password: password)
+    }
+    
+    func deleteAccount(password: String) {
+        
+        loadingView?.startAnimating()
+        
+        SettingsService().deleteAccount(password: password, completionHandler: { result in
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                
+                DispatchQueue.main.async {
+                    self.onDismiss?(true)
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .deleteAccount, completion: {
+                    self.deleteAccount(password: password)
+                })
+            }
+        })
     }
 }
 

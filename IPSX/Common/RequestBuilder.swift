@@ -247,7 +247,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .deleteAccount:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.metaArgs
+            var url = Url.base + Url.deleteAccountArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)

@@ -64,4 +64,25 @@ class SettingsService {
             completionHandler(ServiceResult.success(settings))
         })
     }
+    
+    func deleteAccount(password: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: String] = ["password" : password]
+        
+        RequestBuilder.shared.executeRequest(requestType: .deleteAccount, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
 }
