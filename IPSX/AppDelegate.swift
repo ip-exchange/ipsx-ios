@@ -36,8 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         case "registration":
             let url = url.absoluteURL
-            let accessToken = url.valueOf("token")
-            print("token = ",accessToken)
+            let accessToken = url.valueOf("token") ?? ""
+            let userId = url.valueOf("uid") ?? ""
+            
+            //Store access details in keychain
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            
+            return true
+            
+        case "delete":
+            //TODO: remove Abort delete from Settings
             return true
             
         default:

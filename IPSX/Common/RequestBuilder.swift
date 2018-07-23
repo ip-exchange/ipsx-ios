@@ -329,7 +329,8 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             case .changePassword:
                 print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
                 completion(CustomError.wrongPassword, data)
-                
+               
+            // is not configured to return 402 -> it will return 500
             case .deleteAccount:
                 print(NSDate(), "\(requestType)" + "Request failed. Wrong password")
                 completion(CustomError.wrongPassword, data)

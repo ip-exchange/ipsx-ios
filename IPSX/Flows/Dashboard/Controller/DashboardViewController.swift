@@ -91,7 +91,7 @@ class DashboardViewController: UIViewController {
         updateReachabilityInfo()
     }
     
-        override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
