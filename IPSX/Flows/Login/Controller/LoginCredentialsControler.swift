@@ -29,7 +29,6 @@ class LoginCredentialsControler: UIViewController {
 
     var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
-    var registerFlow = false
 
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var errorMessage: String? {
@@ -163,9 +162,6 @@ class LoginCredentialsControler: UIViewController {
         if segue.identifier == "ForgotPasswordSegueID" {
             let nextController = segue.destination as? ForgotPassController
             nextController?.noLandingScreen = backButton.isHidden
-        } else if segue.identifier == "showAddWalletSegueID" {
-            let nextController = segue.destination as? AddWalletController
-            nextController?.registerFlow = registerFlow
         }
     }
     

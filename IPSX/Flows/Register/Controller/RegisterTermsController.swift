@@ -49,10 +49,6 @@ class RegisterTermsController: UIViewController {
         
         switch segue.identifier {
             
-        case "showAddWalletSegueID":
-            let nextController = segue.destination as? AddWalletController
-            nextController?.registerFlow = true
-            
         case "TermsWebViewSegueID":
             let destinationWebController = segue.destination as? SimpleWebView
             destinationWebController?.loadingURLString = Url.termsUrl
