@@ -665,7 +665,7 @@
         <!--Tab Bar View Controller-->
         <scene sceneID="C2l-Kq-4bT">
             <objects>
-                <tabBarController id="zhc-5m-q3f" customClass="TabBarViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarControllerID" id="zhc-5m-q3f" customClass="TabBarViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="smb-Vh-uSz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -680,6 +680,7 @@
                         <segue destination="f0C-Rr-AGY" kind="relationship" relationship="viewControllers" id="cu0-ty-GJw"/>
                         <segue destination="RbI-qU-2hi" kind="relationship" relationship="viewControllers" id="Roy-su-mpx"/>
                         <segue destination="grr-34-nBj" kind="presentation" identifier="showLandingSegueID" id="TtS-cb-UUJ"/>
+                        <segue destination="Iv2-r2-yiw" kind="show" identifier="showAddWalletSegueID" id="MxS-Wi-XAS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USP-3f-e11" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -864,6 +865,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHB-S1-cvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2592" y="850"/>
+        </scene>
+        <!--WalletAdd-->
+        <scene sceneID="gGv-rz-Bx9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WalletAdd" id="Iv2-r2-yiw" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UiR-L7-7GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1262" y="16"/>
         </scene>
         <!--Landing-->
         <scene sceneID="MA1-Jg-3H6">
@@ -1601,7 +1610,7 @@
         <image name="locked" width="8" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fqj-8c-i0g"/>
+        <segue reference="TtS-cb-UUJ"/>
         <segue reference="eg6-mz-aaC"/>
     </inferredMetricsTieBreakers>
 </document>

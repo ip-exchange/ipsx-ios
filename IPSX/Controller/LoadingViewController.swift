@@ -22,7 +22,7 @@ class LoadingViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     let dispatchGroup = DispatchGroup()
-    
+    var hasPerformedAutologin = false
     var noOfRequests: Float = 9
     
     override func viewDidLayoutSubviews() {
@@ -49,9 +49,17 @@ class LoadingViewController: UIViewController {
             initDataAndContinueFlow()
         }
         else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+            DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "TabbarSegueID", sender: self)
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "TabbarSegueID" {
+            let destinationVC = segue.destination as? TabBarViewController
+            destinationVC?.hasPerformedAutologin = hasPerformedAutologin
         }
     }
     

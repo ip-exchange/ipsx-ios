@@ -42,6 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //Store access details in keychain
             UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
             
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            let loadingVC = initialVC?.viewControllers.first as? LoadingViewController
+            loadingVC?.hasPerformedAutologin = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+            
             return true
             
         case "delete":
