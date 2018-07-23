@@ -665,7 +665,7 @@
         <!--Tab Bar View Controller-->
         <scene sceneID="C2l-Kq-4bT">
             <objects>
-                <tabBarController id="zhc-5m-q3f" customClass="TabBarViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarControllerID" id="zhc-5m-q3f" customClass="TabBarViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="smb-Vh-uSz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -680,6 +680,7 @@
                         <segue destination="f0C-Rr-AGY" kind="relationship" relationship="viewControllers" id="cu0-ty-GJw"/>
                         <segue destination="RbI-qU-2hi" kind="relationship" relationship="viewControllers" id="Roy-su-mpx"/>
                         <segue destination="grr-34-nBj" kind="presentation" identifier="showLandingSegueID" id="TtS-cb-UUJ"/>
+                        <segue destination="Iv2-r2-yiw" kind="show" identifier="showAddWalletSegueID" id="MxS-Wi-XAS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USP-3f-e11" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -765,7 +766,7 @@
                                     <constraint firstAttribute="height" constant="58" id="w8Q-J2-N58"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zme-86-oZS" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zme-86-oZS" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="16" y="195.66666666666666" width="343" height="65.999999999999972"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="garbage" translatesAutoresizingMaskIntoConstraints="NO" id="AUr-BZ-6BV">
@@ -864,6 +865,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHB-S1-cvh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2592" y="850"/>
+        </scene>
+        <!--WalletAdd-->
+        <scene sceneID="gGv-rz-Bx9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WalletAdd" id="Iv2-r2-yiw" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UiR-L7-7GJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1262" y="16"/>
         </scene>
         <!--Landing-->
         <scene sceneID="MA1-Jg-3H6">
@@ -1542,7 +1551,6 @@
                             <constraint firstItem="FVZ-6U-SQI" firstAttribute="trailing" secondItem="YnK-Zt-ED0" secondAttribute="trailing" id="0ld-M6-lUB"/>
                             <constraint firstItem="YPY-n9-OyN" firstAttribute="leading" secondItem="FVZ-6U-SQI" secondAttribute="leading" id="0ut-lt-Qmq"/>
                             <constraint firstItem="FVZ-6U-SQI" firstAttribute="top" secondItem="YPY-n9-OyN" secondAttribute="top" constant="50" id="5Zv-mh-tMm"/>
-                            <constraint firstItem="KIf-g0-G67" firstAttribute="top" secondItem="YPY-n9-OyN" secondAttribute="bottom" constant="30" id="5pR-df-B0u"/>
                             <constraint firstItem="FVZ-6U-SQI" firstAttribute="trailing" secondItem="YPY-n9-OyN" secondAttribute="trailing" id="CDL-ji-Btw"/>
                             <constraint firstItem="ff4-3e-oRd" firstAttribute="centerX" secondItem="FVZ-6U-SQI" secondAttribute="centerX" id="IGZ-Sr-HBM"/>
                             <constraint firstItem="D2c-aM-PUz" firstAttribute="top" secondItem="YnK-Zt-ED0" secondAttribute="bottom" constant="20" id="IoX-I4-uHs"/>
@@ -1552,6 +1560,7 @@
                             <constraint firstItem="tKZ-zS-fY2" firstAttribute="top" secondItem="YPY-n9-OyN" secondAttribute="bottom" id="WSX-KF-OcL"/>
                             <constraint firstItem="ff4-3e-oRd" firstAttribute="centerY" secondItem="FVZ-6U-SQI" secondAttribute="centerY" id="ZZF-T9-sju"/>
                             <constraint firstItem="tKZ-zS-fY2" firstAttribute="leading" secondItem="FVZ-6U-SQI" secondAttribute="leading" id="bnl-cV-i7D"/>
+                            <constraint firstItem="KIf-g0-G67" firstAttribute="top" secondItem="tKZ-zS-fY2" secondAttribute="bottom" constant="29.333333333333329" id="dRG-qL-IaN"/>
                             <constraint firstItem="42h-Xt-MeB" firstAttribute="trailing" secondItem="KIf-g0-G67" secondAttribute="trailing" id="f9m-mp-5Fk"/>
                             <constraint firstItem="42h-Xt-MeB" firstAttribute="leading" secondItem="KIf-g0-G67" secondAttribute="leading" id="mG1-Yf-7Be"/>
                             <constraint firstItem="42h-Xt-MeB" firstAttribute="top" secondItem="KIf-g0-G67" secondAttribute="bottom" constant="4" id="oIq-tD-vuD"/>
@@ -1601,7 +1610,7 @@
         <image name="locked" width="8" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fqj-8c-i0g"/>
+        <segue reference="TtS-cb-UUJ"/>
         <segue reference="eg6-mz-aaC"/>
     </inferredMetricsTieBreakers>
 </document>

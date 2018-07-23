@@ -109,21 +109,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
-        case .getSettings:
-            var url = Url.baseApi + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .updateSettings:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-            
         //Proxy Requests
             
         case .getProxyCountryList:
@@ -235,8 +220,23 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
         
-        //General Settings (Options)
+        // Settings 
         
+        case .getSettings:
+            var url = Url.baseApi + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .updateSettings:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         case .generalSettings:
         
         var url = Url.baseApi + Url.generalSettingsArgs
@@ -244,6 +244,15 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             url = url.replaceKeysWithValues(paramsDict: params)
             request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
         }
+            
+        case .deleteAccount:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.deleteAccountArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)
+            }
+            
         }
         
         if let body = request?.body as? JSON {
@@ -319,7 +328,12 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 
             case .changePassword:
                 print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
-                completion(CustomError.wrongOldPassword, data)
+                completion(CustomError.wrongPassword, data)
+               
+            // is not configured to return 402 -> it will return 500
+            case .deleteAccount:
+                print(NSDate(), "\(requestType)" + "Request failed. Wrong password")
+                completion(CustomError.wrongPassword, data)
                 
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)

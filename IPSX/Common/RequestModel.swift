@@ -34,7 +34,7 @@ public struct Request {
 
 public struct Url {
 
-     public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
+    public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
     
     // DEV ENV:
     public static let baseDEVApi       = "http://devapi.ip.sx:3000/api"
@@ -106,6 +106,7 @@ public struct Url {
     public static let depositArgs           = "/Users/%USER_ID%/deposits?access_token=%ACCESS_TOKEN%"
     public static let cancelDepositArgs     = "/Users/%USER_ID%/deposits/%DEPOSIT_ID%?access_token=%ACCESS_TOKEN%"
     public static let generalSettingsArgs   = "/settings?access_token=%ACCESS_TOKEN%"
+    public static let deleteAccountArgs     = "/Users/%USER_ID%/delete/queue?access_token=%ACCESS_TOKEN%"
     public static let enrollTestingArgs     = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingBulkArgs = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs     = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
@@ -130,7 +131,7 @@ public enum CustomError: Error {
     case invalidParams
     case alreadyExists
     case notFound
-    case wrongOldPassword
+    case wrongPassword
     case loginFailed
     case invalidLogin
     case userDeleted
@@ -190,6 +191,7 @@ public enum IPRequestType: Int {
     case getEthAddress
     case updateEthAddress
     case deleteEthAddress
+    case deleteAccount
     case getUserCountryList
     case getProxyCountryList
     case getTokenRequestList

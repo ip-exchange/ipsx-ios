@@ -226,13 +226,6 @@ class RegisterDoneController: UIViewController {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "LoginScreenSegueID", let loginController = segue.destination as? LoginCredentialsControler {
-            loginController.hideBackButton = true
-            loginController.registerFlow = true
-        }
-    }
 }
 
 extension RegisterTermsController: ErrorPresentable {

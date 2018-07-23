@@ -1,5 +1,5 @@
 //
-//  GeneralSettingsService.swift
+//  SettingsService.swift
 //  IPSX
 //
 //  Created by Cristina Virlan on 22/05/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GeneralSettingsService {
+class SettingsService {
     
     func retrieveSettings(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
@@ -69,6 +69,27 @@ class GeneralSettingsService {
                 }
             }
             completionHandler(ServiceResult.success(settings))
+        })
+    }
+    
+    func deleteAccount(password: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: String] = ["password" : password]
+        
+        RequestBuilder.shared.executeRequest(requestType: .deleteAccount, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard data != nil else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            completionHandler(ServiceResult.success(true))
         })
     }
 }

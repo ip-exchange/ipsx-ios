@@ -11,6 +11,7 @@ import UIKit
 class TabBarViewController: UITabBarController {
     
     var hasReceivedUsedDeletedNotif = false
+    var hasPerformedAutologin = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +22,17 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
         
-        // When closing the app from Add Eth Address screen after Login, the user remains loggedIn
         if !UserManager.shared.hasEthAddress {
-            UserManager.shared.logout()
+            
+            if hasPerformedAutologin {
+                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+            }
+            else {
+                // When closing the app from Add Eth Address screen after Login -> fresh start
+                UserManager.shared.logout()
+            }
         }
+        
         if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
             presentLandingFlow()
         }

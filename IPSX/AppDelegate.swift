@@ -31,7 +31,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        switch url.host {
+            
+        case "registration":
+            let url = url.absoluteURL
+            let accessToken = url.valueOf("token") ?? ""
+            let userId = url.valueOf("uid") ?? ""
+            
+            //Store access details in keychain
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            let loadingVC = initialVC?.viewControllers.first as? LoadingViewController
+            loadingVC?.hasPerformedAutologin = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+            
+            return true
+            
+        case "delete":
+            //TODO: remove Abort delete from Settings
+            return true
+            
+        default:
+            return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        }
     }
     
     func setKeychainAccessGroup() {

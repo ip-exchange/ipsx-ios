@@ -91,7 +91,7 @@ class DashboardViewController: UIViewController {
         updateReachabilityInfo()
     }
     
-        override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
@@ -213,7 +213,7 @@ class DashboardViewController: UIViewController {
     func generalSettings() {
         
         dispatchGroup.enter()
-        GeneralSettingsService().retrieveSettings(completionHandler: { result in
+        SettingsService().retrieveSettings(completionHandler: { result in
             self.dispatchGroup.leave()
             
             switch result {
