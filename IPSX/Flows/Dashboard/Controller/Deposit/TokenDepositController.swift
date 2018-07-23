@@ -295,13 +295,13 @@ extension TokenDepositController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 18
+        return tableView == proxyPacksTableView ? 18 : 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
         headerView.backgroundColor = .clear
-        return headerView
+        return tableView == proxyPacksTableView ? headerView : UIView()
     }
 
 }
