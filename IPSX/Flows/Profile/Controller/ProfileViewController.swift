@@ -423,7 +423,11 @@ extension ProfileViewController: ToastAlertViewPresentable {
     
     private func showDeleteConfirmationAlert(index: IndexPath) {
         let ethAddress = ethAdresses[index.item]
-        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: ethAddress.address, preferredStyle: .alert)
+        var alertMessage = ethAddress.address
+        if ethAddress.testingEnrollmentDate != nil || ethAddress.stakingEnrollmentDate != nil {
+            alertMessage = "Enrolled Address Delete Message".localized
+        }
+        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: alertMessage, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
             self.tableView.reloadData()
