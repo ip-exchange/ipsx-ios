@@ -94,6 +94,7 @@ class UserInfoService {
                 let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate)
                 ethAddresses.append(ethAddress)
             }
+            ethAddresses.sort { $0.ethID < $1.ethID }
             completionHandler(ServiceResult.success(ethAddresses))
         })
     }
