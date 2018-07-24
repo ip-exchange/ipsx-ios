@@ -31,6 +31,9 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    @IBOutlet weak var deleteButtonImageView: UIImageView!
+    @IBOutlet weak var deleteButtonTextLabel: UILabel!
+    
     
     @IBAction func deleteAction(_ sender: UIButton) {
         
@@ -145,20 +148,26 @@ class SettingsViewController: UIViewController {
         self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
         
         let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
+        let deleteDate = UserManager.shared.userInfo?.deleteAccountDate
+        let deleteDateString = deleteDate?.dateToString(format: "dd MMM yyyy") ?? "--:--:--"
         
         switch deleteAccountState {
             
         case .notRequested:
-            print("default")
-            //TODO(CC): Delete Account button with no banner
+            deleteButtonImageView.image = UIImage(named: "garbage")
+            deleteButtonTextLabel.text = "Delete Account".localized
+            toast?.hideToast()
             
         case .pending:
-            print("pending")
-            //TODO(CC): Abort button with "Check your email to confirm your delete account action." banner
-            
+            deleteButtonImageView.image = UIImage(named: "cancelDelete")
+            deleteButtonTextLabel.text = "Abort Delete Account".localized
+            toast?.showToastAlert("Delete Confirm Email Message".localized, type: .deletePending, dismissable: false)
+
         case .confirmed:
-            print("confirmed")
-            //TODO (CC): Abort button with banner "Your account is scheduled to be deleted on @deleteAccountDate"
+            deleteButtonImageView.image = UIImage(named: "cancelDelete")
+            deleteButtonTextLabel.text = "Abort Delete Account".localized
+            let deleteMessage = String(format: "Delete Scheduled Message %@".localized, "\(deleteDateString)")
+            toast?.showToastAlert(deleteMessage, type: .deleteConfirmed, dismissable: false)
         }
     }
     

@@ -67,6 +67,8 @@ public enum ToastAlertType {
     case error
     case info
     case success
+    case deletePending
+    case deleteConfirmed
 }
 
 public class ToastAlertView: UIView {
@@ -151,7 +153,13 @@ public class ToastAlertView: UIView {
                 case .success:
                     self.view.backgroundColor = UIColor.lightBlue
                     imageName = "successWhite"
-                }
+                case .deletePending:
+                    self.view.backgroundColor = UIColor.darkRed
+                    imageName = "mailSent"
+                case .deleteConfirmed:
+                    self.view.backgroundColor = UIColor.darkRed
+                    imageName = "garbageWhite"
+              }
                 self.leftImageView.image = UIImage(named: imageName)
             }
             if let text = alertText, text.count > 0 {

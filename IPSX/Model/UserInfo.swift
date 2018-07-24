@@ -39,6 +39,7 @@ struct UserInfo {
     var kycStatus: String = "Unknown Status Text".localized
     var socialName: String?
     var refferalCode: String?
+    var deleteAccountDate: Date?
     
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
     init(firstName: String = "", middleName: String = "",lastName: String = "",
@@ -54,6 +55,8 @@ struct UserInfo {
         self.balance      = balance
         self.socialName   = socialName
         self.refferalCode = refferalCode
+        
+        self.deleteAccountDate = deleteAccountDate
         
         if let statusString = kycStausedDic[kycStatus] {
             self.kycStatus = statusString.localized
