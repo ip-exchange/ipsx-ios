@@ -33,8 +33,7 @@ class SettingsViewController: UIViewController {
     }
     @IBOutlet weak var deleteButtonImageView: UIImageView!
     @IBOutlet weak var deleteButtonTextLabel: UILabel!
-    
-    
+
     @IBAction func deleteAction(_ sender: UIButton) {
         
         let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
@@ -233,8 +232,18 @@ extension SettingsViewController: ErrorPresentable {
             }, successHandler: {
                 completion?()
             })
+            
         default:
-            self.updateSwitchValue(error: true)
+            
+            switch requestType {
+                
+            case .updateSettings:
+                self.updateSwitchValue(error: true)
+                
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
+            
         }
     }
 }

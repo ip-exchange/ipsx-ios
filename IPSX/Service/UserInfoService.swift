@@ -51,10 +51,11 @@ class UserInfoService {
         let kycStatus           = json["kyc_status"].intValue
         let socialName          = json["social_name"].string
         let refCode             = json["referral_code"].string
-        let deleteAccountString = json["self_deleted_at_confirmation"].stringValue
+        let deleteConfirmation = json["self_deleted_at_confirmation"].string
+        let selfDeletedAtString = json["self_deleted_at"].stringValue
         
-        let dateFormatter     = DateFormatter.backendResponseParse(format: "yyyy-MM-dd HH:mm:ss")
-        let deleteAccountDate = dateFormatter.date(from: deleteAccountString)
+        let dateFormatter     = DateFormatter.backendResponseParse()
+        let deleteAccountDate = dateFormatter.date(from: selfDeletedAtString)
         
         /*
          Bad API (let's hope for something better)
@@ -63,15 +64,15 @@ class UserInfoService {
          "self_deleted_at_confirmation": null
          
          2. After Delete account action:
-         "self_deleted_at_confirmation": "xer8bDLDA5soJISP05stNHc8cGevNgleo9DewfrH"
+         "self_deleted_at_confirmation" != null && "self_deleted_at" == null
          
          3. After confirming the deletion from email:
-         "self_deleted_at_confirmation": "2018-07-23 00:00:00"
+         "self_deleted_at" != null
          */
         
         var pendingDeleteAccount = false
         
-        if deleteAccountString != "" && deleteAccountDate == nil {
+        if deleteConfirmation != nil && deleteAccountDate == nil {
             pendingDeleteAccount = true
         }
         
