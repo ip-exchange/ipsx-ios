@@ -375,17 +375,27 @@
                                     <constraint firstAttribute="height" constant="44" id="UuC-GH-u7k"/>
                                 </constraints>
                             </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V1z-oa-HJZ" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="61" width="375" height="0.5"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="4PI-ms-x7B"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="sHv-gb-7WK" firstAttribute="top" secondItem="UAy-LC-rNp" secondAttribute="bottom" constant="-17" id="5bg-zV-8Ae"/>
+                            <constraint firstItem="V1z-oa-HJZ" firstAttribute="leading" secondItem="S6d-99-Ca9" secondAttribute="leading" id="H0g-Cb-bgo"/>
                             <constraint firstItem="9jH-j8-SeT" firstAttribute="centerX" secondItem="S6d-99-Ca9" secondAttribute="centerX" id="RX1-gt-ccS"/>
                             <constraint firstItem="UAy-LC-rNp" firstAttribute="leading" secondItem="phP-HY-do5" secondAttribute="leading" id="T7V-MC-j1m"/>
+                            <constraint firstItem="S6d-99-Ca9" firstAttribute="trailing" secondItem="V1z-oa-HJZ" secondAttribute="trailing" id="UaO-dZ-wPm"/>
                             <constraint firstAttribute="trailing" secondItem="UAy-LC-rNp" secondAttribute="trailing" id="ZWv-Yg-w0b"/>
                             <constraint firstAttribute="trailing" secondItem="sHv-gb-7WK" secondAttribute="trailing" id="atH-ge-yuf"/>
                             <constraint firstItem="sHv-gb-7WK" firstAttribute="leading" secondItem="phP-HY-do5" secondAttribute="leading" id="cfS-JN-4PY"/>
                             <constraint firstItem="Pqn-Dk-rKt" firstAttribute="top" secondItem="sHv-gb-7WK" secondAttribute="bottom" id="eeU-0H-LzI"/>
                             <constraint firstItem="UAy-LC-rNp" firstAttribute="top" secondItem="oKi-Dt-GGV" secondAttribute="bottom" id="i9g-AI-m7o"/>
+                            <constraint firstItem="V1z-oa-HJZ" firstAttribute="top" secondItem="S6d-99-Ca9" secondAttribute="top" constant="41" id="jhh-Fo-X4m"/>
                             <constraint firstItem="VIt-Z1-HQg" firstAttribute="top" secondItem="S6d-99-Ca9" secondAttribute="top" id="llY-h3-cC2"/>
                             <constraint firstItem="VIt-Z1-HQg" firstAttribute="leading" secondItem="S6d-99-Ca9" secondAttribute="leading" id="m61-Vi-NBy"/>
                             <constraint firstItem="9jH-j8-SeT" firstAttribute="centerY" secondItem="S6d-99-Ca9" secondAttribute="centerY" id="xsF-OT-nMR"/>
@@ -397,6 +407,7 @@
                     <connections>
                         <outlet property="amountLabelLarge" destination="vfl-7k-h3M" id="6vl-kR-w4i"/>
                         <outlet property="amountLabelSmall" destination="Yww-15-e4n" id="lMH-YN-3Z4"/>
+                        <outlet property="amountLabelYConstraint" destination="mpr-u9-EsK" id="fpy-0C-DVq"/>
                         <outlet property="headerHeightConstraint" destination="izM-iL-cnU" id="pjV-Yf-5n4"/>
                         <outlet property="headerSeparatorView" destination="vkU-Q1-KyR" id="Fpx-3a-nTa"/>
                         <outlet property="hidableDownView" destination="H3G-AJ-E1w" id="hi2-Ud-4pH"/>
@@ -404,8 +415,9 @@
                         <outlet property="particlesHolder" destination="twm-dQ-z3c" id="aT3-q7-jk2"/>
                         <outlet property="tableView" destination="sHv-gb-7WK" id="6qw-gc-hBR"/>
                         <outlet property="titleTopConstraint" destination="vKg-sL-YAS" id="3CF-qi-afW"/>
+                        <outlet property="toastHolderView" destination="V1z-oa-HJZ" id="taw-cr-n8B"/>
                         <outlet property="tokenDepositHelpLabel" destination="Hxu-2P-TNQ" id="jnn-d2-FOv"/>
-                        <outlet property="topConstraintOutlet" destination="i9g-AI-m7o" id="Y4p-jo-kao"/>
+                        <outlet property="topConstraintOutlet" destination="jhh-Fo-X4m" id="HB7-sp-G8z"/>
                         <outlet property="topRootView" destination="UAy-LC-rNp" id="24L-eW-Pov"/>
                         <segue destination="N4z-zM-Rxe" kind="show" identifier="createDepositSegueID" id="0zg-Fa-CDO"/>
                         <segue destination="BrW-Sw-AQN" kind="show" identifier="showSummarySegueID" id="Tr8-7C-1cg"/>
