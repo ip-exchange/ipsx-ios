@@ -54,7 +54,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
             
         case "delete":
-            //TODO: remove Abort delete from Settings
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            let loadingVC = initialVC?.viewControllers.first as? LoadingViewController
+            loadingVC?.hasConfirmedDeleteAccount = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+            
             return true
             
         default:

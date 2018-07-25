@@ -12,6 +12,7 @@ class TabBarViewController: UITabBarController {
     
     var hasReceivedUsedDeletedNotif = false
     var hasPerformedAutologin = false
+    var hasConfirmedDeleteAccount = false
     var showLandingFromUnwindSegue = false
     
     override func viewDidLoad() {
@@ -42,6 +43,11 @@ class TabBarViewController: UITabBarController {
         
         if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
             presentLandingFlow()
+        }
+        
+        if hasConfirmedDeleteAccount {
+            hasConfirmedDeleteAccount = false
+            self.selectedIndex = 2
         }
     }
     

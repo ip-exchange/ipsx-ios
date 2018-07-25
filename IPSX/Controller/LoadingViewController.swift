@@ -23,6 +23,7 @@ class LoadingViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     let dispatchGroup = DispatchGroup()
     var hasPerformedAutologin = false
+    var hasConfirmedDeleteAccount = false
     var noOfRequests: Float = 9
     
     override func viewDidLayoutSubviews() {
@@ -60,6 +61,7 @@ class LoadingViewController: UIViewController {
         if segue.identifier == "TabbarSegueID" {
             let destinationVC = segue.destination as? TabBarViewController
             destinationVC?.hasPerformedAutologin = hasPerformedAutologin
+            destinationVC?.hasConfirmedDeleteAccount = hasConfirmedDeleteAccount
         }
     }
     
