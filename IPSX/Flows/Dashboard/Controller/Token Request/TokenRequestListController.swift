@@ -133,6 +133,7 @@ class TokenRequestListController: UIViewController {
         
         DispatchQueue.main.async {
             self.tokenRequests = UserManager.shared.tokenRequests ?? []
+            self.tokenRequests.sort { $0.created ?? Date() > $1.created ?? Date() } 
             self.separatorView.isHidden = self.tokenRequests.count < 1
             self.noItemsLabel.isHidden = self.tokenRequests.count > 0
             self.tableView.reloadData()

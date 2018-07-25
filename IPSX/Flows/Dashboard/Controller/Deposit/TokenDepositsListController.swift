@@ -200,6 +200,7 @@ class TokenDepositsListController: UIViewController {
             switch result {
             case .success(let deposits):
                 self.deposits = deposits as? [Deposit]
+                self.deposits?.sort { $0.createdAt ?? Date() > $1.createdAt ?? Date() }
                 self.updateUI()
                 
             case .failure(let error):
