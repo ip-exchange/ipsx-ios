@@ -12,7 +12,6 @@ class TabBarViewController: UITabBarController {
     
     var hasReceivedUsedDeletedNotif = false
     var hasPerformedAutologin = false
-    var showLandingFromUnwindSegue = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +21,6 @@ class TabBarViewController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        
-        if showLandingFromUnwindSegue {
-            showLandingFromUnwindSegue = false
-            presentLandingFlow()
-            return
-        }
         
         if !UserManager.shared.hasEthAddress {
             
@@ -74,7 +67,6 @@ class TabBarViewController: UITabBarController {
     
     @IBAction func unwindToTabBar(segue:UIStoryboardSegue) { }
     @IBAction func unwindToTabBarAndShowLanding(segue:UIStoryboardSegue) {
-        showLandingFromUnwindSegue = true
         UserManager.shared.logout()
     }
 

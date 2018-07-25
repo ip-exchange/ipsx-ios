@@ -84,7 +84,7 @@ class ProxyDetailsViewController: UIViewController {
 
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
-            if self.proxy?.proxyDetails?.status == "expired" {
+            if self.proxy?.proxyDetails?.status != "active" {
                 self.toast?.showToastAlert("Proxy Expired Alert Message".localized, dismissable: false)
             } else  {
                 switch ReachabilityManager.shared.connectionType {
