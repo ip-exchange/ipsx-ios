@@ -52,6 +52,7 @@ class EnrolStakeSummaryController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
+        enrollmentDetails()
     }
     
     @objc func appWillEnterForeground() {
@@ -67,7 +68,6 @@ class EnrolStakeSummaryController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        enrollmentDetails()
         if stakingEnded { editButton.isHidden = true }
     }
     
