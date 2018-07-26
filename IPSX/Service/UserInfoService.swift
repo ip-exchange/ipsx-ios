@@ -47,11 +47,11 @@ class UserInfoService {
         let countryID           = json["country_id"].stringValue
         let email               = json["email"].stringValue
         let proxyTest           = json["proxy_test"].stringValue
-        let balance             = json["ballance"].intValue
+        let balance             = json["ballance"].doubleValue
         let kycStatus           = json["kyc_status"].intValue
         let socialName          = json["social_name"].string
         let refCode             = json["referral_code"].string
-        let deleteConfirmation = json["self_deleted_at_confirmation"].string
+        let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
         
         let dateFormatter     = DateFormatter.backendResponseParse()

@@ -63,7 +63,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = "\(userInfo?.balance ?? 0)"
+        balance = userInfo?.balance.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController {
     
     func updateUI() {
         
-        self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+        self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0" 
         
         let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
         let deleteDate = UserManager.shared.userInfo?.deleteAccountDate

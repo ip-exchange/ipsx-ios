@@ -231,7 +231,7 @@ class DashboardViewController: UIViewController {
     
     private func showZeroBalanceToastIfNeeded() {
         let balanceValue = UserManager.shared.userInfo?.balance ?? 0
-        balance = "\(balanceValue)"
+        balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
         if balanceValue == 0, UserManager.shared.isLoggedIn {
             toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
         } else {
@@ -248,7 +248,7 @@ class DashboardViewController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
                 self.showZeroBalanceToastIfNeeded()
                 
             case .failure(let error):

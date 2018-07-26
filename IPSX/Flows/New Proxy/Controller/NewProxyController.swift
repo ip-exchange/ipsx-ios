@@ -68,7 +68,7 @@ class NewProxyController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = "\(userInfo?.balance ?? 0)"
+        balance = userInfo?.balance.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -189,7 +189,7 @@ class NewProxyController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {
@@ -239,10 +239,10 @@ extension NewProxyController: UITableViewDelegate {
             self.selectedPack = proxyPack
         }
         
-        let balance = UserManager.shared.userInfo?.balance ?? 0
-        let packagePrice = Int(self.selectedPack?.price ?? "0") ?? 0
+        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
+        let packagePrice = Double(self.selectedPack?.price ?? "0") ?? 0
 
-        if balance >= packagePrice {
+        if balanceValue >= packagePrice {
 
             switch ReachabilityManager.shared.connectionType {
             case .wifi:

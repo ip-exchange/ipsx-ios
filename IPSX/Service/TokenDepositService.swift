@@ -55,7 +55,7 @@ class TokenDepositService {
             for json in jsonArray {
                 
                 let ethID = json["usereth_id"].intValue
-                let amount = json["amount_requested"].stringValue
+                let amount = json["amount_requested"].doubleValue.cleanString
                 let status = json["status"].stringValue
                 
                 let createdString = json["created_at"].stringValue
@@ -128,7 +128,7 @@ class TokenDepositService {
         
         let depositID        = json["id"].intValue
         let ethId            = json["usereth_id"].intValue
-        let amount           = json["amount_requested"].stringValue
+        let amount           = json["amount_requested"].doubleValue.cleanString
         let status           = json["status"].stringValue
         let watchUntilString = json["watch_until"].stringValue
         let watchUntilDate = dateFormatter.date(from: watchUntilString)
