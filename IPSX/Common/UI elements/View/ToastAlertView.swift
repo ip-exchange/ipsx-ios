@@ -77,6 +77,9 @@ public class ToastAlertView: UIView {
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var dismissButton: UIButton!
     
+    var onShow: (()->())?
+    var onHide: (()->())?
+    
     private weak var view: UIView!
     private weak var parent: UIView!
     private weak var underViewTopConstraint: NSLayoutConstraint!
@@ -141,6 +144,7 @@ public class ToastAlertView: UIView {
     private func updateInfoToastUI(visible: Bool, alertText: String? = "", type: ToastAlertType? = nil, completion: (()->())? = nil) {
         
         DispatchQueue.main.async {
+            if visible { self.onShow?() } else { self.onHide?() }
             if let toastType = type {
                 self.view.backgroundColor = .green
                 var imageName = "warningWhite"

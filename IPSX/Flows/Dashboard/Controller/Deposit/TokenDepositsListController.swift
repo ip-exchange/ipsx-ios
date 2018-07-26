@@ -21,6 +21,8 @@ class TokenDepositsListController: UIViewController {
     @IBOutlet weak var amountLabelLarge: UILabel!
     @IBOutlet weak var tokenDepositHelpLabel: UILabel!
     @IBOutlet weak var headerSeparatorView: UIView!
+    @IBOutlet weak var toastHolderView: UIView!
+    @IBOutlet weak var amountLabelYConstraint: NSLayoutConstraint!
     
     
     let maxHeaderHeight: CGFloat = 215;
@@ -94,7 +96,16 @@ class TokenDepositsListController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: topRootView, text: "")
+        createToastAlert(onTopOf: toastHolderView, text: "")
+        toast?.onShow = {
+            self.amountLabelYConstraint.constant = 0
+            UIView.animate(withDuration: 0.5) { self.view.layoutIfNeeded() }
+            
+        }
+        toast?.onHide = {
+            self.amountLabelYConstraint.constant = -30
+            UIView.animate(withDuration: 0.5) { self.view.layoutIfNeeded() }
+       }
     }
     
     override func viewWillAppear(_ animated: Bool) {
