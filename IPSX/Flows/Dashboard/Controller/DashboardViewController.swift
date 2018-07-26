@@ -328,7 +328,7 @@ class DashboardViewController: UIViewController {
                 formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
             }
             
-            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active".localized)
+            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active")
             let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
             proxies.insert(testProxy, at: 0)
         }

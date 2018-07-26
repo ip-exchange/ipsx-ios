@@ -174,7 +174,7 @@ class ProxyService {
         }
         
         let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIP, proxyPort: proxyPort)
-        let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIP, usedMB: "0", remainingDuration: remainigDuartionString, status: "active".localized)
+        let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIP, usedMB: "0", remainingDuration: remainigDuartionString, status: "active")
         let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
         
         completionHandler(ServiceResult.success(proxy))

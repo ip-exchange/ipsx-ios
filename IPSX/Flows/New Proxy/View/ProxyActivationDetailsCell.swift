@@ -31,7 +31,7 @@ class ProxyActivationDetailsCell: UITableViewCell {
             cellStatusLabel.text = "Test Proxy Message".localized
         }
         else {
-            cellStatusLabel.text = proxy.proxyDetails?.status
+            cellStatusLabel.text = proxy.proxyDetails?.status.localized
         }
     
         let noOfMB = proxy.proxyPack?.noOfMB ?? "N/A"
