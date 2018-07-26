@@ -235,13 +235,18 @@ class AddWalletController: UIViewController {
     }
     
     @IBAction func qrCodeAction(_ sender: Any) {
-        let scannerController = QRScannViewController()
-        scannerController.onCodeFound = { code in
-            self.ethAddresRichTextField.contentTextField?.text = code
-            self.ethAddresRichTextField.refreshStatus()
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            presentQRScanner()
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                if granted {
+                    self.presentQRScanner()
+                } else {
+                    self.openSettingsAction()
+                }
+            })
         }
-        self.present(scannerController, animated: true) {
-        }
+        
     }
     
     @IBAction func pasteAction(_ sender: Any) {
@@ -253,6 +258,46 @@ class AddWalletController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func presentQRScanner() {
+        DispatchQueue.main.async {
+            let scannerController = QRScannViewController()
+            scannerController.onCodeFound = { code in
+                self.ethAddresRichTextField.contentTextField?.text = code
+                self.ethAddresRichTextField.refreshStatus()
+            }
+            self.present(scannerController, animated: true) {
+            }
+        }
+    }
+    
+    func openSettingsAction() {
+        
+        self.toast?.hideToast()
+        
+        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+            toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+            return
+        }
+        
+        let alertController = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
+            self.toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+        }
+        
+        let deleteAction = UIAlertAction(title: "Go to Settings".localized, style: .default) { (action:UIAlertAction) in
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            } else {
+                self.toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @objc
@@ -368,7 +413,7 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     private func failed() {
-        let ac = UIAlertController(title: "Scanning not supported message".localized, message: "No Cammera Message".localized, preferredStyle: .alert)
+        let ac = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK".localized, style: .default))
         present(ac, animated: true)
         captureSession = nil
