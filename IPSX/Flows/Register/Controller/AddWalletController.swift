@@ -15,6 +15,7 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var sectionTitleLabel: UILabel?
     
     @IBOutlet weak var pasteAddrButton: UIButton!
+    @IBOutlet weak var copyAddrButton: UIButton?
     @IBOutlet weak var qrcodeButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView?
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -72,6 +73,7 @@ class AddWalletController: UIViewController {
             screenTitleLabel?.text = "Add ETH Address text".localized
             sectionTitleLabel?.text = "Add your ETH address text".localized
         }
+        copyAddrButton?.isHidden = !pasteAddrButton.isHidden
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
@@ -171,8 +173,44 @@ class AddWalletController: UIViewController {
         updateETHaddress(alias: alias, address: address, ethID: ethID)
     }
     
-    func updateETHaddress(alias: String, address: String, ethID: Int) {
     
+    @IBAction func doneAction(_ sender: UIButton) {
+        addEthAdress()
+    }
+    
+    @IBAction func qrCodeAction(_ sender: Any) {
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            presentQRScanner()
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                if granted {
+                    self.presentQRScanner()
+                } else {
+                    self.openSettingsAction()
+                }
+            })
+        }
+        
+    }
+    
+    @IBAction func pasteAction(_ sender: Any) {
+        if let clipboardText = UIPasteboard.general.string {
+            ethAddresRichTextField.contentTextField?.text = clipboardText
+            ethAddresRichTextField.refreshStatus()
+        }
+    }
+    
+    @IBAction func copyAction(_ sender: Any) {
+        if let address = ethAddresRichTextField.contentTextField?.text {
+            UIPasteboard.general.string = address
+            toast?.showToastAlert("ETH Address Copied Message".localized, autoHideAfter: 5, type: .info, dismissable: true)
+        }
+    }
+    
+    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
+    
+    func updateETHaddress(alias: String, address: String, ethID: Int) {
+        
         loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             
@@ -186,7 +224,7 @@ class AddWalletController: UIViewController {
                 }
                 
             case .failure(let error):
-
+                
                 self.handleError(error, requestType: .updateEthAddress, completion: {
                     self.updateETHaddress(alias: alias, address: address, ethID: ethID)
                 })
@@ -194,13 +232,7 @@ class AddWalletController: UIViewController {
         })
     }
     
-    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
-    
-    
-    @IBAction func doneAction(_ sender: UIButton) {
-        addEthAdress()
-    }
-    
+
     func addEthAdress() {
         
         let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
@@ -232,28 +264,6 @@ class AddWalletController: UIViewController {
                 })
             }
         })
-    }
-    
-    @IBAction func qrCodeAction(_ sender: Any) {
-        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
-            presentQRScanner()
-        } else {
-            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
-                if granted {
-                    self.presentQRScanner()
-                } else {
-                    self.openSettingsAction()
-                }
-            })
-        }
-        
-    }
-    
-    @IBAction func pasteAction(_ sender: Any) {
-        if let clipboardText = UIPasteboard.general.string {
-            ethAddresRichTextField.contentTextField?.text = clipboardText
-            ethAddresRichTextField.refreshStatus()
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

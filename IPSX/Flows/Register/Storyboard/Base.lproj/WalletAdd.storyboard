@@ -78,7 +78,7 @@
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0x..." adjustsFontSizeToFit="NO" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uKO-lS-bXj">
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0x..." minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uKO-lS-bXj">
                                                 <rect key="frame" x="0.0" y="18" width="284" height="26"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -452,11 +452,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PvX-GQ-vJ8" userLabel="ETH Address" customClass="RichTextFieldView" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="60" width="345" height="60"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0x..." minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1hb-NR-qjl">
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0x..." adjustsFontSizeToFit="NO" minimumFontSize="10" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1hb-NR-qjl">
                                                 <rect key="frame" x="0.0" y="26" width="345" height="26"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3F5-m3-jTy" userLabel="Separator">
@@ -504,6 +504,16 @@
                                 </state>
                                 <connections>
                                     <action selector="pasteAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="0ac-ao-fMd"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUD-pU-Kal">
+                                <rect key="frame" x="15" y="252.5" width="84" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="   Copy" image="clipboard">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="copyAction:" destination="jYx-4r-YUa" eventType="touchUpInside" id="p66-mq-fcw"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pSE-cg-4Dr" userLabel="Top Bar">
@@ -584,13 +594,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="KUD-pU-Kal" firstAttribute="height" secondItem="VcK-Af-JEh" secondAttribute="height" id="0Su-OZ-iv7"/>
                             <constraint firstItem="Mmt-lK-1sd" firstAttribute="top" secondItem="pSE-cg-4Dr" secondAttribute="bottom" id="3ei-fg-bNM"/>
                             <constraint firstItem="ldT-jy-L68" firstAttribute="top" secondItem="pSE-cg-4Dr" secondAttribute="top" constant="50" id="78a-Le-qi6"/>
-                            <constraint firstItem="La0-Dw-ufx" firstAttribute="leading" secondItem="VcK-Af-JEh" secondAttribute="trailing" constant="8" id="9o7-f8-fpD"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="height" secondItem="ZRe-2w-gCy" secondAttribute="height" id="BmL-wy-deG"/>
                             <constraint firstItem="La0-Dw-ufx" firstAttribute="centerY" secondItem="VcK-Af-JEh" secondAttribute="centerY" id="EbD-YV-EfY"/>
                             <constraint firstItem="ZRe-2w-gCy" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" constant="15" id="EdM-vt-HIX"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="La0-Dw-ufx" secondAttribute="trailing" constant="20" symbolic="YES" id="H36-1Z-RCI"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="La0-Dw-ufx" secondAttribute="trailing" id="H36-1Z-RCI"/>
+                            <constraint firstItem="La0-Dw-ufx" firstAttribute="leading" secondItem="r0o-cy-M4h" secondAttribute="leading" constant="107" id="LIb-OM-aUm"/>
                             <constraint firstItem="pSE-cg-4Dr" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" id="Mwk-gE-ztL"/>
                             <constraint firstItem="Mmt-lK-1sd" firstAttribute="trailing" secondItem="pSE-cg-4Dr" secondAttribute="trailing" id="Nee-RY-8fB"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="centerY" secondItem="ZRe-2w-gCy" secondAttribute="centerY" id="Of8-gK-031"/>
@@ -599,22 +610,26 @@
                             <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="dTD-By-icE" secondAttribute="trailing" id="YTI-4d-M5K"/>
                             <constraint firstItem="xp3-sc-Rhj" firstAttribute="centerX" secondItem="ldT-jy-L68" secondAttribute="centerX" id="aLI-g9-CJt"/>
                             <constraint firstItem="xp3-sc-Rhj" firstAttribute="centerY" secondItem="ldT-jy-L68" secondAttribute="centerY" id="cor-e1-0wb"/>
+                            <constraint firstItem="KUD-pU-Kal" firstAttribute="centerX" secondItem="VcK-Af-JEh" secondAttribute="centerX" id="e1m-u1-YLW"/>
                             <constraint firstItem="VcK-Af-JEh" firstAttribute="leading" secondItem="ZRe-2w-gCy" secondAttribute="leading" id="eqK-dD-FcJ"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="leading" secondItem="ldT-jy-L68" secondAttribute="leading" id="ewC-IY-zjP"/>
                             <constraint firstItem="dTD-By-icE" firstAttribute="centerX" secondItem="ZRe-2w-gCy" secondAttribute="centerX" id="hHK-Xm-hff"/>
                             <constraint firstItem="ZRe-2w-gCy" firstAttribute="centerX" secondItem="ldT-jy-L68" secondAttribute="centerX" id="i6t-rd-uNK"/>
                             <constraint firstItem="c8w-7z-z2N" firstAttribute="top" secondItem="Mmt-lK-1sd" secondAttribute="bottom" priority="750" constant="26" id="ji1-Pq-7fB"/>
                             <constraint firstItem="ldT-jy-L68" firstAttribute="trailing" secondItem="ZRe-2w-gCy" secondAttribute="trailing" constant="15" id="kVd-8i-IGI"/>
+                            <constraint firstItem="KUD-pU-Kal" firstAttribute="width" secondItem="VcK-Af-JEh" secondAttribute="width" id="lma-n4-bmE"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c8w-7z-z2N" secondAttribute="trailing" constant="20" symbolic="YES" id="mkp-pJ-3Gd"/>
                             <constraint firstItem="VcK-Af-JEh" firstAttribute="top" secondItem="ZRe-2w-gCy" secondAttribute="bottom" id="s4C-Q5-qf7"/>
                             <constraint firstItem="Mmt-lK-1sd" firstAttribute="leading" secondItem="pSE-cg-4Dr" secondAttribute="leading" id="tVx-c3-HSB"/>
                             <constraint firstItem="c8w-7z-z2N" firstAttribute="leading" secondItem="ZRe-2w-gCy" secondAttribute="leading" id="wXo-pH-Vvo"/>
+                            <constraint firstItem="KUD-pU-Kal" firstAttribute="centerY" secondItem="VcK-Af-JEh" secondAttribute="centerY" id="y4A-4w-em6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ldT-jy-L68"/>
                     </view>
                     <navigationItem key="navigationItem" id="qro-63-uUw"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="copyAddrButton" destination="KUD-pU-Kal" id="W7X-Td-hHN"/>
                         <outlet property="ethAddresRichTextField" destination="PvX-GQ-vJ8" id="vtA-pF-m3H"/>
                         <outlet property="loadingView" destination="xp3-sc-Rhj" id="GcH-fd-xLA"/>
                         <outlet property="pasteAddrButton" destination="VcK-Af-JEh" id="laK-O5-HIy"/>
