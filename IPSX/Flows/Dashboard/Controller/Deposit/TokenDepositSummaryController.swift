@@ -20,6 +20,7 @@ class TokenDepositSummaryController: UIViewController {
     @IBOutlet weak var detailsTitleLabel: UILabel!
     @IBOutlet weak var detailsAmountLabel: UILabel!
     @IBOutlet weak var detailsRemainingTimeLabel: UILabel!
+    @IBOutlet weak var initialRequestedAmountLabel: UILabel!
     
     @IBOutlet weak var detailsStateCanceledView: RoundedView!
     @IBOutlet weak var detailsStatePendingView: RoundedView!
@@ -73,7 +74,7 @@ class TokenDepositSummaryController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if presentedFromCreateScreen {
-            let amount = deposit?.amount ?? "N/A"
+            let amount = deposit?.amountRequested ?? "N/A"
             
             //TODO (CC): change format to display 2018-07-08 16:36:35 UTC
             let expirationDate = deposit?.watchUntil?.dateToString(format: "dd MMM yyyy") ?? "N/A"
@@ -104,7 +105,13 @@ class TokenDepositSummaryController: UIViewController {
         ethAddressLabel.text = ethAddress?.address
         ethAddresAlias.text = ethAddress?.alias
         
-        let amount = deposit?.amount ?? "-"
+        let amountRequested = deposit?.amountRequested ?? "-"
+        let amountReceived = deposit?.amountReceived ?? "-"
+        let amount = deposit?.status == "complete" ? amountReceived : amountRequested
+        
+        initialRequestedAmountLabel.isHidden = amountRequested == amountReceived || deposit?.status != "complete"
+        
+        initialRequestedAmountLabel.text = "Requested".localized + ": " + amountRequested + " IPSX"
         detailsTitleLabel.text = amount + " IPSX"
         detailsAmountLabel.text = deposit?.status == "complete" ? "Received".localized : "Requested".localized
         

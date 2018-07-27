@@ -12,18 +12,20 @@ struct Deposit {
     
     var depositID: Int
     var ethID: Int
-    var amount: String
+    var amountRequested: String
+    var amountReceived: String
     var status: String //pending, complete, canceled, expired
     var watchUntil: Date?
     var createdAt: Date?
 
-    init(depositID: Int = 0, ethID: Int = 0, amount: String = "", status: String = "",watchUntil: Date? = nil, createdAt: Date? = nil) {
+    init(depositID: Int = 0, ethID: Int = 0, amountRequested: String = "", amountReceived: String = "", status: String = "",watchUntil: Date? = nil, createdAt: Date? = nil) {
         
         self.depositID  = depositID
         self.ethID      = ethID
-        self.amount     = amount
         self.status     = status
         self.watchUntil = watchUntil
         self.createdAt  = createdAt
+        self.amountRequested = amountRequested
+        self.amountReceived  = amountReceived
     }
 }

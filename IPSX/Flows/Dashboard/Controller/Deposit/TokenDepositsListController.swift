@@ -281,7 +281,8 @@ class DepositDetailsCell: UITableViewCell {
         canceledView.isHidden  = deposit.status != "canceled"
         expiredView.isHidden   = deposit.status != "expired"
         
-        walletAliasLabel.text =  deposit.amount + " IPSX"
+        let amount =  deposit.status == "complete" ? deposit.amountReceived : deposit.amountRequested
+        walletAliasLabel.text = amount + " IPSX"
     }
 }
 

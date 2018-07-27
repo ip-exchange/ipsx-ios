@@ -603,7 +603,7 @@
                                 <rect key="frame" x="0.0" y="-536" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETHAddressCellID" id="wRv-gF-VjT" customClass="EthWalletCell" customModule="IPSX" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETHAddressCellID" id="wRv-gF-VjT" customClass="EthWalletCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wRv-gF-VjT" id="t72-fq-WSW">
@@ -1150,6 +1150,19 @@
                                     <constraint firstAttribute="width" constant="44" id="LzD-lF-hk9"/>
                                 </constraints>
                             </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GOW-xc-U3v">
+                                <rect key="frame" x="16" y="446" width="122.5" height="13.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Requested: 3000 IPSX">
+                                        <attributes>
+                                            <color key="NSColor" red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="12" name="ArialMT"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1163,6 +1176,7 @@
                             <constraint firstItem="Mgw-Lh-bqF" firstAttribute="centerX" secondItem="sIu-ID-K0O" secondAttribute="centerX" id="IQb-D8-5vi"/>
                             <constraint firstItem="bDd-xs-2Gi" firstAttribute="top" secondItem="gOx-iz-PZZ" secondAttribute="bottom" constant="11" id="ISj-Bo-tAR"/>
                             <constraint firstItem="1Yd-z0-Q5W" firstAttribute="centerX" secondItem="sIu-ID-K0O" secondAttribute="centerX" id="Im5-Gp-SCg"/>
+                            <constraint firstItem="GOW-xc-U3v" firstAttribute="leading" secondItem="sIu-ID-K0O" secondAttribute="leading" constant="16" id="JDA-Yq-A6P"/>
                             <constraint firstItem="4FP-hb-0jR" firstAttribute="leading" secondItem="sIu-ID-K0O" secondAttribute="leading" constant="16" id="Kmh-z8-Iqd"/>
                             <constraint firstItem="Mgw-Lh-bqF" firstAttribute="centerY" secondItem="sIu-ID-K0O" secondAttribute="centerY" id="MTV-GT-PVg"/>
                             <constraint firstItem="sIu-ID-K0O" firstAttribute="trailing" secondItem="frT-Cu-9eN" secondAttribute="trailing" id="Pri-VH-11j"/>
@@ -1175,6 +1189,7 @@
                             <constraint firstItem="c1L-Sv-AP0" firstAttribute="top" secondItem="TMw-qY-vKB" secondAttribute="bottom" constant="26" id="kHG-xv-80U"/>
                             <constraint firstItem="TMw-qY-vKB" firstAttribute="top" secondItem="4FP-hb-0jR" secondAttribute="bottom" constant="11" id="l2u-R9-t0h"/>
                             <constraint firstItem="gzv-HO-9o9" firstAttribute="leading" secondItem="sIu-ID-K0O" secondAttribute="leading" id="rll-Ny-sIv"/>
+                            <constraint firstItem="GOW-xc-U3v" firstAttribute="top" secondItem="gzv-HO-9o9" secondAttribute="bottom" constant="8" id="rvL-Or-cEy"/>
                             <constraint firstItem="gOx-iz-PZZ" firstAttribute="top" secondItem="ZYG-xF-qr4" secondAttribute="bottom" constant="27.5" id="sPG-E2-oRN"/>
                             <constraint firstItem="gOx-iz-PZZ" firstAttribute="leading" secondItem="sIu-ID-K0O" secondAttribute="leading" constant="16" id="t6d-Xd-MKD"/>
                             <constraint firstItem="bDd-xs-2Gi" firstAttribute="leading" secondItem="sIu-ID-K0O" secondAttribute="leading" id="vKT-G3-jxD"/>
@@ -1197,6 +1212,7 @@
                         <outlet property="ethAddresAlias" destination="F8T-LM-5Kz" id="Ned-2r-gOD"/>
                         <outlet property="ethAddressLabel" destination="jUM-Md-xiI" id="ufi-yP-7mC"/>
                         <outlet property="ethDepositAddressLabel" destination="w4i-0D-m72" id="rbV-bb-bhv"/>
+                        <outlet property="initialRequestedAmountLabel" destination="GOW-xc-U3v" id="Jwt-cz-Xx3"/>
                         <outlet property="loadingView" destination="Mgw-Lh-bqF" id="76Z-Eg-HYw"/>
                         <outlet property="screenTitleLabel" destination="TDV-x9-NMN" id="gYl-Sh-9GB"/>
                         <outlet property="separatorView" destination="ZYG-xF-qr4" id="cOa-UE-VT9"/>
