@@ -183,10 +183,12 @@ class AddWalletController: UIViewController {
             presentQRScanner()
         } else {
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
-                if granted {
-                    self.presentQRScanner()
-                } else {
-                    self.openSettingsAction()
+                DispatchQueue.main.async {
+                    if granted {
+                        self.presentQRScanner()
+                    } else {
+                        self.openSettingsAction()
+                    }
                 }
             })
         }
@@ -285,7 +287,6 @@ class AddWalletController: UIViewController {
     func openSettingsAction() {
         
         self.toast?.hideToast()
-        
         guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
             toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
             return
