@@ -50,6 +50,7 @@ class UserInfoService {
         let balance             = json["ballance"].doubleValue
         let kycStatus           = json["kyc_status"].intValue
         let socialName          = json["social_name"].string
+        let source              = json["source"].string
         let refCode             = json["referral_code"].string
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
@@ -76,7 +77,7 @@ class UserInfoService {
             pendingDeleteAccount = true
         }
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
         completionHandler(ServiceResult.success(user))
     }
     

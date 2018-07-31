@@ -129,7 +129,7 @@ class EditProfileController: UIViewController {
         
         let userInfo = UserManager.shared.userInfo
         var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
-        changePasswordHolderView.isHidden = userInfo?.socialName != nil
+        changePasswordHolderView.isHidden = userInfo?.source != "ios"
         
         if let selectedCountry = self.searchController?.selectedCountry {
             countryName = selectedCountry
