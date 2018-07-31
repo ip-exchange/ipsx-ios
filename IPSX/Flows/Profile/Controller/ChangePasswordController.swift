@@ -89,7 +89,7 @@ class ChangePasswordController: UIViewController {
     }
 
     private func setupTextViews() {
-        oldPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
+        oldPassRTField.validationRegex       = RichTextFieldView.minOneCharRegex
         oldPassRTField.nextResponderField    = newPassRTField.contentTextField
         newPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
         newPassRTField.nextResponderField    = newPassBisRTField.contentTextField
@@ -105,8 +105,7 @@ class ChangePasswordController: UIViewController {
         }
         newPassRTField.onFieldStateChange = { state in
             self.fieldsStateDic["newPass"] = state
-            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
-            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+            self.saveButton.isEnabled = false
             self.newPassBisRTField.contentTextField?.text = ""
         }
         newPassBisRTField.onFieldStateChange = { state in

@@ -14,7 +14,8 @@ class RichTextFieldView: UIView {
     static let validPasswordRegex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"
     static let validEthAddress    = "(0x){1}[0-9a-fA-F]{40}"
     static let validName          = "^[A-Za-z0-9- ]+$"
-
+    static let minOneCharRegex    = "^.{1,}$"
+    
     var onFieldStateChange: ((_ newState: Bool)->())?
     
     var nextResponderField: UIResponder? = nil
@@ -73,7 +74,6 @@ extension RichTextFieldView: UITextFieldDelegate {
     
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         if let newString = textField.text {
-            //THE PASSWORD MUST BE AT LEAST 8 CHARACTERS, ONE NUMBER, ONE UPPERCASE CHARACTER AND ONE SPECIAL CHARACTER @$!%*?&
             updateColors(isValid: isValid(text: newString))
        }
     }

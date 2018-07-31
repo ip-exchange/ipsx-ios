@@ -169,7 +169,7 @@ class LoginCredentialsControler: UIViewController {
     private func setupTextViews() {
         emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
         emailRichTextView.nextResponderField    = passRichTextField.contentTextField
-        passRichTextField.validationRegex       = RichTextFieldView.validPasswordRegex
+        passRichTextField.validationRegex       = RichTextFieldView.minOneCharRegex
     }
     
     private func observreFieldsState() {
