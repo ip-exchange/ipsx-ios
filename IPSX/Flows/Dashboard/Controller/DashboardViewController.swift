@@ -54,7 +54,7 @@ class DashboardViewController: UIViewController {
     var filteredProxies: [Proxy] {
         get {
             let filterString = "active"
-            return proxies.filter {
+            let filtered = proxies.filter {
                 if proxiesSegmentController.selectedSegmentIndex == 0 {
                     return $0.proxyDetails?.status == filterString
                 } else {
@@ -62,6 +62,8 @@ class DashboardViewController: UIViewController {
 
                 }
             }
+            let sorted = filtered.sorted { $0.proxyDetails?.startDate ?? Date() > $1.proxyDetails?.startDate ?? Date() }
+            return sorted
         }
     }
     
