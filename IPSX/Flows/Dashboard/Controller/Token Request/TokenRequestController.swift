@@ -29,13 +29,20 @@ class TokenRequestController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var walletImageView: UIImageView!
+    @IBOutlet weak var telegramOverlayView: UIView!
+    @IBOutlet weak var telegramIDRtextField: RichTextFieldView!
+    @IBOutlet weak var telegramIDDoneButton: UIButton!
+    @IBOutlet weak var telegramOverlayCenterY: NSLayoutConstraint!
     
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     var ethAdresses: [EthAddress] = []
     private var selectedAddress: EthAddress?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
+    
+    //TODO (CVI): Get this from somwhere
+    var hasTelegramID = false
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -44,26 +51,12 @@ class TokenRequestController: UIViewController {
     
     @IBAction func submitAction(_ sender: UIButton) {
         
-        let ethID  = selectedAddress?.ethID ?? 0
-        let amount = amountTextField.text ?? "0"
-        let options = UserManager.shared.generalSettings
-        let amountInt = Int(amount) ?? 0
-        
-        guard amountInt >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
-            let min = options?.depositMin ?? 20
-            let max = options?.depositMax ?? 5000
-            let limitsString = String(format: "Amount Limits Error Message Min %@ Max %@".localized, "\(min)", "\(max)")
-            toast?.hideToastAlert() {
-                self.toast?.showToastAlert(limitsString, autoHideAfter: 5)
-            }
-            return
+        if hasTelegramID {
+            requestTokens()
+        } else {
+            updateTelegramOverlay(visible: true)
         }
         
-        guard ethID != 0 else {
-            toast?.showToastAlert("Select Valid ETH Wallet Message".localized, autoHideAfter: 5)
-            return
-        }
-        requestTokens(ethID: ethID, amount: amount)
     }
     
     func requestTokens(ethID: Int, amount: String) {
@@ -90,6 +83,7 @@ class TokenRequestController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        observreFieldsState()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
@@ -112,10 +106,12 @@ class TokenRequestController: UIViewController {
         updateReachabilityInfo()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    
-    }
+    private func observreFieldsState() {
+        telegramIDRtextField.validationRegex = RichTextFieldView.validTelegramID
+        telegramIDRtextField.onFieldStateChange = { state in
+            self.telegramIDDoneButton.isEnabled = state
+        }
+     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -156,6 +152,26 @@ class TokenRequestController: UIViewController {
         updateDropDown(visible: false)
     }
     
+    @IBAction func closeTelegramOverlay(_ sender: Any) {
+        updateTelegramOverlay(visible: false)
+    }
+    
+    @IBAction func submitTelegramID(_ sender: Any) {
+        updateTelegramOverlay(visible: true)
+        print(telegramIDRtextField.contentTextField?.text ?? "No ID")
+        //TODO (CVI): Submit the telegram ID via a request and request tokens on completion, or submit it via request tokens call directly
+        requestTokens()
+    }
+    
+    private func updateTelegramOverlay(visible: Bool) {
+        view.layoutIfNeeded()
+        self.telegramOverlayCenterY.constant = visible ? 0 : 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.telegramOverlayView.alpha = visible ? 1 : 0
+        })
+    }
+
     private func loadAndSetDefaultAddres() {
         selectedAddress = nil
         if let addresses = UserManager.shared.ethAddresses {
@@ -186,8 +202,11 @@ class TokenRequestController: UIViewController {
     }
     
     private func updateUI() {
+        
+        telegramIDDoneButton.isEnabled = false
         tableViewBottomConstraint.constant = tableView.frame.size.height
         tableViewTopConstraint.constant = -tableView.frame.size.height
+        updateTelegramOverlay(visible: false)
     }
     
     private func updateSelectedAddresUI(ethAddres: EthAddress) {
@@ -208,6 +227,30 @@ class TokenRequestController: UIViewController {
             self.submitButton.alpha = visible ? 0 : 1
         }, completion: { completed in
         })
+    }
+    
+    private func requestTokens() {
+        
+        let ethID  = selectedAddress?.ethID ?? 0
+        let amount = amountTextField.text ?? "0"
+        let options = UserManager.shared.generalSettings
+        let amountInt = Int(amount) ?? 0
+        
+        guard amountInt >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
+            let min = options?.depositMin ?? 20
+            let max = options?.depositMax ?? 5000
+            let limitsString = String(format: "Amount Limits Error Message Min %@ Max %@".localized, "\(min)", "\(max)")
+            toast?.hideToastAlert() {
+                self.toast?.showToastAlert(limitsString, autoHideAfter: 5)
+            }
+            return
+        }
+        
+        guard ethID != 0 else {
+            toast?.showToastAlert("Select Valid ETH Wallet Message".localized, autoHideAfter: 5)
+            return
+        }
+        requestTokens(ethID: ethID, amount: amount)
     }
 }
 
