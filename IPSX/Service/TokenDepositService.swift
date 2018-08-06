@@ -10,13 +10,14 @@ import Foundation
 
 class TokenDepositService {
     
-    func requestTokens(ethID: Int, amount: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func requestTokens(ethID: Int, amount: String, telegramID: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let bodyParams: [String: Any] = ["usereth_id"       : ethID,
-                                         "amount_requested" : amount]
+                                         "amount_requested" : amount,
+                                         "telegram"         : telegramID]
         
         RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
