@@ -99,7 +99,7 @@ class RegisterTermsController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -107,10 +107,10 @@ class RegisterTermsController: UIViewController {
 
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
-            if ReachabilityManager.shared.isReachable() {
-                self.toast?.hideToastAlert()
-            } else {
+            if !ReachabilityManager.shared.isReachable() {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
             }
         }
     }

@@ -80,6 +80,8 @@ public class ToastAlertView: UIView {
     var onShow: (()->())?
     var onHide: (()->())?
     
+    var currentText: String? { return alertTextLabel.text }
+    
     private weak var view: UIView!
     private weak var parent: UIView!
     private weak var underViewTopConstraint: NSLayoutConstraint!

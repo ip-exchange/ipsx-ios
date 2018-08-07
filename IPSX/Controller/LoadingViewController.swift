@@ -83,7 +83,9 @@ class LoadingViewController: UIViewController {
                 self.loadingBottomLabel.text = "Connect to the internet message".localized
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized {
+                    self.toast?.hideToastAlert()
+                }
                 self.loadingBottomLabel.text = "Loading message".localized
                 self.continueFlow()
             }

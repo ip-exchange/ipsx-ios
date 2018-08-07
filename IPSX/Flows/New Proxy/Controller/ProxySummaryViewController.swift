@@ -86,7 +86,9 @@ class ProxySummaryViewController: UIViewController {
                 self.currentIpInfoLabel.text = "No internet connection".localized
             } else {
                 self.confirmButton.isEnabled = ReachabilityManager.shared.connectionType == .wifi
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized  {
+                    self.toast?.hideToastAlert()
+                }
             }
             self.updateReachabilityInfo()
         }

@@ -151,7 +151,7 @@ class DashboardViewController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -159,10 +159,10 @@ class DashboardViewController: UIViewController {
 
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
-            if ReachabilityManager.shared.isReachable() {
-                self.toast?.hideToastAlert()
-            } else {
+            if !ReachabilityManager.shared.isReachable() {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
             }
         }
     }
@@ -297,7 +297,6 @@ class DashboardViewController: UIViewController {
             nextVC?.presentedFromDashboard = true
             
         case "showTokenRequestSegueID":
-            toast?.hideToastAlert()
             let nextVC = segue.destination as? UINavigationController
             let controller = nextVC?.viewControllers.first as? TokenRequestListController
             controller?.tokenRequests = tokenRequests ?? []

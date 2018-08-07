@@ -103,7 +103,7 @@ class NewProxyController: UIViewController {
         if !ReachabilityManager.shared.isReachable() {
             self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             self.currentIpInfoLabel.text = "No internet connection".localized
-        } else {
+        } else if self.toast?.currentText == "No internet connection".localized {
             self.toast?.hideToastAlert()
         }
 

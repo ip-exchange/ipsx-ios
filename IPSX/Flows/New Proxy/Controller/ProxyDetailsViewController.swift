@@ -76,7 +76,9 @@ class ProxyDetailsViewController: UIViewController {
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized {
+                    self.toast?.hideToastAlert()
+                }
                 self.updateReachabilityInfo()
             }
          }
