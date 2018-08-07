@@ -11,6 +11,7 @@ import UIKit
 class DashboardViewController: UIViewController {
     
     @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var fullMaskView: UIView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView?
@@ -157,6 +158,17 @@ class DashboardViewController: UIViewController {
         }
     }
 
+    func hideMaskView() {
+        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.5, options: [], animations: {
+            let shrink = CGAffineTransform(scaleX: 0.1, y: 0.1);
+            let translate = CGAffineTransform(translationX: 0, y: 512)
+            self.fullMaskView.transform = shrink.concatenating(translate)
+        }, completion: { completed in
+            self.fullMaskView.isHidden = true
+            self.tabBarController?.setTabBarVisible(visible: true, animated: true)
+        })
+    }
+    
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
             if !ReachabilityManager.shared.isReachable() {
