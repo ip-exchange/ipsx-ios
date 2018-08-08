@@ -127,6 +127,11 @@ class RegisterTermsController: UIViewController {
         registerButton.isEnabled = allAgreed
     }
     
+    @IBAction func newsletterButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        //TODO: save state on register
+    }
+    
     @IBAction func registerButtonAction(_ sender: UIButton) {
         
         loadingView?.startAnimating()
