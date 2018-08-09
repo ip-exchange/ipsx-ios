@@ -15,7 +15,8 @@ class RichTextFieldView: UIView {
     static let validEthAddress    = "(0x){1}[0-9a-fA-F]{40}"
     static let validName          = "^[A-Za-z0-9- ]+$"
     static let minOneCharRegex    = "^.{1,}$"
-    
+    static let validTelegramID    = "(@){1}[A-Za-z0-9_]{5,32}"
+
     var onFieldStateChange: ((_ newState: Bool)->())?
     
     var nextResponderField: UIResponder? = nil

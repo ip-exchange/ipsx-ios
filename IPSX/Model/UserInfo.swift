@@ -11,23 +11,34 @@ import Foundation
 enum DeleteAccountState: Int {
     
     case notRequested = 0
-    case pending = 1
-    case confirmed = 2
+    case pending      = 1
+    case confirmed    = 2
 }
 
 struct UserInfo {
     
     var deleteAccountState: DeleteAccountState = .notRequested
     
-    let kycStausedDic: [Int : String] = [0 : "Registered Status Text",
-                                         1 : "Approved Status Text",
-                                         2 : "Pending Status Text",
-                                         3 : "Incomplete Status Text",
-                                         4 : "Waiting Status Text",
-                                         5 : "Rejected Status Text",
-                                         6 : "Accepted Status Text",
-                                         ]
+    enum KycStatus: Int {
+        
+        case Registered = 0
+        case Approved   = 1
+        case Pending    = 2
+        case Incomplete = 3
+        case Waiting    = 4
+        case Rejected   = 5
+        case Accepted   = 6
+    }
     
+    let kycStausedDic: [Int : String] = [KycStatus.Registered.rawValue : "Registered Status Text",
+                                         KycStatus.Approved.rawValue   : "Approved Status Text",
+                                         KycStatus.Pending.rawValue    : "Pending Status Text",
+                                         KycStatus.Incomplete.rawValue : "Incomplete Status Text",
+                                         KycStatus.Waiting.rawValue    : "Waiting Status Text",
+                                         KycStatus.Rejected.rawValue   : "Rejected Status Text",
+                                         KycStatus.Accepted.rawValue   : "Accepted Status Text",
+                                         ]
+
     var firstName: String
     var middleName: String
     var lastName: String
@@ -36,7 +47,8 @@ struct UserInfo {
     var email: String
     var proxyTest: String
     var balance: Double
-    var kycStatus: String = "Unknown Status Text".localized
+    var kycStatusString: String = "Unknown Status Text".localized
+    var kycStatus: KycStatus
     var socialName: String?
     var source: String?
     var refferalCode: String?
@@ -59,9 +71,10 @@ struct UserInfo {
         self.refferalCode = refferalCode
         
         self.deleteAccountDate = deleteAccountDate
+        self.kycStatus = KycStatus(rawValue: kycStatus) ?? .Registered
         
         if let statusString = kycStausedDic[kycStatus] {
-            self.kycStatus = statusString.localized
+            self.kycStatusString = statusString.localized
         }
         
         if deleteAccountDate != nil {

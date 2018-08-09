@@ -175,7 +175,7 @@ class ProfileViewController: UIViewController {
     func refreshProfileUI() {
         
         DispatchQueue.main.async {
-            self.kycStatusLabel.text = self.userInfo?.kycStatus ?? ""
+            self.kycStatusLabel.text = self.userInfo?.kycStatusString ?? ""
             if let firstName = self.userInfo?.firstName {
                 let lastName = self.userInfo?.lastName ?? ""
                 self.usernameLabel.text    = firstName + " " + lastName
