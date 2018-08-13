@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var emailNotificationsSwitch: UISwitch!
+    @IBOutlet weak var newsletterSwitch: UISwitch!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -20,6 +21,9 @@ class SettingsViewController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    
+    var emailNotif = false
+    var newsletter = true
     
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
@@ -102,7 +106,15 @@ class SettingsViewController: UIViewController {
     }
 
     @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
-        updateSettings(emailNotif: sender.isOn)
+        
+        emailNotif = sender.isOn
+        updateSettings()
+    }
+    
+    @IBAction func newsletterSwitchAction(_ sender: UISwitch) {
+        
+        newsletter = sender.isOn
+        updateSettings()
     }
     
     func retrieveUserInfo() {
@@ -154,15 +166,14 @@ class SettingsViewController: UIViewController {
             
             self.loadingView?.stopAnimating()
             switch result {
-            case .success(let emailNotifValue):
+            case .success(let result):
                 
-                if let emailNotifValue = emailNotifValue as? String, emailNotifValue == EmailNotifications.on {
-                    self.updateSwitchValue(value: true)
+                if let result = result as? (String, Newsletter) {
+                    
+                    self.updateEmailNotifSwitch(value: result.0 == EmailNotifications.on)
+                    self.updateNewsletterSwitch(value: result.1 == Newsletter.on)
                 }
-                else {
-                    self.updateSwitchValue(value: false)
-                }
-               
+        
             case .failure(let error):
                 self.handleError(error, requestType: .getSettings, completion: {
                     self.loadSettings()
@@ -199,10 +210,10 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    func updateSettings(emailNotif: Bool = false) {
+    func updateSettings() {
         
         loadingView?.startAnimating()
-        UserInfoService().updateSettings(emailNotif: emailNotif, completionHandler: { result in
+        UserInfoService().updateSettings(emailNotif: emailNotif, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -211,17 +222,25 @@ class SettingsViewController: UIViewController {
                 
             case .failure(let error):
                 self.handleError(error, requestType: .updateSettings, completion: {
-                    self.updateSettings(emailNotif: emailNotif)
+                    self.updateSettings()
                 })
             }
         })
     }
     
-    func updateSwitchValue(value: Bool = false, error: Bool = false) {
+    func updateEmailNotifSwitch(value: Bool = false, error: Bool = false) {
         
         DispatchQueue.main.async {
             self.emailNotificationsSwitch.isEnabled = !error
             self.emailNotificationsSwitch.setOn(value, animated: true)
+        }
+    }
+    
+    func updateNewsletterSwitch(value: Bool = true, error: Bool = false) {
+        
+        DispatchQueue.main.async {
+            self.newsletterSwitch.isEnabled = !error
+            self.newsletterSwitch.setOn(value, animated: true)
         }
     }
     
@@ -256,7 +275,8 @@ extension SettingsViewController: ErrorPresentable {
         case CustomError.expiredToken:
             
             LoginService().getNewAccessToken(errorHandler: { error in
-                self.updateSwitchValue(error: true)
+                self.updateEmailNotifSwitch(error: true)
+                self.updateNewsletterSwitch(error: true)
                 
             }, successHandler: {
                 completion?()
@@ -267,7 +287,8 @@ extension SettingsViewController: ErrorPresentable {
             switch requestType {
                 
             case .updateSettings:
-                self.updateSwitchValue(error: true)
+                self.updateEmailNotifSwitch(error: true)
+                self.updateNewsletterSwitch(error: true)
                 
             default:
                 self.errorMessage = "Generic Error Message".localized

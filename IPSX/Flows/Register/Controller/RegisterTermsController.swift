@@ -24,6 +24,7 @@ class RegisterTermsController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
+    var newsletter: Bool = true
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
@@ -129,7 +130,7 @@ class RegisterTermsController: UIViewController {
     
     @IBAction func newsletterButtonAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        //TODO: save state on register
+        newsletter = sender.isSelected
     }
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
@@ -181,7 +182,7 @@ class RegisterTermsController: UIViewController {
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {

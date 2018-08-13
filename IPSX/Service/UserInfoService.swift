@@ -211,9 +211,12 @@ class UserInfoService {
             }
             let json = JSON(data: data)
             let emailNotifValue = json["email_notifications"].stringValue
+            let newsletterValue = json["newsletter"].stringValue
+            
+            let newsletter = newsletterValue != "" ? Newsletter.on : Newsletter.off
             
             if emailNotifValue == EmailNotifications.on || emailNotifValue == EmailNotifications.off {
-                completionHandler(ServiceResult.success(emailNotifValue))
+                completionHandler(ServiceResult.success((emailNotifValue, newsletter)))
             }
             else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
@@ -221,13 +224,17 @@ class UserInfoService {
         })
     }
     
-    func updateSettings(emailNotif: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateSettings(emailNotif: Bool, newsletter: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let emailNotifValue = emailNotif == true ? EmailNotifications.on : EmailNotifications.off
-        let bodyParams: [String: String] =  ["email_notifications": emailNotifValue]
+                
+        let newsletterValue = newsletter == true ? Date().dateToString(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") : nil
+        
+        let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
+                                          "newsletter"         : newsletterValue as Any]
         
         RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             

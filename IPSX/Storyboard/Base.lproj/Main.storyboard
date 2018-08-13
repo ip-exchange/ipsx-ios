@@ -814,8 +814,45 @@
                                     <constraint firstAttribute="height" constant="58" id="w8Q-J2-N58"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1Q-OH-z7a" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="173.66666666666666" width="375" height="0.66666666666665719"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29560959510000001" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="6Ga-hB-b5k"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uV-dt-hMB" userLabel="Newsletter View">
+                                <rect key="frame" x="0.0" y="174.33333333333334" width="375" height="58"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Newsletter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSM-ST-ToC">
+                                        <rect key="frame" x="14" y="20" width="74" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                        <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbv-ry-l2G">
+                                        <rect key="frame" x="312" y="13" width="49" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="newsletterSwitchAction:" destination="f0C-Rr-AGY" eventType="valueChanged" id="BQk-CK-tyv"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="4hP-gR-PeQ"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0F-Zk-4B6" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="232.33333333333334" width="375" height="0.66666666666665719"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29560959510000001" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="p7d-g2-MpR"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zme-86-oZS" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="16" y="195.66666666666666" width="343" height="65.999999999999972"/>
+                                <rect key="frame" x="16" y="254.33333333333337" width="343" height="66"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="garbage" translatesAutoresizingMaskIntoConstraints="NO" id="AUr-BZ-6BV">
                                         <rect key="frame" x="19" y="18" width="27" height="30"/>
@@ -848,13 +885,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sFI-ea-rBE" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="173.66666666666666" width="375" height="0.33333333333334281"/>
-                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30207416373239437" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="qKn-aR-DcE"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwT-vm-HtC" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="165.66666666666666" y="364.66666666666669" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -866,24 +896,30 @@
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="j1Q-OH-z7a" firstAttribute="leading" secondItem="yhC-aQ-dN8" secondAttribute="leading" id="2Ml-7L-QXI"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="1BY-Us-4HP" secondAttribute="trailing" id="2nH-Py-lVu"/>
                             <constraint firstItem="SCm-xM-aMh" firstAttribute="top" secondItem="1BY-Us-4HP" secondAttribute="bottom" constant="26.5" id="Aa6-WW-BmT"/>
                             <constraint firstItem="1BY-Us-4HP" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="Ckt-8P-7Aq"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="fcR-bh-uWF" secondAttribute="trailing" id="CoH-OO-5AE"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="top" secondItem="fcR-bh-uWF" secondAttribute="top" constant="50" id="DfP-k2-p6B"/>
+                            <constraint firstItem="zme-86-oZS" firstAttribute="top" secondItem="1uV-dt-hMB" secondAttribute="bottom" constant="22" id="JuQ-Mb-oVW"/>
                             <constraint firstItem="SCm-xM-aMh" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="Oin-ha-X03"/>
+                            <constraint firstAttribute="trailing" secondItem="j1Q-OH-z7a" secondAttribute="trailing" id="PlI-IQ-2eS"/>
+                            <constraint firstItem="H0F-Zk-4B6" firstAttribute="top" secondItem="1uV-dt-hMB" secondAttribute="bottom" id="Pzi-0m-v1d"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="zme-86-oZS" secondAttribute="trailing" constant="16" id="TN2-7c-Nvv"/>
                             <constraint firstItem="uwT-vm-HtC" firstAttribute="centerX" secondItem="9IB-rH-e1t" secondAttribute="centerX" id="UDJ-uo-gmv"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="SCm-xM-aMh" secondAttribute="trailing" id="VXT-z7-AeM"/>
+                            <constraint firstAttribute="trailing" secondItem="H0F-Zk-4B6" secondAttribute="trailing" id="Vig-oa-V8x"/>
+                            <constraint firstItem="H0F-Zk-4B6" firstAttribute="leading" secondItem="yhC-aQ-dN8" secondAttribute="leading" id="XWb-id-Dzv"/>
                             <constraint firstItem="kop-Q4-f9o" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="Y5r-5n-nRn"/>
-                            <constraint firstItem="zme-86-oZS" firstAttribute="top" secondItem="kop-Q4-f9o" secondAttribute="bottom" constant="22" id="YUd-b3-flc"/>
-                            <constraint firstItem="sFI-ea-rBE" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="fQx-ZZ-QOn"/>
+                            <constraint firstItem="1uV-dt-hMB" firstAttribute="top" secondItem="j1Q-OH-z7a" secondAttribute="bottom" constant="2.8421709430404007e-14" id="ZJ2-hI-4JC"/>
+                            <constraint firstItem="1uV-dt-hMB" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="gwX-cP-6rm"/>
                             <constraint firstItem="kop-Q4-f9o" firstAttribute="top" secondItem="SCm-xM-aMh" secondAttribute="bottom" id="iH2-58-PPS"/>
-                            <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="sFI-ea-rBE" secondAttribute="trailing" id="m8U-XZ-bUU"/>
-                            <constraint firstItem="sFI-ea-rBE" firstAttribute="top" secondItem="kop-Q4-f9o" secondAttribute="bottom" id="mxi-Ew-jZQ"/>
                             <constraint firstItem="fcR-bh-uWF" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" id="swF-Vu-eCx"/>
                             <constraint firstItem="1BY-Us-4HP" firstAttribute="top" secondItem="fcR-bh-uWF" secondAttribute="bottom" id="tTA-h3-Nke"/>
                             <constraint firstItem="uwT-vm-HtC" firstAttribute="centerY" secondItem="9IB-rH-e1t" secondAttribute="centerY" id="tdJ-ND-MKB"/>
+                            <constraint firstItem="j1Q-OH-z7a" firstAttribute="top" secondItem="kop-Q4-f9o" secondAttribute="bottom" id="ub3-kG-HX6"/>
+                            <constraint firstItem="1uV-dt-hMB" firstAttribute="trailing" secondItem="9IB-rH-e1t" secondAttribute="trailing" id="vPn-0V-TNg"/>
                             <constraint firstItem="zme-86-oZS" firstAttribute="leading" secondItem="9IB-rH-e1t" secondAttribute="leading" constant="16" id="wes-U2-lNH"/>
                             <constraint firstItem="9IB-rH-e1t" firstAttribute="trailing" secondItem="kop-Q4-f9o" secondAttribute="trailing" id="zcs-LE-aQK"/>
                         </constraints>
@@ -895,6 +931,7 @@
                         <outlet property="deleteButtonTextLabel" destination="bdW-4P-6m1" id="Spe-H2-PCJ"/>
                         <outlet property="emailNotificationsSwitch" destination="JU3-hU-DmW" id="AsC-4K-4Fu"/>
                         <outlet property="loadingView" destination="uwT-vm-HtC" id="8CL-It-HVo"/>
+                        <outlet property="newsletterSwitch" destination="lbv-ry-l2G" id="Wau-9Y-jYY"/>
                         <outlet property="separatorView" destination="1BY-Us-4HP" id="C9g-Ev-TI8"/>
                         <outlet property="tokensAmountLabel" destination="KPJ-tJ-xHh" id="f5X-dj-cgu"/>
                         <outlet property="topBarView" destination="fcR-bh-uWF" id="Mcf-xW-Usz"/>

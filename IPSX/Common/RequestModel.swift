@@ -231,4 +231,11 @@ public struct EmailNotifications {
     public static let off = "disable"
 }
 
+enum Newsletter {
+    
+    case on
+    case off
+}
+
+
 
