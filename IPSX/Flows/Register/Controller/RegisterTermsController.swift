@@ -165,7 +165,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
