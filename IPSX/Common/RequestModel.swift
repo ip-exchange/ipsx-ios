@@ -37,12 +37,12 @@ public struct Url {
     public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
     
     // DEV ENV:
-    public static let baseDEVApi       = "http://devapi.ip.sx:3000/api"
+    public static let baseDEVApi    = "http://devapi.ip.sx:3000/api"
     public static let pacBaseUrlDEV = "https://devapp.ip.sx/proxy/pac/"
     public static let faqUrlDev     = "https://devapp.ip.sx/webview/faq/staking"
 
     // DEMO ENV:
-    public static let baseDEMOApi       = "https://api.ipsx.io/api"
+    public static let baseDEMOApi    = "https://api.ipsx.io/api"
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
     public static let faqUrlDemo     = "https://demo.ip.sx/webview/faq/staking"
 
