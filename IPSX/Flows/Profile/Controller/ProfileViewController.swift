@@ -185,6 +185,10 @@ class ProfileViewController: UIViewController {
             self.enroledTestingImageView.isHidden = !UserManager.shared.isEnroledForTesting
             self.enrolStakingTitleLabel.text = UserManager.shared.isEnroledForStaking ? "Enrolled for Staking Title".localized : "Enroll for Staking Title".localized
             self.enrolTestingTitleLabel.text = UserManager.shared.isEnroledForTesting ? "Enrolled for Testing Title".localized : "Enroll for Testing Title".localized
+            if self.tableView.contentSize.height < self.view.frame.size.height {
+                self.tableView.contentSize.height = self.view.frame.size.height
+            }
+
         }
     }
 
@@ -287,14 +291,6 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
-        // Calculate the size of the scrollView when header is collapsed
-        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
-        
-        // Make sure that when header is collapsed, there is still room to scroll
-        return scrollView.contentSize.height > scrollViewMaxHeight
-    }
-    
     func collapseHeader() {
         self.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2, animations: {
@@ -361,33 +357,26 @@ extension ProfileViewController: UITableViewDelegate {
 extension ProfileViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
         
-        let absoluteTop: CGFloat = 0;
-        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
+        let isScrollingDown =  scrollView.contentOffset.y > 0
+        let isScrollingUp = scrollView.contentOffset.y < 0
         
-        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
-        
-        if canAnimateHeader(scrollView) {
-            
-            // Calculate new header height
-            var newHeight = self.headerHeightConstraint.constant
-            if isScrollingDown {
-                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-            } else if isScrollingUp {
-                newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
-            }
-            
-            // Header needs to animate
-            if newHeight != self.headerHeightConstraint.constant {
-                self.headerHeightConstraint.constant = newHeight
-                self.updateHeader()
-                self.setScrollPosition(self.previousScrollOffset)
-            }
-            
-            self.previousScrollOffset = scrollView.contentOffset.y
+        var newHeight = self.headerHeightConstraint.constant
+        if isScrollingDown {
+            newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
+        } else if isScrollingUp {
+            newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
         }
+        
+        if newHeight != self.headerHeightConstraint.constant {
+            self.headerHeightConstraint.constant = newHeight
+            self.updateHeader()
+            self.setScrollPosition(self.previousScrollOffset)
+        }
+        
+        self.previousScrollOffset = scrollView.contentOffset.y
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
