@@ -130,6 +130,7 @@ class ProfileViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        topRootView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     

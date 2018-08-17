@@ -26,6 +26,11 @@ class LandingViewController: UIViewController {
         backgroundImageView.createParticlesAnimation()
    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+    
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height

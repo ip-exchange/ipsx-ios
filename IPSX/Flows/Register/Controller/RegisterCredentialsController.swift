@@ -38,6 +38,7 @@ class RegisterCredentialsController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
     }

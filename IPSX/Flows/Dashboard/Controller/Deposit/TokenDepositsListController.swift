@@ -123,6 +123,7 @@ class TokenDepositsListController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        particlesHolder.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
         self.toast?.hideToast()
     }

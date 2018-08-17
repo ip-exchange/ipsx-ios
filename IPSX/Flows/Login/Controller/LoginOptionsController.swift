@@ -40,6 +40,11 @@ class LoginOptionsController: UIViewController {
         backgroundImageView.createParticlesAnimation()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+
     @IBAction func unwindToLoginOptions(segue:UIStoryboardSegue) { }
     
     @IBAction func facebookLoginAction(_ sender: UIButton) {

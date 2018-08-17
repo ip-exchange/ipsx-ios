@@ -86,6 +86,7 @@ class RegisterTermsController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
  
@@ -228,6 +229,12 @@ class RegisterDoneController: UIViewController {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+
 }
 
 extension RegisterTermsController: ErrorPresentable {
