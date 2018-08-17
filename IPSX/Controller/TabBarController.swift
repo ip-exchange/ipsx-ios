@@ -17,7 +17,9 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(performActionFor), name: .userDeleted, object: nil)
-        self.setTabBarVisible(visible: false, animated: false)
+        if UserManager.shared.hasEthAddress {
+            self.setTabBarVisible(visible: false, animated: false)
+        }
     }
         
     override func viewDidAppear(_ animated: Bool) {
