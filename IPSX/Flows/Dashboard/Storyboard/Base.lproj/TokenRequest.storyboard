@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,9 +49,8 @@
                                             <action selector="createRequestAction:" destination="9x0-LF-Zd9" eventType="touchUpInside" id="pVI-co-8tH"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T2-NX-UlG">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T2-NX-UlG">
                                         <rect key="frame" x="128" y="62" width="118" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -60,7 +58,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="6T2-NX-UlG" firstAttribute="centerX" secondItem="fqy-AL-kfs" secondAttribute="centerX" id="5W1-cy-tGL"/>
                                     <constraint firstAttribute="height" constant="94" id="gcL-1q-Z2m"/>
+                                    <constraint firstItem="6T2-NX-UlG" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="top" constant="62" id="uGu-Z9-84Q"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YI5-I1-vzb">
@@ -486,9 +486,8 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1s5-7n-nPX">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1s5-7n-nPX">
                                         <rect key="frame" x="99" y="61" width="176" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -510,7 +509,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="1s5-7n-nPX" firstAttribute="centerX" secondItem="BYq-qQ-WSS" secondAttribute="centerX" id="hsd-zp-g7r"/>
                                     <constraint firstAttribute="height" constant="94" id="tRt-Sj-dDd"/>
+                                    <constraint firstItem="1s5-7n-nPX" firstAttribute="top" secondItem="BYq-qQ-WSS" secondAttribute="top" constant="61" id="uLA-cs-0O5"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJc-0c-HBC" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
@@ -636,7 +637,7 @@
                                             <constraint firstAttribute="trailing" secondItem="tMv-Wu-q4Z" secondAttribute="trailing" id="EyW-gS-Cc1"/>
                                             <constraint firstItem="Fyy-5T-WeD" firstAttribute="leading" secondItem="3Wc-8D-AIa" secondAttribute="leading" id="N3O-D8-8Wh"/>
                                             <constraint firstItem="Fyy-5T-WeD" firstAttribute="top" secondItem="tMv-Wu-q4Z" secondAttribute="bottom" id="TVv-0v-cYx"/>
-                                            <constraint firstAttribute="width" secondItem="3Wc-8D-AIa" secondAttribute="height" multiplier="345:298" id="dEd-jf-psf"/>
+                                            <constraint firstAttribute="height" constant="298" id="UFP-X7-Lc0"/>
                                             <constraint firstAttribute="trailing" secondItem="TUM-CA-DSr" secondAttribute="trailing" id="dVa-LD-NAk"/>
                                             <constraint firstItem="CLb-Gw-wqW" firstAttribute="top" secondItem="UNd-kt-nz1" secondAttribute="bottom" id="egE-qT-niZ"/>
                                             <constraint firstItem="tMv-Wu-q4Z" firstAttribute="top" secondItem="3Wc-8D-AIa" secondAttribute="top" constant="49" id="fIA-gy-kIY"/>
