@@ -60,7 +60,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Company Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wpM-Np-vXv">
-                                                <rect key="frame" x="0.0" y="25" width="343" height="27"/>
+                                                <rect key="frame" x="0.0" y="24" width="343" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -174,7 +174,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="VAT" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZNh-kC-VnJ">
-                                                <rect key="frame" x="0.0" y="25" width="343" height="27"/>
+                                                <rect key="frame" x="0.0" y="24" width="343" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -264,6 +264,9 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="txb-su-Wok">
                                         <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
+                                        <connections>
+                                            <action selector="certificateUploadAction:" destination="S47-Bd-0BS" eventType="touchUpInside" id="QHX-si-9gc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -298,6 +301,9 @@
                                         <state key="normal" image="CloseBut">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="closeButtonAction:" destination="S47-Bd-0BS" eventType="touchUpInside" id="1se-Ty-uge"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBW-oK-kA0">
                                         <rect key="frame" x="329" y="56" width="36" height="33"/>
@@ -349,6 +355,13 @@
                         <viewLayoutGuide key="safeArea" id="8oP-ev-loK"/>
                     </view>
                     <navigationItem key="navigationItem" id="48M-pX-6cG"/>
+                    <connections>
+                        <outlet property="addressRTextField" destination="kxH-ji-c9l" id="Co1-jg-LWM"/>
+                        <outlet property="countryRTextField" destination="w6V-0G-k6x" id="U59-NA-hXt"/>
+                        <outlet property="nameRTextField" destination="Og0-8h-L5k" id="nOw-BE-Gd0"/>
+                        <outlet property="regNumberRTextField" destination="AHI-zR-fSn" id="1s4-5c-81u"/>
+                        <outlet property="vatRTextField" destination="Eoe-l6-OtT" id="Tie-zq-Uah"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NgK-ea-W0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -583,6 +596,11 @@
                         <viewLayoutGuide key="safeArea" id="Yb5-4g-Dw8"/>
                     </view>
                     <navigationItem key="navigationItem" id="pNb-VD-rzu"/>
+                    <connections>
+                        <outlet property="companyRTextField" destination="SQx-VY-oFw" id="bbh-Dt-zf3"/>
+                        <outlet property="emailRtextField" destination="uug-gr-94b" id="wrX-UN-K25"/>
+                        <outlet property="phoneRTextField" destination="5Ge-Ef-tqw" id="E5f-Nw-bIz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LI6-q8-lo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

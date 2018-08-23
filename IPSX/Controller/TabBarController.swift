@@ -14,6 +14,9 @@ class TabBarViewController: UITabBarController {
     var hasPerformedAutologin = false
     var hasConfirmedDeleteAccount = false
     
+    //TODO (CVI-LegalStuff): Solve this
+    var shouldCollectLegalDetails = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(performActionFor), name: .userDeleted, object: nil)
@@ -30,11 +33,13 @@ class TabBarViewController: UITabBarController {
             
             if hasPerformedAutologin {
                 self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-            }
-            else {
+            } else {
                 // When closing the app from Add Eth Address screen after Login -> fresh start
                 UserManager.shared.logout()
             }
+        } else if shouldCollectLegalDetails {
+            shouldCollectLegalDetails = false
+            self.performSegue(withIdentifier: "CollectLegalDetailsSegueID", sender: nil)
         }
         
         if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
