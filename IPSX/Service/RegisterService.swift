@@ -10,13 +10,14 @@ import UIKit
 
 class RegisterService {
     
-    func registerUser(email: String, password: String, ip: String, newsletter: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func registerUser(email: String, password: String, ip: String, newsletter: Bool, type: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let params: [String: Any] =    ["email"      : email,
                                         "password"   : password,
                                         "ip"         : ip,
                                         "source"     : "ios",
-                                        "newsletter" : newsletter]
+                                        "newsletter" : newsletter,
+                                        "type"       : type]
         
         RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             

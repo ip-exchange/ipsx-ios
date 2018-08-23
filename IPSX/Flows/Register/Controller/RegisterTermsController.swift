@@ -198,8 +198,10 @@ class RegisterTermsController: UIViewController {
     
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
+        let type = legalPerson ? 1 : 0
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, completionHandler: { result in
+        
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: type, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
