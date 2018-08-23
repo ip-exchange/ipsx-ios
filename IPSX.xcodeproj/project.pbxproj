@@ -112,6 +112,9 @@
 		EED38F2120A5B1CD004DA2CC /* DateFormatter+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED38F2020A5B1CD004DA2CC /* DateFormatter+extensions.swift */; };
 		EEDB132420A9BE9C00FBFFD0 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB132320A9BE9C00FBFFD0 /* Date+extensions.swift */; };
 		EEE1FC9A212AE9A0002631E6 /* SimpleWebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE1FC9C212AE9A0002631E6 /* SimpleWebView.storyboard */; };
+		EEE1FCA1212E9425002631E6 /* LegalDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */; };
+		EEE1FCA3212EA17E002631E6 /* CompanyDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */; };
+		EEE1FCA5212EA196002631E6 /* RepresentativeDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE1FCA4212EA196002631E6 /* RepresentativeDetailsController.swift */; };
 		EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEBF04A20999259008AB061 /* EditProfileController.swift */; };
 		EEF039C520D3D10500AF89D6 /* SimpleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF039C420D3D10500AF89D6 /* SimpleWebView.swift */; };
 		F848760500F5D1416B01EEE2 /* Pods_IPSXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D1559917C4E87494F213D4 /* Pods_IPSXUITests.framework */; };
@@ -274,6 +277,9 @@
 		EEE1FC99212AE8ED002631E6 /* ro-RO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ro-RO"; path = "ro-RO.lproj/Profile.strings"; sourceTree = "<group>"; };
 		EEE1FC9D212AE9A8002631E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SimpleWebView.storyboard; sourceTree = "<group>"; };
 		EEE1FC9F212AE9BE002631E6 /* ro-RO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ro-RO"; path = "ro-RO.lproj/SimpleWebView.strings"; sourceTree = "<group>"; };
+		EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LegalDetails.storyboard; sourceTree = "<group>"; };
+		EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailsController.swift; sourceTree = "<group>"; };
+		EEE1FCA4212EA196002631E6 /* RepresentativeDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentativeDetailsController.swift; sourceTree = "<group>"; };
 		EEEBF04A20999259008AB061 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		EEF039C420D3D10500AF89D6 /* SimpleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -435,6 +441,8 @@
 				EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */,
 				EE4AAB9E208DDD0B00FE149D /* RegisterOptionsController.swift */,
 				EE4AABA2208E17AA00FE149D /* AddWalletController.swift */,
+				EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */,
+				EEE1FCA4212EA196002631E6 /* RepresentativeDetailsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -444,6 +452,7 @@
 			children = (
 				EE7AD94F20B406930022259D /* Register.storyboard */,
 				EE7AD95420B406A40022259D /* WalletAdd.storyboard */,
+				EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -950,6 +959,7 @@
 				EE7AD95220B406A40022259D /* WalletAdd.storyboard in Resources */,
 				EE354FC820AB10A6002A8132 /* style.css in Resources */,
 				EE7AD94820B403ED0022259D /* Login.storyboard in Resources */,
+				EEE1FCA1212E9425002631E6 /* LegalDetails.storyboard in Resources */,
 				EEAAD4A620B6D0A3001A2FAE /* EnrolTesting.storyboard in Resources */,
 				EE7AD95C20B40E6B0022259D /* NewProxy.storyboard in Resources */,
 				EE7AD93B20B402790022259D /* Search.storyboard in Resources */,
@@ -1089,8 +1099,10 @@
 				EE37F8A22090BCBC00783385 /* SettingsViewController.swift in Sources */,
 				A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */,
 				EE1A0543208F593900522426 /* DashboardViewController.swift in Sources */,
+				EEE1FCA3212EA17E002631E6 /* CompanyDetailsController.swift in Sources */,
 				A43CEC8220BFF254005198A5 /* EnrollmentService.swift in Sources */,
 				A41583B320B6D87B00DEC2BC /* NSNotificationName+extensions.swift in Sources */,
+				EEE1FCA5212EA196002631E6 /* RepresentativeDetailsController.swift in Sources */,
 				A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */,
 				EE4AAB99208DD34B00FE149D /* LoginCredentialsControler.swift in Sources */,
 				A4730029205AC16900488009 /* RequestBuilder.swift in Sources */,
