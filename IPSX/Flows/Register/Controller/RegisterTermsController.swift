@@ -10,6 +10,8 @@ import UIKit
 
 class RegisterTermsController: UIViewController {
 
+    @IBOutlet weak var individualCheckButton: UIButton!
+    @IBOutlet weak var legalCheckButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
@@ -25,6 +27,8 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
+    var legalPerson: Bool = false
+    
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
@@ -147,6 +151,18 @@ class RegisterTermsController: UIViewController {
             }
             self.register(ipAddress: ipAddress)
         })
+    }
+    
+    @IBAction func individualCheckAction(_ sender: UIButton) {
+        sender.isSelected = true
+        legalCheckButton.isSelected = false
+        legalPerson = false
+    }
+    
+    @IBAction func legalCheckAction(_ sender: UIButton) {
+        sender.isSelected = true
+        individualCheckButton.isSelected = false
+        legalPerson = sender.isSelected
     }
     
     func register(ipAddress: String) {
