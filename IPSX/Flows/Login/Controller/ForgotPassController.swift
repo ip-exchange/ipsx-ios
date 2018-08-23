@@ -49,8 +49,17 @@ class ForgotPassController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
                 
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                switch error {
+                case CustomError.userDeleted:
+                    self.errorMessage = "User Deleted Error Message".localized
+                    
+                case CustomError.notPossible:
+                    self.errorMessage = "Reset Password Not Possible Message".localized
+                    
+                default:
+                    self.errorMessage = "Generic Error Message".localized
+                }
             }
         })
     }
@@ -59,8 +68,16 @@ class ForgotPassController: UIViewController {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
         observreFieldsState()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -72,11 +89,13 @@ class ForgotPassController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
@@ -94,7 +113,17 @@ class ForgotPassController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }

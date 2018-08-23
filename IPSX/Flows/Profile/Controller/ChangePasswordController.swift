@@ -35,8 +35,16 @@ class ChangePasswordController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         observreFieldsState()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -50,6 +58,7 @@ class ChangePasswordController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,13 +72,24 @@ class ChangePasswordController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
+    
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     private func setupTextViews() {
-        oldPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
+        oldPassRTField.validationRegex       = RichTextFieldView.minOneCharRegex
         oldPassRTField.nextResponderField    = newPassRTField.contentTextField
         newPassRTField.validationRegex       = RichTextFieldView.validPasswordRegex
         newPassRTField.nextResponderField    = newPassBisRTField.contentTextField
@@ -85,8 +105,7 @@ class ChangePasswordController: UIViewController {
         }
         newPassRTField.onFieldStateChange = { state in
             self.fieldsStateDic["newPass"] = state
-            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
-            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+            self.saveButton.isEnabled = false
             self.newPassBisRTField.contentTextField?.text = ""
         }
         newPassBisRTField.onFieldStateChange = { state in
@@ -191,7 +210,7 @@ extension ChangePasswordController: ErrorPresentable {
                 completion?()
             })
             
-        case CustomError.wrongOldPassword:
+        case CustomError.wrongPassword:
             self.errorMessage = "Wrong Old Password Error Message".localized
             
         default:

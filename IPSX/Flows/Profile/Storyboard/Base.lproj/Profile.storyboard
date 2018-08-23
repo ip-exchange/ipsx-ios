@@ -31,9 +31,8 @@
                                             <segue destination="Yv8-pZ-gdA" kind="unwind" identifier="showTabBarSegueID" unwindAction="unwindToTabBarWithSegue:" id="3I7-8I-y2h"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoJ-Xx-dIb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoJ-Xx-dIb">
                                         <rect key="frame" x="144" y="62" width="87" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -59,6 +58,8 @@
                                 <constraints>
                                     <constraint firstItem="ghf-fy-wpx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="San-8X-eiY" secondAttribute="leading" constant="20" symbolic="YES" id="0TX-jf-i4B"/>
                                     <constraint firstAttribute="trailing" secondItem="ghf-fy-wpx" secondAttribute="trailing" constant="8" id="D3l-tf-sSd"/>
+                                    <constraint firstItem="FoJ-Xx-dIb" firstAttribute="centerX" secondItem="San-8X-eiY" secondAttribute="centerX" id="FVc-54-d8R"/>
+                                    <constraint firstAttribute="bottom" secondItem="FoJ-Xx-dIb" secondAttribute="bottom" constant="11" id="Mht-Ip-OkF"/>
                                     <constraint firstAttribute="height" constant="94" id="SIs-mA-IdD"/>
                                     <constraint firstAttribute="bottom" secondItem="ghf-fy-wpx" secondAttribute="bottom" constant="7" id="ZKf-T8-RvJ"/>
                                 </constraints>
@@ -320,6 +321,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="MOe-bb-j0w"/>
                     <connections>
+                        <outlet property="changePasswordHolderView" destination="3E1-3i-z73" id="pQX-3x-01P"/>
                         <outlet property="emailTextField" destination="0Ww-Hu-VEN" id="8Zh-eE-Unl"/>
                         <outlet property="firstNameTextField" destination="gAm-WK-x0E" id="Puk-iJ-T7f"/>
                         <outlet property="keyIconImageView" destination="XmE-yz-7Zq" id="rDJ-57-ssX"/>
@@ -339,10 +341,10 @@
             </objects>
             <point key="canvasLocation" x="6336.8000000000002" y="-154.27286356821591"/>
         </scene>
-        <!--EmailLoginScreenID-->
+        <!--Landing-->
         <scene sceneID="rsL-1Y-KeO">
             <objects>
-                <viewControllerPlaceholder storyboardName="Login" referencedIdentifier="EmailLoginScreenID" id="AWN-li-dF4" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Landing" id="AWN-li-dF4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H5M-v3-3iy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7734" y="-155"/>
@@ -418,9 +420,8 @@
                                             <action selector="saveButtonAction:" destination="tB3-S2-i7E" eventType="touchUpInside" id="0sO-wd-Hck"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4J-v9-TbB">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4J-v9-TbB">
                                         <rect key="frame" x="115" y="62" width="144" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -429,7 +430,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="i2Y-qK-IkM" secondAttribute="bottom" constant="7" id="10h-dd-8Ub"/>
+                                    <constraint firstItem="i4J-v9-TbB" firstAttribute="centerX" secondItem="Rcj-cG-sJQ" secondAttribute="centerX" id="5RS-nl-scB"/>
                                     <constraint firstAttribute="height" constant="94" id="fHj-cK-nSD"/>
+                                    <constraint firstAttribute="bottom" secondItem="i4J-v9-TbB" secondAttribute="bottom" constant="11" id="iwZ-ws-NXU"/>
                                     <constraint firstAttribute="trailing" secondItem="i2Y-qK-IkM" secondAttribute="trailing" constant="8" id="swE-gW-ymV"/>
                                     <constraint firstItem="i2Y-qK-IkM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Rcj-cG-sJQ" secondAttribute="leading" constant="20" symbolic="YES" id="z7X-2A-4FU"/>
                                 </constraints>

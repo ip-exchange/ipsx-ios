@@ -16,13 +16,13 @@ public extension UserDefaults {
         case freshInstallID = "DEFAULT_FRESH_INSTALL_KEY"
    }
     
-    func storeDelfaultETHAddressID(ethAddressID: String?) {
+    func storeDelfaultETHAddressID(ethAddressID: Int?) {
         UserDefaults.standard.set(ethAddressID, forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
         UserDefaults.standard.synchronize()
     }
     
-    func loadDelfaultETHAddressID() -> String? {
-        return UserDefaults.standard.string(forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
+    func loadDelfaultETHAddressID() -> Int? {
+        return UserDefaults.standard.integer(forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
     }
     
     func isFreshInstall() -> Bool {

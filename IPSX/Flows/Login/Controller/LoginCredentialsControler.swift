@@ -29,6 +29,7 @@ class LoginCredentialsControler: UIViewController {
 
     var hideBackButton = false
     var continueBottomDist: CGFloat = 0.0
+
     private var fieldsStateDic: [String : Bool] = ["email" : false, "pass" : false]
     var errorMessage: String? {
         didSet {
@@ -56,6 +57,9 @@ class LoginCredentialsControler: UIViewController {
                     
                 case CustomError.invalidLogin:
                     self.errorMessage = "Invalid Login Error Message".localized
+                    
+                case CustomError.userDeleted:
+                    self.errorMessage = "User Deleted Error Message".localized
                     
                 default:
                     self.errorMessage = "Generic Error Message".localized
@@ -94,8 +98,16 @@ class LoginCredentialsControler: UIViewController {
         continueBottomDist = bottomContinueConstraint.constant
         backButton.isHidden = hideBackButton
         observreFieldsState()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -107,11 +119,13 @@ class LoginCredentialsControler: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
@@ -129,15 +143,26 @@ class LoginCredentialsControler: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ForgotPasswordSegueID", let nextController = segue.destination as? ForgotPassController {
-            nextController.noLandingScreen = backButton.isHidden
+        if segue.identifier == "ForgotPasswordSegueID" {
+            let nextController = segue.destination as? ForgotPassController
+            nextController?.noLandingScreen = backButton.isHidden
         }
     }
     
@@ -145,7 +170,7 @@ class LoginCredentialsControler: UIViewController {
     private func setupTextViews() {
         emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
         emailRichTextView.nextResponderField    = passRichTextField.contentTextField
-        passRichTextField.validationRegex       = RichTextFieldView.validPasswordRegex
+        passRichTextField.validationRegex       = RichTextFieldView.minOneCharRegex
     }
     
     private func observreFieldsState() {

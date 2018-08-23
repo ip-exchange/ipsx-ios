@@ -27,11 +27,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
+        ReachabilityManager.shared.stopNotifier()
         FBSDKAppEvents.activateApp()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        switch url.host {
+            
+        case "registration":
+            let url = url.absoluteURL
+            let accessToken = url.valueOf("token") ?? ""
+            let userId = url.valueOf("uid") ?? ""
+            
+            //Store access details in keychain
+            UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken)
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            let loadingVC = initialVC?.viewControllers.first as? LoadingViewController
+            loadingVC?.hasPerformedAutologin = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+            
+            return true
+            
+        case "delete":
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            let loadingVC = initialVC?.viewControllers.first as? LoadingViewController
+            loadingVC?.hasConfirmedDeleteAccount = true
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialVC
+            self.window?.makeKeyAndVisible()
+            
+            return true
+            
+        default:
+            return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        }
     }
     
     func setKeychainAccessGroup() {
@@ -45,16 +82,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        ReachabilityManager.shared.stopNotifier()
+
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        ReachabilityManager.shared.stopNotifier()
+        ReachabilityManager.shared.startNotifier()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        ReachabilityManager.shared.stopNotifier()
+        ReachabilityManager.shared.startNotifier()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

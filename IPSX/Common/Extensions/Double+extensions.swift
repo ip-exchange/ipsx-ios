@@ -9,7 +9,22 @@
 import Foundation
 
 extension Double {
-    var cleanString: String {
+    
+    var noDecimalString: String {
         return String(format: "%.0f", self) 
+    }
+    
+    var twoDecimalsString: String {
+        return String(format: "%.2f", self)
+    }
+    
+    var cleanString: String {
+        
+        if floor(self) == self {
+            return self.noDecimalString
+        }
+        else {
+            return self.twoDecimalsString
+        }
     }
 }

@@ -10,13 +10,13 @@ import UIKit
 
 class EnrollmentService {
     
-    func enrollTesting(ethID: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func enrollTesting(ethID: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["usereth_id": ethID,
-                                            "status" : "accepted"]
+        let bodyParams: [String: Any] = ["usereth_id": ethID,
+                                         "status"    : "accepted"]
         
         RequestBuilder.shared.executeRequest(requestType: .enrollTesting, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
             
@@ -41,14 +41,12 @@ class EnrollmentService {
         })
     }
     
-    func enrollStaking(ethsArray: [String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func enrollStaking(ethsArray: [Int], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let ethsIntArray = ethsArray.map { Int($0) ?? 0 }
-        
-        let bodyParams: [String: [Int]] = ["eths": ethsIntArray]
+        let bodyParams: [String: [Int]] = ["eths": ethsArray]
         
         RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
             
@@ -85,12 +83,12 @@ class EnrollmentService {
                 return
             }
             
-            var enrollmentDetails: [(String, Date)] = []
+            var enrollmentDetails: [(Int, Date)] = []
             
             for json in jsonArray {
                 
                 let status        = json["status"].stringValue
-                let ethId         = json["usereth_id"].stringValue
+                let ethId         = json["usereth_id"].intValue
                 let createdString = json["created_at"].stringValue
                 let dateFormatter = DateFormatter.backendResponseParse()
                 

@@ -37,8 +37,16 @@ class EnrolTestSummaryController: UIViewController {
         
         super.viewDidLoad()
         updateUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -47,6 +55,7 @@ class EnrolTestSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -60,18 +69,36 @@ class EnrolTestSummaryController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     private func updateUI() {
         ethAddresAlias.text = enroledAddress?.alias ?? "-"
         ethAddress.text     = enroledAddress?.address ?? "-"
         enroledDate.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "dd MMM yyyy") ?? "-- --- --"
         enroledTime.text    = enroledAddress?.testingEnrollmentDate?.dateToString(format: "HH:mm") ?? "--:--"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationWebController = segue.destination as? SimpleWebView {
+            destinationWebController.loadingURLString = Url.faqPageUrl
+            destinationWebController.titleString = "FAQ".localized
+        }
+    }
+
 }
 
 extension EnrolTestSummaryController: ToastAlertViewPresentable {

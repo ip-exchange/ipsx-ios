@@ -67,6 +67,8 @@ public enum ToastAlertType {
     case error
     case info
     case success
+    case deletePending
+    case deleteConfirmed
 }
 
 public class ToastAlertView: UIView {
@@ -74,6 +76,11 @@ public class ToastAlertView: UIView {
     @IBOutlet weak var alertTextLabel: UILabel!
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var dismissButton: UIButton!
+    
+    var onShow: (()->())?
+    var onHide: (()->())?
+    
+    var currentText: String? { return alertTextLabel.text }
     
     private weak var view: UIView!
     private weak var parent: UIView!
@@ -139,6 +146,7 @@ public class ToastAlertView: UIView {
     private func updateInfoToastUI(visible: Bool, alertText: String? = "", type: ToastAlertType? = nil, completion: (()->())? = nil) {
         
         DispatchQueue.main.async {
+            if visible { self.onShow?() } else { self.onHide?() }
             if let toastType = type {
                 self.view.backgroundColor = .green
                 var imageName = "warningWhite"
@@ -151,7 +159,13 @@ public class ToastAlertView: UIView {
                 case .success:
                     self.view.backgroundColor = UIColor.lightBlue
                     imageName = "successWhite"
-                }
+                case .deletePending:
+                    self.view.backgroundColor = UIColor.darkRed
+                    imageName = "mailSent"
+                case .deleteConfirmed:
+                    self.view.backgroundColor = UIColor.darkRed
+                    imageName = "garbageWhite"
+              }
                 self.leftImageView.image = UIImage(named: imageName)
             }
             if let text = alertText, text.count > 0 {

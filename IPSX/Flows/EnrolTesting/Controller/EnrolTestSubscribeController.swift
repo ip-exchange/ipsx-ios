@@ -47,8 +47,16 @@ class EnrolTestSubscribeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -57,6 +65,7 @@ class EnrolTestSubscribeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         loadAndSetDefaultAddres()
     }
 
@@ -71,12 +80,22 @@ class EnrolTestSubscribeController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? EnrolTestSummaryController {
             dest.enroledAddress = selectedAddress
@@ -92,7 +111,6 @@ class EnrolTestSubscribeController: UIViewController {
     }
 
     @IBAction func submitAction(_ sender: UIButton) {
-        
         enrollTesting()
     }
     
@@ -141,7 +159,7 @@ class EnrolTestSubscribeController: UIViewController {
         if let addresses = UserManager.shared.ethAddresses {
             ethAdresses = addresses.filter { return  $0.validationState == .verified }
             if let defaultAddrID = UserDefaults.standard.loadDelfaultETHAddressID() {
-                let matches = addresses.filter { return $0.ethID == defaultAddrID }
+                let matches = ethAdresses.filter { return $0.ethID == defaultAddrID }
                 if matches.count == 1 {
                     selectedAddress = matches.first
                 } else {

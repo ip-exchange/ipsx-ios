@@ -96,8 +96,8 @@ class LoginService {
                 case .success(_):
                     successHandler()
                     
-                case .failure(let error):
-                    errorHandler(error)
+                case .failure(_):
+                    NotificationCenter.default.post(name: .userDeleted, object: nil)
                 }
             })
         }
@@ -109,8 +109,8 @@ class LoginService {
                 case .success(_):
                     successHandler()
                     
-                case .failure(let error):
-                    errorHandler(error)
+                case .failure(_):
+                    NotificationCenter.default.post(name: .userDeleted, object: nil)
                 }
             })
         }

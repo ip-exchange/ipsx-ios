@@ -10,11 +10,13 @@ import UIKit
 
 class RegisterService {
     
-    func registerUser(email: String, password: String, ip: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func registerUser(email: String, password: String, ip: String, newsletter: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let params: [String: String] = ["email"      : email,
+        let params: [String: Any] =    ["email"      : email,
                                         "password"   : password,
-                                        "ip"         : ip]
+                                        "ip"         : ip,
+                                        "source"     : "ios",
+                                        "newsletter" : newsletter]
         
         RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             
@@ -49,13 +51,13 @@ class RegisterService {
                 return
             }
             let json = JSON(data: data)
-            let ethID    = json["id"].stringValue
+            let ethID    = json["id"].intValue
             let address  = json["address"].stringValue
             let alias    = json["alias"].stringValue
             let verified = json["verified"].intValue
             let status   = json["status"].stringValue
             
-            if ethID == "" || address == "" || alias == "" {
+            if ethID == 0 || address == "" || alias == "" {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }

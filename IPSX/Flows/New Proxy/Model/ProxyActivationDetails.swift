@@ -16,7 +16,7 @@ struct ProxyActivationDetails {
     var userIP: String
     var usedMB: String
     var remainingDuration: String
-    var status: String
+    var status: String //active, expired, close, consumed
     
     init(startDate: Date? = nil, endDate: Date? = nil, country: String = "", userIP: String = "", usedMB: String = "", remainingDuration: String = "", status: String = "") {
         

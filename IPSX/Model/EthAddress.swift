@@ -17,17 +17,19 @@ enum EthAddressState: Int {
 
 struct EthAddress {
     
-    var ethID: String
+    var ethID: Int
     var address: String
     var alias: String
     var validationState: EthAddressState = .pending
+    
+    //"active" / "locked"
     var status: String
     var testingEnrollmentDate: Date?
     var stakingEnrollmentDate: Date?
     
-    init(ethID: String = "", ethAddress: String = "", ethAlias: String = "", ethValidation: Int = 0, ethStatus: String = "", testingEnrollmentDate: Date? = nil, stakingEnrollmentDate: Date? = nil) {
+    init(ethID: Int = 0, ethAddress: String = "", ethAlias: String = "", ethValidation: Int = 0, ethStatus: String = "", testingEnrollmentDate: Date? = nil, stakingEnrollmentDate: Date? = nil) {
         
-        self.ethID    = ethID != "" ? ethID : "N/A"
+        self.ethID    = ethID 
         self.address  = ethAddress != "" ? ethAddress : "N/A"
         self.alias    = ethAlias
         self.status   = ethStatus != "" ? ethStatus : "N/A"

@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var enroledTestingImageView: UIImageView!
     @IBOutlet weak var enrolStakingTitleLabel: UILabel!
     @IBOutlet weak var enroledStakingImageView: UIImageView!
+    @IBOutlet weak var kycStatusLabel: UILabel!
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -42,6 +43,8 @@ class ProfileViewController: UIViewController {
     @IBAction func enrolTestingAction(_ sender: Any) {
         if UserManager.shared.isEnroledForTesting {
             performSegue(withIdentifier: "enrollTestingSummarySegueID", sender: self)
+        } else if !UserManager.shared.hasValidAddress {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
         } else {
             performSegue(withIdentifier: "enrollTestingSegueID", sender: self)
         }
@@ -50,6 +53,12 @@ class ProfileViewController: UIViewController {
     @IBAction func EnrolStakingAction(_ sender: Any) {
         if UserManager.shared.isEnroledForStaking {
             performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
+        } else if UserManager.shared.generalSettings?.stakingStatus == false {
+            let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
+            let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
+            toast?.showToastAlert(stakingEndAlertText, autoHideAfter: 5, type: .info)
+        } else if !UserManager.shared.hasValidAddress {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
         } else {
             performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
         }
@@ -69,7 +78,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func addWalletAction(_ sender: UIButton) {
         
-        let maxETHaddresses = UserManager.shared.options?.maxETHaddresses ?? 5
+        let maxETHaddresses = UserManager.shared.generalSettings?.maxETHaddresses ?? 5
         let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0
         
         if ethAddresses < maxETHaddresses {
@@ -90,8 +99,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         updateHeader()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topRootView, text: "")
@@ -100,6 +117,7 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         selectedAddress = nil
         refreshProfileUI()
         retrieveETHaddresses()
@@ -112,6 +130,7 @@ class ProfileViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        topRootView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
@@ -121,7 +140,17 @@ class ProfileViewController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -147,6 +176,7 @@ class ProfileViewController: UIViewController {
     func refreshProfileUI() {
         
         DispatchQueue.main.async {
+            self.kycStatusLabel.text = self.userInfo?.kycStatusString ?? ""
             if let firstName = self.userInfo?.firstName {
                 let lastName = self.userInfo?.lastName ?? ""
                 self.usernameLabel.text    = firstName + " " + lastName
@@ -156,6 +186,10 @@ class ProfileViewController: UIViewController {
             self.enroledTestingImageView.isHidden = !UserManager.shared.isEnroledForTesting
             self.enrolStakingTitleLabel.text = UserManager.shared.isEnroledForStaking ? "Enrolled for Staking Title".localized : "Enroll for Staking Title".localized
             self.enrolTestingTitleLabel.text = UserManager.shared.isEnroledForTesting ? "Enrolled for Testing Title".localized : "Enroll for Testing Title".localized
+            if self.tableView.contentSize.height < self.view.frame.size.height {
+                self.tableView.contentSize.height = self.view.frame.size.height
+            }
+
         }
     }
 
@@ -238,7 +272,7 @@ class ProfileViewController: UIViewController {
         })
     }
     
-    func updateETHaddresses(ethID: String) {
+    func updateETHaddresses(ethID: Int) {
         
         loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethID) { result in
@@ -256,87 +290,6 @@ class ProfileViewController: UIViewController {
                 })
             }
         }
-    }
-}
-
-extension ProfileViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ethAdresses.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
-        let ethAddress = ethAdresses[indexPath.item]
-        cell.configure(address: ethAddress)
-        return cell
-    }
-}
-
-extension ProfileViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedAddress = ethAdresses[indexPath.item]
-        performSegue(withIdentifier: "walletViewIdentifier", sender: self)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
-        
-        let absoluteTop: CGFloat = 0;
-        let absoluteBottom: CGFloat = scrollView.contentSize.height - scrollView.frame.size.height;
-        
-        let isScrollingDown = scrollDiff > 0 && scrollView.contentOffset.y > absoluteTop
-        let isScrollingUp = scrollDiff < 0 && scrollView.contentOffset.y < absoluteBottom
-        
-        if canAnimateHeader(scrollView) {
-            
-            // Calculate new header height
-            var newHeight = self.headerHeightConstraint.constant
-            if isScrollingDown {
-                newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
-            } else if isScrollingUp {
-                newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
-            }
-            
-            // Header needs to animate
-            if newHeight != self.headerHeightConstraint.constant {
-                self.headerHeightConstraint.constant = newHeight
-                self.updateHeader()
-                self.setScrollPosition(self.previousScrollOffset)
-            }
-            
-            self.previousScrollOffset = scrollView.contentOffset.y
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.scrollViewDidStopScrolling()
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            self.scrollViewDidStopScrolling()
-        }
-    }
-    
-    func scrollViewDidStopScrolling() {
-        let range = self.maxHeaderHeight - self.minHeaderHeight
-        let midPoint = self.minHeaderHeight + (range / 2)
-        
-        if self.headerHeightConstraint.constant > midPoint {
-            self.expandHeader()
-        } else {
-            self.collapseHeader()
-        }
-    }
-    
-    func canAnimateHeader(_ scrollView: UIScrollView) -> Bool {
-        // Calculate the size of the scrollView when header is collapsed
-        let scrollViewMaxHeight = scrollView.frame.height + self.headerHeightConstraint.constant - minHeaderHeight
-        
-        // Make sure that when header is collapsed, there is still room to scroll
-        return scrollView.contentSize.height > scrollViewMaxHeight
     }
     
     func collapseHeader() {
@@ -360,6 +313,93 @@ extension ProfileViewController: UITableViewDelegate {
     func setScrollPosition(_ position: CGFloat) {
         self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
     }
+
+}
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return ethAdresses.count > 1
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            let address = ethAdresses[indexPath.item]
+            if address.status == "locked" {
+                toast?.showToastAlert("Address Locked Toast Message".localized, autoHideAfter: 5)
+            } else {
+                showDeleteConfirmationAlert(index: indexPath)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ethAdresses.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
+        let ethAddress = ethAdresses[indexPath.item]
+        cell.configure(address: ethAddress)
+        return cell
+    }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedAddress = ethAdresses[indexPath.item]
+        performSegue(withIdentifier: "walletViewIdentifier", sender: self)
+    }
+}
+
+extension ProfileViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
+        
+        let isScrollingDown =  scrollView.contentOffset.y > 0
+        let isScrollingUp = scrollView.contentOffset.y < 0
+        
+        var newHeight = self.headerHeightConstraint.constant
+        if isScrollingDown {
+            newHeight = max(self.minHeaderHeight, self.headerHeightConstraint.constant - abs(scrollDiff))
+        } else if isScrollingUp {
+            newHeight = min(self.maxHeaderHeight, self.headerHeightConstraint.constant + abs(scrollDiff))
+        }
+        
+        if newHeight != self.headerHeightConstraint.constant {
+            self.headerHeightConstraint.constant = newHeight
+            self.updateHeader()
+            self.setScrollPosition(self.previousScrollOffset)
+        }
+        
+        self.previousScrollOffset = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.scrollViewDidStopScrolling()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.scrollViewDidStopScrolling()
+        }
+    }
+    
+    func scrollViewDidStopScrolling() {
+        let range = self.maxHeaderHeight - self.minHeaderHeight
+        let midPoint = self.minHeaderHeight + (range / 2)
+        
+        if self.headerHeightConstraint.constant > midPoint {
+            self.expandHeader()
+        } else {
+            self.collapseHeader()
+        }
+    }
 }
 
 extension ProfileViewController: ToastAlertViewPresentable {
@@ -371,22 +411,13 @@ extension ProfileViewController: ToastAlertViewPresentable {
         }
     }
     
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return ethAdresses.count > 1
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            
-            showDeleteConfirmationAlert(index: indexPath)
-        }
-    }
-    
     private func showDeleteConfirmationAlert(index: IndexPath) {
         let ethAddress = ethAdresses[index.item]
-        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: ethAddress.address, preferredStyle: .alert)
+        var alertMessage = ethAddress.address
+        if ethAddress.testingEnrollmentDate != nil || ethAddress.stakingEnrollmentDate != nil {
+            alertMessage = "Enrolled Address Delete Message".localized
+        }
+        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: alertMessage, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
             self.tableView.reloadData()

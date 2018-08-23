@@ -26,7 +26,7 @@ public class UserManager: NSObject {
     var proxies: [Proxy]?
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
-    var options: Options?
+    var generalSettings: GeneralSettings?
     
     var hasEthAddress: Bool {
         get {
@@ -38,7 +38,7 @@ public class UserManager: NSObject {
     var isEnroledForTesting: Bool {
         get {
             guard let addresses = ethAddresses else { return false }
-            return addresses.contains() { address in address.testingEnrollmentDate != nil }
+            return addresses.contains() { address in (address.testingEnrollmentDate != nil && address.validationState == .verified) }
         }
     }
     
@@ -61,11 +61,11 @@ public class UserManager: NSObject {
     var isEnroledForStaking: Bool {
         get {
             guard let addresses = ethAddresses else { return false }
-            return addresses.contains() { address in address.stakingEnrollmentDate != nil }
+            return addresses.contains() { address in (address.stakingEnrollmentDate != nil && address.validationState == .verified) }
         }
     }
     
-    func ethAddres(forID ethId: String) -> EthAddress? {
+    func ethAddres(forID ethId: Int) -> EthAddress? {
         
             guard let addresses = ethAddresses else { return nil }
             let filtered = addresses.filter { $0.ethID == ethId }
@@ -94,6 +94,13 @@ public class UserManager: NSObject {
         get {
             return UserManager.shared.userInfo?.proxyTest == ""
         }
+    }
+    
+    var hasValidAddress: Bool {
+        if let validAddresses = ethAddresses?.filter({ return  $0.validationState == .verified }) {
+            return validAddresses.count > 0
+        }
+        return false
     }
     
     func storeAccessDetails(userId: String, accessToken: String, email: String = "", password: String = "", facebookToken: String = "") {
@@ -189,5 +196,6 @@ public class UserManager: NSObject {
     
     func logout() {
         removeUserDetails()
+        SocialIntegrationService().facebookLogout()
     }
 }

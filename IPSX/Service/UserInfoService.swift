@@ -40,16 +40,44 @@ class UserInfoService {
     
     private func mapResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let firstName  = json["first_name"].stringValue
-        let middleName = json["middle_name"].stringValue
-        let lastName   = json["last_name"].stringValue
-        let telegram   = json["telegram"].stringValue
-        let countryID  = json["country_id"].stringValue
-        let email      = json["email"].stringValue
-        let proxyTest  = json["proxy_test"].stringValue
-        let balance    = json["ballance"].intValue
+        let firstName           = json["first_name"].stringValue
+        let middleName          = json["middle_name"].stringValue
+        let lastName            = json["last_name"].stringValue
+        let telegram            = json["telegram"].stringValue
+        let countryID           = json["country_id"].stringValue
+        let email               = json["email"].stringValue
+        let proxyTest           = json["proxy_test"].stringValue
+        let balance             = json["ballance"].doubleValue
+        let kycStatus           = json["kyc_status"].intValue
+        let socialName          = json["social_name"].string
+        let source              = json["source"].string
+        let refCode             = json["referral_code"].string
+        let deleteConfirmation  = json["self_deleted_at_confirmation"].string
+        let selfDeletedAtString = json["self_deleted_at"].stringValue
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance)
+        let dateFormatter     = DateFormatter.backendResponseParse()
+        let deleteAccountDate = dateFormatter.date(from: selfDeletedAtString)
+        
+        /*
+         Bad API (let's hope for something better)
+         
+         1. No delete action:
+         "self_deleted_at_confirmation": null
+         
+         2. After Delete account action:
+         "self_deleted_at_confirmation" != null && "self_deleted_at" == null
+         
+         3. After confirming the deletion from email:
+         "self_deleted_at" != null
+         */
+        
+        var pendingDeleteAccount = false
+        
+        if deleteConfirmation != nil && deleteAccountDate == nil {
+            pendingDeleteAccount = true
+        }
+        
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
         completionHandler(ServiceResult.success(user))
     }
     
@@ -74,7 +102,7 @@ class UserInfoService {
             var ethAddresses: [EthAddress] = []
             for json in jsonArray {
 
-                let ethID    = json["id"].stringValue
+                let ethID    = json["id"].intValue
                 let address  = json["address"].stringValue
                 let alias    = json["alias"].stringValue
                 let verified = json["verified"].intValue
@@ -92,6 +120,7 @@ class UserInfoService {
                 let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate)
                 ethAddresses.append(ethAddress)
             }
+            ethAddresses.sort { $0.ethID < $1.ethID }
             completionHandler(ServiceResult.success(ethAddresses))
         })
     }
@@ -123,7 +152,7 @@ class UserInfoService {
         })
     }
     
-    func updateUserProfile(bodyParams: [String: String], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateUserProfile(bodyParams: [String: Any], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
@@ -142,11 +171,11 @@ class UserInfoService {
         })
     }
     
-    func updateETHaddress(requestType: IPRequestType, ethID: String, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateETHaddress(requestType: IPRequestType, ethID: Int, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let urlParams: [String: String] =  ["ETH_ID"       : ethID,
-                                            "USER_ID"      : UserManager.shared.userId,
-                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        let urlParams: [String: String] = ["ETH_ID"       : String(ethID),
+                                           "USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]
@@ -182,9 +211,12 @@ class UserInfoService {
             }
             let json = JSON(data: data)
             let emailNotifValue = json["email_notifications"].stringValue
+            let newsletterValue = json["newsletter"].stringValue
+            
+            let newsletter = newsletterValue != "" ? Newsletter.on : Newsletter.off
             
             if emailNotifValue == EmailNotifications.on || emailNotifValue == EmailNotifications.off {
-                completionHandler(ServiceResult.success(emailNotifValue))
+                completionHandler(ServiceResult.success((emailNotifValue, newsletter)))
             }
             else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
@@ -192,13 +224,17 @@ class UserInfoService {
         })
     }
     
-    func updateSettings(emailNotif: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateSettings(emailNotif: Bool, newsletter: Bool, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let emailNotifValue = emailNotif == true ? EmailNotifications.on : EmailNotifications.off
-        let bodyParams: [String: String] =  ["email_notifications": emailNotifValue]
+                
+        let newsletterValue = newsletter == true ? Date().dateToString(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") : nil
+        
+        let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
+                                          "newsletter"         : newsletterValue as Any]
         
         RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             

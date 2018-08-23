@@ -15,6 +15,7 @@ class EthWalletCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var statsuImageView: UIImageView?
     @IBOutlet weak var selectedImageView: UIImageView?
+    @IBOutlet weak var lockedImageView: UIImageView?
     
     private var forceSel = false
     
@@ -23,6 +24,7 @@ class EthWalletCell: UITableViewCell {
         aliasLabel.text = address.alias
         addressLabel.text = address.address
         selectedImageView?.isHidden = !isSelected
+        lockedImageView?.isHidden = address.status != "locked"
         if forceSel { selectedImageView?.isHidden = false }
         switch address.validationState {
         case .verified:

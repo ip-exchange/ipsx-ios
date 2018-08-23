@@ -10,9 +10,9 @@ import UIKit
 
 extension DateFormatter {
     
-    class func backendResponseParse() -> DateFormatter {
+    class func backendResponseParse(format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = format
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter
     }

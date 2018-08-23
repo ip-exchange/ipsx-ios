@@ -39,15 +39,26 @@ class EnrolStakeSummaryController: UIViewController {
     }
     
     // [(ethId, createdDate)]
-    var enrollment: [(ethID: String, createdDate: Date)] = []
+    var enrollment: [(ethID: Int, createdDate: Date)] = []
+    var stakingEnded: Bool {
+        return UserManager.shared.generalSettings?.stakingStatus == false
+    }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         editButton.isHidden = enroledAddresses == nil
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
         enrollmentDetails()
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -56,7 +67,17 @@ class EnrolStakeSummaryController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
-        loadValidAddresses()
+        updateReachabilityInfo()
+        if stakingEnded { editButton.isHidden = true }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if stakingEnded {
+            let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
+            let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
+            toast?.showToastAlert(stakingEndAlertText, type: .info, dismissable: false)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,6 +94,10 @@ class EnrolStakeSummaryController: UIViewController {
                     self.enrollmentDetails()
                 }
             }
+        } else if segue.identifier == "WebViewSegueID" {
+            let destinationWebController = segue.destination as? SimpleWebView
+            destinationWebController?.loadingURLString = Url.faqPageUrl
+            destinationWebController?.titleString = "FAQ".localized
         }
     }
     
@@ -82,7 +107,17 @@ class EnrolStakeSummaryController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -100,7 +135,7 @@ class EnrolStakeSummaryController: UIViewController {
                 self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let details):
-                    if let details = details as? [(ethID: String, createdDate: Date)], let firstEnroled = details.min(by: { $0.createdDate < $1.createdDate }) {
+                    if let details = details as? [(ethID: Int, createdDate: Date)], let firstEnroled = details.min(by: { $0.createdDate < $1.createdDate }) {
                         self.enrollment = details
                         let ethToDisplay = UserManager.shared.ethAddres(forID: firstEnroled.ethID)
                         let letDateToDisplay = firstEnroled.createdDate
@@ -110,7 +145,7 @@ class EnrolStakeSummaryController: UIViewController {
                         self.enrolmentTimeLabel.text = letDateToDisplay.dateToString(format: "HH:mm")
                         self.ethAdresses = []
                         for detail in details {
-                            if let ethAddr = UserManager.shared.ethAddres(forID: detail.ethID) {
+                            if let ethAddr = UserManager.shared.ethAddres(forID: detail.ethID), ethAddr.validationState == .verified {
                                 self.ethAdresses.append(ethAddr)
                             }
                         }
@@ -132,13 +167,6 @@ class EnrolStakeSummaryController: UIViewController {
         })
     }
     
-    private func loadValidAddresses() {
-        if let addresses = UserManager.shared.ethAddresses {
-            ethAdresses = addresses.filter { return  $0.validationState == .verified }
-            tableView.reloadData()
-        }
-    }
-
 }
 
 extension EnrolStakeSummaryController: UITableViewDataSource {

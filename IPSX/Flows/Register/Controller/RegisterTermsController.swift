@@ -24,6 +24,7 @@ class RegisterTermsController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
+    var newsletter: Bool = true
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
@@ -41,11 +42,37 @@ class RegisterTermsController: UIViewController {
         }
     }
     
+    @IBAction func termsAndConditionsAction(_ sender: Any) {
+        performSegue(withIdentifier: "TermsWebViewSegueID", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier {
+            
+        case "TermsWebViewSegueID":
+            let destinationWebController = segue.destination as? SimpleWebView
+            destinationWebController?.loadingURLString = Url.termsUrl
+            destinationWebController?.titleString = "T&C".localized
+            
+        default:
+            break
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerButton.isEnabled = false
-     }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
@@ -54,10 +81,12 @@ class RegisterTermsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
      }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
  
@@ -72,7 +101,17 @@ class RegisterTermsController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -84,10 +123,15 @@ class RegisterTermsController: UIViewController {
             statesDic[titleText] = sender.isSelected
         }
         var allAgreed = true
-        if statesDic.values.contains(false) || statesDic.values.count < 4 {
+        if statesDic.values.contains(false) {
             allAgreed = false
         }
         registerButton.isEnabled = allAgreed
+    }
+    
+    @IBAction func newsletterButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        newsletter = sender.isSelected
     }
     
     @IBAction func registerButtonAction(_ sender: UIButton) {
@@ -122,7 +166,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -139,7 +183,7 @@ class RegisterTermsController: UIViewController {
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -158,7 +202,7 @@ class RegisterTermsController: UIViewController {
         DispatchQueue.main.async {
             
             if self.fbToken != "" {
-                self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
             }
             else {
                 self.performSegue(withIdentifier: "showRegConfirmationSegueID", sender: nil)
@@ -185,12 +229,12 @@ class RegisterDoneController: UIViewController {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "LoginScreenSegueID", let loginController = segue.destination as? LoginCredentialsControler {
-            loginController.hideBackButton = true
-        }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
     }
+
 }
 
 extension RegisterTermsController: ErrorPresentable {
@@ -199,7 +243,7 @@ extension RegisterTermsController: ErrorPresentable {
         
         switch requestType {
             
-        case .fbRegister:
+        case .fbRegister, .register:
             
             switch error {
             case CustomError.alreadyExists:

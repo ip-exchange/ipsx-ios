@@ -36,8 +36,16 @@ class ProxyDetailsViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: tableView, text: "New proxy created! Copy pac link to continue".localized)
@@ -53,13 +61,14 @@ class ProxyDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
-    
+
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
             let reachability = note.object as! Reachability
@@ -67,7 +76,34 @@ class ProxyDetailsViewController: UIViewController {
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized {
+                    self.toast?.hideToastAlert()
+                }
+                self.updateReachabilityInfo()
+            }
+         }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if self.proxy?.proxyDetails?.status != "active" {
+                self.toast?.showToastAlert("Proxy Expired Alert Message".localized, dismissable: false)
+            } else  {
+                switch ReachabilityManager.shared.connectionType {
+                case .wifi:
+                    IPService().getPublicIPAddress() { error, ipAddress in
+                        DispatchQueue.main.async {
+                            if let deviceIp = ipAddress, let proxyIp = self.proxy?.proxyDetails?.userIP {
+                                if deviceIp != proxyIp {
+                                    let message = String(format: "Device IP %@ Mismatch Alert Message".localized, "\(deviceIp)")
+                                    self.toast?.showToastAlert(message, dismissable: false)
+                                }
+                            }
+                        }
+                    }
+                default:
+                    self.toast?.showToastAlert("Connect to WiFi network message".localized, dismissable: false)
+                }
             }
         }
     }
@@ -137,7 +173,7 @@ extension ProxyDetailsViewController: UITableViewDataSource {
                 
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: pacDetailsCellID, for: indexPath) as! ProxyDetailsCell
-                cell.configure(title: "PAC link", value: proxy?.proxySetup?.pacLink)
+                cell.configure(title: "PAC link", value: proxy?.proxySetup?.pacLink, allowCopy: proxy?.proxyDetails?.status == "active")
                 return cell
 
             case 1:
@@ -190,8 +226,7 @@ extension ProxyDetailsViewController: UITableViewDataSource {
 extension ProxyDetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath == IndexPath(item: 0, section: 1) {
-            toast?.hideToastAlert()
+        if indexPath == IndexPath(item: 0, section: 1), proxy?.proxyDetails?.status == "active" {
             tableView.deselectRow(at: indexPath, animated: true)
             view.layoutIfNeeded()
             self.openSettingsCenterConstraint.constant = 0

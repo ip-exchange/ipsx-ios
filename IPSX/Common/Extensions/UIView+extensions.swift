@@ -27,6 +27,12 @@ public extension UIView {
         return view
     }
     
+    public func removeParticlesAnimation() {
+        if subviews.first is WKWebView {
+            subviews.first?.removeFromSuperview()
+        }
+    }
+    
     public func createParticlesAnimation() {
         
         if subviews.first is WKWebView { return }

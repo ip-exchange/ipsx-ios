@@ -55,18 +55,26 @@ class NewProxyController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.currentIpInfoLabel.text = "Getting IP info...".localized
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = "\(userInfo?.balance ?? 0)"
+        balance = userInfo?.balance.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         retrieveUserInfo()
         updateReachabilityInfo()
         
@@ -85,11 +93,20 @@ class NewProxyController: UIViewController {
         proxyPacks = UserManager.shared.proxyPacks
     }
     
-    deinit {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
-    }
+     }
 
     func updateReachabilityInfo() {
+        
+        if !ReachabilityManager.shared.isReachable() {
+            self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            self.currentIpInfoLabel.text = "No internet connection".localized
+        } else if self.toast?.currentText == "No internet connection".localized {
+            self.toast?.hideToastAlert()
+        }
+
         guard shouldRefreshIp else { return }
         DispatchQueue.main.async {
             self.shouldRefreshIp = false
@@ -172,7 +189,7 @@ class NewProxyController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {
@@ -222,10 +239,10 @@ extension NewProxyController: UITableViewDelegate {
             self.selectedPack = proxyPack
         }
         
-        let balance = UserManager.shared.userInfo?.balance ?? 0
-        let packagePrice = Int(self.selectedPack?.price ?? "0") ?? 0
+        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
+        let packagePrice = Double(self.selectedPack?.price ?? "0") ?? 0
 
-        if balance >= packagePrice {
+        if balanceValue >= packagePrice {
 
             switch ReachabilityManager.shared.connectionType {
             case .wifi:

@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var emailNotificationsSwitch: UISwitch!
+    @IBOutlet weak var newsletterSwitch: UISwitch!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -20,6 +21,9 @@ class SettingsViewController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    
+    var emailNotif = false
+    var newsletter = true
     
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
@@ -31,6 +35,23 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    @IBOutlet weak var deleteButtonImageView: UIImageView!
+    @IBOutlet weak var deleteButtonTextLabel: UILabel!
+
+    @IBAction func deleteAction(_ sender: UIButton) {
+        
+        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
+        
+        switch deleteAccountState {
+            
+        case .notRequested:
+            performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
+            
+        case .pending, .confirmed:
+            abortDelete()
+        }
+    }
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -41,37 +62,98 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        balance = "\(userInfo?.balance ?? 0)"
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
+        balance = userInfo?.balance.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
+        retrieveUserInfo()
         loadSettings()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    @objc public func reachabilityChanged(_ note: Notification) {
+        DispatchQueue.main.async {
+            let reachability = note.object as! Reachability
+            
+            if !reachability.isReachable {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+    
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
-        updateSettings(emailNotif: sender.isOn)
+        
+        emailNotif = sender.isOn
+        updateSettings()
+    }
+    
+    @IBAction func newsletterSwitchAction(_ sender: UISwitch) {
+        
+        newsletter = sender.isOn
+        updateSettings()
     }
     
     func retrieveUserInfo() {
-        
+
         loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
-            
+
             self.loadingView?.stopAnimating()
             switch result {
+                
             case .success(let user):
+                
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {
                     self.retrieveUserInfo()
+                })
+            }
+        })
+    }
+    
+    func abortDelete() {
+        
+        loadingView?.startAnimating()
+        SettingsService().abortDeleteAccount(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                self.retrieveUserInfo()
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .abortDeleteAccount, completion: {
+                    self.abortDelete()
                 })
             }
         })
@@ -84,15 +166,14 @@ class SettingsViewController: UIViewController {
             
             self.loadingView?.stopAnimating()
             switch result {
-            case .success(let emailNotifValue):
+            case .success(let result):
                 
-                if let emailNotifValue = emailNotifValue as? String, emailNotifValue == EmailNotifications.on {
-                    self.updateSwitchValue(value: true)
+                if let result = result as? (String, Newsletter) {
+                    
+                    self.updateEmailNotifSwitch(value: result.0 == EmailNotifications.on)
+                    self.updateNewsletterSwitch(value: result.1 == Newsletter.on)
                 }
-                else {
-                    self.updateSwitchValue(value: false)
-                }
-               
+        
             case .failure(let error):
                 self.handleError(error, requestType: .getSettings, completion: {
                     self.loadSettings()
@@ -101,10 +182,38 @@ class SettingsViewController: UIViewController {
         })
     }
     
-    func updateSettings(emailNotif: Bool = false) {
+    func updateUI() {
+        
+        self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0" 
+        
+        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
+        let deleteDate = UserManager.shared.userInfo?.deleteAccountDate
+        let deleteDateString = deleteDate?.dateToString(format: "dd MMM yyyy") ?? "--:--:--"
+        
+        switch deleteAccountState {
+            
+        case .notRequested:
+            deleteButtonImageView.image = UIImage(named: "garbage")
+            deleteButtonTextLabel.text = "Delete Account".localized
+            toast?.hideToast()
+            
+        case .pending:
+            deleteButtonImageView.image = UIImage(named: "cancelDelete")
+            deleteButtonTextLabel.text = "Abort Delete Account".localized
+            toast?.showToastAlert("Delete Confirm Email Message".localized, type: .deletePending, dismissable: false)
+
+        case .confirmed:
+            deleteButtonImageView.image = UIImage(named: "cancelDelete")
+            deleteButtonTextLabel.text = "Abort Delete Account".localized
+            let deleteMessage = String(format: "Delete Scheduled Message %@".localized, "\(deleteDateString)")
+            toast?.showToastAlert(deleteMessage, type: .deleteConfirmed, dismissable: false)
+        }
+    }
+    
+    func updateSettings() {
         
         loadingView?.startAnimating()
-        UserInfoService().updateSettings(emailNotif: emailNotif, completionHandler: { result in
+        UserInfoService().updateSettings(emailNotif: emailNotif, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -113,17 +222,36 @@ class SettingsViewController: UIViewController {
                 
             case .failure(let error):
                 self.handleError(error, requestType: .updateSettings, completion: {
-                    self.updateSettings(emailNotif: emailNotif)
+                    self.updateSettings()
                 })
             }
         })
     }
     
-    func updateSwitchValue(value: Bool = false, error: Bool = false) {
+    func updateEmailNotifSwitch(value: Bool = false, error: Bool = false) {
         
         DispatchQueue.main.async {
             self.emailNotificationsSwitch.isEnabled = !error
             self.emailNotificationsSwitch.setOn(value, animated: true)
+        }
+    }
+    
+    func updateNewsletterSwitch(value: Bool = true, error: Bool = false) {
+        
+        DispatchQueue.main.async {
+            self.newsletterSwitch.isEnabled = !error
+            self.newsletterSwitch.setOn(value, animated: true)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DeleteAccountSegueID" {
+            let deleteAccController = segue.destination as? DeleteAccountController
+            deleteAccController?.onDismiss = { success in
+                if success {
+                    self.retrieveUserInfo()
+                }
+            }
         }
     }
 }
@@ -147,13 +275,25 @@ extension SettingsViewController: ErrorPresentable {
         case CustomError.expiredToken:
             
             LoginService().getNewAccessToken(errorHandler: { error in
-                self.updateSwitchValue(error: true)
+                self.updateEmailNotifSwitch(error: true)
+                self.updateNewsletterSwitch(error: true)
                 
             }, successHandler: {
                 completion?()
             })
+            
         default:
-            self.updateSwitchValue(error: true)
+            
+            switch requestType {
+                
+            case .updateSettings:
+                self.updateEmailNotifSwitch(error: true)
+                self.updateNewsletterSwitch(error: true)
+                
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
+            
         }
     }
 }

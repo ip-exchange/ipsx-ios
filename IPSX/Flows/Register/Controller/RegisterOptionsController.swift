@@ -76,6 +76,11 @@ class RegisterOptionsController: UIViewController {
         backgroundImageView.createParticlesAnimation()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+
 }
 
 extension RegisterOptionsController: ToastAlertViewPresentable {

@@ -11,6 +11,7 @@ import UIKit
 class DashboardViewController: UIViewController {
     
     @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var fullMaskView: UIView!
     @IBOutlet weak var tokensAmountLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView?
@@ -53,43 +54,51 @@ class DashboardViewController: UIViewController {
     }
     var filteredProxies: [Proxy] {
         get {
-            let filterString = proxiesSegmentController.selectedSegmentIndex == 0 ? "active" : "expired"
-            return proxies.filter { $0.proxyDetails?.status == filterString }
-         }
+            let filterString = "active"
+            let filtered = proxies.filter {
+                if proxiesSegmentController.selectedSegmentIndex == 0 {
+                    return $0.proxyDetails?.status == filterString
+                } else {
+                    return $0.proxyDetails?.status != filterString
+
+                }
+            }
+            let sorted = filtered.sorted { $0.proxyDetails?.startDate ?? Date() > $1.proxyDetails?.startDate ?? Date() }
+            return sorted
+        }
     }
     
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
-        let maxTokenRequests = UserManager.shared.options?.maxTokenRequests ?? 5
-        var noOfTokenRequests: Int = 1
-        
-        if let tokenRequests = UserManager.shared.tokenRequests {
-            for tokenRequest in tokenRequests {
-                if tokenRequest.isFromToday() {
-                    noOfTokenRequests = noOfTokenRequests + 1
-                }
-            }
-        }
-        if noOfTokenRequests < maxTokenRequests {
-            self.tokenRequests = UserManager.shared.tokenRequests
-            self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
-        } else {
-            let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
-            self.errorMessage = formatedMessage
-        }
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
+    }
+    
+    @IBAction func tokenDepositAction(_ sender: Any) {
+        self.tokenRequests = UserManager.shared.tokenRequests
+        self.performSegue(withIdentifier: "tokenDepositSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView?.layer.cornerRadius = 5
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
      }
+    
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         tableView?.setContentOffset(.zero, animated: false)
         
         /*  No need to submit requests:
@@ -98,11 +107,14 @@ class DashboardViewController: UIViewController {
          */
         if UserManager.shared.isLoggedIn && UserManager.shared.hasEthAddress {
             
-            if UserManager.shared.testProxyPack == nil && UserManager.shared.hasTestProxyAvailable {
+            if UserManager.shared.testProxyPack == nil {
                 retrieveTestProxyPackage()
             }
             if UserManager.shared.proxyPacks == nil {
                 retrieveProxyPackages()
+            }
+            if UserManager.shared.generalSettings == nil {
+                generalSettings()
             }
             // After Logout we should load the proxy countries if needed for Test Proxy
             if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
@@ -140,7 +152,28 @@ class DashboardViewController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func hideMaskView() {
+        UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.5, options: [], animations: {
+            let shrink = CGAffineTransform(scaleX: 0.1, y: 0.1);
+            let translate = CGAffineTransform(translationX: 0, y: 512)
+            self.fullMaskView.transform = shrink.concatenating(translate)
+        }, completion: { completed in
+            self.fullMaskView.isHidden = true
+            self.tabBarController?.setTabBarVisible(visible: true, animated: true)
+        })
+    }
+    
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -191,9 +224,28 @@ class DashboardViewController: UIViewController {
         })
     }
     
+    func generalSettings() {
+        
+        dispatchGroup.enter()
+        SettingsService().retrieveSettings(completionHandler: { result in
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .generalSettings, completion: {
+                    self.generalSettings()
+                })
+            }
+        })
+    }
+    
     private func showZeroBalanceToastIfNeeded() {
         let balanceValue = UserManager.shared.userInfo?.balance ?? 0
-        balance = "\(balanceValue)"
+        balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
         if balanceValue == 0, UserManager.shared.isLoggedIn {
             toast?.showToastAlert("Balance Empty Info Message".localized, type: .info)
         } else {
@@ -210,7 +262,7 @@ class DashboardViewController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = "\(UserManager.shared.userInfo?.balance ?? 0)"
+                self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
                 self.showZeroBalanceToastIfNeeded()
                 
             case .failure(let error):
@@ -257,7 +309,6 @@ class DashboardViewController: UIViewController {
             nextVC?.presentedFromDashboard = true
             
         case "showTokenRequestSegueID":
-            toast?.hideToastAlert()
             let nextVC = segue.destination as? UINavigationController
             let controller = nextVC?.viewControllers.first as? TokenRequestListController
             controller?.tokenRequests = tokenRequests ?? []
@@ -290,7 +341,7 @@ class DashboardViewController: UIViewController {
                 formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
             }
             
-            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active".localized)
+            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active")
             let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
             proxies.insert(testProxy, at: 0)
         }
@@ -346,11 +397,22 @@ extension DashboardViewController: UITableViewDataSource {
         return 18
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 5
+    }
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
         headerView.backgroundColor = .clear
         return headerView
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 5))
+        footerView.backgroundColor = .clear
+        return footerView
+    }
+
 }
 
 extension DashboardViewController: UITableViewDelegate {

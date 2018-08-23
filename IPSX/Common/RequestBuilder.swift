@@ -35,19 +35,19 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .login:
             let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            request = Request(url:Url.baseApi + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         case .fbLogin:
             let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.fbLoginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            request = Request(url:Url.baseApi + Url.fbLoginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         case .resetPassword:
             let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            request = Request(url:Url.baseApi + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         case .changePassword:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.changePassArgs
+            var url = Url.baseApi + Url.changePassArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
@@ -56,31 +56,31 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         //Register Requests
             
         case .getPublicIP:
-            request = Request(url:Url.publicIP, httpMethod: "GET")
+            request = Request(url:Url.baseApi + Url.publicIPArgs, httpMethod: "GET")
             
         case .register:
             let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            request = Request(url:Url.baseApi + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
           
         case .fbRegister:
             let body = JSON(bodyParams)
-            request = Request(url:Url.base + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+            request = Request(url:Url.baseApi + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             
         //User Info Requests
             
         case .getUserCountryList:
-            request = Request(url:Url.base + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
             
         case .updateProfile:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.userInfoArgs
+            var url = Url.baseApi + Url.userInfoArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+                request = Request(url:url, httpMethod: "PATCH", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .userInfo:
-            var url = Url.base + Url.userInfoArgs
+            var url = Url.baseApi + Url.userInfoArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
@@ -88,7 +88,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
            
         case .enrollTesting:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.enrollTestingArgs
+            var url = Url.baseApi + Url.enrollTestingArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
@@ -96,59 +96,44 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .enrollStaking:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.enrollStakingBulkArgs
+            var url = Url.baseApi + Url.enrollStakingBulkArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .enrollStakingDetails:
-            var url = Url.base + Url.enrollStakingArgs
+            var url = Url.baseApi + Url.enrollStakingArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .getSettings:
-            var url = Url.base + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .updateSettings:
-            let body = JSON(bodyParams)
-            var url = Url.base + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
             
         //Proxy Requests
             
         case .getProxyCountryList:
-            var url = Url.base + Url.proxyCountriesArgs
+            var url = Url.baseApi + Url.proxyCountriesArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
           
         case .retrieveProxyPackages:
-            var url = Url.base + Url.proxyPackagesArgs
+            var url = Url.baseApi + Url.proxyPackagesArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
         case .retrieveTestProxyPackage:
-            var url = Url.base + Url.proxyTestPackageArgs
+            var url = Url.baseApi + Url.proxyTestPackageArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
             
         case .retrieveProxies:
-            var url = Url.base + Url.proxiesArgs
+            var url = Url.baseApi + Url.proxiesArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
@@ -156,7 +141,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .createProxy:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.createProxyArgs
+            var url = Url.baseApi + Url.createProxyArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
@@ -166,14 +151,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .updateEthAddress:
             let body = JSON(bodyParams)
-            var url = Url.base + Url.updateEthAddressArgs
+            var url = Url.baseApi + Url.updateEthAddressArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
             }
             
         case .deleteEthAddress:
-            var url = Url.base + Url.updateEthAddressArgs
+            var url = Url.baseApi + Url.updateEthAddressArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON)
@@ -182,14 +167,14 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .addEthAddress:
             
             let body = JSON(bodyParams)
-            var url = Url.base + Url.ethArgs
+            var url = Url.baseApi + Url.ethArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             }
          
         case .getEthAddress:
-            var url = Url.base + Url.ethEnrolmentsArgs
+            var url = Url.baseApi + Url.ethEnrolmentsArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
@@ -198,31 +183,82 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         //Token Requests
             
         case .requestTokens:
-            
             let body = JSON(bodyParams)
-            var url = Url.base + Url.tokenRequestArgs
+            var url = Url.baseApi + Url.tokenRequestArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
             }
             
         case .getTokenRequestList:
-            
-            var url = Url.base + Url.tokenRequestArgs
+            var url = Url.baseApi + Url.tokenRequestArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
             }
+            
+        case .getDepositList:
+            var url = Url.baseApi + Url.depositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .createDeposit:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.depositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .cancelDeposit:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.cancelDepositArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
         
-        //Options
+        // Settings 
         
-        case .options:
-        
-        var url = Url.base + Url.optionsArgs
+        case .getSettings:
+            var url = Url.baseApi + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
+            
+        case .updateSettings:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.metaArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .generalSettings:
+        var url = Url.baseApi + Url.generalSettingsArgs
         if let params = urlParams as? [String: String] {
             url = url.replaceKeysWithValues(paramsDict: params)
             request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
         }
+            
+        case .deleteAccount:
+            let body = JSON(bodyParams)
+            var url = Url.baseApi + Url.deleteAccountArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)
+            }
+            
+        case .abortDeleteAccount:
+            var url = Url.baseApi + Url.abortDeleteAccountArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
+            }
+            
         }
         
         if let body = request?.body as? JSON {
@@ -246,7 +282,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         return urlRequest
     }
     
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+    /// urlParams should be [String: String]
+    
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
         
         let requestBuilder = RequestBuilder.shared
         if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
@@ -259,13 +297,13 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 else if let httpResponse = response as? HTTPURLResponse , let data = data {
                     
                     let statusCode = httpResponse.statusCode
-                    self.handleError(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
+                    self.handleResponse(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
                 }
             }).resume()
         }
     }
     
-    func handleError(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
+    func handleResponse(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
         
         switch statusCode {
             
@@ -289,6 +327,24 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed. Expired token")
                 completion(CustomError.expiredToken, data)
             }
+            
+        case 402:
+            
+            switch requestType {
+                
+            case .changePassword:
+                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
+                completion(CustomError.wrongPassword, data)
+               
+            // is not configured to return 402 -> it will return 500
+            case .deleteAccount:
+                print(NSDate(), "\(requestType)" + "Request failed. Wrong password")
+                completion(CustomError.wrongPassword, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
 
         case 403:
             
@@ -298,29 +354,33 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. Email not confirmed")
                 completion(CustomError.invalidLogin, data)
                 
+            case .resetPassword:
+                print(NSDate(), "\(requestType)" + "Request failed. Can't reset password from IPSX app.")
+                completion(CustomError.notPossible, data)
+                
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
 
-        case 402:
+        case 405:
             
             switch requestType {
                 
-            case .changePassword:
-                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
-                completion(CustomError.wrongOldPassword, data)
+            case .login, .fbLogin, .resetPassword:
+                print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. User deleted.")
+                completion(CustomError.userDeleted, data)
                 
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
-        
+            
         case 422:
             
             switch requestType {
                 
-            case .addEthAddress, .updateEthAddress, .fbRegister:
+            case .addEthAddress, .updateEthAddress, .fbRegister, .register:
                 print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
                 completion(CustomError.alreadyExists, data)
                
@@ -332,7 +392,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
-        
+          
         default:
             print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
             completion(CustomError.statusCodeNOK(statusCode), data)

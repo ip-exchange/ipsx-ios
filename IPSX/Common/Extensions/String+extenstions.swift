@@ -31,8 +31,8 @@ public extension String {
     }
     
     public func trimLeadingAndTrailingSpaces() -> String {
+        
         let trimmedString = self.trimmingCharacters(in: .whitespacesAndNewlines)
-        print(trimmedString)
         return trimmedString
     }
     
@@ -47,6 +47,14 @@ public extension String {
             return ""
         }
         return Url.pacBaseUrl + proxyId + "\(Int(timestamp))" + ".pac?type=ios"
+    }
+    
+    func removeCharacters(characters: String) -> String {
+        
+        let characterSet = NSCharacterSet(charactersIn: characters)
+        let components = self.components(separatedBy: characterSet as CharacterSet)
+        let result = components.joined(separator: "")
+        return result
     }
     
 }

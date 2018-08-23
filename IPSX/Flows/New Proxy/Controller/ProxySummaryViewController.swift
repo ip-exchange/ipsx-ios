@@ -48,20 +48,30 @@ class ProxySummaryViewController: UIViewController {
         
         super.viewDidLoad()
         configureUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         updateReachabilityInfo()
     }
     
-    deinit {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
 
@@ -76,7 +86,9 @@ class ProxySummaryViewController: UIViewController {
                 self.currentIpInfoLabel.text = "No internet connection".localized
             } else {
                 self.confirmButton.isEnabled = ReachabilityManager.shared.connectionType == .wifi
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized  {
+                    self.toast?.hideToastAlert()
+                }
             }
             self.updateReachabilityInfo()
         }

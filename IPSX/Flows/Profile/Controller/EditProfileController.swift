@@ -28,6 +28,8 @@ class EditProfileController: UIViewController {
     }
     @IBOutlet weak var selectedCountryLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var changePasswordHolderView: RoundedView!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -55,8 +57,16 @@ class EditProfileController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         keyIconImageView.tintColor = .lightBlue
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "Saved".localized)
@@ -67,6 +77,7 @@ class EditProfileController: UIViewController {
         updateFields()
         detectChangesAndValidity()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
 
         // After Logout
         if UserManager.shared.userCountries == nil {
@@ -98,7 +109,17 @@ class EditProfileController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -108,6 +129,8 @@ class EditProfileController: UIViewController {
         
         let userInfo = UserManager.shared.userInfo
         var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
+        changePasswordHolderView.isHidden = userInfo?.source != "ios"
+        
         if let selectedCountry = self.searchController?.selectedCountry {
             countryName = selectedCountry
          } else {
@@ -157,16 +180,16 @@ class EditProfileController: UIViewController {
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
-        let bodyParams: [String: String] =  ["email"     : emailTextField.text ?? "",
-                                             "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                             "country_id": countryID ?? ""]
+        let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
+                                          "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
+                                          "country_id": countryID as Any]
         
         updateUserProfile(bodyParams: bodyParams)
     }
     
-    func updateUserProfile(bodyParams: [String: String]) {
+    func updateUserProfile(bodyParams: [String: Any]) {
         
         loadingView?.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in

@@ -13,19 +13,37 @@ class SearchViewController: UIViewController {
     let cellID = "SearchCellID"
     let newProxyFlowID = "NewProxyFlowSegueID"
     
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var loadingView: CustomLoadingView!
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    var errorMessage: String? {
+        didSet { self.toast?.showToastAlert(self.errorMessage) }
+    }
+
     public var dismissOnSelect = false
+    
     var isProxyFlow: Bool? = false
     var proxyPack: ProxyPack?
     var proxy: Proxy?
     var countries: [String]?
     var filteredCountries: [String]?
     var selectedCountry: String?
+    
+    private var countriesRefreshed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +54,7 @@ class SearchViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         
-        filteredCountries = countries
+        filteredCountries = isProxyFlow == true ? [] : countries
         tableView.reloadData()
     }
     
@@ -55,6 +73,43 @@ class SearchViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: searchView, text: "")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidLoad()
+        if isProxyFlow == true, !countriesRefreshed {
+            proxyCountryList()
+            countriesRefreshed = true
+        }
+    }
+    
+    func proxyCountryList() {
+        
+        loadingView.startAnimating()
+        ProxyService().getProxyCountryList(completionHandler: { result in
+            
+            self.loadingView.stopAnimating()
+            switch result {
+            case .success(let countryList):
+                UserManager.shared.proxyCountries = countryList as? [String]
+                self.filteredCountries = UserManager.shared.proxyCountries
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            case .failure(_):
+                self.errorMessage = "Proxy Contries Fetch Error Message".localized
+                self.filteredCountries = self.countries
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        })
+    }
+
     @IBAction func BackButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -170,6 +225,16 @@ extension SearchViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+extension SearchViewController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
 }
 
 class SearchCell: UITableViewCell {

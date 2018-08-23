@@ -26,8 +26,8 @@ class EnrolStakeSubscribeController: UIViewController {
     var ethAdresses: [EthAddress] = []
     var editMode = false
     var onDismiss: ((_ hasUpdatedStaking: Bool)->())?
-    var selectedEths: [String]  {
-        var selected: [String] = []
+    var selectedEths: [Int]  {
+        var selected: [Int] = []
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for path in selectedIndexPaths {
                 let ethAddr = ethAdresses[path.item]
@@ -50,6 +50,14 @@ class EnrolStakeSubscribeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         joinStakingButton.isEnabled = false
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
+
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
     }
 
     override func viewDidLayoutSubviews() {
@@ -60,6 +68,7 @@ class EnrolStakeSubscribeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         loadValidAddresses()
         if editMode {
             loadingView.startAnimating()
@@ -93,11 +102,22 @@ class EnrolStakeSubscribeController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
 
     private func loadValidAddresses() {
         if let addresses = UserManager.shared.ethAddresses {

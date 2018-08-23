@@ -7,17 +7,29 @@
 //
 
 import Foundation
+import FacebookLogin
+import FBSDKLoginKit
 
 class SocialIntegrationService {
     
-    func facebook(requestType: IPRequestType, fbToken: String?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func facebook(requestType: IPRequestType, fbToken: String?, newsletter: Bool = true, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let fbToken = fbToken else {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
             return
         }
         
-        let params: [String: String] = ["token" : fbToken]
+        var params: [String: Any] = [:]
+        
+        if requestType == .fbRegister {
+            
+            params = ["token"      : fbToken,
+                      "newsletter" : newsletter as Any]
+        }
+        else if requestType == .fbLogin {
+            
+            params = ["token" : fbToken]
+        }
         
         RequestBuilder.shared.executeRequest(requestType: requestType, bodyParams: params, completion: { error, data in
             
@@ -54,5 +66,12 @@ class SocialIntegrationService {
                 }
             })
         })
+    }
+    
+    func facebookLogout() {
+        
+        FBSDKAccessToken.setCurrent(nil)
+        FBSDKProfile.setCurrent(nil)
+        LoginManager().logOut()
     }
 }

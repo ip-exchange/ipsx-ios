@@ -14,6 +14,9 @@ class AddWalletController: UIViewController {
     @IBOutlet weak var screenTitleLabel: UILabel?
     @IBOutlet weak var sectionTitleLabel: UILabel?
     
+    @IBOutlet weak var pasteAddrButton: UIButton!
+    @IBOutlet weak var copyAddrButton: UIButton?
+    @IBOutlet weak var qrcodeButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
@@ -50,7 +53,7 @@ class AddWalletController: UIViewController {
     func loginAnotherAccount() {
         
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "showLoginSegueID", sender: nil)
+        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
     }
     
     override func viewDidLoad() {
@@ -63,23 +66,37 @@ class AddWalletController: UIViewController {
             ethAddresRichTextField.contentTextField?.text = address.address
             screenTitleLabel?.text = "Edit ETH Address text".localized
             sectionTitleLabel?.text = "Edit your ETH address text".localized
+            ethAddresRichTextField.contentTextField?.isEnabled = false
+            qrcodeButton.isHidden = true
+            pasteAddrButton.isHidden = true
         } else {
             screenTitleLabel?.text = "Add ETH Address text".localized
             sectionTitleLabel?.text = "Add your ETH address text".localized
         }
+        copyAddrButton?.isHidden = !pasteAddrButton.isHidden
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        backgroundImageView?.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
@@ -102,7 +119,17 @@ class AddWalletController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
@@ -116,7 +143,7 @@ class AddWalletController: UIViewController {
     
     private func observreFieldsState() {
         walletNameRichTextField.onFieldStateChange = { state in
-            let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
+            let curentNameText = self.walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
             self.fieldsStateDic["walletName"] = state
             self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
             self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
@@ -142,13 +169,51 @@ class AddWalletController: UIViewController {
         }
         let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
         let address = ethAddresRichTextField.contentTextField?.text ?? ""
-        let ethID = ethereumAddress?.ethID ?? ""
+        let ethID = ethereumAddress?.ethID ?? 0
         
         updateETHaddress(alias: alias, address: address, ethID: ethID)
     }
     
-    func updateETHaddress(alias: String, address: String, ethID: String) {
     
+    @IBAction func doneAction(_ sender: UIButton) {
+        addEthAdress()
+    }
+    
+    @IBAction func qrCodeAction(_ sender: Any) {
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            presentQRScanner()
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.presentQRScanner()
+                    } else {
+                        self.openSettingsAction()
+                    }
+                }
+            })
+        }
+        
+    }
+    
+    @IBAction func pasteAction(_ sender: Any) {
+        if let clipboardText = UIPasteboard.general.string {
+            ethAddresRichTextField.contentTextField?.text = clipboardText
+            ethAddresRichTextField.refreshStatus()
+        }
+    }
+    
+    @IBAction func copyAction(_ sender: Any) {
+        if let address = ethAddresRichTextField.contentTextField?.text {
+            UIPasteboard.general.string = address
+            toast?.showToastAlert("ETH Address Copied Message".localized, autoHideAfter: 5, type: .info, dismissable: true)
+        }
+    }
+    
+    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
+    
+    func updateETHaddress(alias: String, address: String, ethID: Int) {
+        
         loadingView?.startAnimating()
         UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             
@@ -162,7 +227,7 @@ class AddWalletController: UIViewController {
                 }
                 
             case .failure(let error):
-
+                
                 self.handleError(error, requestType: .updateEthAddress, completion: {
                     self.updateETHaddress(alias: alias, address: address, ethID: ethID)
                 })
@@ -170,13 +235,7 @@ class AddWalletController: UIViewController {
         })
     }
     
-    @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
-    
-    
-    @IBAction func doneAction(_ sender: UIButton) {
-        addEthAdress()
-    }
-    
+
     func addEthAdress() {
         
         let alias = walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
@@ -210,25 +269,47 @@ class AddWalletController: UIViewController {
         })
     }
     
-    @IBAction func qrCodeAction(_ sender: Any) {
-        let scannerController = QRScannViewController()
-        scannerController.onCodeFound = { code in
-            self.ethAddresRichTextField.contentTextField?.text = code
-            self.ethAddresRichTextField.refreshStatus()
-        }
-        self.present(scannerController, animated: true) {
-        }
-    }
-    
-    @IBAction func pasteAction(_ sender: Any) {
-        if let clipboardText = UIPasteboard.general.string {
-            ethAddresRichTextField.contentTextField?.text = clipboardText
-            ethAddresRichTextField.refreshStatus()
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func presentQRScanner() {
+        DispatchQueue.main.async {
+            let scannerController = QRScannViewController()
+            scannerController.onCodeFound = { code in
+                self.ethAddresRichTextField.contentTextField?.text = code
+                self.ethAddresRichTextField.refreshStatus()
+            }
+            self.present(scannerController, animated: true) {
+            }
+        }
+    }
+    
+    func openSettingsAction() {
+        
+        self.toast?.hideToast()
+        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+            toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+            return
+        }
+        
+        let alertController = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
+            self.toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+        }
+        
+        let deleteAction = UIAlertAction(title: "Go to Settings".localized, style: .default) { (action:UIAlertAction) in
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl)
+            } else {
+                self.toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
+            }
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @objc
@@ -344,7 +425,7 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     private func failed() {
-        let ac = UIAlertController(title: "Scanning not supported message".localized, message: "No Cammera Message".localized, preferredStyle: .alert)
+        let ac = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK".localized, style: .default))
         present(ac, animated: true)
         captureSession = nil
@@ -381,6 +462,12 @@ class FirstWalletDoneController: UIViewController {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+
 }
 
 extension AddWalletController: ErrorPresentable {

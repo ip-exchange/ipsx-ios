@@ -26,10 +26,16 @@ class LandingViewController: UIViewController {
         backgroundImageView.createParticlesAnimation()
    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
+    }
+    
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
-        labelTopConstraint.constant = (deviceHeight - bottomView.frame.height) / 2
+        labelTopConstraint.constant = ((deviceHeight - bottomView.frame.height) / 2) - 30
     }
     
+    @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }
 }

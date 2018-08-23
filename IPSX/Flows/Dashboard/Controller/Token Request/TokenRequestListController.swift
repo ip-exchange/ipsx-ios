@@ -26,16 +26,31 @@ class TokenRequestListController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var tokenRequests: [TokenRequest] = []
     
+    private var timer: Timer?
+    private let refreshInterval: TimeInterval = 30
+    
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
         }
     }
     
+    private let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshControl.addTarget(self, action: #selector(self.pulltoRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        updateReachabilityInfo()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: toastHolderView, text: "")
@@ -45,13 +60,52 @@ class TokenRequestListController: UIViewController {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        updateReachabilityInfo()
         getTokenRequestList()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: refreshInterval, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+        timer?.invalidate()
     }
+    
+    @objc func pulltoRefresh() {
+        timer?.invalidate()
+        getTokenRequestList(tableviewPull: true)
+    }
+
+    @objc func updateData() {
+        getTokenRequestList()
+    }
+
+    @IBAction func createRequestAction(_ sender: Any) {
+        
+        guard UserManager.shared.hasValidAddress else {
+            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            return
+        }
+        
+        let maxTokenRequests = UserManager.shared.generalSettings?.maxTokenRequests ?? 5
+        var noOfTokenRequests: Int = 1
+        
+        if let tokenRequests = UserManager.shared.tokenRequests {
+            for tokenRequest in tokenRequests {
+                if tokenRequest.isFromToday() {
+                    noOfTokenRequests = noOfTokenRequests + 1
+                }
+            }
+        }
+        if noOfTokenRequests <= maxTokenRequests {
+            self.performSegue(withIdentifier: "showCreateTokenSegueID", sender: self)
+        } else {
+            let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
+            self.errorMessage = formatedMessage
+        }
+     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
@@ -59,39 +113,59 @@ class TokenRequestListController: UIViewController {
             
             if !reachability.isReachable {
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
-            } else {
+            } else if self.toast?.currentText == "No internet connection".localized {
                 self.toast?.hideToastAlert()
             }
         }
     }
     
+    func updateReachabilityInfo() {
+        DispatchQueue.main.async {
+            if !ReachabilityManager.shared.isReachable() {
+                self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
+            } else if self.toast?.currentText == "No internet connection".localized {
+                self.toast?.hideToastAlert()
+            }
+        }
+    }
+
     func updateUI() {
         
         DispatchQueue.main.async {
             self.tokenRequests = UserManager.shared.tokenRequests ?? []
+            self.tokenRequests.sort { $0.created ?? Date() > $1.created ?? Date() } 
             self.separatorView.isHidden = self.tokenRequests.count < 1
             self.noItemsLabel.isHidden = self.tokenRequests.count > 0
             self.tableView.reloadData()
         }
     }
     
-    func getTokenRequestList() {
+    func getTokenRequestList(tableviewPull: Bool = false) {
         
-        self.loadingView?.startAnimating()
-        ProxyService().getTokenRequestList(completionHandler: { result in
+        if !tableviewPull { self.loadingView?.startAnimating() }
+        
+        TokenDepositService().getTokenRequestList() { result in
             
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let tokenRequests):
-                UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
-                self.updateUI()
-                 
-            case .failure(let error):
-                self.handleError(error, requestType: .getTokenRequestList, completion: {
-                    self.getTokenRequestList()
-                })
+            DispatchQueue.main.async {
+                self.loadingView?.stopAnimating()
+                self.refreshControl.endRefreshing()
+                
+                if tableviewPull {
+                    self.timer = Timer.scheduledTimer(timeInterval: self.refreshInterval, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+                }
+                
+                switch result {
+                case .success(let tokenRequests):
+                    UserManager.shared.tokenRequests = tokenRequests as? [TokenRequest]
+                    self.updateUI()
+                    
+                case .failure(let error):
+                    self.handleError(error, requestType: .getTokenRequestList, completion: {
+                        self.getTokenRequestList()
+                    })
+                }
             }
-        })
+        }
     }
     
     private func ethAddressFor(tokenRequest: TokenRequest) -> EthAddress? {
@@ -104,6 +178,7 @@ class TokenRequestListController: UIViewController {
         }
         return ethAddress
     }
+    
 }
 
 extension TokenRequestListController: UITableViewDataSource {

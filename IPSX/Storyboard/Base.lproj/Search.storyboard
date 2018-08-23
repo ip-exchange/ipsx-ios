@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zjk-F1-ml2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zjk-F1-ml2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -33,7 +33,7 @@
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEu-8F-3QN" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="93" width="375" height="0.5"/>
-                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29874559859154931" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="lot-La-3Yr"/>
                                         </constraints>
@@ -164,15 +164,25 @@
                                     <outlet property="delegate" destination="zjk-F1-ml2" id="RQc-4K-dL7"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDO-tK-6Ak" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="sKG-A3-POk"/>
+                                    <constraint firstAttribute="width" constant="44" id="su8-4F-JUQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="WVZ-01-mjG" secondAttribute="trailing" id="0lT-Jg-nHh"/>
+                            <constraint firstItem="BDO-tK-6Ak" firstAttribute="centerY" secondItem="D5S-dm-6q1" secondAttribute="centerY" id="H41-YX-oFJ"/>
                             <constraint firstItem="WVZ-01-mjG" firstAttribute="top" secondItem="Yhr-9L-cfB" secondAttribute="bottom" id="IPp-b3-7dR"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="bottom" secondItem="WVZ-01-mjG" secondAttribute="bottom" id="IVY-YZ-q4h"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="2aK-81-k3s" secondAttribute="trailing" id="Ji6-fR-zk1"/>
                             <constraint firstItem="WVZ-01-mjG" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="KXV-0y-LR0"/>
                             <constraint firstItem="Yhr-9L-cfB" firstAttribute="top" secondItem="2aK-81-k3s" secondAttribute="bottom" id="SxA-cS-u5T"/>
+                            <constraint firstItem="BDO-tK-6Ak" firstAttribute="centerX" secondItem="D5S-dm-6q1" secondAttribute="centerX" id="WVa-XO-jwh"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="top" secondItem="2aK-81-k3s" secondAttribute="top" constant="50" id="efq-by-8hw"/>
                             <constraint firstItem="Yhr-9L-cfB" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="ivf-Q9-S5n"/>
                             <constraint firstItem="2aK-81-k3s" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="pbN-qa-ak1"/>
@@ -185,7 +195,11 @@
                         <outlet property="backButton" destination="Qf3-EU-BHL" id="Agz-b7-i5e"/>
                         <outlet property="bottomConstraint" destination="IVY-YZ-q4h" id="Ay9-OQ-8gB"/>
                         <outlet property="closeButton" destination="Mfk-dz-DFx" id="Ew2-tV-R0v"/>
+                        <outlet property="loadingView" destination="BDO-tK-6Ak" id="YtQ-zh-XST"/>
+                        <outlet property="searchView" destination="Yhr-9L-cfB" id="0ji-d2-GTd"/>
                         <outlet property="tableView" destination="WVZ-01-mjG" id="cct-vr-3LS"/>
+                        <outlet property="topBarView" destination="2aK-81-k3s" id="N8M-8X-125"/>
+                        <outlet property="topConstraintOutlet" destination="SxA-cS-u5T" id="AIf-D4-s9C"/>
                         <segue destination="wdf-BT-Yzy" kind="show" identifier="NewProxyFlowSegueID" id="xCJ-lL-dTm"/>
                     </connections>
                 </viewController>

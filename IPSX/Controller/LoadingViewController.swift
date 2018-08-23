@@ -22,7 +22,8 @@ class LoadingViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     let dispatchGroup = DispatchGroup()
-    
+    var hasPerformedAutologin = false
+    var hasConfirmedDeleteAccount = false
     var noOfRequests: Float = 9
     
     override func viewDidLayoutSubviews() {
@@ -49,9 +50,18 @@ class LoadingViewController: UIViewController {
             initDataAndContinueFlow()
         }
         else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+            DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "TabbarSegueID", sender: self)
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "TabbarSegueID" {
+            let destinationVC = segue.destination as? TabBarViewController
+            destinationVC?.hasPerformedAutologin = hasPerformedAutologin
+            destinationVC?.hasConfirmedDeleteAccount = hasConfirmedDeleteAccount
         }
     }
     
@@ -62,6 +72,7 @@ class LoadingViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
@@ -73,7 +84,9 @@ class LoadingViewController: UIViewController {
                 self.loadingBottomLabel.text = "Connect to the internet message".localized
                 self.toast?.showToastAlert("No internet connection".localized, dismissable: false)
             } else {
-                self.toast?.hideToastAlert()
+                if self.toast?.currentText == "No internet connection".localized {
+                    self.toast?.hideToastAlert()
+                }
                 self.loadingBottomLabel.text = "Loading message".localized
                 self.continueFlow()
             }
@@ -90,7 +103,7 @@ class LoadingViewController: UIViewController {
         proxyCountryList()
         retrieveProxyPackages()
         retrieveTestProxyPackage()
-        options()
+        generalSettings()
         
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -220,7 +233,7 @@ class LoadingViewController: UIViewController {
     func tokenRequestList() {
         
         dispatchGroup.enter()
-        ProxyService().getTokenRequestList(completionHandler: { result in
+        TokenDepositService().getTokenRequestList(completionHandler: { result in
             
             self.dispatchGroup.leave()
             
@@ -259,21 +272,21 @@ class LoadingViewController: UIViewController {
         })
     }
     
-    func options() {
+    func generalSettings() {
         
         dispatchGroup.enter()
-        OptionsService().retrieveOptions(completionHandler: { result in
+        SettingsService().retrieveSettings(completionHandler: { result in
             self.dispatchGroup.leave()
             
             switch result {
-            case .success(let options):
-                UserManager.shared.options = options as? Options
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
                 DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .options, completion: {
-                    self.options()
+                self.handleError(error, requestType: .generalSettings, completion: {
+                    self.generalSettings()
                 })
             }
         })

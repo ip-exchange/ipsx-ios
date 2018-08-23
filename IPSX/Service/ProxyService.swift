@@ -63,12 +63,12 @@ class ProxyService {
             let userIp = json["user_ip"].stringValue
             let status = json["status"].stringValue
             let usage = json["usage"].doubleValue
-            let usedMBString = usage.cleanString
+            let usedMBString = usage.noDecimalString
             
             let proxyIp = json["ip"].stringValue
             let proxyPort = json["port"].stringValue
             
-            let packageID = json["package_id"].stringValue
+            let packageID = json["package_id"].intValue
             var proxyPack: ProxyPack?
             if UserManager.shared.testProxyPack?.packId == packageID {
                 proxyPack = UserManager.shared.testProxyPack
@@ -108,75 +108,14 @@ class ProxyService {
         })
     }
     
-    func requestTokens(ethID: String, amount: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
-                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
-        
-        let bodyParams: [String: String] = ["usereth_id"       : ethID,
-                                            "amount_requested" : amount]
-        
-        RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
-            
-            guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
-            }
-            guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
-                return
-            }
-            completionHandler(ServiceResult.success(true))
-        })
-    }
-    
-    func getTokenRequestList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
-                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
-        
-        RequestBuilder.shared.executeRequest(requestType: .getTokenRequestList, urlParams: urlParams, completion: { error, data in
-            
-            guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
-            }
-            guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
-                return
-            }
-            guard let jsonArray = JSON(data: data).array else {
-                completionHandler(ServiceResult.failure(CustomError.invalidJson))
-                return
-            }
-            var tokenRequests: [TokenRequest] = []
-            for json in jsonArray {
-                
-                let ethID = json["usereth_id"].stringValue
-                let amount = json["amount_requested"].stringValue
-                let status = json["status"].stringValue
-                
-                let createdString = json["created_at"].stringValue
-                
-                let dateFormatter = DateFormatter.backendResponseParse()
-                
-                let createdDate = dateFormatter.date(from: createdString)
-                
-                let tokenRequest = TokenRequest(ethID: ethID, amount: amount, status: status, created: createdDate)
-                tokenRequests.append(tokenRequest)
-            }
-            completionHandler(ServiceResult.success(tokenRequests))
-        })
-    }
-    
     func createProxy(userIP: String, proxy: Proxy?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["user_ip"    : userIP,
-                                            "country"    : proxy?.proxyDetails?.country ?? "",
-                                            "package_id" : proxy?.proxyPack?.packId ?? ""]
+        let bodyParams: [String: Any] = ["user_ip"    : userIP,
+                                         "country"    : proxy?.proxyDetails?.country ?? "",
+                                         "package_id" : proxy?.proxyPack?.packId as Any]
         
         RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
             
@@ -205,7 +144,7 @@ class ProxyService {
             let proxyPort       = json["port"]?.stringValue,
             let country         = json["country"]?.stringValue,
             let userIP          = json["user_ip"]?.stringValue,
-            let packageID       = json["package_id"]?.stringValue,
+            let packageID       = json["package_id"]?.intValue,
             let startDateString = json["start_date"]?.stringValue,
             let endDateString   = json["end_date"]?.stringValue,
             let createdString   = json["created_at"]?.stringValue else {
@@ -235,7 +174,7 @@ class ProxyService {
         }
         
         let proxySetup = ProxySetup(pacLink: pacLink, proxyIP: proxyIP, proxyPort: proxyPort)
-        let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIP, usedMB: "0", remainingDuration: remainigDuartionString, status: "active".localized)
+        let proxyDetails = ProxyActivationDetails(startDate: startDate, endDate: endDate, country: country, userIP: userIP, usedMB: "0", remainingDuration: remainigDuartionString, status: "active")
         let proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails, proxySetup: proxySetup)
         
         completionHandler(ServiceResult.success(proxy))
@@ -264,7 +203,7 @@ class ProxyService {
             var packages: [ProxyPack] = []
             for json in jsonArray {
                 
-                let packId   = json["id"].stringValue
+                let packId   = json["id"].intValue
                 let name     = json["name"].stringValue
                 let noOfMB   = json["traffic"].stringValue
                 let duration = json["duration"].stringValue
