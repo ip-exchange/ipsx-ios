@@ -57,6 +57,18 @@ public extension String {
         return result
     }
     
+    func generateFormEncodedString(paramsDict:[String: String]) -> String {
+        
+        var concatenatedString = ""
+        for param in paramsDict {
+            
+            let key = param.key
+            let value = param.value
+            concatenatedString += key + "=" + value + "&"
+        }
+        return String(concatenatedString.dropLast())
+    }
+    
 }
 
 

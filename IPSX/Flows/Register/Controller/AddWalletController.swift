@@ -13,7 +13,6 @@ class AddWalletController: UIViewController {
 
     @IBOutlet weak var screenTitleLabel: UILabel?
     @IBOutlet weak var sectionTitleLabel: UILabel?
-    
     @IBOutlet weak var pasteAddrButton: UIButton!
     @IBOutlet weak var copyAddrButton: UIButton?
     @IBOutlet weak var qrcodeButton: UIButton!

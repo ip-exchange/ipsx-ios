@@ -17,7 +17,7 @@ struct ProxyRequest {
     var proxyTraffic: String
     var authIP: String
     
-    init(action: String = "", country: String = "", appUid: String = "",proxyTTL: String = "", proxyTraffic: String = "", authIP: String = "") {
+    init(action: String, country: String, appUid: String, proxyTTL: String, proxyTraffic: String, authIP: String) {
         
         self.action = action
         self.country = country

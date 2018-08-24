@@ -97,6 +97,7 @@ public struct Url {
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
     public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
+    public static let submitLegalArgs        = "/Users/%USER_ID%/companies/aws-store?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs            = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
     public static let createProxyArgs        = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
     public static let proxyPackagesArgs      = "/packages/admin/paid?access_token=%ACCESS_TOKEN%"
@@ -174,6 +175,7 @@ public enum IPRequestType: Int {
     case getUserCountryList
     case register
     case fbRegister
+    case submitLegalPersonDetails
     
     case login
     case fbLogin
@@ -213,7 +215,9 @@ public enum IPRequestType: Int {
 }
 
 public struct ContentType {
+    
     public static let applicationJSON = "application/json"
+    public static let formData = "application/x-www-form-urlencoded"
 }
 
 public struct KeychainKeys {

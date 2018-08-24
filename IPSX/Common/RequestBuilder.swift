@@ -23,7 +23,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
     public var publicIP: String?
     public var privateIP: String?
     
-    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:]) -> URLRequest? {
+    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: Any = "")-> URLRequest? {
         
         var urlRequest: URLRequest?
         var request: Request?
@@ -65,6 +65,13 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .fbRegister:
             let body = JSON(bodyParams)
             request = Request(url:Url.baseApi + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
+           
+        case .submitLegalPersonDetails:
+            var url = Url.baseApi + Url.submitLegalArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.formData, body: bodyParams)
+            }
             
         //User Info Requests
             
@@ -284,7 +291,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
     
     /// urlParams should be [String: String]
     
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: Any = "", completion:@escaping (Error?, Data?)->Void) {
         
         let requestBuilder = RequestBuilder.shared
         if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
