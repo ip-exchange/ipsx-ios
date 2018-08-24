@@ -12,12 +12,18 @@ class RegisterService {
     
     func registerUser(email: String, password: String, ip: String, newsletter: Bool, type: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let params: [String: Any] =    ["email"      : email,
-                                        "password"   : password,
-                                        "ip"         : ip,
-                                        "source"     : "ios",
-                                        "newsletter" : newsletter,
-                                        "type"       : type]
+        /*
+         "intention_company" - 0 = normal user / 1 = company user
+         "intention_provider" - 0 = requester / 1 = provider
+         */
+        
+        let params: [String: Any] =    ["email"             : email,
+                                        "password"          : password,
+                                        "ip"                : ip,
+                                        "source"            : "ios",
+                                        "newsletter"        : newsletter,
+                                        "intention_company" : type,
+                                        "intention_provider": 0]
         
         RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
             
