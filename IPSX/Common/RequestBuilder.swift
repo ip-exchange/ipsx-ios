@@ -376,17 +376,26 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 completion(CustomError.statusCodeNOK(statusCode), data)
             }
             
-        case 422:
+        case 429:
             
             switch requestType {
                 
-            case .addEthAddress, .updateEthAddress, .fbRegister, .register:
-                print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
-                completion(CustomError.alreadyExists, data)
-               
             case .fbLogin:
                 print(NSDate(), "\(requestType)" + "Request failed. This user has not registered with Facebook")
                 completion(CustomError.notFound, data)
+                
+            default:
+                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
+                completion(CustomError.statusCodeNOK(statusCode), data)
+            }
+            
+        case 430:
+            
+            switch requestType {
+                
+            case .addEthAddress, .fbRegister, .register:
+                print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
+                completion(CustomError.alreadyExists, data)
                 
             default:
                 print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
