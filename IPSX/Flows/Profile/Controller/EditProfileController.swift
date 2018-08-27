@@ -36,12 +36,24 @@ class EditProfileController: UIViewController {
         }
     }
 
+    @IBOutlet weak var fullContentHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var individualCheckmarkImage: UIImageView!
+    @IBOutlet weak var legalCheckmarkImage: UIImageView!
+    @IBOutlet weak var corporateDetailsView: RoundedView!
+    
+    //TODO (CVI): Make it real (Snoop Dogg)
+    var isLegalPerson = true
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
-    private var searchController: SearchViewController?
     
-    let countrySelectionID = "SearchSegueID"
+    private var searchController: SearchViewController?
+    private var legalStateChanged = false
+    
+    let countrySelectionID  = "SearchSegueID"
+    let legalDetailsSegueID = "LegalDetailsSegueID"
+    
     let validEmailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
     var errorMessage: String? {
@@ -54,6 +66,32 @@ class EditProfileController: UIViewController {
         self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
     }
     
+    @IBAction func selectIndividualAction(_ sender: Any) {
+        self.legalCheckmarkImage.isHidden = true
+        self.individualCheckmarkImage.isHidden = false
+        self.corporateDetailsView.isHidden = true
+        if isLegalPerson {
+            self.legalStateChanged = true
+            self.saveButton.isEnabled = true
+            self.fullContentHeightConstraint.constant -= 66
+            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
+        }
+        isLegalPerson = false
+    }
+    
+    @IBAction func selectLegalAction(_ sender: Any) {
+        self.legalCheckmarkImage.isHidden = false
+        self.individualCheckmarkImage.isHidden = true
+        self.corporateDetailsView.isHidden = false
+        if !isLegalPerson {
+            self.legalStateChanged = true
+            self.saveButton.isEnabled = true
+            self.fullContentHeightConstraint.constant += 66
+            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
+        }
+        isLegalPerson = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         keyIconImageView.tintColor = .lightBlue
@@ -61,6 +99,7 @@ class EditProfileController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
+        prepareUI()
     }
     
     @objc func appWillEnterForeground() {
@@ -124,13 +163,25 @@ class EditProfileController: UIViewController {
             }
         }
     }
-
+    
+    private func prepareUI() {
+        if UserManager.shared.userInfo?.source != "ios" {
+            self.fullContentHeightConstraint.constant -= 66
+        }
+        if isLegalPerson {
+            self.legalCheckmarkImage.isHidden = false
+        } else {
+            self.individualCheckmarkImage.isHidden = false
+            self.fullContentHeightConstraint.constant -= 66
+            self.corporateDetailsView.isHidden = true
+        }
+    }
+    
     private func updateFields() {
         
         let userInfo = UserManager.shared.userInfo
         var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         changePasswordHolderView.isHidden = userInfo?.source != "ios"
-        
         if let selectedCountry = self.searchController?.selectedCountry {
             countryName = selectedCountry
          } else {
@@ -140,7 +191,6 @@ class EditProfileController: UIViewController {
             self.telegramTextField.text    = userInfo?.telegram
         }
         self.selectedCountryLabel.text = countryName ?? "Select a country".localized
-
     }
     
     private func detectChangesAndValidity(textfield: UITextField? = nil, newText: String = "") {
@@ -187,6 +237,11 @@ class EditProfileController: UIViewController {
                                           "country_id": countryID as Any]
         
         updateUserProfile(bodyParams: bodyParams)
+        
+        if legalStateChanged {
+            legalStateChanged = false
+            //TODO (CVI): Create the request to update the legat state (isLegalPerson - get the current state).
+        }
     }
     
     func updateUserProfile(bodyParams: [String: Any]) {
@@ -243,6 +298,9 @@ class EditProfileController: UIViewController {
             let userInfo = UserManager.shared.userInfo
             searchController = srcController
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
+        }
+        if segue.identifier == legalDetailsSegueID {
+            //TODO (CVI): Pass data here if needed, or you can check directly in the legal controllers if there is any data to pre-fill
         }
     }
 }
