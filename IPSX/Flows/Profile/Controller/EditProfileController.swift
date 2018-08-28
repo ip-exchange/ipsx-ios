@@ -41,9 +41,7 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var legalCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     
-    //TODO (CVI): Make it real (Snoop Dogg)
-    var isLegalPerson = true
-    
+    var isLegalPerson = UserManager.shared.userInfo?.isLegalPerson ?? false
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?

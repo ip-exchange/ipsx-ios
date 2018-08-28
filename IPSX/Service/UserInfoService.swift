@@ -54,6 +54,7 @@ class UserInfoService {
         let refCode             = json["referral_code"].string
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
+        let isLegalPerson       = json["intention_company"].intValue == 1 ? true : false
         
         let dateFormatter     = DateFormatter.backendResponseParse()
         let deleteAccountDate = dateFormatter.date(from: selfDeletedAtString)
@@ -77,7 +78,7 @@ class UserInfoService {
             pendingDeleteAccount = true
         }
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount, isLegalPerson: isLegalPerson)
         completionHandler(ServiceResult.success(user))
     }
     

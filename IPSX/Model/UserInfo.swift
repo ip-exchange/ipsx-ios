@@ -53,22 +53,24 @@ struct UserInfo {
     var source: String?
     var refferalCode: String?
     var deleteAccountDate: Date?
+    var isLegalPerson: Bool
     
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Double = 0, kycStatus: Int = -1, socialName: String? = nil, source: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false) {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Double = 0, kycStatus: Int = -1, socialName: String? = nil, source: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false, isLegalPerson: Bool) {
         
-        self.firstName    = firstName
-        self.middleName   = middleName
-        self.lastName     = lastName
-        self.telegram     = telegram
-        self.countryID    = countryID
-        self.email        = email
-        self.proxyTest    = proxyTest
-        self.balance      = balance
-        self.socialName   = socialName
-        self.source       = source
-        self.refferalCode = refferalCode
+        self.firstName     = firstName
+        self.middleName    = middleName
+        self.lastName      = lastName
+        self.telegram      = telegram
+        self.countryID     = countryID
+        self.email         = email
+        self.proxyTest     = proxyTest
+        self.balance       = balance
+        self.socialName    = socialName
+        self.source        = source
+        self.refferalCode  = refferalCode
+        self.isLegalPerson = isLegalPerson
         
         self.deleteAccountDate = deleteAccountDate
         self.kycStatus = KycStatus(rawValue: kycStatus) ?? .Registered
