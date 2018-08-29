@@ -63,8 +63,10 @@ class EditProfileController: UIViewController {
     
     @IBAction func selectIndividualAction(_ sender: Any) {
         
-        //TODO V2: Remove this guard if the downgrade from legal to individual will be implemented
-        guard !isLegalPerson else { return }
+        guard !isLegalPerson else {
+            //TODO (CC): add notification banner with message "This change is not possible at the moment."
+            return
+        }
         
         self.legalCheckmarkImage.isHidden = true
         self.individualCheckmarkImage.isHidden = false
@@ -84,6 +86,9 @@ class EditProfileController: UIViewController {
         self.corporateDetailsView.isHidden = false
         
         if !isLegalPerson {
+            
+            //TODO (CC): display notification banner with message “Please add corporate details”
+            
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant += 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }

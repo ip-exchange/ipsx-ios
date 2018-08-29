@@ -15,13 +15,11 @@ class CompanyDetailsController: UIViewController {
     @IBOutlet weak var regNumberRTextField: RichTextFieldView!
     @IBOutlet weak var vatRTextField: RichTextFieldView!
     @IBOutlet weak var countryRTextField: RichTextFieldView!
-    
-    var company: Company?
-
     @IBOutlet weak var nextButton: UIButton!
-    
+
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
+    var company: Company?
     
     override func viewDidLoad() {
         super.viewDidLoad()
