@@ -314,8 +314,13 @@ class EditProfileController: UIViewController {
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         }
         if segue.identifier == legalDetailsSegueID {
-            let companyController = segue.destination as? CompanyDetailsController
+            let companyNavController = segue.destination as? UINavigationController
+            let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company
+            companyController?.onCollectDataComplete = { company in
+                //TODO CVI): Do the request using the company object
+                print(company.name)
+            }
         }
     }
 }

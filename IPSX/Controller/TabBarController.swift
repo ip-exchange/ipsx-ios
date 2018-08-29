@@ -88,6 +88,16 @@ class TabBarViewController: UITabBarController {
         UserManager.shared.logout()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CollectLegalDetailsSegueID" {
+            let companyNavController = segue.destination as? UINavigationController
+            let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
+            companyController?.onCollectDataComplete = { company in
+                //TODO CVI): Do the request using the company object
+                print(company.name)
+            }
+        }
+    }
 }
 
 extension UITabBarController {

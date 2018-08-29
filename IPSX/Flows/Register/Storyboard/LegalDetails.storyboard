@@ -305,7 +305,7 @@
                                             <action selector="closeButtonAction:" destination="S47-Bd-0BS" eventType="touchUpInside" id="1se-Ty-uge"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBW-oK-kA0">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBW-oK-kA0">
                                         <rect key="frame" x="329" y="56" width="36" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Next">
@@ -555,11 +555,14 @@
                                             <action selector="backButtonAction:" destination="5A6-QR-psk" eventType="touchUpInside" id="z2q-Qp-rvf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-kn-9sE">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHR-kn-9sE">
                                         <rect key="frame" x="326" y="59" width="41" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="doneButtonAction:" destination="5A6-QR-psk" eventType="touchUpInside" id="2uI-Rm-mPj"/>
@@ -603,6 +606,7 @@
                     <navigationItem key="navigationItem" id="pNb-VD-rzu"/>
                     <connections>
                         <outlet property="companyRTextField" destination="SQx-VY-oFw" id="bbh-Dt-zf3"/>
+                        <outlet property="doneButton" destination="nHR-kn-9sE" id="j5W-WC-BQg"/>
                         <outlet property="emailRtextField" destination="uug-gr-94b" id="wrX-UN-K25"/>
                         <outlet property="phoneRTextField" destination="5Ge-Ef-tqw" id="E5f-Nw-bIz"/>
                     </connections>

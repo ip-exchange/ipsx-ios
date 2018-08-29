@@ -19,10 +19,15 @@ class CompanyDetailsController: UIViewController {
 
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
+    private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
+
     var company: Company?
-    
+    var onCollectDataComplete: ((_ company: Company)->())?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTextViews()
+        observreFieldsState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +59,7 @@ class CompanyDetailsController: UIViewController {
             representativeController = repController
             collectData()
             repController.company = company
+            repController.onCollectDataComplete = self.onCollectDataComplete
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
@@ -70,6 +76,41 @@ class CompanyDetailsController: UIViewController {
     }
     
     @IBAction func certificateUploadAction(_ sender: Any) {
+    }
+    
+    private func setupTextViews() {
+        //TODO: Add the proper regex when defined by design
+        nameRTextField.validationRegex          = RichTextFieldView.validName
+        nameRTextField.nextResponderField       = addressRTextField.contentTextField
+        addressRTextField.validationRegex       = RichTextFieldView.validName
+        addressRTextField.nextResponderField    = regNumberRTextField.contentTextField
+        regNumberRTextField.validationRegex     = RichTextFieldView.validName
+        regNumberRTextField.nextResponderField  = vatRTextField.contentTextField
+        vatRTextField.validationRegex           = RichTextFieldView.validName
+    }
+    
+    private func observreFieldsState() {
+        self.nextButton.isEnabled = false
+        nameRTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["name"] = state
+            self.nextButton.isEnabled = self.canContinue()
+        }
+        addressRTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["address"] = state
+            self.nextButton.isEnabled = self.canContinue()
+        }
+        regNumberRTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["regNum"] = state
+            self.nextButton.isEnabled = self.canContinue()
+        }
+        vatRTextField.onFieldStateChange = { state in
+            self.fieldsStateDic["vat"] = state
+            self.nextButton.isEnabled = self.canContinue()
+        }
+    }
+    
+    private func canContinue() -> Bool {
+        return !self.fieldsStateDic.values.contains(false) && self.countryRTextField.contentTextField?.text != "Select a country".localized
     }
     
     private func collectData() {
@@ -92,7 +133,7 @@ class CompanyDetailsController: UIViewController {
             countryName = selectedCountry
         }
         self.countryRTextField.contentTextField?.text = countryName ?? "Select a country".localized
-        
+        self.nextButton.isEnabled = self.canContinue()
     }
 
 }
