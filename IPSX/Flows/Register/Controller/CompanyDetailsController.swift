@@ -16,8 +16,8 @@ class CompanyDetailsController: UIViewController {
     @IBOutlet weak var vatRTextField: RichTextFieldView!
     @IBOutlet weak var countryRTextField: RichTextFieldView!
     
+    var company: Company?
     private var searchController: SearchViewController?
-    private var legalDetails: LegalDetailsObject = LegalDetailsObject()
     private var representativeController: RepresentativeDetailsController?
     
     override func viewDidLoad() {
@@ -25,9 +25,10 @@ class CompanyDetailsController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
-        if let legDetails = representativeController?.legalDetails {
-            legalDetails = legDetails
+        if let representative = representativeController?.representative {
+            company?.representative = representative
         }
         if UserManager.shared.userCountries == nil {
             
@@ -51,7 +52,7 @@ class CompanyDetailsController: UIViewController {
         if segue.identifier == "NextSegueID", let repController = segue.destination as? RepresentativeDetailsController {
             representativeController = repController
             collectData()
-            repController.legalDetails = legalDetails
+            repController.representative = company?.representative
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
@@ -71,11 +72,11 @@ class CompanyDetailsController: UIViewController {
     }
     
     private func collectData() {
-        legalDetails.companyName        = nameRTextField.contentTextField?.text
-        legalDetails.companyAddress     = addressRTextField.contentTextField?.text
-        legalDetails.companyRegNumber   = regNumberRTextField.contentTextField?.text
-        legalDetails.companyVat         = vatRTextField.contentTextField?.text
-        legalDetails.companyCountry     = countryRTextField.contentTextField?.text
+        company?.name        = nameRTextField.contentTextField?.text ?? ""
+        company?.address     = addressRTextField.contentTextField?.text ?? ""
+        company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
+        company?.vat         = vatRTextField.contentTextField?.text ?? ""
+        company?.country     = countryRTextField.contentTextField?.text ?? ""
     }
 
     private func updateFields() {
@@ -92,14 +93,3 @@ class CompanyDetailsController: UIViewController {
 
 }
 
-class LegalDetailsObject {
-    
-    var companyName: String?
-    var companyAddress: String?
-    var companyRegNumber: String?
-    var companyVat: String?
-    var companyCountry: String?
-    var repName: String?
-    var repEmail: String?
-    var repPhone: String?
-}

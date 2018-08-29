@@ -41,6 +41,7 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var legalCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     
+    var company: Company?
     var isLegalPerson = UserManager.shared.userInfo?.isLegalPerson ?? false
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -77,7 +78,6 @@ class EditProfileController: UIViewController {
             self.fullContentHeightConstraint.constant -= 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
         }
-        isLegalPerson = false
     }
     
     @IBAction func selectLegalAction(_ sender: Any) {
@@ -92,7 +92,6 @@ class EditProfileController: UIViewController {
             self.fullContentHeightConstraint.constant += 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
         }
-        isLegalPerson = true
     }
     
     override func viewDidLoad() {

@@ -10,31 +10,22 @@ import UIKit
 
 class RepresentativeDetailsController: UIViewController {
 
-    
     @IBOutlet weak var companyRTextField: RichTextFieldView!
     @IBOutlet weak var emailRtextField: RichTextFieldView!
     @IBOutlet weak var phoneRTextField: RichTextFieldView!
     
-    var legalDetails: LegalDetailsObject?
+    var representative: Representative?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        companyRTextField.contentTextField?.text = legalDetails?.repName
-        emailRtextField.contentTextField?.text = legalDetails?.repEmail
-        phoneRTextField.contentTextField?.text = legalDetails?.repPhone
+        companyRTextField.contentTextField?.text = representative?.name
+        emailRtextField.contentTextField?.text = representative?.email
+        phoneRTextField.contentTextField?.text = representative?.phone
     }
     
     @IBAction func doneButtonAction(_ sender: Any) {
-        collectData()
         
-        print(legalDetails?.companyName ?? "")
-        print(legalDetails?.companyVat ?? "")
-        print(legalDetails?.companyAddress ?? "")
-        print(legalDetails?.companyCountry ?? "")
-        print(legalDetails?.companyRegNumber ?? "")
-        print(legalDetails?.repName ?? "")
-        print(legalDetails?.repPhone ?? "")
-        print(legalDetails?.repEmail ?? "")
+        collectData()
         
         //TODO (CVI-LegalStuff): Use all that data and make the request before dismiss
         self.navigationController?.dismiss(animated: true)
@@ -46,8 +37,8 @@ class RepresentativeDetailsController: UIViewController {
     }
     
     private func collectData() {
-        legalDetails?.repName  = companyRTextField.contentTextField?.text
-        legalDetails?.repEmail = emailRtextField.contentTextField?.text
-        legalDetails?.repPhone = phoneRTextField.contentTextField?.text
+        representative?.name  = companyRTextField.contentTextField?.text ?? ""
+        representative?.email = emailRtextField.contentTextField?.text ?? ""
+        representative?.phone = phoneRTextField.contentTextField?.text ?? ""
     }
 }
