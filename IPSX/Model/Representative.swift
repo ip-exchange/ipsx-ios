@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Representative {
+class Representative {
     
     var name : String
     var email: String

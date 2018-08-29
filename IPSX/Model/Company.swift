@@ -8,24 +8,24 @@
 
 import Foundation
 
-struct Company {
+class Company {
     
     var name: String
     var address: String
     var registrationNumber: String
     var vat: String
     var country: String
-    var certificateData: Data
-    var representative: Representative
+    var certificateData: Data?
+    var representative: Representative?
     
-    init(name: String, address: String, registrationNumber: String, vat: String, country: String, certificateData: Data, representative: Representative) {
+    init(name: String, address: String, registrationNumber: String, vat: String, country: String, certificateData: Data?, representative: Representative? = nil) {
         
         self.name = name
         self.address = address
         self.registrationNumber = registrationNumber
         self.vat = vat
         self.country = country
-        self.representative = representative
         self.certificateData = certificateData
+        self.representative = representative
     }
 }

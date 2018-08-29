@@ -10,21 +10,22 @@ import Foundation
 
 class LegalPersonService {
     
-    func submitLegalDetails(companyDetails: Company, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func submitLegalDetails(companyDetails: Company?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let countryID = UserManager.shared.getCountryId(countryName: companyDetails.country) ?? ""
+        let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
         
-        let bodyDict: [String: Any] = ["name" : companyDetails.name,
-                                         "address" : companyDetails.address,
-                                         "registration_number" : companyDetails.registrationNumber,
-                                         "vat" : companyDetails.vat,
+        let bodyDict: [String: String] = [  "name" : companyDetails?.name ?? "",
+                                         "address" : companyDetails?.address ?? "",
+                                         "registration_number" : companyDetails?.registrationNumber ?? "",
+                                         "vat" : companyDetails?.vat ?? "",
                                          "country_id" : countryID,
-                                         "representative_name" : companyDetails.representative.name,
-                                         "representative_email" : companyDetails.representative.email,
-                                         "representative_phone" : companyDetails.representative.phone,
-                                         "incorporation_certificate" : companyDetails.certificateData]
+                                         "representative_name" : companyDetails?.representative?.name ?? "",
+                                         "representative_email" : companyDetails?.representative?.email ?? "",
+                                         "representative_phone" : companyDetails?.representative?.phone ?? ""
+                                         //"incorporation_certificate" : companyDetails?.certificateData ?? ""
+                                        ]
         
-        let bodyParams = "??"
+        let bodyParams = String().generateFormEncodedString(paramsDict: bodyDict)
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]

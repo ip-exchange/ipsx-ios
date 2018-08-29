@@ -73,11 +73,14 @@ class CompanyDetailsController: UIViewController {
     }
     
     private func collectData() {
-        company?.name        = nameRTextField.contentTextField?.text ?? ""
-        company?.address     = addressRTextField.contentTextField?.text ?? ""
-        company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
-        company?.vat         = vatRTextField.contentTextField?.text ?? ""
-        company?.country     = countryRTextField.contentTextField?.text ?? ""
+        
+        let name = nameRTextField.contentTextField?.text ?? ""
+        let address = addressRTextField.contentTextField?.text ?? ""
+        let registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
+        let vat = vatRTextField.contentTextField?.text ?? ""
+        let country = countryRTextField.contentTextField?.text ?? ""
+        
+        company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, country: country, certificateData: nil)
     }
 
     private func updateFields() {
