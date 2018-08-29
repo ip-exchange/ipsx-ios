@@ -47,7 +47,7 @@ class EditProfileController: UIViewController {
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     
     private var searchController: SearchViewController?
-    private var legalStateChanged = false
+    private var performUserTypeUpdate = false
     
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
@@ -65,11 +65,13 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func selectIndividualAction(_ sender: Any) {
+        
         self.legalCheckmarkImage.isHidden = true
         self.individualCheckmarkImage.isHidden = false
         self.corporateDetailsView.isHidden = true
+        
         if isLegalPerson {
-            self.legalStateChanged = true
+            self.performUserTypeUpdate = true
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant -= 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
@@ -78,11 +80,13 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func selectLegalAction(_ sender: Any) {
+        
         self.legalCheckmarkImage.isHidden = false
         self.individualCheckmarkImage.isHidden = true
         self.corporateDetailsView.isHidden = false
+        
         if !isLegalPerson {
-            self.legalStateChanged = true
+            self.performUserTypeUpdate = true
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant += 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
@@ -236,9 +240,15 @@ class EditProfileController: UIViewController {
         
         updateUserProfile(bodyParams: bodyParams)
         
-        if legalStateChanged {
-            legalStateChanged = false
-            //TODO (CVI): Create the request to update the legat state (isLegalPerson - get the current state).
+        if performUserTypeUpdate {
+            
+            performUserTypeUpdate = false
+            let legalPersonAfterChange = !isLegalPerson
+            let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
+            let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
+            updateUserProfile(bodyParams: bodyParams)
+            
+            //TODO (CVI): Create the request to update the corporate details
         }
     }
     
