@@ -30,7 +30,7 @@ class CompanyDetailsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        if let representative = representativeController?.representative {
+        if let representative = representativeController?.company?.representative {
             company?.representative = representative
         }
         if UserManager.shared.userCountries == nil {
@@ -55,7 +55,7 @@ class CompanyDetailsController: UIViewController {
         if segue.identifier == "NextSegueID", let repController = segue.destination as? RepresentativeDetailsController {
             representativeController = repController
             collectData()
-            repController.representative = company?.representative
+            repController.company = company
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {

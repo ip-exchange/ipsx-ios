@@ -14,13 +14,13 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var emailRtextField: RichTextFieldView!
     @IBOutlet weak var phoneRTextField: RichTextFieldView!
     
-    var representative: Representative?
+    var company: Company?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        companyRTextField.contentTextField?.text = representative?.name
-        emailRtextField.contentTextField?.text = representative?.email
-        phoneRTextField.contentTextField?.text = representative?.phone
+        companyRTextField.contentTextField?.text = company?.representative.name
+        emailRtextField.contentTextField?.text = company?.representative.email
+        phoneRTextField.contentTextField?.text = company?.representative.phone
     }
     
     @IBAction func doneButtonAction(_ sender: Any) {
@@ -37,8 +37,8 @@ class RepresentativeDetailsController: UIViewController {
     }
     
     private func collectData() {
-        representative?.name  = companyRTextField.contentTextField?.text ?? ""
-        representative?.email = emailRtextField.contentTextField?.text ?? ""
-        representative?.phone = phoneRTextField.contentTextField?.text ?? ""
+        company?.representative.name  = companyRTextField.contentTextField?.text ?? ""
+        company?.representative.email = emailRtextField.contentTextField?.text ?? ""
+        company?.representative.phone = phoneRTextField.contentTextField?.text ?? ""
     }
 }
