@@ -52,8 +52,6 @@ class EditProfileController: UIViewController {
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
     
-    let validEmailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -65,6 +63,9 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func selectIndividualAction(_ sender: Any) {
+        
+        //TODO V2: Remove this guard if the downgrade from legal to individual will be implemented
+        guard !isLegalPerson else { return }
         
         self.legalCheckmarkImage.isHidden = true
         self.individualCheckmarkImage.isHidden = false
@@ -295,7 +296,7 @@ class EditProfileController: UIViewController {
     }
     
     private func isEmailValid(text: String) -> Bool {
-        let validityTest = NSPredicate(format:"SELF MATCHES %@", validEmailRegex)
+        let validityTest = NSPredicate(format:"SELF MATCHES %@", RichTextFieldView.validEmailRegex)
         return validityTest.evaluate(with: text)
     }
     
