@@ -48,8 +48,6 @@ class EditProfileController: UIViewController {
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     
     private var searchController: SearchViewController?
-    private var performUserTypeUpdate = false
-    
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
     
@@ -73,7 +71,6 @@ class EditProfileController: UIViewController {
         self.corporateDetailsView.isHidden = true
         
         if isLegalPerson {
-            self.performUserTypeUpdate = true
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant -= 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
@@ -87,7 +84,6 @@ class EditProfileController: UIViewController {
         self.corporateDetailsView.isHidden = false
         
         if !isLegalPerson {
-            self.performUserTypeUpdate = true
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant += 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
@@ -240,15 +236,20 @@ class EditProfileController: UIViewController {
         
         updateUserProfile(bodyParams: bodyParams)
         
-        if performUserTypeUpdate {
+        if company != nil {
             
-            performUserTypeUpdate = false
             let legalPersonAfterChange = !isLegalPerson
             let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
             let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
             updateUserProfile(bodyParams: bodyParams)
             
             //TODO (CVI): Create the request to update the corporate details
+        }
+        else {
+            //TODO (CC): UIAlert
+            /*
+             message : “Missing corporate details” and actions: Add (open Corporate Details flow) & Cancel (close alert and ignore user type change -> will remain Individual)
+             */
         }
     }
     
@@ -308,7 +309,8 @@ class EditProfileController: UIViewController {
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         }
         if segue.identifier == legalDetailsSegueID {
-            //TODO (CVI): Pass data here if needed, or you can check directly in the legal controllers if there is any data to pre-fill
+            let companyController = segue.destination as? CompanyDetailsController
+            companyController?.company = company
         }
     }
 }
