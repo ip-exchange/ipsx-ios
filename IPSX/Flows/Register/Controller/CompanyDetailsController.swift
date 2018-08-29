@@ -17,6 +17,9 @@ class CompanyDetailsController: UIViewController {
     @IBOutlet weak var countryRTextField: RichTextFieldView!
     
     var company: Company?
+
+    @IBOutlet weak var nextButton: UIButton!
+    
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
     
