@@ -47,7 +47,7 @@ class RepresentativeDetailsController: UIViewController {
         //TODO: Add the proper regex when defined by design
         companyRTextField.validationRegex    = RichTextFieldView.validName
         companyRTextField.nextResponderField = emailRtextField.contentTextField
-        emailRtextField.validationRegex      = RichTextFieldView.validName
+        emailRtextField.validationRegex      = RichTextFieldView.validEmailRegex
         emailRtextField.nextResponderField   = phoneRTextField.contentTextField
         phoneRTextField.validationRegex      = RichTextFieldView.validName
         
