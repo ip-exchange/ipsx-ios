@@ -79,7 +79,7 @@ class SettingsService {
         
         let bodyParams: [String: String] = ["password" : password]
         
-        RequestBuilder.shared.executeRequest(requestType: .deleteAccount, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .deleteAccount, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

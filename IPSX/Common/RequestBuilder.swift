@@ -70,7 +70,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             var url = Url.baseApi + Url.submitLegalArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.formData, body: bodyParams)
+                request = Request(url:url, httpMethod: "POST", contentType: ContentType.multipart, body: bodyParams)
             }
             
         //User Info Requests
@@ -275,6 +275,11 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 print("Error getting Data from JSON body")
             }
         }
+        else if let body = request?.body as? Data {
+            postData = body
+            urlRequest?.setValue(String(body.count), forHTTPHeaderField: "Content-Length")
+            urlRequest?.httpShouldHandleCookies = false
+        }
         
         if let request = request {
             
@@ -283,7 +288,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             urlRequest?.httpBody = postData
             
             if let contentType = request.contentType {
-                urlRequest?.addValue(contentType, forHTTPHeaderField: "Content-Type")
+                urlRequest?.setValue(contentType, forHTTPHeaderField: "Content-Type")
             }
         }
         return urlRequest
@@ -291,10 +296,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
     
     /// urlParams should be [String: String]
     
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: Any = "", completion:@escaping (Error?, Data?)->Void) {
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], body: Any = "", completion:@escaping (Error?, Data?)->Void) {
         
         let requestBuilder = RequestBuilder.shared
-        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
+        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: body) {
             
             requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
                 

@@ -10,6 +10,14 @@ import UIKit
 
 public extension String {
     
+    var localized: String {
+        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
+    }
+    
+    var encodedData: Data {
+        return self.data(using: String.Encoding.utf8) ?? Data()
+    }
+    
     func removeAllSpaces() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
@@ -25,12 +33,8 @@ public extension String {
         }
         return removeAllSpaces ? urlWithParams.removeAllSpaces() : urlWithParams
     }
-    
-    public var localized: String {
-        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
-    }
-    
-    public func trimLeadingAndTrailingSpaces() -> String {
+
+    func trimLeadingAndTrailingSpaces() -> String {
         
         let trimmedString = self.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmedString
@@ -55,18 +59,6 @@ public extension String {
         let components = self.components(separatedBy: characterSet as CharacterSet)
         let result = components.joined(separator: "")
         return result
-    }
-    
-    func generateFormEncodedString(paramsDict:[String: String]) -> String {
-        
-        var concatenatedString = ""
-        for param in paramsDict {
-            
-            let key = param.key
-            let value = param.value
-            concatenatedString += key + "=" + value + "&"
-        }
-        return String(concatenatedString.dropLast())
     }
     
 }

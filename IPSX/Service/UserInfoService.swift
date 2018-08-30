@@ -158,7 +158,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -181,7 +181,7 @@ class UserInfoService {
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -237,7 +237,7 @@ class UserInfoService {
         let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
                                           "newsletter"         : newsletterValue as Any]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

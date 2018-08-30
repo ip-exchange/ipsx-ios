@@ -31,7 +31,7 @@ class SocialIntegrationService {
             params = ["token" : fbToken]
         }
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, bodyParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: requestType, body: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

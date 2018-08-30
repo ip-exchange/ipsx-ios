@@ -14,7 +14,7 @@ class LegalPersonService {
         
         let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
         
-        let bodyDict: [String: String] = [  "name" : companyDetails?.name ?? "",
+        let bodyDict: [String: String] = ["name" : companyDetails?.name ?? "",
                                          "address" : companyDetails?.address ?? "",
                                          "registration_number" : companyDetails?.registrationNumber ?? "",
                                          "vat" : companyDetails?.vat ?? "",
@@ -24,14 +24,18 @@ class LegalPersonService {
                                          "representative_phone" : companyDetails?.representative?.phone ?? ""
                                          //"incorporation_certificate" : companyDetails?.certificateData ?? ""
                                         ]
+        let body = NSMutableData()
+        body.append("--\(boundary)\r\n".encodedData)
         
-        let bodyParams = String().generateFormEncodedString(paramsDict: bodyDict)
+        body.append(contentDisposition.replaceKeysWithValues(paramsDict: ["PARAMETER_NAME" : "name"]).encodedData)
+        body.append((companyDetails?.name ?? "" + "\r\n").encodedData)
+        
+        body.append("\r\n--\(boundary)--\r\n".encodedData)
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        
-        RequestBuilder.shared.executeRequest(requestType: .submitLegalPersonDetails, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .submitLegalPersonDetails, urlParams: urlParams, body: body, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
