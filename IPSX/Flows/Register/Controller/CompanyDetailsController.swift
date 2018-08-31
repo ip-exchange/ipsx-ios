@@ -16,7 +16,9 @@ class CompanyDetailsController: UIViewController {
     @IBOutlet weak var vatRTextField: RichTextFieldView!
     @IBOutlet weak var countryRTextField: RichTextFieldView!
     @IBOutlet weak var nextButton: UIButton!
-
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stackBottomConstraint: NSLayoutConstraint!
+    
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
@@ -33,6 +35,10 @@ class CompanyDetailsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
+
         if let representative = representativeController?.company?.representative {
             company?.representative = representative
         }
@@ -53,6 +59,13 @@ class CompanyDetailsController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "NextSegueID", let repController = segue.destination as? RepresentativeDetailsController {
@@ -72,6 +85,7 @@ class CompanyDetailsController: UIViewController {
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
+        self.view.endEditing(true)
         self.navigationController?.dismiss(animated: true)
     }
     
@@ -134,6 +148,26 @@ class CompanyDetailsController: UIViewController {
         }
         self.countryRTextField.contentTextField?.text = countryName ?? "Select a country".localized
         self.nextButton.isEnabled = self.canContinue()
+    }
+
+    @objc
+    func keyboardWillAppear(notification: NSNotification?) {
+        
+        titleLabelTopConstraint.constant = -34
+        stackBottomConstraint.constant   = 124
+        UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
+    }
+    
+    @objc
+    func keyboardWillDisappear(notification: NSNotification?) {
+
+        titleLabelTopConstraint.constant = 26
+        stackBottomConstraint.constant   = 30
+        UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
 }
