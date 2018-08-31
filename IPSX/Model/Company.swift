@@ -16,6 +16,7 @@ class Company {
     var vat: String
     var country: String
     var certificateData: Data?
+    var certificateURL: URL?
     var representative: Representative?
     
     init(name: String, address: String, registrationNumber: String, vat: String, country: String, certificateData: Data?, representative: Representative? = nil) {
@@ -27,5 +28,17 @@ class Company {
         self.country = country
         self.certificateData = certificateData
         self.representative = representative
+    }
+    
+    init() {
+        
+        self.name = ""
+        self.address = ""
+        self.registrationNumber = ""
+        self.vat = ""
+        self.country = ""
+        self.certificateData = Data()
+        self.representative = nil
+        self.certificateURL = nil
     }
 }

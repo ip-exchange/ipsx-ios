@@ -21,14 +21,16 @@ public struct Request {
     public var url: String
     public var httpMethod: String
     public var contentType: String?
+    public var contentLength: String?
     public var body: Any?
     
-    public init(url:String, httpMethod:String, contentType:String? = nil, body: Any? = nil) {
+    public init(url:String, httpMethod:String, contentType:String? = nil, body: Any? = nil, contentLength: String? = nil) {
         
         self.url = url
         self.httpMethod = httpMethod
         self.contentType = contentType
         self.body = body
+        self.contentLength = contentLength
     }
 }
 
@@ -249,7 +251,7 @@ var boundary: String {
 
 var contentDisposition: String {
     get {
-        return "Content-Disposition: form-data; name=\"%PARAMETER_NAME%\"\r\n\r\n"
+        return "Content-Disposition: form-data; name=\"%PARAMETER_NAME%\""
     }
 }
 

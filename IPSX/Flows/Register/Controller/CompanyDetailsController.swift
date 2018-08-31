@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class CompanyDetailsController: UIViewController {
+class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     
     @IBOutlet weak var nameRTextField: RichTextFieldView!
     @IBOutlet weak var addressRTextField: RichTextFieldView!
@@ -23,9 +24,9 @@ class CompanyDetailsController: UIViewController {
     private var representativeController: RepresentativeDetailsController?
     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
 
-    var company: Company?
+    var company: Company? = Company()
     var onCollectDataComplete: ((_ company: Company)->())?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextViews()
@@ -90,6 +91,11 @@ class CompanyDetailsController: UIViewController {
     }
     
     @IBAction func certificateUploadAction(_ sender: Any) {
+        
+        let importMenu = UIDocumentPickerViewController(documentTypes: [(kUTTypeJPEG as String)], in: .import)
+        importMenu.delegate = self
+        importMenu.modalPresentationStyle = .formSheet
+        self.present(importMenu, animated: true, completion: nil)
     }
     
     private func setupTextViews() {
@@ -129,13 +135,11 @@ class CompanyDetailsController: UIViewController {
     
     private func collectData() {
         
-        let name = nameRTextField.contentTextField?.text ?? ""
-        let address = addressRTextField.contentTextField?.text ?? ""
-        let registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
-        let vat = vatRTextField.contentTextField?.text ?? ""
-        let country = countryRTextField.contentTextField?.text ?? ""
-        
-        company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, country: country, certificateData: nil)
+        company?.name = nameRTextField.contentTextField?.text ?? ""
+        company?.address = addressRTextField.contentTextField?.text ?? ""
+        company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
+        company?.vat = vatRTextField.contentTextField?.text ?? ""
+        company?.country = countryRTextField.contentTextField?.text ?? ""
     }
 
     private func updateFields() {
@@ -169,6 +173,24 @@ class CompanyDetailsController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
+    // MARK: - UIDocumentPickerDelegate Methods
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        
+        if controller.documentPickerMode == .import {
+            
+            company?.certificateURL = url
+            
+            do {
+                let documentData = try Data(contentsOf: url)
+                company?.certificateData = documentData
+            }
+            catch {
+                //TODO
+            }
+        }
+    }
+    
 }
 

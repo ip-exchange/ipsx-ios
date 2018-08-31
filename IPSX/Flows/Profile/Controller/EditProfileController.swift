@@ -316,7 +316,7 @@ class EditProfileController: UIViewController {
         if segue.identifier == legalDetailsSegueID {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
-            companyController?.company = company
+            companyController?.company = company 
             companyController?.onCollectDataComplete = { company in
                 //TODO CVI): Do the request using the company object
                 print(company.name)

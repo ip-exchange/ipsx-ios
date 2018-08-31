@@ -265,20 +265,18 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
-            
         }
         
-        if let body = request?.body as? JSON {
+        if let body = request?.body as? Data {
+            postData = body
+            request?.contentLength = String(body.count)
+        }
+        else if let body = request?.body as? JSON {
             do {
                 postData = try body.rawData()
             } catch {
                 print("Error getting Data from JSON body")
             }
-        }
-        else if let body = request?.body as? Data {
-            postData = body
-            urlRequest?.setValue(String(body.count), forHTTPHeaderField: "Content-Length")
-            urlRequest?.httpShouldHandleCookies = false
         }
         
         if let request = request {
@@ -287,6 +285,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             urlRequest?.httpMethod = request.httpMethod
             urlRequest?.httpBody = postData
             
+            if let contentLength = request.contentLength {
+                urlRequest?.setValue(contentLength, forHTTPHeaderField: "Content-Length")
+            }
             if let contentType = request.contentType {
                 urlRequest?.setValue(contentType, forHTTPHeaderField: "Content-Type")
             }
