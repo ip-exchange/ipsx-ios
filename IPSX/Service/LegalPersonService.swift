@@ -26,13 +26,15 @@ class LegalPersonService {
         apendFormDataString(body: body, name: "representative_phone", value: companyDetails?.representative?.phone)
         
         let mimetype = mimeType(for: companyDetails?.certificateURL)
-        let filename = companyDetails?.certificateURL?.absoluteString ?? ""
-            
+        let urlString = companyDetails?.certificateURL?.absoluteString ?? ""
+        let filename = urlString.components(separatedBy: "/").last ?? ""
+        
         body.append("\r\n--\(boundary)\r\n".encodedData)
         body.append(contentDisposition.replaceKeysWithValues(paramsDict: ["PARAMETER_NAME" : "incorporation_certificate"]).encodedData)
         body.append("; filename = \"\(filename)\"".encodedData)
-        body.append("\r\n Content-Type: \(mimetype)\r\n\r\n".encodedData)
-
+        body.append("\r\nContent-Type: \(mimetype)\r\n\r\n".encodedData)
+        body.append(companyDetails?.certificateData ?? Data())
+        
         body.append("\r\n--\(boundary)--\r\n".encodedData)
         
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
