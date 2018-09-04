@@ -245,7 +245,7 @@ enum Newsletter {
 
 var boundary: String {
     get {
-        return "--------FormBoundary"
+        return "----boundary" + UUID().uuidString
     }
 }
 
