@@ -11,54 +11,8 @@ import MobileCoreServices
 import Alamofire
 
 class LegalPersonService {
-    
+        
     func submitLegalDetails(companyDetails: Company?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
-
-        let body = NSMutableData()
-        
-        let mimetype = mimeType(for: companyDetails?.certificateURL)
-        let urlString = companyDetails?.certificateURL?.absoluteString ?? ""
-        let filename = urlString.components(separatedBy: "/").last ?? ""
-        
-        body.append("\r\n--\(boundary)\r\n".encodedData)
-        body.append(contentDisposition.replaceKeysWithValues(paramsDict: ["PARAMETER_NAME" : "incorporation_certificate"]).encodedData)
-        body.append("; filename = \"\(filename)\"".encodedData)
-        body.append("\r\nContent-Type: \(mimetype)\r\n\r\n".encodedData)
-        body.append(companyDetails?.certificateData ?? Data())
-        
-        apendFormDataString(body: body, name: "name", value: companyDetails?.name)
-        apendFormDataString(body: body, name: "address", value: companyDetails?.address)
-        apendFormDataString(body: body, name: "registration_number", value: companyDetails?.registrationNumber)
-        apendFormDataString(body: body, name: "vat", value: companyDetails?.vat)
-        apendFormDataString(body: body, name: "country_id", value: countryID)
-        apendFormDataString(body: body, name: "representative_name", value: companyDetails?.representative?.name)
-        apendFormDataString(body: body, name: "representative_email", value: companyDetails?.representative?.email)
-        apendFormDataString(body: body, name: "representative_phone", value: companyDetails?.representative?.phone)
-        
-
-        
-        body.append("\r\n--\(boundary)--\r\n".encodedData)
-        
-        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
-                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
-        
-        RequestBuilder.shared.executeRequest(requestType: .submitLegalPersonDetails, urlParams: urlParams, body: body, completion: { error, data in
-            
-            guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
-            }
-            guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
-                return
-            }
-            completionHandler(ServiceResult.success(true))
-        })
-    }
-    
-    func uploadCompanyDetails(companyDetails: Company?) {
         
         let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
         
@@ -71,17 +25,16 @@ class LegalPersonService {
                                        "representative_email" : companyDetails?.representative?.email ?? "",
                                        "representative_phone" : companyDetails?.representative?.phone ?? ""]
         
-       
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
         let url = (Url.baseApi + Url.submitLegalArgs).replaceKeysWithValues(paramsDict: urlParams)
+        let mimetype = mimeType(for: companyDetails?.certificateURL)
+        let urlString = companyDetails?.certificateURL?.absoluteString ?? ""
+        let filename = urlString.components(separatedBy: "/").last ?? ""
         
         upload( multipartFormData: { multipartFormData in
-                multipartFormData.append(companyDetails?.certificateData ?? Data(), withName: "incorporation_certificate", fileName: "image.jpeg", mimeType: "image/jpeg")
-            
-                // Send parameters
-                multipartFormData.append((companyDetails?.name ?? "").encodedData, withName: "name")
+                multipartFormData.append(companyDetails?.certificateData ?? Data(), withName: "incorporation_certificate", fileName: filename, mimeType: mimetype)
             
                 for (key, value) in params {
                     multipartFormData.append(value.encodedData, withName: key)
@@ -90,13 +43,17 @@ class LegalPersonService {
             to: url,
             encodingCompletion: { encodingResult in
                 switch encodingResult {
-                case .success(let upload, _, _):
-                    upload.responseJSON { response in
-                        debugPrint("SUCCESS RESPONSE: \(response)")
-                    }
-                case .failure(let encodingError):
-                    print("ERROR RESPONSE: \(encodingError)")
                     
+                case .success(let upload, _, _):
+                    
+                    upload.responseJSON { response in
+                        print("SUCCESS RESPONSE: \(response)")
+                        completionHandler(ServiceResult.success(true))
+                    }
+                    
+                case .failure(let encodingError):
+                    
+                    completionHandler(ServiceResult.failure(encodingError))
                 }
             }
         )

@@ -92,7 +92,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     
     @IBAction func certificateUploadAction(_ sender: Any) {
         
-        let importMenu = UIDocumentPickerViewController(documentTypes: [(kUTTypeJPEG as String)], in: .import)
+        let importMenu = UIDocumentPickerViewController(documentTypes: [(kUTTypeJPEG as String), (kUTTypePNG as String), (kUTTypePDF as String)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
         self.present(importMenu, animated: true, completion: nil)
@@ -179,12 +179,11 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         
         if controller.documentPickerMode == .import {
-            
-            company?.certificateURL = url
-            
+        
             do {
                 let documentData = try Data(contentsOf: url)
                 company?.certificateData = documentData
+                company?.certificateURL = url
             }
             catch {
                 //TODO

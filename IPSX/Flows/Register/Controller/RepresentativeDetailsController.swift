@@ -84,26 +84,24 @@ class RepresentativeDetailsController: UIViewController {
     
     func submitCompanyDetails() {
         
-        LegalPersonService().uploadCompanyDetails(companyDetails: company)
-        
-//        //loadingView?.startAnimating()
-//        LegalPersonService().submitLegalDetails(companyDetails: company, completionHandler: { result in
-//            //self.loadingView?.stopAnimating()
-//            switch result {
-//            case .success(_):
-//
-//                //TODO: CVI when should we get the new user info details about company ?
-//
-//                    DispatchQueue.main.async {
-//                        self.navigationController?.dismiss(animated: true)
-//                    }
-//
-//            case .failure(let error):
-//                self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
-//                    self.submitCompanyDetails()
-//                })
-//            }
-//        })
+        //loadingView?.startAnimating()
+        LegalPersonService().submitLegalDetails(companyDetails: company) { result in
+            //self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                
+                //TODO: when should we get the new user info details about company ?
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.dismiss(animated: true)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
+                    self.submitCompanyDetails()
+                })
+            }
+        }
     }
 }
 
