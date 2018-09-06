@@ -16,6 +16,7 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     
     var company: Company?
+    var editMode = false
     var onCollectDataComplete: ((_ company: Company)->())?
     
     private var fieldsStateDic: [String : Bool] = ["company" : false, "email" : false, "phone" : false]

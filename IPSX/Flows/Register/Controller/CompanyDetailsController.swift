@@ -26,11 +26,13 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
 
     var company: Company? = Company()
     var onCollectDataComplete: ((_ company: Company)->())?
+    var editMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
+        if company != nil { editMode = true }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +75,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
             representativeController = repController
             collectData()
             repController.company = company
+            repController.editMode = editMode
             repController.onCollectDataComplete = self.onCollectDataComplete
         }
         
