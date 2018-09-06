@@ -77,6 +77,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .getUserCountryList:
             request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+           
+        case .getCompany:
+            request = Request(url:Url.baseApi + Url.companyArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
             
         case .updateProfile:
             let body = JSON(bodyParams)

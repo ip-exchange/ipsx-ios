@@ -24,7 +24,9 @@ class LoadingViewController: UIViewController {
     let dispatchGroup = DispatchGroup()
     var hasPerformedAutologin = false
     var hasConfirmedDeleteAccount = false
-    var noOfRequests: Float = 9
+    
+    // Update this when adding more requests
+    var noOfRequests: Float = 10
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -97,6 +99,7 @@ class LoadingViewController: UIViewController {
         
         userCountryList()
         ethAddresses()
+        companyDetails()
         userInfo()
         proxies()
         tokenRequestList()
@@ -144,6 +147,27 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: .getEthAddress, completion: {
                     self.ethAddresses()
+                })
+            }
+        })
+    }
+    
+    func companyDetails() {
+        
+        dispatchGroup.enter()
+        LegalPersonService().getCompanyDetails(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let company):
+                UserManager.shared.company = company as? Company
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getCompany, completion: {
+                    self.companyDetails()
                 })
             }
         })

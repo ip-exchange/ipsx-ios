@@ -37,7 +37,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     private var representativeController: RepresentativeDetailsController?
     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
 
-    var company: Company? = Company()
+    var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
     var editMode = false
     

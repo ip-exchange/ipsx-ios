@@ -27,11 +27,18 @@ public class UserManager: NSObject {
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
     var generalSettings: GeneralSettings?
+    var company: Company?
     
     var hasEthAddress: Bool {
         get {
             let noOfEthAddresses = ethAddresses?.count ?? 0
             return noOfEthAddresses > 0
+        }
+    }
+    
+    var hasCompany: Bool {
+        get {
+            return company != nil
         }
     }
     
@@ -153,6 +160,7 @@ public class UserManager: NSObject {
         userInfo = nil
         proxyPacks = nil
         testProxyPack = nil
+        company = nil
     }
     
     func getUserCountryList() -> [String] {

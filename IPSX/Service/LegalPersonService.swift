@@ -41,7 +41,7 @@ class LegalPersonService {
                 }
         },
             to: url,
-            method: editMode ? .put : .post,
+            method: editMode ? .patch : .post,
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                     
@@ -84,6 +84,13 @@ class LegalPersonService {
             }
         }
         return "application/octet-stream"
+    }
+    
+    func getCompanyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        //TODO: GET users/company
+        
+        completionHandler(ServiceResult.success(Company()))
     }
 }
 

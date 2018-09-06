@@ -41,7 +41,7 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var legalCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     
-    var company: Company?
+    var company: Company? = UserManager.shared.company
     var isLegalPerson = UserManager.shared.userInfo?.isLegalPerson ?? false
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
