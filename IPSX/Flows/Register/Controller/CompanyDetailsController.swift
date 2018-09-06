@@ -180,6 +180,13 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     
     private func prePopulate() {
         guard company != nil else { return }
+        
+        self.fieldsStateDic["name"] = true
+        self.fieldsStateDic["address"] = true
+        self.fieldsStateDic["regNum"] = true
+        self.fieldsStateDic["vat"] = true
+        
+        choosenFileLabel.text = company?.certificateURL?.lastPathComponent ?? "Choose file to upload".localized
         nameRTextField.contentTextField?.text = company?.name ?? ""
         addressRTextField.contentTextField?.text = company?.address ?? ""
         regNumberRTextField.contentTextField?.text = company?.registrationNumber ?? ""
