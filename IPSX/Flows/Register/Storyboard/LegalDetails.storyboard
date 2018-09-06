@@ -256,7 +256,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose file to upload" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDH-3f-0Hb">
-                                        <rect key="frame" x="71" y="30.5" width="264" height="16"/>
+                                        <rect key="frame" x="71" y="33.5" width="264" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -277,7 +277,7 @@
                                     <constraint firstItem="NUm-d9-cJI" firstAttribute="leading" secondItem="nXo-0e-XEf" secondAttribute="trailing" constant="22" id="FJd-hc-l4M"/>
                                     <constraint firstAttribute="bottom" secondItem="txb-su-Wok" secondAttribute="bottom" id="OUE-Hp-3it"/>
                                     <constraint firstAttribute="trailing" secondItem="uDH-3f-0Hb" secondAttribute="trailing" constant="10" id="VhY-ey-45O"/>
-                                    <constraint firstItem="uDH-3f-0Hb" firstAttribute="top" secondItem="NUm-d9-cJI" secondAttribute="bottom" constant="-2" id="aPQ-3m-36l"/>
+                                    <constraint firstItem="uDH-3f-0Hb" firstAttribute="top" secondItem="NUm-d9-cJI" secondAttribute="bottom" constant="1" id="aPQ-3m-36l"/>
                                     <constraint firstItem="uDH-3f-0Hb" firstAttribute="leading" secondItem="nXo-0e-XEf" secondAttribute="trailing" constant="22" id="lkf-NF-b5q"/>
                                     <constraint firstAttribute="height" constant="67" id="mYq-eC-0ii"/>
                                     <constraint firstItem="txb-su-Wok" firstAttribute="leading" secondItem="dlB-Ks-bUe" secondAttribute="leading" id="nW9-ky-UDQ"/>
@@ -314,7 +314,8 @@
                                             <color key="titleColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="5A6-QR-psk" kind="show" identifier="NextSegueID" id="Fun-Ig-LN3"/>
+                                            <action selector="nextAction:" destination="S47-Bd-0BS" eventType="touchUpInside" id="b8E-Vd-FMu"/>
+                                            <action selector="nextButtonAction:" destination="uFT-ud-Vrt" eventType="touchUpInside" id="0H6-f9-LR3"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IPExchangeNav" translatesAutoresizingMaskIntoConstraints="NO" id="h2e-ND-lWG">
@@ -343,10 +344,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dlB-Ks-bUe" firstAttribute="leading" secondItem="8oP-ev-loK" secondAttribute="leading" constant="15" id="26g-9k-wkS"/>
+                            <constraint firstItem="37E-57-Lwq" firstAttribute="top" secondItem="oOm-OL-EBe" secondAttribute="bottom" constant="25.5" id="29x-6O-wcl"/>
                             <constraint firstItem="oOm-OL-EBe" firstAttribute="top" secondItem="ngT-kh-9kT" secondAttribute="bottom" id="32g-Sf-aPu"/>
                             <constraint firstItem="dlB-Ks-bUe" firstAttribute="top" secondItem="fXV-Bb-J9W" secondAttribute="bottom" constant="30" id="5Fx-Tc-ka6"/>
                             <constraint firstItem="37E-57-Lwq" firstAttribute="leading" secondItem="8oP-ev-loK" secondAttribute="leading" constant="16" id="7zH-GQ-7M6"/>
-                            <constraint firstItem="37E-57-Lwq" firstAttribute="top" secondItem="ngT-kh-9kT" secondAttribute="bottom" constant="26" id="969-cU-dPR"/>
                             <constraint firstItem="8oP-ev-loK" firstAttribute="top" secondItem="3dm-5N-g1P" secondAttribute="top" constant="20" id="A5Q-CD-1V3"/>
                             <constraint firstItem="fXV-Bb-J9W" firstAttribute="top" secondItem="37E-57-Lwq" secondAttribute="bottom" constant="26.5" id="FvJ-bK-llx"/>
                             <constraint firstItem="8oP-ev-loK" firstAttribute="bottom" secondItem="3dm-5N-g1P" secondAttribute="bottom" id="JyI-zN-hCC"/>
@@ -367,16 +368,22 @@
                     <navigationItem key="navigationItem" id="48M-pX-6cG"/>
                     <connections>
                         <outlet property="addressRTextField" destination="kxH-ji-c9l" id="Co1-jg-LWM"/>
+                        <outlet property="choosenFileLabel" destination="uDH-3f-0Hb" id="2lo-fD-Qbu"/>
                         <outlet property="countryRTextField" destination="w6V-0G-k6x" id="U59-NA-hXt"/>
                         <outlet property="nameRTextField" destination="Og0-8h-L5k" id="nOw-BE-Gd0"/>
                         <outlet property="nextButton" destination="vBW-oK-kA0" id="3aK-vR-cX9"/>
                         <outlet property="regNumberRTextField" destination="AHI-zR-fSn" id="1s4-5c-81u"/>
                         <outlet property="stackBottomConstraint" destination="5Fx-Tc-ka6" id="oYY-36-CkU"/>
-                        <outlet property="titleLabelTopConstraint" destination="969-cU-dPR" id="QYq-LQ-rza"/>
+                        <outlet property="titleLabelTopConstraint" destination="29x-6O-wcl" id="BZo-FC-2sS"/>
+                        <outlet property="topBarView" destination="ngT-kh-9kT" id="fje-Bo-Bq6"/>
+                        <outlet property="topConstraintOutlet" destination="32g-Sf-aPu" id="ase-Wb-ELJ"/>
+                        <outlet property="topSeparatorView" destination="oOm-OL-EBe" id="WLa-g2-Ke5"/>
                         <outlet property="vatRTextField" destination="Eoe-l6-OtT" id="Tie-zq-Uah"/>
+                        <segue destination="5A6-QR-psk" kind="show" identifier="RepresentativeSegueID" id="XSX-j8-7CJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NgK-ea-W0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="uFT-ud-Vrt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="836" y="116.49175412293854"/>
         </scene>

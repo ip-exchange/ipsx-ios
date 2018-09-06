@@ -19,7 +19,20 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var stackBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var choosenFileLabel: UILabel!
     
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
@@ -32,7 +45,10 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
-        if company != nil { editMode = true }
+        if company != nil {
+            editMode = true
+            company = Company()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +78,11 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: topSeparatorView, text: "")
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -88,13 +109,21 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         }
     }
     
+    @IBAction func nextAction(_ sender: Any) {
+        guard company?.certificateURL != nil else {
+            toast?.showToastAlert("Missing Certificate Message".localized, type: .info, dismissable: false)
+            return
+        }
+        self.performSegue(withIdentifier: "RepresentativeSegueID", sender: nil)
+    }
+    
     @IBAction func closeButtonAction(_ sender: Any) {
         self.view.endEditing(true)
         self.navigationController?.dismiss(animated: true)
     }
     
     @IBAction func certificateUploadAction(_ sender: Any) {
-        
+        toast?.hideToast()
         let importMenu = UIDocumentPickerViewController(documentTypes: [(kUTTypeJPEG as String), (kUTTypePNG as String), (kUTTypePDF as String)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
@@ -187,6 +216,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
                 let documentData = try Data(contentsOf: url)
                 company?.certificateData = documentData
                 company?.certificateURL = url
+                choosenFileLabel.text = url.lastPathComponent
             }
             catch {
                 //TODO
@@ -194,5 +224,15 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         }
     }
     
+}
+
+extension CompanyDetailsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
 }
 
