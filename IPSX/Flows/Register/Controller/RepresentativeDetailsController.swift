@@ -15,6 +15,18 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var phoneRTextField: RichTextFieldView!
     @IBOutlet weak var doneButton: UIButton!
     
+    @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topConstraintOutlet
+        }
+    }
+    
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     var company: Company?
     var editMode = false
     var onCollectDataComplete: ((_ company: Company?)->())?
@@ -27,6 +39,11 @@ class RepresentativeDetailsController: UIViewController {
         observreFieldsState()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: topSeparatorView, text: "")
+    }
+
     @IBAction func doneButtonAction(_ sender: Any) {
         
         collectData()
@@ -98,6 +115,16 @@ class RepresentativeDetailsController: UIViewController {
                     self.submitCompanyDetails()
                 })
             }
+        }
+    }
+}
+
+extension RepresentativeDetailsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
         }
     }
 }

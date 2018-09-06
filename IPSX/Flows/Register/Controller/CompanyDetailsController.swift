@@ -90,7 +90,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "NextSegueID", let repController = segue.destination as? RepresentativeDetailsController {
+        if segue.identifier == "RepresentativeSegueID", let repController = segue.destination as? RepresentativeDetailsController {
             representativeController = repController
             collectData()
             repController.company = company
