@@ -45,10 +45,8 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
-        if company != nil {
-            editMode = true
-            company = Company()
-        }
+        if company == nil { company = Company() }
+        else { editMode = true }
     }
     
     override func viewWillAppear(_ animated: Bool) {
