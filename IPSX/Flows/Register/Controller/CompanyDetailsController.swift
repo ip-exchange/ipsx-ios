@@ -25,7 +25,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
 
     var company: Company? = Company()
-    var onCollectDataComplete: ((_ company: Company)->())?
+    var onCollectDataComplete: ((_ company: Company?)->())?
     var editMode = false
     
     override func viewDidLoad() {
@@ -76,7 +76,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
             collectData()
             repController.company = company
             repController.editMode = editMode
-            repController.onCollectDataComplete = self.onCollectDataComplete
+            repController.onCollectDataComplete = self.onCollectDataComplete 
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {

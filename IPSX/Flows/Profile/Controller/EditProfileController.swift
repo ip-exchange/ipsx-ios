@@ -318,8 +318,7 @@ class EditProfileController: UIViewController {
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company 
             companyController?.onCollectDataComplete = { company in
-                //TODO CVI): Do the request using the company object
-                print(company.name)
+                self.company = company
             }
         }
     }

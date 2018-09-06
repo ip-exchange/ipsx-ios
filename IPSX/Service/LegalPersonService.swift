@@ -12,7 +12,7 @@ import Alamofire
 
 class LegalPersonService {
         
-    func submitLegalDetails(companyDetails: Company?, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func submitLegalDetails(companyDetails: Company?, editMode: Bool = false, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
         
@@ -41,6 +41,7 @@ class LegalPersonService {
                 }
         },
             to: url,
+            method: editMode ? .put : .post,
             encodingCompletion: { encodingResult in
                 switch encodingResult {
                     
@@ -52,7 +53,6 @@ class LegalPersonService {
                     }
                     
                 case .failure(let encodingError):
-                    
                     completionHandler(ServiceResult.failure(encodingError))
                 }
             }

@@ -94,7 +94,7 @@ class TabBarViewController: UITabBarController {
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.onCollectDataComplete = { company in
                 //TODO CVI): Do the request using the company object
-                print(company.name)
+                print(company?.name)
             }
         }
     }

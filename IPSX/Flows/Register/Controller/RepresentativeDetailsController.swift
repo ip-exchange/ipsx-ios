@@ -17,7 +17,7 @@ class RepresentativeDetailsController: UIViewController {
     
     var company: Company?
     var editMode = false
-    var onCollectDataComplete: ((_ company: Company)->())?
+    var onCollectDataComplete: ((_ company: Company?)->())?
     
     private var fieldsStateDic: [String : Bool] = ["company" : false, "email" : false, "phone" : false]
 
@@ -31,12 +31,6 @@ class RepresentativeDetailsController: UIViewController {
         
         collectData()
         submitCompanyDetails()
-        if let validCompany = self.company {
-            self.onCollectDataComplete?(validCompany)
-        }
-
-        //TODO (CVI-LegalStuff): Use all that data and make the request before dismiss
-        self.navigationController?.dismiss(animated: true)
     }
     
     @IBAction func backButtonAction(_ sender: Any) {
@@ -86,7 +80,7 @@ class RepresentativeDetailsController: UIViewController {
     func submitCompanyDetails() {
         
         //loadingView?.startAnimating()
-        LegalPersonService().submitLegalDetails(companyDetails: company) { result in
+        LegalPersonService().submitLegalDetails(companyDetails: company, editMode: editMode) { result in
             //self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
@@ -94,6 +88,8 @@ class RepresentativeDetailsController: UIViewController {
                 //TODO: when should we get the new user info details about company ?
                 
                 DispatchQueue.main.async {
+                    
+                    self.onCollectDataComplete?(self.company)
                     self.navigationController?.dismiss(animated: true)
                 }
                 
