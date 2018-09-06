@@ -115,7 +115,7 @@ public struct Url {
     public static let enrollStakingBulkArgs  = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs      = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
-    public static let companyArgs            = "-->> /Users/%USER_ID%/TODOTODOTODOTODOTODOTODOTODOTODOTODOTODO?access_token=%ACCESS_TOKEN%"
+    public static let companyArgs            = "/Users/%USER_ID%/companies?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {

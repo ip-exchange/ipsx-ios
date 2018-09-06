@@ -88,9 +88,41 @@ class LegalPersonService {
     
     func getCompanyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        //TODO: GET users/company
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        completionHandler(ServiceResult.success(Company()))
+        RequestBuilder.shared.executeRequest(requestType: .getCompany, urlParams: urlParams, completion: { error, data in
+            
+            guard error == nil else {
+                completionHandler(ServiceResult.failure(error!))
+                return
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(CustomError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            
+            var company: Company?
+            
+            //TODO: certificate !!!
+            
+            if  let name                 = json["name"].string,
+                let address              = json["address"].string,
+                let registrationNumber   = json["registration_number"].string,
+                let vat                  = json["vat"].string,
+                let countryId            = json["country_id"].int,
+                let representativeName   = json["representative_name"].string,
+                let representativeEmail  = json["representative_email"].string,
+                let representativePhone  = json["representative_phone"].string,
+                let certificate          = json["incorporation_certificate"].string {
+                
+                let representative = Representative(name: representativeName, email: representativeEmail, phone: representativePhone)
+                
+                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, country: "\(countryId)", certificateData: nil, representative: representative)
+            }
+            completionHandler(ServiceResult.success(company))
+        })
     }
 }
 

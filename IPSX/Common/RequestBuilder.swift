@@ -79,7 +79,11 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
            
         case .getCompany:
-            request = Request(url:Url.baseApi + Url.companyArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            var url = Url.baseApi + Url.companyArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
             
         case .updateProfile:
             let body = JSON(bodyParams)
@@ -282,9 +286,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
         }
         
-        if let request = request {
+        if let request = request, let url = URL(string: request.url) {
             
-            urlRequest = URLRequest(url:URL(string: request.url)!)
+            urlRequest = URLRequest(url: url)
             urlRequest?.httpMethod = request.httpMethod
             urlRequest?.httpBody = postData
             

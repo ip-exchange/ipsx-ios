@@ -15,16 +15,15 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var phoneRTextField: RichTextFieldView!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    @IBOutlet weak var topBarView: UIView!
-    @IBOutlet weak var topSeparatorView: UIView!
-    
+
     var errorMessage: String? {
         didSet {
             self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -33,7 +32,6 @@ class RepresentativeDetailsController: UIViewController {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     var company: Company?
     var editMode = false
     var onCollectDataComplete: ((_ company: Company?)->())?
