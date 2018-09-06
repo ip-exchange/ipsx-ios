@@ -46,6 +46,7 @@ class EditProfileController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
+    var addCompanyBannerShown = false
     
     private var searchController: SearchViewController?
     let countrySelectionID  = "SearchSegueID"
@@ -64,10 +65,11 @@ class EditProfileController: UIViewController {
     @IBAction func selectIndividualAction(_ sender: Any) {
         
         guard !isLegalPerson else {
-            //TODO (CC): add notification banner with message "This change is not possible at the moment."
+            toast?.showToastAlert("Legal To Individual Downgrade Forbiden Message.".localized, autoHideAfter: 5, type: .info, dismissable: true)
             return
         }
         
+        self.toast?.hideToast()
         self.legalCheckmarkImage.isHidden = true
         self.individualCheckmarkImage.isHidden = false
         self.corporateDetailsView.isHidden = true
@@ -87,12 +89,20 @@ class EditProfileController: UIViewController {
         
         if !isLegalPerson {
             
-            //TODO (CC): display notification banner with message “Please add corporate details”
+            if !addCompanyBannerShown {
+                toast?.showToastAlert("Add corporate details toast message".localized, type: .info, dismissable: true)
+                addCompanyBannerShown = true
+            }
             
             self.saveButton.isEnabled = true
             self.fullContentHeightConstraint.constant += 66
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
         }
+    }
+    
+    @IBAction func corporateDetailsAction(_ sender: Any) {
+        //TODO (CVI): Request here the company details before performing segue
+        self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
     }
     
     override func viewDidLoad() {
@@ -119,6 +129,9 @@ class EditProfileController: UIViewController {
         super.viewWillAppear(animated)
         updateFields()
         detectChangesAndValidity()
+        if individualCheckmarkImage.isHidden && !isLegalPerson {
+            saveButton.isEnabled = true
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
 
@@ -237,6 +250,12 @@ class EditProfileController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
+        if individualCheckmarkImage.isHidden && !isLegalPerson && company == nil {
+            
+            createAndShowCorpDetailsAlert()
+            return
+        }
+        
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
         let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
                                           "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
@@ -255,12 +274,21 @@ class EditProfileController: UIViewController {
             
             //TODO (CVI): Create the request to update the corporate details
         }
-        else {
-            //TODO (CC): UIAlert
-            /*
-             message : “Missing corporate details” and actions: Add (open Corporate Details flow) & Cancel (close alert and ignore user type change -> will remain Individual)
-             */
+    }
+    
+    private func createAndShowCorpDetailsAlert() {
+        let alertController = UIAlertController(title: "Add Company Alert Title".localized, message: "Add Company Alert Body".localized, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
         }
+        
+        let addAction = UIAlertAction(title: "Add".localized, style: .default) { (action:UIAlertAction) in
+            self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(addAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func updateUserProfile(bodyParams: [String: Any]) {

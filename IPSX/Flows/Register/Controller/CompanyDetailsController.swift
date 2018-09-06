@@ -113,6 +113,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     }
     
     @IBAction func nextAction(_ sender: Any) {
+        self.view.endEditing(true)
         guard company?.certificateURL != nil else {
             toast?.showToastAlert("Missing Certificate Message".localized, type: .info, dismissable: false)
             return
