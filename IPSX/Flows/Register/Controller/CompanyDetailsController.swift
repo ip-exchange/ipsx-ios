@@ -46,7 +46,10 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         setupTextViews()
         observreFieldsState()
         if company == nil { company = Company() }
-        else { editMode = true }
+        else {
+            prePopulate()
+            editMode = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,7 +174,16 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         company?.vat = vatRTextField.contentTextField?.text ?? ""
         company?.country = countryRTextField.contentTextField?.text ?? ""
     }
-
+    
+    private func prePopulate() {
+        guard company != nil else { return }
+        nameRTextField.contentTextField?.text = company?.name ?? ""
+        addressRTextField.contentTextField?.text = company?.address ?? ""
+        regNumberRTextField.contentTextField?.text = company?.registrationNumber ?? ""
+        vatRTextField.contentTextField?.text = company?.vat ?? ""
+        countryRTextField.contentTextField?.text = company?.country ?? "Select a country".localized
+    }
+    
     private func updateFields() {
         
         let userInfo = UserManager.shared.userInfo

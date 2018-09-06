@@ -14,6 +14,7 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var emailRtextField: RichTextFieldView!
     @IBOutlet weak var phoneRTextField: RichTextFieldView!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var loadingView: CustomLoadingView!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -24,6 +25,12 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
     
+    var errorMessage: String? {
+        didSet {
+            self.toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+        }
+    }
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -96,9 +103,9 @@ class RepresentativeDetailsController: UIViewController {
     
     func submitCompanyDetails() {
         
-        //loadingView?.startAnimating()
+        loadingView?.startAnimating()
         LegalPersonService().submitLegalDetails(companyDetails: company, editMode: editMode) { result in
-            //self.loadingView?.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 
@@ -138,14 +145,13 @@ extension RepresentativeDetailsController: ErrorPresentable {
         case CustomError.expiredToken:
             
             LoginService().getNewAccessToken(errorHandler: { error in
-                //self.errorMessage = "Generic Error Message".localized
+                self.errorMessage = "Generic Error Message".localized
                 
             }, successHandler: {
                 completion?()
             })
         default:
-            print("todo - cc")
-            //self.errorMessage = "Generic Error Message".localized
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

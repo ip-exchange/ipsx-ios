@@ -604,9 +604,18 @@
                                     <constraint firstItem="ZQY-y2-liR" firstAttribute="centerY" secondItem="JE0-z5-ag0" secondAttribute="centerY" id="yqt-Cm-6eb"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rqT-vE-xIH" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="APN-vt-8NF"/>
+                                    <constraint firstAttribute="width" constant="44" id="tKa-Xv-MfY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="rqT-vE-xIH" firstAttribute="centerX" secondItem="Yb5-4g-Dw8" secondAttribute="centerX" id="17x-zu-0Bw"/>
                             <constraint firstItem="Vgs-a1-30w" firstAttribute="top" secondItem="dEa-wn-NNo" secondAttribute="bottom" constant="26" id="Hb0-eA-7e6"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="trailing" secondItem="7iZ-gQ-6xZ" secondAttribute="trailing" id="Knn-Mo-dNv"/>
                             <constraint firstItem="0za-dh-svN" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" id="ORf-qM-cbo"/>
@@ -622,6 +631,7 @@
                             <constraint firstItem="Vgs-a1-30w" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" constant="16" id="f6p-Gf-hH6"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="trailing" secondItem="v4P-1f-WHc" secondAttribute="trailing" constant="16" id="jON-FR-R4Y"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="top" secondItem="0za-dh-svN" secondAttribute="top" constant="20" id="lk7-Rc-gvC"/>
+                            <constraint firstItem="rqT-vE-xIH" firstAttribute="centerY" secondItem="Yb5-4g-Dw8" secondAttribute="centerY" id="lte-cJ-VcA"/>
                             <constraint firstItem="dEa-wn-NNo" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" id="vCa-aW-2mk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yb5-4g-Dw8"/>
@@ -631,6 +641,7 @@
                         <outlet property="companyRTextField" destination="SQx-VY-oFw" id="bbh-Dt-zf3"/>
                         <outlet property="doneButton" destination="nHR-kn-9sE" id="j5W-WC-BQg"/>
                         <outlet property="emailRtextField" destination="uug-gr-94b" id="wrX-UN-K25"/>
+                        <outlet property="loadingView" destination="rqT-vE-xIH" id="mRh-ZK-t5H"/>
                         <outlet property="phoneRTextField" destination="5Ge-Ef-tqw" id="E5f-Nw-bIz"/>
                         <outlet property="topBarView" destination="7iZ-gQ-6xZ" id="cXF-Tq-ruw"/>
                         <outlet property="topConstraintOutlet" destination="eeb-cg-MxK" id="0CS-ui-xKX"/>
