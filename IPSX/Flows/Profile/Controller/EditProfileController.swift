@@ -101,8 +101,14 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func corporateDetailsAction(_ sender: Any) {
-        //TODO (CVI): Request here the company details before performing segue
-        self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+        self.view.endEditing(true)
+        self.toast?.hideToast()
+        
+        if UserManager.shared.userInfo?.isLegalPerson == true {
+            getCompanyDetails()
+        } else {
+            self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+        }
     }
     
     override func viewDidLoad() {
@@ -151,10 +157,6 @@ class EditProfileController: UIViewController {
                     self.errorMessage = "Generic Error Message".localized
                 }
             })
-        }
-        
-        if UserManager.shared.userInfo?.isLegalPerson == true {
-            getCompanyDetails()
         }
     }
     
