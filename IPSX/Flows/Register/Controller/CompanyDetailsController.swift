@@ -45,10 +45,12 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
-        if company == nil { company = Company() }
-        else {
+        
+        if editMode {
             prePopulate()
-            editMode = true
+        }
+        if company == nil {
+            company = Company()
         }
     }
     

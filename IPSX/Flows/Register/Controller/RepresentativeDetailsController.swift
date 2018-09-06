@@ -53,8 +53,15 @@ class RepresentativeDetailsController: UIViewController {
 
     @IBAction func doneButtonAction(_ sender: Any) {
         
-        collectData()
-        submitCompanyDetails()
+        // Edit User Profile: add company when upgrading from Individual to Legal / edit company details
+        if editMode {
+            self.onCollectDataComplete?(self.company)
+        }
+        // Register flow
+        else {
+            collectData()
+            submitCompanyDetails()
+        }
     }
     
     @IBAction func backButtonAction(_ sender: Any) {
@@ -108,12 +115,7 @@ class RepresentativeDetailsController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
-                
-                //TODO: when should we get the new user info details about company ?
-                
                 DispatchQueue.main.async {
-                    
-                    self.onCollectDataComplete?(self.company)
                     self.navigationController?.dismiss(animated: true)
                 }
                 

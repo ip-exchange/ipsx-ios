@@ -115,6 +115,7 @@ class EditProfileController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         updateFields()
         detectChangesAndValidity()
@@ -137,6 +138,10 @@ class EditProfileController: UIViewController {
                     self.errorMessage = "Generic Error Message".localized
                 }
             })
+        }
+        
+        if UserManager.shared.userInfo?.isLegalPerson == true {
+            getCompanyDetails()
         }
     }
     
@@ -300,12 +305,37 @@ class EditProfileController: UIViewController {
         })
     }
     
+    func getCompanyDetails() {
+        
+        self.loadingView?.startAnimating()
+        LegalPersonService().getCompanyDetails(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            
+            switch result {
+                
+            case .success(let company):
+                UserManager.shared.company = company as? Company
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: self.legalDetailsSegueID, sender: nil)
+                }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getCompany, completion: {
+                    self.getCompanyDetails()
+                })
+            }
+        })
+    }
+    
     private func isEmailValid(text: String) -> Bool {
         let validityTest = NSPredicate(format:"SELF MATCHES %@", RichTextFieldView.validEmailRegex)
         return validityTest.evaluate(with: text)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
             srcController.dismissOnSelect = true
             srcController.countries = UserManager.shared.getUserCountryList()
@@ -316,7 +346,8 @@ class EditProfileController: UIViewController {
         if segue.identifier == legalDetailsSegueID {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
-            companyController?.company = company 
+            companyController?.company = company
+            companyController?.editMode = true
             companyController?.onCollectDataComplete = { company in
                 self.company = company
             }
@@ -399,6 +430,8 @@ extension EditProfileController: ErrorPresentable {
             switch requestType {
             case .userInfo:
                 self.errorMessage = "User Info Error Message".localized
+            case .getCompany:
+                self.errorMessage = "Get Company Details Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized
             }
