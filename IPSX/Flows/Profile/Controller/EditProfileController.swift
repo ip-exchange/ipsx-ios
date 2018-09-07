@@ -377,7 +377,8 @@ class EditProfileController: UIViewController {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company
-            companyController?.editMode = true
+            companyController?.editMode = company != nil
+            companyController?.lastStepForLegalRegistration = false
             companyController?.onCollectDataComplete = { company in
                 self.company = company
             }

@@ -14,19 +14,19 @@ class Company {
     var address: String
     var registrationNumber: String
     var vat: String
-    var country: String
-    var certificateData: Data?
+    var countryName: String
+    var certificateFilename: String
     var certificateURL: URL?
     var representative: Representative?
     
-    init(name: String, address: String, registrationNumber: String, vat: String, country: String, certificateData: Data?, representative: Representative? = nil) {
+    init(name: String, address: String, registrationNumber: String, vat: String, countryName: String, certificateFilename: String, representative: Representative? = nil) {
         
         self.name = name
         self.address = address
         self.registrationNumber = registrationNumber
         self.vat = vat
-        self.country = country
-        self.certificateData = certificateData
+        self.countryName = countryName
+        self.certificateFilename = certificateFilename
         self.representative = representative
     }
     
@@ -36,9 +36,10 @@ class Company {
         self.address = ""
         self.registrationNumber = ""
         self.vat = ""
-        self.country = ""
-        self.certificateData = Data()
-        self.representative = nil
+        self.countryName = ""
+        self.certificateFilename = ""
         self.certificateURL = nil
+        self.representative = nil
+        
     }
 }

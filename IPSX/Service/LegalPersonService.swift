@@ -14,7 +14,7 @@ class LegalPersonService {
         
     func submitLegalDetails(companyDetails: Company?, editMode: Bool = false, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.country) ?? ""
+        let countryID = UserManager.shared.getCountryId(countryName: companyDetails?.countryName) ?? ""
         
         let params: [String: String] = ["name" : companyDetails?.name ?? "",
                                        "address" : companyDetails?.address ?? "",
@@ -30,15 +30,23 @@ class LegalPersonService {
         
         let url = (Url.baseApi + Url.submitLegalArgs).replaceKeysWithValues(paramsDict: urlParams)
         let mimetype = mimeType(for: companyDetails?.certificateURL)
-        let urlString = companyDetails?.certificateURL?.absoluteString ?? ""
-        let filename = urlString.components(separatedBy: "/").last ?? ""
+        let filename = companyDetails?.certificateFilename ?? ""
         
         upload( multipartFormData: { multipartFormData in
-                multipartFormData.append(companyDetails?.certificateData ?? Data(), withName: "incorporation_certificate", fileName: filename, mimeType: mimetype)
             
-                for (key, value) in params {
-                    multipartFormData.append(value.encodedData, withName: key)
+            if let url = companyDetails?.certificateURL {
+                do {
+                    let documentData = try Data(contentsOf: url)
+                    multipartFormData.append(documentData, withName: "incorporation_certificate", fileName: filename, mimeType: mimetype)
+                    
+                    for (key, value) in params {
+                        multipartFormData.append(value.encodedData, withName: key)
+                    }
                 }
+                catch {
+                    //TODO
+                }
+            }
         },
             to: url,
             method: editMode ? .patch : .post,
@@ -118,10 +126,10 @@ class LegalPersonService {
                 let certificate          = json["incorporation_certificate"].string {
                 
                 let representative = Representative(name: representativeName, email: representativeEmail, phone: representativePhone)
-                
-                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, country: "\(countryId)", certificateData: nil, representative: representative)
+                let countryName = UserManager.shared.getCountryName(countryID: "\(countryId)") ?? ""
+                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: certificate, representative: representative)
             }
-            completionHandler(ServiceResult.success(company))
+            completionHandler(ServiceResult.success(company as Any))
         })
     }
 }

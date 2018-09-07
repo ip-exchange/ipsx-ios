@@ -34,6 +34,7 @@ class RepresentativeDetailsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var company: Company?
     var editMode = false
+    var lastStepForLegalRegistration = true
     var onCollectDataComplete: ((_ company: Company?)->())?
     
     private var fieldsStateDic: [String : Bool] = ["company" : false, "email" : false, "phone" : false]
@@ -51,14 +52,16 @@ class RepresentativeDetailsController: UIViewController {
 
     @IBAction func doneButtonAction(_ sender: Any) {
         
-        // Edit User Profile: add company when upgrading from Individual to Legal / edit company details
-        if editMode {
-            self.onCollectDataComplete?(self.company)
-        }
-        // Register flow
-        else {
+        if lastStepForLegalRegistration {
             collectData()
             submitCompanyDetails()
+        }
+        /*
+             Edit User Profile: add company when upgrading from Individual to Legal / edit existing company details
+             Pass company details on completion for later submit
+         */
+        else {
+            self.onCollectDataComplete?(self.company)
         }
     }
     

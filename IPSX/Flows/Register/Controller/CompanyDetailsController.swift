@@ -20,16 +20,15 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var stackBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var choosenFileLabel: UILabel!
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    @IBOutlet weak var topBarView: UIView!
-    @IBOutlet weak var topSeparatorView: UIView!
-    
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -40,8 +39,10 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
     var editMode = false
+    var lastStepForLegalRegistration = true
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
@@ -57,7 +58,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
 
@@ -100,6 +100,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
             collectData()
             repController.company = company
             repController.editMode = editMode
+            repController.lastStepForLegalRegistration = lastStepForLegalRegistration
             repController.onCollectDataComplete = self.onCollectDataComplete 
         }
         
@@ -122,6 +123,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
+        
         self.view.endEditing(true)
         self.navigationController?.dismiss(animated: true)
     }
@@ -175,7 +177,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         company?.address = addressRTextField.contentTextField?.text ?? ""
         company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
         company?.vat = vatRTextField.contentTextField?.text ?? ""
-        company?.country = countryRTextField.contentTextField?.text ?? ""
+        company?.countryName = countryRTextField.contentTextField?.text ?? ""
     }
     
     private func prePopulate() {
@@ -186,12 +188,12 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         self.fieldsStateDic["regNum"] = true
         self.fieldsStateDic["vat"] = true
         
-        choosenFileLabel.text = company?.certificateURL?.lastPathComponent ?? "Choose file to upload".localized
+        choosenFileLabel.text = company?.certificateFilename ?? "Choose file to upload".localized
         nameRTextField.contentTextField?.text = company?.name ?? ""
         addressRTextField.contentTextField?.text = company?.address ?? ""
         regNumberRTextField.contentTextField?.text = company?.registrationNumber ?? ""
         vatRTextField.contentTextField?.text = company?.vat ?? ""
-        countryRTextField.contentTextField?.text = company?.country ?? "Select a country".localized
+        countryRTextField.contentTextField?.text = company?.countryName ?? "Select a country".localized
     }
     
     private func updateFields() {
@@ -231,19 +233,12 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         
         if controller.documentPickerMode == .import {
-        
-            do {
-                let documentData = try Data(contentsOf: url)
-                company?.certificateData = documentData
-                company?.certificateURL = url
-                choosenFileLabel.text = url.lastPathComponent
-            }
-            catch {
-                //TODO
-            }
+            
+            company?.certificateURL = url
+            company?.certificateFilename = url.lastPathComponent
+            choosenFileLabel.text = company?.certificateFilename
         }
     }
-    
 }
 
 extension CompanyDetailsController: ToastAlertViewPresentable {
