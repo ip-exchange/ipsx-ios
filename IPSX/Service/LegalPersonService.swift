@@ -94,7 +94,33 @@ class LegalPersonService {
         return "application/octet-stream"
     }
     
+    ///
+    /// This requires the user countries list to be loaded before
+    /// - company call from API returns country ID and we need to map the country name
+    ///
+    
     func getCompanyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        if UserManager.shared.userCountries == nil {
+            
+            UserInfoService().getUserCountryList(completionHandler: { result in
+                
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    self.companyDetails(completionHandler: completionHandler)
+                    
+                case .failure(_):
+                    self.companyDetails(completionHandler: completionHandler)
+                }
+            })
+        }
+        else {
+            companyDetails(completionHandler: completionHandler)
+        }
+    }
+    
+    fileprivate func companyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
@@ -110,10 +136,7 @@ class LegalPersonService {
                 return
             }
             let json = JSON(data: data)
-            
             var company: Company?
-            
-            //TODO: certificate !!!
             
             if  let name                 = json["name"].string,
                 let address              = json["address"].string,
@@ -125,9 +148,11 @@ class LegalPersonService {
                 let representativePhone  = json["representative_phone"].string,
                 let certificate          = json["incorporation_certificate"].string {
                 
+                let filename = certificate.components(separatedBy: "/").last ?? ""
                 let representative = Representative(name: representativeName, email: representativeEmail, phone: representativePhone)
                 let countryName = UserManager.shared.getCountryName(countryID: "\(countryId)") ?? ""
-                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: certificate, representative: representative)
+                
+                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: filename, representative: representative)
             }
             completionHandler(ServiceResult.success(company as Any))
         })

@@ -61,24 +61,13 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
 
+        self.nextButton.isEnabled = self.canContinue()
+        
         if let representative = representativeController?.company?.representative {
             company?.representative = representative
         }
-        if UserManager.shared.userCountries == nil {
-            
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.userCountries = countryList as? [[String: String]]
-                    DispatchQueue.main.async { self.updateFields() }
-                    
-                case .failure(_): break
-                }
-            })
-        } else {
-            self.updateFields()
-        }
+        
+        //TODO (CC) call self.updateFields() after select country -->> create completion bblock
     }
     
     override func viewDidLayoutSubviews() {
@@ -115,7 +104,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     
     @IBAction func nextAction(_ sender: Any) {
         self.view.endEditing(true)
-        guard company?.certificateURL != nil else {
+        guard company?.certificateFilename != nil else {
             toast?.showToastAlert("Missing Certificate Message".localized, type: .info, dismissable: false)
             return
         }
@@ -138,13 +127,14 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     
     private func setupTextViews() {
         //TODO: Add the proper regex when defined by design
-        nameRTextField.validationRegex          = RichTextFieldView.validName
-        nameRTextField.nextResponderField       = addressRTextField.contentTextField
-        addressRTextField.validationRegex       = RichTextFieldView.validName
-        addressRTextField.nextResponderField    = regNumberRTextField.contentTextField
-        regNumberRTextField.validationRegex     = RichTextFieldView.validName
-        regNumberRTextField.nextResponderField  = vatRTextField.contentTextField
-        vatRTextField.validationRegex           = RichTextFieldView.validName
+        nameRTextField.validationRegex           = RichTextFieldView.validName
+        nameRTextField.nextResponderField        = addressRTextField.contentTextField
+        addressRTextField.validationRegex        = RichTextFieldView.validName
+        addressRTextField.nextResponderField     = regNumberRTextField.contentTextField
+        regNumberRTextField.validationRegex      = RichTextFieldView.validName
+        regNumberRTextField.nextResponderField   = vatRTextField.contentTextField
+        vatRTextField.validationRegex            = RichTextFieldView.validName
+        countryRTextField.contentTextField?.text = "Select a country".localized
     }
     
     private func observreFieldsState() {
@@ -196,15 +186,11 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         countryRTextField.contentTextField?.text = company?.countryName ?? "Select a country".localized
     }
     
-    private func updateFields() {
-        
-        let userInfo = UserManager.shared.userInfo
-        var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
+    private func updateUI() {
         
         if let selectedCountry = self.searchController?.selectedCountry {
-            countryName = selectedCountry
+            self.countryRTextField.contentTextField?.text = selectedCountry
         }
-        self.countryRTextField.contentTextField?.text = countryName ?? "Select a country".localized
         self.nextButton.isEnabled = self.canContinue()
     }
 

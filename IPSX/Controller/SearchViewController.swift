@@ -10,32 +10,27 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let cellID = "SearchCellID"
-    let newProxyFlowID = "NewProxyFlowSegueID"
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var loadingView: CustomLoadingView!
-    
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    
+    let cellID = "SearchCellID"
+    let newProxyFlowID = "NewProxyFlowSegueID"
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var errorMessage: String? {
         didSet { self.toast?.showToastAlert(self.errorMessage) }
     }
 
-    public var dismissOnSelect = false
-    
+    var dismissOnSelect = false
     var isProxyFlow: Bool? = false
     var proxyPack: ProxyPack?
     var proxy: Proxy?
@@ -44,6 +39,8 @@ class SearchViewController: UIViewController {
     var selectedCountry: String?
     
     private var countriesRefreshed = false
+    
+    //TODO (CC): add completion to pass selectedCountry
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -224,7 +221,6 @@ extension SearchViewController: UITextFieldDelegate {
         textField.returnKeyType = .done
         return true
     }
-    
 }
 
 extension SearchViewController: ToastAlertViewPresentable {
