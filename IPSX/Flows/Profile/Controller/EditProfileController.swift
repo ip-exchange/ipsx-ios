@@ -47,6 +47,7 @@ class EditProfileController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
     var addCompanyBannerShown = false
+    var editMode = false
     
     private var searchController: SearchViewController?
     let countrySelectionID  = "SearchSegueID"
@@ -273,8 +274,7 @@ class EditProfileController: UIViewController {
             let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
             let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
             updateUserProfile(bodyParams: bodyParams)
-            
-            //TODO (CVI): Create the request to update the corporate details
+            submitCompanyDetails()
         }
     }
     
@@ -359,6 +359,25 @@ class EditProfileController: UIViewController {
         })
     }
     
+    func submitCompanyDetails() {
+        
+        loadingView?.startAnimating()
+        LegalPersonService().submitLegalDetails(companyDetails: company, editMode: editMode) { result in
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.navigationController?.dismiss(animated: true)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
+                    self.submitCompanyDetails()
+                })
+            }
+        }
+    }
+    
     private func isEmailValid(text: String) -> Bool {
         let validityTest = NSPredicate(format:"SELF MATCHES %@", RichTextFieldView.validEmailRegex)
         return validityTest.evaluate(with: text)
@@ -377,7 +396,8 @@ class EditProfileController: UIViewController {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company
-            companyController?.editMode = company != nil
+            self.editMode = company != nil
+            companyController?.editMode = self.editMode
             companyController?.lastStepForLegalRegistration = false
             companyController?.onCollectDataComplete = { company in
                 self.company = company

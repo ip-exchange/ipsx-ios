@@ -38,6 +38,13 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
 
     var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
+    var country: String? {
+        didSet {
+            DispatchQueue.main.async {
+                self.countryRTextField.contentTextField?.text = self.country
+            }
+        }
+    }
     var editMode = false
     var lastStepForLegalRegistration = true
     
@@ -66,8 +73,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         if let representative = representativeController?.company?.representative {
             company?.representative = representative
         }
-        
-        //TODO (CC) call self.updateFields() after select country -->> create completion bblock
     }
     
     override func viewDidLayoutSubviews() {
@@ -183,7 +188,9 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         addressRTextField.contentTextField?.text = company?.address ?? ""
         regNumberRTextField.contentTextField?.text = company?.registrationNumber ?? ""
         vatRTextField.contentTextField?.text = company?.vat ?? ""
-        countryRTextField.contentTextField?.text = company?.countryName ?? "Select a country".localized
+        
+        country = company?.countryName ?? "Select a country".localized
+        countryRTextField.contentTextField?.text = country
     }
     
     private func updateUI() {

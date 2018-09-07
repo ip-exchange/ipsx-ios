@@ -40,7 +40,7 @@ class SearchViewController: UIViewController {
     
     private var countriesRefreshed = false
     
-    //TODO (CC): add completion to pass selectedCountry
+    //TODO (CC): Refactor country selection -> add completion to pass selectedCountry
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,8 +116,10 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == newProxyFlowID, let nextVC = segue.destination as? ProxySummaryViewController {
-            nextVC.proxy = proxy
+        
+        if segue.identifier == newProxyFlowID {
+            let nextVC = segue.destination as? ProxySummaryViewController
+            nextVC?.proxy = proxy
         }
     }
     
@@ -166,8 +168,13 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCountry = filteredCountries?[indexPath.item]
+        
         if dismissOnSelect {
             if let nav = navigationController {
+            
+                if let companyController = nav.viewControllers.first as? CompanyDetailsController {
+                    companyController.country = selectedCountry
+                }
                 nav.popViewController(animated: true)
             } else {
                 dismiss(animated: true)

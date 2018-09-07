@@ -84,6 +84,7 @@ class RepresentativeDetailsController: UIViewController {
     }
     
     private func observreFieldsState() {
+        
         self.doneButton.isEnabled = false
         companyRTextField.onFieldStateChange = { state in
             self.fieldsStateDic["company"] = state
