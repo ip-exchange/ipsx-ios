@@ -44,7 +44,7 @@ class LegalPersonService {
                     }
                 }
                 catch {
-                    //TODO
+                    completionHandler(ServiceResult.failure(CustomError.notSuccessful))
                 }
             }
         },
@@ -65,13 +65,6 @@ class LegalPersonService {
                 }
             }
         )
-    }
-    
-    func apendFormDataString(body: NSMutableData, name: String, value: String?)  {
-        
-        body.append("\r\n--\(boundary)\r\n".encodedData)
-        body.append((contentDisposition.replaceKeysWithValues(paramsDict: ["PARAMETER_NAME" : name]) + "\r\n\r\n").encodedData)
-        body.append((value ?? "" + "\r\n").encodedData)
     }
     
     /// Determine mime type on the basis of extension of a file.
