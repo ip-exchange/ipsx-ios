@@ -117,6 +117,8 @@ class LegalPersonService {
         }
     }
     
+    //TODO (CC): use GET /users/{id}/intentions for company details instead of GET /users/{id}/companies
+    
     fileprivate func companyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,

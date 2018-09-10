@@ -42,6 +42,15 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var corporateDetailsView: RoundedView!
     
     var company: Company? = UserManager.shared.company
+    
+    /*
+        TODO (CC): display individual / legal bbased on GET /users/{id}/intentions response -> "company" -> "status"
+        Note that, based on our discussion with the team:
+            - for Legal person with company details in pending we should display Legal & pending validation (How?)
+            - we decided to block the user for using the app if he is registered as Legal and the validation is in pending (How?)
+            - for update from Individual -> Legal with pending company validation: probably the user should remain individual, but the user should be notified that the company validation is in pending
+     */
+    
     var isLegalPerson = UserManager.shared.userInfo?.isLegalPerson ?? false
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -117,7 +126,7 @@ class EditProfileController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
-        prepareUI()        
+        prepareUI()
     }
     
     @objc func appWillEnterForeground() {
@@ -272,10 +281,11 @@ class EditProfileController: UIViewController {
                     let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
                     self.updateUserProfile(bodyParams: bodyParams)
                 }
-                else {
-                    self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
-                }
+                self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
             }
+        }
+        else {
+            self.updateUserProfile(bodyParams: bodyParams)
         }
     }
     
