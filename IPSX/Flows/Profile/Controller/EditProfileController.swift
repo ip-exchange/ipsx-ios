@@ -120,6 +120,10 @@ class EditProfileController: UIViewController {
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
         prepareUI()
+        
+        //TODO (CC)
+        self.saveButton.isEnabled = true
+        
     }
     
     @objc func appWillEnterForeground() {
@@ -248,13 +252,13 @@ class EditProfileController: UIViewController {
             break
         }
         
-        saveButton.isEnabled = dataChanged
+        //TODO (CC)
+        //saveButton.isEnabled = dataChanged
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
         if individualCheckmarkImage.isHidden && !isLegalPerson && company == nil {
-            
             createAndShowCorpDetailsAlert()
             return
         }
@@ -266,15 +270,21 @@ class EditProfileController: UIViewController {
                                           "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "country_id": countryID as Any]
         
-        updateUserProfile(bodyParams: bodyParams)
-        
         if company != nil {
             
-            let legalPersonAfterChange = !isLegalPerson
-            let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
-            let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
-            updateUserProfile(bodyParams: bodyParams)
-            submitCompanyDetails()
+            submitCompanyDetails() { success in
+                
+                if success {
+                    
+                    let legalPersonAfterChange = !self.isLegalPerson
+                    let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
+                    let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
+                    self.updateUserProfile(bodyParams: bodyParams)
+                }
+                else {
+                    self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
+                }
+            }
         }
     }
     
@@ -293,7 +303,7 @@ class EditProfileController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func updateUserProfile(bodyParams: [String: Any]) {
+    func updateUserProfile(bodyParams: [String: Any], companyError: Bool = false) {
         
         loadingView?.startAnimating()
         UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
@@ -303,8 +313,11 @@ class EditProfileController: UIViewController {
             case .success(_):
                 self.getNewUserInfo() {
                     DispatchQueue.main.async {
-                        self.onDismiss?(true)
-                        self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
+                        
+                        if !companyError {
+                            self.onDismiss?(true)
+                            self.performSegue(withIdentifier: "showTabBarSegueID", sender: nil)
+                        }
                     }
                 }
             case .failure(let error):
@@ -359,20 +372,18 @@ class EditProfileController: UIViewController {
         })
     }
     
-    func submitCompanyDetails() {
+    func submitCompanyDetails(completion: @escaping (Bool) -> ()) {
         
         loadingView?.startAnimating()
         LegalPersonService().submitLegalDetails(companyDetails: company, editMode: editMode) { result in
             self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
-                DispatchQueue.main.async {
-                    self.navigationController?.dismiss(animated: true)
-                }
+                completion(true)
                 
             case .failure(let error):
                 self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
-                    self.submitCompanyDetails()
+                    self.submitCompanyDetails(completion: completion)
                 })
             }
         }

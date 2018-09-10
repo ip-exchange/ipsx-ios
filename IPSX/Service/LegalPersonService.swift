@@ -56,8 +56,12 @@ class LegalPersonService {
                 case .success(let upload, _, _):
                     
                     upload.responseJSON { response in
-                        print("SUCCESS RESPONSE: \(response)")
-                        completionHandler(ServiceResult.success(true))
+                        if response.response?.statusCode == 200 {
+                            completionHandler(ServiceResult.success(true))
+                        }
+                        else {
+                            completionHandler(ServiceResult.failure(CustomError.notSuccessful))
+                        }
                     }
                     
                 case .failure(let encodingError):

@@ -37,17 +37,25 @@ class RepresentativeDetailsController: UIViewController {
     var lastStepForLegalRegistration = true
     var onCollectDataComplete: ((_ company: Company?)->())?
     
-    private var fieldsStateDic: [String : Bool] = ["company" : false, "email" : false, "phone" : false]
+    private var fieldsStateDic: [String : Bool] = ["repName" : false, "repEmail" : false, "repPhone" : false]
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
     }
     
     override func viewDidLayoutSubviews() {
+        
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.doneButton.isEnabled = self.canContinue()
     }
 
     @IBAction func doneButtonAction(_ sender: Any) {
@@ -62,6 +70,7 @@ class RepresentativeDetailsController: UIViewController {
          */
         else {
             self.onCollectDataComplete?(self.company)
+            self.dismiss(animated: true)
         }
     }
     
@@ -81,25 +90,33 @@ class RepresentativeDetailsController: UIViewController {
         companyRTextField.contentTextField?.text = company?.representative?.name
         emailRtextField.contentTextField?.text = company?.representative?.email
         phoneRTextField.contentTextField?.text = company?.representative?.phone
+        
+        fieldsStateDic["repName"] = company?.representative?.name != nil
+        fieldsStateDic["repEmail"] = company?.representative?.email != nil
+        fieldsStateDic["repPhone"] = company?.representative?.phone != nil
     }
     
     private func observreFieldsState() {
         
         self.doneButton.isEnabled = false
         companyRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["company"] = state
+            self.fieldsStateDic["repName"] = state
             self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
         }
         emailRtextField.onFieldStateChange = { state in
-            self.fieldsStateDic["email"] = state
+            self.fieldsStateDic["repEmail"] = state
             self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
         }
         phoneRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["phone"] = state
+            self.fieldsStateDic["repPhone"] = state
             self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
         }
     }
 
+    private func canContinue() -> Bool {
+        return !self.fieldsStateDic.values.contains(false)
+    }
+    
     private func collectData() {
         
         let name  = companyRTextField.contentTextField?.text ?? ""
