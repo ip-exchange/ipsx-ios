@@ -117,11 +117,7 @@ class EditProfileController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
-        prepareUI()
-        
-        //TODO (CC)
-        self.saveButton.isEnabled = true
-        
+        prepareUI()        
     }
     
     @objc func appWillEnterForeground() {
@@ -249,9 +245,6 @@ class EditProfileController: UIViewController {
         default:
             break
         }
-        
-        //TODO (CC)
-        //saveButton.isEnabled = dataChanged
     }
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
