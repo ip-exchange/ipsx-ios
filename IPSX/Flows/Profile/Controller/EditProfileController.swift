@@ -75,11 +75,9 @@ class EditProfileController: UIViewController {
         self.individualCheckmarkImage.isHidden = false
         self.corporateDetailsView.isHidden = true
         
-        if isLegalPerson {
-            self.saveButton.isEnabled = true
-            self.fullContentHeightConstraint.constant -= 66
-            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
-        }
+        self.saveButton.isEnabled = true
+        self.fullContentHeightConstraint.constant -= 66
+        UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
     }
     
     @IBAction func selectLegalAction(_ sender: Any) {
