@@ -26,10 +26,9 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
-    
-    //TODO (CVI): refactor this
-    var legalPerson: Bool = false
     var userDestiny: DestinyType?
+    var userType: UserType?
+    
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
@@ -157,13 +156,13 @@ class RegisterTermsController: UIViewController {
     @IBAction func individualCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         legalCheckButton.isSelected = false
-        legalPerson = false
+        userType = .individual
     }
     
     @IBAction func legalCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         individualCheckButton.isSelected = false
-        legalPerson = sender.isSelected
+        userType = .legal
     }
     
     func register(ipAddress: String) {
@@ -199,10 +198,8 @@ class RegisterTermsController: UIViewController {
     
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
-        let type = legalPerson ? UserType.legal : UserType.individual
-        
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: type.rawValue, destiny: userDestiny?.rawValue, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: userType?.rawValue, destiny: userDestiny?.rawValue, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
