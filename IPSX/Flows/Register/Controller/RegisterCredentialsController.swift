@@ -82,9 +82,9 @@ class RegisterCredentialsController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "showRegistrationTermsSegueID" {
+        if segue.identifier == "showChooseDestinySegueID" {
             if let email = emailRichTextView.contentTextField?.text, let password = passRichTextField.contentTextField?.text {
-                let nextScreen = segue.destination as? RegisterTermsController
+                let nextScreen = segue.destination as? ChooseDestinyViewController
                 nextScreen?.userCredentials = ["email": email,
                                                "pass" : password]
             }

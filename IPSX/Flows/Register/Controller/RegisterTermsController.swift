@@ -16,7 +16,6 @@ class RegisterTermsController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var readWPLabel: UILabel!
     @IBOutlet weak var registerButton: RoundedButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -27,8 +26,10 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
-    var legalPerson: Bool = false
     
+    //TODO (CVI): refactor this
+    var legalPerson: Bool = false
+    var userDestiny: DestinyType?
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
     var errorMessage: String? {
@@ -198,10 +199,10 @@ class RegisterTermsController: UIViewController {
     
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
-        let type = legalPerson ? 1 : 0
-        self.loadingView?.startAnimating()
+        let type = legalPerson ? UserType.legal : UserType.individual
         
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: type, completionHandler: { result in
+        self.loadingView?.startAnimating()
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: type.rawValue, destiny: userDestiny?.rawValue, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {

@@ -9,7 +9,7 @@
 import Foundation
 
 /// CURRENT ENVIRONMENT (DEV / DEMO):
-let environment = Environment.demo
+let environment = Environment.dev
 
 enum Environment: String {
     case dev = "DEV"
