@@ -27,8 +27,8 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
-    var userDestiny: DestinyType?
-    var userType: UserType?
+    var userDestiny: DestinyType = .requester
+    var userType: UserType = .individual
     var isFbFlow = false
     
     private var statesDic: [String : Bool] = [:]
@@ -196,7 +196,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -213,7 +213,7 @@ class RegisterTermsController: UIViewController {
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: userType?.rawValue, destiny: userDestiny?.rawValue, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: userType, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
