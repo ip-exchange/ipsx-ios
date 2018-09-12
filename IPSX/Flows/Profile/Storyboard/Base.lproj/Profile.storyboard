@@ -327,16 +327,23 @@
                                                 <rect key="frame" x="14" y="560" width="348" height="66"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lawBook" translatesAutoresizingMaskIntoConstraints="NO" id="gjE-Za-mhh">
-                                                        <rect key="frame" x="19" y="18" width="29" height="30"/>
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="corporatePending" translatesAutoresizingMaskIntoConstraints="NO" id="gjE-Za-mhh">
+                                                        <rect key="frame" x="19" y="16" width="33" height="37"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <color key="tintColor" red="0.1650000066" green="0.67450980390000004" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Corporate Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hem-az-Ylq">
-                                                        <rect key="frame" x="69" y="23" width="269" height="20"/>
+                                                        <rect key="frame" x="69" y="13" width="269" height="20"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your corporate data is being reviewed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yzO-qh-WrS">
+                                                        <rect key="frame" x="69" y="30" width="269" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKw-hd-DZ6">
@@ -443,6 +450,8 @@
                     <connections>
                         <outlet property="changePasswordHolderView" destination="3E1-3i-z73" id="pQX-3x-01P"/>
                         <outlet property="corporateDetailsView" destination="HxG-Si-blr" id="2bW-HC-51T"/>
+                        <outlet property="corporateStatusImageView" destination="gjE-Za-mhh" id="Nms-PF-zEp"/>
+                        <outlet property="corporateStatusLabel" destination="yzO-qh-WrS" id="r2d-bT-beG"/>
                         <outlet property="emailTextField" destination="0Ww-Hu-VEN" id="8Zh-eE-Unl"/>
                         <outlet property="firstNameTextField" destination="gAm-WK-x0E" id="Puk-iJ-T7f"/>
                         <outlet property="fullContentHeightConstraint" destination="nUE-jp-x0y" id="S5J-u0-3x3"/>
@@ -741,7 +750,7 @@
         <image name="CheckLarge" width="56" height="41"/>
         <image name="CloseBut" width="27" height="27"/>
         <image name="RightDisclosure" width="9" height="16"/>
+        <image name="corporatePending" width="33" height="36"/>
         <image name="keyIcon" width="25" height="26"/>
-        <image name="lawBook" width="24" height="30"/>
     </resources>
 </document>

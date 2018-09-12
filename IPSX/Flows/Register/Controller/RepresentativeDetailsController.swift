@@ -17,6 +17,7 @@ class RepresentativeDetailsController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
+    @IBOutlet weak var signWithAnotherAccount: UIButton!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -34,9 +35,11 @@ class RepresentativeDetailsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var company: Company?
     var editMode = false
+    var nonDismissable = true
     var lastStepForLegalRegistration = true
     var onCollectDataComplete: ((_ company: Company?)->())?
-    
+    var firstLoginFlow = false
+
     private var fieldsStateDic: [String : Bool] = ["repName" : false, "repEmail" : false, "repPhone" : false]
 
     override func viewDidLoad() {
@@ -44,6 +47,7 @@ class RepresentativeDetailsController: UIViewController {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
+        signWithAnotherAccount.isHidden = !nonDismissable
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,6 +81,11 @@ class RepresentativeDetailsController: UIViewController {
     @IBAction func backButtonAction(_ sender: Any) {
         collectData()
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func signWithAnotherAccount(_ sender: Any) {
+        UserManager.shared.logout()
+        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
     }
     
     private func setupTextViews() {
@@ -135,7 +144,11 @@ class RepresentativeDetailsController: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
-                    self.navigationController?.dismiss(animated: true)
+                    if self.firstLoginFlow {
+                        self.performSegue(withIdentifier: "CongratsSegueID", sender: nil)
+                    } else {
+                        self.navigationController?.dismiss(animated: true)
+                    }
                 }
                 
             case .failure(let error):

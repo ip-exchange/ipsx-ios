@@ -117,8 +117,6 @@ class LegalPersonService {
         }
     }
     
-    //TODO (CC): use GET /users/{id}/intentions for company details instead of GET /users/{id}/companies
-    
     fileprivate func companyDetails(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
@@ -135,23 +133,26 @@ class LegalPersonService {
                 return
             }
             let json = JSON(data: data)
+            let jsonCompany = json["company"]
+            
             var company: Company?
             
-            if  let name                 = json["name"].string,
-                let address              = json["address"].string,
-                let registrationNumber   = json["registration_number"].string,
-                let vat                  = json["vat"].string,
-                let countryId            = json["country_id"].int,
-                let representativeName   = json["representative_name"].string,
-                let representativeEmail  = json["representative_email"].string,
-                let representativePhone  = json["representative_phone"].string,
-                let certificate          = json["incorporation_certificate"].string {
+            if  let name                 = jsonCompany["name"].string,
+                let address              = jsonCompany["address"].string,
+                let registrationNumber   = jsonCompany["registration_number"].string,
+                let vat                  = jsonCompany["vat"].string,
+                let countryId            = jsonCompany["country_id"].int,
+                let representativeName   = jsonCompany["representative_name"].string,
+                let representativeEmail  = jsonCompany["representative_email"].string,
+                let representativePhone  = jsonCompany["representative_phone"].string,
+                let certificate          = jsonCompany["incorporation_certificate"].string,
+                let companyStatusString  = jsonCompany["status"].string {
                 
                 let filename = certificate.components(separatedBy: "/").last ?? ""
                 let representative = Representative(name: representativeName, email: representativeEmail, phone: representativePhone)
                 let countryName = UserManager.shared.getCountryName(countryID: "\(countryId)") ?? ""
                 
-                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: filename, representative: representative)
+                company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: filename, representative: representative, statusString: companyStatusString)
             }
             completionHandler(ServiceResult.success(company as Any))
         })

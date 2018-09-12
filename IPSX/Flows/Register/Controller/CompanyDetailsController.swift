@@ -22,6 +22,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet weak var choosenFileLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -31,6 +32,8 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var nonDismissable = true
+    var firstLoginFlow = false
 
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
@@ -60,6 +63,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         if company == nil {
             company = Company()
         }
+        closeButton.isHidden = nonDismissable
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +76,9 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         
         if let representative = representativeController?.company?.representative {
             company?.representative = representative
+        }
+        if let selectedCountry = searchController?.selectedCountry {
+            countryRTextField.contentTextField?.text = selectedCountry
         }
     }
     
@@ -93,6 +100,8 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
             representativeController = repController
             collectData()
             repController.company = company
+            repController.nonDismissable = self.nonDismissable
+            repController.firstLoginFlow = self.firstLoginFlow
             repController.editMode = editMode
             repController.lastStepForLegalRegistration = lastStepForLegalRegistration
             repController.onCollectDataComplete = self.onCollectDataComplete 

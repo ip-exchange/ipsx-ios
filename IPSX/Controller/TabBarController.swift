@@ -53,7 +53,7 @@ class TabBarViewController: UITabBarController {
             UserManager.shared.hasPerformedLogout = false
         }
         
-        if !hasPresentedLegalFlow && (UserManager.shared.userInfo?.isLegalPerson == true && UserManager.shared.company == nil) {
+        if !hasPresentedLegalFlow && (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil) {
             hasPresentedLegalFlow = true
             self.performSegue(withIdentifier: "CollectLegalDetailsSegueID", sender: nil)
         }

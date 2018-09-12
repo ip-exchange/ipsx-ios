@@ -53,7 +53,7 @@ struct UserInfo {
     var source: String?
     var refferalCode: String?
     var deleteAccountDate: Date?
-    var isLegalPerson: Bool
+    var hasOptedForLegal: Bool
     
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
     init(firstName: String = "", middleName: String = "",lastName: String = "",
@@ -70,7 +70,7 @@ struct UserInfo {
         self.socialName    = socialName
         self.source        = source
         self.refferalCode  = refferalCode
-        self.isLegalPerson = isLegalPerson
+        self.hasOptedForLegal = isLegalPerson
         
         self.deleteAccountDate = deleteAccountDate
         self.kycStatus = KycStatus(rawValue: kycStatus) ?? .Registered

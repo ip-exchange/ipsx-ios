@@ -41,6 +41,9 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var legalCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     
+    @IBOutlet weak var corporateStatusImageView: UIImageView!
+    @IBOutlet weak var corporateStatusLabel: UILabel!
+    
     var company: Company? = UserManager.shared.company
     
     /*
@@ -51,7 +54,7 @@ class EditProfileController: UIViewController {
             - for update from Individual -> Legal with pending company validation: probably the user should remain individual, but the user should be notified that the company validation is in pending
      */
     
-    var isLegalPerson = UserManager.shared.userInfo?.isLegalPerson ?? false
+    var isLegalPerson = UserManager.shared.userInfo?.hasOptedForLegal ?? false
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
@@ -112,7 +115,7 @@ class EditProfileController: UIViewController {
         self.view.endEditing(true)
         self.toast?.hideToast()
         
-        if UserManager.shared.userInfo?.isLegalPerson == true {
+        if UserManager.shared.userInfo?.hasOptedForLegal == true {
             getCompanyDetails()
         } else {
             self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
@@ -253,6 +256,33 @@ class EditProfileController: UIViewController {
             dataChanged = dataChanged || (lastNameTextField.text  != userInfo?.lastName)
         default:
             break
+        }
+        
+        if let company = self.company {
+            var imageName = "corporatePending"
+            var stateText = "Your corporate data is being reviewed".localized
+            switch company.status {
+            case .pending:
+                imageName = "corporatePending"
+                stateText = "Your corporate data is being reviewed".localized
+            case .incomplete:
+                imageName = "corporateReject"
+                stateText = "You data is incomplete".localized
+            case .rejected:
+                imageName = "corporateReject"
+                stateText = "You data has been rejected".localized
+            case .verified:
+                imageName = "corporateSuccess"
+                stateText = "You data has been reviewed".localized
+            case .unknown:
+                imageName = "corporateReject"
+                stateText = "Your status is unknown, contact support".localized
+           }
+            corporateStatusLabel.text = stateText
+            corporateStatusImageView.image = UIImage(named: imageName)
+        } else {
+            corporateStatusLabel.text = "Submit your corporate details".localized
+            corporateStatusImageView.image = UIImage(named: "lawBook")
         }
     }
     
@@ -408,6 +438,7 @@ class EditProfileController: UIViewController {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company
+            companyController?.nonDismissable = false
             self.editMode = company != nil
             companyController?.editMode = self.editMode
             companyController?.lastStepForLegalRegistration = false

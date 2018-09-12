@@ -36,6 +36,7 @@ class AddWalletController: UIViewController {
     var ethereumAddress: EthAddress?
     var continueBottomDist: CGFloat = 0.0
     var shouldPop = false
+    var shouldRequestCompanyDetails = (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil)
     
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
@@ -71,6 +72,9 @@ class AddWalletController: UIViewController {
         } else {
             screenTitleLabel?.text = "Add ETH Address text".localized
             sectionTitleLabel?.text = "Add your ETH address text".localized
+            if shouldRequestCompanyDetails {
+                doneButton?.setTitle("Next".localized, for: .normal)
+            }
         }
         copyAddrButton?.isHidden = !pasteAddrButton.isHidden
         NotificationCenter.default.addObserver(self,
@@ -255,7 +259,10 @@ class AddWalletController: UIViewController {
                     }
                     if self.shouldPop {
                         self.navigationController?.popViewController(animated: true)
-                    } else {
+                    } else if self.shouldRequestCompanyDetails {
+                        self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+                    }
+                    else {
                         self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
                     }
                 }
@@ -309,6 +316,14 @@ class AddWalletController: UIViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(deleteAction)
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "LegalDetailsSegueID" {
+            let companyDetailsController = segue.destination as? CompanyDetailsController
+            companyDetailsController?.nonDismissable = true
+            companyDetailsController?.firstLoginFlow = true
+        }
     }
     
     @objc

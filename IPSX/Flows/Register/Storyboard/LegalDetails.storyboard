@@ -13,7 +13,7 @@
         <!--Company Details Controller-->
         <scene sceneID="gct-TX-upL">
             <objects>
-                <viewController id="S47-Bd-0BS" customClass="CompanyDetailsController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CompanyDetailsControllerID" id="S47-Bd-0BS" customClass="CompanyDetailsController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Klt-S7-lHf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,6 +369,7 @@
                     <connections>
                         <outlet property="addressRTextField" destination="kxH-ji-c9l" id="Co1-jg-LWM"/>
                         <outlet property="choosenFileLabel" destination="uDH-3f-0Hb" id="2lo-fD-Qbu"/>
+                        <outlet property="closeButton" destination="2NJ-hK-34g" id="VFu-k4-qAR"/>
                         <outlet property="countryRTextField" destination="w6V-0G-k6x" id="U59-NA-hXt"/>
                         <outlet property="nameRTextField" destination="Og0-8h-L5k" id="nOw-BE-Gd0"/>
                         <outlet property="nextButton" destination="vBW-oK-kA0" id="3aK-vR-cX9"/>
@@ -612,16 +613,37 @@
                                     <constraint firstAttribute="width" constant="44" id="tKa-Xv-MfY"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqp-cu-XCl">
+                                <rect key="frame" x="10" y="603" width="355" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="284" id="ReQ-tj-FU9"/>
+                                    <constraint firstAttribute="height" constant="44" id="mSg-vt-0NV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Sign in with another account">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="0.80784313730000001" green="0.83137254900000002" blue="0.85500001910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signWithAnotherAccount:" destination="5A6-QR-psk" eventType="touchUpInside" id="sYl-yC-Kp2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rqT-vE-xIH" firstAttribute="centerX" secondItem="Yb5-4g-Dw8" secondAttribute="centerX" id="17x-zu-0Bw"/>
                             <constraint firstItem="Vgs-a1-30w" firstAttribute="top" secondItem="dEa-wn-NNo" secondAttribute="bottom" constant="26" id="Hb0-eA-7e6"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="trailing" secondItem="7iZ-gQ-6xZ" secondAttribute="trailing" id="Knn-Mo-dNv"/>
+                            <constraint firstItem="Yb5-4g-Dw8" firstAttribute="bottom" secondItem="tqp-cu-XCl" secondAttribute="bottom" constant="20" id="Nfw-aO-XKd"/>
                             <constraint firstItem="0za-dh-svN" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" id="ORf-qM-cbo"/>
                             <constraint firstItem="v4P-1f-WHc" firstAttribute="top" secondItem="Vgs-a1-30w" secondAttribute="bottom" constant="26" id="Pe2-WY-USu"/>
+                            <constraint firstItem="tqp-cu-XCl" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" constant="10" id="QKj-U2-Rpl"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="trailing" secondItem="0za-dh-svN" secondAttribute="trailing" id="SP5-cg-SmC"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="top" secondItem="7iZ-gQ-6xZ" secondAttribute="top" constant="50" id="T2e-CB-zxE"/>
+                            <constraint firstItem="Yb5-4g-Dw8" firstAttribute="trailing" secondItem="tqp-cu-XCl" secondAttribute="trailing" constant="10" id="WEF-xg-xZP"/>
                             <constraint firstItem="7iZ-gQ-6xZ" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" id="XL2-SN-ZwS"/>
                             <constraint firstItem="v4P-1f-WHc" firstAttribute="leading" secondItem="Yb5-4g-Dw8" secondAttribute="leading" constant="16" id="bHa-Fm-JcR"/>
                             <constraint firstItem="Yb5-4g-Dw8" firstAttribute="bottom" secondItem="0za-dh-svN" secondAttribute="bottom" id="bQg-re-NdO"/>
@@ -643,14 +665,26 @@
                         <outlet property="emailRtextField" destination="uug-gr-94b" id="wrX-UN-K25"/>
                         <outlet property="loadingView" destination="rqT-vE-xIH" id="mRh-ZK-t5H"/>
                         <outlet property="phoneRTextField" destination="5Ge-Ef-tqw" id="E5f-Nw-bIz"/>
+                        <outlet property="signWithAnotherAccount" destination="tqp-cu-XCl" id="Ghh-Ms-hUf"/>
                         <outlet property="topBarView" destination="7iZ-gQ-6xZ" id="cXF-Tq-ruw"/>
                         <outlet property="topConstraintOutlet" destination="eeb-cg-MxK" id="0CS-ui-xKX"/>
                         <outlet property="topSeparatorView" destination="dEa-wn-NNo" id="34c-Rq-GsP"/>
+                        <segue destination="EsY-m7-NtX" kind="show" identifier="CongratsSegueID" id="WVo-1V-zig"/>
+                        <segue destination="dc9-fq-8wg" kind="unwind" identifier="UnwindAndShowLandingID" unwindAction="unwindToTabBarAndShowLandingWithSegue:" id="Oot-zU-e6Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LI6-q8-lo0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="dc9-fq-8wg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1660" y="116"/>
+        </scene>
+        <!--CongratsControllerID-->
+        <scene sceneID="7vK-b5-Dca">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WalletAdd" referencedIdentifier="CongratsControllerID" id="EsY-m7-NtX" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ug2-v8-7IA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2274" y="115"/>
         </scene>
     </scenes>
     <resources>
