@@ -73,6 +73,7 @@ class RepresentativeDetailsController: UIViewController {
              Pass company details on completion for later submit
          */
         else {
+            self.company?.status = .collected
             self.onCollectDataComplete?(self.company)
             self.dismiss(animated: true)
         }

@@ -62,6 +62,8 @@ class EditProfileController: UIViewController {
     var editMode = false
     
     private var searchController: SearchViewController?
+    private var backFromSearch = false
+    
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
     
@@ -146,6 +148,7 @@ class EditProfileController: UIViewController {
         super.viewWillAppear(animated)
         updateFields()
         detectChangesAndValidity()
+        updateLegalStatus()
         if individualCheckmarkImage.isHidden && !isLegalPerson {
             saveButton.isEnabled = true
         }
@@ -216,8 +219,11 @@ class EditProfileController: UIViewController {
         let userInfo = UserManager.shared.userInfo
         var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         changePasswordHolderView.isHidden = userInfo?.source != "ios"
-        if let selectedCountry = self.searchController?.selectedCountry {
-            countryName = selectedCountry
+        if backFromSearch == true {
+            backFromSearch = false
+            if let selectedCountry = self.searchController?.selectedCountry {
+                countryName = selectedCountry
+            }
          } else {
             self.emailTextField.text       = userInfo?.email
             self.firstNameTextField.text   = userInfo?.firstName
@@ -258,6 +264,11 @@ class EditProfileController: UIViewController {
             break
         }
         
+        saveButton.isEnabled = dataChanged
+    }
+    
+    private func updateLegalStatus() {
+        
         if let company = self.company {
             var imageName = "corporatePending"
             var stateText = "Your corporate data is being reviewed".localized
@@ -267,17 +278,20 @@ class EditProfileController: UIViewController {
                 stateText = "Your corporate data is being reviewed".localized
             case .incomplete:
                 imageName = "corporateReject"
-                stateText = "You data is incomplete".localized
+                stateText = "You rdata is incomplete".localized
             case .rejected:
                 imageName = "corporateReject"
-                stateText = "You data has been rejected".localized
+                stateText = "Your data has been rejected".localized
             case .verified:
                 imageName = "corporateSuccess"
-                stateText = "You data has been reviewed".localized
+                stateText = "Your data has been reviewed".localized
+            case .collected:
+                imageName = "lawBook"
+                stateText = "Your data is ready to submit".localized
             case .unknown:
                 imageName = "corporateReject"
                 stateText = "Your status is unknown, contact support".localized
-           }
+            }
             corporateStatusLabel.text = stateText
             corporateStatusImageView.image = UIImage(named: imageName)
         } else {
@@ -428,6 +442,7 @@ class EditProfileController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
+            backFromSearch = true
             srcController.dismissOnSelect = true
             srcController.countries = UserManager.shared.getUserCountryList()
             let userInfo = UserManager.shared.userInfo

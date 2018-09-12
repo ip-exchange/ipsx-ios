@@ -15,6 +15,7 @@ class Company {
         case rejected   = "rejected"
         case verified   = "verified"
         case incomplete = "incomplete"
+        case collected  = "collected"
         case unknown    = "unknown"
     }
 
