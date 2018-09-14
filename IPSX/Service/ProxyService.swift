@@ -117,7 +117,7 @@ class ProxyService {
                                          "country"    : proxy?.proxyDetails?.country ?? "",
                                          "package_id" : proxy?.proxyPack?.packId as Any]
         
-        RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

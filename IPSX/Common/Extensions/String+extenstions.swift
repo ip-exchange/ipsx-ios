@@ -10,6 +10,14 @@ import UIKit
 
 public extension String {
     
+    var localized: String {
+        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
+    }
+    
+    var encodedData: Data {
+        return self.data(using: String.Encoding.utf8) ?? Data()
+    }
+    
     func removeAllSpaces() -> String {
         return replacingOccurrences(of: " ", with: "")
     }
@@ -25,12 +33,8 @@ public extension String {
         }
         return removeAllSpaces ? urlWithParams.removeAllSpaces() : urlWithParams
     }
-    
-    public var localized: String {
-        return Bundle.main.localizedString(forKey: self, value: nil, table: nil)
-    }
-    
-    public func trimLeadingAndTrailingSpaces() -> String {
+
+    func trimLeadingAndTrailingSpaces() -> String {
         
         let trimmedString = self.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmedString

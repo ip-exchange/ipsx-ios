@@ -19,7 +19,7 @@ class TokenDepositService {
                                          "amount_requested" : amount,
                                          "telegram"         : telegramID]
         
-        RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -107,7 +107,7 @@ class TokenDepositService {
         let bodyParams: [String: Any] = ["usereth_id"       : ethID,
                                          "amount_requested" : amount]
         
-        RequestBuilder.shared.executeRequest(requestType: .createDeposit, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .createDeposit, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -150,7 +150,7 @@ class TokenDepositService {
         
         let bodyParams: [String: Any] = ["status" : "canceled"]
         
-        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

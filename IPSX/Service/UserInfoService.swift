@@ -54,6 +54,7 @@ class UserInfoService {
         let refCode             = json["referral_code"].string
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
+        let hasOpetdForLegal    = json["intention_company"].intValue == 1 ? true : false
         
         let dateFormatter     = DateFormatter.backendResponseParse()
         let deleteAccountDate = dateFormatter.date(from: selfDeletedAtString)
@@ -77,7 +78,7 @@ class UserInfoService {
             pendingDeleteAccount = true
         }
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount)
+        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount, isLegalPerson: hasOpetdForLegal)
         completionHandler(ServiceResult.success(user))
     }
     
@@ -157,7 +158,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -180,7 +181,7 @@ class UserInfoService {
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -236,7 +237,7 @@ class UserInfoService {
         let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
                                           "newsletter"         : newsletterValue as Any]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

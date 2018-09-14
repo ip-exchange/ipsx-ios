@@ -8,6 +8,7 @@ target 'IPSX' do
   # Pods for IPSX
 
   pod 'FacebookLogin'
+  pod 'Alamofire'
 
   target 'IPSXTests' do
     inherit! :search_paths

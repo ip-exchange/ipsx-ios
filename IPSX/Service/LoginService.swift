@@ -20,7 +20,7 @@ class LoginService {
         let params: [String: String] = ["email"    : email,
                                         "password" : password]
         
-        RequestBuilder.shared.executeRequest(requestType: .login, bodyParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .login, body: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -56,7 +56,7 @@ class LoginService {
         
         let bodyParams: [String: String] = ["email" : email]
         
-        RequestBuilder.shared.executeRequest(requestType: .resetPassword, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .resetPassword, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -75,7 +75,7 @@ class LoginService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .changePassword, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .changePassword, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

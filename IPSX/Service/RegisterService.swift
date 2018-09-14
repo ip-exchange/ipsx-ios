@@ -25,7 +25,7 @@ class RegisterService {
                                         "intention_company" : type.rawValue,
                                         "intention_provider": destiny.rawValue]
         
-        RequestBuilder.shared.executeRequest(requestType: .register, bodyParams: params, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .register, body: params, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -47,7 +47,7 @@ class RegisterService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, bodyParams: bodyParams, completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, body: bodyParams, completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
