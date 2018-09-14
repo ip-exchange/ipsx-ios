@@ -68,8 +68,9 @@ struct UserInfo {
     var hasOptedForLegal: Bool
     
     //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
+    
     init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Double = 0, kycStatus: Int = -1, socialName: String? = nil, source: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false, isLegalPerson: Bool) {
+         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Double = 0, kycStatus: Int = -1, socialName: String? = nil, source: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false, hasOpetdForLegal: Bool, hasOpetdForProvider: Bool) {
         
         self.firstName     = firstName
         self.middleName    = middleName
@@ -82,7 +83,7 @@ struct UserInfo {
         self.socialName    = socialName
         self.source        = source
         self.refferalCode  = refferalCode
-        self.hasOptedForLegal = isLegalPerson
+        self.hasOptedForLegal = hasOpetdForLegal
         
         self.deleteAccountDate = deleteAccountDate
         self.kycStatus = KycStatus(rawValue: kycStatus) ?? .Registered

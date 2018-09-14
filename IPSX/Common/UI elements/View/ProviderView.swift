@@ -33,7 +33,7 @@ class ProviderView: RoundedView {
     
     var subbmissionStatus: ProviderStatus = .notSubmitted
     var view: UIView!
-    
+
     override func awakeFromNib() {
         
         super.awakeFromNib()

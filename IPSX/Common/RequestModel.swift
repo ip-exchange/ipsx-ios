@@ -115,7 +115,7 @@ public struct Url {
     public static let enrollStakingBulkArgs  = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs      = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
-    public static let companyArgs            = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
+    public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -179,6 +179,7 @@ public enum IPRequestType: Int {
     case register
     case fbRegister
     case getCompany
+    case getProviderDetails
     case submitLegalPersonDetails
     
     case login

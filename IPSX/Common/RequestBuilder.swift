@@ -71,8 +71,8 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .getUserCountryList:
             request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
            
-        case .getCompany:
-            var url = Url.baseApi + Url.companyArgs
+        case .getCompany, .getProviderDetails:
+            var url = Url.baseApi + Url.intentionsArgs
             if let params = urlParams as? [String: String] {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)

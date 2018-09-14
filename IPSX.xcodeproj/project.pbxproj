@@ -57,6 +57,7 @@
 		A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEA32085EAF1001787DF /* LandingViewController.swift */; };
 		A4E6AEA62085F6CD001787DF /* UIColor+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */; };
 		A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEAA20862E23001787DF /* RoundedButton.swift */; };
+		A4F04CCC214BCACE0044820A /* ProviderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F04CCB214BCACE0044820A /* ProviderService.swift */; };
 		A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2F7442090B02500515883 /* ProxyPack.swift */; };
 		A4F2F7482090B4F200515883 /* ProxyPackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2F7472090B4F200515883 /* ProxyPackCell.swift */; };
 		A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FCA933205BB463009FF41B /* ProxyRequest.swift */; };
@@ -167,7 +168,7 @@
 		A4524C1620A094C600F7BD84 /* EthAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthAddress.swift; sourceTree = "<group>"; };
 		A45331CB20C926710038E0E2 /* SocialIntegrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialIntegrationService.swift; sourceTree = "<group>"; };
 		A45331CD20C944790038E0E2 /* FacebookLogin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FacebookLogin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A456C8D0214AA93C00B823A1 /* ProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderView.swift; sourceTree = "<group>"; };
+		A456C8D0214AA93C00B823A1 /* ProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProviderView.swift; path = ProviderView/ProviderView.swift; sourceTree = "<group>"; };
 		A45F0ED820AEF485009C55F2 /* ErrorHandlingProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingProtocols.swift; sourceTree = "<group>"; };
 		A4606C352092165D0008A9F3 /* ProxyActivationDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyActivationDetailsCell.swift; sourceTree = "<group>"; };
 		A46480D72091EEE600330CC9 /* ProxySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxySummaryViewController.swift; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 		A4E6AEA32085EAF1001787DF /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		A4E6AEA52085F6CD001787DF /* UIColor+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extensions.swift"; sourceTree = "<group>"; };
 		A4E6AEAA20862E23001787DF /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		A4F04CCB214BCACE0044820A /* ProviderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderService.swift; sourceTree = "<group>"; };
 		A4F26D1220C56E0700134CAD /* Pods_IPSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_IPSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F26D1420C56E3800134CAD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F26D1620C56E4400134CAD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,14 +411,6 @@
 				A4734AF2214B9B810091654B /* ToastAlertView.xib */,
 			);
 			path = ToastAlertView;
-			sourceTree = "<group>";
-		};
-		A456C8CF214AA91F00B823A1 /* ProviderView */ = {
-			isa = PBXGroup;
-			children = (
-				A456C8D0214AA93C00B823A1 /* ProviderView.swift */,
-			);
-			path = ProviderView;
 			sourceTree = "<group>";
 		};
 		A46A614A20A32AC900F25CC1 /* Flows */ = {
@@ -644,6 +638,7 @@
 				A45331CB20C926710038E0E2 /* SocialIntegrationService.swift */,
 				A4B57C2C20F24FE300EEE433 /* TokenDepositService.swift */,
 				A4935049212EEADB00482BA5 /* LegalPersonService.swift */,
+				A4F04CCB214BCACE0044820A /* ProviderService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -809,9 +804,9 @@
 		EE7AD92620B3F5280022259D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A456C8CF214AA91F00B823A1 /* ProviderView */,
 				A456C8CE214AA8FA00B823A1 /* ToastAlertView */,
 				EE6FC03E209B2951007971DC /* CustomLoadingView.swift */,
+				A456C8D0214AA93C00B823A1 /* ProviderView.swift */,
 				EE7AD92720B3F5510022259D /* EthWalletCell.swift */,
 				EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */,
 				EE1A0545208F650E00522426 /* RoundedView.swift */,
@@ -1175,6 +1170,7 @@
 				A466F06520B4469700A7B68A /* SettingsService.swift in Sources */,
 				EE3BDFF420A1AC71007AEB1D /* UIView+extensions.swift in Sources */,
 				A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */,
+				A4F04CCC214BCACE0044820A /* ProviderService.swift in Sources */,
 				EE62F7442099C62300BE6120 /* ProfileViewController.swift in Sources */,
 				EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */,
 				EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */,
