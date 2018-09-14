@@ -21,14 +21,16 @@ public struct Request {
     public var url: String
     public var httpMethod: String
     public var contentType: String?
+    public var contentLength: String?
     public var body: Any?
     
-    public init(url:String, httpMethod:String, contentType:String? = nil, body: Any? = nil) {
+    public init(url:String, httpMethod:String, contentType:String? = nil, body: Any? = nil, contentLength: String? = nil) {
         
         self.url = url
         self.httpMethod = httpMethod
         self.contentType = contentType
         self.body = body
+        self.contentLength = contentLength
     }
 }
 
@@ -97,6 +99,7 @@ public struct Url {
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
     public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
+    public static let submitLegalArgs        = "/Users/%USER_ID%/companies/aws-store?access_token=%ACCESS_TOKEN%"
     public static let proxiesArgs            = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
     public static let createProxyArgs        = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
     public static let proxyPackagesArgs      = "/packages/admin/paid?access_token=%ACCESS_TOKEN%"
@@ -112,6 +115,7 @@ public struct Url {
     public static let enrollStakingBulkArgs  = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
     public static let enrollStakingArgs      = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
+    public static let companyArgs            = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
 }
 
 public enum ServiceResult<T> {
@@ -174,6 +178,8 @@ public enum IPRequestType: Int {
     case getUserCountryList
     case register
     case fbRegister
+    case getCompany
+    case submitLegalPersonDetails
     
     case login
     case fbLogin
@@ -213,6 +219,7 @@ public enum IPRequestType: Int {
 }
 
 public struct ContentType {
+    
     public static let applicationJSON = "application/json"
 }
 
@@ -236,6 +243,9 @@ enum Newsletter {
     case on
     case off
 }
+
+
+
 
 
 

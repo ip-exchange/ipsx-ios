@@ -23,7 +23,7 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
     public var publicIP: String?
     public var privateIP: String?
     
-    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: [String: Any] = [:]) -> URLRequest? {
+    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: Any = "")-> URLRequest? {
         
         var urlRequest: URLRequest?
         var request: Request?
@@ -70,6 +70,13 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             
         case .getUserCountryList:
             request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
+           
+        case .getCompany:
+            var url = Url.baseApi + Url.companyArgs
+            if let params = urlParams as? [String: String] {
+                url = url.replaceKeysWithValues(paramsDict: params)
+                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
+            }
             
         case .updateProfile:
             let body = JSON(bodyParams)
@@ -259,9 +266,15 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
             
+        default:
+            break
         }
         
-        if let body = request?.body as? JSON {
+        if let body = request?.body as? Data {
+            postData = body
+            request?.contentLength = String(body.count)
+        }
+        else if let body = request?.body as? JSON {
             do {
                 postData = try body.rawData()
             } catch {
@@ -269,14 +282,17 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
             }
         }
         
-        if let request = request {
+        if let request = request, let url = URL(string: request.url) {
             
-            urlRequest = URLRequest(url:URL(string: request.url)!)
+            urlRequest = URLRequest(url: url)
             urlRequest?.httpMethod = request.httpMethod
             urlRequest?.httpBody = postData
             
+            if let contentLength = request.contentLength {
+                urlRequest?.setValue(contentLength, forHTTPHeaderField: "Content-Length")
+            }
             if let contentType = request.contentType {
-                urlRequest?.addValue(contentType, forHTTPHeaderField: "Content-Type")
+                urlRequest?.setValue(contentType, forHTTPHeaderField: "Content-Type")
             }
         }
         return urlRequest
@@ -284,10 +300,10 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
     
     /// urlParams should be [String: String]
     
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], bodyParams: [String: Any] = [:], completion:@escaping (Error?, Data?)->Void) {
+    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], body: Any = "", completion:@escaping (Error?, Data?)->Void) {
         
         let requestBuilder = RequestBuilder.shared
-        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams) {
+        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: body) {
             
             requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
                 

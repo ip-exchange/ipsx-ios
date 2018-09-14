@@ -105,21 +105,29 @@ class DashboardViewController: UIViewController {
             - When no eth address: Close the app from Add Eth Address screen after Login (the user remains loggedIn)
             - When the user is not yet logged in: Login will be displayed from Tab Bar Controller (this is the first VC)
          */
-        if UserManager.shared.isLoggedIn && UserManager.shared.hasEthAddress {
+        if UserManager.shared.isLoggedIn {
             
-            if UserManager.shared.testProxyPack == nil {
-                retrieveTestProxyPackage()
+            if UserManager.shared.company == nil {
+                companyDetails()
             }
-            if UserManager.shared.proxyPacks == nil {
-                retrieveProxyPackages()
+            
+            if UserManager.shared.hasEthAddress {
+                
+                if UserManager.shared.testProxyPack == nil {
+                    retrieveTestProxyPackage()
+                }
+                if UserManager.shared.proxyPacks == nil {
+                    retrieveProxyPackages()
+                }
+                if UserManager.shared.generalSettings == nil {
+                    generalSettings()
+                }
+                // After Logout we should load the proxy countries if needed for Test Proxy
+                if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
+                    getProxyCountryList()
+                }
             }
-            if UserManager.shared.generalSettings == nil {
-                generalSettings()
-            }
-            // After Logout we should load the proxy countries if needed for Test Proxy
-            if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
-                getProxyCountryList()
-            }
+           
             dispatchGroup.notify(queue: .main) {
                 self.updateData()
                 self.timer?.invalidate()
@@ -238,6 +246,26 @@ class DashboardViewController: UIViewController {
                 
                 self.handleError(error, requestType: .generalSettings, completion: {
                     self.generalSettings()
+                })
+            }
+        })
+    }
+    
+    func companyDetails() {
+        
+        dispatchGroup.enter()
+        LegalPersonService().getCompanyDetails(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let company):
+                UserManager.shared.company = company as? Company
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getCompany, completion: {
+                    self.companyDetails()
                 })
             }
         })

@@ -18,7 +18,7 @@ class EnrollmentService {
         let bodyParams: [String: Any] = ["usereth_id": ethID,
                                          "status"    : "accepted"]
         
-        RequestBuilder.shared.executeRequest(requestType: .enrollTesting, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .enrollTesting, urlParams: urlParams, body: bodyParams,  completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))
@@ -48,7 +48,7 @@ class EnrollmentService {
         
         let bodyParams: [String: [Int]] = ["eths": ethsArray]
         
-        RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, bodyParams: bodyParams,  completion: { error, data in
+        RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, body: bodyParams,  completion: { error, data in
             
             guard error == nil else {
                 completionHandler(ServiceResult.failure(error!))

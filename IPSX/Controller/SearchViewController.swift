@@ -10,32 +10,27 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    let cellID = "SearchCellID"
-    let newProxyFlowID = "NewProxyFlowSegueID"
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var loadingView: CustomLoadingView!
-    
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    
+    let cellID = "SearchCellID"
+    let newProxyFlowID = "NewProxyFlowSegueID"
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var errorMessage: String? {
         didSet { self.toast?.showToastAlert(self.errorMessage) }
     }
 
-    public var dismissOnSelect = false
-    
+    var dismissOnSelect = false
     var isProxyFlow: Bool? = false
     var proxyPack: ProxyPack?
     var proxy: Proxy?
@@ -44,6 +39,8 @@ class SearchViewController: UIViewController {
     var selectedCountry: String?
     
     private var countriesRefreshed = false
+    
+    //TODO (CC): Refactor country selection -> add completion to pass selectedCountry
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,8 +116,10 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == newProxyFlowID, let nextVC = segue.destination as? ProxySummaryViewController {
-            nextVC.proxy = proxy
+        
+        if segue.identifier == newProxyFlowID {
+            let nextVC = segue.destination as? ProxySummaryViewController
+            nextVC?.proxy = proxy
         }
     }
     
@@ -169,8 +168,13 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCountry = filteredCountries?[indexPath.item]
+        
         if dismissOnSelect {
             if let nav = navigationController {
+            
+                if let companyController = nav.viewControllers.first as? CompanyDetailsController {
+                    companyController.country = selectedCountry
+                }
                 nav.popViewController(animated: true)
             } else {
                 dismiss(animated: true)
@@ -224,7 +228,6 @@ extension SearchViewController: UITextFieldDelegate {
         textField.returnKeyType = .done
         return true
     }
-    
 }
 
 extension SearchViewController: ToastAlertViewPresentable {

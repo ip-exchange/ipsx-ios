@@ -27,11 +27,19 @@ public class UserManager: NSObject {
     var userCountries: [[String: String]]?
     var proxyCountries: [String]?
     var generalSettings: GeneralSettings?
+    var company: Company?
+    var hasPerformedLogout = false
     
     var hasEthAddress: Bool {
         get {
             let noOfEthAddresses = ethAddresses?.count ?? 0
             return noOfEthAddresses > 0
+        }
+    }
+    
+    var hasCompany: Bool {
+        get {
+            return company != nil
         }
     }
     
@@ -67,9 +75,9 @@ public class UserManager: NSObject {
     
     func ethAddres(forID ethId: Int) -> EthAddress? {
         
-            guard let addresses = ethAddresses else { return nil }
-            let filtered = addresses.filter { $0.ethID == ethId }
-            return filtered.count == 1 ? filtered.first : nil
+        guard let addresses = ethAddresses else { return nil }
+        let filtered = addresses.filter { $0.ethID == ethId }
+        return filtered.count == 1 ? filtered.first : nil
     }
 
     var isLoggedIn: Bool {
@@ -153,6 +161,7 @@ public class UserManager: NSObject {
         userInfo = nil
         proxyPacks = nil
         testProxyPack = nil
+        company = nil
     }
     
     func getUserCountryList() -> [String] {
@@ -197,5 +206,6 @@ public class UserManager: NSObject {
     func logout() {
         removeUserDetails()
         SocialIntegrationService().facebookLogout()
+        hasPerformedLogout = true
     }
 }

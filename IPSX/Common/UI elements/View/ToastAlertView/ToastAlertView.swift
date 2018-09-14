@@ -2,7 +2,8 @@
 //  ToastAlertView.swift
 //  IPSX
 //
-//  Created by Calin Chitu on 2/24/17.
+//  Created by Calin Chitu on 02/05/2018.
+//
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 

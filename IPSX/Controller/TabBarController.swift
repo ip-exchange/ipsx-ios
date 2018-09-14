@@ -13,8 +13,10 @@ class TabBarViewController: UITabBarController {
     var hasReceivedUsedDeletedNotif = false
     var hasPerformedAutologin = false
     var hasConfirmedDeleteAccount = false
+    var hasPresentedLegalFlow = false
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(performActionFor), name: .userDeleted, object: nil)
         if UserManager.shared.hasEthAddress {
@@ -26,12 +28,13 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
         
+        //TODO: refactor presentation flow
+        
         if !UserManager.shared.hasEthAddress {
             
             if hasPerformedAutologin {
                 self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-            }
-            else {
+            } else {
                 // When closing the app from Add Eth Address screen after Login -> fresh start
                 UserManager.shared.logout()
             }
@@ -45,6 +48,16 @@ class TabBarViewController: UITabBarController {
             dashboard.hideMaskView()
         }
         
+        if UserManager.shared.hasPerformedLogout {
+            hasPresentedLegalFlow = false
+            UserManager.shared.hasPerformedLogout = false
+        }
+        
+        if !hasPresentedLegalFlow && (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil) {
+            hasPresentedLegalFlow = true
+            self.performSegue(withIdentifier: "CollectLegalDetailsSegueID", sender: nil)
+        }
+    
         if hasConfirmedDeleteAccount {
             hasConfirmedDeleteAccount = false
             self.selectedIndex = 2
@@ -83,6 +96,16 @@ class TabBarViewController: UITabBarController {
         UserManager.shared.logout()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CollectLegalDetailsSegueID" {
+            let companyNavController = segue.destination as? UINavigationController
+            let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
+            companyController?.onCollectDataComplete = { company in
+                //TODO CVI): Do the request using the company object
+                print(company?.name)
+            }
+        }
+    }
 }
 
 extension UITabBarController {
