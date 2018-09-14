@@ -1,9 +1,9 @@
 //
 //  ToastAlertView.swift
-//  BPUIKit
+//  IPSX
 //
 //  Created by Calin Chitu on 2/24/17.
-//  Copyright © 2017 BP Oil UK Limited. All rights reserved.
+//  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 
 /*
@@ -184,16 +184,6 @@ public class ToastAlertView: UIView {
                 completion?()
             })
         }
-    }
-
-    func loadNib(withOwner: UIView) -> UIView {
-        
-        let bundle = Bundle(for: self.classForCoder)
-        let view = UIView.viewFromNib(withOwner: withOwner, bundle: bundle)
-        
-        view.frame = bounds
-        
-        return view
     }
 }
 

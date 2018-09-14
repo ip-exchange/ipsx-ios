@@ -49,4 +49,12 @@ public extension UIView {
             webView.load(request)
         }
     }
+    
+    func loadNib(withOwner: UIView) -> UIView {
+        
+        let bundle = Bundle(for: self.classForCoder)
+        let view = UIView.viewFromNib(withOwner: withOwner, bundle: bundle)
+        view.frame = bounds
+        return view
+    }
 }
