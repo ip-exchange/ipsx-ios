@@ -28,6 +28,7 @@ public class UserManager: NSObject {
     var proxyCountries: [String]?
     var generalSettings: GeneralSettings?
     var company: Company?
+    var companyVerified: Bool { return company?.status == Company.CompanyStatus.verified }
     var hasPerformedLogout = false
     
     var hasEthAddress: Bool {
