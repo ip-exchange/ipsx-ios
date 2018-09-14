@@ -295,7 +295,7 @@ class EditProfileController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
-        if individualCheckmarkImage.isHidden && !(registeredAsCompany || hasCompany) {
+        if individualCheckmarkImage.isHidden && !registeredAsCompany && self.company == nil {
             createAndShowCorpDetailsAlert()
             return
         }
