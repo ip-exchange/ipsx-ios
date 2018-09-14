@@ -16,8 +16,8 @@ class RegisterTermsController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var readWPLabel: UILabel!
     @IBOutlet weak var registerButton: RoundedButton!
+    @IBOutlet weak var legalSelectorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -27,7 +27,9 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
-    var legalPerson: Bool = false
+    var userDestiny: DestinyType = .requester
+    var userType: UserType = .individual
+    var isFbFlow = false
     
     private var statesDic: [String : Bool] = [:]
     var userCredentials: [String: String] = ["email": "", "pass": ""]
@@ -86,6 +88,7 @@ class RegisterTermsController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+        configureUI()
      }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,6 +100,17 @@ class RegisterTermsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
+    }
+    
+    func configureUI() {
+        
+        isFbFlow = fbToken != ""
+        
+        if isFbFlow {
+            legalSelectorView.isHidden = true
+            individualCheckButton.isSelected = false
+            individualCheckButton.isEnabled = false
+        }
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -156,18 +170,18 @@ class RegisterTermsController: UIViewController {
     @IBAction func individualCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         legalCheckButton.isSelected = false
-        legalPerson = false
+        userType = .individual
     }
     
     @IBAction func legalCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         individualCheckButton.isSelected = false
-        legalPerson = sender.isSelected
+        userType = .legal
     }
     
     func register(ipAddress: String) {
         
-        if fbToken != "" {
+        if isFbFlow {
             self.registerWithFacebook(fbToken: fbToken)
         }
         else if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
@@ -182,7 +196,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -198,10 +212,8 @@ class RegisterTermsController: UIViewController {
     
     func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
         
-        let type = legalPerson ? 1 : 0
         self.loadingView?.startAnimating()
-        
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: type, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: userType, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -219,7 +231,7 @@ class RegisterTermsController: UIViewController {
         
         DispatchQueue.main.async {
             
-            if self.fbToken != "" {
+            if self.isFbFlow {
                 self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
             }
             else {

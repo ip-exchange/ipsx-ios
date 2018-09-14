@@ -10,7 +10,7 @@ import UIKit
 
 class RegisterService {
     
-    func registerUser(email: String, password: String, ip: String, newsletter: Bool, type: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func registerUser(email: String, password: String, ip: String, newsletter: Bool, type: UserType, destiny: DestinyType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         /*
          "intention_company" - 0 = normal user / 1 = company user
@@ -22,8 +22,8 @@ class RegisterService {
                                         "ip"                : ip,
                                         "source"            : "ios",
                                         "newsletter"        : newsletter,
-                                        "intention_company" : type,
-                                        "intention_provider": 0]
+                                        "intention_company" : type.rawValue,
+                                        "intention_provider": destiny.rawValue]
         
         RequestBuilder.shared.executeRequest(requestType: .register, body: params, completion: { error, data in
             

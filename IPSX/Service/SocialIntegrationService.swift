@@ -12,7 +12,7 @@ import FBSDKLoginKit
 
 class SocialIntegrationService {
     
-    func facebook(requestType: IPRequestType, fbToken: String?, newsletter: Bool = true, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func facebook(requestType: IPRequestType, fbToken: String?, newsletter: Bool = true, destiny: DestinyType? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let fbToken = fbToken else {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
@@ -23,8 +23,9 @@ class SocialIntegrationService {
         
         if requestType == .fbRegister {
             
-            params = ["token"      : fbToken,
-                      "newsletter" : newsletter as Any]
+            params = ["token"              : fbToken,
+                      "newsletter"         : newsletter as Any,
+                      "intention_provider" : destiny?.rawValue as Any]
         }
         else if requestType == .fbLogin {
             

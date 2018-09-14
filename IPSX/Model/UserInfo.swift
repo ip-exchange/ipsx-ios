@@ -15,6 +15,18 @@ enum DeleteAccountState: Int {
     case confirmed    = 2
 }
 
+enum DestinyType: Int {
+    
+    case requester = 0
+    case provider  = 1
+}
+
+enum UserType: Int {
+    
+    case individual = 0
+    case legal      = 1
+}
+
 struct UserInfo {
     
     var deleteAccountState: DeleteAccountState = .notRequested
