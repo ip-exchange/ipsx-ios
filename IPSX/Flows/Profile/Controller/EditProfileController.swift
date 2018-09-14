@@ -45,15 +45,7 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var corporateStatusLabel: UILabel!
     
     var company: Company? = UserManager.shared.company
-    
-    /*
-        TODO (CC): display individual / legal bbased on GET /users/{id}/intentions response -> "company" -> "status"
-        Note that, based on our discussion with the team:
-            - for Legal person with company details in pending we should display Legal & pending validation (How?)
-            - we decided to block the user for using the app if he is registered as Legal and the validation is in pending (How?)
-            - for update from Individual -> Legal with pending company validation: probably the user should remain individual, but the user should be notified that the company validation is in pending
-     */
-    
+        
     var registeredAsCompany = UserManager.shared.userInfo?.hasOptedForLegal == true
     var hasCompany = UserManager.shared.company != nil
     

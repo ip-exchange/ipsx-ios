@@ -221,7 +221,6 @@ public enum IPRequestType: Int {
 public struct ContentType {
     
     public static let applicationJSON = "application/json"
-    public static let multipart = "multipart/form-data; boundary=\(boundary)"
 }
 
 public struct KeychainKeys {
@@ -245,17 +244,6 @@ enum Newsletter {
     case off
 }
 
-var boundary: String {
-    get {
-        return "----boundary" + UUID().uuidString
-    }
-}
-
-var contentDisposition: String {
-    get {
-        return "Content-Disposition: form-data; name=\"%PARAMETER_NAME%\""
-    }
-}
 
 
 

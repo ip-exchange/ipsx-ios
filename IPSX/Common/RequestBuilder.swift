@@ -65,13 +65,6 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
         case .fbRegister:
             let body = JSON(bodyParams)
             request = Request(url:Url.baseApi + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-           
-        case .submitLegalPersonDetails:
-            var url = Url.baseApi + Url.submitLegalArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.multipart, body: bodyParams)
-            }
             
         //User Info Requests
             
@@ -272,6 +265,9 @@ public class RequestBuilder: NSObject, URLSessionDelegate {
                 url = url.replaceKeysWithValues(paramsDict: params)
                 request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
             }
+            
+        default:
+            break
         }
         
         if let body = request?.body as? Data {
