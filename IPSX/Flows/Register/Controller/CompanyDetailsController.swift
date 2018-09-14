@@ -23,7 +23,8 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var closeButton: UIButton!
-    
+    @IBOutlet weak var signWithAnotherAccount: UIButton!
+
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -64,6 +65,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
             company = Company()
         }
         closeButton.isHidden = nonDismissable
+        signWithAnotherAccount.isHidden = !nonDismissable
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,6 +81,19 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         }
         if let selectedCountry = searchController?.selectedCountry {
             countryRTextField.contentTextField?.text = selectedCountry
+        }
+        
+        if UserManager.shared.userCountries == nil {
+            
+            UserInfoService().getUserCountryList(completionHandler: { result in
+                
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    
+                case .failure(_): break
+                }
+            })
         }
     }
     
@@ -139,6 +154,11 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         self.present(importMenu, animated: true, completion: nil)
     }
     
+    @IBAction func signWithAnotherAccount(_ sender: Any) {
+        UserManager.shared.logout()
+        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
+    }
+
     private func setupTextViews() {
         //TODO: Add the proper regex when defined by design
         nameRTextField.validationRegex           = RichTextFieldView.validName

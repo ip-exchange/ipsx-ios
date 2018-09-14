@@ -1,9 +1,9 @@
 //
 //  ToastAlertView.swift
-//  BPUIKit
+//  IPSX
 //
-//  Created by Calin Chitu on 2/24/17.
-//  Copyright © 2017 BP Oil UK Limited. All rights reserved.
+//  Created by Calin Chitu on 02/05/2018.
+//  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 
 /*

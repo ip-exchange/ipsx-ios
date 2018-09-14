@@ -54,7 +54,9 @@ class EditProfileController: UIViewController {
             - for update from Individual -> Legal with pending company validation: probably the user should remain individual, but the user should be notified that the company validation is in pending
      */
     
-    var isLegalPerson = UserManager.shared.userInfo?.hasOptedForLegal ?? false
+    var registeredAsCompany = UserManager.shared.userInfo?.hasOptedForLegal == true
+    var hasCompany = UserManager.shared.company != nil
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var onDismiss: ((_ hasUpdatedProfile: Bool)->())?
@@ -63,6 +65,7 @@ class EditProfileController: UIViewController {
     
     private var searchController: SearchViewController?
     private var backFromSearch = false
+    private var companyEdited = false
     
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
@@ -79,7 +82,7 @@ class EditProfileController: UIViewController {
     
     @IBAction func selectIndividualAction(_ sender: Any) {
         
-        guard !isLegalPerson else {
+        guard !(registeredAsCompany || hasCompany) else {
             toast?.showToastAlert("Legal To Individual Downgrade Forbiden Message.".localized, autoHideAfter: 5, type: .info, dismissable: true)
             return
         }
@@ -100,7 +103,7 @@ class EditProfileController: UIViewController {
         self.individualCheckmarkImage.isHidden = true
         self.corporateDetailsView.isHidden = false
         
-        if !isLegalPerson {
+        if !(registeredAsCompany || hasCompany) {
             
             if !addCompanyBannerShown {
                 toast?.showToastAlert("Add corporate details toast message".localized, type: .info, dismissable: true)
@@ -118,7 +121,7 @@ class EditProfileController: UIViewController {
         self.toast?.hideToast()
         
         if UserManager.shared.userInfo?.hasOptedForLegal == true {
-            getCompanyDetails()
+            getCompanyDetails() { self.performSegue(withIdentifier: self.legalDetailsSegueID, sender: nil) }
         } else {
             self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
         }
@@ -148,10 +151,8 @@ class EditProfileController: UIViewController {
         super.viewWillAppear(animated)
         updateFields()
         detectChangesAndValidity()
-        updateLegalStatus()
-        if individualCheckmarkImage.isHidden && !isLegalPerson {
-            saveButton.isEnabled = true
-        }
+        getCompanyDetails() { self.updateLegalStatusUI() }
+        if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
 
@@ -205,7 +206,7 @@ class EditProfileController: UIViewController {
         if UserManager.shared.userInfo?.source != "ios" {
             self.fullContentHeightConstraint.constant -= 66
         }
-        if isLegalPerson {
+        if (registeredAsCompany || hasCompany) {
             self.legalCheckmarkImage.isHidden = false
         } else {
             self.individualCheckmarkImage.isHidden = false
@@ -267,7 +268,7 @@ class EditProfileController: UIViewController {
         saveButton.isEnabled = dataChanged
     }
     
-    private func updateLegalStatus() {
+    private func updateLegalStatusUI() {
         
         if let company = self.company {
             var imageName = "corporatePending"
@@ -302,28 +303,26 @@ class EditProfileController: UIViewController {
     
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
-        if individualCheckmarkImage.isHidden && !isLegalPerson && company == nil {
+        if individualCheckmarkImage.isHidden && !(registeredAsCompany || hasCompany) {
             createAndShowCorpDetailsAlert()
             return
         }
         
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
-        let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
+        var bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
                                           "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "country_id": countryID as Any]
         
-        if company != nil {
+        if companyEdited {
             
+            companyEdited = false
             submitCompanyDetails() { success in
                 
                 if success {
-                    
-                    let legalPersonAfterChange = !self.isLegalPerson
-                    let intentionCompanyValue = legalPersonAfterChange ? 1 : 0
-                    let bodyParams: [String: Any] =  ["intention_company" : intentionCompanyValue]
-                    self.updateUserProfile(bodyParams: bodyParams)
+                    self.getCompanyDetails() { self.updateLegalStatusUI() }
+                    bodyParams["intention_company"] = 1
                 }
                 self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
             }
@@ -393,7 +392,7 @@ class EditProfileController: UIViewController {
         })
     }
     
-    func getCompanyDetails() {
+    func getCompanyDetails(completion: (()->())? = nil) {
         
         self.loadingView?.startAnimating()
         LegalPersonService().getCompanyDetails(completionHandler: { result in
@@ -404,9 +403,6 @@ class EditProfileController: UIViewController {
                 
             case .success(let company):
                 UserManager.shared.company = company as? Company
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: self.legalDetailsSegueID, sender: nil)
-                }
                 
             case .failure(let error):
                 
@@ -414,6 +410,7 @@ class EditProfileController: UIViewController {
                     self.getCompanyDetails()
                 })
             }
+            DispatchQueue.main.async { completion?() }
         })
     }
     
@@ -458,6 +455,7 @@ class EditProfileController: UIViewController {
             companyController?.editMode = self.editMode
             companyController?.lastStepForLegalRegistration = false
             companyController?.onCollectDataComplete = { company in
+                self.companyEdited = true
                 self.company = company
             }
         }

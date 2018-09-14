@@ -47,7 +47,6 @@ class RepresentativeDetailsController: UIViewController {
         super.viewDidLoad()
         setupTextViews()
         observreFieldsState()
-        signWithAnotherAccount.isHidden = !nonDismissable
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,8 +63,8 @@ class RepresentativeDetailsController: UIViewController {
 
     @IBAction func doneButtonAction(_ sender: Any) {
         
+        collectData()
         if lastStepForLegalRegistration {
-            collectData()
             submitCompanyDetails()
         }
         /*

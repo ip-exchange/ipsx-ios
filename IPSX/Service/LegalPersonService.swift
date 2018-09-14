@@ -38,14 +38,13 @@ class LegalPersonService {
                 do {
                     let documentData = try Data(contentsOf: url)
                     multipartFormData.append(documentData, withName: "incorporation_certificate", fileName: filename, mimeType: mimetype)
-                    
-                    for (key, value) in params {
-                        multipartFormData.append(value.encodedData, withName: key)
-                    }
                 }
                 catch {
                     completionHandler(ServiceResult.failure(CustomError.notSuccessful))
                 }
+            }
+            for (key, value) in params {
+                multipartFormData.append(value.encodedData, withName: key)
             }
         },
             to: url,
