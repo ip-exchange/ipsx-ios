@@ -262,34 +262,36 @@ class EditProfileController: UIViewController {
     
     private func updateLegalStatusUI() {
         
-        if let company = self.company {
-            var imageName = "corporatePending"
-            var stateText = "Your corporate data is being reviewed".localized
-            switch company.status {
-            case .pending:
-                imageName = "corporatePending"
-                stateText = "Your corporate data is being reviewed".localized
-            case .incomplete:
-                imageName = "corporateReject"
-                stateText = "You rdata is incomplete".localized
-            case .rejected:
-                imageName = "corporateReject"
-                stateText = "Your data has been rejected".localized
-            case .verified:
-                imageName = "corporateSuccess"
-                stateText = "Your data has been reviewed".localized
-            case .collected:
-                imageName = "lawBook"
-                stateText = "Your data is ready to submit".localized
-            case .unknown:
-                imageName = "corporateReject"
-                stateText = "Your status is unknown, contact support".localized
+        DispatchQueue.main.async {
+            if let company = self.company {
+                var imageName = "corporatePending"
+                var stateText = "Your corporate data is being reviewed".localized
+                switch company.status {
+                case .pending:
+                    imageName = "corporatePending"
+                    stateText = "Your corporate data is being reviewed".localized
+                case .incomplete:
+                    imageName = "corporateReject"
+                    stateText = "You rdata is incomplete".localized
+                case .rejected:
+                    imageName = "corporateReject"
+                    stateText = "Your data has been rejected".localized
+                case .verified:
+                    imageName = "corporateSuccess"
+                    stateText = "Your data has been reviewed".localized
+                case .collected:
+                    imageName = "lawBook"
+                    stateText = "Your data is ready to submit".localized
+                case .unknown:
+                    imageName = "corporateReject"
+                    stateText = "Your status is unknown, contact support".localized
+                }
+                self.corporateStatusLabel.text = stateText
+                self.corporateStatusImageView.image = UIImage(named: imageName)
+            } else {
+                self.corporateStatusLabel.text = "Submit your corporate details".localized
+                self.corporateStatusImageView.image = UIImage(named: "lawBook")
             }
-            corporateStatusLabel.text = stateText
-            corporateStatusImageView.image = UIImage(named: imageName)
-        } else {
-            corporateStatusLabel.text = "Submit your corporate details".localized
-            corporateStatusImageView.image = UIImage(named: "lawBook")
         }
     }
     
@@ -301,7 +303,7 @@ class EditProfileController: UIViewController {
         }
         
         let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
-        var bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
+        let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
                                           "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
                                           "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
@@ -314,7 +316,6 @@ class EditProfileController: UIViewController {
                 
                 if success {
                     self.getCompanyDetails() { self.updateLegalStatusUI() }
-                    bodyParams["intention_company"] = 1
                 }
                 self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
             }

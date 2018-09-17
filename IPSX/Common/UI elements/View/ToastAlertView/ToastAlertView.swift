@@ -70,6 +70,7 @@ public enum ToastAlertType {
     case success
     case deletePending
     case deleteConfirmed
+    case validatePending
 }
 
 public class ToastAlertView: UIView {
@@ -166,6 +167,9 @@ public class ToastAlertView: UIView {
                 case .deleteConfirmed:
                     self.view.backgroundColor = UIColor.darkRed
                     imageName = "garbageWhite"
+                case .validatePending:
+                    self.view.backgroundColor = UIColor.pendingYellow
+                    imageName = "toastRefresh"
               }
                 self.leftImageView.image = UIImage(named: imageName)
             }

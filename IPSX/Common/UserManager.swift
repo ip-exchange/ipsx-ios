@@ -29,6 +29,7 @@ public class UserManager: NSObject {
     var generalSettings: GeneralSettings?
     var company: Company?
     var providerSubmissionStatus: ProviderStatus?
+    var companyVerified: Bool { return company?.status == Company.CompanyStatus.verified }
     var hasPerformedLogout = false
     
     var hasEthAddress: Bool {

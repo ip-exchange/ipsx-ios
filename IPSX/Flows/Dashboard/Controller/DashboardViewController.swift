@@ -33,6 +33,8 @@ class DashboardViewController: UIViewController {
     var tokenRequests: [TokenRequest]?
     let dispatchGroup = DispatchGroup()
     
+    var preventPurchase: Bool { return !UserManager.shared.companyVerified && UserManager.shared.userInfo?.hasOptedForLegal == true }
+
     var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -40,6 +42,7 @@ class DashboardViewController: UIViewController {
             }
         }
     }
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -74,11 +77,22 @@ class DashboardViewController: UIViewController {
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
+        guard !preventPurchase else {
+            self.toast?.showToastAlert("Company Not Validated Message".localized, type: .validatePending, dismissable: false)
+            return
+        }
+        
         self.tokenRequests = UserManager.shared.tokenRequests
         self.performSegue(withIdentifier: "showTokenRequestSegueID", sender: nil)
     }
     
     @IBAction func tokenDepositAction(_ sender: Any) {
+        
+        guard !preventPurchase else {
+            self.toast?.showToastAlert("Company Not Validated Message".localized, type: .validatePending, dismissable: false)
+            return
+        }
+        
         self.tokenRequests = UserManager.shared.tokenRequests
         self.performSegue(withIdentifier: "tokenDepositSegueID", sender: nil)
     }
@@ -320,6 +334,11 @@ class DashboardViewController: UIViewController {
     }
     
     private func showZeroBalanceToastIfNeeded() {
+        
+        guard !preventPurchase else {
+            return
+        }
+
         let balanceValue = UserManager.shared.userInfo?.balance ?? 0
         balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
         if balanceValue == 0, UserManager.shared.isLoggedIn {
