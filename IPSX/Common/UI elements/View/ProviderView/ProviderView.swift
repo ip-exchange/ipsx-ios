@@ -14,6 +14,9 @@ public enum ProviderStatus: String {
     case pending      = "pending"
     case accepted     = "accepted"
     case rejected     = "rejected"
+    case resubmitted  = "resubmitted"
+    case incomplete   = "incomplete"
+    case canceled     = "canceled"
 }
 
 @IBDesignable
@@ -49,29 +52,47 @@ class ProviderView: RoundedView {
     func configure() {
         
         guard let subbmissionStatus = subbmissionStatus else { return }
+        var imageName = ""
         
         switch subbmissionStatus {
             
         case .notSubmitted:
             titleLabel.text = "Ready to become a Provider".localized
-            subtitleLabel.text = "You will need to follow a few more steps".localized
-            statusImageView.image = UIImage(named: "providerNotSubmitted")
+            subtitleLabel.text = "Provider Not Submitted Text".localized
+            imageName = "providerNotSubmitted"
             
         case .pending:
             titleLabel.text = "About you as Provider".localized
-            subtitleLabel.text = "Your petition is being reviewed".localized
-            statusImageView.image = UIImage(named: "providerPending")
+            subtitleLabel.text = "Provider Pending Text".localized
+            imageName = "providerPending"
+            
+        case .resubmitted:
+            titleLabel.text = "About you as Provider".localized
+            subtitleLabel.text = "Provider Resubmitted Text".localized
+            imageName = "providerPending"
             
         case .accepted:
             titleLabel.text = "About you as Provider".localized
-            subtitleLabel.text = "Your petition has been approved".localized
-            statusImageView.image = UIImage(named: "providerApproved")
+            subtitleLabel.text = "Provider Approved Text".localized
+            imageName = "providerApproved"
             
         case .rejected:
             titleLabel.text = "About you as Provider".localized
-            subtitleLabel.text = "Your petition has been rejected".localized
-            statusImageView.image = UIImage(named: "providerRejected")
+            subtitleLabel.text = "Provider Rejected Text".localized
+            imageName = "providerRejected"
+            
+        case .canceled:
+            titleLabel.text = "About you as Provider".localized
+            subtitleLabel.text = "Provider Canceled Text".localized
+            imageName = "providerRejected"
+            
+        case .incomplete:
+            titleLabel.text = "About you as Provider".localized
+            subtitleLabel.text = "Provider Incomplete Text".localized
+            imageName = "providerRejected"
+            
         }
+        statusImageView.image = UIImage(named: imageName)
         layoutIfNeeded()
     }
 }

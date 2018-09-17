@@ -183,16 +183,21 @@ class DashboardViewController: UIViewController {
     
     func configureProviderView() {
         
-        print("hasOptedForProvider = ",UserManager.shared.userInfo?.hasOptedForProvider)
-        print("providerSubmissionStatus = ",UserManager.shared.providerSubmissionStatus)
-        
         if UserManager.shared.userInfo?.hasOptedForProvider == false {
-            providerViewHeight.constant = 0
+            hideProviderView()
         }
         else {
             providerViewHeight.constant = 66
             let providerStatus = UserManager.shared.providerSubmissionStatus
             providerView.subbmissionStatus = providerStatus
+        }
+    }
+    
+    func hideProviderView() {
+        
+        DispatchQueue.main.async {
+            self.providerView.clipsToBounds = true
+            self.providerViewHeight.constant = 0
         }
     }
     
@@ -523,7 +528,12 @@ extension DashboardViewController: ErrorPresentable {
                 completion?()
             })
         default:
-            self.errorMessage = "Refresh Data Error Message".localized
+            if requestType == .getProviderDetails {
+                self.hideProviderView()
+            }
+            else {
+                self.errorMessage = "Refresh Data Error Message".localized
+            }
         }
     }
 }

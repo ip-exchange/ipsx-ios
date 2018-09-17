@@ -33,6 +33,7 @@ class ProviderService {
                 completionHandler(ServiceResult.success(status))
             }
             else {
+                print("Error: Provider submission status doesn't match with internal mapping")
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
             }
         })
