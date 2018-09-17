@@ -14,6 +14,10 @@ class AboutProviderViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @IBAction func openInBrowserAction(_ sender: UIButton) {
+        print("TODO")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
