@@ -28,6 +28,7 @@ public class UserManager: NSObject {
     var proxyCountries: [String]?
     var generalSettings: GeneralSettings?
     var company: Company?
+    var providerSubmissionStatus: ProviderStatus?
     var hasPerformedLogout = false
     
     var hasEthAddress: Bool {
@@ -162,6 +163,7 @@ public class UserManager: NSObject {
         proxyPacks = nil
         testProxyPack = nil
         company = nil
+        providerSubmissionStatus = nil
     }
     
     func getUserCountryList() -> [String] {

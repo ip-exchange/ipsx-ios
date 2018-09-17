@@ -17,6 +17,8 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
     @IBOutlet weak var slidableView: UIView!
+    @IBOutlet weak var providerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var providerView: ProviderView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -110,7 +112,9 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.company == nil {
                 companyDetails()
             }
-            
+            if UserManager.shared.providerSubmissionStatus == nil {
+                providerDetails()
+            }
             if UserManager.shared.hasEthAddress {
                 
                 if UserManager.shared.testProxyPack == nil {
@@ -177,6 +181,21 @@ class DashboardViewController: UIViewController {
         })
     }
     
+    func configureProviderView() {
+        
+        print("hasOptedForProvider = ",UserManager.shared.userInfo?.hasOptedForProvider)
+        print("providerSubmissionStatus = ",UserManager.shared.providerSubmissionStatus)
+        
+        if UserManager.shared.userInfo?.hasOptedForProvider == false {
+            providerViewHeight.constant = 0
+        }
+        else {
+            providerViewHeight.constant = 66
+            let providerStatus = UserManager.shared.providerSubmissionStatus
+            providerView.subbmissionStatus = providerStatus
+        }
+    }
+    
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
             if !ReachabilityManager.shared.isReachable() {
@@ -189,6 +208,7 @@ class DashboardViewController: UIViewController {
 
     @objc func updateData() {
         retrieveUserInfo()
+        providerDetails()
         retrieveProxiesForCurrentUser()
     }
     
@@ -266,6 +286,29 @@ class DashboardViewController: UIViewController {
                 
                 self.handleError(error, requestType: .getCompany, completion: {
                     self.companyDetails()
+                })
+            }
+        })
+    }
+    
+    func providerDetails() {
+        
+        dispatchGroup.enter()
+        ProviderService().getProviderStatus(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let status):
+                UserManager.shared.providerSubmissionStatus = status as? ProviderStatus
+                DispatchQueue.main.async {
+                    self.configureProviderView()
+                }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getProviderDetails, completion: {
+                    self.providerDetails()
                 })
             }
         })

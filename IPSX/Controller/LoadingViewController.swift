@@ -26,7 +26,7 @@ class LoadingViewController: UIViewController {
     var hasConfirmedDeleteAccount = false
     
     // Update this when adding more requests
-    var noOfRequests: Float = 10
+    var noOfRequests: Float = 11
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -168,6 +168,27 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: .getCompany, completion: {
                     self.companyDetails()
+                })
+            }
+        })
+    }
+    
+    func providerDetails() {
+        
+        dispatchGroup.enter()
+        ProviderService().getProviderStatus(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let status):
+                UserManager.shared.providerSubmissionStatus = status as? ProviderStatus
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: .getProviderDetails, completion: {
+                    self.providerDetails()
                 })
             }
         })

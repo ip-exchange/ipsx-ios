@@ -348,7 +348,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t3o-MO-ZV0" userLabel="Provider View" customClass="ProviderView" customModule="IPSX" customModuleProvider="target">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t3o-MO-ZV0" userLabel="Provider View" customClass="ProviderView" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="15" y="161" width="345" height="66"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="providerNotSubmitted" translatesAutoresizingMaskIntoConstraints="NO" id="Mtq-n6-y4d">
@@ -394,7 +394,7 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="status" value="approved"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="statusImageView" destination="Mtq-n6-y4d" id="VAq-4o-NBe"/>
@@ -679,6 +679,8 @@
                     <connections>
                         <outlet property="fullMaskView" destination="Kzs-NX-cLu" id="ux9-69-g5c"/>
                         <outlet property="loadingView" destination="VGl-ma-YbP" id="IWn-Ql-Sqv"/>
+                        <outlet property="providerView" destination="t3o-MO-ZV0" id="IFq-u4-Wra"/>
+                        <outlet property="providerViewHeight" destination="7Gh-0Q-2Do" id="cp4-g6-urv"/>
                         <outlet property="proxiesSegmentController" destination="PSQ-5O-SSB" id="e42-mQ-6zM"/>
                         <outlet property="slidableView" destination="5Xw-8d-dgg" id="WZc-Zh-M2S"/>
                         <outlet property="tableView" destination="0Jl-Mt-64I" id="g6v-z2-Mfx"/>

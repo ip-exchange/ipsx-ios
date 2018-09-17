@@ -12,7 +12,7 @@ public enum ProviderStatus: String {
     
     case notSubmitted = ""
     case pending      = "pending"
-    case approved     = "approved"
+    case accepted     = "accepted"
     case rejected     = "rejected"
 }
 
@@ -31,7 +31,13 @@ class ProviderView: RoundedView {
         }
     }
     
-    var subbmissionStatus: ProviderStatus = .notSubmitted
+    public var subbmissionStatus: ProviderStatus? {
+        didSet {
+            DispatchQueue.main.async {
+                self.configure()
+            }
+        }
+    }
     var view: UIView!
     
     override func awakeFromNib() {
@@ -41,6 +47,8 @@ class ProviderView: RoundedView {
     }
       
     func configure() {
+        
+        guard let subbmissionStatus = subbmissionStatus else { return }
         
         switch subbmissionStatus {
             
@@ -54,7 +62,7 @@ class ProviderView: RoundedView {
             subtitleLabel.text = "Your petition is being reviewed".localized
             statusImageView.image = UIImage(named: "providerPending")
             
-        case .approved:
+        case .accepted:
             titleLabel.text = "About you as Provider".localized
             subtitleLabel.text = "Your petition has been approved".localized
             statusImageView.image = UIImage(named: "providerApproved")
