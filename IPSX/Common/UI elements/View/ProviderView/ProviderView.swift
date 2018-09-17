@@ -14,7 +14,6 @@ public enum ProviderStatus: String {
     case pending      = "pending"
     case accepted     = "accepted"
     case rejected     = "rejected"
-    case resubmitted  = "resubmitted"
     case incomplete   = "incomplete"
     case canceled     = "canceled"
 }
@@ -64,11 +63,6 @@ class ProviderView: RoundedView {
         case .pending:
             titleLabel.text = "About you as Provider".localized
             subtitleLabel.text = "Provider Pending Text".localized
-            imageName = "providerPending"
-            
-        case .resubmitted:
-            titleLabel.text = "About you as Provider".localized
-            subtitleLabel.text = "Provider Resubmitted Text".localized
             imageName = "providerPending"
             
         case .accepted:
