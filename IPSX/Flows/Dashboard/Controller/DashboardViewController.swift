@@ -104,6 +104,7 @@ class DashboardViewController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                object: nil)
+        providerView.providerDelegate = self
      }
     
     @objc func appWillEnterForeground() {
@@ -553,6 +554,19 @@ extension DashboardViewController: ErrorPresentable {
             else {
                 self.errorMessage = "Refresh Data Error Message".localized
             }
+        }
+    }
+}
+
+extension DashboardViewController: ProviderDelegate {
+    
+    func openProviderDetails(hasSubmittedProviderRequest: Bool) {
+        
+        if hasSubmittedProviderRequest {
+            performSegue(withIdentifier: "showAboutProviderSegue", sender: nil)
+        }
+        else {
+            performSegue(withIdentifier: "showBecomeProviderSegue", sender: nil)
         }
     }
 }

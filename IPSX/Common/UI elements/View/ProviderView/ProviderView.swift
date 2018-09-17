@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol ProviderDelegate: class {
+    func openProviderDetails(hasSubmittedProviderRequest: Bool)
+}
+
 public enum ProviderStatus: String {
     
     case notSubmitted = ""
@@ -33,6 +37,15 @@ class ProviderView: RoundedView {
         }
     }
     
+    @IBAction func ProviderButtonAction(_ sender: UIButton) {
+        
+        if UserManager.shared.userInfo?.hasOptedForProvider == false {
+            return
+        }
+        let hasSubmittedProviderRequest = UserManager.shared.providerSubmissionStatus != .notSubmitted
+        providerDelegate?.openProviderDetails(hasSubmittedProviderRequest: hasSubmittedProviderRequest)
+    }
+    
     public var subbmissionStatus: ProviderStatus? {
         didSet {
             DispatchQueue.main.async {
@@ -41,6 +54,7 @@ class ProviderView: RoundedView {
         }
     }
     var view: UIView!
+    public weak var providerDelegate: ProviderDelegate?
     
     override func awakeFromNib() {
         

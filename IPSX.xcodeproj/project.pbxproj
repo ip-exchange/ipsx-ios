@@ -51,6 +51,9 @@
 		A4AC7629209A074600504ED9 /* Double+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AC7628209A074600504ED9 /* Double+extensions.swift */; };
 		A4B57C2D20F24FE300EEE433 /* TokenDepositService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B57C2C20F24FE300EEE433 /* TokenDepositService.swift */; };
 		A4B57C3120F268C700EEE433 /* Deposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B57C3020F268C700EEE433 /* Deposit.swift */; };
+		A4D5D91E214FE3BA00B79361 /* ProviderDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4D5D91D214FE3BA00B79361 /* ProviderDetails.storyboard */; };
+		A4D5D920214FE73F00B79361 /* AboutProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D5D91F214FE73F00B79361 /* AboutProviderViewController.swift */; };
+		A4D5D923214FE79000B79361 /* BecomeProviderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D5D922214FE79000B79361 /* BecomeProviderController.swift */; };
 		A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DD0BA22097590E00D27759 /* RegisterService.swift */; };
 		A4DFBFFE20B44AD200FFC28F /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DFBFFD20B44AD200FFC28F /* GeneralSettings.swift */; };
 		A4E374CA2090C2D100808B86 /* NewProxyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E374C92090C2D100808B86 /* NewProxyController.swift */; };
@@ -201,6 +204,9 @@
 		A4B57C3020F268C700EEE433 /* Deposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deposit.swift; sourceTree = "<group>"; };
 		A4CCCFED20C56FCC005FA14F /* Pods_IPSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_IPSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_IPSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4D5D91D214FE3BA00B79361 /* ProviderDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProviderDetails.storyboard; sourceTree = "<group>"; };
+		A4D5D91F214FE73F00B79361 /* AboutProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutProviderViewController.swift; sourceTree = "<group>"; };
+		A4D5D922214FE79000B79361 /* BecomeProviderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BecomeProviderController.swift; sourceTree = "<group>"; };
 		A4DD0BA22097590E00D27759 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		A4DFBFFD20B44AD200FFC28F /* GeneralSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
 		A4E374C92090C2D100808B86 /* NewProxyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProxyController.swift; sourceTree = "<group>"; };
@@ -513,6 +519,7 @@
 				EECFA9202105D54700F58ABE /* ReferFriendController.swift */,
 				A4B57C2E20F256F800EEE433 /* Token Request */,
 				A4B57C2F20F2570E00EEE433 /* Deposit */,
+				A4D5D921214FE75000B79361 /* Provider */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -522,6 +529,7 @@
 			children = (
 				EE7AD95920B40C500022259D /* TokenRequest.storyboard */,
 				EECE360320FE192200168193 /* TokenDeposit.storyboard */,
+				A4D5D91D214FE3BA00B79361 /* ProviderDetails.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -543,6 +551,15 @@
 				EECEB9CE20ED00780081748F /* TokenDepositSummaryController.swift */,
 			);
 			path = Deposit;
+			sourceTree = "<group>";
+		};
+		A4D5D921214FE75000B79361 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				A4D5D91F214FE73F00B79361 /* AboutProviderViewController.swift */,
+				A4D5D922214FE79000B79361 /* BecomeProviderController.swift */,
+			);
+			path = Provider;
 			sourceTree = "<group>";
 		};
 		A4E6AEA920862DD2001787DF /* UI elements */ = {
@@ -974,6 +991,7 @@
 				EE354FC920AB10A6002A8132 /* index.js in Resources */,
 				EE7AD92E20B3FA740022259D /* Main.storyboard in Resources */,
 				EEE1FC9A212AE9A0002631E6 /* SimpleWebView.storyboard in Resources */,
+				A4D5D91E214FE3BA00B79361 /* ProviderDetails.storyboard in Resources */,
 				A43930B9205AAEE800CA7B15 /* LaunchScreen.storyboard in Resources */,
 				EE7AD96120B413240022259D /* Profile.storyboard in Resources */,
 				EE4DF81920BBECD300CE87E2 /* EnrolStaking.storyboard in Resources */,
@@ -1105,6 +1123,7 @@
 				EEAAD49920B5A81F001A2FAE /* SwiftyJSON.swift in Sources */,
 				A48329CC209C5B1F003B19FC /* UserInfoService.swift in Sources */,
 				A473002B205AC16900488009 /* RequestModel.swift in Sources */,
+				A4D5D923214FE79000B79361 /* BecomeProviderController.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				EE4DF81420BBE3C600CE87E2 /* EnrolStakeSubscribeController.swift in Sources */,
 				A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */,
@@ -1168,6 +1187,7 @@
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
 				EE7AD92C20B3F56D0022259D /* ToastAlertView.swift in Sources */,
 				A466F06520B4469700A7B68A /* SettingsService.swift in Sources */,
+				A4D5D920214FE73F00B79361 /* AboutProviderViewController.swift in Sources */,
 				EE3BDFF420A1AC71007AEB1D /* UIView+extensions.swift in Sources */,
 				A46480E420920A3600330CC9 /* ProxyDetailsViewController.swift in Sources */,
 				A4F04CCC214BCACE0044820A /* ProviderService.swift in Sources */,
