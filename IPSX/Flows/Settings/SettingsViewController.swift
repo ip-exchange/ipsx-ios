@@ -45,7 +45,11 @@ class SettingsViewController: UIViewController {
         switch deleteAccountState {
             
         case .notRequested:
-            performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
+            if UserManager.shared.userInfo?.source == "ios" {
+                performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
+            } else {
+                presentDeleteAlert()
+            }
             
         case .pending, .confirmed:
             abortDelete()
@@ -244,6 +248,44 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    private func presentDeleteAlert() {
+        
+        let alertController = UIAlertController(title: "Delete Account Confirm Message".localized, message: "".localized, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
+        }
+        
+        let deleteAction = UIAlertAction(title: "Confirm".localized, style: .destructive) { (action:UIAlertAction) in
+            self.deleteAccount()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteAccount() {
+        
+        loadingView?.startAnimating()
+        
+        SettingsService().deleteAccount(completionHandler: { result in
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                
+                DispatchQueue.main.async {
+                    self.retrieveUserInfo()
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: .deleteAccount, completion: {
+                    self.deleteAccount()
+                })
+            }
+        })
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DeleteAccountSegueID" {
             let deleteAccController = segue.destination as? DeleteAccountController
