@@ -48,7 +48,7 @@ class SettingsViewController: UIViewController {
             if UserManager.shared.userInfo?.source == "ios" {
                 performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
             } else {
-                createAndDeleteAlert()
+                presentDeleteAlert()
             }
             
         case .pending, .confirmed:
@@ -248,7 +248,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    private func createAndDeleteAlert() {
+    private func presentDeleteAlert() {
         
         let alertController = UIAlertController(title: "Delete Account Confirm Message".localized, message: "".localized, preferredStyle: .alert)
         
