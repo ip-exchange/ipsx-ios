@@ -250,7 +250,7 @@ class SettingsViewController: UIViewController {
     
     private func createAndDeleteAlert() {
         
-        let alertController = UIAlertController(title: "Are you sure you want to delete this account?".localized, message: "".localized, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Delete Account Confirm Message".localized, message: "".localized, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
         }
