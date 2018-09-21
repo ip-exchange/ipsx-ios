@@ -87,6 +87,14 @@ public struct Url {
         get { return baseUrl + "/register?referral=" }
     }
     
+    public static var aboutProviderUrl: String {
+        get { return baseUrl + "/provider" }
+    }
+    
+    public static var becomeProviderUrl: String {
+        get { return baseUrl + "/become-a-provider" }
+    }
+    
     public static let publicIPArgs           = "/Users/ip"
     public static let registerArgs           = "/Users"
     public static let fbRegisterArgs         = "/Users/social/register/facebook"

@@ -15,7 +15,10 @@ class AboutProviderViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     @IBAction func openInBrowserAction(_ sender: UIButton) {
-        print("TODO")
+        
+        if let url = URL(string: Url.aboutProviderUrl) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBOutlet weak var collectionView: UICollectionView!

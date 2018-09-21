@@ -17,7 +17,10 @@ class BecomeProviderController: UIViewController {
     }
     
     @IBAction func openInBrowserAction(_ sender: UIButton) {
-        print("TODO")
+        
+        if let url = URL(string: Url.becomeProviderUrl) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     override func viewDidLoad() {
