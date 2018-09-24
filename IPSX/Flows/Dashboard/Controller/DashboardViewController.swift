@@ -102,7 +102,7 @@ class DashboardViewController: UIViewController {
         tableView?.layer.cornerRadius = 5
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         providerView.providerDelegate = self
      }

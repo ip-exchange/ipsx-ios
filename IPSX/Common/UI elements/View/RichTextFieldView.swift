@@ -37,7 +37,7 @@ class RichTextFieldView: UIView {
             contentTextField?.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
             if let placeholder = contentTextField?.placeholder {
                 contentTextField?.attributedPlaceholder = NSAttributedString(string:placeholder,
-                                                                         attributes: [NSAttributedStringKey.foregroundColor: UIColor.silver])
+                                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.silver])
             }
          }
     }

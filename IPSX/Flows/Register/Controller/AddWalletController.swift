@@ -79,7 +79,7 @@ class AddWalletController: UIViewController {
         copyAddrButton?.isHidden = !pasteAddrButton.isHidden
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     
@@ -90,8 +90,8 @@ class AddWalletController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
     }
@@ -100,8 +100,8 @@ class AddWalletController: UIViewController {
         super.viewWillDisappear(animated)
         
         backgroundImageView?.removeParticlesAnimation()
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow , object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide , object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification , object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification , object: nil)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
@@ -294,7 +294,7 @@ class AddWalletController: UIViewController {
     func openSettingsAction() {
         
         self.toast?.hideToast()
-        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
             toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
             return
         }
@@ -329,7 +329,7 @@ class AddWalletController: UIViewController {
     @objc
     func keyboardWillAppear(notification: NSNotification?) {
         
-        guard let keyboardFrame = notification?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else {
+        guard let keyboardFrame = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         

@@ -124,7 +124,7 @@ class EditProfileController: UIViewController {
         keyIconImageView.tintColor = .lightBlue
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         prepareUI()
     }

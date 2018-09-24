@@ -101,8 +101,8 @@ class TabBarViewController: UITabBarController {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.onCollectDataComplete = { company in
-                //TODO CVI): Do the request using the company object
-                print(company?.name)
+                //TODO (CC): Do the request using the company object
+                print(company?.name ?? "")
             }
         }
     }
