@@ -100,7 +100,7 @@ class TokenDepositController: UIViewController {
         updateUI()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     
@@ -251,8 +251,8 @@ class TokenDepositController: UIViewController {
         let tooBar: UIToolbar = UIToolbar()
         tooBar.barStyle = UIBarStyle.default
         tooBar.items=[
-            UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Done".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(TokenDepositController.donePressed))]
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(TokenDepositController.donePressed))]
         tooBar.sizeToFit()
         amountTextField.inputAccessoryView = tooBar
     }

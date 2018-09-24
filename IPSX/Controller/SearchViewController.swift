@@ -51,8 +51,8 @@ class SearchViewController: UIViewController {
         closeButton.isHidden = (isProxyFlow == false)
         backButton.isHidden  = !closeButton.isHidden
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         filteredCountries = isProxyFlow == true ? [] : countries
         tableView.reloadData()
@@ -127,7 +127,7 @@ class SearchViewController: UIViewController {
     @objc
     func keyboardWillAppear(notification: NSNotification?) {
         
-        guard let keyboardFrame = notification?.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else {
+        guard let keyboardFrame = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return
         }
         
