@@ -43,7 +43,7 @@ class TokenRequestListController: UIViewController {
         tableView.refreshControl = refreshControl
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     

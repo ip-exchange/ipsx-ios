@@ -38,7 +38,7 @@ class ProxyDetailsViewController: UIViewController {
         configureUI()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     

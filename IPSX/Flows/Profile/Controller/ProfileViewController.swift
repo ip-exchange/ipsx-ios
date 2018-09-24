@@ -101,7 +101,7 @@ class ProfileViewController: UIViewController {
         updateHeader()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
-                                               name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     
@@ -322,7 +322,7 @@ extension ProfileViewController: UITableViewDataSource {
         return ethAdresses.count > 1
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             let address = ethAdresses[indexPath.item]

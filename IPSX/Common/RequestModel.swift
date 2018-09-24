@@ -139,7 +139,9 @@ public enum CustomError: Error {
     case notPossible
     
     public var errorDescription: String? {
+        
         switch self {
+            
         case .noData:
             return "There was no data on the server response."
             
@@ -161,9 +163,6 @@ public enum CustomError: Error {
         default:
             return self.localizedDescription
         }
-    }
-    public var errorCode: String {
-        return self.errorCode
     }
 }
 
