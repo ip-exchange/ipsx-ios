@@ -40,6 +40,8 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var individualCheckmarkImage: UIImageView!
     @IBOutlet weak var legalCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
+    @IBOutlet weak var legalOptionsHoldeView: UIView!
+    @IBOutlet weak var legalotionsTitleLabel: UILabel!
     
     @IBOutlet weak var corporateStatusImageView: UIImageView!
     @IBOutlet weak var corporateStatusLabel: UILabel!
@@ -197,6 +199,8 @@ class EditProfileController: UIViewController {
     private func prepareUI() {
         if UserManager.shared.userInfo?.source != "ios" {
             self.fullContentHeightConstraint.constant -= 66
+            self.legalOptionsHoldeView.isHidden = true
+            self.legalotionsTitleLabel.isHidden = true
         }
         if (registeredAsCompany || hasCompany) {
             self.legalCheckmarkImage.isHidden = false
