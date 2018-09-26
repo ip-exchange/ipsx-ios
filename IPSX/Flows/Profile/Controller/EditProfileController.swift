@@ -276,7 +276,7 @@ class EditProfileController: UIViewController {
                     stateText = "Your corporate data is being reviewed".localized
                 case .incomplete:
                     imageName = "corporateReject"
-                    stateText = "You rdata is incomplete".localized
+                    stateText = "Your data is incomplete".localized
                 case .rejected:
                     imageName = "corporateReject"
                     stateText = "Your data has been rejected".localized
