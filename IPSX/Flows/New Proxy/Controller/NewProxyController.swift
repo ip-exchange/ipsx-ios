@@ -68,7 +68,7 @@ class NewProxyController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = userInfo?.balance.cleanString ?? "0"
+        balance = userInfo?.balance?.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -189,7 +189,7 @@ class NewProxyController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
+                self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
                 
             case .failure(let error):
                 self.handleError(error, requestType: .userInfo, completion: {

@@ -39,19 +39,7 @@ class UserInfoService {
     }
     
     private func mapResponse(json:JSON, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        let firstName           = json["first_name"].stringValue
-        let middleName          = json["middle_name"].stringValue
-        let lastName            = json["last_name"].stringValue
-        let telegram            = json["telegram"].stringValue
-        let countryID           = json["country_id"].stringValue
-        let email               = json["email"].stringValue
-        let proxyTest           = json["proxy_test"].stringValue
-        let balance             = json["ballance"].doubleValue
-        let kycStatus           = json["kyc_status"].intValue
-        let socialName          = json["social_name"].string
-        let source              = json["source"].string
-        let refCode             = json["referral_code"].string
+
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
         let hasOpetdForLegal    = json["intention_company"].intValue == 1 ? true : false
@@ -79,7 +67,24 @@ class UserInfoService {
             pendingDeleteAccount = true
         }
         
-        let user = UserInfo(firstName: firstName, middleName: middleName, lastName: lastName, telegram: telegram, countryID: countryID, email: email, proxyTest: proxyTest, balance: balance, kycStatus: kycStatus, socialName: socialName, source: source, refferalCode: refCode, deleteAccountDate: deleteAccountDate, pendingDeleteAccount: pendingDeleteAccount, hasOpetdForLegal: hasOpetdForLegal, hasOpetdForProvider: hasOpetdForProvider)
+        let userDict: [String: Any] = [ "first_name":    json["first_name"].stringValue,
+                                        "middle_name":   json["middle_name"].stringValue,
+                                        "last_name":     json["last_name"].stringValue,
+                                        "telegram":      json["telegram"].stringValue,
+                                        "country_id":    json["country_id"].stringValue,
+                                        "email":         json["email"].stringValue,
+                                        "proxy_test":    json["proxy_test"].stringValue,
+                                        "ballance":      json["ballance"].doubleValue,
+                                        "kyc_status":    json["kyc_status"].intValue,
+                                        "social_name":   json["social_name"].stringValue,
+                                        "source":        json["source"].stringValue,
+                                        "referral_code": json["referral_code"].stringValue,
+                                        "delete_account_date":    deleteAccountDate as Any,
+                                        "pending_delete_account": pendingDeleteAccount,
+                                        "intention_company":      hasOpetdForLegal,
+                                        "intention_provider":     hasOpetdForProvider]
+        
+        let user = UserInfo(userDict: userDict)
         completionHandler(ServiceResult.success(user))
     }
     

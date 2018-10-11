@@ -112,7 +112,7 @@ class TokenDepositsListController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         getDepositList()
-        self.balance = UserManager.shared.userInfo?.balance.cleanString ?? "0"
+        self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
         updateReachabilityInfo()
     }
     

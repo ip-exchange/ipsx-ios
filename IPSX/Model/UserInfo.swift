@@ -51,54 +51,52 @@ struct UserInfo {
                                          KycStatus.Accepted.rawValue   : "Accepted Status Text",
                                          ]
 
-    var firstName: String
-    var middleName: String
-    var lastName: String
-    var telegram: String
-    var countryID: String
-    var email: String
-    var proxyTest: String
-    var balance: Double
+    var firstName: String?
+    var middleName: String?
+    var lastName: String?
+    var telegram: String?
+    var countryID: String?
+    var email: String?
+    var proxyTest: String?
+    var balance: Double?
     var kycStatusString: String = "Unknown Status Text".localized
     var kycStatus: KycStatus
     var socialName: String?
     var source: String?
     var refferalCode: String?
     var deleteAccountDate: Date?
-    var hasOptedForLegal: Bool
-    var hasOptedForProvider: Bool
+    var hasOptedForLegal: Bool?
+    var hasOptedForProvider: Bool?
     
-    //TODO (some new minion in the future): Refactor the constructor to accept a dictionary
-    
-    init(firstName: String = "", middleName: String = "",lastName: String = "",
-         telegram: String = "", countryID: String = "", email: String = "", proxyTest: String = "", balance: Double = 0, kycStatus: Int = -1, socialName: String? = nil, source: String? = nil, refferalCode: String? = nil, deleteAccountDate: Date? = nil, pendingDeleteAccount: Bool = false, hasOpetdForLegal: Bool, hasOpetdForProvider: Bool) {
+    init(userDict: [String: Any]) {
         
-        self.firstName     = firstName
-        self.middleName    = middleName
-        self.lastName      = lastName
-        self.telegram      = telegram
-        self.countryID     = countryID
-        self.email         = email
-        self.proxyTest     = proxyTest
-        self.balance       = balance
-        self.socialName    = socialName
-        self.source        = source
-        self.refferalCode  = refferalCode
+        self.firstName     = userDict["first_name"] as? String
+        self.middleName    = userDict["middle_name"] as? String
+        self.lastName      = userDict["last_name"] as? String
+        self.telegram      = userDict["telegram"] as? String
+        self.countryID     = userDict["country_id"] as? String
+        self.email         = userDict["email"] as? String
+        self.proxyTest     = userDict["proxy_test"] as? String
+        self.balance       = userDict["ballance"] as? Double
+        self.socialName    = userDict["social_name"] as? String
+        self.source        = userDict["source"] as? String
+        self.refferalCode  = userDict["referral_code"] as? String
         
-        self.hasOptedForLegal    = hasOpetdForLegal
-        self.hasOptedForProvider = hasOpetdForProvider
+        self.hasOptedForLegal    = userDict["intention_company"] as? Bool
+        self.hasOptedForProvider = userDict["intention_provider"] as? Bool 
         
-        self.deleteAccountDate = deleteAccountDate
-        self.kycStatus = KycStatus(rawValue: kycStatus) ?? .Registered
+        self.deleteAccountDate = userDict["delete_account_date"] as? Date
+        let kyc = userDict["kyc_status"] as? Int ?? -1
+        self.kycStatus = KycStatus(rawValue: kyc) ?? .Registered
         
-        if let statusString = kycStausedDic[kycStatus] {
+        if let statusString = kycStausedDic[kyc] {
             self.kycStatusString = statusString.localized
         }
         
         if deleteAccountDate != nil {
             deleteAccountState = .confirmed
         }
-        else if pendingDeleteAccount {
+        else if userDict["pending_delete_account"] as? Bool == true {
             deleteAccountState = .pending
         }
     }
