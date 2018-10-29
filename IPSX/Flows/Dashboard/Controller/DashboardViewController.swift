@@ -425,7 +425,7 @@ class DashboardViewController: UIViewController {
     func updateProxyDataSource() {
         
         proxies = UserManager.shared.proxies ?? []
-        if UserManager.shared.hasTestProxyAvailable {
+        if UserManager.shared.hasTestProxyAvailable && UserManager.shared.testProxyPack != nil {
             
             let testProxyPack = UserManager.shared.testProxyPack
             
