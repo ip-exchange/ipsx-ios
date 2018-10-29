@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class TokenDepositController: UIViewController {
     
@@ -87,7 +88,7 @@ class TokenDepositController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .createDeposit, completion: {
+                self.handleError(error, requestType: RequestType.createDeposit, completion: {
                     self.createDeposit(ethID: ethID, amount: amount)
                 })
             }
@@ -150,7 +151,7 @@ class TokenDepositController: UIViewController {
                 self.proxyPacks = UserManager.shared.proxyPacks
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -366,7 +367,7 @@ extension TokenDepositController: ToastAlertViewPresentable {
 
 extension TokenDepositController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

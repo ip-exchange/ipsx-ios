@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class RegisterService {
     
@@ -17,22 +18,32 @@ class RegisterService {
          "intention_provider" - 0 = requester / 1 = provider
          */
         
-        let params: [String: Any] =    ["email"             : email,
-                                        "password"          : password,
-                                        "ip"                : ip,
-                                        "source"            : "ios",
-                                        "newsletter"        : newsletter,
-                                        "intention_company" : type.rawValue,
-                                        "intention_provider": destiny.rawValue]
+        let bodyParams: [String: Any] = ["email"             : email,
+                                         "password"          : password,
+                                         "ip"                : ip,
+                                         "source"            : "ios",
+                                         "newsletter"        : newsletter,
+                                         "intention_company" : type.rawValue,
+                                         "intention_provider": destiny.rawValue]
         
-        RequestBuilder.shared.executeRequest(requestType: .register, body: params, completion: { error, data in
+        let request = createRequest(requestType: RequestType.register, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
@@ -47,14 +58,24 @@ class RegisterService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .addEthAddress, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.addEthAddress, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)

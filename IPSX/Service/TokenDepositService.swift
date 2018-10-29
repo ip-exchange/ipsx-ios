@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CVINetworkingFramework
 
 class TokenDepositService {
     
@@ -19,14 +20,24 @@ class TokenDepositService {
                                          "amount_requested" : amount,
                                          "telegram"         : telegramID]
         
-        RequestBuilder.shared.executeRequest(requestType: .requestTokens, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.requestTokens, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
@@ -38,14 +49,24 @@ class TokenDepositService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getTokenRequestList, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.getTokenRequestList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array else {
@@ -77,14 +98,24 @@ class TokenDepositService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getDepositList, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.getDepositList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array else {
@@ -107,14 +138,24 @@ class TokenDepositService {
         let bodyParams: [String: Any] = ["usereth_id"       : ethID,
                                          "amount_requested" : amount]
         
-        RequestBuilder.shared.executeRequest(requestType: .createDeposit, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.createDeposit, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)
@@ -150,14 +191,24 @@ class TokenDepositService {
         
         let bodyParams: [String: Any] = ["status" : "canceled"]
         
-        RequestBuilder.shared.executeRequest(requestType: .cancelDeposit, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.cancelDeposit, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))

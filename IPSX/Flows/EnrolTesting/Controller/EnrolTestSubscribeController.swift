@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EnrolTestSubscribeController: UIViewController {
     
@@ -136,7 +137,7 @@ class EnrolTestSubscribeController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .enrollTesting, completion: {
+                self.handleError(error, requestType: RequestType.enrollTesting, completion: {
                     self.enrollTesting()
                 })
             }
@@ -239,7 +240,7 @@ extension EnrolTestSubscribeController: ToastAlertViewPresentable {
 
 extension EnrolTestSubscribeController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

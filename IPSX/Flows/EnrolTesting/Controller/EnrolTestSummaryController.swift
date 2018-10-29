@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EnrolTestSummaryController: UIViewController {
     

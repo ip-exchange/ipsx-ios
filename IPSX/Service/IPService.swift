@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class IPService {
     
@@ -19,7 +20,7 @@ class IPService {
                 return
             }
             guard let data = data else {
-                completion(CustomError.noData, nil)
+                completion(RequestError.noData, nil)
                 return
             }
             let json = JSON(data: data)

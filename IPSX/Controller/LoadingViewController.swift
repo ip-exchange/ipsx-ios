@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class LoadingViewController: UIViewController {
     
@@ -145,7 +146,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getEthAddress, completion: {
+                self.handleError(error, requestType: RequestType.getEthAddress, completion: {
                     self.ethAddresses()
                 })
             }
@@ -166,7 +167,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getCompany, completion: {
+                self.handleError(error, requestType: RequestType.getCompany, completion: {
                     self.companyDetails()
                 })
             }
@@ -187,7 +188,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getProviderDetails, completion: {
+                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
                     self.providerDetails()
                 })
             }
@@ -208,7 +209,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.userInfo()
                 })
             }
@@ -230,7 +231,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .retrieveProxies, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxies, completion: {
                     self.proxies()
                 })
             }
@@ -249,7 +250,7 @@ class LoadingViewController: UIViewController {
                 DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -268,7 +269,7 @@ class LoadingViewController: UIViewController {
                 DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
+                self.handleError(error, requestType: RequestType.retrieveTestProxyPackage, completion: {
                     self.retrieveTestProxyPackage()
                 })
             }
@@ -289,7 +290,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getTokenRequestList, completion: {
+                self.handleError(error, requestType: RequestType.getTokenRequestList, completion: {
                     self.tokenRequestList()
                 })
             }
@@ -310,7 +311,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
                     self.proxyCountryList()
                 })
             }
@@ -330,7 +331,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .generalSettings, completion: {
+                self.handleError(error, requestType: RequestType.generalSettings, completion: {
                     self.generalSettings()
                 })
             }
@@ -355,7 +356,7 @@ extension LoadingViewController: ToastAlertViewPresentable {
 
 extension LoadingViewController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

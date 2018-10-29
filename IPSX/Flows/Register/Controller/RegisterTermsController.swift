@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class RegisterTermsController: UIViewController {
 
@@ -196,7 +197,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -205,7 +206,7 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .fbRegister)
+                self.handleError(error, requestType: RequestType.fbRegister)
             }
         })
     }
@@ -222,7 +223,7 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .register)
+                self.handleError(error, requestType: RequestType.register)
             }
         })
     }
@@ -269,11 +270,11 @@ class RegisterDoneController: UIViewController {
 
 extension RegisterTermsController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch requestType {
             
-        case .fbRegister, .register:
+        case RequestType.fbRegister, RequestType.register:
             
             switch error {
             case CustomError.alreadyExists:

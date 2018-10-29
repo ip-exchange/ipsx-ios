@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EnrollmentService {
     
@@ -18,14 +19,24 @@ class EnrollmentService {
         let bodyParams: [String: Any] = ["usereth_id": ethID,
                                          "status"    : "accepted"]
         
-        RequestBuilder.shared.executeRequest(requestType: .enrollTesting, urlParams: urlParams, body: bodyParams,  completion: { error, data in
+        let request = createRequest(requestType: RequestType.enrollTesting, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request,  completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)
@@ -48,33 +59,53 @@ class EnrollmentService {
         
         let bodyParams: [String: [Int]] = ["eths": ethsArray]
         
-        RequestBuilder.shared.executeRequest(requestType: .enrollStaking, urlParams: urlParams, body: bodyParams,  completion: { error, data in
+        let request = createRequest(requestType: RequestType.enrollStaking, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request,  completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
         })
     }
     
-    func getEnrollmentDetails(requestType: IPRequestType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func getEnrollmentDetails(requestType: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams,  completion: { error, data in
+        let request = createRequest(requestType: requestType, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             

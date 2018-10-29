@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class RepresentativeDetailsController: UIViewController {
 
@@ -152,7 +153,7 @@ class RepresentativeDetailsController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
+                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completion: {
                     self.submitCompanyDetails()
                 })
             }
@@ -172,7 +173,7 @@ extension RepresentativeDetailsController: ToastAlertViewPresentable {
 
 extension RepresentativeDetailsController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

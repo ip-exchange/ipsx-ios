@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EnrolStakeSubscribeController: UIViewController {
 
@@ -166,7 +167,7 @@ class EnrolStakeSubscribeController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .enrollStaking, completion: {
+                self.handleError(error, requestType: RequestType.enrollStaking, completion: {
                     self.enrollStaking()
                 })
             }
@@ -237,7 +238,7 @@ extension EnrolStakeSubscribeController: ToastAlertViewPresentable {
 
 extension EnrolStakeSubscribeController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

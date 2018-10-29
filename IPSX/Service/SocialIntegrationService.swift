@@ -9,37 +9,48 @@
 import Foundation
 import FacebookLogin
 import FBSDKLoginKit
+import CVINetworkingFramework
 
 class SocialIntegrationService {
     
-    func facebook(requestType: IPRequestType, fbToken: String?, newsletter: Bool = true, destiny: DestinyType? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func facebook(requestType: String, fbToken: String?, newsletter: Bool = true, destiny: DestinyType? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let fbToken = fbToken else {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
             return
         }
         
-        var params: [String: Any] = [:]
+        var bodyParams: [String: Any] = [:]
         
-        if requestType == .fbRegister {
+        if requestType == RequestType.fbRegister {
             
-            params = ["token"              : fbToken,
-                      "newsletter"         : newsletter as Any,
-                      "intention_provider" : destiny?.rawValue as Any]
+            bodyParams = ["token"              : fbToken,
+                          "newsletter"         : newsletter as Any,
+                          "intention_provider" : destiny?.rawValue as Any]
         }
-        else if requestType == .fbLogin {
+        else if requestType == RequestType.fbLogin {
             
-            params = ["token" : fbToken]
+            bodyParams = ["token" : fbToken]
         }
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, body: params, completion: { error, data in
+        let request = createRequest(requestType: requestType, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json        = JSON(data: data)

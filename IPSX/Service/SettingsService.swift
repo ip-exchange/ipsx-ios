@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class SettingsService {
     
@@ -16,16 +17,26 @@ class SettingsService {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
             return
         }
-        let params: [String: String] =  ["ACCESS_TOKEN" : accessToken]
+        let urlParams: [String: String] =  ["ACCESS_TOKEN" : accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .generalSettings, urlParams: params, completion: { error, data in
+        let request = createRequest(requestType: RequestType.generalSettings, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
@@ -81,14 +92,24 @@ class SettingsService {
         
         if let _ = password { bodyParams["password"] = password }
         
-        RequestBuilder.shared.executeRequest(requestType: .deleteAccount, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.deleteAccount, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
@@ -100,14 +121,24 @@ class SettingsService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .abortDeleteAccount, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.abortDeleteAccount, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))

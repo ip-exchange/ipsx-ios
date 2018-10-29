@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 @IBDesignable
 class ProxyDetailsViewController: UIViewController {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class ChangePasswordController: UIViewController {
 
@@ -139,7 +140,7 @@ class ChangePasswordController: UIViewController {
                 self.autologin(password: newPassword)
             
             case .failure(let error):
-                self.handleError(error, requestType: .changePassword, completion: {
+                self.handleError(error, requestType: RequestType.changePassword, completion: {
                     self.changePassword(oldPassword: oldPassword, newPassword: newPassword)
                 })
             }
@@ -197,7 +198,7 @@ extension ChangePasswordController: ToastAlertViewPresentable {
 
 extension ChangePasswordController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

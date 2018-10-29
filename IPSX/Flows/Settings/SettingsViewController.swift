@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class SettingsViewController: UIViewController {
 
@@ -137,7 +138,7 @@ class SettingsViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -156,7 +157,7 @@ class SettingsViewController: UIViewController {
                 self.retrieveUserInfo()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .abortDeleteAccount, completion: {
+                self.handleError(error, requestType: RequestType.abortDeleteAccount, completion: {
                     self.abortDelete()
                 })
             }
@@ -179,7 +180,7 @@ class SettingsViewController: UIViewController {
                 }
         
             case .failure(let error):
-                self.handleError(error, requestType: .getSettings, completion: {
+                self.handleError(error, requestType: RequestType.getSettings, completion: {
                     self.loadSettings()
                 })
             }
@@ -222,10 +223,10 @@ class SettingsViewController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
-                print("success")
+                break
                 
             case .failure(let error):
-                self.handleError(error, requestType: .updateSettings, completion: {
+                self.handleError(error, requestType: RequestType.updateSettings, completion: {
                     self.updateSettings()
                 })
             }
@@ -279,7 +280,7 @@ class SettingsViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .deleteAccount, completion: {
+                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
                     self.deleteAccount()
                 })
             }
@@ -310,7 +311,7 @@ extension SettingsViewController: ToastAlertViewPresentable {
 
 extension SettingsViewController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
@@ -328,7 +329,7 @@ extension SettingsViewController: ErrorPresentable {
             
             switch requestType {
                 
-            case .updateSettings:
+            case RequestType.updateSettings:
                 self.updateEmailNotifSwitch(error: true)
                 self.updateNewsletterSwitch(error: true)
                 

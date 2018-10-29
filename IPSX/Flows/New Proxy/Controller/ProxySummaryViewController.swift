@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class ProxySummaryViewController: UIViewController {
     
@@ -141,7 +142,7 @@ class ProxySummaryViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .createProxy, completion: {
+                self.handleError(error, requestType: RequestType.createProxy, completion: {
                     self.createProxy(userIP: userIP, proxy: proxy)
                 })
             }
@@ -270,7 +271,7 @@ extension ProxySummaryViewController: UITableViewDelegate {
 
 extension ProxySummaryViewController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

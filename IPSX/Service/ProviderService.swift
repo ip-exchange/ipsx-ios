@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CVINetworkingFramework
 
 class ProviderService {
     
@@ -15,14 +16,24 @@ class ProviderService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getProviderDetails, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: RequestType.getProviderDetails, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)

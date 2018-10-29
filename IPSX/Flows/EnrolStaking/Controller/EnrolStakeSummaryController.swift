@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EnrolStakeSummaryController: UIViewController {
 
@@ -130,7 +131,7 @@ class EnrolStakeSummaryController: UIViewController {
         self.enrolmentTimeLabel.text = "--:--"
         self.walletAlliasLabel.text  = "Loading message".localized
         self.walletAddressLabel.text = "..."
-        EnrollmentService().getEnrollmentDetails(requestType: .enrollStakingDetails, completionHandler: { result in
+        EnrollmentService().getEnrollmentDetails(requestType: RequestType.enrollStakingDetails, completionHandler: { result in
             DispatchQueue.main.async {
                 self.loadingView?.stopAnimating()
                 switch result {
@@ -159,7 +160,7 @@ class EnrolStakeSummaryController: UIViewController {
                     }
                     
                 case .failure(let error):
-                    self.handleError(error, requestType: .enrollTesting, completion: {
+                    self.handleError(error, requestType: RequestType.enrollTesting, completion: {
                         self.enrollmentDetails()
                     })
                 }
@@ -196,7 +197,7 @@ extension EnrolStakeSummaryController: ToastAlertViewPresentable {
 
 extension EnrolStakeSummaryController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
