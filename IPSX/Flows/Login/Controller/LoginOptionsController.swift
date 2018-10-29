@@ -8,7 +8,7 @@
 
 import UIKit
 import FacebookLogin
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 class LoginOptionsController: UIViewController {
 

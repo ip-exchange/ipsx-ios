@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 /// CURRENT ENVIRONMENT (DEV / DEMO):
 let environment = Environment.dev

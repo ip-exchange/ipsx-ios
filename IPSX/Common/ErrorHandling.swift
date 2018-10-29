@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 protocol ErrorPresentable {
     

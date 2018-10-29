@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 class LoginCredentialsControler: UIViewController {
     

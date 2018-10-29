@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 import Alamofire
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 class LegalPersonService {
         

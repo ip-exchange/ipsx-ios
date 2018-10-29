@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 class AddWalletController: UIViewController {
 

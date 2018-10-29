@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 @IBDesignable
 class ProxyDetailsViewController: UIViewController {

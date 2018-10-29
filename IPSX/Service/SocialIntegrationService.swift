@@ -9,7 +9,7 @@
 import Foundation
 import FacebookLogin
 import FBSDKLoginKit
-import CVINetworkingFramework
+import IPSXNetworkingFramework
 
 class SocialIntegrationService {
     
