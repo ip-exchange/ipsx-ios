@@ -27,9 +27,7 @@ class TabBarViewController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        
-        //TODO: refactor presentation flow
-        
+                
         if !UserManager.shared.hasEthAddress {
             
             if hasPerformedAutologin {
@@ -100,10 +98,7 @@ class TabBarViewController: UITabBarController {
         if segue.identifier == "CollectLegalDetailsSegueID" {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
-            companyController?.onCollectDataComplete = { company in
-                //TODO (CC): Do the request using the company object
-                print(company?.name ?? "")
-            }
+            companyController?.onCollectDataComplete = { company in }
         }
     }
 }
