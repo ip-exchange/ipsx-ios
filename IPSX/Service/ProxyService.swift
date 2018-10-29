@@ -48,9 +48,6 @@ class ProxyService {
         
         var proxies: [Proxy] = []
         
-        // TODO (CC): fix this shit and use it by default
-        let dateFormatter = DateFormatter.backendResponseParse()
-        
         for json in jsonArray {
             
             let proxyID = json["id"].stringValue
@@ -58,8 +55,8 @@ class ProxyService {
             let endDateString = json["end_date"].stringValue
             let createdDateString = json["created_at"].stringValue
             
-            let startDate = dateFormatter.date(from: startDateString)
-            let endDate = dateFormatter.date(from: endDateString)
+            let startDate = startDateString.dateObject()
+            let endDate   = endDateString.dateObject()
             
             let pacLink = String.generatePacLink(createdDate: createdDateString, proxyId: proxyID)
             

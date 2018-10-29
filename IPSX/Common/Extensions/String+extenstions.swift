@@ -61,6 +61,12 @@ public extension String {
         return result
     }
     
+    func dateObject(format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> Date? {
+        
+        let dateFormatter = DateFormatter.backendResponseParse(format: format)
+        return dateFormatter.date(from: self)
+    }
+    
 }
 
 
