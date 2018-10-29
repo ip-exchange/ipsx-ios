@@ -429,7 +429,7 @@ class DashboardViewController: UIViewController {
             
             let testProxyPack = UserManager.shared.testProxyPack
             
-            //TODO (CVI): simplify this formatting for duration -> move to extension
+            //TODO (CC): simplify this formatting for duration -> move to extension
             
             let duration = testProxyPack?.duration ?? "0"
             var formatedDuration = duration + " min"

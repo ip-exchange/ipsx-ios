@@ -36,8 +36,6 @@ class TokenDepositSummaryController: UIViewController {
         }
     }
 
-    //TODO (CC): add Copy button for payment address
-    
     var deposit: Deposit?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -77,7 +75,6 @@ class TokenDepositSummaryController: UIViewController {
         if presentedFromCreateScreen {
             let amount = deposit?.amountRequested ?? "N/A"
             
-            //TODO (CC): change format to display 2018-07-08 16:36:35 UTC
             let expirationDate = deposit?.watchUntil?.dateToString(format: "dd MMM yyyy") ?? "N/A"
             
             let depositCreatedMessage = String(format: "Token Deposit Created %@ IPSX expiration date %@ Message".localized, "\(amount)", "\(expirationDate)")
