@@ -8,6 +8,7 @@
 
 import UIKit
 import FacebookLogin
+import CVINetworkingFramework
 
 class LoginOptionsController: UIViewController {
 
@@ -73,7 +74,7 @@ class LoginOptionsController: UIViewController {
     func executeLogin(withFBtoken fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: .fbLogin, fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: IPRequestType.fbLogin, fbToken: fbToken, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -82,7 +83,7 @@ class LoginOptionsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .fbLogin)
+                self.handleError(error, requestType: IPRequestType.fbLogin)
             }
         })
     }
@@ -105,7 +106,7 @@ class LoginOptionsController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: .getEthAddress)
+                self.handleError(error, requestType: IPRequestType.getEthAddress)
             }
         })
     }
@@ -123,11 +124,11 @@ extension LoginOptionsController: ToastAlertViewPresentable {
 
 extension LoginOptionsController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch requestType {
             
-        case .fbLogin:
+        case IPRequestType.fbLogin:
             
             switch error {
             case CustomError.notFound:

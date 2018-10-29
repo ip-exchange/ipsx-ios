@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class DashboardViewController: UIViewController {
     
@@ -245,7 +246,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveTestProxyPackage, completion: {
+                self.handleError(error, requestType: IPRequestType.retrieveTestProxyPackage, completion: {
                     self.retrieveTestProxyPackage()
                 })
             }
@@ -265,7 +266,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.proxyPacks = packages as? [ProxyPack]
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -284,7 +285,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .generalSettings, completion: {
+                self.handleError(error, requestType: IPRequestType.generalSettings, completion: {
                     self.generalSettings()
                 })
             }
@@ -304,7 +305,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getCompany, completion: {
+                self.handleError(error, requestType: IPRequestType.getCompany, completion: {
                     self.companyDetails()
                 })
             }
@@ -327,7 +328,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getProviderDetails, completion: {
+                self.handleError(error, requestType: IPRequestType.getProviderDetails, completion: {
                     self.providerDetails()
                 })
             }
@@ -362,7 +363,7 @@ class DashboardViewController: UIViewController {
                 self.showZeroBalanceToastIfNeeded()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -381,7 +382,7 @@ class DashboardViewController: UIViewController {
                 self.updateProxyDataSource()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveProxies, completion: {
+                self.handleError(error, requestType: IPRequestType.retrieveProxies, completion: {
                     self.retrieveProxiesForCurrentUser()
                 })
             }
@@ -456,7 +457,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.proxyCountries = countryList as? [String]
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                self.handleError(error, requestType: IPRequestType.getProxyCountryList, completion: {
                     self.getProxyCountryList()
                 })
             }
@@ -535,7 +536,7 @@ extension DashboardViewController: UITableViewDelegate {
 
 extension DashboardViewController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
@@ -548,7 +549,7 @@ extension DashboardViewController: ErrorPresentable {
                 completion?()
             })
         default:
-            if requestType == .getProviderDetails {
+            if requestType == IPRequestType.getProviderDetails {
                 self.hideProviderView()
             }
             else {

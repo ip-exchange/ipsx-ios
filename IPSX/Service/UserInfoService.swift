@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class UserInfoService {
     
@@ -19,17 +20,27 @@ class UserInfoService {
                 completionHandler(ServiceResult.failure(CustomError.invalidParams))
                 return
         }
-        let params: [String: String] =  ["USER_ID"      : userId,
-                                         "ACCESS_TOKEN" : accessToken]
+        let urlParams: [String: String] =  ["USER_ID"      : userId,
+                                            "ACCESS_TOKEN" : accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .userInfo, urlParams: params, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.userInfo, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             
@@ -90,17 +101,27 @@ class UserInfoService {
     
     func retrieveETHaddresses(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let params: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
-                                         "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getEthAddress, urlParams: params, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.getEthAddress, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data)
@@ -134,14 +155,24 @@ class UserInfoService {
     
     func getUserCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        RequestBuilder.shared.executeRequest(requestType: .getUserCountryList, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.getUserCountryList)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
@@ -164,21 +195,31 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateProfile, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.updateProfile, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
         })
     }
     
-    func updateETHaddress(requestType: IPRequestType, ethID: Int, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func updateETHaddress(requestType: String, ethID: Int, alias: String = "", address: String = "", completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["ETH_ID"       : String(ethID),
                                            "USER_ID"      : UserManager.shared.userId,
@@ -187,14 +228,24 @@ class UserInfoService {
         let bodyParams: [String: String] = ["address" : address,
                                             "alias"   : alias]
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))
@@ -206,14 +257,24 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getSettings, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.getSettings, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)
@@ -243,14 +304,24 @@ class UserInfoService {
         let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
                                           "newsletter"         : newsletterValue as Any]
         
-        RequestBuilder.shared.executeRequest(requestType: .updateSettings, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.updateSettings, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard data != nil else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             completionHandler(ServiceResult.success(true))

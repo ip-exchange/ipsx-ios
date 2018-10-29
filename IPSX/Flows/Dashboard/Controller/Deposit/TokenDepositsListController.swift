@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class TokenDepositsListController: UIViewController {
 
@@ -216,7 +217,7 @@ class TokenDepositsListController: UIViewController {
                 self.updateUI()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getDepositList, completion: {
+                self.handleError(error, requestType: IPRequestType.getDepositList, completion: {
                     self.getDepositList()
                 })
             }
@@ -364,7 +365,7 @@ extension TokenDepositsListController: ToastAlertViewPresentable {
 
 extension TokenDepositsListController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
@@ -380,9 +381,9 @@ extension TokenDepositsListController: ErrorPresentable {
         default:
             
             switch requestType {
-            case .userInfo, .getEthAddress:
+            case IPRequestType.userInfo, IPRequestType.getEthAddress:
                 self.errorMessage = "Refresh Data Error Message".localized
-            case .deleteEthAddress:
+            case IPRequestType.deleteEthAddress:
                 self.errorMessage = "ETH Address Delete Failed Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized

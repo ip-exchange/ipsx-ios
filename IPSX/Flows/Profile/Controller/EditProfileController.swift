@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class EditProfileController: UIViewController {
 
@@ -362,7 +363,7 @@ class EditProfileController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: .updateProfile, completion: {
+                self.handleError(error, requestType: IPRequestType.updateProfile, completion: {
                     self.updateUserProfile(bodyParams: bodyParams)
                 })
             }
@@ -382,7 +383,7 @@ class EditProfileController: UIViewController {
                 successCompletion()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
                     self.getNewUserInfo(successCompletion: successCompletion)
                 })
             }
@@ -403,7 +404,7 @@ class EditProfileController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .getCompany, completion: {
+                self.handleError(error, requestType: IPRequestType.getCompany, completion: {
                     self.getCompanyDetails()
                 })
             }
@@ -421,7 +422,7 @@ class EditProfileController: UIViewController {
                 completion(true)
                 
             case .failure(let error):
-                self.handleError(error, requestType: .submitLegalPersonDetails, completion: {
+                self.handleError(error, requestType: IPRequestType.submitLegalPersonDetails, completion: {
                     self.submitCompanyDetails(completion: completion)
                 })
             }
@@ -517,7 +518,7 @@ extension EditProfileController: ToastAlertViewPresentable {
 }
 extension EditProfileController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
@@ -532,9 +533,9 @@ extension EditProfileController: ErrorPresentable {
         default:
             
             switch requestType {
-            case .userInfo:
+            case IPRequestType.userInfo:
                 self.errorMessage = "User Info Error Message".localized
-            case .getCompany:
+            case IPRequestType.getCompany:
                 self.errorMessage = "Get Company Details Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized

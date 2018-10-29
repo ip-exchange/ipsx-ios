@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class LoginService {
     
@@ -17,17 +18,27 @@ class LoginService {
             return
         }
         
-        let params: [String: String] = ["email"    : email,
-                                        "password" : password]
+        let bodyParams: [String: String] = ["email"    : email,
+                                            "password" : password]
         
-        RequestBuilder.shared.executeRequest(requestType: .login, body: params, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.login, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data: data)
@@ -36,7 +47,7 @@ class LoginService {
             
             //Store access details in keychain
             UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, email: email, password: password)
-                        
+            
             //Execute User Info request
             UserInfoService().retrieveUserInfo(completionHandler: { result in
                 switch result {
@@ -55,12 +66,21 @@ class LoginService {
     func resetPassword(email: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let bodyParams: [String: String] = ["email" : email]
-        
-        RequestBuilder.shared.executeRequest(requestType: .resetPassword, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.resetPassword, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             completionHandler(ServiceResult.success(true))
         })
@@ -75,11 +95,21 @@ class LoginService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .changePassword, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.changePassword, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             completionHandler(ServiceResult.success(true))
         })
@@ -89,7 +119,7 @@ class LoginService {
         
         if UserManager.shared.isLoggedInWithFB {
             
-            SocialIntegrationService().facebook(requestType: .fbLogin, fbToken: UserManager.shared.facebookToken, completionHandler: { result in
+            SocialIntegrationService().facebook(requestType: IPRequestType.fbLogin, fbToken: UserManager.shared.facebookToken, completionHandler: { result in
                 
                 switch result {
                     

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 import Foundation
+import CVINetworkingFramework
 
 public protocol IPRetrievable {
     func executeIPRequest(completion:@escaping (Error?, Data?)->Void)
@@ -14,11 +15,20 @@ public protocol IPRetrievable {
 extension IPRetrievable {
     
     func executeIPRequest(completion:@escaping (Error?, Data?)->Void) {
+
+        let requestManager = RequestManager.shared
+        var urlRequest: URLRequest?
         
-        let requestBuilder = RequestBuilder.shared
-        if let request = requestBuilder.createRequest(requestType: .getPublicIP) {
+        if let url = URL(string: Url.baseApi + Url.publicIPArgs) {
             
-            requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
+            urlRequest = URLRequest(url: url)
+            urlRequest?.httpMethod = "GET"
+            urlRequest?.setValue(ContentType.applicationJSON, forHTTPHeaderField: "Content-Type")
+        }
+        
+        if let request = urlRequest {
+            
+            requestManager.session.dataTask(with: request , completionHandler: { data, response, error in
                 
                 if let error = error {
                     completion(error, data)

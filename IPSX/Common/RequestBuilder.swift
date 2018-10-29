@@ -1,426 +1,346 @@
 //
 //  RequestBuilder.swift
-//  Test
+//  IPSX
 //
-//  Created by Cristina Virlan on 13/02/2018.
+//  Created by Cristina Virlan on 26/10/2018.
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
+
 import Foundation
+import CVINetworkingFramework
 
-public class RequestBuilder: NSObject, URLSessionDelegate {
-    
-    public static let shared = RequestBuilder()
-    private override init(){}
-    
-    public var session : URLSession {
-        get{
-            let urlconfig = URLSessionConfiguration.default
-            urlconfig.timeoutIntervalForRequest = 30
-            urlconfig.timeoutIntervalForResource = 30
-            return URLSession(configuration: urlconfig, delegate: self, delegateQueue: nil)
-        }
-    }
-    public var publicIP: String?
-    public var privateIP: String?
-    
-    public func createRequest(requestType:IPRequestType, urlParams: [String: Any] = [:], bodyParams: Any = "")-> URLRequest? {
-        
-        var urlRequest: URLRequest?
-        var request: Request?
-        var postData: Data?
-        
-        switch requestType {
-        
-        //Login Requests
-            
-        case .login:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.baseApi + Url.loginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            
-        case .fbLogin:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.baseApi + Url.fbLoginArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            
-        case .resetPassword:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.baseApi + Url.resetPassArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            
-        case .changePassword:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.changePassArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            }
-            
-        //Register Requests
-            
-        case .getPublicIP:
-            request = Request(url:Url.baseApi + Url.publicIPArgs, httpMethod: "GET")
-            
-        case .register:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.baseApi + Url.registerArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-          
-        case .fbRegister:
-            let body = JSON(bodyParams)
-            request = Request(url:Url.baseApi + Url.fbRegisterArgs, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            
-        //User Info Requests
-            
-        case .getUserCountryList:
-            request = Request(url:Url.baseApi + Url.userCountriesArgs, httpMethod: "GET", contentType: ContentType.applicationJSON)
-           
-        case .getCompany, .getProviderDetails:
-            var url = Url.baseApi + Url.intentionsArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .updateProfile:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.userInfoArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PATCH", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .userInfo:
-            var url = Url.baseApi + Url.userInfoArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-           
-        case .enrollTesting:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.enrollTestingArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .enrollStaking:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.enrollStakingBulkArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .enrollStakingDetails:
-            var url = Url.baseApi + Url.enrollStakingArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        //Proxy Requests
-            
-        case .getProxyCountryList:
-            var url = Url.baseApi + Url.proxyCountriesArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-          
-        case .retrieveProxyPackages:
-            var url = Url.baseApi + Url.proxyPackagesArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .retrieveTestProxyPackage:
-            var url = Url.baseApi + Url.proxyTestPackageArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .retrieveProxies:
-            var url = Url.baseApi + Url.proxiesArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .createProxy:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.createProxyArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        //ETH addresses Requests
-            
-        case .updateEthAddress:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.updateEthAddressArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .deleteEthAddress:
-            var url = Url.baseApi + Url.updateEthAddressArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON)
-            }
-            
-        case .addEthAddress:
-            
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.ethArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            }
-         
-        case .getEthAddress:
-            var url = Url.baseApi + Url.ethEnrolmentsArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-        
-        //Token Requests
-            
-        case .requestTokens:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.tokenRequestArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body:body)
-            }
-            
-        case .getTokenRequestList:
-            var url = Url.baseApi + Url.tokenRequestArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .getDepositList:
-            var url = Url.baseApi + Url.depositArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .createDeposit:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.depositArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .cancelDeposit:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.cancelDepositArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-        
-        // Settings 
-        
-        case .getSettings:
-            var url = Url.baseApi + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-            }
-            
-        case .updateSettings:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.metaArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "PUT", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .generalSettings:
-        var url = Url.baseApi + Url.generalSettingsArgs
-        if let params = urlParams as? [String: String] {
-            url = url.replaceKeysWithValues(paramsDict: params)
-            request = Request(url:url, httpMethod: "GET", contentType: ContentType.applicationJSON)
-        }
-            
-        case .deleteAccount:
-            let body = JSON(bodyParams)
-            var url = Url.baseApi + Url.deleteAccountArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "DELETE", contentType: ContentType.applicationJSON, body: body)
-            }
-            
-        case .abortDeleteAccount:
-            var url = Url.baseApi + Url.abortDeleteAccountArgs
-            if let params = urlParams as? [String: String] {
-                url = url.replaceKeysWithValues(paramsDict: params)
-                request = Request(url:url, httpMethod: "POST", contentType: ContentType.applicationJSON)
-            }
-            
-        default:
-            break
-        }
-        
-        if let body = request?.body as? Data {
-            postData = body
-            request?.contentLength = String(body.count)
-        }
-        else if let body = request?.body as? JSON {
-            do {
-                postData = try body.rawData()
-            } catch {
-                print("Error getting Data from JSON body")
-            }
-        }
-        
-        if let request = request, let url = URL(string: request.url) {
-            
-            urlRequest = URLRequest(url: url)
-            urlRequest?.httpMethod = request.httpMethod
-            urlRequest?.httpBody = postData
-            
-            if let contentLength = request.contentLength {
-                urlRequest?.setValue(contentLength, forHTTPHeaderField: "Content-Length")
-            }
-            if let contentType = request.contentType {
-                urlRequest?.setValue(contentType, forHTTPHeaderField: "Content-Type")
-            }
-        }
-        return urlRequest
-    }
-    
-    /// urlParams should be [String: String]
-    
-    public func executeRequest(requestType:IPRequestType, urlParams: [String: String] = [:], body: Any = "", completion:@escaping (Error?, Data?)->Void) {
-        
-        let requestBuilder = RequestBuilder.shared
-        if let request = requestBuilder.createRequest(requestType: requestType, urlParams: urlParams, bodyParams: body) {
-            
-            requestBuilder.session.dataTask(with: request , completionHandler: { data, response, error in
-                
-                if let error = error {
-                    completion(error, data)
-                }
-                else if let httpResponse = response as? HTTPURLResponse , let data = data {
-                    
-                    let statusCode = httpResponse.statusCode
-                    self.handleResponse(statusCode: statusCode, requestType: requestType, data: data, completion: completion)
-                }
-            }).resume()
-        }
-    }
-    
-    func handleResponse(statusCode: Int, requestType: IPRequestType, data: Data, completion:@escaping (Error?, Data?)->Void) {
-        
-        switch statusCode {
-            
-        case 200, 204:
-            print(NSDate(),"\(requestType)" + "Request succeeded")
-            completion(nil, data)
-            
-        case 401:
-            
-            switch requestType {
-                
-            case .login:
-                print(NSDate(), "\(requestType)" + "Request failed. Login failed")
-                completion(CustomError.loginFailed, data)
-                
-            case .register:
-                print(NSDate(), "\(requestType)" + "Request failed. Register failed")
-                completion(CustomError.statusCodeNOK(statusCode), data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed. Expired token")
-                completion(CustomError.expiredToken, data)
-            }
-            
-        case 402:
-            
-            switch requestType {
-                
-            case .changePassword:
-                print(NSDate(), "\(requestType)" + "Request failed. User specified wrong old password")
-                completion(CustomError.wrongPassword, data)
-               
-            // is not configured to return 402 -> it will return 500
-            case .deleteAccount:
-                print(NSDate(), "\(requestType)" + "Request failed. Wrong password")
-                completion(CustomError.wrongPassword, data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-                completion(CustomError.statusCodeNOK(statusCode), data)
-            }
+/// CURRENT ENVIRONMENT (DEV / DEMO):
+let environment = Environment.dev
 
-        case 403:
-            
-            switch requestType {
-                
-            case .login:
-                print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. Email not confirmed")
-                completion(CustomError.invalidLogin, data)
-                
-            case .resetPassword:
-                print(NSDate(), "\(requestType)" + "Request failed. Can't reset password from IPSX app.")
-                completion(CustomError.notPossible, data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-                completion(CustomError.statusCodeNOK(statusCode), data)
-            }
-
-        case 405:
-            
-            switch requestType {
-                
-            case .login, .fbLogin, .resetPassword:
-                print(NSDate(), "\(requestType)" + "Request failed. Invalid Login. User deleted.")
-                completion(CustomError.userDeleted, data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-                completion(CustomError.statusCodeNOK(statusCode), data)
-            }
-            
-        case 429:
-            
-            switch requestType {
-                
-            case .fbLogin:
-                print(NSDate(), "\(requestType)" + "Request failed. This user has not registered with Facebook")
-                completion(CustomError.notFound, data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-                completion(CustomError.statusCodeNOK(statusCode), data)
-            }
-            
-        case 430:
-            
-            switch requestType {
-                
-            case .addEthAddress, .fbRegister, .register:
-                print(NSDate(), "\(requestType)" + "Request failed. This record already exists")
-                completion(CustomError.alreadyExists, data)
-                
-            default:
-                print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-                completion(CustomError.statusCodeNOK(statusCode), data)
-            }
-          
-        default:
-            print(NSDate(), "\(requestType)" + "Request failed with status code:", statusCode)
-            completion(CustomError.statusCodeNOK(statusCode), data)
-        }
-    }
+enum Environment: String {
+    
+    case dev  = "DEV"
+    case demo = "DEMO"
 }
+
+struct IPRequestType {
+    
+    static let getPublicIP = "getPublicIP"
+    static let getUserCountryList = "getUserCountryList"
+    static let register = "register"
+    static let fbRegister = "fbRegister"
+    static let getCompany = "getCompany"
+    static let getProviderDetails = "getProviderDetails"
+    static let submitLegalPersonDetails = "submitLegalPersonDetails"
+    
+    static let login = "login"
+    static let fbLogin = "fbLogin"
+    
+    static let resetPassword = "resetPassword"
+    static let changePassword = "changePassword"
+    
+    static let retrieveProxies = "retrieveProxies"
+    static let createProxy = "createProxy"
+    static let retrieveProxyPackages = "retrieveProxyPackages"
+    static let retrieveTestProxyPackage = "retrieveTestProxyPackage"
+    static let getProxyCountryList = "getProxyCountryList"
+    
+    static let userInfo = "userInfo"
+    static let updateProfile = "updateProfile"
+    static let deleteAccount = "deleteAccount"
+    static let abortDeleteAccount = "abortDeleteAccount"
+    
+    static let requestTokens = "requestTokens"
+    static let getDepositList = "getDepositList"
+    static let createDeposit = "createDeposit"
+    static let cancelDeposit = "cancelDeposit"
+    
+    static let addEthAddress = "addEthAddress"
+    static let getEthAddress = "getEthAddress"
+    static let updateEthAddress = "updateEthAddress"
+    static let deleteEthAddress = "deleteEthAddress"
+    
+    static let getTokenRequestList = "getTokenRequestList"
+    static let enrollTesting = "enrollTesting"
+    static let enrollStaking = "enrollStaking"
+    static let enrollStakingDetails = "enrollStakingDetails"
+    
+    static let getSettings = "getSettings"
+    static let updateSettings = "updateSettings"
+    static let generalSettings = "generalSettings"
+}
+
+public struct KeychainKeys {
+    
+    public static let accessToken   = "ACCESS_TOKEN_KEY"
+    public static let facebookToken = "FACEBOOK_TOKEN_KEY"
+    public static let userId        = "USER_ID_KEY"
+    public static let password      = "USER_PASSWORD"
+    public static let email         = "USER_EMAIL"
+}
+
+public struct EmailNotifications {
+    
+    public static let on = "all"
+    public static let off = "disable"
+}
+
+enum Newsletter {
+    
+    case on
+    case off
+}
+
+public struct Url {
+    
+    public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
+    
+    // DEV ENV:
+    public static let baseDEVApi    = "http://devapi.ip.sx:3000/api"
+    public static let pacBaseUrlDEV = "https://devapp.ip.sx/proxy/pac/"
+    public static let faqUrlDev     = "https://devapp.ip.sx/webview/faq/staking"
+    
+    // DEMO ENV:
+    public static let baseDEMOApi    = "https://api.ipsx.io/api"
+    public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
+    public static let faqUrlDemo     = "https://demo.ip.sx/webview/faq/staking"
+    
+    public static var baseUrl: String {
+        get {
+            switch environment {
+            case .dev:  return "https://devapp.ip.sx"
+            case .demo: return "https://demo.ip.sx"
+            }
+        }
+    }
+    
+    public static var baseApi: String {
+        get {
+            switch environment {
+            case .dev:
+                return baseDEVApi
+            case .demo:
+                return baseDEMOApi
+            }
+        }
+    }
+    
+    public static var pacBaseUrl: String {
+        get {
+            switch environment {
+            case .dev:
+                return pacBaseUrlDEV
+            case .demo:
+                return pacBaseUrlDEMO
+            }
+        }
+    }
+    
+    public static var faqPageUrl: String {
+        get { return baseUrl + "/webview/faq/staking" }
+    }
+    
+    public static var referalCodeUrl: String {
+        get { return baseUrl + "/register?referral=" }
+    }
+    
+    public static var aboutProviderUrl: String {
+        get { return baseUrl + "/provider" }
+    }
+    
+    public static var becomeProviderUrl: String {
+        get { return baseUrl + "/become-a-provider" }
+    }
+    
+    public static let publicIPArgs           = "/Users/ip"
+    public static let registerArgs           = "/Users"
+    public static let fbRegisterArgs         = "/Users/social/register/facebook"
+    public static let userCountriesArgs      = "/countries"
+    public static let proxyCountriesArgs     = "/proxies/countries?access_token=%ACCESS_TOKEN%"
+    public static let ethEnrolmentsArgs      = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
+    public static let ethArgs                = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
+    public static let updateEthAddressArgs   = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
+    public static let loginArgs              = "/Users/auth"
+    public static let fbLoginArgs            = "/Users/social/login/facebook"
+    public static let resetPassArgs          = "/Users/reset"
+    public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
+    public static let submitLegalArgs        = "/Users/%USER_ID%/companies/aws-store?access_token=%ACCESS_TOKEN%"
+    public static let proxiesArgs            = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
+    public static let createProxyArgs        = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
+    public static let proxyPackagesArgs      = "/packages/admin/paid?access_token=%ACCESS_TOKEN%"
+    public static let proxyTestPackageArgs   = "/packages/admin/test?access_token=%ACCESS_TOKEN%"
+    public static let userInfoArgs           = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
+    public static let tokenRequestArgs       = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
+    public static let depositArgs            = "/Users/%USER_ID%/deposits?access_token=%ACCESS_TOKEN%"
+    public static let cancelDepositArgs      = "/Users/%USER_ID%/deposits/%DEPOSIT_ID%?access_token=%ACCESS_TOKEN%"
+    public static let generalSettingsArgs    = "/settings?access_token=%ACCESS_TOKEN%"
+    public static let deleteAccountArgs      = "/Users/%USER_ID%/delete/queue?access_token=%ACCESS_TOKEN%"
+    public static let abortDeleteAccountArgs = "/Users/%USER_ID%/delete/queue/cancel?access_token=%ACCESS_TOKEN%"
+    public static let enrollTestingArgs      = "/Users/%USER_ID%/testers?access_token=%ACCESS_TOKEN%"
+    public static let enrollStakingBulkArgs  = "/Users/%USER_ID%/stakings/bulk?access_token=%ACCESS_TOKEN%"
+    public static let enrollStakingArgs      = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
+    public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
+    public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
+}
+
+func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "") -> Request {
+    
+    let body = JSON(bodyParams)
+    var url: String = ""
+    var httpMethod: String = ""
+    let contentType: String = ContentType.applicationJSON
+    
+    switch requestType {
+        
+    //Login Requests
+        
+    case IPRequestType.login:
+        url = Url.baseApi + Url.loginArgs
+        httpMethod = "POST"
+        
+    case IPRequestType.fbLogin:
+        url = Url.baseApi + Url.fbLoginArgs
+        httpMethod = "POST"
+        
+    case IPRequestType.resetPassword:
+        url = Url.baseApi + Url.resetPassArgs
+        httpMethod = "POST"
+        
+    case IPRequestType.changePassword:
+        url = (Url.baseApi + Url.changePassArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    //Register Requests
+        
+    case IPRequestType.getPublicIP:
+        url = Url.baseApi + Url.publicIPArgs
+        httpMethod = "GET"
+        
+    case IPRequestType.register:
+        url = Url.baseApi + Url.registerArgs
+        httpMethod = "POST"
+        
+    case IPRequestType.fbRegister:
+        url = Url.baseApi + Url.fbRegisterArgs
+        httpMethod = "POST"
+        
+    //User Info Requests
+        
+    case IPRequestType.getUserCountryList:
+        url = Url.baseApi + Url.userCountriesArgs
+        httpMethod = "GET"
+        
+    case IPRequestType.getCompany, IPRequestType.getProviderDetails:
+        url = (Url.baseApi + Url.intentionsArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.updateProfile:
+        url = (Url.baseApi + Url.userInfoArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "PATCH"
+        
+    case IPRequestType.userInfo:
+        url = (Url.baseApi + Url.userInfoArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.enrollTesting:
+        url = (Url.baseApi + Url.enrollTestingArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case IPRequestType.enrollStaking:
+        url = (Url.baseApi + Url.enrollStakingBulkArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case IPRequestType.enrollStakingDetails:
+        url = (Url.baseApi + Url.enrollStakingArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    //Proxy Requests
+        
+    case IPRequestType.getProxyCountryList:
+        url = (Url.baseApi + Url.proxyCountriesArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.retrieveProxyPackages:
+        url = (Url.baseApi + Url.proxyPackagesArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.retrieveTestProxyPackage:
+        url = (Url.baseApi + Url.proxyTestPackageArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.retrieveProxies:
+        url = (Url.baseApi + Url.proxiesArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.createProxy:
+        url = (Url.baseApi + Url.createProxyArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    //ETH addresses Requests
+        
+    case IPRequestType.updateEthAddress:
+        url = (Url.baseApi + Url.updateEthAddressArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "PUT"
+        
+    case IPRequestType.deleteEthAddress:
+        url = (Url.baseApi + Url.updateEthAddressArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "DELETE"
+        
+    case IPRequestType.addEthAddress:
+        url = (Url.baseApi + Url.ethArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case IPRequestType.getEthAddress:
+        url = (Url.baseApi + Url.ethEnrolmentsArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    //Token Requests
+        
+    case IPRequestType.requestTokens:
+        url = (Url.baseApi + Url.tokenRequestArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case IPRequestType.getTokenRequestList:
+        url = (Url.baseApi + Url.tokenRequestArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.getDepositList:
+        url = (Url.baseApi + Url.depositArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.createDeposit:
+        url = (Url.baseApi + Url.depositArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case IPRequestType.cancelDeposit:
+        url = (Url.baseApi + Url.cancelDepositArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "PUT"
+        
+    // Settings
+        
+    case IPRequestType.getSettings:
+        url = (Url.baseApi + Url.metaArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.updateSettings:
+        url = (Url.baseApi + Url.metaArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "PUT"
+        
+    case IPRequestType.generalSettings:
+        url = (Url.baseApi + Url.generalSettingsArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case IPRequestType.deleteAccount:
+        url = (Url.baseApi + Url.deleteAccountArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "DELETE"
+        
+    case IPRequestType.abortDeleteAccount:
+        url = (Url.baseApi + Url.abortDeleteAccountArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    default:
+        break
+    }
+    
+    return Request(url: url, httpMethod: httpMethod, contentType: contentType, body:body, requestType: requestType)
+}
+
+
+
+
+

@@ -7,22 +7,33 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class ProxyService {
     
     func retrieveProxiesForCurrentUser(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let params: [String: String] = ["USER_ID"      : UserManager.shared.userId,
-                                        "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .retrieveProxies, urlParams: params, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.retrieveProxies, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array else {
@@ -87,16 +98,26 @@ class ProxyService {
     
     func getProxyCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let params: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        RequestBuilder.shared.executeRequest(requestType: .getProxyCountryList, urlParams: params, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.getProxyCountryList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             let json = JSON(data)
@@ -117,14 +138,24 @@ class ProxyService {
                                          "country"    : proxy?.proxyDetails?.country ?? "",
                                          "package_id" : proxy?.proxyPack?.packId as Any]
         
-        RequestBuilder.shared.executeRequest(requestType: .createProxy, urlParams: urlParams, body: bodyParams, completion: { error, data in
+        let request = createRequest(requestType: IPRequestType.createProxy, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonDict = JSON(data)["proxy"].dictionary, jsonDict.count > 0 else {
@@ -186,14 +217,24 @@ class ProxyService {
         
         let requestType = testPackage ? IPRequestType.retrieveTestProxyPackage : IPRequestType.retrieveProxyPackages
         
-        RequestBuilder.shared.executeRequest(requestType: requestType, urlParams: urlParams, completion: { error, data in
+        let request = createRequest(requestType: requestType, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
-                completionHandler(ServiceResult.failure(error!))
-                return
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
             }
             guard let data = data else {
-                completionHandler(ServiceResult.failure(CustomError.noData))
+                completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
             guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {

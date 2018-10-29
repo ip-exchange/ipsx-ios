@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class NewProxyController: UIViewController {
     
@@ -141,7 +142,7 @@ class NewProxyController: UIViewController {
                 self.countries = UserManager.shared.proxyCountries
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getProxyCountryList, completion: {
+                self.handleError(error, requestType: IPRequestType.getProxyCountryList, completion: {
                     self.getProxyCountryList()
                 })
             }
@@ -160,7 +161,7 @@ class NewProxyController: UIViewController {
                 self.proxyPacks = UserManager.shared.proxyPacks
             
             case .failure(let error):
-                self.handleError(error, requestType: .retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -192,7 +193,7 @@ class NewProxyController: UIViewController {
                 self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
                 
             case .failure(let error):
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -271,7 +272,7 @@ extension NewProxyController: ToastAlertViewPresentable {
 
 extension NewProxyController: ErrorPresentable {
 
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
 
         switch error {
 

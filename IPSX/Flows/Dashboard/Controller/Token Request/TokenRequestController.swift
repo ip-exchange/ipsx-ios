@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class TokenRequestController: UIViewController {
 
@@ -71,7 +72,7 @@ class TokenRequestController: UIViewController {
                 }
             case .failure(let error):
                 
-                self.handleError(error, requestType: .requestTokens, completion: {
+                self.handleError(error, requestType: IPRequestType.requestTokens, completion: {
                     self.requestTokens(ethID: ethID, amount: amount)
                 })
             }
@@ -292,7 +293,7 @@ extension TokenRequestController: ToastAlertViewPresentable {
 
 extension TokenRequestController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

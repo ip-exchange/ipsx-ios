@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CVINetworkingFramework
 
 class AddWalletController: UIViewController {
 
@@ -218,7 +219,7 @@ class AddWalletController: UIViewController {
     func updateETHaddress(alias: String, address: String, ethID: Int) {
         
         loadingView?.startAnimating()
-        UserInfoService().updateETHaddress(requestType: .updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
+        UserInfoService().updateETHaddress(requestType: IPRequestType.updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -231,7 +232,7 @@ class AddWalletController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: .updateEthAddress, completion: {
+                self.handleError(error, requestType: IPRequestType.updateEthAddress, completion: {
                     self.updateETHaddress(alias: alias, address: address, ethID: ethID)
                 })
             }
@@ -268,7 +269,7 @@ class AddWalletController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: .addEthAddress, completion: {
+                self.handleError(error, requestType: IPRequestType.addEthAddress, completion: {
                     self.addEthAdress()
                 })
             }
@@ -486,7 +487,7 @@ class FirstWalletDoneController: UIViewController {
 
 extension AddWalletController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
 
         switch error {
             
@@ -502,7 +503,7 @@ extension AddWalletController: ErrorPresentable {
             
             switch requestType {
                 
-            case .updateEthAddress, .addEthAddress:
+            case IPRequestType.updateEthAddress, IPRequestType.addEthAddress:
                 if let customErr = error as? CustomError, case .alreadyExists = customErr {
                     self.errorMessage = "ETH Address Already Used Error Message".localized
                 }

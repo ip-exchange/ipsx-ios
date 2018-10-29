@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class TokenDepositSummaryController: UIViewController {
     
@@ -151,7 +152,7 @@ class TokenDepositSummaryController: UIViewController {
 
             case .failure(let error):
 
-                self.handleError(error, requestType: .cancelDeposit, completion: {
+                self.handleError(error, requestType: IPRequestType.cancelDeposit, completion: {
                     self.cancelDeposit()
                 })
             }
@@ -171,7 +172,7 @@ extension TokenDepositSummaryController: ToastAlertViewPresentable {
 
 extension TokenDepositSummaryController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             

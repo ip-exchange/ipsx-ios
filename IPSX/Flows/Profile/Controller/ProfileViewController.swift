@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CVINetworkingFramework
 
 class ProfileViewController: UIViewController {
     
@@ -245,7 +246,7 @@ class ProfileViewController: UIViewController {
                 self.refreshProfileUI()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .userInfo, completion: {
+                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -265,7 +266,7 @@ class ProfileViewController: UIViewController {
                 self.refreshProfileUI()
                 
             case .failure(let error):
-                self.handleError(error, requestType: .getEthAddress, completion: {
+                self.handleError(error, requestType: IPRequestType.getEthAddress, completion: {
                     self.retrieveETHaddresses()
                 })
             }
@@ -275,7 +276,7 @@ class ProfileViewController: UIViewController {
     func updateETHaddresses(ethID: Int) {
         
         loadingView?.startAnimating()
-        UserInfoService().updateETHaddress(requestType: .deleteEthAddress, ethID: ethID) { result in
+        UserInfoService().updateETHaddress(requestType: IPRequestType.deleteEthAddress, ethID: ethID) { result in
             
             self.loadingView?.stopAnimating()
             
@@ -285,7 +286,7 @@ class ProfileViewController: UIViewController {
                 self.retrieveETHaddresses()
 
             case .failure(let error):
-                self.handleError(error, requestType: .deleteEthAddress, completion: {
+                self.handleError(error, requestType: IPRequestType.deleteEthAddress, completion: {
                     self.updateETHaddresses(ethID: ethID)
                 })
             }
@@ -435,7 +436,7 @@ extension ProfileViewController: ToastAlertViewPresentable {
 
 extension ProfileViewController: ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: IPRequestType, completion:(() -> ())? = nil) {
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
         switch error {
             
@@ -451,9 +452,9 @@ extension ProfileViewController: ErrorPresentable {
         default:
             
             switch requestType {
-            case .userInfo, .getEthAddress:
+            case IPRequestType.userInfo, IPRequestType.getEthAddress:
                 self.errorMessage = "Refresh Data Error Message".localized
-            case .deleteEthAddress:
+            case IPRequestType.deleteEthAddress:
                 self.errorMessage = "ETH Address Delete Failed Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized
