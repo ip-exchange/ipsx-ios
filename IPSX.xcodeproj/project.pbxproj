@@ -118,6 +118,8 @@
 		EECFA9212105D54700F58ABE /* ReferFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECFA9202105D54700F58ABE /* ReferFriendController.swift */; };
 		EED38F2120A5B1CD004DA2CC /* DateFormatter+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED38F2020A5B1CD004DA2CC /* DateFormatter+extensions.swift */; };
 		EEDB132420A9BE9C00FBFFD0 /* Date+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDB132320A9BE9C00FBFFD0 /* Date+extensions.swift */; };
+		EEE1B8D821872DDB0098BB7C /* CVINetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A44F57362183264300F09CB4 /* CVINetworkingFramework.framework */; };
+		EEE1B8D921872DDB0098BB7C /* CVINetworkingFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A44F57362183264300F09CB4 /* CVINetworkingFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EEE1FC9A212AE9A0002631E6 /* SimpleWebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE1FC9C212AE9A0002631E6 /* SimpleWebView.storyboard */; };
 		EEE1FCA1212E9425002631E6 /* LegalDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */; };
 		EEE1FCA3212EA17E002631E6 /* CompanyDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */; };
@@ -143,6 +145,20 @@
 			remoteInfo = IPSX;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EEE1B8DA21872DDB0098BB7C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EEE1B8D921872DDB0098BB7C /* CVINetworkingFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0BA7DC4C74928AE27400C3EE /* Pods-IPSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IPSX/Pods-IPSX.debug.xcconfig"; sourceTree = "<group>"; };
@@ -305,6 +321,7 @@
 			files = (
 				A44F57372183264300F09CB4 /* CVINetworkingFramework.framework in Frameworks */,
 				A45331D120C9468D0038E0E2 /* Pods_IPSX.framework in Frameworks */,
+				EEE1B8D821872DDB0098BB7C /* CVINetworkingFramework.framework in Frameworks */,
 				EE354FCF20AB1345002A8132 /* WebKit.framework in Frameworks */,
 				2A5A40E81D709E4C560DBC99 /* Pods_IPSX.framework in Frameworks */,
 			);
@@ -875,6 +892,7 @@
 				A43930A8205AAEE800CA7B15 /* Frameworks */,
 				A43930A9205AAEE800CA7B15 /* Resources */,
 				09C381433DBEE5C6A0BA578B /* [CP] Embed Pods Frameworks */,
+				EEE1B8DA21872DDB0098BB7C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
