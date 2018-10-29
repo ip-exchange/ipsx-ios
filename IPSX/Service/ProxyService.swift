@@ -16,7 +16,7 @@ class ProxyService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.retrieveProxies, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.retrieveProxies, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -100,7 +100,7 @@ class ProxyService {
         
         let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getProxyCountryList, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getProxyCountryList, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -138,7 +138,7 @@ class ProxyService {
                                          "country"    : proxy?.proxyDetails?.country ?? "",
                                          "package_id" : proxy?.proxyPack?.packId as Any]
         
-        let request = createRequest(requestType: IPRequestType.createProxy, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.createProxy, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -215,7 +215,7 @@ class ProxyService {
         
         let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let requestType = testPackage ? IPRequestType.retrieveTestProxyPackage : IPRequestType.retrieveProxyPackages
+        let requestType = testPackage ? RequestType.retrieveTestProxyPackage : RequestType.retrieveProxyPackages
         
         let request = createRequest(requestType: requestType, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in

@@ -23,7 +23,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : userId,
                                             "ACCESS_TOKEN" : accessToken]
         
-        let request = createRequest(requestType: IPRequestType.userInfo, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.userInfo, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -104,7 +104,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getEthAddress, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getEthAddress, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -155,7 +155,7 @@ class UserInfoService {
     
     func getUserCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let request = createRequest(requestType: IPRequestType.getUserCountryList)
+        let request = createRequest(requestType: RequestType.getUserCountryList)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -195,7 +195,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.updateProfile, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.updateProfile, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -257,7 +257,7 @@ class UserInfoService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getSettings, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getSettings, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -304,7 +304,7 @@ class UserInfoService {
         let bodyParams: [String: Any] =  ["email_notifications": emailNotifValue,
                                           "newsletter"         : newsletterValue as Any]
         
-        let request = createRequest(requestType: IPRequestType.updateSettings, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.updateSettings, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

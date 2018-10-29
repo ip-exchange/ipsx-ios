@@ -88,7 +88,7 @@ class TokenDepositController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.createDeposit, completion: {
+                self.handleError(error, requestType: RequestType.createDeposit, completion: {
                     self.createDeposit(ethID: ethID, amount: amount)
                 })
             }
@@ -151,7 +151,7 @@ class TokenDepositController: UIViewController {
                 self.proxyPacks = UserManager.shared.proxyPacks
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }

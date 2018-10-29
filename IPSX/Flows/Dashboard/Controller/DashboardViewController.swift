@@ -246,7 +246,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveTestProxyPackage, completion: {
+                self.handleError(error, requestType: RequestType.retrieveTestProxyPackage, completion: {
                     self.retrieveTestProxyPackage()
                 })
             }
@@ -266,7 +266,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.proxyPacks = packages as? [ProxyPack]
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -285,7 +285,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.generalSettings, completion: {
+                self.handleError(error, requestType: RequestType.generalSettings, completion: {
                     self.generalSettings()
                 })
             }
@@ -305,7 +305,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getCompany, completion: {
+                self.handleError(error, requestType: RequestType.getCompany, completion: {
                     self.companyDetails()
                 })
             }
@@ -328,7 +328,7 @@ class DashboardViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getProviderDetails, completion: {
+                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
                     self.providerDetails()
                 })
             }
@@ -363,7 +363,7 @@ class DashboardViewController: UIViewController {
                 self.showZeroBalanceToastIfNeeded()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -382,7 +382,7 @@ class DashboardViewController: UIViewController {
                 self.updateProxyDataSource()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveProxies, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxies, completion: {
                     self.retrieveProxiesForCurrentUser()
                 })
             }
@@ -457,7 +457,7 @@ class DashboardViewController: UIViewController {
                 UserManager.shared.proxyCountries = countryList as? [String]
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.getProxyCountryList, completion: {
+                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
                     self.getProxyCountryList()
                 })
             }
@@ -549,7 +549,7 @@ extension DashboardViewController: ErrorPresentable {
                 completion?()
             })
         default:
-            if requestType == IPRequestType.getProviderDetails {
+            if requestType == RequestType.getProviderDetails {
                 self.hideProviderView()
             }
             else {

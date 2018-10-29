@@ -152,7 +152,7 @@ class TokenDepositSummaryController: UIViewController {
 
             case .failure(let error):
 
-                self.handleError(error, requestType: IPRequestType.cancelDeposit, completion: {
+                self.handleError(error, requestType: RequestType.cancelDeposit, completion: {
                     self.cancelDeposit()
                 })
             }

@@ -22,13 +22,13 @@ class SocialIntegrationService {
         
         var bodyParams: [String: Any] = [:]
         
-        if requestType == IPRequestType.fbRegister {
+        if requestType == RequestType.fbRegister {
             
             bodyParams = ["token"              : fbToken,
                           "newsletter"         : newsletter as Any,
                           "intention_provider" : destiny?.rawValue as Any]
         }
-        else if requestType == IPRequestType.fbLogin {
+        else if requestType == RequestType.fbLogin {
             
             bodyParams = ["token" : fbToken]
         }

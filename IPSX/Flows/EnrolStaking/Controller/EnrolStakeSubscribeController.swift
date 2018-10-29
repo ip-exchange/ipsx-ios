@@ -167,7 +167,7 @@ class EnrolStakeSubscribeController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.enrollStaking, completion: {
+                self.handleError(error, requestType: RequestType.enrollStaking, completion: {
                     self.enrollStaking()
                 })
             }

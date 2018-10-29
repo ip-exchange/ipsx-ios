@@ -20,7 +20,7 @@ class TokenDepositService {
                                          "amount_requested" : amount,
                                          "telegram"         : telegramID]
         
-        let request = createRequest(requestType: IPRequestType.requestTokens, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.requestTokens, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -49,7 +49,7 @@ class TokenDepositService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getTokenRequestList, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getTokenRequestList, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -98,7 +98,7 @@ class TokenDepositService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getDepositList, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getDepositList, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -138,7 +138,7 @@ class TokenDepositService {
         let bodyParams: [String: Any] = ["usereth_id"       : ethID,
                                          "amount_requested" : amount]
         
-        let request = createRequest(requestType: IPRequestType.createDeposit, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.createDeposit, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -191,7 +191,7 @@ class TokenDepositService {
         
         let bodyParams: [String: Any] = ["status" : "canceled"]
         
-        let request = createRequest(requestType: IPRequestType.cancelDeposit, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.cancelDeposit, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

@@ -73,8 +73,8 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.login:    customError = CustomError.loginFailed
-            case IPRequestType.register: customError = CustomError.statusCodeNOK(statusCode)
+            case RequestType.login:    customError = CustomError.loginFailed
+            case RequestType.register: customError = CustomError.statusCodeNOK(statusCode)
             default: customError = CustomError.expiredToken
             }
             
@@ -82,8 +82,8 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.changePassword: customError = CustomError.wrongPassword
-            case IPRequestType.deleteAccount:  customError = CustomError.wrongPassword
+            case RequestType.changePassword: customError = CustomError.wrongPassword
+            case RequestType.deleteAccount:  customError = CustomError.wrongPassword
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
@@ -91,8 +91,8 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.login:         customError = CustomError.invalidLogin
-            case IPRequestType.resetPassword: customError = CustomError.notPossible
+            case RequestType.login:         customError = CustomError.invalidLogin
+            case RequestType.resetPassword: customError = CustomError.notPossible
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
@@ -100,7 +100,7 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.login, IPRequestType.fbLogin, IPRequestType.resetPassword: customError = CustomError.userDeleted
+            case RequestType.login, RequestType.fbLogin, RequestType.resetPassword: customError = CustomError.userDeleted
                 
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
@@ -109,7 +109,7 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.fbLogin: customError = CustomError.notFound
+            case RequestType.fbLogin: customError = CustomError.notFound
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
@@ -117,7 +117,7 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case IPRequestType.addEthAddress, IPRequestType.fbRegister, IPRequestType.register: customError = CustomError.alreadyExists
+            case RequestType.addEthAddress, RequestType.fbRegister, RequestType.register: customError = CustomError.alreadyExists
                 
             default: customError = CustomError.statusCodeNOK(statusCode)
             }

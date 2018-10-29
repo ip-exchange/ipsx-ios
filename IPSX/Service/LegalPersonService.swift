@@ -122,7 +122,7 @@ class LegalPersonService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getCompany, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getCompany, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

@@ -146,7 +146,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getEthAddress, completion: {
+                self.handleError(error, requestType: RequestType.getEthAddress, completion: {
                     self.ethAddresses()
                 })
             }
@@ -167,7 +167,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getCompany, completion: {
+                self.handleError(error, requestType: RequestType.getCompany, completion: {
                     self.companyDetails()
                 })
             }
@@ -188,7 +188,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getProviderDetails, completion: {
+                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
                     self.providerDetails()
                 })
             }
@@ -209,7 +209,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.userInfo()
                 })
             }
@@ -231,7 +231,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.retrieveProxies, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxies, completion: {
                     self.proxies()
                 })
             }
@@ -250,7 +250,7 @@ class LoadingViewController: UIViewController {
                 DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -269,7 +269,7 @@ class LoadingViewController: UIViewController {
                 DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveTestProxyPackage, completion: {
+                self.handleError(error, requestType: RequestType.retrieveTestProxyPackage, completion: {
                     self.retrieveTestProxyPackage()
                 })
             }
@@ -290,7 +290,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getTokenRequestList, completion: {
+                self.handleError(error, requestType: RequestType.getTokenRequestList, completion: {
                     self.tokenRequestList()
                 })
             }
@@ -311,7 +311,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getProxyCountryList, completion: {
+                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
                     self.proxyCountryList()
                 })
             }
@@ -331,7 +331,7 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.generalSettings, completion: {
+                self.handleError(error, requestType: RequestType.generalSettings, completion: {
                     self.generalSettings()
                 })
             }

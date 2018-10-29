@@ -16,7 +16,7 @@ class ProviderService {
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.getProviderDetails, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getProviderDetails, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

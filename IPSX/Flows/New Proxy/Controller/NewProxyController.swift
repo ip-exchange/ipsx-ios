@@ -142,7 +142,7 @@ class NewProxyController: UIViewController {
                 self.countries = UserManager.shared.proxyCountries
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.getProxyCountryList, completion: {
+                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
                     self.getProxyCountryList()
                 })
             }
@@ -161,7 +161,7 @@ class NewProxyController: UIViewController {
                 self.proxyPacks = UserManager.shared.proxyPacks
             
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.retrieveProxyPackages, completion: {
+                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
                     self.retrieveProxyPackages()
                 })
             }
@@ -193,7 +193,7 @@ class NewProxyController: UIViewController {
                 self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }

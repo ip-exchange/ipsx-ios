@@ -197,7 +197,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: IPRequestType.fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -206,7 +206,7 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.fbRegister)
+                self.handleError(error, requestType: RequestType.fbRegister)
             }
         })
     }
@@ -223,7 +223,7 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.register)
+                self.handleError(error, requestType: RequestType.register)
             }
         })
     }
@@ -274,7 +274,7 @@ extension RegisterTermsController: ErrorPresentable {
         
         switch requestType {
             
-        case IPRequestType.fbRegister, IPRequestType.register:
+        case RequestType.fbRegister, RequestType.register:
             
             switch error {
             case CustomError.alreadyExists:

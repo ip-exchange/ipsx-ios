@@ -138,7 +138,7 @@ class SettingsViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.retrieveUserInfo()
                 })
             }
@@ -157,7 +157,7 @@ class SettingsViewController: UIViewController {
                 self.retrieveUserInfo()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.abortDeleteAccount, completion: {
+                self.handleError(error, requestType: RequestType.abortDeleteAccount, completion: {
                     self.abortDelete()
                 })
             }
@@ -180,7 +180,7 @@ class SettingsViewController: UIViewController {
                 }
         
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.getSettings, completion: {
+                self.handleError(error, requestType: RequestType.getSettings, completion: {
                     self.loadSettings()
                 })
             }
@@ -226,7 +226,7 @@ class SettingsViewController: UIViewController {
                 break
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.updateSettings, completion: {
+                self.handleError(error, requestType: RequestType.updateSettings, completion: {
                     self.updateSettings()
                 })
             }
@@ -280,7 +280,7 @@ class SettingsViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.deleteAccount, completion: {
+                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
                     self.deleteAccount()
                 })
             }
@@ -329,7 +329,7 @@ extension SettingsViewController: ErrorPresentable {
             
             switch requestType {
                 
-            case IPRequestType.updateSettings:
+            case RequestType.updateSettings:
                 self.updateEmailNotifSwitch(error: true)
                 self.updateNewsletterSwitch(error: true)
                 

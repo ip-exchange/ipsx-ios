@@ -219,7 +219,7 @@ class AddWalletController: UIViewController {
     func updateETHaddress(alias: String, address: String, ethID: Int) {
         
         loadingView?.startAnimating()
-        UserInfoService().updateETHaddress(requestType: IPRequestType.updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
+        UserInfoService().updateETHaddress(requestType: RequestType.updateEthAddress, ethID: ethID, alias: alias, address: address, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -232,7 +232,7 @@ class AddWalletController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.updateEthAddress, completion: {
+                self.handleError(error, requestType: RequestType.updateEthAddress, completion: {
                     self.updateETHaddress(alias: alias, address: address, ethID: ethID)
                 })
             }
@@ -269,7 +269,7 @@ class AddWalletController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.addEthAddress, completion: {
+                self.handleError(error, requestType: RequestType.addEthAddress, completion: {
                     self.addEthAdress()
                 })
             }
@@ -503,7 +503,7 @@ extension AddWalletController: ErrorPresentable {
             
             switch requestType {
                 
-            case IPRequestType.updateEthAddress, IPRequestType.addEthAddress:
+            case RequestType.updateEthAddress, RequestType.addEthAddress:
                 if let customErr = error as? CustomError, case .alreadyExists = customErr {
                     self.errorMessage = "ETH Address Already Used Error Message".localized
                 }

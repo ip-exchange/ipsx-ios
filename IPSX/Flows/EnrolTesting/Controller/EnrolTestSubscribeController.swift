@@ -137,7 +137,7 @@ class EnrolTestSubscribeController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.enrollTesting, completion: {
+                self.handleError(error, requestType: RequestType.enrollTesting, completion: {
                     self.enrollTesting()
                 })
             }

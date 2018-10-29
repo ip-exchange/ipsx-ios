@@ -74,7 +74,7 @@ class LoginOptionsController: UIViewController {
     func executeLogin(withFBtoken fbToken: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: IPRequestType.fbLogin, fbToken: fbToken, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: RequestType.fbLogin, fbToken: fbToken, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -83,7 +83,7 @@ class LoginOptionsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.fbLogin)
+                self.handleError(error, requestType: RequestType.fbLogin)
             }
         })
     }
@@ -106,7 +106,7 @@ class LoginOptionsController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.getEthAddress)
+                self.handleError(error, requestType: RequestType.getEthAddress)
             }
         })
     }
@@ -128,7 +128,7 @@ extension LoginOptionsController: ErrorPresentable {
         
         switch requestType {
             
-        case IPRequestType.fbLogin:
+        case RequestType.fbLogin:
             
             switch error {
             case CustomError.notFound:

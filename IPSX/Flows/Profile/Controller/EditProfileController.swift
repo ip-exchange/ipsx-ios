@@ -363,7 +363,7 @@ class EditProfileController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.updateProfile, completion: {
+                self.handleError(error, requestType: RequestType.updateProfile, completion: {
                     self.updateUserProfile(bodyParams: bodyParams)
                 })
             }
@@ -383,7 +383,7 @@ class EditProfileController: UIViewController {
                 successCompletion()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.getNewUserInfo(successCompletion: successCompletion)
                 })
             }
@@ -404,7 +404,7 @@ class EditProfileController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.getCompany, completion: {
+                self.handleError(error, requestType: RequestType.getCompany, completion: {
                     self.getCompanyDetails()
                 })
             }
@@ -422,7 +422,7 @@ class EditProfileController: UIViewController {
                 completion(true)
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.submitLegalPersonDetails, completion: {
+                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completion: {
                     self.submitCompanyDetails(completion: completion)
                 })
             }
@@ -533,9 +533,9 @@ extension EditProfileController: ErrorPresentable {
         default:
             
             switch requestType {
-            case IPRequestType.userInfo:
+            case RequestType.userInfo:
                 self.errorMessage = "User Info Error Message".localized
-            case IPRequestType.getCompany:
+            case RequestType.getCompany:
                 self.errorMessage = "Get Company Details Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized

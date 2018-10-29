@@ -161,7 +161,7 @@ class TokenRequestListController: UIViewController {
                     self.updateUI()
                     
                 case .failure(let error):
-                    self.handleError(error, requestType: IPRequestType.getTokenRequestList, completion: {
+                    self.handleError(error, requestType: RequestType.getTokenRequestList, completion: {
                         self.getTokenRequestList()
                     })
                 }

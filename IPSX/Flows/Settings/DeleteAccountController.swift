@@ -124,7 +124,7 @@ class DeleteAccountController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.deleteAccount, completion: {
+                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
                     self.deleteAccount(password: password)
                 })
             }

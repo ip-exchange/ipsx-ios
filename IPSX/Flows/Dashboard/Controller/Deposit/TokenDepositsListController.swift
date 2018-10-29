@@ -217,7 +217,7 @@ class TokenDepositsListController: UIViewController {
                 self.updateUI()
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.getDepositList, completion: {
+                self.handleError(error, requestType: RequestType.getDepositList, completion: {
                     self.getDepositList()
                 })
             }
@@ -381,9 +381,9 @@ extension TokenDepositsListController: ErrorPresentable {
         default:
             
             switch requestType {
-            case IPRequestType.userInfo, IPRequestType.getEthAddress:
+            case RequestType.userInfo, RequestType.getEthAddress:
                 self.errorMessage = "Refresh Data Error Message".localized
-            case IPRequestType.deleteEthAddress:
+            case RequestType.deleteEthAddress:
                 self.errorMessage = "ETH Address Delete Failed Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized

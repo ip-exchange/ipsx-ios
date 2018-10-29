@@ -18,7 +18,7 @@ enum Environment: String {
     case demo = "DEMO"
 }
 
-struct IPRequestType {
+struct RequestType {
     
     static let getPublicIP = "getPublicIP"
     static let getUserCountryList = "getUserCountryList"
@@ -189,147 +189,147 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         
     //Login Requests
         
-    case IPRequestType.login:
+    case RequestType.login:
         url = Url.baseApi + Url.loginArgs
         httpMethod = "POST"
         
-    case IPRequestType.fbLogin:
+    case RequestType.fbLogin:
         url = Url.baseApi + Url.fbLoginArgs
         httpMethod = "POST"
         
-    case IPRequestType.resetPassword:
+    case RequestType.resetPassword:
         url = Url.baseApi + Url.resetPassArgs
         httpMethod = "POST"
         
-    case IPRequestType.changePassword:
+    case RequestType.changePassword:
         url = (Url.baseApi + Url.changePassArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
     //Register Requests
         
-    case IPRequestType.getPublicIP:
+    case RequestType.getPublicIP:
         url = Url.baseApi + Url.publicIPArgs
         httpMethod = "GET"
         
-    case IPRequestType.register:
+    case RequestType.register:
         url = Url.baseApi + Url.registerArgs
         httpMethod = "POST"
         
-    case IPRequestType.fbRegister:
+    case RequestType.fbRegister:
         url = Url.baseApi + Url.fbRegisterArgs
         httpMethod = "POST"
         
     //User Info Requests
         
-    case IPRequestType.getUserCountryList:
+    case RequestType.getUserCountryList:
         url = Url.baseApi + Url.userCountriesArgs
         httpMethod = "GET"
         
-    case IPRequestType.getCompany, IPRequestType.getProviderDetails:
+    case RequestType.getCompany, RequestType.getProviderDetails:
         url = (Url.baseApi + Url.intentionsArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.updateProfile:
+    case RequestType.updateProfile:
         url = (Url.baseApi + Url.userInfoArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "PATCH"
         
-    case IPRequestType.userInfo:
+    case RequestType.userInfo:
         url = (Url.baseApi + Url.userInfoArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.enrollTesting:
+    case RequestType.enrollTesting:
         url = (Url.baseApi + Url.enrollTestingArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
-    case IPRequestType.enrollStaking:
+    case RequestType.enrollStaking:
         url = (Url.baseApi + Url.enrollStakingBulkArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
-    case IPRequestType.enrollStakingDetails:
+    case RequestType.enrollStakingDetails:
         url = (Url.baseApi + Url.enrollStakingArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
     //Proxy Requests
         
-    case IPRequestType.getProxyCountryList:
+    case RequestType.getProxyCountryList:
         url = (Url.baseApi + Url.proxyCountriesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.retrieveProxyPackages:
+    case RequestType.retrieveProxyPackages:
         url = (Url.baseApi + Url.proxyPackagesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.retrieveTestProxyPackage:
+    case RequestType.retrieveTestProxyPackage:
         url = (Url.baseApi + Url.proxyTestPackageArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.retrieveProxies:
+    case RequestType.retrieveProxies:
         url = (Url.baseApi + Url.proxiesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.createProxy:
+    case RequestType.createProxy:
         url = (Url.baseApi + Url.createProxyArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
     //ETH addresses Requests
         
-    case IPRequestType.updateEthAddress:
+    case RequestType.updateEthAddress:
         url = (Url.baseApi + Url.updateEthAddressArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "PUT"
         
-    case IPRequestType.deleteEthAddress:
+    case RequestType.deleteEthAddress:
         url = (Url.baseApi + Url.updateEthAddressArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "DELETE"
         
-    case IPRequestType.addEthAddress:
+    case RequestType.addEthAddress:
         url = (Url.baseApi + Url.ethArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
-    case IPRequestType.getEthAddress:
+    case RequestType.getEthAddress:
         url = (Url.baseApi + Url.ethEnrolmentsArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
     //Token Requests
         
-    case IPRequestType.requestTokens:
+    case RequestType.requestTokens:
         url = (Url.baseApi + Url.tokenRequestArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
-    case IPRequestType.getTokenRequestList:
+    case RequestType.getTokenRequestList:
         url = (Url.baseApi + Url.tokenRequestArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.getDepositList:
+    case RequestType.getDepositList:
         url = (Url.baseApi + Url.depositArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.createDeposit:
+    case RequestType.createDeposit:
         url = (Url.baseApi + Url.depositArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
-    case IPRequestType.cancelDeposit:
+    case RequestType.cancelDeposit:
         url = (Url.baseApi + Url.cancelDepositArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "PUT"
         
     // Settings
         
-    case IPRequestType.getSettings:
+    case RequestType.getSettings:
         url = (Url.baseApi + Url.metaArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.updateSettings:
+    case RequestType.updateSettings:
         url = (Url.baseApi + Url.metaArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "PUT"
         
-    case IPRequestType.generalSettings:
+    case RequestType.generalSettings:
         url = (Url.baseApi + Url.generalSettingsArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case IPRequestType.deleteAccount:
+    case RequestType.deleteAccount:
         url = (Url.baseApi + Url.deleteAccountArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "DELETE"
         
-    case IPRequestType.abortDeleteAccount:
+    case RequestType.abortDeleteAccount:
         url = (Url.baseApi + Url.abortDeleteAccountArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         

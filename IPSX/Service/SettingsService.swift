@@ -19,7 +19,7 @@ class SettingsService {
         }
         let urlParams: [String: String] =  ["ACCESS_TOKEN" : accessToken]
         
-        let request = createRequest(requestType: IPRequestType.generalSettings, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.generalSettings, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -92,7 +92,7 @@ class SettingsService {
         
         if let _ = password { bodyParams["password"] = password }
         
-        let request = createRequest(requestType: IPRequestType.deleteAccount, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.deleteAccount, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -121,7 +121,7 @@ class SettingsService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.abortDeleteAccount, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.abortDeleteAccount, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

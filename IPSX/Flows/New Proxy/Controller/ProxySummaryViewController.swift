@@ -142,7 +142,7 @@ class ProxySummaryViewController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.createProxy, completion: {
+                self.handleError(error, requestType: RequestType.createProxy, completion: {
                     self.createProxy(userIP: userIP, proxy: proxy)
                 })
             }

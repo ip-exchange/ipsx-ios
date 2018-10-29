@@ -19,7 +19,7 @@ class EnrollmentService {
         let bodyParams: [String: Any] = ["usereth_id": ethID,
                                          "status"    : "accepted"]
         
-        let request = createRequest(requestType: IPRequestType.enrollTesting, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.enrollTesting, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request,  completion: { error, data in
             
             guard error == nil else {
@@ -59,7 +59,7 @@ class EnrollmentService {
         
         let bodyParams: [String: [Int]] = ["eths": ethsArray]
         
-        let request = createRequest(requestType: IPRequestType.enrollStaking, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.enrollStaking, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request,  completion: { error, data in
             
             guard error == nil else {

@@ -131,7 +131,7 @@ class EnrolStakeSummaryController: UIViewController {
         self.enrolmentTimeLabel.text = "--:--"
         self.walletAlliasLabel.text  = "Loading message".localized
         self.walletAddressLabel.text = "..."
-        EnrollmentService().getEnrollmentDetails(requestType: IPRequestType.enrollStakingDetails, completionHandler: { result in
+        EnrollmentService().getEnrollmentDetails(requestType: RequestType.enrollStakingDetails, completionHandler: { result in
             DispatchQueue.main.async {
                 self.loadingView?.stopAnimating()
                 switch result {
@@ -160,7 +160,7 @@ class EnrolStakeSummaryController: UIViewController {
                     }
                     
                 case .failure(let error):
-                    self.handleError(error, requestType: IPRequestType.enrollTesting, completion: {
+                    self.handleError(error, requestType: RequestType.enrollTesting, completion: {
                         self.enrollmentDetails()
                     })
                 }

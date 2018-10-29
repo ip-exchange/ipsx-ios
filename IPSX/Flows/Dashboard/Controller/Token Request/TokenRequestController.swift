@@ -72,7 +72,7 @@ class TokenRequestController: UIViewController {
                 }
             case .failure(let error):
                 
-                self.handleError(error, requestType: IPRequestType.requestTokens, completion: {
+                self.handleError(error, requestType: RequestType.requestTokens, completion: {
                     self.requestTokens(ethID: ethID, amount: amount)
                 })
             }

@@ -153,7 +153,7 @@ class RepresentativeDetailsController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: IPRequestType.submitLegalPersonDetails, completion: {
+                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completion: {
                     self.submitCompanyDetails()
                 })
             }

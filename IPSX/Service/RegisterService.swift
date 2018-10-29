@@ -26,7 +26,7 @@ class RegisterService {
                                          "intention_company" : type.rawValue,
                                          "intention_provider": destiny.rawValue]
         
-        let request = createRequest(requestType: IPRequestType.register, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.register, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -58,7 +58,7 @@ class RegisterService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.addEthAddress, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.addEthAddress, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

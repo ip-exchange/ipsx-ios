@@ -21,7 +21,7 @@ class LoginService {
         let bodyParams: [String: String] = ["email"    : email,
                                             "password" : password]
         
-        let request = createRequest(requestType: IPRequestType.login, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.login, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -66,7 +66,7 @@ class LoginService {
     func resetPassword(email: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let bodyParams: [String: String] = ["email" : email]
-        let request = createRequest(requestType: IPRequestType.resetPassword, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.resetPassword, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -95,7 +95,7 @@ class LoginService {
         let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
                                             "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let request = createRequest(requestType: IPRequestType.changePassword, urlParams: urlParams, bodyParams: bodyParams)
+        let request = createRequest(requestType: RequestType.changePassword, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -119,7 +119,7 @@ class LoginService {
         
         if UserManager.shared.isLoggedInWithFB {
             
-            SocialIntegrationService().facebook(requestType: IPRequestType.fbLogin, fbToken: UserManager.shared.facebookToken, completionHandler: { result in
+            SocialIntegrationService().facebook(requestType: RequestType.fbLogin, fbToken: UserManager.shared.facebookToken, completionHandler: { result in
                 
                 switch result {
                     
