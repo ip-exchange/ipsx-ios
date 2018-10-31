@@ -205,6 +205,8 @@ class NewProxyController: UIViewController {
         if segue.identifier == countrySelectionID {
             let navController = segue.destination as? UINavigationController
             let destinationVC = navController?.viewControllers.first as? SearchViewController
+            destinationVC?.onCountrySelected = { selectedCountry in
+            }
             destinationVC?.isProxyFlow = true
             destinationVC?.countries = countries
             destinationVC?.proxyPack = selectedPack

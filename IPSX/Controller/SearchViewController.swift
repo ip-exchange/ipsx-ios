@@ -38,9 +38,10 @@ class SearchViewController: UIViewController {
     var filteredCountries: [String]?
     var selectedCountry: String?
     
+    var onCountrySelected: ((_ selectedCountry: String)->())?
+    
     private var countriesRefreshed = false
     
-    //TODO (CC): Refactor country selection -> add completion to pass selectedCountry
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,12 +170,9 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCountry = filteredCountries?[indexPath.item]
         
+        self.onCountrySelected?(selectedCountry ?? "Select a country".localized)
         if dismissOnSelect {
             if let nav = navigationController {
-            
-                if let companyController = nav.viewControllers.first as? CompanyDetailsController {
-                    companyController.country = selectedCountry
-                }
                 nav.popViewController(animated: true)
             } else {
                 dismiss(animated: true)

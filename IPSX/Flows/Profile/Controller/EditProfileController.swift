@@ -437,6 +437,9 @@ class EditProfileController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
+            srcController.onCountrySelected = { selectedCountry in
+                self.selectedCountryLabel.text = selectedCountry
+            }
             backFromSearch = true
             srcController.dismissOnSelect = true
             srcController.countries = UserManager.shared.getUserCountryList()

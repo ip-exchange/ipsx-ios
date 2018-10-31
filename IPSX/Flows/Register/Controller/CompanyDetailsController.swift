@@ -123,6 +123,10 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
+            srcController.onCountrySelected = { selectedCountry in
+                self.country = selectedCountry
+            }
+
             srcController.dismissOnSelect = true
             srcController.countries = UserManager.shared.getUserCountryList()
             let userInfo = UserManager.shared.userInfo
