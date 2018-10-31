@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import IPSXNetworkingFramework
 
 struct Deposit {
     
@@ -18,14 +19,19 @@ struct Deposit {
     var watchUntil: Date?
     var createdAt: Date?
 
-    init(depositID: Int = 0, ethID: Int = 0, amountRequested: String = "", amountReceived: String = "", status: String = "",watchUntil: Date? = nil, createdAt: Date? = nil) {
+    init(json: JSON) {
         
-        self.depositID  = depositID
-        self.ethID      = ethID
-        self.status     = status
-        self.watchUntil = watchUntil
-        self.createdAt  = createdAt
-        self.amountRequested = amountRequested
-        self.amountReceived  = amountReceived
+        let dateFormatter = DateFormatter.backendResponseParse()
+        
+        self.depositID        = json["id"].intValue
+        self.ethID            = json["usereth_id"].intValue
+        self.amountRequested  = json["amount_requested"].doubleValue.cleanString
+        self.amountReceived   = json["amount_received"].doubleValue.cleanString
+        self.status           = json["status"].stringValue
+        let watchUntilString  = json["watch_until"].stringValue
+        self.watchUntil       = dateFormatter.date(from: watchUntilString)
+        let createdAtString   = json["created_at"].stringValue
+        self.createdAt        = dateFormatter.date(from: createdAtString)
+
     }
 }

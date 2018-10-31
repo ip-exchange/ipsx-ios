@@ -166,20 +166,7 @@ class TokenDepositService {
     
     func mapDepositResponse(json: JSON) -> Deposit {
         
-        let dateFormatter = DateFormatter.backendResponseParse()
-        
-        let depositID        = json["id"].intValue
-        let ethId            = json["usereth_id"].intValue
-        let amountRequested  = json["amount_requested"].doubleValue.cleanString
-        let amountReceived   = json["amount_received"].doubleValue.cleanString
-        let status           = json["status"].stringValue
-        let watchUntilString = json["watch_until"].stringValue
-        let watchUntilDate = dateFormatter.date(from: watchUntilString)
-        let createdAtString = json["created_at"].stringValue
-        let createdAtDate = dateFormatter.date(from: createdAtString)
-        
-        //TODO: Refactor with a dictionary or object arg
-        let deposit = Deposit(depositID: depositID, ethID: ethId, amountRequested: amountRequested, amountReceived: amountReceived, status: status, watchUntil: watchUntilDate, createdAt: createdAtDate)
+        let deposit = Deposit(json: json)
         return deposit
     }
     
