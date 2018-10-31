@@ -67,6 +67,15 @@ public extension String {
         return dateFormatter.date(from: self)
     }
     
+    func daysHoursMinutesFormated() -> String {
+        var formatedDuration = self + " min"
+        if let intDuration = Int(self) {
+            let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(intDuration * 60))
+            formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
+        }
+        return formatedDuration
+    }
+    
 }
 
 

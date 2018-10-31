@@ -431,16 +431,8 @@ class DashboardViewController: UIViewController {
             
             let testProxyPack = UserManager.shared.testProxyPack
             
-            //TODO (CC): simplify this formatting for duration -> move to extension
-            
             let duration = testProxyPack?.duration ?? "0"
-            var formatedDuration = duration + " min"
-            if let intDuration = Int(duration) {
-                let components = DateFormatter.secondsToDaysHoursMinutes(seconds: Int(intDuration * 60))
-                formatedDuration = DateFormatter.readableDaysHoursMinutes(components:components)
-            }
-            
-            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: formatedDuration, status: "active")
+            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: duration.daysHoursMinutesFormated(), status: "active")
             let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
             proxies.insert(testProxy, at: 0)
         }
