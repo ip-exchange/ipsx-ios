@@ -103,7 +103,7 @@ public struct Url {
     public static var baseUrl: String {
         get {
             switch environment {
-            case .dev:  return "https://devapp.ip.sx"
+            case .dev:  return "https://app.dev.ip.sx"
             case .demo: return "https://demo.ip.sx"
             }
         }
