@@ -1,26 +1,27 @@
 //
-//  RegCredentialsController.swift
-//  IPSXSandbox
+//  RegisterFBCountryController.swift
+//  IPSX
 //
-//  Created by Calin Chitu on 17/04/2018.
-//  Copyright © 2018 Calin Chitu. All rights reserved.
+//  Created by Calin Chitu on 06/11/2018.
+//  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 
 import UIKit
 
 @IBDesignable
-class RegisterCredentialsController: UIViewController {
-
+class RegisterFBCountryController: UIViewController {
+    
     @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var countryRTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
     
+    var fbToken: String = ""
     var continueBottomDist: CGFloat = 0.0
-    private var fieldsStateDic: [String : Bool] = ["email" : false, "country_id": false]
+
+    private var fieldsStateDic: [String : Bool] = ["country_id": false]
     private var searchController: SearchViewController?
-    var country: String? {
+    private var country: String? {
         didSet {
             DispatchQueue.main.async {
                 self.countryRTextField.contentTextField?.text = self.country
@@ -28,14 +29,13 @@ class RegisterCredentialsController: UIViewController {
         }
     }
     
-    var userCredentials: [String: String] = ["email": "", "country_id": ""]
+    var userCredentials: [String: String] = ["email": "", "pass": "", "country_id": ""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
-        observreFieldsState()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -45,7 +45,7 @@ class RegisterCredentialsController: UIViewController {
         if let selectedCountry = searchController?.selectedCountry {
             countryRTextField.contentTextField?.text = selectedCountry
         }
-
+        
         if UserManager.shared.userCountries == nil {
             
             UserInfoService().getUserCountryList(completionHandler: { result in
@@ -71,20 +71,8 @@ class RegisterCredentialsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
-        setupTextViews()
     }
-    
-    private func setupTextViews() {
-        emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
-    }
-    
-    private func observreFieldsState() {
-        emailRichTextView.onFieldStateChange = { state in
-            self.fieldsStateDic["email"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
-        }
-    }
-    
+        
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -92,19 +80,20 @@ class RegisterCredentialsController: UIViewController {
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
     
     @IBAction func continueAction(_ sender: Any) {
-        performSegue(withIdentifier: "PasswordSegueID", sender: self)
+        performSegue(withIdentifier: "TermsSegueID", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "PasswordSegueID" {
-            if let email = emailRichTextView.contentTextField?.text, let countryID = self.userCredentials["country_id"] {
-                let nextScreen = segue.destination as? RegisterPasswordController
-                nextScreen?.userCredentials = ["email": email, "country_id": countryID]
+        if segue.identifier == "TermsSegueID" {
+            if let countryID = self.userCredentials["country_id"] {
+                let nextScreen = segue.destination as? RegisterTermsController
+                nextScreen?.userCredentials = ["email": "", "pass": "", "country_id": countryID]
+                nextScreen?.fbToken = fbToken
             }
         }
         
-        if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
+        if segue.identifier == "SrcSegueID", let srcController = segue.destination as? SearchViewController {
             srcController.onCountrySelected = { selectedCountry in
                 self.country = selectedCountry
                 let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) ?? ""
@@ -124,7 +113,7 @@ class RegisterCredentialsController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
     @objc
     func keyboardWillAppear(notification: NSNotification?) {
         
@@ -148,4 +137,3 @@ class RegisterCredentialsController: UIViewController {
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
 }
-

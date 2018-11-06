@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PpC-zs-M2V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PpC-zs-M2V">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -154,7 +154,6 @@
                         <outlet property="topBarView" destination="IDt-vf-HrN" id="dvW-gX-H2K"/>
                         <outlet property="topConstraintOutlet" destination="ANj-Mf-9gX" id="ldf-NV-0FR"/>
                         <segue destination="Vks-3f-bfz" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="Ze8-f2-tBR"/>
-                        <segue destination="WaM-93-tC1" kind="show" identifier="showAddWalletSegueID" id="5cu-zl-FKV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="epG-9H-8yh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -193,7 +192,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVm-tX-9G9">
-                                <rect key="frame" x="46" y="88" width="162.5" height="26.5"/>
+                                <rect key="frame" x="45.5" y="87.5" width="162.5" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -294,7 +293,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5J-cg-8LK">
-                                <rect key="frame" x="159" y="307" width="170" height="36"/>
+                                <rect key="frame" x="159.5" y="307" width="170" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="4Uo-cg-f9B"/>
                                     <constraint firstAttribute="height" constant="36" id="v6Z-XA-fzH"/>
@@ -404,7 +403,6 @@
                         <outlet property="separatorView" destination="ziu-Gm-gNo" id="CzS-5B-dBt"/>
                         <outlet property="topBarView" destination="5IV-4B-Hec" id="n2g-E3-r9r"/>
                         <outlet property="topConstraintOutlet" destination="8If-QR-3td" id="Mg7-nl-m6m"/>
-                        <segue destination="WaM-93-tC1" kind="show" identifier="showAddWalletSegueID" id="nNU-Zf-N1I"/>
                         <segue destination="gXX-ac-zLO" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="cz0-dD-Yb0"/>
                     </connections>
                 </viewController>
@@ -425,7 +423,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ij5-YA-s4T">
-                                <rect key="frame" x="46" y="88" width="160" height="26.5"/>
+                                <rect key="frame" x="45.5" y="87.5" width="160" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -483,7 +481,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GjQ-VO-LVy">
-                                <rect key="frame" x="89" y="232" width="240" height="36"/>
+                                <rect key="frame" x="89.5" y="232" width="240" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="G69-uh-lMS"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="NBl-OW-5BN"/>
@@ -601,23 +599,12 @@
             </objects>
             <point key="canvasLocation" x="3825" y="-154"/>
         </scene>
-        <!--WalletAdd-->
-        <scene sceneID="5pZ-Aa-VzF">
-            <objects>
-                <viewControllerPlaceholder storyboardName="WalletAdd" id="WaM-93-tC1" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wsU-ND-ZvQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2634" y="595"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="BackArrow" width="10" height="19"/>
+        <image name="BackArrow" width="10.5" height="19"/>
         <image name="Background" width="375" height="667"/>
-        <image name="IPExchangeNav" width="105" height="20"/>
-        <image name="emailIcon" width="27" height="20"/>
-        <image name="keyIcon" width="25" height="26"/>
+        <image name="IPExchangeNav" width="105" height="20.5"/>
+        <image name="emailIcon" width="27" height="20.5"/>
+        <image name="keyIcon" width="25.5" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="nNU-Zf-N1I"/>
-    </inferredMetricsTieBreakers>
 </document>
