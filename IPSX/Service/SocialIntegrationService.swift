@@ -22,10 +22,11 @@ class SocialIntegrationService {
         
         var bodyParams: [String: Any] = [:]
         
-        if requestType == RequestType.fbRegister {
+        if requestType == RequestType.fbRegister  {
             
+            let cID = Double(countryID) ?? -1
             bodyParams = ["token"              : fbToken,
-                          "country_id"         : countryID,
+                          "country_id"         : cID,
                           "newsletter"         : newsletter as Any]
         }
         else if requestType == RequestType.fbLogin {
