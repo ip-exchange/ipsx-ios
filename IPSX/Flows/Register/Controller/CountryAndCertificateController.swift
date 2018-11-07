@@ -158,14 +158,12 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     }
     
     private func collectData() {
-        
         company?.countryName = countryRTextField.contentTextField?.text ?? ""
     }
     
     private func prePopulate() {
+        
         guard company != nil else { return }
-        
-        
         choosenFileLabel.text = company?.certificateFilename ?? "Choose file to upload".localized
         country = company?.countryName ?? "Select a country".localized
         countryRTextField.contentTextField?.text = country

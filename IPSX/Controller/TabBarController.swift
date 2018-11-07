@@ -27,18 +27,7 @@ class TabBarViewController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        
-        //TODO (CC): Delete this once tested
-//        if !UserManager.shared.hasEthAddress {
-//
-//            if hasPerformedAutologin {
-//                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-//            } else {
-//                // When closing the app from Add Eth Address screen after Login -> fresh start
-//                UserManager.shared.logout()
-//            }
-//        }
-        
+                
         if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
             presentLandingFlow()
         }
