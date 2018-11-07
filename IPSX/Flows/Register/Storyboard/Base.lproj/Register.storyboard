@@ -44,7 +44,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qy0-1C-L6Z">
-                                                <rect key="frame" x="0.0" y="13" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="12" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type a valid email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhZ-6S-3Y3">
@@ -87,7 +87,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="flag" translatesAutoresizingMaskIntoConstraints="NO" id="00n-9Y-ep1">
-                                                <rect key="frame" x="0.0" y="13" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="12" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M11-vf-NpW">
@@ -415,10 +415,10 @@
                                     <constraint firstAttribute="bottom" secondItem="nx9-zq-FVY" secondAttribute="bottom" id="jWU-KY-4UR"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FsG-8v-yh7" userLabel="Legal selector">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FsG-8v-yh7" userLabel="Company selector">
                                 <rect key="frame" x="45" y="430" width="285" height="44"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Legal Person" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXT-2v-0LV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXT-2v-0LV">
                                         <rect key="frame" x="30" y="0.0" width="255" height="44"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -431,7 +431,7 @@
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="legalCheckAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="HfQ-fj-I4E"/>
+                                            <action selector="companyCheckAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="EQu-pb-uYe"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -516,9 +516,9 @@
                     <navigationItem key="navigationItem" id="0e8-Db-69X"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="Jyq-XU-knM" id="4Be-5B-wFP"/>
+                        <outlet property="companyCheckButton" destination="uAe-Yp-ebf" id="3Pc-Py-OKl"/>
+                        <outlet property="companySelectorView" destination="FsG-8v-yh7" id="zmj-JF-Mnl"/>
                         <outlet property="individualCheckButton" destination="nx9-zq-FVY" id="gbq-sq-0VT"/>
-                        <outlet property="legalCheckButton" destination="uAe-Yp-ebf" id="jTb-9f-kb7"/>
-                        <outlet property="legalSelectorView" destination="FsG-8v-yh7" id="MQi-As-wOw"/>
                         <outlet property="loadingView" destination="c05-Gj-MdM" id="BPd-UA-RbE"/>
                         <outlet property="registerButton" destination="zJr-kv-cZI" id="MKM-zt-x9x"/>
                         <outlet property="separatorView" destination="7or-DF-D72" id="ybL-9x-3GV"/>

@@ -18,7 +18,7 @@ enum DeleteAccountState: Int {
 enum UserType: Int {
     
     case individual = 0
-    case legal      = 1
+    case company    = 1
 }
 
 struct UserInfo {

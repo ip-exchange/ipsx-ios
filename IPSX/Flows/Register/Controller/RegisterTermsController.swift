@@ -12,13 +12,13 @@ import IPSXNetworkingFramework
 class RegisterTermsController: UIViewController {
 
     @IBOutlet weak var individualCheckButton: UIButton!
-    @IBOutlet weak var legalCheckButton: UIButton!
+    @IBOutlet weak var companyCheckButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var registerButton: RoundedButton!
-    @IBOutlet weak var legalSelectorView: UIView!
+    @IBOutlet weak var companySelectorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -107,7 +107,7 @@ class RegisterTermsController: UIViewController {
         isFbFlow = fbToken != ""
         
         if isFbFlow {
-            legalSelectorView.isHidden = true
+            companySelectorView.isHidden = true
             individualCheckButton.isSelected = false
             individualCheckButton.isEnabled = false
         }
@@ -169,14 +169,14 @@ class RegisterTermsController: UIViewController {
     
     @IBAction func individualCheckAction(_ sender: UIButton) {
         sender.isSelected = true
-        legalCheckButton.isSelected = false
+        companyCheckButton.isSelected = false
         userType = .individual
     }
     
-    @IBAction func legalCheckAction(_ sender: UIButton) {
+    @IBAction func companyCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         individualCheckButton.isSelected = false
-        userType = .legal
+        userType = .company
     }
     
     func register(ipAddress: String) {
