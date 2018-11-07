@@ -9,17 +9,15 @@
 import UIKit
 import MobileCoreServices
 
-class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
+class CompanyDetailsController: UIViewController {
     
     @IBOutlet weak var nameRTextField: RichTextFieldView!
     @IBOutlet weak var addressRTextField: RichTextFieldView!
     @IBOutlet weak var regNumberRTextField: RichTextFieldView!
     @IBOutlet weak var vatRTextField: RichTextFieldView!
-    @IBOutlet weak var countryRTextField: RichTextFieldView!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var stackBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var choosenFileLabel: UILabel!
+    @IBOutlet weak var stackHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var closeButton: UIButton!
@@ -36,19 +34,11 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     var nonDismissable = true
     var firstLoginFlow = false
 
-    private var searchController: SearchViewController?
-    private var representativeController: RepresentativeDetailsController?
-    private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
+     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
 
     var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
-    var country: String? {
-        didSet {
-            DispatchQueue.main.async {
-                self.countryRTextField.contentTextField?.text = self.country
-            }
-        }
-    }
+
     var editMode = false
     var lastStepForLegalRegistration = true
     
@@ -75,13 +65,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         self.nextButton.isEnabled = self.canContinue()
-        
-        if let representative = representativeController?.company?.representative {
-            company?.representative = representative
-        }
-        if let selectedCountry = searchController?.selectedCountry {
-            countryRTextField.contentTextField?.text = selectedCountry
-        }
         
         if UserManager.shared.userCountries == nil {
             
@@ -111,51 +94,24 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "RepresentativeSegueID", let repController = segue.destination as? RepresentativeDetailsController {
-            representativeController = repController
+        if segue.identifier == "CompanyDetailsSegueID", let certController = segue.destination as? CountryAndCertificateController {
             collectData()
-            repController.company = company
-            repController.nonDismissable = self.nonDismissable
-            repController.firstLoginFlow = self.firstLoginFlow
-            repController.editMode = editMode
-            repController.lastStepForLegalRegistration = lastStepForLegalRegistration
-            repController.onCollectDataComplete = self.onCollectDataComplete 
-        }
-        
-        if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.country = selectedCountry
-            }
-
-            srcController.dismissOnSelect = true
-            srcController.countries = UserManager.shared.getUserCountryList()
-            let userInfo = UserManager.shared.userInfo
-            searchController = srcController
-            searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
+            certController.company = company
+            certController.nonDismissable = nonDismissable
+            certController.firstLoginFlow = firstLoginFlow
+            certController.editMode = editMode
         }
     }
     
     @IBAction func nextAction(_ sender: Any) {
         self.view.endEditing(true)
-        guard company?.certificateFilename != nil else {
-            toast?.showToastAlert("Missing Certificate Message".localized, type: .info, dismissable: false)
-            return
-        }
-        self.performSegue(withIdentifier: "RepresentativeSegueID", sender: nil)
+        self.performSegue(withIdentifier: "CompanyDetailsSegueID", sender: nil)
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
         
         self.view.endEditing(true)
         self.navigationController?.dismiss(animated: true)
-    }
-    
-    @IBAction func certificateUploadAction(_ sender: Any) {
-        toast?.hideToast()
-        let importMenu = UIDocumentPickerViewController(documentTypes: [(kUTTypeJPEG as String), (kUTTypePNG as String), (kUTTypePDF as String)], in: .import)
-        importMenu.delegate = self
-        importMenu.modalPresentationStyle = .formSheet
-        self.present(importMenu, animated: true, completion: nil)
     }
     
     @IBAction func signWithAnotherAccount(_ sender: Any) {
@@ -172,7 +128,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         regNumberRTextField.validationRegex      = RichTextFieldView.validName
         regNumberRTextField.nextResponderField   = vatRTextField.contentTextField
         vatRTextField.validationRegex            = RichTextFieldView.validName
-        countryRTextField.contentTextField?.text = "Select a country".localized
     }
     
     private func observreFieldsState() {
@@ -196,7 +151,7 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
     }
     
     private func canContinue() -> Bool {
-        return !self.fieldsStateDic.values.contains(false) && self.countryRTextField.contentTextField?.text != "Select a country".localized
+        return !self.fieldsStateDic.values.contains(false)
     }
     
     private func collectData() {
@@ -205,7 +160,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         company?.address = addressRTextField.contentTextField?.text ?? ""
         company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
         company?.vat = vatRTextField.contentTextField?.text ?? ""
-        company?.countryName = countryRTextField.contentTextField?.text ?? ""
     }
     
     private func prePopulate() {
@@ -216,37 +170,34 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         self.fieldsStateDic["regNum"] = company?.registrationNumber != nil
         self.fieldsStateDic["vat"] = company?.vat != nil
         
-        choosenFileLabel.text = company?.certificateFilename ?? "Choose file to upload".localized
         nameRTextField.contentTextField?.text = company?.name ?? ""
         addressRTextField.contentTextField?.text = company?.address ?? ""
         regNumberRTextField.contentTextField?.text = company?.registrationNumber ?? ""
         vatRTextField.contentTextField?.text = company?.vat ?? ""
-        
-        country = company?.countryName ?? "Select a country".localized
-        countryRTextField.contentTextField?.text = country
     }
     
     private func updateUI() {
         
-        if let selectedCountry = self.searchController?.selectedCountry {
-            self.countryRTextField.contentTextField?.text = selectedCountry
-        }
         self.nextButton.isEnabled = self.canContinue()
     }
 
     @objc
     func keyboardWillAppear(notification: NSNotification?) {
         
-        titleLabelTopConstraint.constant = -34
-        stackBottomConstraint.constant   = 124
+        guard view.frame.size.height <= 568 else { return }
+
+        titleLabelTopConstraint.constant = -30
+        stackHeightConstraint.constant   = 270
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
     
     @objc
     func keyboardWillDisappear(notification: NSNotification?) {
+        
+        guard view.frame.size.height <= 568 else { return }
 
         titleLabelTopConstraint.constant = 26
-        stackBottomConstraint.constant   = 30
+        stackHeightConstraint.constant   = 320
         UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
     }
 
@@ -254,17 +205,6 @@ class CompanyDetailsController: UIViewController, UIDocumentPickerDelegate {
         self.view.endEditing(true)
     }
     
-    // MARK: - UIDocumentPickerDelegate Methods
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        
-        if controller.documentPickerMode == .import {
-            
-            company?.certificateURL = url
-            company?.certificateFilename = url.lastPathComponent
-            choosenFileLabel.text = company?.certificateFilename
-        }
-    }
 }
 
 extension CompanyDetailsController: ToastAlertViewPresentable {

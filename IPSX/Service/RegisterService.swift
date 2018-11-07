@@ -11,7 +11,7 @@ import IPSXNetworkingFramework
 
 class RegisterService {
     
-    func registerUser(email: String, password: String, ip: String, newsletter: Bool, type: UserType, destiny: DestinyType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func registerUser(email: String, password: String, ip: String, countryID: String, newsletter: Bool, type: UserType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         /*
          "intention_company" - 0 = normal user / 1 = company user
@@ -21,10 +21,10 @@ class RegisterService {
         let bodyParams: [String: Any] = ["email"             : email,
                                          "password"          : password,
                                          "ip"                : ip,
+                                         "country_id"        : countryID,
                                          "source"            : "ios",
                                          "newsletter"        : newsletter,
-                                         "intention_company" : type.rawValue,
-                                         "intention_provider": destiny.rawValue]
+                                         "intention_company" : type.rawValue]
         
         let request = createRequest(requestType: RequestType.register, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in

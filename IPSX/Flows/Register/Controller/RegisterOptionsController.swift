@@ -34,7 +34,7 @@ class RegisterOptionsController: UIViewController {
     }
     
     var fbToken: String = ""
-    let chooseDestinyFlowID = "showChooseDestinySegueID"
+    let chooseCountryFlowID = "FacebookCountrySegueID"
     
     func facebookLogin() {
         
@@ -52,7 +52,7 @@ class RegisterOptionsController: UIViewController {
             case .success(_,  _, let accessToken):
                 self.fbToken = accessToken.authenticationToken
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: self.chooseDestinyFlowID, sender: nil)
+                    self.performSegue(withIdentifier: self.chooseCountryFlowID, sender: nil)
                 }
             }
         })
@@ -60,8 +60,8 @@ class RegisterOptionsController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == chooseDestinyFlowID {
-            let destination = segue.destination as? ChooseDestinyViewController
+        if segue.identifier == chooseCountryFlowID {
+            let destination = segue.destination as? RegisterFBCountryController
             destination?.fbToken = fbToken
         }
     }

@@ -98,12 +98,7 @@ class LoginOptionsController: UIViewController {
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 
                 DispatchQueue.main.async {
-                    if UserManager.shared.hasEthAddress {
-                        self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
-                    }
-                    else {
-                        self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-                    }
+                    self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
                 }
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getEthAddress)

@@ -12,13 +12,13 @@ import IPSXNetworkingFramework
 class RegisterTermsController: UIViewController {
 
     @IBOutlet weak var individualCheckButton: UIButton!
-    @IBOutlet weak var legalCheckButton: UIButton!
+    @IBOutlet weak var companyCheckButton: UIButton!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var registerButton: RoundedButton!
-    @IBOutlet weak var legalSelectorView: UIView!
+    @IBOutlet weak var companySelectorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -28,12 +28,11 @@ class RegisterTermsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var fbToken: String = ""
     var newsletter: Bool = true
-    var userDestiny: DestinyType = .requester
     var userType: UserType = .individual
     var isFbFlow = false
     
     private var statesDic: [String : Bool] = [:]
-    var userCredentials: [String: String] = ["email": "", "pass": ""]
+    var userCredentials: [String: String] = ["email": "", "pass": "", "country_id": ""]
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -108,7 +107,7 @@ class RegisterTermsController: UIViewController {
         isFbFlow = fbToken != ""
         
         if isFbFlow {
-            legalSelectorView.isHidden = true
+            companySelectorView.isHidden = true
             individualCheckButton.isSelected = false
             individualCheckButton.isEnabled = false
         }
@@ -170,23 +169,23 @@ class RegisterTermsController: UIViewController {
     
     @IBAction func individualCheckAction(_ sender: UIButton) {
         sender.isSelected = true
-        legalCheckButton.isSelected = false
+        companyCheckButton.isSelected = false
         userType = .individual
     }
     
-    @IBAction func legalCheckAction(_ sender: UIButton) {
+    @IBAction func companyCheckAction(_ sender: UIButton) {
         sender.isSelected = true
         individualCheckButton.isSelected = false
-        userType = .legal
+        userType = .company
     }
     
     func register(ipAddress: String) {
         
-        if isFbFlow {
-            self.registerWithFacebook(fbToken: fbToken)
+        if isFbFlow, let countryID = self.userCredentials["country_id"] {
+            self.registerWithFacebook(fbToken: fbToken, countryID: countryID)
         }
-        else if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"] {
-            self.registerWithEmailPass(email: email, pass: pass, ipAddress: ipAddress)
+        else if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"], let countryID = self.userCredentials["country_id"] {
+            self.registerWithEmailPass(email: email, pass: pass, ipAddress: ipAddress, countryID: countryID)
         }
         else {
             self.loadingView?.stopAnimating()
@@ -194,10 +193,10 @@ class RegisterTermsController: UIViewController {
         }
     }
     
-    func registerWithFacebook(fbToken: String) {
+    func registerWithFacebook(fbToken: String, countryID: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, newsletter: newsletter, destiny: userDestiny, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, countryID: countryID, newsletter: newsletter, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -211,10 +210,10 @@ class RegisterTermsController: UIViewController {
         })
     }
     
-    func registerWithEmailPass(email: String, pass: String, ipAddress: String) {
+    func registerWithEmailPass(email: String, pass: String, ipAddress: String, countryID: String) {
         
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, newsletter: newsletter, type: userType, destiny: userDestiny, completionHandler: { result in
+        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, countryID: countryID, newsletter: newsletter, type: userType, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -233,7 +232,7 @@ class RegisterTermsController: UIViewController {
         DispatchQueue.main.async {
             
             if self.isFbFlow {
-                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
+                self.performSegue(withIdentifier: "CongratsSegueID", sender: nil)
             }
             else {
                 self.performSegue(withIdentifier: "showRegConfirmationSegueID", sender: nil)

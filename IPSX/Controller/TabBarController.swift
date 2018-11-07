@@ -28,16 +28,6 @@ class TabBarViewController: UITabBarController {
         
         super.viewDidAppear(animated)
                 
-        if !UserManager.shared.hasEthAddress {
-            
-            if hasPerformedAutologin {
-                self.performSegue(withIdentifier: "showAddWalletSegueID", sender: nil)
-            } else {
-                // When closing the app from Add Eth Address screen after Login -> fresh start
-                UserManager.shared.logout()
-            }
-        }
-        
         if !hasReceivedUsedDeletedNotif && !UserManager.shared.isLoggedIn {
             presentLandingFlow()
         }
