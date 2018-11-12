@@ -300,7 +300,7 @@ class AddWalletController: UIViewController {
             return
         }
         
-        let alertController = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "No Camera Title Alert".localized, message: "No Camera Message Alert".localized, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
             self.toast?.showToastAlert("Settings Camera Redirect Message".localized, type: .error)
@@ -440,7 +440,7 @@ class QRScannViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     private func failed() {
-        let ac = UIAlertController(title: "No Cammera Title Alert".localized, message: "No Cammera Message Alert".localized, preferredStyle: .alert)
+        let ac = UIAlertController(title: "No Camera Title Alert".localized, message: "No Camera Message Alert".localized, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK".localized, style: .default))
         present(ac, animated: true)
         captureSession = nil
