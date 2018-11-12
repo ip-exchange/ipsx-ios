@@ -29,6 +29,7 @@ public enum CustomError: Error {
     case userDeleted
     case notPossible
     case notSuccessful
+    case fbNoEmailError
     
     public var errorDescription: String? {
         
@@ -44,7 +45,10 @@ public enum CustomError: Error {
             return "Request result: success = false"
             
         case .invalidJson:
-            return "Error parsing the JSON response from the server."
+            return "Error parsing the JSON response from the server"
+            
+        case .fbNoEmailError:
+            return "Facebook account without email"
             
         case .statusCodeNOK(let statusCode):
             return "Error status code:" + "\(statusCode)"
@@ -119,6 +123,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
                 
             case RequestType.addEthAddress, RequestType.fbRegister, RequestType.register: customError = CustomError.alreadyExists
                 
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
+        case 431:
+            
+            switch requestType {
+                
+            case RequestType.fbRegister: customError = CustomError.fbNoEmailError
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             

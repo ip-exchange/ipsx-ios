@@ -279,6 +279,9 @@ extension RegisterTermsController: ErrorPresentable {
             case CustomError.alreadyExists:
                 self.errorMessage = "User already registered Error Message".localized
                 
+            case CustomError.fbNoEmailError:
+                self.errorMessage = "Facebook Register No Email Error".localized
+                
             default:
                 self.errorMessage = "Generic Error Message".localized
             }
