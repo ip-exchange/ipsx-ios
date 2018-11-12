@@ -225,8 +225,7 @@ class UserInfoService {
                                            "USER_ID"      : UserManager.shared.userId,
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
         
-        let bodyParams: [String: String] = ["address" : address,
-                                            "alias"   : alias]
+        let bodyParams: [String: String] = ["alias" : alias]
         
         let request = createRequest(requestType: requestType, urlParams: urlParams, bodyParams: bodyParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
