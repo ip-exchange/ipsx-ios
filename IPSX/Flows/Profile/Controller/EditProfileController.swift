@@ -15,19 +15,6 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var keyIconImageView: UIImageView!
-    @IBOutlet weak var emailTextField: UITextField! {
-        didSet { emailTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) }
-    }
-    @IBOutlet weak var firstNameTextField: UITextField!{
-        didSet { firstNameTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) }
-    }
-    @IBOutlet weak var lastNameTextField: UITextField!{
-        didSet { lastNameTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) }
-    }
-    @IBOutlet weak var telegramTextField: UITextField!{
-        didSet { telegramTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged) }
-    }
-    @IBOutlet weak var selectedCountryLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var changePasswordHolderView: RoundedView!
     
@@ -44,8 +31,9 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var legalOptionsHoldeView: UIView!
     @IBOutlet weak var legalotionsTitleLabel: UILabel!
     
-    @IBOutlet weak var corporateStatusImageView: UIImageView!
-    @IBOutlet weak var corporateStatusLabel: UILabel!
+    @IBOutlet weak var companyApproveLabel: UILabel!
+    @IBOutlet weak var companyStatusImageView: UIImageView!
+    @IBOutlet weak var companyStatusLabel: UILabel!
     
     var company: Company? = UserManager.shared.company
         
@@ -145,7 +133,6 @@ class EditProfileController: UIViewController {
         
         super.viewWillAppear(animated)
         updateFields()
-        detectChangesAndValidity()
         getCompanyDetails() { self.updateLegalStatusUI() }
         if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
@@ -202,6 +189,7 @@ class EditProfileController: UIViewController {
             self.fullContentHeightConstraint.constant -= 66
             self.legalOptionsHoldeView.isHidden = true
             self.legalotionsTitleLabel.isHidden = true
+            self.companyApproveLabel.isHidden = true
         }
         if (registeredAsCompany || hasCompany) {
             self.legalCheckmarkImage.isHidden = false
@@ -215,54 +203,7 @@ class EditProfileController: UIViewController {
     private func updateFields() {
         
         let userInfo = UserManager.shared.userInfo
-        var countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
         changePasswordHolderView.isHidden = userInfo?.source != "ios"
-        if backFromSearch == true {
-            backFromSearch = false
-            if let selectedCountry = self.searchController?.selectedCountry {
-                countryName = selectedCountry
-            }
-         } else {
-            self.emailTextField.text       = userInfo?.email
-            self.firstNameTextField.text   = userInfo?.firstName
-            self.lastNameTextField.text    = userInfo?.lastName
-            self.telegramTextField.text    = userInfo?.telegram
-        }
-        self.selectedCountryLabel.text = countryName ?? "Select a country".localized
-    }
-    
-    private func detectChangesAndValidity(textfield: UITextField? = nil, newText: String = "") {
-        
-        let userInfo = UserManager.shared.userInfo
-        let countryName = UserManager.shared.getCountryName(countryID: userInfo?.countryID) ?? "Select a country".localized
-        var dataChanged = countryName != selectedCountryLabel.text
-        
-        switch textfield {
-        case emailTextField:
-            dataChanged = dataChanged || newText != userInfo?.email && isEmailValid(text: newText)
-            dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
-            dataChanged = dataChanged || (lastNameTextField.text  != userInfo?.lastName)
-            dataChanged = dataChanged || (telegramTextField.text  != userInfo?.telegram)
-        case firstNameTextField:
-            dataChanged = dataChanged || newText != userInfo?.firstName
-            dataChanged = dataChanged || (emailTextField.text    != userInfo?.email)
-            dataChanged = dataChanged || (lastNameTextField.text != userInfo?.lastName)
-            dataChanged = dataChanged || (telegramTextField.text != userInfo?.telegram)
-        case lastNameTextField:
-            dataChanged = dataChanged || newText != userInfo?.lastName
-            dataChanged = dataChanged || (emailTextField.text     != userInfo?.email)
-            dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
-            dataChanged = dataChanged || (telegramTextField.text  != userInfo?.telegram)
-        case telegramTextField:
-            dataChanged = dataChanged || newText != userInfo?.telegram
-            dataChanged = dataChanged || (emailTextField.text     != userInfo?.email)
-            dataChanged = dataChanged || (firstNameTextField.text != userInfo?.firstName)
-            dataChanged = dataChanged || (lastNameTextField.text  != userInfo?.lastName)
-        default:
-            break
-        }
-        
-        saveButton.isEnabled = dataChanged
     }
     
     private func updateLegalStatusUI() {
@@ -291,11 +232,11 @@ class EditProfileController: UIViewController {
                     imageName = "corporateReject"
                     stateText = "Your status is unknown, contact support".localized
                 }
-                self.corporateStatusLabel.text = stateText
-                self.corporateStatusImageView.image = UIImage(named: imageName)
+                self.companyStatusLabel.text = stateText
+                self.companyStatusImageView.image = UIImage(named: imageName)
             } else {
-                self.corporateStatusLabel.text = "Submit your corporate details".localized
-                self.corporateStatusImageView.image = UIImage(named: "lawBook")
+                self.companyStatusLabel.text = "Submit your corporate details".localized
+                self.companyStatusImageView.image = UIImage(named: "lawBook")
             }
         }
     }
@@ -307,13 +248,6 @@ class EditProfileController: UIViewController {
             return
         }
         
-        let countryID = UserManager.shared.getCountryId(countryName: selectedCountryLabel.text ?? "")
-        let bodyParams: [String: Any] =  ["email"     : emailTextField.text ?? "",
-                                          "first_name": firstNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                          "last_name" : lastNameTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                          "telegram"  : telegramTextField.text?.trimLeadingAndTrailingSpaces() ?? "",
-                                          "country_id": countryID as Any]
-        
         if companyEdited {
             
             companyEdited = false
@@ -322,11 +256,7 @@ class EditProfileController: UIViewController {
                 if success {
                     self.getCompanyDetails() { self.updateLegalStatusUI() }
                 }
-                self.updateUserProfile(bodyParams: bodyParams, companyError: !success)
             }
-        }
-        else {
-            self.updateUserProfile(bodyParams: bodyParams)
         }
     }
     
@@ -436,17 +366,6 @@ class EditProfileController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.selectedCountryLabel.text = selectedCountry
-            }
-            backFromSearch = true
-            srcController.dismissOnSelect = true
-            srcController.countries = UserManager.shared.getUserCountryList()
-            let userInfo = UserManager.shared.userInfo
-            searchController = srcController
-            searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)
-        }
         if segue.identifier == legalDetailsSegueID {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
@@ -459,53 +378,6 @@ class EditProfileController: UIViewController {
                 self.companyEdited = true
                 self.company = company
             }
-        }
-    }
-}
-
-extension EditProfileController: UITextFieldDelegate {
-    
-    @objc func textFieldEditingChanged(_ textField: UITextField) {
-        if let newString = textField.text {
-            //THE PASSWORD MUST BE AT LEAST 8 CHARACTERS, ONE NUMBER, ONE UPPERCASE CHARACTER AND ONE SPECIAL CHARACTER @$!%*?&
-            detectChangesAndValidity(textfield: textField, newText: newString)
-        }
-    }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard  !textField.isSecureTextEntry else { return true }
-        
-        let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
-        detectChangesAndValidity(textfield: textField, newText: newString)
-        
-        return true
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        handleTextfieldFocusChange(for: textField, actionOnDone: true)
-        return true
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        textField.returnKeyType = textField == telegramTextField ? .done : .next
-        return true
-    }
-    
-    private func handleTextfieldFocusChange(for textField: UITextField, actionOnDone: Bool) {
-        
-        detectChangesAndValidity(textfield: textField, newText: textField.text ?? "")
-        switch textField {
-        case emailTextField: firstNameTextField.becomeFirstResponder()
-        case firstNameTextField: lastNameTextField.becomeFirstResponder()
-        case lastNameTextField: telegramTextField.becomeFirstResponder()
-        case telegramTextField: textField.resignFirstResponder()
-       default:
-            break
         }
     }
 }

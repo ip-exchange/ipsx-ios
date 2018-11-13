@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import IPSXNetworkingFramework
 
-class AddWalletController: UIViewController {
+class WalletAddController: UIViewController {
 
     @IBOutlet weak var screenTitleLabel: UILabel?
     @IBOutlet weak var sectionTitleLabel: UILabel?
@@ -39,6 +39,8 @@ class AddWalletController: UIViewController {
     var shouldPop = false
     var shouldRequestCompanyDetails = (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil)
     
+    var onAddressEdited: ((_ alias: String)->())?
+
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
     var errorMessage: String? {
@@ -227,6 +229,7 @@ class AddWalletController: UIViewController {
             case .success(_):
                 
                 DispatchQueue.main.async {
+                    self.onAddressEdited?(alias)
                     self.navigationController?.popViewController(animated: true)
                 }
                 
@@ -353,7 +356,7 @@ class AddWalletController: UIViewController {
 
 }
 
-extension AddWalletController: ToastAlertViewPresentable {
+extension WalletAddController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
@@ -485,7 +488,7 @@ class FirstWalletDoneController: UIViewController {
 
 }
 
-extension AddWalletController: ErrorPresentable {
+extension WalletAddController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
 

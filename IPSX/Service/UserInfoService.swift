@@ -135,6 +135,7 @@ class UserInfoService {
                 let alias    = json["alias"].stringValue
                 let verified = json["verified"].intValue
                 let status   = json["status"].stringValue
+                let created  = json["created_at"].stringValue
                 
                 let testingEnrolledDate = json["tester"].stringValue
                 let stakingEnrolledDate = json["staking"].stringValue
@@ -144,8 +145,9 @@ class UserInfoService {
                 // null if not enrolled
                 let testingDate = dateFormatter.date(from: testingEnrolledDate)
                 let stakingDate = dateFormatter.date(from: stakingEnrolledDate)
+                let createdDate = dateFormatter.date(from: created)
                 
-                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate)
+                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate, createdDate: createdDate)
                 ethAddresses.append(ethAddress)
             }
             ethAddresses.sort { $0.ethID < $1.ethID }

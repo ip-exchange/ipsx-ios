@@ -27,35 +27,8 @@ class SettingsViewController: UIViewController {
     var newsletter = true
     
     @IBOutlet weak var loadingView: CustomLoadingView!
-    @IBOutlet weak var tokensAmountLabel: UILabel!
+ 
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    var balance: String = "" {
-        didSet {
-            DispatchQueue.main.async {
-                self.tokensAmountLabel.text = self.balance
-            }
-        }
-    }
-    @IBOutlet weak var deleteButtonImageView: UIImageView!
-    @IBOutlet weak var deleteButtonTextLabel: UILabel!
-
-    @IBAction func deleteAction(_ sender: UIButton) {
-        
-        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
-        
-        switch deleteAccountState {
-            
-        case .notRequested:
-            if UserManager.shared.userInfo?.source == "ios" {
-                performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
-            } else {
-                presentDeleteAlert()
-            }
-            
-        case .pending, .confirmed:
-            abortDelete()
-        }
-    }
     
     var errorMessage: String? {
         didSet {
@@ -72,14 +45,12 @@ class SettingsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = userInfo?.balance?.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        retrieveUserInfo()
         loadSettings()
     }
     
@@ -122,48 +93,6 @@ class SettingsViewController: UIViewController {
         updateSettings()
     }
     
-    func retrieveUserInfo() {
-
-        loadingView?.startAnimating()
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
-
-            self.loadingView?.stopAnimating()
-            switch result {
-                
-            case .success(let user):
-                
-                UserManager.shared.userInfo = user as? UserInfo
-                DispatchQueue.main.async {
-                    self.updateUI()
-                }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
-            }
-        })
-    }
-    
-    func abortDelete() {
-        
-        loadingView?.startAnimating()
-        SettingsService().abortDeleteAccount(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-                
-            case .success(_):
-                self.retrieveUserInfo()
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.abortDeleteAccount, completion: {
-                    self.abortDelete()
-                })
-            }
-        })
-    }
-    
     func loadSettings() {
         
         loadingView?.startAnimating()
@@ -185,34 +114,6 @@ class SettingsViewController: UIViewController {
                 })
             }
         })
-    }
-    
-    func updateUI() {
-        
-        self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0" 
-        
-        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
-        let deleteDate = UserManager.shared.userInfo?.deleteAccountDate
-        let deleteDateString = deleteDate?.dateToString(format: "dd MMM yyyy") ?? "--:--:--"
-        
-        switch deleteAccountState {
-            
-        case .notRequested:
-            deleteButtonImageView.image = UIImage(named: "garbage")
-            deleteButtonTextLabel.text = "Delete Account".localized
-            toast?.hideToast()
-            
-        case .pending:
-            deleteButtonImageView.image = UIImage(named: "cancelDelete")
-            deleteButtonTextLabel.text = "Abort Delete Account".localized
-            toast?.showToastAlert("Delete Confirm Email Message".localized, type: .deletePending, dismissable: false)
-
-        case .confirmed:
-            deleteButtonImageView.image = UIImage(named: "cancelDelete")
-            deleteButtonTextLabel.text = "Abort Delete Account".localized
-            let deleteMessage = String(format: "Delete Scheduled Message %@".localized, "\(deleteDateString)")
-            toast?.showToastAlert(deleteMessage, type: .deleteConfirmed, dismissable: false)
-        }
     }
     
     func updateSettings() {
@@ -249,54 +150,6 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    private func presentDeleteAlert() {
-        
-        let alertController = UIAlertController(title: "Delete Account Confirm Message".localized, message: "".localized, preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
-        }
-        
-        let deleteAction = UIAlertAction(title: "Confirm".localized, style: .destructive) { (action:UIAlertAction) in
-            self.deleteAccount()
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    func deleteAccount() {
-        
-        loadingView?.startAnimating()
-        
-        SettingsService().deleteAccount(completionHandler: { result in
-            self.loadingView?.stopAnimating()
-            switch result {
-                
-            case .success(_):
-                
-                DispatchQueue.main.async {
-                    self.retrieveUserInfo()
-                }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
-                    self.deleteAccount()
-                })
-            }
-        })
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DeleteAccountSegueID" {
-            let deleteAccController = segue.destination as? DeleteAccountController
-            deleteAccController?.onDismiss = { success in
-                if success {
-                    self.retrieveUserInfo()
-                }
-            }
-        }
-    }
 }
 
 extension SettingsViewController: ToastAlertViewPresentable {

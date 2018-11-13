@@ -26,8 +26,9 @@ struct EthAddress {
     var status: String
     var testingEnrollmentDate: Date?
     var stakingEnrollmentDate: Date?
-    
-    init(ethID: Int = 0, ethAddress: String = "", ethAlias: String = "", ethValidation: Int = 0, ethStatus: String = "", testingEnrollmentDate: Date? = nil, stakingEnrollmentDate: Date? = nil) {
+    var createdDate: Date?
+
+    init(ethID: Int = 0, ethAddress: String = "", ethAlias: String = "", ethValidation: Int = 0, ethStatus: String = "", testingEnrollmentDate: Date? = nil, stakingEnrollmentDate: Date? = nil, createdDate: Date? = nil) {
         
         self.ethID    = ethID 
         self.address  = ethAddress != "" ? ethAddress : "N/A"
@@ -36,6 +37,7 @@ struct EthAddress {
         
         self.testingEnrollmentDate = testingEnrollmentDate
         self.stakingEnrollmentDate = stakingEnrollmentDate
+        self.createdDate           = createdDate
         
         if let validation = EthAddressState(rawValue: ethValidation) {
             self.validationState = validation

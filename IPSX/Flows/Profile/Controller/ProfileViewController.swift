@@ -32,8 +32,6 @@ class ProfileViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    var ethAdresses: [EthAddress] = []
-    private var selectedAddress: EthAddress?
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -77,19 +75,10 @@ class ProfileViewController: UIViewController {
         logout()
     }
     
-    @IBAction func addWalletAction(_ sender: UIButton) {
-        
-        let maxETHaddresses = UserManager.shared.generalSettings?.maxETHaddresses ?? 5
-        let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0
-        
-        if ethAddresses < maxETHaddresses {
-            performSegue(withIdentifier: "walletViewIdentifier", sender: nil)
-        } else {
-            let formatedMessage = String(format: "Max %@ ETH addresses Error Message".localized, "\(maxETHaddresses)")
-            self.errorMessage = formatedMessage.localized
-        }
+    @IBAction func manageWalletsAction(_ sender: Any) {
+        performSegue(withIdentifier: "WalletsListID", sender: nil)
     }
-    
+        
     func logout() {
         
         UserManager.shared.logout()
@@ -119,9 +108,7 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        selectedAddress = nil
         refreshProfileUI()
-        retrieveETHaddresses()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -194,16 +181,6 @@ class ProfileViewController: UIViewController {
         }
     }
 
-    func refreshETHaddressesUI() {
-        
-        DispatchQueue.main.async {
-            if let addresses = UserManager.shared.ethAddresses {
-                self.ethAdresses = addresses
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -216,9 +193,6 @@ class ProfileViewController: UIViewController {
                     self.retrieveUserInfo()
                 }
             }
-        case "walletViewIdentifier":
-            let addController = segue.destination as? AddWalletController
-            addController?.ethereumAddress = selectedAddress
             
         case "enrollTestingSummarySegueID":
             let summaryController = segue.destination as? EnrolTestSummaryController
@@ -253,46 +227,6 @@ class ProfileViewController: UIViewController {
         })
     }
     
-    func retrieveETHaddresses() {
-        
-        loadingView?.startAnimating()
-        UserInfoService().retrieveETHaddresses(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let ethAddresses):
-                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                self.refreshETHaddressesUI()
-                self.refreshProfileUI()
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.getEthAddress, completion: {
-                    self.retrieveETHaddresses()
-                })
-            }
-        })
-    }
-    
-    func updateETHaddresses(ethID: Int) {
-        
-        loadingView?.startAnimating()
-        UserInfoService().updateETHaddress(requestType: RequestType.deleteEthAddress, ethID: ethID) { result in
-            
-            self.loadingView?.stopAnimating()
-            
-            switch result {
-                
-            case .success(_):
-                self.retrieveETHaddresses()
-
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.deleteEthAddress, completion: {
-                    self.updateETHaddresses(ethID: ethID)
-                })
-            }
-        }
-    }
-    
     func collapseHeader() {
         self.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2, animations: {
@@ -319,40 +253,12 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return ethAdresses.count > 1
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            let address = ethAdresses[indexPath.item]
-            if address.status == "locked" {
-                toast?.showToastAlert("Address Locked Toast Message".localized, autoHideAfter: 5)
-            } else {
-                showDeleteConfirmationAlert(index: indexPath)
-            }
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ethAdresses.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: EthWalletCell.cellID, for: indexPath) as! EthWalletCell
-        let ethAddress = ethAdresses[indexPath.item]
-        cell.configure(address: ethAddress)
-        return cell
-    }
-}
-
-extension ProfileViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedAddress = ethAdresses[indexPath.item]
-        performSegue(withIdentifier: "walletViewIdentifier", sender: self)
+        return UITableViewCell()
     }
 }
 
@@ -410,27 +316,6 @@ extension ProfileViewController: ToastAlertViewPresentable {
             self.toast = toastView
             view.addSubview(toastView)
         }
-    }
-    
-    private func showDeleteConfirmationAlert(index: IndexPath) {
-        let ethAddress = ethAdresses[index.item]
-        var alertMessage = ethAddress.address
-        if ethAddress.testingEnrollmentDate != nil || ethAddress.stakingEnrollmentDate != nil {
-            alertMessage = "Enrolled Address Delete Message".localized
-        }
-        let alertController = UIAlertController(title: "Delete Address Confirmation Alert Title".localized, message: alertMessage, preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default) { (action:UIAlertAction) in
-            self.tableView.reloadData()
-        }
-        
-        let deleteAction = UIAlertAction(title: "Delete".localized, style: .destructive) { (action:UIAlertAction) in
-            self.updateETHaddresses(ethID: ethAddress.ethID)
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true, completion: nil)
     }
 }
 
