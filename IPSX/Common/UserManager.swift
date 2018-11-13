@@ -31,7 +31,9 @@ public class UserManager: NSObject {
     var providerSubmissionStatus: ProviderStatus?
     var companyVerified: Bool { return company?.status == Company.CompanyStatus.verified }
     var hasPerformedLogout = false
-    
+    var emailNotifications: Bool = true
+    var newsletterNotifications: Bool = true
+
     var hasEthAddress: Bool {
         get {
             let noOfEthAddresses = ethAddresses?.count ?? 0

@@ -285,6 +285,10 @@ class UserInfoService {
             let newsletter = newsletterValue != "" ? Newsletter.on : Newsletter.off
             
             if emailNotifValue == EmailNotifications.on || emailNotifValue == EmailNotifications.off {
+                
+                UserManager.shared.emailNotifications = emailNotifValue == EmailNotifications.on ? true : false
+                UserManager.shared.newsletterNotifications = newsletter == Newsletter.on ? true : false
+                
                 completionHandler(ServiceResult.success((emailNotifValue, newsletter)))
             }
             else {
@@ -325,6 +329,8 @@ class UserInfoService {
                 completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
+            UserManager.shared.emailNotifications = emailNotif
+            UserManager.shared.newsletterNotifications = newsletter
             completionHandler(ServiceResult.success(true))
         })
     }

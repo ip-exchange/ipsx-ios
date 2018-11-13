@@ -61,7 +61,7 @@ struct UserInfo {
     var deleteAccountDate: Date?
     var hasOptedForLegal: Bool?
     var hasOptedForProvider: Bool?
-    
+
     init(userDict: [String: Any]) {
         
         self.firstName     = userDict["first_name"] as? String

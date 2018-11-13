@@ -73,7 +73,7 @@ class WalletViewerController: UIViewController {
         walletNameLabel.text = ethAddress.alias
         walletAddress.text   = ethAddress.address
         let formattedDate    = ethAddress.createdDate?.dateToString(format: "dd MMM yyyy") ?? "--/--/---"
-        walletDateLabel.text = "Created at: " + formattedDate
+        walletDateLabel.text = "Created at: ".localized + formattedDate
         
         switch ethAddress.validationState {
         case .verified:

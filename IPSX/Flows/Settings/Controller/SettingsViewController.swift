@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
-    var emailNotif = false
+    var emailNotif = true
     var newsletter = true
     
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -40,6 +40,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        newsletterSwitch.setOn(UserManager.shared.newsletterNotifications, animated: false)
+        emailNotificationsSwitch.setOn(UserManager.shared.emailNotifications, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,12 +86,14 @@ class SettingsViewController: UIViewController {
     @IBAction func emailNotificationSwitchAction(_ sender: UISwitch) {
         
         emailNotif = sender.isOn
+        newsletter = newsletterSwitch.isOn
         updateSettings()
     }
     
     @IBAction func newsletterSwitchAction(_ sender: UISwitch) {
         
         newsletter = sender.isOn
+        emailNotif = emailNotificationsSwitch.isOn
         updateSettings()
     }
     
