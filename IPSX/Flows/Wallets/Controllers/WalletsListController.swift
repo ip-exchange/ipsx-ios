@@ -39,6 +39,7 @@ class WalletsListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        retrieveETHaddresses()
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,10 +51,6 @@ class WalletsListController: UIViewController {
         super.viewWillAppear(animated)
         selectedAddress = nil
         refreshETHaddressesUI()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     private func configureUI() {
