@@ -41,6 +41,7 @@ struct RequestType {
     static let getProxyCountryList = "getProxyCountryList"
     
     static let userInfo = "userInfo"
+    static let userRoles = "userRoles"
     static let updateProfile = "updateProfile"
     static let deleteAccount = "deleteAccount"
     static let abortDeleteAccount = "abortDeleteAccount"
@@ -176,6 +177,7 @@ public struct Url {
     public static let enrollStakingArgs      = "/Users/%USER_ID%/stakings?access_token=%ACCESS_TOKEN%"
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
     public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
+    public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "") -> Request {
@@ -247,6 +249,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         
     case RequestType.enrollStakingDetails:
         url = (Url.baseApi + Url.enrollStakingArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case RequestType.userRoles:
+        url = (Url.baseApi + Url.userRolesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
     //Proxy Requests

@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var enroledTestingImageView: UIImageView!
     @IBOutlet weak var enrolStakingTitleLabel: UILabel!
     @IBOutlet weak var enroledStakingImageView: UIImageView!
-    @IBOutlet weak var kycStatusLabel: UILabel!
+    @IBOutlet weak var userRoleLabel: UILabel!
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -164,7 +164,8 @@ class ProfileViewController: UIViewController {
     func refreshProfileUI() {
         
         DispatchQueue.main.async {
-            self.kycStatusLabel.text = self.userInfo?.kycStatusString ?? ""
+
+            self.userRoleLabel.text = UserManager.shared.userRoleString
             if let firstName = self.userInfo?.firstName {
                 let lastName = self.userInfo?.lastName ?? ""
                 self.usernameLabel.text    = firstName + " " + lastName

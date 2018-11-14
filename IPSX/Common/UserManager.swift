@@ -34,6 +34,15 @@ public class UserManager: NSObject {
     var emailNotifications: Bool = true
     var newsletterNotifications: Bool = true
 
+    var roles: [UserRoles]?
+    
+    var hasEthAddress: Bool {
+        get {
+            let noOfEthAddresses = ethAddresses?.count ?? 0
+            return noOfEthAddresses > 0
+        }
+    }
+    
     var hasCompany: Bool {
         get {
             return company != nil
@@ -67,6 +76,31 @@ public class UserManager: NSObject {
         get {
             guard let addresses = ethAddresses else { return false }
             return addresses.contains() { address in (address.stakingEnrollmentDate != nil && address.validationState == .verified) }
+        }
+    }
+    
+    var isCompany: Bool {
+        get {
+            guard let roles = roles else { return false }
+            return roles.contains(.Corporate)
+        }
+    }
+    
+    var userRoleString: String {
+        get {
+            var roleString = "Member".localized
+            guard let roles = roles else { return "" }
+            
+            if roles.contains(.Requester) && !roles.contains(.Provider) {
+                roleString = "Requester".localized
+            }
+            if !roles.contains(.Requester) && roles.contains(.Provider) {
+                roleString = "Provider".localized
+            }
+            if roles.contains(.Requester) && roles.contains(.Provider) {
+                roleString = "Requester and Provider".localized
+            }
+            return roleString
         }
     }
     
@@ -160,9 +194,9 @@ public class UserManager: NSObject {
         testProxyPack = nil
         company = nil
         providerSubmissionStatus = nil
-        
         emailNotifications = true
         newsletterNotifications = true
+        roles = nil
     }
     
     func getUserCountryList() -> [String] {

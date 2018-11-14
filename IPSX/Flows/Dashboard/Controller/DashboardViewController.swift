@@ -35,7 +35,7 @@ class DashboardViewController: UIViewController {
     let dispatchGroup = DispatchGroup()
     
     var preventPurchase: Bool { return !UserManager.shared.companyVerified && UserManager.shared.userInfo?.hasOptedForLegal == true }
-
+    
     var balance: String = "" {
         didSet {
             DispatchQueue.main.async {
@@ -49,7 +49,7 @@ class DashboardViewController: UIViewController {
             if ReachabilityManager.shared.isReachable() {
                 toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
             }
-       }
+        }
     }
     var proxies: [Proxy] = [] {
         didSet {
@@ -66,7 +66,7 @@ class DashboardViewController: UIViewController {
                     return $0.proxyDetails?.status == filterString
                 } else {
                     return $0.proxyDetails?.status != filterString
-
+                    
                 }
             }
             let sorted = filtered.sorted { $0.proxyDetails?.startDate ?? Date() > $1.proxyDetails?.startDate ?? Date() }
@@ -106,7 +106,7 @@ class DashboardViewController: UIViewController {
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         providerView.providerDelegate = self
-     }
+    }
     
     @objc func appWillEnterForeground() {
         updateReachabilityInfo()
@@ -120,8 +120,7 @@ class DashboardViewController: UIViewController {
         tableView?.setContentOffset(.zero, animated: false)
         
         /*  No need to submit requests:
-            - When no eth address: Close the app from Add Eth Address screen after Login (the user remains loggedIn)
-            - When the user is not yet logged in: Login will be displayed from Tab Bar Controller (this is the first VC)
+         - When the user is not yet logged in: Login will be displayed from Tab Bar Controller (this is the first VC)
          */
         if UserManager.shared.isLoggedIn {
             
@@ -131,12 +130,14 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.providerSubmissionStatus == nil {
                 providerDetails()
             }
-            
             if UserManager.shared.testProxyPack == nil {
                 retrieveTestProxyPackage()
             }
             if UserManager.shared.proxyPacks == nil {
                 retrieveProxyPackages()
+            }
+            if UserManager.shared.roles == nil {
+                userRoles()
             }
             if UserManager.shared.generalSettings == nil {
                 generalSettings()
@@ -145,7 +146,6 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
                 getProxyCountryList()
             }
-            
             dispatchGroup.notify(queue: .main) {
                 self.updateData()
                 self.timer?.invalidate()
@@ -183,7 +183,7 @@ class DashboardViewController: UIViewController {
             }
         }
     }
-
+    
     func hideMaskView() {
         UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.95, initialSpringVelocity: 0.5, options: [], animations: {
             let shrink = CGAffineTransform(scaleX: 0.1, y: 0.1);
@@ -224,7 +224,7 @@ class DashboardViewController: UIViewController {
             }
         }
     }
-
+    
     @objc func updateData() {
         retrieveUserInfo()
         providerDetails()
@@ -333,12 +333,32 @@ class DashboardViewController: UIViewController {
         })
     }
     
+    func userRoles() {
+        
+        dispatchGroup.enter()
+        UserInfoService().getRoles(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.userRoles, completion: {
+                    self.userRoles()
+                })
+            }
+        })
+    }
+    
     private func showZeroBalanceToastIfNeeded() {
         
         guard !preventPurchase else {
             return
         }
-
+        
         let balanceValue = UserManager.shared.userInfo?.balance ?? 0
         balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
         if balanceValue == 0, UserManager.shared.isLoggedIn {
@@ -489,7 +509,7 @@ extension DashboardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
         headerView.backgroundColor = .clear
@@ -501,7 +521,7 @@ extension DashboardViewController: UITableViewDataSource {
         footerView.backgroundColor = .clear
         return footerView
     }
-
+    
 }
 
 extension DashboardViewController: UITableViewDelegate {
