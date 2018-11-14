@@ -109,7 +109,6 @@ class ProfileViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         refreshProfileUI()
-        retrieveETHaddresses()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -228,25 +227,6 @@ class ProfileViewController: UIViewController {
         })
     }
     
-    func retrieveETHaddresses() {
-        
-        loadingView?.startAnimating()
-        UserInfoService().retrieveETHaddresses(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let ethAddresses):
-                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
-                self.retrieveUserInfo()
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.getEthAddress, completion: {
-                    self.retrieveETHaddresses()
-                })
-            }
-        })
-    }
-
     func collapseHeader() {
         self.view.layoutIfNeeded()
         UIView.animate(withDuration: 0.2, animations: {

@@ -162,7 +162,17 @@ class EnrolStakeSubscribeController: UIViewController {
                        })
                     }
                     else {
-                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+                            
+                            switch result {
+                            case .success(let ethAddresses): UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                            case .failure(_): break
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                            }
+                        })
                     }
                 }
                 
