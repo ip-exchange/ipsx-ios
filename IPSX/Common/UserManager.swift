@@ -34,13 +34,6 @@ public class UserManager: NSObject {
     var emailNotifications: Bool = true
     var newsletterNotifications: Bool = true
 
-    var hasEthAddress: Bool {
-        get {
-            let noOfEthAddresses = ethAddresses?.count ?? 0
-            return noOfEthAddresses > 0
-        }
-    }
-    
     var hasCompany: Bool {
         get {
             return company != nil
@@ -167,6 +160,9 @@ public class UserManager: NSObject {
         testProxyPack = nil
         company = nil
         providerSubmissionStatus = nil
+        
+        emailNotifications = true
+        newsletterNotifications = true
     }
     
     func getUserCountryList() -> [String] {

@@ -131,23 +131,21 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.providerSubmissionStatus == nil {
                 providerDetails()
             }
-            if UserManager.shared.hasEthAddress {
-                
-                if UserManager.shared.testProxyPack == nil {
-                    retrieveTestProxyPackage()
-                }
-                if UserManager.shared.proxyPacks == nil {
-                    retrieveProxyPackages()
-                }
-                if UserManager.shared.generalSettings == nil {
-                    generalSettings()
-                }
-                // After Logout we should load the proxy countries if needed for Test Proxy
-                if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
-                    getProxyCountryList()
-                }
+            
+            if UserManager.shared.testProxyPack == nil {
+                retrieveTestProxyPackage()
             }
-           
+            if UserManager.shared.proxyPacks == nil {
+                retrieveProxyPackages()
+            }
+            if UserManager.shared.generalSettings == nil {
+                generalSettings()
+            }
+            // After Logout we should load the proxy countries if needed for Test Proxy
+            if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
+                getProxyCountryList()
+            }
+            
             dispatchGroup.notify(queue: .main) {
                 self.updateData()
                 self.timer?.invalidate()
@@ -542,11 +540,11 @@ extension DashboardViewController: ErrorPresentable {
             }, successHandler: {
                 completion?()
             })
+        case CustomError.emptyJson: break
         default:
             if requestType == RequestType.getProviderDetails {
                 self.hideProviderView()
-            }
-            else {
+            }  else {
                 self.errorMessage = "Refresh Data Error Message".localized
             }
         }

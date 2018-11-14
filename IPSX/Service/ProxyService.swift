@@ -234,10 +234,17 @@ class ProxyService {
                 completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
-            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+            
+            guard let jsonArray = JSON(data: data).array else {
                 completionHandler(ServiceResult.failure(CustomError.invalidJson))
                 return
             }
+            
+            guard jsonArray.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.emptyJson))
+                return
+            }
+            
             var packages: [ProxyPack] = []
             for json in jsonArray {
                 

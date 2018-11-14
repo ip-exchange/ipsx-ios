@@ -17,6 +17,7 @@ protocol ErrorPresentable {
 public enum CustomError: Error {
     
     case invalidJson
+    case emptyJson
     case statusCodeNOK(Int)
     case expiredToken
     case otherError(Error)
@@ -46,6 +47,9 @@ public enum CustomError: Error {
             
         case .invalidJson:
             return "Error parsing the JSON response from the server"
+            
+        case .emptyJson:
+            return "JSON received is empty"
             
         case .fbNoEmailError:
             return "Facebook account without email"
