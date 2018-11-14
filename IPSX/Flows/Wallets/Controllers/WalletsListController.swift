@@ -38,8 +38,7 @@ class WalletsListController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,9 +49,13 @@ class WalletsListController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selectedAddress = nil
-        retrieveETHaddresses()
+        refreshETHaddressesUI()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     private func configureUI() {
         tableView.tableFooterView = UIView()
     }
