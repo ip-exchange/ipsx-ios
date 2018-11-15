@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import IPSXNetworkingFramework
 
-class AddWalletController: UIViewController {
+class WalletAddController: UIViewController {
 
     @IBOutlet weak var screenTitleLabel: UILabel?
     @IBOutlet weak var sectionTitleLabel: UILabel?
@@ -39,6 +39,8 @@ class AddWalletController: UIViewController {
     var shouldPop = false
     var shouldRequestCompanyDetails = (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil)
     
+    var onAddressEdited: ((_ alias: String)->())?
+
     private var fieldsStateDic: [String : Bool] = ["walletName" : true, "ethAddress" : false]
     
     var errorMessage: String? {
@@ -226,8 +228,11 @@ class AddWalletController: UIViewController {
                 
             case .success(_):
                 
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
+                self.retrieveETHaddresses() {
+                    DispatchQueue.main.async {
+                        self.onAddressEdited?(alias)
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
                 
             case .failure(let error):
@@ -251,20 +256,19 @@ class AddWalletController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
                 
-            case .success(let ethAddress):
+            case .success(_):
                 
-                DispatchQueue.main.async {
-                    
-                    if let ethAddress = ethAddress as? EthAddress {
-                        UserManager.shared.ethAddresses = [ethAddress]
-                    }
-                    if self.shouldPop {
-                        self.navigationController?.popViewController(animated: true)
-                    } else if self.shouldRequestCompanyDetails {
-                        self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
-                    }
-                    else {
-                        self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                self.retrieveETHaddresses() {
+                    DispatchQueue.main.async {
+                        
+                        if self.shouldPop {
+                            self.navigationController?.popViewController(animated: true)
+                        } else if self.shouldRequestCompanyDetails {
+                            self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+                        }
+                        else {
+                            self.performSegue(withIdentifier: "showCongratsSegueID", sender: nil)
+                        }
                     }
                 }
                 
@@ -276,6 +280,19 @@ class AddWalletController: UIViewController {
         })
     }
     
+    func retrieveETHaddresses(completion: @escaping ()->()) {
+        
+        UserInfoService().retrieveETHaddresses(completionHandler: { result in
+            
+            switch result {
+            case .success(let ethAddresses):
+                UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+            case .failure(_): break
+            }
+            completion()
+        })
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -353,7 +370,7 @@ class AddWalletController: UIViewController {
 
 }
 
-extension AddWalletController: ToastAlertViewPresentable {
+extension WalletAddController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
@@ -485,7 +502,7 @@ class FirstWalletDoneController: UIViewController {
 
 }
 
-extension AddWalletController: ErrorPresentable {
+extension WalletAddController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
 

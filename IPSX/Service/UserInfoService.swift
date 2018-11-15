@@ -53,7 +53,7 @@ class UserInfoService {
 
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
-        let hasOpetdForLegal    = json["intention_company"].intValue == 1 ? true : false
+        let hasOpetdForCompany  = json["intention_company"].intValue == 1 ? true : false
         let hasOpetdForProvider = json["intention_provider"].intValue == 1 ? true : false
         
         let dateFormatter     = DateFormatter.backendResponseParse()
@@ -92,7 +92,7 @@ class UserInfoService {
                                         "referral_code": json["referral_code"].stringValue,
                                         "delete_account_date":    deleteAccountDate as Any,
                                         "pending_delete_account": pendingDeleteAccount,
-                                        "intention_company":      hasOpetdForLegal,
+                                        "intention_company":      hasOpetdForCompany,
                                         "intention_provider":     hasOpetdForProvider]
         
         let user = UserInfo(userDict: userDict)
@@ -135,6 +135,7 @@ class UserInfoService {
                 let alias    = json["alias"].stringValue
                 let verified = json["verified"].intValue
                 let status   = json["status"].stringValue
+                let created  = json["created_at"].stringValue
                 
                 let testingEnrolledDate = json["tester"].stringValue
                 let stakingEnrolledDate = json["staking"].stringValue
@@ -144,8 +145,9 @@ class UserInfoService {
                 // null if not enrolled
                 let testingDate = dateFormatter.date(from: testingEnrolledDate)
                 let stakingDate = dateFormatter.date(from: stakingEnrolledDate)
+                let createdDate = dateFormatter.date(from: created)
                 
-                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate)
+                let ethAddress = EthAddress(ethID: ethID, ethAddress: address, ethAlias: alias, ethValidation: verified, ethStatus: status, testingEnrollmentDate: testingDate, stakingEnrollmentDate: stakingDate, createdDate: createdDate)
                 ethAddresses.append(ethAddress)
             }
             ethAddresses.sort { $0.ethID < $1.ethID }
@@ -283,6 +285,10 @@ class UserInfoService {
             let newsletter = newsletterValue != "" ? Newsletter.on : Newsletter.off
             
             if emailNotifValue == EmailNotifications.on || emailNotifValue == EmailNotifications.off {
+                
+                UserManager.shared.emailNotifications = emailNotifValue == EmailNotifications.on ? true : false
+                UserManager.shared.newsletterNotifications = newsletter == Newsletter.on ? true : false
+                
                 completionHandler(ServiceResult.success((emailNotifValue, newsletter)))
             }
             else {
@@ -323,7 +329,53 @@ class UserInfoService {
                 completionHandler(ServiceResult.failure(RequestError.noData))
                 return
             }
+            UserManager.shared.emailNotifications = emailNotif
+            UserManager.shared.newsletterNotifications = newsletter
             completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func getRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.userRoles, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array, jsonArray.count > 0 else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var userRoles: [UserRoles] = []
+            
+            for json in jsonArray {
+                
+                let roleID = json["role_id"].intValue
+                guard let role = UserRoles(rawValue: roleID) else {
+                    completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                    return
+                }
+                userRoles.append(role)
+            }
+            completionHandler(ServiceResult.success(userRoles))
         })
     }
 }

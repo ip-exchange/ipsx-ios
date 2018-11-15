@@ -27,7 +27,7 @@ class LoadingViewController: UIViewController {
     var hasConfirmedDeleteAccount = false
     
     // Update this when adding more requests
-    var noOfRequests: Float = 11
+    var noOfRequests: Float = 12
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -102,6 +102,7 @@ class LoadingViewController: UIViewController {
         ethAddresses()
         companyDetails()
         userInfo()
+        userRoles()
         proxies()
         tokenRequestList()
         proxyCountryList()
@@ -211,6 +212,27 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.userInfo()
+                })
+            }
+        })
+    }
+    
+    func userRoles() {
+        
+        dispatchGroup.enter()
+        UserInfoService().getRoles(completionHandler: { result in
+            
+            self.dispatchGroup.leave()
+            
+            switch result {
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.userRoles, completion: {
+                    self.userRoles()
                 })
             }
         })

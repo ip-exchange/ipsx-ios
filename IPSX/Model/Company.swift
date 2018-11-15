@@ -11,6 +11,7 @@ import Foundation
 class Company {
     
     enum CompanyStatus: String {
+        
         case pending    = "pending"
         case rejected   = "rejected"
         case verified   = "verified"
@@ -52,6 +53,5 @@ class Company {
         self.certificateFilename = nil
         self.certificateURL = nil
         self.representative = nil
-        
     }
 }

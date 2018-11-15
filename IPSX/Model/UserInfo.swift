@@ -21,6 +21,16 @@ enum UserType: Int {
     case company    = 1
 }
 
+enum UserRoles: Int {
+    
+    case Member     = 1
+    case Corporate  = 2
+    case Requester  = 3
+    case Provider   = 4
+    case Admin      = 5
+    case SuperAdmin = 6
+}
+
 struct UserInfo {
     
     var deleteAccountState: DeleteAccountState = .notRequested
@@ -61,7 +71,7 @@ struct UserInfo {
     var deleteAccountDate: Date?
     var hasOptedForLegal: Bool?
     var hasOptedForProvider: Bool?
-    
+
     init(userDict: [String: Any]) {
         
         self.firstName     = userDict["first_name"] as? String

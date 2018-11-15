@@ -132,9 +132,19 @@ class EnrolTestSubscribeController: UIViewController {
                 if let created = createdDate as? Date {
                     self.selectedAddress?.testingEnrollmentDate = created
                 }
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
-                }
+                
+                UserInfoService().retrieveETHaddresses(completionHandler: { result in
+                    
+                    switch result {
+                    case .success(let ethAddresses): UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
+                    case .failure(_): break
+                    }
+
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "showEnrollmentDetailsID", sender: nil)
+                    }
+                })
+
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.enrollTesting, completion: {
@@ -143,7 +153,7 @@ class EnrolTestSubscribeController: UIViewController {
             }
         }
     }
-    
+
     private func updateUI() {
         tableViewBottomConstraint.constant = tableView.frame.size.height
         tableViewTopConstraint.constant = -tableView.frame.size.height
