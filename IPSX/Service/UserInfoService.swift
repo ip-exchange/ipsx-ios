@@ -53,7 +53,7 @@ class UserInfoService {
 
         let deleteConfirmation  = json["self_deleted_at_confirmation"].string
         let selfDeletedAtString = json["self_deleted_at"].stringValue
-        let hasOpetdForLegal    = json["intention_company"].intValue == 1 ? true : false
+        let hasOpetdForCompany  = json["intention_company"].intValue == 1 ? true : false
         let hasOpetdForProvider = json["intention_provider"].intValue == 1 ? true : false
         
         let dateFormatter     = DateFormatter.backendResponseParse()
@@ -92,7 +92,7 @@ class UserInfoService {
                                         "referral_code": json["referral_code"].stringValue,
                                         "delete_account_date":    deleteAccountDate as Any,
                                         "pending_delete_account": pendingDeleteAccount,
-                                        "intention_company":      hasOpetdForLegal,
+                                        "intention_company":      hasOpetdForCompany,
                                         "intention_provider":     hasOpetdForProvider]
         
         let user = UserInfo(userDict: userDict)

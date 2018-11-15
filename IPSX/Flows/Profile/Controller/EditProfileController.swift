@@ -23,17 +23,15 @@ class EditProfileController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-
-    @IBOutlet weak var fullContentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var individualCheckmarkImage: UIImageView!
-    @IBOutlet weak var legalCheckmarkImage: UIImageView!
+    @IBOutlet weak var companyCheckmarkImage: UIImageView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     @IBOutlet weak var legalOptionsHoldeView: UIView!
     @IBOutlet weak var legalotionsTitleLabel: UILabel!
-    
     @IBOutlet weak var companyApproveLabel: UILabel!
     @IBOutlet weak var companyStatusImageView: UIImageView!
     @IBOutlet weak var companyStatusLabel: UILabel!
+    @IBOutlet weak var typeOfUserView: UIView!
     
     var company: Company? = UserManager.shared.company
         
@@ -59,44 +57,38 @@ class EditProfileController: UIViewController {
         }
     }
     
-    @IBAction func selectCountryAction(_ sender: UIButton) {
-        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
-    }
-    
     @IBAction func selectIndividualAction(_ sender: Any) {
         
-        guard !(registeredAsCompany || hasCompany) else {
-            toast?.showToastAlert("Legal To Individual Downgrade Forbiden Message.".localized, autoHideAfter: 5, type: .info, dismissable: true)
+        guard individualCheckmarkImage.isHidden else { return }
+        guard hasCompany == false else {
+            toast?.showToastAlert("Company To Individual Downgrade Forbiden Message.".localized, autoHideAfter: 5, type: .info, dismissable: true)
             return
         }
         
-        self.toast?.hideToast()
-        self.legalCheckmarkImage.isHidden = true
-        self.individualCheckmarkImage.isHidden = false
-        self.corporateDetailsView.isHidden = true
+        toast?.hideToast()
+        companyCheckmarkImage.isHidden = true
+        individualCheckmarkImage.isHidden = false
+        corporateDetailsView.isHidden = true
         
-        self.saveButton.isEnabled = true
-        self.fullContentHeightConstraint.constant -= 66
+        saveButton.isEnabled = true
         UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
     }
     
     @IBAction func selectLegalAction(_ sender: Any) {
         
-        self.legalCheckmarkImage.isHidden = false
-        self.individualCheckmarkImage.isHidden = true
-        self.corporateDetailsView.isHidden = false
+        guard hasCompany == false else { return }
+            
+        companyCheckmarkImage.isHidden = false
+        individualCheckmarkImage.isHidden = true
+        corporateDetailsView.isHidden = false
         
-        if !(registeredAsCompany || hasCompany) {
-            
-            if !addCompanyBannerShown {
-                toast?.showToastAlert("Add corporate details toast message".localized, type: .info, dismissable: true)
-                addCompanyBannerShown = true
-            }
-            
-            self.saveButton.isEnabled = true
-            self.fullContentHeightConstraint.constant += 66
-            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
+        if !addCompanyBannerShown {
+            toast?.showToastAlert("Add corporate details toast message".localized, type: .info, dismissable: true)
+            addCompanyBannerShown = true
         }
+        
+        saveButton.isEnabled = true
+        UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
     }
     
     @IBAction func corporateDetailsAction(_ sender: Any) {
@@ -117,7 +109,6 @@ class EditProfileController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        prepareUI()
     }
     
     @objc func appWillEnterForeground() {
@@ -132,12 +123,13 @@ class EditProfileController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        updateFields()
         getCompanyDetails() { self.updateLegalStatusUI() }
         if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
 
+        configureUI()
+        
         // After Logout
         if UserManager.shared.userCountries == nil {
             
@@ -148,7 +140,7 @@ class EditProfileController: UIViewController {
                 switch result {
                 case .success(let countryList):
                     UserManager.shared.userCountries = countryList as? [[String: String]]
-                    DispatchQueue.main.async { self.updateFields() }
+                    DispatchQueue.main.async { self.configureUI() }
                     
                 case .failure(_):
                     self.errorMessage = "Generic Error Message".localized
@@ -184,26 +176,25 @@ class EditProfileController: UIViewController {
         }
     }
     
-    private func prepareUI() {
-        if UserManager.shared.userInfo?.source != "ios" {
-            self.fullContentHeightConstraint.constant -= 66
-            self.legalOptionsHoldeView.isHidden = true
-            self.legalotionsTitleLabel.isHidden = true
-            self.companyApproveLabel.isHidden = true
-        }
-        if (registeredAsCompany || hasCompany) {
-            self.legalCheckmarkImage.isHidden = false
-        } else {
-            self.individualCheckmarkImage.isHidden = false
-            self.fullContentHeightConstraint.constant -= 66
-            self.corporateDetailsView.isHidden = true
-        }
-    }
-    
-    private func updateFields() {
+    private func configureUI() {
         
-        let userInfo = UserManager.shared.userInfo
-        changePasswordHolderView.isHidden = userInfo?.source != "ios"
+        DispatchQueue.main.async {
+            
+            if UserManager.shared.userInfo?.source == "facebook" {
+                
+                self.changePasswordHolderView.isHidden = true
+                self.typeOfUserView.isHidden = true
+            }
+            
+            self.individualCheckmarkImage.isHidden = UserManager.shared.companyVerified
+            self.companyCheckmarkImage.isHidden = !UserManager.shared.companyVerified
+            
+            //TODO:
+            //self.companyPendingCheckmarkImage.isHidden = UserManager.shared.company?.status == .pending
+            
+            self.companyApproveLabel.isHidden = !(self.hasCompany && !UserManager.shared.companyVerified)
+            self.corporateDetailsView.isHidden = !self.hasCompany
+        }
     }
     
     private func updateLegalStatusUI() {

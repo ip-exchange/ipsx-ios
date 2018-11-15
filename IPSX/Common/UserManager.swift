@@ -78,14 +78,7 @@ public class UserManager: NSObject {
             return addresses.contains() { address in (address.stakingEnrollmentDate != nil && address.validationState == .verified) }
         }
     }
-    
-    var isCompany: Bool {
-        get {
-            guard let roles = roles else { return false }
-            return roles.contains(.Corporate)
-        }
-    }
-    
+        
     var userRoleString: String {
         get {
             var roleString = "Member".localized
