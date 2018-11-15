@@ -23,6 +23,14 @@ public extension UIColor {
         return UIColor(red: 207.0 / 255.0, green: 14.0 / 255.0, blue: 14.0 / 255.0, alpha: 1.0)
     }
     
+    static var progressGreen: UIColor {
+        return UIColor(red: 0.0 / 255.0, green: 193.0 / 255.0, blue: 64.0 / 255.0, alpha: 1.0)
+    }
+    
+    static var progressGray: UIColor {
+        return UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
+    }
+    
     @nonobjc class var silver: UIColor {
         return UIColor(red: 206.0 / 255.0, green: 212.0 / 255.0, blue: 218.0 / 255.0, alpha: 1.0)
     }

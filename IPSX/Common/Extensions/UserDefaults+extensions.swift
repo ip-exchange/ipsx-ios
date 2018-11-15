@@ -14,6 +14,7 @@ public extension UserDefaults {
         
         case defaultETHAddressID   = "DEFAULT_ETH_ADDRESS_KEY"
         case freshInstallID = "DEFAULT_FRESH_INSTALL_KEY"
+        case marketTutorialChekced = "MARKET_TUTORIAL_CHECKED"
    }
     
     func storeDelfaultETHAddressID(ethAddressID: Int?) {
@@ -25,6 +26,15 @@ public extension UserDefaults {
         return UserDefaults.standard.integer(forKey: UserDefaultsKey.defaultETHAddressID.rawValue)
     }
     
+    func marketTutorialChecked() -> Bool {
+        return UserDefaults.standard.bool(forKey: UserDefaultsKey.marketTutorialChekced.rawValue)
+    }
+    
+    func setMarketTutorialChecked(_ state: Bool) {
+        UserDefaults.standard.set(state, forKey: UserDefaultsKey.marketTutorialChekced.rawValue)
+        UserDefaults.standard.synchronize()
+    }
+
     func isFreshInstall() -> Bool {
         let isFreshInstall = !UserDefaults.standard.bool(forKey: UserDefaultsKey.freshInstallID.rawValue)
         UserDefaults.standard.set(true, forKey:  UserDefaultsKey.freshInstallID.rawValue)

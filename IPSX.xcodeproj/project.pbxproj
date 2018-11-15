@@ -99,6 +99,11 @@
 		EE6FC03F209B2951007971DC /* CustomLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6FC03E209B2951007971DC /* CustomLoadingView.swift */; };
 		EE79B6A32199BF53001C9FF6 /* WalletsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6A22199BF53001C9FF6 /* WalletsListController.swift */; };
 		EE79B6A8219AAEB2001C9FF6 /* WalletViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6A7219AAEB2001C9FF6 /* WalletViewerController.swift */; };
+		EE79B6AC219D5E57001C9FF6 /* Market.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE79B6AB219D5E57001C9FF6 /* Market.storyboard */; };
+		EE79B6AF219D5E8C001C9FF6 /* MarketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6AE219D5E8C001C9FF6 /* MarketController.swift */; };
+		EE79B6B1219D7B04001C9FF6 /* MarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6B0219D7B04001C9FF6 /* MarketCell.swift */; };
+		EE79B6B3219D86B4001C9FF6 /* ProgressRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6B2219D86B4001C9FF6 /* ProgressRoundView.swift */; };
+		EE79B6B5219DA31B001C9FF6 /* MarketTutorialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79B6B4219DA31B001C9FF6 /* MarketTutorialController.swift */; };
 		EE7AD92820B3F5510022259D /* EthWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7AD92720B3F5510022259D /* EthWalletCell.swift */; };
 		EE7AD92C20B3F56D0022259D /* ToastAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7AD92A20B3F56C0022259D /* ToastAlertView.swift */; };
 		EE7AD92E20B3FA740022259D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7AD93020B3FA740022259D /* Main.storyboard */; };
@@ -278,6 +283,11 @@
 		EE6FC03E209B2951007971DC /* CustomLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoadingView.swift; sourceTree = "<group>"; };
 		EE79B6A22199BF53001C9FF6 /* WalletsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsListController.swift; sourceTree = "<group>"; };
 		EE79B6A7219AAEB2001C9FF6 /* WalletViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewerController.swift; sourceTree = "<group>"; };
+		EE79B6AB219D5E57001C9FF6 /* Market.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Market.storyboard; sourceTree = "<group>"; };
+		EE79B6AE219D5E8C001C9FF6 /* MarketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketController.swift; sourceTree = "<group>"; };
+		EE79B6B0219D7B04001C9FF6 /* MarketCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCell.swift; sourceTree = "<group>"; };
+		EE79B6B2219D86B4001C9FF6 /* ProgressRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRoundView.swift; sourceTree = "<group>"; };
+		EE79B6B4219DA31B001C9FF6 /* MarketTutorialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTutorialController.swift; sourceTree = "<group>"; };
 		EE7AD92720B3F5510022259D /* EthWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EthWalletCell.swift; sourceTree = "<group>"; };
 		EE7AD92A20B3F56C0022259D /* ToastAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastAlertView.swift; sourceTree = "<group>"; };
 		EE7AD92F20B3FA740022259D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -449,6 +459,7 @@
 		A46A614A20A32AC900F25CC1 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				EE79B6AD219D5E5F001C9FF6 /* Marketplace */,
 				EE79B6A42199BF6B001C9FF6 /* Wallets */,
 				EE4DF81020BBE33600CE87E2 /* EnrolStaking */,
 				EEAAD49A20B6A396001A2FAE /* EnrolTesting */,
@@ -899,6 +910,18 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
+		EE79B6AD219D5E5F001C9FF6 /* Marketplace */ = {
+			isa = PBXGroup;
+			children = (
+				EE79B6AE219D5E8C001C9FF6 /* MarketController.swift */,
+				EE79B6B0219D7B04001C9FF6 /* MarketCell.swift */,
+				EE79B6B4219DA31B001C9FF6 /* MarketTutorialController.swift */,
+				EE79B6B2219D86B4001C9FF6 /* ProgressRoundView.swift */,
+				EE79B6AB219D5E57001C9FF6 /* Market.storyboard */,
+			);
+			path = Marketplace;
+			sourceTree = "<group>";
+		};
 		EE7AD92620B3F5280022259D /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1095,6 +1118,7 @@
 				A4734AF3214B9B810091654B /* ToastAlertView.xib in Resources */,
 				EEAAD4A620B6D0A3001A2FAE /* EnrolTesting.storyboard in Resources */,
 				EE7AD95C20B40E6B0022259D /* NewProxy.storyboard in Resources */,
+				EE79B6AC219D5E57001C9FF6 /* Market.storyboard in Resources */,
 				EE7AD93B20B402790022259D /* Search.storyboard in Resources */,
 				EE7AD94D20B406930022259D /* Register.storyboard in Resources */,
 			);
@@ -1216,11 +1240,13 @@
 				EE81B813219172E800E9EC6D /* RegisterFBCountryController.swift in Sources */,
 				A4AC76242099F27F00504ED9 /* UserManager.swift in Sources */,
 				EE4DF81220BBE39500CE87E2 /* EnrolStakeLandingController.swift in Sources */,
+				EE79B6B3219D86B4001C9FF6 /* ProgressRoundView.swift in Sources */,
 				EECEB9CB20ECA92D0081748F /* TokenDepositsListController.swift in Sources */,
 				A4F2F7452090B02500515883 /* ProxyPack.swift in Sources */,
 				A4935047212EE8F500482BA5 /* Company.swift in Sources */,
 				A4FCA934205BB463009FF41B /* ProxyRequest.swift in Sources */,
 				A44F567F21831C8000F09CB4 /* RequestBuilder.swift in Sources */,
+				EE79B6B5219DA31B001C9FF6 /* MarketTutorialController.swift in Sources */,
 				EE6FC03B2099EF67007971DC /* TokenRequestController.swift in Sources */,
 				EE4DF81620BBE3DD00CE87E2 /* EnrolStakeSummaryController.swift in Sources */,
 				A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */,
@@ -1259,6 +1285,7 @@
 				A4606C362092165E0008A9F3 /* ProxyActivationDetailsCell.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */,
+				EE79B6AF219D5E8C001C9FF6 /* MarketController.swift in Sources */,
 				A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */,
 				EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */,
 				EE6FC03F209B2951007971DC /* CustomLoadingView.swift in Sources */,
@@ -1268,6 +1295,7 @@
 				EECEB9CF20ED00780081748F /* TokenDepositSummaryController.swift in Sources */,
 				EE4AAB9D208DDB4800FE149D /* LoginOptionsController.swift in Sources */,
 				EE62F7412099A3CF00BE6120 /* ChangePasswordController.swift in Sources */,
+				EE79B6B1219D7B04001C9FF6 /* MarketCell.swift in Sources */,
 				A47F63C7218357DF00F75F25 /* ErrorHandling.swift in Sources */,
 				A4E6AEA42085EAF1001787DF /* LandingViewController.swift in Sources */,
 				A47F63C92183586400F75F25 /* IPInfoProtocol.swift in Sources */,
