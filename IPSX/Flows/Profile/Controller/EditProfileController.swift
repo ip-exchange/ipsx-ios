@@ -123,13 +123,16 @@ class EditProfileController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        getCompanyDetails() { self.updateLegalStatusUI() }
+        
+        getCompanyDetails() {
+            self.updateLegalStatusUI()
+            self.configureUI()
+        }
+        
         if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
 
-        configureUI()
-        
         // After Logout
         if UserManager.shared.userCountries == nil {
             
@@ -364,7 +367,6 @@ class EditProfileController: UIViewController {
             companyController?.nonDismissable = false
             self.editMode = company != nil
             companyController?.editMode = self.editMode
-            companyController?.lastStepForLegalRegistration = false
             companyController?.onCollectDataComplete = { company in
                 self.companyEdited = true
                 self.company = company

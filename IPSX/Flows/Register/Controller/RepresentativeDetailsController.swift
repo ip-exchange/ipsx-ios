@@ -37,7 +37,6 @@ class RepresentativeDetailsController: UIViewController {
     var company: Company?
     var editMode = false
     var nonDismissable = true
-    var lastStepForLegalRegistration = true
     var onCollectDataComplete: ((_ company: Company?)->())?
     var firstLoginFlow = false
 
@@ -65,18 +64,7 @@ class RepresentativeDetailsController: UIViewController {
     @IBAction func doneButtonAction(_ sender: Any) {
         
         collectData()
-        if lastStepForLegalRegistration {
-            submitCompanyDetails()
-        }
-        /*
-             Edit User Profile: add company when upgrading from Individual to Legal / edit existing company details
-             Pass company details on completion for later submit
-         */
-        else {
-            self.company?.status = .collected
-            self.onCollectDataComplete?(self.company)
-            self.dismiss(animated: true)
-        }
+        submitCompanyDetails()
     }
     
     @IBAction func backButtonAction(_ sender: Any) {

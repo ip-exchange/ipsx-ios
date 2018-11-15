@@ -38,9 +38,7 @@ class CompanyDetailsController: UIViewController {
 
     var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
-
     var editMode = false
-    var lastStepForLegalRegistration = true
     
     override func viewDidLoad() {
         

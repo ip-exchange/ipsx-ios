@@ -43,7 +43,6 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         }
     }
     var editMode = false
-    var lastStepForLegalRegistration = true
     
     override func viewDidLoad() {
         
@@ -105,7 +104,6 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
             repController.nonDismissable = self.nonDismissable
             repController.firstLoginFlow = self.firstLoginFlow
             repController.editMode = editMode
-            repController.lastStepForLegalRegistration = lastStepForLegalRegistration
             repController.onCollectDataComplete = self.onCollectDataComplete
         }
         
