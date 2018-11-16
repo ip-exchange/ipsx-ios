@@ -15,6 +15,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var countryOverlayView: UIView!
+    @IBOutlet weak var countryViewYAxiscenter: NSLayoutConstraint!
+    @IBOutlet weak var countryRComponent: RichTextFieldView!
+    @IBOutlet weak var submitCountryButton: UIButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -24,23 +28,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    let cellID = "ProxyPackCellID"
+    let cellID = "MarketCellID"
     let countrySelectionID = "CountrySearchSegueID"
-    var countries: [String]?
-    var proxyPacks : [ProxyPack]? {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    var selectedPack: ProxyPack?
-    var balance: String = "" {
-        didSet {
-            DispatchQueue.main.async {
-            }
-        }
-    }
+
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -55,6 +45,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.delegate = self
+        updateCountryOverlay(visible: false)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -68,7 +59,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
-        balance = userInfo?.balance?.cleanString ?? "0"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,19 +68,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         retrieveUserInfo()
         updateReachabilityInfo()
         
-        // After Logout
-        if UserManager.shared.proxyCountries == nil {
-            getProxyCountryList()
-        }
-        if UserManager.shared.proxyPacks == nil {
-            retrieveProxyPackages()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        countries  = UserManager.shared.proxyCountries
-        proxyPacks = UserManager.shared.proxyPacks
         
         if !UserDefaults.standard.marketTutorialChecked(), !tutorialPresented {
             performSegue(withIdentifier: "MarketTutorialSegueID", sender: self)
@@ -101,6 +82,42 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    @IBAction func closeCountryOverlay(_ sender: Any) {
+        updateCountryOverlay(visible: false)
+    }
+    
+    @IBAction func submitCountry(_ sender: Any) {
+        
+        if let selectedCountry = self.countryRComponent.contentTextField?.text, let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) {
+            let bodyParams: [String: Any] =  ["country_id": countryID as Any]
+            
+            loadingView?.startAnimating()
+            UserInfoService().updateUserProfile(bodyParams: bodyParams, completionHandler: { result in
+                
+                self.loadingView?.stopAnimating()
+                switch result {
+                case .success(_):
+                    self.retrieveUserInfo()
+                    DispatchQueue.main.async {
+                        self.countryRComponent.contentTextField?.text = ""
+                        self.updateCountryOverlay(visible: false)
+                    }
+                case .failure(let error):
+                    self.handleError(error, requestType: RequestType.updateProfile, completion: {
+                        DispatchQueue.main.async {
+                            self.countryRComponent.contentTextField?.text = ""
+                            self.updateCountryOverlay(visible: false)
+                        }
+                    })
+                }
+            })
+         }
+    }
+    
+    @IBAction func selectCountry(_ sender: Any) {
+        performSegue(withIdentifier: "CountrySearchSegueID", sender: nil)
     }
     
     func updateReachabilityInfo() {
@@ -129,44 +146,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    func getProxyCountryList() {
-        
-        loadingView?.startAnimating()
-        ProxyService().getProxyCountryList(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
-                self.countries = UserManager.shared.proxyCountries
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
-                    self.getProxyCountryList()
-                })
-            }
-        })
-    }
-    
-    func retrieveProxyPackages() {
-        
-        loadingView?.startAnimating()
-        ProxyService().retrieveProxyPackages(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let packages):
-                UserManager.shared.proxyPacks = packages as? [ProxyPack]
-                self.proxyPacks = UserManager.shared.proxyPacks
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
-                    self.retrieveProxyPackages()
-                })
-            }
-        })
-    }
-    
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
             self.shouldRefreshIp = true
@@ -188,7 +167,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.balance = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.userInfo, completion: {
@@ -198,16 +176,31 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         })
     }
     
+    private func updateCountryOverlay(visible: Bool) {
+        view.layoutIfNeeded()
+        //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
+        self.submitCountryButton.isEnabled = self.countryRComponent.contentTextField?.text != ""
+        self.countryViewYAxiscenter.constant = visible ? 0 : 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.countryOverlayView.alpha = visible ? 1 : 0
+        })
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID {
             let navController = segue.destination as? UINavigationController
-            let destinationVC = navController?.viewControllers.first as? SearchViewController
-            destinationVC?.onCountrySelected = { selectedCountry in
+            if let srcController = navController?.viewControllers.first as? SearchViewController {
+                srcController.dismissPresentingNav = true
+                srcController.countries = UserManager.shared.getUserCountryList()
+                
+                srcController.onCountrySelected = { selectedCountry in
+                    let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) ?? ""
+                    self.countryRComponent.contentTextField?.text = selectedCountry
+                    self.submitCountryButton.isEnabled = true
+                }
             }
-            destinationVC?.isProxyFlow = true
-            destinationVC?.countries = countries
-            destinationVC?.proxyPack = selectedPack
         }
     }
     
@@ -238,7 +231,11 @@ extension MarketController: UITableViewDataSource {
 extension MarketController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        toast?.showToastAlert("Miauuuuuuu")
+        
+        guard UserManager.shared.getCountryName(countryID: userInfo?.countryID) != nil else {
+            updateCountryOverlay(visible: true)
+            return
+        }
         
 //        tableView.deselectRow(at: indexPath, animated: false)
 //

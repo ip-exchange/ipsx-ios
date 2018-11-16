@@ -31,6 +31,7 @@ class SearchViewController: UIViewController {
     }
 
     var dismissOnSelect = false
+    var dismissPresentingNav = false
     var isProxyFlow: Bool? = false
     var proxyPack: ProxyPack?
     var proxy: Proxy?
@@ -109,7 +110,11 @@ class SearchViewController: UIViewController {
     }
 
     @IBAction func BackButton(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        if dismissPresentingNav {
+            navigationController?.dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+         }
     }
     
     @IBAction func CloseButton(_ sender: Any) {
@@ -180,6 +185,8 @@ extension SearchViewController: UITableViewDelegate {
         } else if isProxyFlow == true {
             proxy?.proxyDetails?.country = selectedCountry ?? ""
             performSegue(withIdentifier: newProxyFlowID, sender: nil)
+        } else if dismissPresentingNav {
+            navigationController?.dismiss(animated: true)
         }
     }
 }
