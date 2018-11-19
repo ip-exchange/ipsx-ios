@@ -17,7 +17,9 @@ class ProgressRoundView: UIView {
         }
     }
     
-    private var lineWidth: CGFloat { return frame.size.width / 8 }
+    @IBInspectable open var borderWidth: CGFloat = 5
+
+    private var lineWidth: CGFloat { return borderWidth }
     private var subCircle1: CAShapeLayer!
 
     override public var layer: CAShapeLayer {
@@ -51,9 +53,9 @@ class ProgressRoundView: UIView {
         subCircle1.fillColor = nil
         subCircle1.strokeColor = UIColor.progressGreen.cgColor
         subCircle1.lineWidth = lineWidth
-       layer.addSublayer(subCircle1)
-
+        layer.addSublayer(subCircle1)
     }
+    
     private func setPath() {
         
         let centery: CGPoint = CGPoint(x: layer.frame.size.width / 2, y: layer.frame.size.width / 2)

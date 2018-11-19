@@ -30,7 +30,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     let cellID = "MarketCellID"
     let countrySelectionID = "CountrySearchSegueID"
-
+    let marketItemID = "MarketItemSegueID"
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -196,7 +197,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 srcController.countries = UserManager.shared.getUserCountryList()
                 
                 srcController.onCountrySelected = { selectedCountry in
-                    let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) ?? ""
                     self.countryRComponent.contentTextField?.text = selectedCountry
                     self.submitCountryButton.isEnabled = true
                 }
@@ -237,6 +237,10 @@ extension MarketController: UITableViewDelegate {
             return
         }
         
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: self.marketItemID, sender: self)
+        }
+
 //        tableView.deselectRow(at: indexPath, animated: false)
 //
 //        if let proxyPack = proxyPacks?[indexPath.row] {
