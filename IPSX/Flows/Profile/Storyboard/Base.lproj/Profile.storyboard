@@ -161,7 +161,7 @@
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29984595069999997" colorSpace="calibratedRGB"/>
                                                             </view>
-                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nIU-YZ-AGS" userLabel="First Name">
+                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nIU-YZ-AGS" userLabel="Individual View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
@@ -192,7 +192,7 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </view>
-                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uAM-PD-iD8" userLabel="Last name">
+                                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uAM-PD-iD8" userLabel="Company View">
                                                                 <rect key="frame" x="0.0" y="52" width="374" height="51"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
@@ -208,6 +208,18 @@
                                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                         <color key="tintColor" red="0.1650000066" green="0.67450980390000004" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </imageView>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y0U-ed-23D" userLabel="Pending Loading View" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                                                        <rect key="frame" x="336" y="18" width="17" height="17"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="singleCircle" value="YES"/>
+                                                                            <userDefinedRuntimeAttribute type="color" keyPath="firstCircleColor">
+                                                                                <color key="value" red="0.75686274509803919" green="0.55686274509803924" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ignoreInteractionEvents" value="NO"/>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
                                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0g4-HU-paI">
                                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="53"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -243,7 +255,7 @@
                                                                 <color key="tintColor" red="0.1650000066" green="0.67450980390000004" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hem-az-Ylq">
-                                                                <rect key="frame" x="69" y="12" width="269" height="20"/>
+                                                                <rect key="frame" x="69" y="11" width="269" height="20"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -323,6 +335,7 @@
                         <outlet property="changePasswordHolderView" destination="3E1-3i-z73" id="O2L-kb-vKB"/>
                         <outlet property="companyApproveLabel" destination="lps-1F-ms7" id="wr1-hV-nAR"/>
                         <outlet property="companyCheckmarkImage" destination="NrN-ug-Mjh" id="gHC-eF-7vM"/>
+                        <outlet property="companyPendingView" destination="y0U-ed-23D" id="XNb-vj-I3b"/>
                         <outlet property="companyStatusImageView" destination="gjE-Za-mhh" id="Nms-PF-zEp"/>
                         <outlet property="companyStatusLabel" destination="yzO-qh-WrS" id="r2d-bT-beG"/>
                         <outlet property="corporateDetailsView" destination="HxG-Si-blr" id="2bW-HC-51T"/>

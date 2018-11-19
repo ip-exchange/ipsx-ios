@@ -25,6 +25,7 @@ class EditProfileController: UIViewController {
     }
     @IBOutlet weak var individualCheckmarkImage: UIImageView!
     @IBOutlet weak var companyCheckmarkImage: UIImageView!
+    @IBOutlet weak var companyPendingView: CustomLoadingView!
     @IBOutlet weak var corporateDetailsView: RoundedView!
     @IBOutlet weak var legalOptionsHoldeView: UIView!
     @IBOutlet weak var legalotionsTitleLabel: UILabel!
@@ -182,7 +183,7 @@ class EditProfileController: UIViewController {
     private func configureUI() {
         
         DispatchQueue.main.async {
-            
+                        
             if UserManager.shared.userInfo?.source == "facebook" {
                 
                 self.changePasswordHolderView.isHidden = true
@@ -191,12 +192,17 @@ class EditProfileController: UIViewController {
             
             self.individualCheckmarkImage.isHidden = UserManager.shared.companyVerified
             self.companyCheckmarkImage.isHidden = !UserManager.shared.companyVerified
-            
-            //TODO:
-            //self.companyPendingCheckmarkImage.isHidden = UserManager.shared.company?.status == .pending
-            
             self.companyApproveLabel.isHidden = !(self.hasCompany && !UserManager.shared.companyVerified)
             self.corporateDetailsView.isHidden = !self.hasCompany
+            
+            if UserManager.shared.company?.status == .pending {
+                self.companyPendingView.startAnimating()
+                self.companyPendingView.isHidden = false
+            }
+            else {
+                self.companyPendingView.stopAnimating()
+                self.companyPendingView.isHidden = true
+            }
         }
     }
     
