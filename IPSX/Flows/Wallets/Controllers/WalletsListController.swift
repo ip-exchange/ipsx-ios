@@ -21,6 +21,7 @@ class WalletsListController: UIViewController {
     }
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableTopSeparator: UIView!
+    @IBOutlet weak var noWalletHelpLabel: UILabel!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -62,6 +63,7 @@ class WalletsListController: UIViewController {
         DispatchQueue.main.async {
             if let addresses = UserManager.shared.ethAddresses {
                 self.tableTopSeparator.isHidden = addresses.count < 1
+                self.noWalletHelpLabel.isHidden = addresses.count > 0
                 self.tableView.isHidden = addresses.count < 1
                 self.ethAdresses = addresses
                 self.tableView.reloadData()
