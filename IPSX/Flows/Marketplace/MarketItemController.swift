@@ -24,6 +24,10 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let progress = Double(arc4random_uniform(100))
         progressView.progress = progress
     }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension MarketItemController: UICollectionViewDataSource {
