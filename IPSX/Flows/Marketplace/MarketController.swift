@@ -209,6 +209,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             tutorialPresented = false
         }
     }
+    
+    @IBAction func unwindToMarket(segue:UIStoryboardSegue) { }
+
 }
 
 extension MarketController: UITableViewDataSource {
