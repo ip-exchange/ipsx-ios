@@ -52,6 +52,10 @@ class RegisterTermsController: UIViewController {
         performSegue(withIdentifier: "TermsWebViewSegueID", sender: self)
     }
     
+    @IBAction func privacyPolicyAction(_ sender: Any) {
+        performSegue(withIdentifier: "PrivacyPolicyWebViewSegueID", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -59,7 +63,12 @@ class RegisterTermsController: UIViewController {
         case "TermsWebViewSegueID":
             let destinationWebController = segue.destination as? SimpleWebView
             destinationWebController?.loadingURLString = Url.termsUrl
-            destinationWebController?.titleString = "T&C".localized
+            destinationWebController?.titleString = "Terms of Use".localized
+            
+        case "PrivacyPolicyWebViewSegueID":
+            let destinationWebController = segue.destination as? SimpleWebView
+            destinationWebController?.loadingURLString = Url.privacyPolicyUrl
+            destinationWebController?.titleString = "Privacy Policy".localized
             
         default:
             break

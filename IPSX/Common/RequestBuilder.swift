@@ -82,24 +82,19 @@ public struct EmailNotifications {
 }
 
 enum Newsletter {
-    
     case on
     case off
 }
 
 public struct Url {
     
-    public static let termsUrl     = "https://ip.sx/dist/IPSX-Terms-of-Service.pdf"
-    
     // DEV ENV:
     public static let baseDEVApi    = "https://api.dev.ip.sx/api"
     public static let pacBaseUrlDEV = "https://api.dev.ip.sx/proxy/pac/"
-    public static let faqUrlDev     = "https://api.dev.ip.sx/webview/faq/staking"
     
     // DEMO ENV:
     public static let baseDEMOApi    = "https://api.ipsx.io/api"
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
-    public static let faqUrlDemo     = "https://demo.ip.sx/webview/faq/staking"
     
     public static var baseUrl: String {
         get {
@@ -133,19 +128,22 @@ public struct Url {
     }
     
     public static var faqPageUrl: String {
-        get { return baseUrl + "/webview/faq/staking" }
+        get { return baseUrl + "/webview/faq/staking?webview=true" }
     }
-    
     public static var referalCodeUrl: String {
         get { return baseUrl + "/register?referral=" }
     }
-    
     public static var aboutProviderUrl: String {
-        get { return baseUrl + "/provider" }
+        get { return baseUrl + "/provider?webview=true" }
     }
-    
     public static var becomeProviderUrl: String {
-        get { return baseUrl + "/become-a-provider" }
+        get { return baseUrl + "/become-a-provider?webview=true" }
+    }
+    public static var termsUrl: String {
+        get { return baseUrl + "/terms-of-use?webview=true" }
+    }
+    public static var privacyPolicyUrl: String {
+        get { return baseUrl + "/privacy-policy?webview=true" }
     }
     
     public static let publicIPArgs           = "/Users/ip"

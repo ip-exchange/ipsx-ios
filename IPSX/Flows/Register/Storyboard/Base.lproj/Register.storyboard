@@ -44,7 +44,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qy0-1C-L6Z">
-                                                <rect key="frame" x="0.0" y="12" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="11" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type a valid email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhZ-6S-3Y3">
@@ -87,7 +87,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="flag" translatesAutoresizingMaskIntoConstraints="NO" id="00n-9Y-ep1">
-                                                <rect key="frame" x="0.0" y="12" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="11" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M11-vf-NpW">
@@ -528,6 +528,7 @@
                         <segue destination="IVQ-OJ-hHf" kind="unwind" identifier="showDashboardSegueID" unwindAction="unwindToDashboardWithSegue:" id="xlX-v8-zit"/>
                         <segue destination="T1P-fu-tvH" kind="presentation" identifier="TermsWebViewSegueID" id="TNl-m6-ngZ"/>
                         <segue destination="MvF-pn-P78" kind="show" identifier="CongratsSegueID" id="BjW-2L-s2g"/>
+                        <segue destination="T1P-fu-tvH" kind="presentation" identifier="PrivacyPolicyWebViewSegueID" id="PE2-ju-dU2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVn-Vo-kvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1201,6 +1202,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4r6-zb-MVk"/>
+        <segue reference="PE2-ju-dU2"/>
         <segue reference="xLz-No-hjJ"/>
     </inferredMetricsTieBreakers>
 </document>
