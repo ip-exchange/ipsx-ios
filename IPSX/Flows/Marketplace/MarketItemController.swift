@@ -12,6 +12,8 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var cartOverlayView: UIView!
+    @IBOutlet weak var cartOverlayYConstraint: NSLayoutConstraint!
     
     private let cellSpacing: CGFloat = 12
     
@@ -23,11 +25,28 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
         let progress = Double(arc4random_uniform(100))
         progressView.progress = progress
+        cartOverlayView.alpha = 0
+        updateCountryOverlay(visible: false)
+    }
+    
+    @IBAction func addToCart(_ sender: Any) {
+        updateCountryOverlay(visible: true)
     }
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    private func updateCountryOverlay(visible: Bool) {
+        view.layoutIfNeeded()
+        //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
+        self.cartOverlayYConstraint.constant = visible ? 0 : 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.cartOverlayView.alpha = visible ? 1 : 0
+        })
+    }
+
 }
 
 extension MarketItemController: UICollectionViewDataSource {
