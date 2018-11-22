@@ -16,6 +16,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var cartOverlayYConstraint: NSLayoutConstraint!
     
     private let cellSpacing: CGFloat = 12
+    private let cartSegueID = "ViewCartSegueID"
     
     fileprivate let reuseIdentifier = "MarketItemCell"
     
@@ -35,6 +36,10 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func viewCart(_ sender: Any) {
+        performSegue(withIdentifier: cartSegueID, sender: self)
     }
     
     private func updateCountryOverlay(visible: Bool) {

@@ -12,11 +12,16 @@ class MarketCartController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    let cellID = "MarketCellID"
-
+    fileprivate let cellID = "MarketCellID"
+    private let checkoutSegueID = "CheckoutSegueID"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.layer.cornerRadius = 5
+    }
+    
+    @IBAction func checkout(_ sender: Any) {
+        performSegue(withIdentifier: checkoutSegueID, sender: self)
     }
     
 }
