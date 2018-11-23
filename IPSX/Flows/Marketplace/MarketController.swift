@@ -32,7 +32,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
     private var timer: Timer?
-    
+    var offers: [Offer] = [] {
+        didSet {
+            DispatchQueue.main.async { self.tableView.reloadData() }
+        }
+    }
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -177,7 +181,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             switch result {
             case .success(let offers):
                 ProxyManager.shared.allOffers = offers as? [Offer]
-                DispatchQueue.main.async { self.tableView.reloadData() }
+                self.offers = ProxyManager.shared.allOffers ?? []
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOffers, completion: {
@@ -245,16 +249,15 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 extension MarketController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ProxyManager.shared.allOffers?.count ?? 0
+        return offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MarketCell
-        cell.cellContentView.shadow = true
-        let progress = Double(arc4random_uniform(100))
-        cell.progressView.progress = progress
-        cell.progressLabel.text = "\(Int(progress))%"
+        if offers.count > indexPath.row {
+            cell.configure(offer: offers[indexPath.row])
+        }
         return cell
     }
 }
