@@ -30,7 +30,6 @@ class DashboardViewController: UIViewController {
     var countries: [String] = []
     private var timer: Timer?
     let cellID = "ActivationDetailsCellID"
-    var selectedProxy: Proxy? = nil
     var tokenRequests: [TokenRequest]?
     let dispatchGroup = DispatchGroup()
     
@@ -49,28 +48,6 @@ class DashboardViewController: UIViewController {
             if ReachabilityManager.shared.isReachable() {
                 toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
             }
-        }
-    }
-    var proxies: [Proxy] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView?.reloadData()
-            }
-        }
-    }
-    var filteredProxies: [Proxy] {
-        get {
-            let filterString = "active"
-            let filtered = proxies.filter {
-                if proxiesSegmentController.selectedSegmentIndex == 0 {
-                    return $0.proxyDetails?.status == filterString
-                } else {
-                    return $0.proxyDetails?.status != filterString
-                    
-                }
-            }
-            let sorted = filtered.sorted { $0.proxyDetails?.startDate ?? Date() > $1.proxyDetails?.startDate ?? Date() }
-            return sorted
         }
     }
     
@@ -130,12 +107,6 @@ class DashboardViewController: UIViewController {
             if UserManager.shared.providerSubmissionStatus == nil {
                 providerDetails()
             }
-            if UserManager.shared.testProxyPack == nil {
-                retrieveTestProxyPackage()
-            }
-            if UserManager.shared.proxyPacks == nil {
-                retrieveProxyPackages()
-            }
             if UserManager.shared.roles == nil {
                 userRoles()
             }
@@ -163,13 +134,6 @@ class DashboardViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: slidableView, text: "")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        selectedProxy = nil
-        updateProxyDataSource()
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -228,47 +192,6 @@ class DashboardViewController: UIViewController {
     @objc func updateData() {
         retrieveUserInfo()
         providerDetails()
-        retrieveProxiesForCurrentUser()
-    }
-    
-    func retrieveTestProxyPackage() {
-        
-        dispatchGroup.enter()
-        loadingView?.startAnimating()
-        ProxyService().retrieveProxyPackages(testPackage: true, completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let packages):
-                UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveTestProxyPackage, completion: {
-                    self.retrieveTestProxyPackage()
-                })
-            }
-        })
-    }
-    
-    func retrieveProxyPackages() {
-        
-        dispatchGroup.enter()
-        loadingView?.startAnimating()
-        ProxyService().retrieveProxyPackages(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let packages):
-                UserManager.shared.proxyPacks = packages as? [ProxyPack]
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
-                    self.retrieveProxyPackages()
-                })
-            }
-        })
     }
     
     func generalSettings() {
@@ -388,25 +311,6 @@ class DashboardViewController: UIViewController {
         })
     }
     
-    func retrieveProxiesForCurrentUser() {
-        
-        loadingView?.startAnimating()
-        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let proxyArray):
-                UserManager.shared.proxies = proxyArray as? [Proxy]
-                self.updateProxyDataSource()
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveProxies, completion: {
-                    self.retrieveProxiesForCurrentUser()
-                })
-            }
-        })
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -418,12 +322,6 @@ class DashboardViewController: UIViewController {
             }
             destinationVC?.isProxyFlow = true
             destinationVC?.countries = countries
-            destinationVC?.proxy = selectedProxy
-            
-        case "ProxyDetailsSegueiID":
-            let nextVC = segue.destination as? ProxyDetailsViewController
-            nextVC?.proxy = selectedProxy
-            nextVC?.presentedFromDashboard = true
             
         case "showTokenRequestSegueID":
             let nextVC = segue.destination as? UINavigationController
@@ -439,20 +337,6 @@ class DashboardViewController: UIViewController {
         tableView?.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.tableView?.setContentOffset(.zero, animated: true)
-        }
-    }
-    
-    func updateProxyDataSource() {
-        
-        proxies = UserManager.shared.proxies ?? []
-        if UserManager.shared.hasTestProxyAvailable && UserManager.shared.testProxyPack != nil {
-            
-            let testProxyPack = UserManager.shared.testProxyPack
-            
-            let duration = testProxyPack?.duration ?? "0"
-            let testProxyActivationDetails = ProxyActivationDetails(usedMB: "0", remainingDuration: duration.daysHoursMinutesFormated(), status: "active")
-            let testProxy = Proxy(proxyPack: testProxyPack, proxyDetails: testProxyActivationDetails, isTestProxy: true)
-            proxies.insert(testProxy, at: 0)
         }
     }
     
@@ -490,60 +374,33 @@ extension DashboardViewController: ToastAlertViewPresentable {
 extension DashboardViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredProxies.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! ProxyActivationDetailsCell
-        cell.cellContentView.shadow = true
-        cell.configure(proxy: filteredProxies[indexPath.item])
-        
-        return cell
+        return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 18
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 5
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 18))
         headerView.backgroundColor = .clear
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    private func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 5))
         footerView.backgroundColor = .clear
         return footerView
     }
     
-}
-
-extension DashboardViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        selectedProxy = filteredProxies[indexPath.item]
-        
-        if selectedProxy?.isTestProxy == true {
-            
-            let calendar = Calendar.current
-            let minDurationString = selectedProxy?.proxyPack?.duration ?? "0"
-            selectedProxy?.proxyDetails?.startDate = Date()
-            selectedProxy?.proxyDetails?.endDate = calendar.date(byAdding: .minute, value: Int(minDurationString) ?? 0, to: Date())
-            
-            countries = UserManager.shared.proxyCountries ?? []
-            self.performSegue(withIdentifier: "FreeProxySegueID", sender: self)
-        }
-        else {
-            performSegue(withIdentifier: "ProxyDetailsSegueiID", sender: self)
-        }
-    }
 }
 
 extension DashboardViewController: ErrorPresentable {

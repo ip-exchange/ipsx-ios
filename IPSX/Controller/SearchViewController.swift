@@ -33,8 +33,6 @@ class SearchViewController: UIViewController {
     var dismissOnSelect = false
     var dismissPresentingNav = false
     var isProxyFlow: Bool? = false
-    var proxyPack: ProxyPack?
-    var proxy: Proxy?
     var countries: [String]?
     var filteredCountries: [String]?
     var selectedCountry: String?
@@ -61,15 +59,6 @@ class SearchViewController: UIViewController {
         
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        
-        if isProxyFlow == true && proxy == nil {
-            
-            let calendar = Calendar.current
-            let minDurationString = proxyPack?.duration ?? "0"
-            let endDate = calendar.date(byAdding: .minute, value: Int(minDurationString) ?? 0, to: Date())
-            let proxyDetails = ProxyActivationDetails(startDate: Date(), endDate: endDate, country: "")
-            proxy = Proxy(proxyPack: proxyPack, proxyDetails: proxyDetails)
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,14 +108,6 @@ class SearchViewController: UIViewController {
     
     @IBAction func CloseButton(_ sender: Any) {
         dismiss(animated: true)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == newProxyFlowID {
-            let nextVC = segue.destination as? ProxySummaryViewController
-            nextVC?.proxy = proxy
-        }
     }
     
     @objc
@@ -182,9 +163,6 @@ extension SearchViewController: UITableViewDelegate {
             } else {
                 dismiss(animated: true)
             }
-        } else if isProxyFlow == true {
-            proxy?.proxyDetails?.country = selectedCountry ?? ""
-            performSegue(withIdentifier: newProxyFlowID, sender: nil)
         } else if dismissPresentingNav {
             navigationController?.dismiss(animated: true)
         }

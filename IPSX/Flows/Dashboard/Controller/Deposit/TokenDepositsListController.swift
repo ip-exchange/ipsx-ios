@@ -59,20 +59,6 @@ class TokenDepositsListController: UIViewController {
         }
     }
     
-    @IBAction func createDepositAction(_ sender: Any) {
-        
-        if let deposits = deposits {
-            
-            for deposit in deposits {
-                guard deposit.status != "pending" else {
-                    self.errorMessage = "Create Deposit Not Possible Message".localized
-                    return
-                }
-            }
-        }
-        performSegue(withIdentifier: "createDepositSegueID", sender: self)
-    }
-    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {

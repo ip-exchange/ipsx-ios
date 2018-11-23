@@ -27,7 +27,7 @@ class LoadingViewController: UIViewController {
     var hasConfirmedDeleteAccount = false
     
     // Update this when adding more requests
-    var noOfRequests: Float = 12
+    var noOfRequests: Float = 9
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -103,11 +103,8 @@ class LoadingViewController: UIViewController {
         companyDetails()
         userInfo()
         userRoles()
-        proxies()
         tokenRequestList()
         proxyCountryList()
-        retrieveProxyPackages()
-        retrieveTestProxyPackage()
         generalSettings()
         
         dispatchGroup.notify(queue: .main) {
@@ -233,66 +230,6 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: RequestType.userRoles, completion: {
                     self.userRoles()
-                })
-            }
-        })
-    }
-    
-    func proxies() {
-        
-        dispatchGroup.enter()
-        ProxyService().retrieveProxiesForCurrentUser(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            
-            switch result {
-                
-            case .success(let proxyArray):
-                UserManager.shared.proxies = proxyArray as? [Proxy]
-                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
-
-            case .failure(let error):
-                
-                self.handleError(error, requestType: RequestType.retrieveProxies, completion: {
-                    self.proxies()
-                })
-            }
-        })
-    }
-    
-    func retrieveProxyPackages() {
-        
-        dispatchGroup.enter()
-        ProxyService().retrieveProxyPackages(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            switch result {
-            case .success(let packages):
-                UserManager.shared.proxyPacks = packages as? [ProxyPack]
-                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveProxyPackages, completion: {
-                    self.retrieveProxyPackages()
-                })
-            }
-        })
-    }
-    
-    func retrieveTestProxyPackage() {
-        
-        dispatchGroup.enter()
-        ProxyService().retrieveProxyPackages(testPackage: true, completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            switch result {
-            case .success(let packages):
-                UserManager.shared.testProxyPack = (packages as? [ProxyPack])?.first
-                DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.retrieveTestProxyPackage, completion: {
-                    self.retrieveTestProxyPackage()
                 })
             }
         })
