@@ -12,7 +12,8 @@ class MarketFilterController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var countriesCollectionView: UICollectionView!
-    @IBOutlet weak var priceSlider: RangeSlider!
+    
+    @IBOutlet weak var priceRangeView: RangeView!
     
     fileprivate let reuseIdentifier = "CountryCellID"
 
