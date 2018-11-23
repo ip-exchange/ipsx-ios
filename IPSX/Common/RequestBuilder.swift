@@ -21,23 +21,20 @@ enum Environment: String {
 struct RequestType {
     
     static let getPublicIP = "getPublicIP"
-    static let getUserCountryList = "getUserCountryList"
+    
+    static let getCompany = "getCompany"
+    static let submitLegalPersonDetails = "submitLegalPersonDetails"
+    static let getProviderDetails = "getProviderDetails"
+    
     static let register = "register"
     static let fbRegister = "fbRegister"
-    static let getCompany = "getCompany"
-    static let getProviderDetails = "getProviderDetails"
-    static let submitLegalPersonDetails = "submitLegalPersonDetails"
-    
     static let login = "login"
     static let fbLogin = "fbLogin"
     
     static let resetPassword = "resetPassword"
     static let changePassword = "changePassword"
     
-    static let retrieveProxies = "retrieveProxies"
-    static let createProxy = "createProxy"
-    static let retrieveProxyPackages = "retrieveProxyPackages"
-    static let retrieveTestProxyPackage = "retrieveTestProxyPackage"
+    static let getUserCountryList = "getUserCountryList"
     static let getProxyCountryList = "getProxyCountryList"
     
     static let userInfo = "userInfo"
@@ -64,6 +61,9 @@ struct RequestType {
     static let getSettings = "getSettings"
     static let updateSettings = "updateSettings"
     static let generalSettings = "generalSettings"
+    
+    // Marketplace
+    static let getOffers = "getSettings"
 }
 
 public struct KeychainKeys {
@@ -150,19 +150,15 @@ public struct Url {
     public static let registerArgs           = "/Users"
     public static let fbRegisterArgs         = "/Users/social/register/facebook"
     public static let userCountriesArgs      = "/countries"
-    public static let proxyCountriesArgs     = "/proxies/countries?access_token=%ACCESS_TOKEN%"
-    public static let ethEnrolmentsArgs      = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
-    public static let ethArgs                = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
-    public static let updateEthAddressArgs   = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let loginArgs              = "/Users/auth"
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
     public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
+    public static let proxyCountriesArgs     = "/proxies/countries?access_token=%ACCESS_TOKEN%"
+    public static let ethEnrolmentsArgs      = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
+    public static let ethArgs                = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
+    public static let updateEthAddressArgs   = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
     public static let submitLegalArgs        = "/Users/%USER_ID%/companies/aws-store?access_token=%ACCESS_TOKEN%"
-    public static let proxiesArgs            = "/Users/%USER_ID%/proxies?access_token=%ACCESS_TOKEN%"
-    public static let createProxyArgs        = "/Users/%USER_ID%/proxies/create-via-package?access_token=%ACCESS_TOKEN%"
-    public static let proxyPackagesArgs      = "/packages/admin/paid?access_token=%ACCESS_TOKEN%"
-    public static let proxyTestPackageArgs   = "/packages/admin/test?access_token=%ACCESS_TOKEN%"
     public static let userInfoArgs           = "/Users/%USER_ID%?access_token=%ACCESS_TOKEN%"
     public static let tokenRequestArgs       = "/Users/%USER_ID%/token_requests?access_token=%ACCESS_TOKEN%"
     public static let depositArgs            = "/Users/%USER_ID%/deposits?access_token=%ACCESS_TOKEN%"
@@ -176,6 +172,7 @@ public struct Url {
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
     public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
+    public static let offersArgs             = "/offers/search"
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "") -> Request {
@@ -259,21 +256,9 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         url = (Url.baseApi + Url.proxyCountriesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    case RequestType.retrieveProxyPackages:
-        url = (Url.baseApi + Url.proxyPackagesArgs).replaceKeysWithValues(paramsDict: urlParams)
+    case RequestType.getOffers:
+        url = (Url.baseApi + Url.offersArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
-        
-    case RequestType.retrieveTestProxyPackage:
-        url = (Url.baseApi + Url.proxyTestPackageArgs).replaceKeysWithValues(paramsDict: urlParams)
-        httpMethod = "GET"
-        
-    case RequestType.retrieveProxies:
-        url = (Url.baseApi + Url.proxiesArgs).replaceKeysWithValues(paramsDict: urlParams)
-        httpMethod = "GET"
-        
-    case RequestType.createProxy:
-        url = (Url.baseApi + Url.createProxyArgs).replaceKeysWithValues(paramsDict: urlParams)
-        httpMethod = "POST"
         
     //ETH addresses Requests
         

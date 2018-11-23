@@ -26,8 +26,8 @@ class LoadingViewController: UIViewController {
     var hasPerformedAutologin = false
     var hasConfirmedDeleteAccount = false
     
-    // Update this when adding more requests
-    var noOfRequests: Float = 9
+    // Update the total number of requests
+    var noOfRequests: Float = 8
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -265,7 +265,7 @@ class LoadingViewController: UIViewController {
             
             switch result {
             case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
+                ProxyManager.shared.proxyCountries = countryList as? [String]
                 DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
 
             case .failure(let error):

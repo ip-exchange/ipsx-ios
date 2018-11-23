@@ -82,8 +82,8 @@ class SearchViewController: UIViewController {
             self.loadingView.stopAnimating()
             switch result {
             case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
-                self.filteredCountries = UserManager.shared.proxyCountries
+                ProxyManager.shared.proxyCountries = countryList as? [String]
+                self.filteredCountries = ProxyManager.shared.proxyCountries
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }

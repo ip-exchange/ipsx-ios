@@ -10,19 +10,23 @@ import Foundation
 
 class Offer {
     
-    var id: String
-    var priceIPSX: Double
-    var priceDollars: Double
+    var id: Int
+    var priceIPSX: String
+    var priceDollars: String
     var durationMin: String
     var trafficMB: String
+    var proxies: [Proxy] = []
     
-    init(id: String, priceIPSX: Double, priceDollars: Double, durationMin: String, trafficMB: String) {
+    init(id: Int, priceIPSX: Double, priceDollars: Double, durationMin: String, trafficMB: String) {
         
         self.id  = id
-        self.priceIPSX = priceIPSX
-        self.priceDollars = priceDollars
+        self.priceIPSX = priceIPSX.cleanString
+        self.priceDollars = priceDollars.cleanString
         self.durationMin = durationMin
         self.trafficMB = trafficMB
     }
     
+    func setProxies(proxyArray: [Proxy]) {
+        self.proxies = proxyArray
+    }
 }

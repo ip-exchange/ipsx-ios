@@ -31,6 +31,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     let cellID = "MarketCellID"
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
+    private var timer: Timer?
     
     var errorMessage: String? {
         didSet {
@@ -66,9 +67,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
-        retrieveUserInfo()
         updateReachabilityInfo()
         
+        self.updateData()
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -161,10 +164,35 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
+    @objc func updateData() {
+        loadOffers()
+    }
+    
+    func loadOffers() {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().retrieveOffers(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let offers):
+                ProxyManager.shared.allOffers = offers as? [Offer]
+                DispatchQueue.main.async { self.tableView.reloadData() }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.getOffers, completion: {
+                    self.loadOffers()
+                })
+            }
+        })
+    }
+    
     func retrieveUserInfo() {
         
+        loadingView?.startAnimating()
         UserInfoService().retrieveUserInfo(completionHandler: { result in
             
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
@@ -217,7 +245,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 extension MarketController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 200
+        return ProxyManager.shared.allOffers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

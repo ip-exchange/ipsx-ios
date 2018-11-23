@@ -22,7 +22,6 @@ public class UserManager: NSObject {
     var tokenRequests: [TokenRequest]?
     var ethAddresses: [EthAddress]?
     var userCountries: [[String: String]]?
-    var proxyCountries: [String]?
     var generalSettings: GeneralSettings?
     var company: Company?
     var providerSubmissionStatus: ProviderStatus?
@@ -177,7 +176,6 @@ public class UserManager: NSObject {
         tokenRequests = nil
         userCountries = nil
         ethAddresses = nil
-        proxyCountries = nil
         userInfo = nil
         company = nil
         providerSubmissionStatus = nil

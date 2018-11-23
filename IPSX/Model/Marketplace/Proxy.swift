@@ -10,20 +10,22 @@ import Foundation
 
 class Proxy {
     
-    var id: String
+    var id: Int
     var countryName: String
     var sla: String
-    var ipType: String // IPv4, IPv6
+    var ipType: String = "" // IPv4, IPv6
     var proxyType: String // Dedicated, Shared
     var features: [String] // ["http(s)", "socks5", "shadowsocks", "vpn"]
     
-    init(id: String, countryName: String, sla: String, ipType: String, proxyType: String, features: [String]) {
+    init(id: Int, countryName: String, sla: String, ipType: Int, proxyType: String, features: [String]) {
         
         self.id  = id
         self.countryName = countryName
         self.sla = sla
-        self.ipType = ipType
         self.proxyType = proxyType
         self.features = features
+        
+        if ipType == 4 { self.ipType = "IPv4" }
+        if ipType == 6 { self.ipType = "IPv6" }
     }
 }

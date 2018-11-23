@@ -31,7 +31,6 @@ class DashboardViewController: UIViewController {
     private var timer: Timer?
     let cellID = "ActivationDetailsCellID"
     var tokenRequests: [TokenRequest]?
-    let dispatchGroup = DispatchGroup()
     
     var preventPurchase: Bool { return !UserManager.shared.companyVerified && UserManager.shared.userInfo?.hasOptedForLegal == true }
     
@@ -101,6 +100,9 @@ class DashboardViewController: UIViewController {
          */
         if UserManager.shared.isLoggedIn {
             
+            if UserManager.shared.userInfo == nil {
+                retrieveUserInfo()
+            }
             if UserManager.shared.company == nil {
                 companyDetails()
             }
@@ -114,13 +116,8 @@ class DashboardViewController: UIViewController {
                 generalSettings()
             }
             // After Logout we should load the proxy countries if needed for Test Proxy
-            if UserManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
+            if ProxyManager.shared.proxyCountries == nil && UserManager.shared.hasTestProxyAvailable {
                 getProxyCountryList()
-            }
-            dispatchGroup.notify(queue: .main) {
-                self.updateData()
-                self.timer?.invalidate()
-                self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
             }
         }
     }
@@ -189,16 +186,9 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    @objc func updateData() {
-        retrieveUserInfo()
-        providerDetails()
-    }
-    
     func generalSettings() {
         
-        dispatchGroup.enter()
         SettingsService().retrieveSettings(completionHandler: { result in
-            self.dispatchGroup.leave()
             
             switch result {
             case .success(let settings):
@@ -215,10 +205,7 @@ class DashboardViewController: UIViewController {
     
     func companyDetails() {
         
-        dispatchGroup.enter()
         LegalPersonService().getCompanyDetails(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
             
             switch result {
             case .success(let company):
@@ -235,10 +222,7 @@ class DashboardViewController: UIViewController {
     
     func providerDetails() {
         
-        dispatchGroup.enter()
         ProviderService().getProviderStatus(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
             
             switch result {
             case .success(let status):
@@ -258,10 +242,7 @@ class DashboardViewController: UIViewController {
     
     func userRoles() {
         
-        dispatchGroup.enter()
         UserInfoService().getRoles(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
             
             switch result {
             case .success(let userRoles):
@@ -342,15 +323,13 @@ class DashboardViewController: UIViewController {
     
     func getProxyCountryList() {
         
-        dispatchGroup.enter()
         loadingView?.startAnimating()
         ProxyService().getProxyCountryList(completionHandler: { result in
             
-            self.dispatchGroup.leave()
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let countryList):
-                UserManager.shared.proxyCountries = countryList as? [String]
+                ProxyManager.shared.proxyCountries = countryList as? [String]
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
