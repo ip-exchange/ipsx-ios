@@ -9,39 +9,6 @@
 import UIKit
 import QuartzCore
 
-/*
- class ViewController: UIViewController {
- let rangeSlider = RangeSlider(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
- 
- override func viewDidLoad() {
- super.viewDidLoad()
- 
- view.addSubview(rangeSlider)
- 
- rangeSlider.addTarget(self, action: Selector(("rangeSliderValueChanged:")), for: .valueChanged)
- 
- }
- 
- override func viewDidAppear(_ animated: Bool) {
- super.viewDidAppear(animated)
- self.rangeSlider.trackHighlightTintColor = UIColor.red
- self.rangeSlider.curvaceousness = 0.0
- }
- 
- override func viewDidLayoutSubviews() {
- let margin: CGFloat = 20.0
- let width = view.bounds.width - 2.0 * margin
- rangeSlider.frame = CGRect(x: margin, y: margin + topLayoutGuide.length,
- width: width, height: 31.0)
- }
- 
- func rangeSliderValueChanged(rangeSlider: RangeSlider) {
- print(rangeSlider.lowerValue)
- print(rangeSlider.upperValue)
- }
- }
-
- */
 
 class RangeSlider: UIControl {
     
@@ -50,6 +17,9 @@ class RangeSlider: UIControl {
     let upperThumbLayer = RangeSliderThumbLayer()
     var previousLocation = CGPoint()
     
+    var minRangeDelta = 0.0
+    var onValueChange: ((_ lower: Double, _ upper: Double)->())?
+
     var minimumValue: Double = 0.0 {
         didSet {
             updateLayerFrames()
@@ -65,12 +35,14 @@ class RangeSlider: UIControl {
     var lowerValue: Double = 0.2 {
         didSet {
             updateLayerFrames()
+            onValueChange?(lowerValue, upperValue)
         }
     }
     
     var upperValue: Double = 0.8 {
         didSet {
             updateLayerFrames()
+            onValueChange?(lowerValue, upperValue)
         }
     }
     
@@ -158,7 +130,10 @@ class RangeSlider: UIControl {
         previousLocation = touch.location(in: self)
         
         // Hit test the thumb layers
-        if lowerThumbLayer.frame.contains(previousLocation) {
+        if lowerThumbLayer.frame.contains(previousLocation) && upperThumbLayer.frame.contains(previousLocation) {
+            lowerThumbLayer.highlighted = lastHighlitedLower
+            upperThumbLayer.highlighted = !upperThumbLayer.highlighted
+        } else if lowerThumbLayer.frame.contains(previousLocation) {
             lowerThumbLayer.highlighted = true
         } else if upperThumbLayer.frame.contains(previousLocation) {
             upperThumbLayer.highlighted = true
@@ -171,6 +146,7 @@ class RangeSlider: UIControl {
         return min(max(value, lowerValue), upperValue)
     }
     
+    private var lastHighlitedLower = true
     override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let location = touch.location(in: self)
         
@@ -179,14 +155,24 @@ class RangeSlider: UIControl {
         let deltaValue = (maximumValue - minimumValue) * deltaLocation / Double(bounds.width - bounds.height)
         
         previousLocation = location
-        
+        lastHighlitedLower = lowerThumbLayer.highlighted
         // 2. Update the values
         if lowerThumbLayer.highlighted {
-            lowerValue += deltaValue
-            lowerValue = boundValue(value: lowerValue, toLowerValue: minimumValue, upperValue: upperValue)
-        } else if upperThumbLayer.highlighted {
-            upperValue += deltaValue
-            upperValue = boundValue(value: upperValue, toLowerValue: lowerValue, upperValue: maximumValue)
+            var tmpVal = lowerValue
+            if tmpVal < upperValue - minRangeDelta || deltaValue < 0 {
+                tmpVal += deltaValue
+            } else {
+                tmpVal = upperValue - minRangeDelta
+            }
+            lowerValue = boundValue(value: tmpVal, toLowerValue: minimumValue, upperValue: upperValue)
+       } else if upperThumbLayer.highlighted {
+            var tmpVal = upperValue
+            if tmpVal > lowerValue + minRangeDelta || deltaValue > 0 {
+                tmpVal += deltaValue
+            } else {
+               tmpVal = lowerValue + minRangeDelta
+            }
+            upperValue = boundValue(value: tmpVal, toLowerValue: lowerValue, upperValue: maximumValue)
         }
         
         return true
