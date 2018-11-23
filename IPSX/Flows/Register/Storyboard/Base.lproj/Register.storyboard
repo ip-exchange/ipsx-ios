@@ -44,7 +44,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qy0-1C-L6Z">
-                                                <rect key="frame" x="0.0" y="11" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="10" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type a valid email address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhZ-6S-3Y3">
@@ -87,10 +87,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="flag" translatesAutoresizingMaskIntoConstraints="NO" id="00n-9Y-ep1">
-                                                <rect key="frame" x="0.0" y="11" width="29" height="32"/>
+                                                <rect key="frame" x="0.0" y="10" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M11-vf-NpW">
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M11-vf-NpW">
                                                 <rect key="frame" x="35" y="12" width="247" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -314,7 +314,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vui-al-Ln8" userLabel="AgreeView">
                                 <rect key="frame" x="45" y="214" width="285" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ea-PD-dt0">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1ea-PD-dt0">
                                         <rect key="frame" x="29" y="0.0" width="255" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <attributedString key="attributedText">
@@ -322,28 +322,44 @@
                                                 <attributes>
                                                     <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" metaFont="system"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="agree">
                                                 <attributes>
                                                     <color key="NSColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" metaFont="system"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content=" with ">
+                                            <fragment>
+                                                <string key="content"> with 
+</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.16551339285714287" green="0.16500000655651093" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" metaFont="system"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content="TERMS OF SERVICE">
+                                            <fragment content="TERMS OF USE ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.16551339285714287" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" metaFont="system"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="&amp; ">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.16550999999999999" green="0.16500000000000001" blue="0.16500000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="13" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="PRIVACY POLICY">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.16551339285714287" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -362,17 +378,30 @@
                                             <action selector="checkboxButtonAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="ZIX-Rv-kCB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zsm-7G-Wdy">
-                                        <rect key="frame" x="29" y="0.0" width="256" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zsm-7G-Wdy" userLabel="Terms Button">
+                                        <rect key="frame" x="29" y="8" width="95" height="34"/>
                                         <connections>
                                             <action selector="termsAndConditionsAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="BS8-Sd-y9q"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mas-UD-HQS" userLabel="Privacy Button">
+                                        <rect key="frame" x="139" y="8" width="133" height="34"/>
+                                        <connections>
+                                            <action selector="privacyPolicyAction:" destination="NZC-Rz-rhn" eventType="touchUpInside" id="FoF-Td-2pd"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="Zsm-7G-Wdy" firstAttribute="width" secondItem="Vui-al-Ln8" secondAttribute="width" multiplier="1:3" id="Hwe-FL-L4t"/>
+                                    <constraint firstItem="Mas-UD-HQS" firstAttribute="top" secondItem="Zsm-7G-Wdy" secondAttribute="top" id="I2T-t5-pdP"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zsm-7G-Wdy" secondAttribute="bottom" constant="8" id="IQO-1d-3T7"/>
+                                    <constraint firstItem="Mas-UD-HQS" firstAttribute="leading" secondItem="Zsm-7G-Wdy" secondAttribute="trailing" constant="15" id="Qoc-uc-E6m"/>
+                                    <constraint firstItem="Zsm-7G-Wdy" firstAttribute="top" secondItem="Vui-al-Ln8" secondAttribute="top" constant="8" id="bzJ-uT-cx1"/>
                                     <constraint firstAttribute="height" constant="50" id="fwP-zu-Hla"/>
+                                    <constraint firstItem="Mas-UD-HQS" firstAttribute="width" secondItem="Zsm-7G-Wdy" secondAttribute="width" multiplier="1.4" id="kB9-tK-PK3"/>
+                                    <constraint firstItem="Mas-UD-HQS" firstAttribute="bottom" secondItem="Zsm-7G-Wdy" secondAttribute="bottom" id="mn7-fp-zta"/>
+                                    <constraint firstItem="Zsm-7G-Wdy" firstAttribute="leading" secondItem="Vui-al-Ln8" secondAttribute="leading" constant="29" id="yo2-go-JEx"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Type of user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E40-nd-R5Y">
@@ -534,7 +563,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VVn-Vo-kvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IVQ-OJ-hHf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3802" y="150"/>
+            <point key="canvasLocation" x="3800.8000000000002" y="149.77511244377811"/>
         </scene>
         <!--CongratsControllerID-->
         <scene sceneID="AAA-Ui-Wh9">
@@ -1054,7 +1083,7 @@
                                                 <rect key="frame" x="0.0" y="16" width="29" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YGd-Lc-NtA">
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Country" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YGd-Lc-NtA">
                                                 <rect key="frame" x="35" y="17" width="247" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1201,8 +1230,8 @@
         <image name="rcheckBoxEmpty" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4r6-zb-MVk"/>
+        <segue reference="hLp-Vp-NEo"/>
         <segue reference="PE2-ju-dU2"/>
-        <segue reference="xLz-No-hjJ"/>
+        <segue reference="MCg-vm-VIq"/>
     </inferredMetricsTieBreakers>
 </document>
