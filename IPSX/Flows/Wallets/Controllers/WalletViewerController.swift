@@ -26,6 +26,7 @@ class WalletViewerController: UIViewController {
     @IBOutlet weak var approveStateHolderView: UIView!
     @IBOutlet weak var approveStateImageView: UIImageView!
     @IBOutlet weak var approveStateLabel: UILabel!
+    @IBOutlet weak var lockedHolderWidthConstraint: NSLayoutConstraint!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -38,7 +39,7 @@ class WalletViewerController: UIViewController {
         super.viewDidLoad()
         if ethereumAddress?.status != "locked" {
             lockedStateHolderView.isHidden = true
-            approveStateHolderView.frame.origin.x -= lockedStateHolderView.frame.size.width / 2
+            lockedHolderWidthConstraint.constant = lockedHolderWidthConstraint.constant / 2
         }
     }
     
