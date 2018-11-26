@@ -12,17 +12,21 @@ class MarketFilterController: UIViewController {
 
     
     
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollContentView: UIView!
     
-    @IBOutlet weak var scrollTopConstraint: NSLayoutConstraint! {
-        didSet { topConstraint = scrollTopConstraint }
+    @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
+        didSet { topConstraint = topSeparatorConstraint }
     }
     
     @IBOutlet weak var countriesCollectionView: UICollectionView!
     @IBOutlet weak var countriesCollectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var priceRangeView: RangeView!
     @IBOutlet weak var searchContriesButton: UIButton!
+    @IBOutlet weak var worldwideLabel: RoundedView!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -31,25 +35,25 @@ class MarketFilterController: UIViewController {
     
     fileprivate let reuseIdentifier = "CountryCellID"
     
-    fileprivate var countriesList:[String] = []
-    
+    fileprivate var selectedCountries:[String] = []
+    fileprivate var availableCountries:[String] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if let countries = ProxyManager.shared.proxyCountries  {
-            countriesList = countries
+            availableCountries = countries
         }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: scrollContentView, text: "")
+        createToastAlert(onTopOf: topSeparatorView, text: "")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let countries = ProxyManager.shared.proxyCountries, countriesList.count == countries.count  {
-            searchContriesButton.isHidden = true
-        }
+        searchContriesButton.isHidden = selectedCountries.count == availableCountries.count
+        worldwideLabel.isHidden = selectedCountries.count > 0
     }
     
     @IBAction func sortByAction(_ sender: Any) {
@@ -58,9 +62,13 @@ class MarketFilterController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == searchSegueID {
             let searchController = segue.destination as? SearchViewController
-            searchController?.onCountrySelected = { selectedCountry in
+            searchController?.countries = availableCountries
+            searchController?.multipleSelections = true
+            searchController?.selectedCountries = selectedCountries
+            searchController?.onSaveSelected = { selected in
+                self.selectedCountries = selected
+                self.countriesCollectionView.reloadData()
             }
-            searchController?.countries = countriesList
         }
     }
 }
@@ -71,14 +79,14 @@ extension MarketFilterController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         if let countryCell = cell as? MarketFilterCountryCell  {
-            let country = countriesList[indexPath.item]
+            let country = selectedCountries[indexPath.item]
             countryCell.countryLabel.text = country
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return countriesList.count
+        return selectedCountries.count
     }
 }
 
@@ -86,12 +94,9 @@ extension MarketFilterController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard countriesList.count > 1000 else {
-            toast?.showToastAlert("You need at least one country in your list", autoHideAfter: 5, type: .info, dismissable: true)
-            return
-        }
+        worldwideLabel.isHidden = selectedCountries.count > 1
         searchContriesButton.isHidden = false
-        countriesList.remove(at: indexPath.item)
+        selectedCountries.remove(at: indexPath.item)
         let range = Range(uncheckedBounds: (0, collectionView.numberOfSections))
         let indexSet = IndexSet(integersIn: range)
         collectionView.reloadSections(indexSet)
@@ -102,7 +107,7 @@ extension MarketFilterController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let country = countriesList[indexPath.item]
+        let country = selectedCountries[indexPath.item]
         let strigSize = country.size(withAttributes: [
             NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)
             ])
@@ -114,9 +119,9 @@ extension MarketFilterController: UICollectionViewDelegateFlowLayout {
 extension MarketFilterController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
-        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text, topOffset: 20) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text, topOffset: 44) {
             self.toast = toastView
-            view.insertSubview(toastView, belowSubview: scrollContentView)
+            view.insertSubview(toastView, belowSubview: topView)
         }
     }
 }

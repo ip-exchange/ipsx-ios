@@ -10,7 +10,14 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    
+    @IBOutlet weak var selectedItemsCollectionview: UICollectionView!
+    @IBOutlet weak var collectionTopConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
+    
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -22,23 +29,30 @@ class SearchViewController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
-    let cellID = "SearchCellID"
-    let newProxyFlowID = "NewProxyFlowSegueID"
+
+    fileprivate let cellID = "SearchCellID"
+    fileprivate let newProxyFlowID = "NewProxyFlowSegueID"
+    fileprivate let reuseIdentifier = "CountryCellID"
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var errorMessage: String? {
         didSet { self.toast?.showToastAlert(self.errorMessage) }
     }
 
+    var multipleSelections = false
     var dismissOnSelect = false
     var dismissPresentingNav = false
     var isProxyFlow: Bool? = false
     var countries: [String]?
     var filteredCountries: [String]?
+    var selectedCountries:[String] = []
+
     var selectedCountry: String?
     
     var onCountrySelected: ((_ selectedCountry: String)->())?
-    
+    var onSaveSelected: ((_ selectedCountres: [String])->())?
+
     private var countriesRefreshed = false
     
     
@@ -47,12 +61,17 @@ class SearchViewController: UIViewController {
         
         closeButton.isHidden = (isProxyFlow == false)
         backButton.isHidden  = !closeButton.isHidden
+        saveButton.isHidden  = !multipleSelections
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         filteredCountries = isProxyFlow == true ? [] : countries
         tableView.reloadData()
+        
+        if selectedCountries.count == 0 {
+            collectionTopConstraint.constant = -40
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +82,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        createToastAlert(onTopOf: searchView, text: "")
+        createToastAlert(onTopOf: topSeparatorView, text: "")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -98,6 +117,15 @@ class SearchViewController: UIViewController {
         })
     }
 
+    @IBAction func saveAction(_ sender: Any) {
+        onSaveSelected?(selectedCountries)
+        if dismissPresentingNav {
+            navigationController?.dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
     @IBAction func BackButton(_ sender: Any) {
         if dismissPresentingNav {
             navigationController?.dismiss(animated: true)
@@ -146,7 +174,7 @@ extension SearchViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SearchCell
         cell.textlabel.text = filteredCountries?[indexPath.item]
-        cell.disclousureImageView.isHidden = dismissOnSelect
+        cell.disclousureImageView.isHidden = dismissOnSelect || multipleSelections
         return cell
     }
 }
@@ -156,15 +184,31 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCountry = filteredCountries?[indexPath.item]
         
-        self.onCountrySelected?(selectedCountry ?? "Select a country".localized)
-        if dismissOnSelect {
-            if let nav = navigationController {
-                nav.popViewController(animated: true)
-            } else {
-                dismiss(animated: true)
+        if multipleSelections {
+            if let validCountry = selectedCountry {
+                if selectedCountries.count == 0 {
+                    collectionTopConstraint.constant = 20
+                    UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
+                }
+                if selectedCountries.contains(validCountry) {
+                    toast?.showToastAlert("Country is already selected", autoHideAfter: 5, type: .info, dismissable: true)
+                } else {
+                    toast?.hideToast()
+                    selectedCountries.insert(validCountry, at: 0)
+                    selectedItemsCollectionview.reloadData()
+                }
             }
-        } else if dismissPresentingNav {
-            navigationController?.dismiss(animated: true)
+        } else {
+            self.onCountrySelected?(selectedCountry ?? "Select a country".localized)
+            if dismissOnSelect {
+                if let nav = navigationController {
+                    nav.popViewController(animated: true)
+                } else {
+                    dismiss(animated: true)
+                }
+            } else if dismissPresentingNav {
+                navigationController?.dismiss(animated: true)
+            }
         }
     }
 }
@@ -210,6 +254,51 @@ extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.returnKeyType = .done
         return true
+    }
+}
+
+extension SearchViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        
+        if let countryCell = cell as? MarketFilterCountryCell  {
+            let country = selectedCountries[indexPath.item]
+            countryCell.countryLabel.text = country
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedCountries.count
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if selectedCountries.count == 1 {
+            collectionTopConstraint.constant = -40
+            UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
+        }
+        selectedCountries.remove(at: indexPath.item)
+        let range = Range(uncheckedBounds: (0, collectionView.numberOfSections))
+        let indexSet = IndexSet(integersIn: range)
+        collectionView.reloadSections(indexSet)
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let country = selectedCountries[indexPath.item]
+        let strigSize = country.size(withAttributes: [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 13)
+            ])
+        
+        return  CGSize(width: strigSize.width + 40, height: 40)
     }
 }
 
