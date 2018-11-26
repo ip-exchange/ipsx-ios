@@ -191,7 +191,8 @@ extension SearchViewController: UITableViewDelegate {
                     UIView.animate(withDuration: 0.25) { self.view.layoutIfNeeded() }
                 }
                 if selectedCountries.contains(validCountry) {
-                    toast?.showToastAlert("Country is already selected", autoHideAfter: 5, type: .info, dismissable: true)
+                    let message = validCountry + " " + "is already selected".localized
+                    toast?.showToastAlert(message, autoHideAfter: 5, type: .info, dismissable: true)
                 } else {
                     toast?.hideToast()
                     selectedCountries.insert(validCountry, at: 0)

@@ -22,6 +22,8 @@ class MarketFilterController: UIViewController {
         didSet { topConstraint = topSeparatorConstraint }
     }
     
+    @IBOutlet weak var sortOptionsTableView: UITableView!
+    @IBOutlet weak var selectedSortOptionLabel: UILabel!
     @IBOutlet weak var countriesCollectionView: UICollectionView!
     @IBOutlet weak var countriesCollectionViewLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var priceRangeView: RangeView!
@@ -37,7 +39,9 @@ class MarketFilterController: UIViewController {
     
     fileprivate var selectedCountries:[String] = []
     fileprivate var availableCountries:[String] = []
-
+    
+    fileprivate let sortingOptions = ["Descending SLA", "Ascending SLA", "Descending Price", "Ascending Price", "Descending Duration", "Ascending Duration"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let countries = ProxyManager.shared.proxyCountries  {
@@ -57,6 +61,11 @@ class MarketFilterController: UIViewController {
     }
     
     @IBAction func sortByAction(_ sender: Any) {
+        let newAlpha: CGFloat = sortOptionsTableView.alpha < 1 ? 1.0 : 0.0
+        scrollView.isScrollEnabled = newAlpha < 1.0
+        UIView.animate(withDuration: 0.25) {
+            self.sortOptionsTableView.alpha = newAlpha
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,6 +78,36 @@ class MarketFilterController: UIViewController {
                 self.selectedCountries = selected
                 self.countriesCollectionView.reloadData()
             }
+        }
+    }
+}
+
+
+extension MarketFilterController: UITableViewDataSource {
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sortingOptions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SortOptionCellID", for: indexPath)
+        if let sortCell = cell as? MarketFilterSortCell {
+            sortCell.sortOptionLabel.text = sortingOptions[indexPath.item]
+        }
+        return cell
+    }
+}
+
+extension MarketFilterController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        scrollView.isScrollEnabled = true
+        selectedSortOptionLabel.text = sortingOptions[indexPath.item]
+        UIView.animate(withDuration: 0.25) {
+            self.sortOptionsTableView.alpha = 0
         }
     }
 }

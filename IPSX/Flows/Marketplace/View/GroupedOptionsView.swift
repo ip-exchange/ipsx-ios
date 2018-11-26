@@ -14,13 +14,17 @@ class GroupedOptionsView: UIView {
     @IBOutlet weak var secondOption: UIButton!
 
     @IBAction func firstOptionAction(_ sender: UIButton) {
-        firstOption.isSelected = true
-        secondOption.isSelected = false
+        firstOption.isSelected = !firstOption.isSelected
+        if firstOption.isSelected {
+            secondOption.isSelected = false
+        }
     }
     
     @IBAction func secondOptionAction(_ sender: Any) {
-        firstOption.isSelected = false
-        secondOption.isSelected = true
+        secondOption.isSelected = !secondOption.isSelected
+        if secondOption.isSelected {
+            firstOption.isSelected = false
+        }
     }
     
 }
