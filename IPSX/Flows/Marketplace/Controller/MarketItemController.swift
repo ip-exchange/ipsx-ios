@@ -56,7 +56,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
             countryLabel.text = ""
         }
         else {
-            noOfProxiesLabel.text = "\(noOfProxies)" + "proxy item"
+            noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
             flagImageView.image = UIImage(named: "RO32") //TODO
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
@@ -101,7 +101,11 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 extension MarketItemController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProxyItemCollectionViewCell
+        if offer?.proxies.count ?? 0 > indexPath.row, let proxy = offer?.proxies[indexPath.row] {
+            cell.configure(proxy: proxy)
+        }
         return cell
     }
     
