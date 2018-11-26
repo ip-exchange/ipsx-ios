@@ -283,8 +283,6 @@ extension MarketController: UITableViewDelegate {
             selectedOffer = offers[indexPath.row]
         }
         
-        print("SLA selected: ",selectedOffer?.proxies.first?.sla)
-        
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: self.marketItemID, sender: self)
         }
