@@ -12,12 +12,12 @@ class Proxy {
     
     var id: Int
     var countryName: String
-    var sla: String
+    var sla: Int
     var ipType: String = "" // IPv4, IPv6
     var proxyType: String // Dedicated, Shared
     var features: [String] // ["http(s)", "socks5", "shadowsocks", "vpn"]
     
-    init(id: Int, countryName: String, sla: String, ipType: Int, proxyType: String, features: [String]) {
+    init(id: Int, countryName: String, sla: Int, ipType: Int, proxyType: String, features: [String]) {
         
         self.id  = id
         self.countryName = countryName

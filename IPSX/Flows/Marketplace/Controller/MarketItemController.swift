@@ -46,17 +46,17 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         priceIPSXLabel.text = offer.priceIPSX
-        
-        let progress = Double(arc4random_uniform(sla))
-        progressView.progress = progress
-        progressLabel.text = "\(Int(progress))%"
+        progressView.progress = Double(sla)
+        progressLabel.text = "\(sla)%"
         
         if noOfProxies > 1 {
+            noOfProxiesLabel.text = "\(noOfProxies)" + " proxy items"
             flagImageView.image = UIImage(named: "worldPins")
             offerTypeLabel.text = "Grouped offer".localized
             countryLabel.text = ""
         }
         else {
+            noOfProxiesLabel.text = "\(noOfProxies)" + "proxy item"
             flagImageView.image = UIImage(named: "RO32") //TODO
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
@@ -65,14 +65,13 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         updateCountryOverlay(visible: false)
     }
     
-    private func slaToDisplay(proxies: [Proxy]) -> UInt32 {
+    private func slaToDisplay(proxies: [Proxy]) -> Int {
         
-        var slaTotal: UInt32 = 0
+        var slaTotal: Int = 0
         for proxy in proxies {
-            let intValue = UInt32(proxy.sla) ?? 0
-            slaTotal += intValue
+            slaTotal += proxy.sla
         }
-        return slaTotal / UInt32(proxies.count)
+        return slaTotal / proxies.count
     }
     
     @IBAction func addToCart(_ sender: Any) {

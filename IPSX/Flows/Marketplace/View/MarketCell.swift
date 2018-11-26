@@ -31,11 +31,8 @@ class MarketCell: UITableViewCell {
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         priceIPSXLabel.text = offer.priceIPSX
-        
-        let progress = Double(arc4random_uniform(sla))
-        progressView.progress = progress
-        progressLabel.text = "\(Int(progress))%"
-        
+        progressView.progress = Double(sla)
+        progressLabel.text = "\(sla)%"
         cellContentView.shadow = true
         
         if noOfProxies > 1 {
@@ -50,14 +47,13 @@ class MarketCell: UITableViewCell {
         }
     }
     
-    private func slaToDisplay(proxies: [Proxy]) -> UInt32 {
+    private func slaToDisplay(proxies: [Proxy]) -> Int {
         
-        var slaTotal: UInt32 = 0
+        var slaTotal: Int = 0
         for proxy in proxies {
-            let intValue = UInt32(proxy.sla) ?? 0
-            slaTotal += intValue
+            slaTotal += proxy.sla
         }
-        return slaTotal / UInt32(proxies.count)
+        return slaTotal / proxies.count
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
