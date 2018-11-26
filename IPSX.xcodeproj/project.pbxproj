@@ -264,7 +264,7 @@
 		EE37F8A62091F52700783385 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EE37F8A82092035800783385 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
-		EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MarketItemController.swift; path = ../../../../ios/IPSX/Flows/Marketplace/MarketItemController.swift; sourceTree = "<group>"; };
+		EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketItemController.swift; sourceTree = "<group>"; };
 		EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCartController.swift; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
@@ -587,6 +587,40 @@
 			path = Marketplace;
 			sourceTree = "<group>";
 		};
+		A49C32EE21AB1B3B008A0CD2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EE79B6AE219D5E8C001C9FF6 /* MarketController.swift */,
+				EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */,
+				EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */,
+				EEF6AFC021A6989900D4729F /* MarketCheckoutController.swift */,
+				EE0C536521A6AA4500D9ED11 /* MarketFilterController.swift */,
+				EE79B6B4219DA31B001C9FF6 /* MarketTutorialController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A49C32EF21AB1B4D008A0CD2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EE79B6B0219D7B04001C9FF6 /* MarketCell.swift */,
+				EE0C536721A6D87C00D9ED11 /* MarketFilterCountryCell.swift */,
+				EE79B6B2219D86B4001C9FF6 /* ProgressRoundView.swift */,
+				EE6DC2B321AAA36E00322D9A /* GroupedOptionsView.swift */,
+				EE0C536921A6E67F00D9ED11 /* RangeSlider.swift */,
+				EE0C536D21A7D59700D9ED11 /* RangeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A49C32F021AB1BAE008A0CD2 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EE79B6AB219D5E57001C9FF6 /* Market.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		A4B57C2E20F256F800EEE433 /* Token Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -892,19 +926,9 @@
 		EE79B6AD219D5E5F001C9FF6 /* Marketplace */ = {
 			isa = PBXGroup;
 			children = (
-				EE79B6AE219D5E8C001C9FF6 /* MarketController.swift */,
-				EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */,
-				EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */,
-				EEF6AFC021A6989900D4729F /* MarketCheckoutController.swift */,
-				EE0C536521A6AA4500D9ED11 /* MarketFilterController.swift */,
-				EE79B6B0219D7B04001C9FF6 /* MarketCell.swift */,
-				EE0C536721A6D87C00D9ED11 /* MarketFilterCountryCell.swift */,
-				EE79B6B4219DA31B001C9FF6 /* MarketTutorialController.swift */,
-				EE79B6B2219D86B4001C9FF6 /* ProgressRoundView.swift */,
-				EE6DC2B321AAA36E00322D9A /* GroupedOptionsView.swift */,
-				EE0C536921A6E67F00D9ED11 /* RangeSlider.swift */,
-				EE0C536D21A7D59700D9ED11 /* RangeView.swift */,
-				EE79B6AB219D5E57001C9FF6 /* Market.storyboard */,
+				A49C32EF21AB1B4D008A0CD2 /* View */,
+				A49C32EE21AB1B3B008A0CD2 /* Controller */,
+				A49C32F021AB1BAE008A0CD2 /* Storyboard */,
 			);
 			path = Marketplace;
 			sourceTree = "<group>";
