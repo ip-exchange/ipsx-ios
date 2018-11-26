@@ -14,9 +14,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cartOverlayView: UIView!
     @IBOutlet weak var cartOverlayYConstraint: NSLayoutConstraint!
-    
-    //TODO: ---->>> LINK OUTLETS <<<-----
-    
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var flagImageView: UIImageView!
