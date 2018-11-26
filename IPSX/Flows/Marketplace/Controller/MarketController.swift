@@ -44,6 +44,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             }
         }
     }
+    var selectedOffer: Offer?
     var shouldRefreshIp = true
     
     private var tutorialPresented = false
@@ -222,7 +223,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == countrySelectionID {
+        switch segue.identifier {
+            
+        case marketItemID:
+            let destinationVC = segue.destination as? MarketItemController
+            destinationVC?.offer = selectedOffer
+            
+        case countrySelectionID:
+            
             let navController = segue.destination as? UINavigationController
             if let srcController = navController?.viewControllers.first as? SearchViewController {
                 srcController.dismissPresentingNav = true
@@ -233,6 +241,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                     self.submitCountryButton.isEnabled = true
                 }
             }
+        default: break
         }
     }
     
@@ -269,6 +278,9 @@ extension MarketController: UITableViewDelegate {
         guard UserManager.shared.getCountryName(countryID: userInfo?.countryID) != nil else {
             updateCountryOverlay(visible: true)
             return
+        }
+        if offers.count > indexPath.row {
+            selectedOffer = offers[indexPath.row]
         }
         
         DispatchQueue.main.async {

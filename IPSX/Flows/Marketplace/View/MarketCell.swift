@@ -27,7 +27,7 @@ class MarketCell: UITableViewCell {
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
         let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
-            
+        
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         priceIPSXLabel.text = offer.priceIPSX
