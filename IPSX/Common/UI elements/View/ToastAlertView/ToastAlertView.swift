@@ -90,12 +90,22 @@ public class ToastAlertView: UIView {
 
     private var initialParentConstraint:  CGFloat!
     private var hideTimer: Timer?
+    private var extraOffest: CGFloat = 0
     
-    public init?(parentUnderView: UIView, parentUnderViewConstraint: NSLayoutConstraint, alertText: String) {
+    public init?(parentUnderView: UIView, parentUnderViewConstraint: NSLayoutConstraint, alertText: String, topOffset: CGFloat = 0) {
         
-        let frame = CGRect(x: 0, y: parentUnderView.frame.origin.y - 50, width: UIScreen.main.bounds.width, height: 50)
+        let frame = CGRect(x: 15, y: parentUnderView.frame.origin.y - 50, width: UIScreen.main.bounds.width - 30, height: 50)
         super.init(frame: frame)
+        extraOffest = topOffset
         view = loadNib(withOwner: self)
+
+        view.layer.cornerRadius = 5
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        view.layer.masksToBounds = false
+        view.layer.shadowRadius = 3.0
+        view.layer.shadowOpacity = 0.2
+
         parent = parentUnderView
         underViewTopConstraint  = parentUnderViewConstraint
         initialParentConstraint = parentUnderViewConstraint.constant
@@ -179,11 +189,11 @@ public class ToastAlertView: UIView {
             }
             
             self.superview?.layoutIfNeeded()
-            self.underViewTopConstraint?.constant = (visible) ? self.initialParentConstraint + self.frame.size.height : self.initialParentConstraint
+            self.underViewTopConstraint?.constant = (visible) ? self.initialParentConstraint + self.frame.size.height + 7 : self.initialParentConstraint
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
                 self.superview?.layoutIfNeeded()
-                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height : -self.frame.size.height
+                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height + 7 + self.extraOffest : -self.frame.size.height
                 self.alpha = (visible) ? 1.0 : 0.0
             }, completion: {success in
                 completion?()

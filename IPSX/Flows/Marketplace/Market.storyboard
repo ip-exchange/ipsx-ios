@@ -1360,7 +1360,7 @@ maximum 5 minutes after purchase!</string>
         <!--Market Filter Controller-->
         <scene sceneID="mK9-kj-0Vr">
             <objects>
-                <viewController storyboardIdentifier="MarketFilterID" id="tNv-OR-Ey0" customClass="MarketFilterController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tNv-OR-Ey0" customClass="MarketFilterController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oVD-Dx-hsU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1982"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1544,11 +1544,11 @@ maximum 5 minutes after purchase!</string>
                                     <constraint firstAttribute="height" constant="0.5" id="fxc-UK-5HF"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvr-Vg-tZO">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvr-Vg-tZO" userLabel="Mask View">
                                 <rect key="frame" x="0.0" y="-56" width="375" height="2104"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.40118838029999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75r-Ur-l7L">
+                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75r-Ur-l7L">
                                 <rect key="frame" x="0.0" y="44" width="375" height="1904"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fy-UT-NEg" userLabel="Content View">
@@ -1569,9 +1569,12 @@ maximum 5 minutes after purchase!</string>
                                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f63-Qj-3Ck" userLabel="Close">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f63-Qj-3Ck" userLabel="Close">
                                                         <rect key="frame" x="301" y="5" width="44" height="44"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="VNg-6q-02H"/>
+                                                            <constraint firstAttribute="width" constant="44" id="ogU-y3-8tr"/>
+                                                        </constraints>
                                                         <state key="normal" image="CloseBut">
                                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
@@ -1650,6 +1653,19 @@ maximum 5 minutes after purchase!</string>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jl-v7-SBY" userLabel="Close">
+                                                                <rect key="frame" x="301" y="129" width="44" height="44"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="44" id="A6l-HM-Yey"/>
+                                                                    <constraint firstAttribute="width" constant="44" id="LaO-XN-SFL"/>
+                                                                </constraints>
+                                                                <state key="normal" image="PlusSymbol">
+                                                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <segue destination="PhH-AD-Z2b" kind="show" identifier="SearchCountriesSegueID" id="0bA-Re-32L"/>
+                                                                </connections>
+                                                            </button>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q6o-4S-DaJ">
                                                                 <rect key="frame" x="0.0" y="168.66666666666669" width="345" height="40"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2372,7 +2388,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       IPv4" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="firstOptionAction:" destination="AcD-ei-2QD" eventType="touchUpInside" id="EHq-Ud-Mw6"/>
                                                                         </connections>
@@ -2393,7 +2409,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       IPv6" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="secondOptionAction:" destination="AcD-ei-2QD" eventType="touchUpInside" id="N3T-Gp-rxT"/>
                                                                         </connections>
@@ -2455,7 +2471,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       Dedicated" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="firstOptionAction:" destination="4xx-WK-bQF" eventType="touchUpInside" id="r4y-MW-Hz5"/>
                                                                         </connections>
@@ -2476,7 +2492,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       Shared" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="secondOptionAction:" destination="4xx-WK-bQF" eventType="touchUpInside" id="RyB-od-zId"/>
                                                                         </connections>
@@ -2715,7 +2731,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       Grouped" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="firstOptionAction:" destination="FKy-Xp-w8T" eventType="touchUpInside" id="8eg-p8-hIX"/>
                                                                         </connections>
@@ -2736,7 +2752,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <state key="normal" title="       Single" image="checkboxBlueEmpty">
                                                                             <color key="titleColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         </state>
-                                                                        <state key="selected" image="checkBoxChecked"/>
+                                                                        <state key="selected" image="checkboxBlueChecked"/>
                                                                         <connections>
                                                                             <action selector="secondOptionAction:" destination="FKy-Xp-w8T" eventType="touchUpInside" id="Fgn-pM-MXn"/>
                                                                         </connections>
@@ -2804,6 +2820,8 @@ maximum 5 minutes after purchase!</string>
                                                             <constraint firstItem="qsQ-eH-y0Z" firstAttribute="top" secondItem="9T0-cK-U2H" secondAttribute="top" constant="25" id="Rab-oB-XHR"/>
                                                             <constraint firstItem="qsQ-eH-y0Z" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" constant="15" id="SgE-Iz-ucC"/>
                                                             <constraint firstItem="jWq-DI-621" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="TI3-wW-xz0"/>
+                                                            <constraint firstItem="0Jl-v7-SBY" firstAttribute="centerY" secondItem="2bh-cK-jWB" secondAttribute="centerY" id="TWR-q1-8o5"/>
+                                                            <constraint firstAttribute="trailing" secondItem="0Jl-v7-SBY" secondAttribute="trailing" id="TYh-Iw-HHZ"/>
                                                             <constraint firstItem="61q-LV-IX9" firstAttribute="leading" secondItem="A8A-Bv-D5G" secondAttribute="leading" id="Trt-Uw-V9g"/>
                                                             <constraint firstAttribute="trailing" secondItem="FKy-Xp-w8T" secondAttribute="trailing" id="VSt-lQ-cCU"/>
                                                             <constraint firstItem="4xx-WK-bQF" firstAttribute="top" secondItem="61q-LV-IX9" secondAttribute="bottom" constant="11" id="YXZ-ff-8MD"/>
@@ -2876,6 +2894,7 @@ maximum 5 minutes after purchase!</string>
                                                 <constraints>
                                                     <constraint firstItem="Ktt-k3-hT7" firstAttribute="leading" secondItem="MKC-0R-rB6" secondAttribute="leading" id="4kQ-eW-xnO"/>
                                                     <constraint firstAttribute="trailing" secondItem="9T0-cK-U2H" secondAttribute="trailing" id="6FM-Ti-5V8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="f63-Qj-3Ck" secondAttribute="trailing" id="JUk-Or-Fcb"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ktt-k3-hT7" secondAttribute="bottom" constant="57" id="RWd-Aq-N4g"/>
                                                     <constraint firstItem="h9a-H5-L1c" firstAttribute="leading" secondItem="MKC-0R-rB6" secondAttribute="leading" constant="15" id="Sim-K0-aFH"/>
                                                     <constraint firstItem="Ktt-k3-hT7" firstAttribute="top" secondItem="9T0-cK-U2H" secondAttribute="bottom" id="TqZ-ni-WMs"/>
@@ -2888,6 +2907,7 @@ maximum 5 minutes after purchase!</string>
                                                     <constraint firstItem="Twf-lh-MiP" firstAttribute="top" secondItem="MKC-0R-rB6" secondAttribute="top" constant="48" id="rWf-wk-rvF"/>
                                                     <constraint firstItem="9T0-cK-U2H" firstAttribute="leading" secondItem="MKC-0R-rB6" secondAttribute="leading" id="s1I-2T-dhC"/>
                                                     <constraint firstItem="vak-tP-CLd" firstAttribute="centerX" secondItem="MKC-0R-rB6" secondAttribute="centerX" id="x9v-ZQ-Jh7"/>
+                                                    <constraint firstItem="Twf-lh-MiP" firstAttribute="top" secondItem="f63-Qj-3Ck" secondAttribute="bottom" constant="-1" id="zyq-5K-1h5"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
@@ -2916,6 +2936,13 @@ maximum 5 minutes after purchase!</string>
                                     <constraint firstAttribute="bottom" secondItem="7Fy-UT-NEg" secondAttribute="bottom" id="xiI-cl-lXB"/>
                                 </constraints>
                             </scrollView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iU-np-csW">
+                                <rect key="frame" x="0.0" y="1820" width="375" height="128"/>
+                                <color key="backgroundColor" red="0.0" green="0.75686274509999996" blue="0.25098039220000001" alpha="0.32559419010000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="2Kz-ui-UkE"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -2935,12 +2962,15 @@ maximum 5 minutes after purchase!</string>
                             <constraint firstItem="acm-a3-DPl" firstAttribute="width" secondItem="TIk-vf-XDu" secondAttribute="width" id="cyD-QN-RKk"/>
                             <constraint firstItem="TIk-vf-XDu" firstAttribute="centerY" secondItem="qWU-kH-CkS" secondAttribute="centerY" id="d8Z-Fm-IT3"/>
                             <constraint firstItem="qWU-kH-CkS" firstAttribute="top" secondItem="cpO-xc-wFu" secondAttribute="bottom" id="dPj-9U-KOm"/>
+                            <constraint firstItem="9iU-np-csW" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="e3S-NA-mi6"/>
                             <constraint firstItem="qWU-kH-CkS" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="fMA-cS-fNY"/>
                             <constraint firstItem="75r-Ur-l7L" firstAttribute="bottom" secondItem="1Sb-eN-L2B" secondAttribute="bottom" id="gzV-AD-Wkr"/>
+                            <constraint firstItem="1Sb-eN-L2B" firstAttribute="bottom" secondItem="9iU-np-csW" secondAttribute="bottom" id="k1H-NF-h8E"/>
                             <constraint firstItem="HYQ-wS-Hhz" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="kPj-jb-1kh"/>
                             <constraint firstItem="1Sb-eN-L2B" firstAttribute="trailing" secondItem="75r-Ur-l7L" secondAttribute="trailing" id="l5Z-0n-Jsu"/>
                             <constraint firstItem="1Sb-eN-L2B" firstAttribute="top" secondItem="75r-Ur-l7L" secondAttribute="top" id="otn-OR-rbH"/>
                             <constraint firstItem="acm-a3-DPl" firstAttribute="centerY" secondItem="TIk-vf-XDu" secondAttribute="centerY" id="p0f-59-Mph"/>
+                            <constraint firstItem="1Sb-eN-L2B" firstAttribute="trailing" secondItem="9iU-np-csW" secondAttribute="trailing" id="ucK-Jv-2Pq"/>
                             <constraint firstItem="nvr-Vg-tZO" firstAttribute="top" secondItem="1Sb-eN-L2B" secondAttribute="top" constant="-100" id="vUT-3Z-Q5R"/>
                             <constraint firstItem="75r-Ur-l7L" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="xb1-eR-M2s"/>
                             <constraint firstItem="2T8-IN-cAv" firstAttribute="top" secondItem="qWU-kH-CkS" secondAttribute="bottom" id="yEL-4n-dGj"/>
@@ -2948,32 +2978,66 @@ maximum 5 minutes after purchase!</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Sb-eN-L2B"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hbZ-TI-w3R"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1982"/>
                     <connections>
                         <outlet property="countriesCollectionView" destination="Q6o-4S-DaJ" id="uCc-4k-S8T"/>
+                        <outlet property="countriesCollectionViewLayout" destination="aGv-yy-ZDi" id="AKt-8R-rzH"/>
                         <outlet property="priceRangeView" destination="jWq-DI-621" id="kgh-3A-jpA"/>
+                        <outlet property="scrollContentView" destination="7Fy-UT-NEg" id="rA8-6s-8ac"/>
+                        <outlet property="scrollTopConstraint" destination="9ne-6V-QgF" id="vQY-Ca-XUP"/>
                         <outlet property="scrollView" destination="75r-Ur-l7L" id="dje-i1-8nA"/>
+                        <outlet property="searchContriesButton" destination="0Jl-v7-SBY" id="i9q-eP-y8I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUV-0D-sKh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Tk1-ev-ynS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8261.6000000000004" y="-75.369458128078819"/>
+            <point key="canvasLocation" x="9205.6000000000004" y="6.6502463054187197"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="Csg-mD-eTb">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" id="PhH-AD-Z2b" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yYY-jx-nhr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9783.2000000000007" y="-609.60591133004925"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bOR-ix-0Gw">
+            <objects>
+                <navigationController storyboardIdentifier="MarketFilterID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="djk-jO-k1W" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dRg-xK-lC5">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tNv-OR-Ey0" kind="relationship" relationship="rootViewController" id="dsU-AP-8oL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cKn-eN-sTi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8303" y="6"/>
         </scene>
     </scenes>
     <resources>
         <image name="BackArrow" width="10.333333015441895" height="19"/>
         <image name="CheckLarge" width="56.666667938232422" height="41.333332061767578"/>
         <image name="CloseBut" width="27" height="27"/>
+        <image name="PlusSymbol" width="19" height="19"/>
         <image name="RO32" width="18" height="18"/>
         <image name="arrowDown" width="16" height="8.6666669845581055"/>
         <image name="bgMarketitem" width="375" height="142"/>
         <image name="cart" width="16.333333969116211" height="17.333333969116211"/>
         <image name="checkBoxChecked" width="20" height="20"/>
         <image name="checkBoxEmpty" width="20" height="20"/>
+        <image name="checkboxBlueChecked" width="21" height="21"/>
         <image name="checkboxBlueEmpty" width="21" height="21"/>
         <image name="clock" width="14" height="14.333333015441895"/>
         <image name="closeSmall" width="13.666666984558105" height="13.666666984558105"/>
