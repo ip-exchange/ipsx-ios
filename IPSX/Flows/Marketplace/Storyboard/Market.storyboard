@@ -1385,24 +1385,24 @@ maximum 5 minutes after purchase!</string>
             <objects>
                 <viewController id="tNv-OR-Ey0" customClass="MarketFilterController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oVD-Dx-hsU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="1982"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1870"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvr-Vg-tZO" userLabel="Mask View">
-                                <rect key="frame" x="0.0" y="-56" width="375" height="2104"/>
+                                <rect key="frame" x="0.0" y="-56" width="375" height="1992"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.40118838029999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75r-Ur-l7L">
-                                <rect key="frame" x="0.0" y="44" width="375" height="1904"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="1792"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fy-UT-NEg" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1942"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1870"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKC-0R-rB6" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                                <rect key="frame" x="15" y="15" width="345" height="1912"/>
+                                                <rect key="frame" x="15" y="15" width="345" height="1840"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9T0-cK-U2H" userLabel="Gray Content View">
-                                                        <rect key="frame" x="0.0" y="48" width="345" height="1864"/>
+                                                        <rect key="frame" x="0.0" y="48" width="345" height="1792"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort By" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qsQ-eH-y0Z">
                                                                 <rect key="frame" x="15" y="25.000000000000004" width="45" height="15.666666666666668"/>
@@ -1410,6 +1410,16 @@ maximum 5 minutes after purchase!</string>
                                                                 <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z4K-ky-WNv">
+                                                                <rect key="frame" x="0.0" y="116" width="345" height="180"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="180" id="jC2-1i-DPu"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="dataSource" destination="tNv-OR-Ey0" id="2y0-so-PAG"/>
+                                                                    <outlet property="delegate" destination="tNv-OR-Ey0" id="ZP1-Uy-JWQ"/>
+                                                                </connections>
+                                                            </pickerView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jW3-l1-4uW" userLabel="Sort option View">
                                                                 <rect key="frame" x="0.0" y="56" width="345" height="60"/>
                                                                 <subviews>
@@ -1429,9 +1439,12 @@ maximum 5 minutes after purchase!</string>
                                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="TXB-Tg-GcV">
                                                                         <rect key="frame" x="314" y="26" width="16" height="8"/>
                                                                     </imageView>
-                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sj9-RZ-13D">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="60"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sj9-RZ-13D">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                        <state key="selected" title="Done">
+                                                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </state>
                                                                         <connections>
                                                                             <action selector="sortByAction:" destination="tNv-OR-Ey0" eventType="touchUpInside" id="2QH-GN-bdD"/>
                                                                         </connections>
@@ -1460,13 +1473,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </constraints>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Locations" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bh-cK-jWB">
-                                                                <rect key="frame" x="14.999999999999996" y="143" width="58.666666666666657" height="15.666666666666657"/>
+                                                                <rect key="frame" x="14.999999999999996" y="321" width="58.666666666666657" height="15.666666666666686"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jl-v7-SBY" userLabel="Close">
-                                                                <rect key="frame" x="301" y="129" width="44" height="44"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jl-v7-SBY" userLabel="Countries">
+                                                                <rect key="frame" x="301" y="307" width="44" height="44"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="A6l-HM-Yey"/>
                                                                     <constraint firstAttribute="width" constant="44" id="LaO-XN-SFL"/>
@@ -1479,7 +1492,7 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pD-12-gnS" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="15" y="172.66666666666669" width="94" height="30"/>
+                                                                <rect key="frame" x="15" y="350.66666666666669" width="94" height="30"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Worldwide" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzq-5E-F64">
                                                                         <rect key="frame" x="15" y="7" width="64" height="16"/>
@@ -1504,7 +1517,7 @@ maximum 5 minutes after purchase!</string>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
                                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q6o-4S-DaJ">
-                                                                <rect key="frame" x="0.0" y="168.66666666666669" width="345" height="40"/>
+                                                                <rect key="frame" x="0.0" y="347.66666666666669" width="345" height="40"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="LUA-Mm-LAW"/>
@@ -1571,13 +1584,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </collectionView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price Range" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceL-rI-ikj">
-                                                                <rect key="frame" x="15" y="228.66666666666669" width="72.666666666666671" height="15.666666666666657"/>
+                                                                <rect key="frame" x="15" y="407.66666666666663" width="72.666666666666671" height="15.666666666666686"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jWq-DI-621" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="259" width="345" height="83"/>
+                                                                <rect key="frame" x="0.0" y="438" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fe6-ag-Mbg" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -1612,7 +1625,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTL-py-i2j" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666686" width="345" height="0.3333333333333286"/>
+                                                                        <rect key="frame" x="0.0" y="82.666666666666629" width="345" height="0.3333333333333286"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="Iln-i5-u1p"/>
@@ -1676,13 +1689,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIZ-TE-GcI">
-                                                                <rect key="frame" x="15" y="367" width="52" height="15.666666666666686"/>
+                                                                <rect key="frame" x="15" y="546" width="52" height="15.666666666666629"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bao-SZ-oqu" userLabel="Duration Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="393.66666666666669" width="345" height="83"/>
+                                                                <rect key="frame" x="0.0" y="572.66666666666663" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZG-cu-2kY" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -1692,39 +1705,39 @@ maximum 5 minutes after purchase!</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfT-DQ-mNH" customClass="RangeSlider" customModule="IPSX" customModuleProvider="target">
-                                                                        <rect key="frame" x="15" y="17.999999999999943" width="315" height="27"/>
+                                                                        <rect key="frame" x="15" y="18" width="315" height="27"/>
                                                                         <color key="backgroundColor" red="0.0" green="0.75686274509999996" blue="0.25098039220000001" alpha="0.32559419010000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="27" id="2cF-E6-IgZ"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q7j-SD-5ch">
-                                                                        <rect key="frame" x="15.000000000000002" y="44.999999999999943" width="7.3333333333333339" height="20"/>
+                                                                        <rect key="frame" x="15.000000000000002" y="45" width="7.3333333333333339" height="20"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" min" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xKW-W6-Q5q">
-                                                                        <rect key="frame" x="22.333333333333336" y="48.999999999999943" width="24" height="15"/>
+                                                                        <rect key="frame" x="22.333333333333336" y="49" width="24" height="15"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" days" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Y1-82-llP">
-                                                                        <rect key="frame" x="300" y="48.999999999999943" width="30" height="15"/>
+                                                                        <rect key="frame" x="300" y="49" width="30" height="15"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="alU-D7-T35" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666686" width="345" height="0.3333333333333286"/>
+                                                                        <rect key="frame" x="0.0" y="82.666666666666742" width="345" height="0.3333333333333286"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="iMv-mw-qfC"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2Z-hy-vvI">
-                                                                        <rect key="frame" x="280.33333333333331" y="44.999999999999943" width="19.666666666666686" height="20"/>
+                                                                        <rect key="frame" x="280.33333333333331" y="45" width="19.666666666666686" height="20"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -1781,13 +1794,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Traffic" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RJh-2S-4lX">
-                                                                <rect key="frame" x="15" y="501.66666666666663" width="39" height="15.666666666666629"/>
+                                                                <rect key="frame" x="15" y="680.66666666666663" width="39" height="15.666666666666629"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bGF-Ee-CaU" userLabel="Bytes Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="528.33333333333337" width="345" height="83"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bGF-Ee-CaU" userLabel="Traffic Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="707.33333333333337" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cig-YU-AVK" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -1886,13 +1899,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqR-oD-NZf">
-                                                                <rect key="frame" x="14.999999999999998" y="636.33333333333337" width="24.333333333333329" height="15.666666666666629"/>
+                                                                <rect key="frame" x="14.999999999999998" y="815.33333333333337" width="24.333333333333329" height="15.666666666666629"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MVB-Fi-0h1" userLabel="Bytes Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="663" width="345" height="83"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MVB-Fi-0h1" userLabel="SLA Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="842" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ofq-ad-lPT" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -1933,7 +1946,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VS5-tl-zuT" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666629" width="345" height="0.3333333333333286"/>
+                                                                        <rect key="frame" x="0.0" y="82.666666666666742" width="345" height="0.3333333333333286"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="AxP-Jv-Cve"/>
@@ -1990,119 +2003,14 @@ maximum 5 minutes after purchase!</string>
                                                                     <outlet property="rangeSlider" destination="9tE-aq-qsI" id="ttV-GO-ZKS"/>
                                                                 </connections>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of IPs" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aoc-vs-Wbg">
-                                                                <rect key="frame" x="15" y="771" width="86" height="15.666666666666629"/>
-                                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRE-Ef-lI2" userLabel="IP Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="797.66666666666663" width="345" height="83"/>
-                                                                <subviews>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0J0-1q-GOL" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
-                                                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="0.5" id="MuI-ic-bjB"/>
-                                                                        </constraints>
-                                                                    </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9P-qf-8m5" customClass="RangeSlider" customModule="IPSX" customModuleProvider="target">
-                                                                        <rect key="frame" x="15" y="18" width="315" height="27"/>
-                                                                        <color key="backgroundColor" red="0.0" green="0.75686274509999996" blue="0.25098039220000001" alpha="0.32559419010000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="27" id="18I-aF-IUA"/>
-                                                                        </constraints>
-                                                                    </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IB-he-KEx">
-                                                                        <rect key="frame" x="15.000000000000002" y="45" width="7.3333333333333339" height="20"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                        <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" IPs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xia-HF-g5E">
-                                                                        <rect key="frame" x="22.333333333333336" y="49" width="20.333333333333336" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWY-eX-M1d">
-                                                                        <rect key="frame" x="282.66666666666669" y="45" width="27" height="20"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                        <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" IPs" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESM-zj-WKl">
-                                                                        <rect key="frame" x="309.66666666666669" y="49" width="20.333333333333314" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVX-rD-01A" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666742" width="345" height="0.3333333333333286"/>
-                                                                        <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="0.5" id="3ZD-8H-Mm8"/>
-                                                                        </constraints>
-                                                                    </view>
-                                                                </subviews>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstItem="0J0-1q-GOL" firstAttribute="top" secondItem="CRE-Ef-lI2" secondAttribute="top" id="0Uq-Pr-lvs"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="CVX-rD-01A" secondAttribute="trailing" id="19q-UR-c6L"/>
-                                                                    <constraint firstAttribute="height" constant="83" id="1se-xt-rbT"/>
-                                                                    <constraint firstItem="ESM-zj-WKl" firstAttribute="trailing" secondItem="p9P-qf-8m5" secondAttribute="trailing" id="73D-BE-8tH"/>
-                                                                    <constraint firstItem="ZWY-eX-M1d" firstAttribute="centerY" secondItem="8IB-he-KEx" secondAttribute="centerY" id="87V-cg-RQz"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="8IB-he-KEx" secondAttribute="bottom" constant="18" id="9dw-3Y-FLf"/>
-                                                                    <constraint firstItem="0J0-1q-GOL" firstAttribute="leading" secondItem="CRE-Ef-lI2" secondAttribute="leading" id="B9r-tV-aA5"/>
-                                                                    <constraint firstItem="8IB-he-KEx" firstAttribute="leading" secondItem="p9P-qf-8m5" secondAttribute="leading" id="Cf4-xz-hWO"/>
-                                                                    <constraint firstItem="CVX-rD-01A" firstAttribute="leading" secondItem="CRE-Ef-lI2" secondAttribute="leading" id="EZF-ae-BCc"/>
-                                                                    <constraint firstItem="ESM-zj-WKl" firstAttribute="centerY" secondItem="xia-HF-g5E" secondAttribute="centerY" id="Nve-9d-aqY"/>
-                                                                    <constraint firstItem="ESM-zj-WKl" firstAttribute="leading" secondItem="ZWY-eX-M1d" secondAttribute="trailing" id="THQ-yd-UGL"/>
-                                                                    <constraint firstItem="p9P-qf-8m5" firstAttribute="top" secondItem="CRE-Ef-lI2" secondAttribute="top" constant="18" id="Up3-gR-F95"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="CVX-rD-01A" secondAttribute="bottom" id="bFU-wv-77A"/>
-                                                                    <constraint firstItem="xia-HF-g5E" firstAttribute="leading" secondItem="8IB-he-KEx" secondAttribute="trailing" id="dxB-Vj-gZ3"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="0J0-1q-GOL" secondAttribute="trailing" id="egW-3I-NLm"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="p9P-qf-8m5" secondAttribute="trailing" constant="15" id="rBB-Wi-70e"/>
-                                                                    <constraint firstItem="xia-HF-g5E" firstAttribute="firstBaseline" secondItem="8IB-he-KEx" secondAttribute="firstBaseline" id="reU-Tk-uyw"/>
-                                                                    <constraint firstItem="p9P-qf-8m5" firstAttribute="leading" secondItem="CRE-Ef-lI2" secondAttribute="leading" constant="15" id="tO9-tZ-4Ah"/>
-                                                                </constraints>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="unit" value=" IPs"/>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="decimals">
-                                                                        <integer key="value" value="0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="minVal">
-                                                                        <real key="value" value="1"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxVal">
-                                                                        <real key="value" value="500"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="lowerVal">
-                                                                        <real key="value" value="1"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="upperVal">
-                                                                        <real key="value" value="500"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="minDelta">
-                                                                        <real key="value" value="5"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <outlet property="maxUnitLabel" destination="ESM-zj-WKl" id="BBs-Eg-VDm"/>
-                                                                    <outlet property="maxValueLabel" destination="ZWY-eX-M1d" id="BI5-zI-9zU"/>
-                                                                    <outlet property="minUnitLabel" destination="xia-HF-g5E" id="GhM-Sc-5WM"/>
-                                                                    <outlet property="minValueLabel" destination="8IB-he-KEx" id="unN-De-yhj"/>
-                                                                    <outlet property="rangeSlider" destination="p9P-qf-8m5" id="PUK-ZN-Pj1"/>
-                                                                </connections>
-                                                            </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bandwith" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsr-Xc-mRo">
-                                                                <rect key="frame" x="14.999999999999996" y="905.66666666666663" width="56.666666666666657" height="15.666666666666629"/>
+                                                                <rect key="frame" x="14.999999999999996" y="950" width="56.666666666666657" height="15.666666666666629"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOI-4u-3R5" userLabel="Bytes Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="932.33333333333326" width="345" height="83"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOI-4u-3R5" userLabel="Bandwith Range View" customClass="RangeView" customModule="IPSX" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="976.66666666666674" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQu-1S-Aag" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -2143,7 +2051,7 @@ maximum 5 minutes after purchase!</string>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpr-k1-7dt" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666742" width="345" height="0.3333333333333286"/>
+                                                                        <rect key="frame" x="0.0" y="82.666666666666515" width="345" height="0.3333333333333286"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="NFQ-Bl-K61"/>
@@ -2201,13 +2109,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP Type" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8A-Bv-D5G">
-                                                                <rect key="frame" x="15" y="1040.3333333333333" width="45" height="15.666666666666742"/>
+                                                                <rect key="frame" x="15" y="1084.6666666666667" width="45" height="15.666666666666742"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AcD-ei-2QD" userLabel="IP Type" customClass="GroupedOptionsView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="1067" width="345" height="83"/>
+                                                                <rect key="frame" x="0.0" y="1111.3333333333333" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xm-Rs-muF" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -2231,7 +2139,7 @@ maximum 5 minutes after purchase!</string>
                                                                         </connections>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7v-bU-zbd" userLabel="Separator">
-                                                                        <rect key="frame" x="15" y="41.333333333333258" width="330" height="0.3333333333333357"/>
+                                                                        <rect key="frame" x="15" y="41.333333333333485" width="330" height="0.3333333333333357"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="Vb2-ce-vcR"/>
@@ -2284,13 +2192,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Proxy Type" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61q-LV-IX9">
-                                                                <rect key="frame" x="15" y="1175" width="67" height="15.666666666666742"/>
+                                                                <rect key="frame" x="15" y="1219.3333333333333" width="67" height="15.666666666666742"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4xx-WK-bQF" userLabel="Proxy Type" customClass="GroupedOptionsView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="1201.6666666666667" width="345" height="83"/>
+                                                                <rect key="frame" x="0.0" y="1246" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ng-76-7r0" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -2300,7 +2208,7 @@ maximum 5 minutes after purchase!</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE5-B8-fxM">
-                                                                        <rect key="frame" x="15" y="0.66666666666651508" width="315" height="40.666666666666664"/>
+                                                                        <rect key="frame" x="15" y="0.66666666666674246" width="315" height="40.666666666666664"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="HpG-Bc-7sO"/>
                                                                         </constraints>
@@ -2321,7 +2229,7 @@ maximum 5 minutes after purchase!</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gut-9d-S2G">
-                                                                        <rect key="frame" x="15" y="41.666666666666515" width="315" height="41"/>
+                                                                        <rect key="frame" x="15" y="41.666666666666742" width="315" height="41"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="g3O-Tp-B8P"/>
                                                                         </constraints>
@@ -2335,7 +2243,7 @@ maximum 5 minutes after purchase!</string>
                                                                         </connections>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W6N-jV-Z54" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="82.666666666666515" width="345" height="0.3333333333333286"/>
+                                                                        <rect key="frame" x="0.0" y="82.666666666666742" width="345" height="0.3333333333333286"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="y6K-Gy-w9K"/>
@@ -2367,13 +2275,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E0K-IX-mrz">
-                                                                <rect key="frame" x="15" y="1309.6666666666667" width="53" height="15.666666666666742"/>
+                                                                <rect key="frame" x="15" y="1354" width="53" height="15.666666666666742"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Avc-M1-Ez5" userLabel="Features View" customClass="GroupedMatrixView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="1336.3333333333333" width="345" height="160"/>
+                                                                <rect key="frame" x="0.0" y="1380.6666666666667" width="345" height="160"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVg-hq-Jdi">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="160"/>
@@ -2539,28 +2447,28 @@ maximum 5 minutes after purchase!</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnd-jA-dL9" userLabel="VSeparator">
-                                                                        <rect key="frame" x="172" y="10.666666666666742" width="1" height="59"/>
+                                                                        <rect key="frame" x="172" y="10.666666666666515" width="1" height="59"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="1" id="orx-YK-dT3"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxU-ZO-6Tr" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="79.666666666666742" width="345" height="0.6666666666666714"/>
+                                                                        <rect key="frame" x="0.0" y="79.666666666666515" width="345" height="0.6666666666666714"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="CmI-VI-nXB"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6Z-b4-HK0" userLabel="VSeparator">
-                                                                        <rect key="frame" x="172" y="90.333333333333485" width="1" height="59.333333333333343"/>
+                                                                        <rect key="frame" x="172" y="90.333333333333258" width="1" height="59.333333333333343"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="1" id="oWz-FR-jah"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dE-PY-OaT" userLabel="Separator">
-                                                                        <rect key="frame" x="0.0" y="159.66666666666674" width="345" height="0.33333333333334281"/>
+                                                                        <rect key="frame" x="0.0" y="159.66666666666652" width="345" height="0.33333333333334281"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="a2Z-ZH-atR"/>
@@ -2602,13 +2510,13 @@ maximum 5 minutes after purchase!</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offer Type" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeN-XI-TpZ">
-                                                                <rect key="frame" x="15" y="1521.3333333333333" width="64.333333333333329" height="15.666666666666742"/>
+                                                                <rect key="frame" x="15" y="1565.6666666666667" width="64.333333333333329" height="15.666666666666742"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                                 <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FKy-Xp-w8T" userLabel="Proxy Type" customClass="GroupedOptionsView" customModule="IPSX" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="1548" width="345" height="83"/>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FKy-Xp-w8T" userLabel="Offer Type" customClass="GroupedOptionsView" customModule="IPSX" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="1592.3333333333333" width="345" height="83"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30E-Fl-iyN" userLabel="Separator">
                                                                         <rect key="frame" x="0.0" y="0.0" width="345" height="0.66666666666666663"/>
@@ -2632,7 +2540,7 @@ maximum 5 minutes after purchase!</string>
                                                                         </connections>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNb-fS-TB6" userLabel="Separator">
-                                                                        <rect key="frame" x="15" y="41.333333333333258" width="330" height="0.3333333333333357"/>
+                                                                        <rect key="frame" x="15" y="41.333333333333485" width="330" height="0.3333333333333357"/>
                                                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="0.5" id="nZh-76-EQT"/>
@@ -2684,75 +2592,29 @@ maximum 5 minutes after purchase!</string>
                                                                     <outlet property="secondOption" destination="LCD-rY-BTb" id="hb4-1H-XdN"/>
                                                                 </connections>
                                                             </view>
-                                                            <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="58" sectionHeaderHeight="24" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="V96-cR-1Gn">
-                                                                <rect key="frame" x="0.0" y="116" width="345" height="1748"/>
-                                                                <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <prototypes>
-                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SortOptionCellID" id="o5B-5M-BdE" customClass="MarketFilterSortCell" customModule="IPSX" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="24" width="345" height="58"/>
-                                                                        <autoresizingMask key="autoresizingMask"/>
-                                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="o5B-5M-BdE" id="2ZT-0V-WD6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="345" height="58"/>
-                                                                            <autoresizingMask key="autoresizingMask"/>
-                                                                            <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some sort option" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-Qr-3pi">
-                                                                                    <rect key="frame" x="14.999999999999993" y="20.666666666666668" width="111.33333333333331" height="17.000000000000004"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                </label>
-                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SiC-Lw-KZC" userLabel="Separator">
-                                                                                    <rect key="frame" x="0.0" y="57.666666666666664" width="345" height="0.3333333333333357"/>
-                                                                                    <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <constraints>
-                                                                                        <constraint firstAttribute="height" constant="0.5" id="sXc-Rz-UNU"/>
-                                                                                    </constraints>
-                                                                                </view>
-                                                                            </subviews>
-                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <constraints>
-                                                                                <constraint firstItem="LSH-Qr-3pi" firstAttribute="leading" secondItem="2ZT-0V-WD6" secondAttribute="leading" constant="15" id="Iqz-In-2q2"/>
-                                                                                <constraint firstItem="SiC-Lw-KZC" firstAttribute="leading" secondItem="2ZT-0V-WD6" secondAttribute="leading" id="lBr-Zo-hwh"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="SiC-Lw-KZC" secondAttribute="trailing" id="lqV-b2-4Oh"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="SiC-Lw-KZC" secondAttribute="bottom" id="obT-1W-aJZ"/>
-                                                                                <constraint firstItem="LSH-Qr-3pi" firstAttribute="centerY" secondItem="2ZT-0V-WD6" secondAttribute="centerY" id="zgh-cQ-IPf"/>
-                                                                            </constraints>
-                                                                        </tableViewCellContentView>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <connections>
-                                                                            <outlet property="sortOptionLabel" destination="LSH-Qr-3pi" id="lwX-U4-UL7"/>
-                                                                        </connections>
-                                                                    </tableViewCell>
-                                                                </prototypes>
-                                                                <connections>
-                                                                    <outlet property="dataSource" destination="tNv-OR-Ey0" id="THl-GK-RhS"/>
-                                                                    <outlet property="delegate" destination="tNv-OR-Ey0" id="0Jw-5N-DMr"/>
-                                                                </connections>
-                                                            </tableView>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstItem="ceL-rI-ikj" firstAttribute="top" secondItem="Q6o-4S-DaJ" secondAttribute="bottom" constant="20" id="0Cd-nJ-msi"/>
-                                                            <constraint firstAttribute="bottom" secondItem="V96-cR-1Gn" secondAttribute="bottom" id="2pW-1F-PbN"/>
+                                                            <constraint firstItem="xsr-Xc-mRo" firstAttribute="top" secondItem="MVB-Fi-0h1" secondAttribute="bottom" constant="25" id="13Y-jU-jDq"/>
                                                             <constraint firstItem="CIZ-TE-GcI" firstAttribute="top" secondItem="jWq-DI-621" secondAttribute="bottom" constant="25" id="59u-jP-o6P"/>
                                                             <constraint firstItem="E0K-IX-mrz" firstAttribute="top" secondItem="4xx-WK-bQF" secondAttribute="bottom" constant="25" id="6FU-Se-6ar"/>
                                                             <constraint firstItem="4xx-WK-bQF" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="6vR-Yb-rxM"/>
                                                             <constraint firstItem="Avc-M1-Ez5" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="7Kr-Jn-e3t"/>
                                                             <constraint firstItem="E0K-IX-mrz" firstAttribute="leading" secondItem="61q-LV-IX9" secondAttribute="leading" id="7bH-l6-WkK"/>
                                                             <constraint firstAttribute="trailing" secondItem="Q6o-4S-DaJ" secondAttribute="trailing" id="9nT-2U-rAG"/>
-                                                            <constraint firstItem="V96-cR-1Gn" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="AkU-Fk-bQz"/>
-                                                            <constraint firstItem="Q6o-4S-DaJ" firstAttribute="top" secondItem="2bh-cK-jWB" secondAttribute="bottom" constant="10" id="CDd-CR-hMH"/>
+                                                            <constraint firstItem="Q6o-4S-DaJ" firstAttribute="top" secondItem="2bh-cK-jWB" secondAttribute="bottom" constant="11" id="CDd-CR-hMH"/>
                                                             <constraint firstItem="AcD-ei-2QD" firstAttribute="top" secondItem="A8A-Bv-D5G" secondAttribute="bottom" constant="11" id="CDk-q1-Mim"/>
                                                             <constraint firstItem="Avc-M1-Ez5" firstAttribute="top" secondItem="E0K-IX-mrz" secondAttribute="bottom" constant="11" id="DSk-UL-S2F"/>
                                                             <constraint firstItem="jWq-DI-621" firstAttribute="top" secondItem="ceL-rI-ikj" secondAttribute="bottom" constant="14.666666666666657" id="E8S-cH-Any"/>
+                                                            <constraint firstItem="2bh-cK-jWB" firstAttribute="top" secondItem="z4K-ky-WNv" secondAttribute="bottom" constant="25" id="EM0-Cb-0GC"/>
                                                             <constraint firstItem="vqR-oD-NZf" firstAttribute="top" secondItem="bGF-Ee-CaU" secondAttribute="bottom" constant="25" id="FIN-gF-vPq"/>
                                                             <constraint firstItem="MVB-Fi-0h1" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="FXI-4b-KR9"/>
-                                                            <constraint firstItem="aoc-vs-Wbg" firstAttribute="top" secondItem="MVB-Fi-0h1" secondAttribute="bottom" constant="25" id="FkO-33-br8"/>
+                                                            <constraint firstItem="xsr-Xc-mRo" firstAttribute="leading" secondItem="vqR-oD-NZf" secondAttribute="leading" id="Fjz-rZ-Xp3"/>
                                                             <constraint firstItem="A8A-Bv-D5G" firstAttribute="leading" secondItem="xsr-Xc-mRo" secondAttribute="leading" id="Hkl-ed-0wZ"/>
                                                             <constraint firstAttribute="trailing" secondItem="sOI-4u-3R5" secondAttribute="trailing" id="I2B-kT-gzs"/>
                                                             <constraint firstItem="bGF-Ee-CaU" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="JBg-Fk-ctv"/>
                                                             <constraint firstAttribute="trailing" secondItem="4xx-WK-bQF" secondAttribute="trailing" id="KS8-lK-NAs"/>
-                                                            <constraint firstItem="V96-cR-1Gn" firstAttribute="top" secondItem="jW3-l1-4uW" secondAttribute="bottom" id="LHs-nv-dq5"/>
                                                             <constraint firstAttribute="trailing" secondItem="jWq-DI-621" secondAttribute="trailing" id="LTL-wJ-gqM"/>
                                                             <constraint firstItem="TeN-XI-TpZ" firstAttribute="leading" secondItem="E0K-IX-mrz" secondAttribute="leading" id="LVH-1L-Ah8"/>
                                                             <constraint firstItem="TeN-XI-TpZ" firstAttribute="top" secondItem="Avc-M1-Ez5" secondAttribute="bottom" constant="25" id="MQo-f9-fpp"/>
@@ -2763,32 +2625,25 @@ maximum 5 minutes after purchase!</string>
                                                             <constraint firstItem="qsQ-eH-y0Z" firstAttribute="top" secondItem="9T0-cK-U2H" secondAttribute="top" constant="25" id="Rab-oB-XHR"/>
                                                             <constraint firstItem="qsQ-eH-y0Z" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" constant="15" id="SgE-Iz-ucC"/>
                                                             <constraint firstItem="jWq-DI-621" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="TI3-wW-xz0"/>
+                                                            <constraint firstItem="z4K-ky-WNv" firstAttribute="top" secondItem="jW3-l1-4uW" secondAttribute="bottom" id="TRt-Py-k2R"/>
                                                             <constraint firstItem="0Jl-v7-SBY" firstAttribute="centerY" secondItem="2bh-cK-jWB" secondAttribute="centerY" id="TWR-q1-8o5"/>
                                                             <constraint firstAttribute="trailing" secondItem="0Jl-v7-SBY" secondAttribute="trailing" id="TYh-Iw-HHZ"/>
                                                             <constraint firstItem="61q-LV-IX9" firstAttribute="leading" secondItem="A8A-Bv-D5G" secondAttribute="leading" id="Trt-Uw-V9g"/>
                                                             <constraint firstAttribute="trailing" secondItem="FKy-Xp-w8T" secondAttribute="trailing" id="VSt-lQ-cCU"/>
                                                             <constraint firstItem="4xx-WK-bQF" firstAttribute="top" secondItem="61q-LV-IX9" secondAttribute="bottom" constant="11" id="YXZ-ff-8MD"/>
                                                             <constraint firstItem="jW3-l1-4uW" firstAttribute="top" secondItem="qsQ-eH-y0Z" secondAttribute="bottom" constant="15.333333333333329" id="ap7-9i-aTB"/>
-                                                            <constraint firstItem="2bh-cK-jWB" firstAttribute="top" secondItem="jW3-l1-4uW" secondAttribute="bottom" constant="27" id="bOp-dv-3sz"/>
                                                             <constraint firstAttribute="trailing" secondItem="bGF-Ee-CaU" secondAttribute="trailing" id="bmQ-hv-COK"/>
                                                             <constraint firstAttribute="trailing" secondItem="jW3-l1-4uW" secondAttribute="trailing" id="cOG-Jz-3YC"/>
-                                                            <constraint firstAttribute="trailing" secondItem="V96-cR-1Gn" secondAttribute="trailing" id="cRo-uH-Iys"/>
                                                             <constraint firstAttribute="trailing" secondItem="bao-SZ-oqu" secondAttribute="trailing" id="dA4-qT-54p"/>
                                                             <constraint firstItem="Q6o-4S-DaJ" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="eGM-Pz-sQ3"/>
-                                                            <constraint firstAttribute="trailing" secondItem="CRE-Ef-lI2" secondAttribute="trailing" id="eQ3-I7-MLf"/>
                                                             <constraint firstItem="ceL-rI-ikj" firstAttribute="leading" secondItem="2bh-cK-jWB" secondAttribute="leading" id="f0R-7Z-0Ie"/>
                                                             <constraint firstItem="2bh-cK-jWB" firstAttribute="leading" secondItem="qsQ-eH-y0Z" secondAttribute="leading" id="f2u-Tg-gDc"/>
                                                             <constraint firstAttribute="trailing" secondItem="AcD-ei-2QD" secondAttribute="trailing" id="f4q-go-LHT"/>
                                                             <constraint firstItem="bao-SZ-oqu" firstAttribute="top" secondItem="CIZ-TE-GcI" secondAttribute="bottom" constant="11" id="fC0-IN-1zr"/>
-                                                            <constraint firstItem="aoc-vs-Wbg" firstAttribute="leading" secondItem="vqR-oD-NZf" secondAttribute="leading" id="gNu-aI-6cJ"/>
-                                                            <constraint firstItem="xsr-Xc-mRo" firstAttribute="top" secondItem="CRE-Ef-lI2" secondAttribute="bottom" constant="25" id="h88-20-1zb"/>
-                                                            <constraint firstItem="CRE-Ef-lI2" firstAttribute="top" secondItem="aoc-vs-Wbg" secondAttribute="bottom" constant="11" id="hnO-In-Kl1"/>
                                                             <constraint firstItem="FKy-Xp-w8T" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="j3n-yq-Pzn"/>
                                                             <constraint firstItem="bao-SZ-oqu" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="jgb-NZ-YdI"/>
                                                             <constraint firstItem="FKy-Xp-w8T" firstAttribute="top" secondItem="TeN-XI-TpZ" secondAttribute="bottom" constant="11" id="jvs-X2-TCo"/>
-                                                            <constraint firstItem="xsr-Xc-mRo" firstAttribute="leading" secondItem="aoc-vs-Wbg" secondAttribute="leading" id="jy1-2i-9SW"/>
                                                             <constraint firstItem="3pD-12-gnS" firstAttribute="top" secondItem="2bh-cK-jWB" secondAttribute="bottom" constant="14" id="k4v-KG-RU7"/>
-                                                            <constraint firstItem="CRE-Ef-lI2" firstAttribute="leading" secondItem="9T0-cK-U2H" secondAttribute="leading" id="knh-oe-2b7"/>
                                                             <constraint firstItem="3pD-12-gnS" firstAttribute="leading" secondItem="2bh-cK-jWB" secondAttribute="leading" id="krH-md-VuC"/>
                                                             <constraint firstItem="MVB-Fi-0h1" firstAttribute="top" secondItem="vqR-oD-NZf" secondAttribute="bottom" constant="11" id="mkP-2p-rwf"/>
                                                             <constraint firstItem="RJh-2S-4lX" firstAttribute="top" secondItem="bao-SZ-oqu" secondAttribute="bottom" constant="25" id="n7p-Wc-FFJ"/>
@@ -2823,7 +2678,7 @@ maximum 5 minutes after purchase!</string>
                                             <constraint firstItem="MKC-0R-rB6" firstAttribute="leading" secondItem="7Fy-UT-NEg" secondAttribute="leading" constant="15" id="8G9-jG-IEI"/>
                                             <constraint firstAttribute="bottom" secondItem="MKC-0R-rB6" secondAttribute="bottom" constant="15" id="Cps-Za-DC6"/>
                                             <constraint firstItem="MKC-0R-rB6" firstAttribute="top" secondItem="7Fy-UT-NEg" secondAttribute="top" constant="15" id="ZjI-z6-xkL"/>
-                                            <constraint firstAttribute="height" constant="1942" id="icY-gD-aqg"/>
+                                            <constraint firstAttribute="height" constant="1870" id="icY-gD-aqg"/>
                                             <constraint firstAttribute="trailing" secondItem="MKC-0R-rB6" secondAttribute="trailing" constant="15" id="sHG-Yd-Jwu"/>
                                         </constraints>
                                     </view>
@@ -2875,7 +2730,7 @@ maximum 5 minutes after purchase!</string>
                                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="Tk1-ev-ynS" kind="unwind" unwindAction="unwindToMarketWithSegue:" id="8QN-xo-ITS"/>
+                                                            <segue destination="Tk1-ev-ynS" kind="unwind" identifier="UnwindToMarketSegueID" unwindAction="unwindToMarketWithSegue:" id="8QN-xo-ITS"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -2918,7 +2773,7 @@ maximum 5 minutes after purchase!</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iU-np-csW" userLabel="Bottom View">
-                                <rect key="frame" x="0.0" y="1876" width="375" height="122"/>
+                                <rect key="frame" x="0.0" y="1764" width="375" height="122"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYj-PS-u6e" userLabel="Mask View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
@@ -2945,6 +2800,7 @@ maximum 5 minutes after purchase!</string>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="NO"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
+                                                            <action selector="applyFilters:" destination="tNv-OR-Ey0" eventType="touchUpInside" id="6lG-Zx-c5u"/>
                                                             <action selector="viewCart:" destination="sBJ-Zc-YxA" eventType="touchUpInside" id="sn6-oP-5QG"/>
                                                         </connections>
                                                     </button>
@@ -2957,6 +2813,7 @@ maximum 5 minutes after purchase!</string>
                                                         </state>
                                                         <connections>
                                                             <action selector="backAction:" destination="sBJ-Zc-YxA" eventType="touchUpInside" id="eHN-ov-TRN"/>
+                                                            <action selector="resetFilters:" destination="tNv-OR-Ey0" eventType="touchUpInside" id="DRj-eC-vOk"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -2996,8 +2853,10 @@ maximum 5 minutes after purchase!</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="SvP-jy-BFj" firstAttribute="top" secondItem="1Sb-eN-L2B" secondAttribute="top" constant="-50" id="8tT-uN-mrH"/>
+                            <constraint firstItem="z4K-ky-WNv" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" constant="15" id="9ad-98-eby"/>
                             <constraint firstItem="1Sb-eN-L2B" firstAttribute="bottom" secondItem="nvr-Vg-tZO" secondAttribute="bottom" constant="-100" id="DUd-01-g9c"/>
                             <constraint firstItem="nvr-Vg-tZO" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="Td1-4Q-aIJ"/>
+                            <constraint firstItem="1Sb-eN-L2B" firstAttribute="trailing" secondItem="z4K-ky-WNv" secondAttribute="trailing" constant="15" id="X7i-wi-p7L"/>
                             <constraint firstItem="SvP-jy-BFj" firstAttribute="leading" secondItem="1Sb-eN-L2B" secondAttribute="leading" id="XOg-yf-w14"/>
                             <constraint firstItem="1Sb-eN-L2B" firstAttribute="trailing" secondItem="SvP-jy-BFj" secondAttribute="trailing" id="XS2-xj-CMO"/>
                             <constraint firstItem="1Sb-eN-L2B" firstAttribute="trailing" secondItem="nvr-Vg-tZO" secondAttribute="trailing" id="XXc-bZ-hU0"/>
@@ -3016,19 +2875,32 @@ maximum 5 minutes after purchase!</string>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="1982"/>
+                    <size key="freeformSize" width="375" height="1870"/>
                     <connections>
+                        <outlet property="activeFiltersConterLabel" destination="vak-tP-CLd" id="tT5-N2-onl"/>
+                        <outlet property="bandwithRangeView" destination="sOI-4u-3R5" id="8LL-rq-yPI"/>
                         <outlet property="countriesCollectionView" destination="Q6o-4S-DaJ" id="uCc-4k-S8T"/>
                         <outlet property="countriesCollectionViewLayout" destination="aGv-yy-ZDi" id="AKt-8R-rzH"/>
+                        <outlet property="durationRangeView" destination="bao-SZ-oqu" id="llJ-rB-iPh"/>
+                        <outlet property="featuresMatrixView" destination="Avc-M1-Ez5" id="qBv-2z-AKQ"/>
+                        <outlet property="ipTypeGroupedView" destination="AcD-ei-2QD" id="vYB-nN-PeI"/>
+                        <outlet property="offerTypeGroupedView" destination="FKy-Xp-w8T" id="giu-Gq-5BE"/>
                         <outlet property="priceRangeView" destination="jWq-DI-621" id="kgh-3A-jpA"/>
+                        <outlet property="proxyTypeGroupedView" destination="4xx-WK-bQF" id="stR-yL-ktV"/>
                         <outlet property="scrollContentView" destination="7Fy-UT-NEg" id="rA8-6s-8ac"/>
                         <outlet property="scrollView" destination="75r-Ur-l7L" id="dje-i1-8nA"/>
                         <outlet property="searchContriesButton" destination="0Jl-v7-SBY" id="i9q-eP-y8I"/>
                         <outlet property="selectedSortOptionLabel" destination="v6v-QD-nEt" id="4IB-sg-Nuc"/>
-                        <outlet property="sortOptionsTableView" destination="V96-cR-1Gn" id="Wo0-T8-KHZ"/>
+                        <outlet property="slaRangeView" destination="MVB-Fi-0h1" id="sBw-ej-5OV"/>
+                        <outlet property="sortArrowImage" destination="TXB-Tg-GcV" id="er9-aX-OeZ"/>
+                        <outlet property="sortButton" destination="Sj9-RZ-13D" id="r6G-Bl-InT"/>
+                        <outlet property="sortPickerHeightConstraint" destination="jC2-1i-DPu" id="xeP-FQ-sl7"/>
+                        <outlet property="sortPickerTopConstraint" destination="TRt-Py-k2R" id="yMd-Jx-jWk"/>
+                        <outlet property="sortPickerView" destination="z4K-ky-WNv" id="aTz-NF-7R6"/>
                         <outlet property="topSeparatorConstraint" destination="671-ZB-lkK" id="bRg-5w-ZLP"/>
                         <outlet property="topSeparatorView" destination="Twf-lh-MiP" id="Wbp-0q-4I5"/>
                         <outlet property="topView" destination="SvP-jy-BFj" id="mi2-zU-uoh"/>
+                        <outlet property="trafficRangeView" destination="bGF-Ee-CaU" id="Vp4-4v-e9z"/>
                         <outlet property="worldwideLabel" destination="3pD-12-gnS" id="0yy-hT-Yy0"/>
                     </connections>
                 </viewController>

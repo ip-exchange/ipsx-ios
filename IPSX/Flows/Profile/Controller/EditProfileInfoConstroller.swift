@@ -109,7 +109,7 @@ class EditProfileInfoConstroller: UIViewController {
         retrieveUserInfo()
         
         // After Logout
-        if UserManager.shared.userCountries == nil {
+        if UserManager.shared.allCountries == nil {
             
             loadingView?.startAnimating()
             UserInfoService().getUserCountryList(completionHandler: { result in
@@ -117,7 +117,7 @@ class EditProfileInfoConstroller: UIViewController {
                 self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let countryList):
-                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    UserManager.shared.allCountries = countryList as? [[String: String]]
                     DispatchQueue.main.async { self.updateFields() }
                     
                 case .failure(_):

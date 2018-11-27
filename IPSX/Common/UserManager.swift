@@ -21,7 +21,7 @@ public class UserManager: NSObject {
     var userInfo: UserInfo?
     var tokenRequests: [TokenRequest]?
     var ethAddresses: [EthAddress]?
-    var userCountries: [[String: String]]?
+    var allCountries: [[String: String]]?
     var generalSettings: GeneralSettings?
     var company: Company?
     var providerSubmissionStatus: ProviderStatus?
@@ -174,7 +174,7 @@ public class UserManager: NSObject {
         email = ""
         password = ""
         tokenRequests = nil
-        userCountries = nil
+        allCountries = nil
         ethAddresses = nil
         userInfo = nil
         company = nil
@@ -187,7 +187,7 @@ public class UserManager: NSObject {
     func getUserCountryList() -> [String] {
         
         var countryArray: [String] = []
-        if let countries = UserManager.shared.userCountries {
+        if let countries = UserManager.shared.allCountries {
             for country in countries {
                 if let key = country.keys.first, let countryName = country[key] {
                     countryArray.append(countryName)
@@ -200,7 +200,7 @@ public class UserManager: NSObject {
     func getCountryId(countryName: String?) -> String? {
         
         var countryID: String?
-        if let countries = UserManager.shared.userCountries {
+        if let countries = UserManager.shared.allCountries {
             for country in countries {
                 if let key = country.keys.first, let value = country[key], value == countryName {
                     countryID = key
@@ -213,7 +213,7 @@ public class UserManager: NSObject {
     func getCountryName(countryID: String?) -> String? {
         
         var countryName: String?
-        if let countries = UserManager.shared.userCountries {
+        if let countries = UserManager.shared.allCountries {
             for country in countries {
                 if let key = country.keys.first, let value = country[key], key == countryID {
                     countryName = value

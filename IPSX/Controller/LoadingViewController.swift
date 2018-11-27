@@ -122,7 +122,7 @@ class LoadingViewController: UIViewController {
             self.dispatchGroup.leave()
             switch result {
             case .success(let countryList):
-                UserManager.shared.userCountries = countryList as? [[String: String]]
+                UserManager.shared.allCountries = countryList as? [[String: String]]
                 DispatchQueue.main.async { self.progressView.progress += 1 / self.noOfRequests }
             case .failure(_):
                 print("Generic Error Message".localized)

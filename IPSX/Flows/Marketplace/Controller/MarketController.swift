@@ -31,6 +31,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     let cellID = "MarketCellID"
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
+    let filtersSegueID = "FiltersSegueID"
     private var timer: Timer?
     var offers: [Offer] = [] {
         didSet {
@@ -240,6 +241,12 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                     self.countryRComponent.contentTextField?.text = selectedCountry
                     self.submitCountryButton.isEnabled = true
                 }
+            }
+        case filtersSegueID:
+            let navController = segue.destination as? UINavigationController
+            let filterController = navController?.viewControllers.first as? MarketFilterController
+            filterController?.onApplyFilters = { filtersDic in
+                print("Filters: --->\n\(filtersDic)\nFilters: <---")
             }
         default: break
         }
