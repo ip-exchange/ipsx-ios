@@ -11,10 +11,10 @@ import IPSXNetworkingFramework
 
 class MarketplaceService {
     
-    func retrieveOffers(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func retrieveOffers(filters: [String: Any]? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = [:] //TODO for filters
-        let request = createRequest(requestType: RequestType.getOffers, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getOffers, urlParams: urlParams, filters: filters)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

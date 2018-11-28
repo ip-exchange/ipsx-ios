@@ -19,15 +19,15 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var countryViewYAxiscenter: NSLayoutConstraint!
     @IBOutlet weak var countryRComponent: RichTextFieldView!
     @IBOutlet weak var submitCountryButton: UIButton!
+    @IBOutlet weak var filtersImage: UIImageView!
+    @IBOutlet weak var filtersTitleLabel: UILabel!
+    @IBOutlet weak var filtersCounterLabel: UILabel!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-    
-    @IBOutlet weak var filtersImage: UIImageView!
-    @IBOutlet weak var filtersTitleLabel: UILabel!
-    @IBOutlet weak var filtersCounterLabel: UILabel!
     
     public var filtersDictionary: [String:Any] = [:] {
         didSet {
@@ -37,15 +37,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             filtersCounterLabel.text = "\(filtersDictionary.values.count) \(tailString)"
         }
     }
-
-    var toast: ToastAlertView?
-    var topConstraint: NSLayoutConstraint?
-    var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    let cellID = "MarketCellID"
-    let countrySelectionID = "CountrySearchSegueID"
-    let marketItemID = "MarketItemSegueID"
-    let filtersSegueID = "FiltersSegueID"
-    private var timer: Timer?
     var offers: [Offer] = [] {
         didSet {
             DispatchQueue.main.async { self.tableView.reloadData() }
@@ -58,10 +49,18 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             }
         }
     }
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+    var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    let cellID = "MarketCellID"
+    let countrySelectionID = "CountrySearchSegueID"
+    let marketItemID = "MarketItemSegueID"
+    let filtersSegueID = "FiltersSegueID"
+    private var timer: Timer?
     var selectedOffer: Offer?
     var shouldRefreshIp = true
-    
     private var tutorialPresented = false
+    var filters: [Filter]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,7 +189,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     func loadOffers() {
         
         loadingView?.startAnimating()
-        MarketplaceService().retrieveOffers(completionHandler: { result in
+        MarketplaceService().retrieveOffers(filters: filtersDictionary, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -340,3 +339,4 @@ extension MarketController: ErrorPresentable {
         }
     }
 }
+

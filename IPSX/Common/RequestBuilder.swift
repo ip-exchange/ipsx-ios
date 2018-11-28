@@ -175,7 +175,7 @@ public struct Url {
     public static let offersArgs             = "/offers/search"
 }
 
-func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "") -> Request {
+func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
     
     let body = JSON(bodyParams)
     var url: String = ""
@@ -326,7 +326,7 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         break
     }
     
-    return Request(url: url, httpMethod: httpMethod, contentType: contentType, body:body, requestType: requestType)
+    return Request(url: url, httpMethod: httpMethod, contentType: contentType, body:body, requestType: requestType, filters: filters)
 }
 
 

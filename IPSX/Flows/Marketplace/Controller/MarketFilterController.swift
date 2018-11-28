@@ -198,8 +198,8 @@ class MarketFilterController: UIViewController {
         }
         offerTypeGroupedView.onNewState = { activeState, values in
             var vals: [String] = []
-            if values.first { vals.append("single")}
-            if values.second { vals.append("group")}
+            if values.first { vals.append("group")}
+            if values.second { vals.append("single")}
             self.updateFiltersDictionary(activeState: activeState, key: "offer_type", values: vals)
         }
         featuresMatrixView.onNewState = { activeState, values in
@@ -260,7 +260,6 @@ class MarketFilterController: UIViewController {
         }
     }
     
-
     private func updatePickerUI(visible: Bool, animated: Bool = true) {
         
         sortButton.isSelected = visible
