@@ -31,9 +31,6 @@ class RangeView: UIView {
     private var actualUp: Double = 0
     
     public var onNewState: ((_ state: Bool, _ values: (low: Double, high: Double))->())?
-    public func getData() -> (low: Double, high: Double) {
-        return (actualLow, actualUp)
-    }
     
     public func reset() {
         

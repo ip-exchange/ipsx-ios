@@ -11,7 +11,7 @@ import UIKit
 
 class MarketFilterController: UIViewController {
     
-    @IBOutlet weak var activeFiltersConterLabel: UILabel!
+    @IBOutlet weak var activeFiltersConterLabel: UILabel?
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollContentView: UIView!
     @IBOutlet weak var countriesCollectionView: UICollectionView!
@@ -47,11 +47,7 @@ class MarketFilterController: UIViewController {
     
     //MARK: Public properties
     public var filtersDictionary: [String:Any] = [:] {
-        didSet {
-            activeFiltersConterLabel.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
-            let tailString = filtersDictionary.values.count == 1 ? "Filter active".localized : "Filters active".localized
-            activeFiltersConterLabel.text = "\(filtersDictionary.values.count) \(tailString)"
-        }
+        didSet { updateCounterUI() }
     }
     public var onApplyFilters: ((_ filtersDic: [String:Any])->())?
 
@@ -59,10 +55,19 @@ class MarketFilterController: UIViewController {
     fileprivate let searchSegueID = "SearchCountriesSegueID"
     fileprivate let reuseIdentifier = "CountryCellID"
     fileprivate let unwindToMarketID = "UnwindToMarketSegueID"
-    fileprivate var selectedCountries:[String] = []
+    fileprivate var selectedCountries:[String] = [] {
+        didSet {
+            if selectedCountries.count > 0 {
+                filtersDictionary["location"] = selectedCountries
+            } else {
+                filtersDictionary.removeValue(forKey: "location")
+            }
+            worldwideLabel.isHidden = selectedCountries.count > 0
+            countriesCollectionView.reloadData()
+        }
+    }
     fileprivate var availableCountries:[String] = []
 
-    //date, random, traffic, duration, cost (DESC, ASC)
     fileprivate let sortingOptions = [
                                       (title: "Random Descending".localized,   filterKey: "random", orderKey: "DESC"),
                                       (title: "Random Ascending".localized,    filterKey: "random", orderKey: "ASC"),
@@ -81,13 +86,27 @@ class MarketFilterController: UIViewController {
     //MARK: viewcontroller delegates
     override func viewDidLoad() {
         super.viewDidLoad()
-        activeFiltersConterLabel.text = "\(filtersDictionary.values.count) Filters active"
+        activeFiltersConterLabel?.text = "\(filtersDictionary.values.count) Filters active"
+        activeFiltersConterLabel?.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
         observeSliders()
+        observeGroupedViews()
         updatePickerUI(visible: false, animated: false)
         selectedSortOptionLabel.text = sortingOptions[defaultSortIndex].title
         if let countries = UserManager.shared.allCountries  {
             availableCountries = countries.map { item in
                 return item.values.first ?? ""}
+        }
+        loadFilterValues()
+    }
+    
+    private func loadFilterValues() {
+        if let selCountries = filtersDictionary["location"] as? [String], selCountries.count > 0 {
+            selectedCountries = selCountries
+        }
+        if let sortDic = filtersDictionary["sort"] as? [String:Any], let sortRow = sortDic["sort_row"] as? Int {
+            defaultSortSelected = true
+            sortPickerView.selectRow(sortRow, inComponent: 0, animated: false)
+            selectedSortOptionLabel.text = sortingOptions[sortRow].title
         }
     }
     
@@ -129,6 +148,11 @@ class MarketFilterController: UIViewController {
     
     @IBAction func resetFilters(_ sender: Any) {
         resetSliders()
+        resetGroupedViews()
+        selectedCountries = []
+        selectedSortOptionLabel.text = sortingOptions[defaultSortIndex].title
+        sortPickerView.selectRow(defaultSortIndex, inComponent: 0, animated: true)
+        filtersDictionary.removeValue(forKey: "sort")
     }
     
     @IBAction func applyFilters(_ sender: Any) {
@@ -146,17 +170,60 @@ class MarketFilterController: UIViewController {
         bandwithRangeView.reset()
     }
     
+    private func resetGroupedViews() {
+        ipTypeGroupedView.reset()
+        proxyTypeGroupedView.reset()
+        offerTypeGroupedView.reset()
+        featuresMatrixView.reset()
+    }
+    
     private func observeSliders() {
         priceRangeView.onNewState = { activeState, values in
-            if activeState {
-                self.filtersDictionary["price"] = ["min_price":Int(values.low), "max_price":Int(values.high)]
-            }
-            else {
-                self.filtersDictionary.removeValue(forKey: "price")
-            }
+            self.updateFiltersDictionary(activeState: activeState, key: "price", values: ["min_price":Int(values.low), "max_price":Int(values.high)])
+        }
+        durationRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "duration", values: ["min_duration":Int(values.low), "max_duration":Int(values.high)])
+        }
+        trafficRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "traffic", values: ["min_traffic":Int(values.low), "max_traffic":Int(values.high)])
+        }
+        slaRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "sla", values: ["min_sla":Int(values.low), "max_sla":Int(values.high)])
+        }
+        bandwithRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "bandwidth", values: ["min_bandwidth":Int(values.low), "max_bandwidth":Int(values.high)])
         }
     }
     
+    private func observeGroupedViews() {
+        ipTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("4")}
+            if values.second { vals.append("6")}
+            self.updateFiltersDictionary(activeState: activeState, key: "ip_type", values: vals)
+        }
+        proxyTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("dedicated")}
+            if values.second { vals.append("shared")}
+            self.updateFiltersDictionary(activeState: activeState, key: "proxy_type", values: vals)
+        }
+        offerTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("single")}
+            if values.second { vals.append("group")}
+            self.updateFiltersDictionary(activeState: activeState, key: "offer_type", values: vals)
+        }
+        featuresMatrixView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.r1c1 { vals.append("http(s)")}
+            if values.r1c2 { vals.append("socks5")}
+            if values.r2c1 { vals.append("vpn")}
+            if values.r2c2 { vals.append("shadowsocks")}
+            self.updateFiltersDictionary(activeState: activeState, key: "features", values: vals)
+        }
+    }
+
     private func updatePickerUI(visible: Bool, animated: Bool = true) {
         
         sortButton.isSelected = visible
@@ -171,6 +238,20 @@ class MarketFilterController: UIViewController {
         }
     }
     
+    private func updateCounterUI() {
+        activeFiltersConterLabel?.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
+        let tailString = filtersDictionary.values.count == 1 ? "Filter active".localized : "Filters active".localized
+        activeFiltersConterLabel?.text = "\(filtersDictionary.values.count) \(tailString)"
+    }
+
+    private func updateFiltersDictionary(activeState: Bool, key: String, values: Any) {
+        if activeState {
+            self.filtersDictionary[key] = values
+        }
+        else {
+            self.filtersDictionary.removeValue(forKey: key)
+        }
+    }
 }
 
 
@@ -195,7 +276,7 @@ extension MarketFilterController: UIPickerViewDelegate {
         if row == defaultSortIndex {
             filtersDictionary.removeValue(forKey: "sort")
         } else {
-            filtersDictionary["sort"] = ["sort_criteria":sortingOptions[row].filterKey, "sort_order":sortingOptions[row].orderKey]
+            filtersDictionary["sort"] = ["sort_criteria":sortingOptions[row].filterKey, "sort_order":sortingOptions[row].orderKey, "sort_row": row]
         }
     }
 }
