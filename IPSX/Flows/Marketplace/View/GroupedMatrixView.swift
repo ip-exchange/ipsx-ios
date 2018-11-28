@@ -27,6 +27,22 @@ class GroupedMatrixView: UIView {
     
     public var onNewState: ((_ state: Bool, _ values: (r1c1: Bool, r1c2: Bool, r2c1: Bool, r2c2: Bool))->())?
     
+    public func updateSelection(r1c1: Bool, r1c2: Bool, r2c1: Bool, r2c2: Bool) {
+        buttonR1C1.isSelected = r1c1
+        buttonR1C2.isSelected = r1c2
+        buttonR2C1.isSelected = r2c1
+        buttonR2C2.isSelected = r2c2
+        imageR1C1.tintColor = r1c1 ? UIColor.lightBlue : UIColor.darkGray
+        labelR1C1.textColor = r1c1 ? UIColor.lightBlue : UIColor.darkGray
+        imageR1C2.tintColor = r1c2 ? UIColor.lightBlue : UIColor.darkGray
+        labelR1C2.textColor = r1c2 ? UIColor.lightBlue : UIColor.darkGray
+        imageR2C1.tintColor = r2c1 ? UIColor.lightBlue : UIColor.darkGray
+        labelR2C1.textColor = r2c1 ? UIColor.lightBlue : UIColor.darkGray
+        imageR2C2.tintColor = r2c2 ? UIColor.lightBlue : UIColor.darkGray
+        labelR2C2.textColor = r2c2 ? UIColor.lightBlue : UIColor.darkGray
+        onNewState?(isAnySelected(), (buttonR1C1.isSelected, buttonR1C2.isSelected, buttonR2C1.isSelected, buttonR2C2.isSelected))
+    }
+
     public func reset() {
         buttonR1C1.isSelected = false
         buttonR1C2.isSelected = false

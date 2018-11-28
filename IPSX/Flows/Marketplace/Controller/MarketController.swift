@@ -33,8 +33,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         didSet {
             filtersCounterLabel.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
             filtersTitleLabel.text =  filtersDictionary.values.count == 1 ? "Filter".localized : "Filters".localized
-            filtersTitleLabel.textColor = filtersCounterLabel.textColor
-            filtersImage.tintColor = filtersCounterLabel.textColor
             let tailString = "active".localized
             filtersCounterLabel.text = "\(filtersDictionary.values.count) \(tailString)"
         }
@@ -310,30 +308,6 @@ extension MarketController: UITableViewDelegate {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: self.marketItemID, sender: self)
         }
-
-//        tableView.deselectRow(at: indexPath, animated: false)
-//
-//        if let proxyPack = proxyPacks?[indexPath.row] {
-//            self.selectedPack = proxyPack
-//        }
-//
-//        let balanceValue = UserManager.shared.userInfo?.balance ?? 0
-//        let packagePrice = Double(self.selectedPack?.price ?? "0") ?? 0
-//
-//        if balanceValue >= packagePrice {
-//
-//            switch ReachabilityManager.shared.connectionType {
-//            case .wifi:
-//                self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
-//            case .cellular:
-//                self.errorMessage = "Connect to WiFi network message".localized
-//            case .none:
-//                self.errorMessage = "No internet connection".localized
-//            }
-//        }
-//        else {
-//            self.errorMessage = "Insufficient Balance Error Message".localized
-//        }
     }
 }
 
