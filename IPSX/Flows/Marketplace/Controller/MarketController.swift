@@ -60,7 +60,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var selectedOffer: Offer?
     var shouldRefreshIp = true
     private var tutorialPresented = false
-    var filters: [Filter]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
