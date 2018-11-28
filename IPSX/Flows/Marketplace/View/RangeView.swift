@@ -43,6 +43,31 @@ class RangeView: UIView {
         actualUp = upperVal
     }
     
+    public func updateSlider(lower: Double, upper: Double, moveThumbs: Bool = true) {
+        
+        let low = lower * self.maxVal
+        let  up = upper * self.maxVal
+        
+        if moveThumbs {
+            rangeSlider?.lowerValue = (low / maxVal)
+            rangeSlider?.upperValue = (up / maxVal)
+        }
+        
+        self.actualLow = low
+        self.actualUp = up
+        
+        self.minValueLabel?.text = String(format: "%.\(self.decimals)f", low)
+        self.maxValueLabel?.text = String(format: "%.\(self.decimals)f", up)
+        
+        if low == self.minVal, up == self.maxVal {
+            self.rangeSlider?.trackHighlightTintColor = UIColor(white: 221/255.0, alpha: 0.5)
+            self.onNewState?(false, (self.actualLow, self.actualUp))
+        } else {
+            self.rangeSlider?.trackHighlightTintColor = UIColor.lightBlue
+            self.onNewState?(true, (self.actualLow, self.actualUp))
+        }
+    }
+    
     override func awakeFromNib() {
         
         rangeSlider?.backgroundColor = .clear
@@ -61,22 +86,7 @@ class RangeView: UIView {
         actualUp = upperVal
         
         rangeSlider?.onValueChange = { lower, upper in
-            let low = lower * self.maxVal
-            let  up = upper * self.maxVal
-            
-            self.actualLow = low
-            self.actualUp = up
-            
-            self.minValueLabel?.text = String(format: "%.\(self.decimals)f", low)
-            self.maxValueLabel?.text = String(format: "%.\(self.decimals)f", up)
-            
-            if low == self.minVal, up == self.maxVal {
-                self.rangeSlider?.trackHighlightTintColor = UIColor(white: 221/255.0, alpha: 0.5)
-                self.onNewState?(false, (self.actualLow, self.actualUp))
-            } else {
-                self.rangeSlider?.trackHighlightTintColor = UIColor.lightBlue
-                self.onNewState?(true, (self.actualLow, self.actualUp))
-            }
+            self.updateSlider(lower: lower, upper: upper, moveThumbs: false)
         }
     }
     

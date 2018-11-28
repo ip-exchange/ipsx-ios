@@ -99,17 +99,6 @@ class MarketFilterController: UIViewController {
         loadFilterValues()
     }
     
-    private func loadFilterValues() {
-        if let selCountries = filtersDictionary["location"] as? [String], selCountries.count > 0 {
-            selectedCountries = selCountries
-        }
-        if let sortDic = filtersDictionary["sort"] as? [String:Any], let sortRow = sortDic["sort_row"] as? Int {
-            defaultSortSelected = true
-            sortPickerView.selectRow(sortRow, inComponent: 0, animated: false)
-            selectedSortOptionLabel.text = sortingOptions[sortRow].title
-        }
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
@@ -223,6 +212,55 @@ class MarketFilterController: UIViewController {
             self.updateFiltersDictionary(activeState: activeState, key: "features", values: vals)
         }
     }
+
+    private func loadFilterValues() {
+        if let selCountries = filtersDictionary["location"] as? [String], selCountries.count > 0 {
+            selectedCountries = selCountries
+        }
+        if let sortDic = filtersDictionary["sort"] as? [String:Any], let sortRow = sortDic["sort_row"] as? Int {
+            defaultSortSelected = true
+            sortPickerView.selectRow(sortRow, inComponent: 0, animated: false)
+            selectedSortOptionLabel.text = sortingOptions[sortRow].title
+        }
+        if let prices = filtersDictionary["price"] as? [String:Int], let min = prices["min_price"], let max = prices["max_price"] {
+            priceRangeView.updateSlider(lower: Double(min) / priceRangeView.maxVal, upper: Double(max) / priceRangeView.maxVal)
+        }
+        if let durations = filtersDictionary["duration"] as? [String:Int], let min = durations["min_duration"], let max = durations["max_duration"] {
+            durationRangeView.updateSlider(lower: Double(min) / durationRangeView.maxVal, upper: Double(max) / durationRangeView.maxVal)
+        }
+        if let traffics = filtersDictionary["traffic"] as? [String:Int], let min = traffics["min_traffic"], let max = traffics["max_traffic"] {
+            trafficRangeView.updateSlider(lower: Double(min) / trafficRangeView.maxVal, upper: Double(max) / trafficRangeView.maxVal)
+        }
+        if let slas = filtersDictionary["sla"] as? [String:Int], let min = slas["min_sla"], let max = slas["max_sla"] {
+            slaRangeView.updateSlider(lower: Double(min) / slaRangeView.maxVal, upper: Double(max) / slaRangeView.maxVal)
+        }
+        if let bandwiths = filtersDictionary["bandwidth"] as? [String:Int], let min = bandwiths["min_bandwidth"], let max = bandwiths["max_bandwidth"] {
+            bandwithRangeView.updateSlider(lower: Double(min) / bandwithRangeView.maxVal, upper: Double(max) / bandwithRangeView.maxVal)
+        }
+        if let offertypes = filtersDictionary["ip_type"] as? [String] {
+            let first = offertypes.contains("4")
+            let secound = offertypes.contains("6")
+            ipTypeGroupedView.updateSelection(first: first, second: secound)
+        }
+        if let offertypes = filtersDictionary["offer_type"] as? [String] {
+            let first = offertypes.contains("single")
+            let secound = offertypes.contains("group")
+            offerTypeGroupedView.updateSelection(first: first, second: secound)
+        }
+        if let offertypes = filtersDictionary["proxy_type"] as? [String] {
+            let first = offertypes.contains("dedicated")
+            let secound = offertypes.contains("shared")
+            proxyTypeGroupedView.updateSelection(first: first, second: secound)
+        }
+        if let features = filtersDictionary["features"] as? [String] {
+            let r1c1 = features.contains("http(s)")
+            let r1c2 = features.contains("socks5")
+            let r2c1 = features.contains("vpn")
+            let r2c2 = features.contains("shadowsocks")
+            featuresMatrixView.updateSelection(r1c1: r1c1, r1c2: r1c2, r2c1: r2c1, r2c2: r2c2)
+        }
+    }
+    
 
     private func updatePickerUI(visible: Bool, animated: Bool = true) {
         

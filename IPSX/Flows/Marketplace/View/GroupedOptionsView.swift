@@ -15,6 +15,12 @@ class GroupedOptionsView: UIView {
 
     public var onNewState: ((_ state: Bool, _ values: (first: Bool, second: Bool))->())?
     
+    public func updateSelection(first: Bool, second: Bool) {
+        firstOption.isSelected = first
+        secondOption.isSelected = second
+        onNewState?((firstOption.isSelected || secondOption.isSelected), (firstOption.isSelected, secondOption.isSelected))
+    }
+    
     public func reset() {
         firstOption.isSelected = false
         secondOption.isSelected = false
@@ -23,17 +29,11 @@ class GroupedOptionsView: UIView {
     
     @IBAction func firstOptionAction(_ sender: UIButton) {
         firstOption.isSelected = !firstOption.isSelected
-        if firstOption.isSelected {
-            secondOption.isSelected = false
-        }
         onNewState?((firstOption.isSelected || secondOption.isSelected), (firstOption.isSelected, secondOption.isSelected))
     }
     
     @IBAction func secondOptionAction(_ sender: Any) {
         secondOption.isSelected = !secondOption.isSelected
-        if secondOption.isSelected {
-            firstOption.isSelected = false
-        }
         onNewState?((firstOption.isSelected || secondOption.isSelected), (firstOption.isSelected, secondOption.isSelected))
     }
     
