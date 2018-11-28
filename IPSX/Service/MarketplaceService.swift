@@ -87,7 +87,7 @@ class MarketplaceService {
         return proxies
     }
     
-    /// Example of Return: ["http(s)", "socks5", "shadowsocks", "vpn"]
+    /// Example of Return: ["HTTP(s)", "SOCKS5", "VPN", "Shadowsocks"] 
     private func parseFeatures(featuresJsonArray: [JSON]) -> [String] {
         
         var features: [String] = []
