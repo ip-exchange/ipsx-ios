@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MarketFilterController: UIViewController {
     
     @IBOutlet weak var activeFiltersConterLabel: UILabel?
@@ -49,6 +48,7 @@ class MarketFilterController: UIViewController {
     public var filtersDictionary: [String:Any] = [:] {
         didSet { updateCounterUI() }
     }
+    
     public var onApplyFilters: ((_ filtersDic: [String:Any])->())?
 
     //MARK: internal kictchen
@@ -85,6 +85,7 @@ class MarketFilterController: UIViewController {
     
     //MARK: viewcontroller delegates
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         activeFiltersConterLabel?.text = "\(filtersDictionary.values.count) Filters active"
         activeFiltersConterLabel?.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
@@ -135,7 +136,6 @@ class MarketFilterController: UIViewController {
         }
     }
     
-    
     //MARK: UIControls actions
     @IBAction func sortByAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -159,7 +159,6 @@ class MarketFilterController: UIViewController {
         self.onApplyFilters?(filtersDictionary)
         self.performSegue(withIdentifier: unwindToMarketID, sender: self)
     }
-    
     
     //MARK: Internal logic
     private func resetSliders() {
@@ -254,7 +253,6 @@ class MarketFilterController: UIViewController {
     }
 }
 
-
 extension MarketFilterController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -280,7 +278,6 @@ extension MarketFilterController: UIPickerViewDelegate {
         }
     }
 }
-
 
 //MARK: Countries collectionview delegate and datasource
 extension MarketFilterController: UICollectionViewDataSource {
@@ -325,7 +322,6 @@ extension MarketFilterController: UICollectionViewDelegateFlowLayout {
         return  CGSize(width: strigSize.width + 40, height: 40)
     }
 }
-
 
 //MARK: Toast alert protocol
 extension MarketFilterController: ToastAlertViewPresentable {

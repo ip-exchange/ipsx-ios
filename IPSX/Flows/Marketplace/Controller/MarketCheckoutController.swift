@@ -10,7 +10,6 @@ import UIKit
 
 class MarketCheckoutController: UIViewController {
 
-    
     @IBOutlet weak var activationInfoAttributedLabel: UILabel!
     
     private let unwindToMarketSegueID = "UnwindToMarketSegueID"

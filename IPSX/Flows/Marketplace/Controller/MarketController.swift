@@ -25,7 +25,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    
     @IBOutlet weak var filtersImage: UIImageView!
     @IBOutlet weak var filtersTitleLabel: UILabel!
     @IBOutlet weak var filtersCounterLabel: UILabel!

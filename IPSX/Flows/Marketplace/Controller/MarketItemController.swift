@@ -95,7 +95,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
             self.cartOverlayView.alpha = visible ? 1 : 0
         })
     }
-
 }
 
 extension MarketItemController: UICollectionViewDataSource {
@@ -129,7 +128,6 @@ class CenteringFlowLayout: UICollectionViewFlowLayout {
                 candidate = layoutAttributes
             }
         }
-        
         return CGPoint(x: candidate.center.x - collectionView.bounds.width / 2, y: proposedContentOffset.y)
     }
     

@@ -23,7 +23,6 @@ class MarketCartController: UIViewController {
     @IBAction func checkout(_ sender: Any) {
         performSegue(withIdentifier: checkoutSegueID, sender: self)
     }
-    
 }
 
 extension MarketCartController: UITableViewDataSource {
