@@ -135,7 +135,7 @@ class EditProfileController: UIViewController {
         updateReachabilityInfo()
 
         // After Logout
-        if UserManager.shared.userCountries == nil {
+        if UserManager.shared.allCountries == nil {
             
             loadingView?.startAnimating()
             UserInfoService().getUserCountryList(completionHandler: { result in
@@ -143,7 +143,7 @@ class EditProfileController: UIViewController {
                 self.loadingView?.stopAnimating()
                 switch result {
                 case .success(let countryList):
-                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    UserManager.shared.allCountries = countryList as? [[String: String]]
                     DispatchQueue.main.async { self.configureUI() }
                     
                 case .failure(_):

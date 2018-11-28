@@ -25,12 +25,29 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
+    
+    @IBOutlet weak var filtersImage: UIImageView!
+    @IBOutlet weak var filtersTitleLabel: UILabel!
+    @IBOutlet weak var filtersCounterLabel: UILabel!
+    
+    public var filtersDictionary: [String:Any] = [:] {
+        didSet {
+            filtersCounterLabel.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
+            filtersTitleLabel.text =  filtersDictionary.values.count == 1 ? "Filter".localized : "Filters".localized
+            filtersTitleLabel.textColor = filtersCounterLabel.textColor
+            filtersImage.tintColor = filtersCounterLabel.textColor
+            let tailString = "active".localized
+            filtersCounterLabel.text = "\(filtersDictionary.values.count) \(tailString)"
+        }
+    }
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     let cellID = "MarketCellID"
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
+    let filtersSegueID = "FiltersSegueID"
     private var timer: Timer?
     var offers: [Offer] = [] {
         didSet {
@@ -240,6 +257,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                     self.countryRComponent.contentTextField?.text = selectedCountry
                     self.submitCountryButton.isEnabled = true
                 }
+            }
+        case filtersSegueID:
+            let navController = segue.destination as? UINavigationController
+            let filterController = navController?.viewControllers.first as? MarketFilterController
+            filterController?.filtersDictionary = self.filtersDictionary
+            filterController?.onApplyFilters = { filtersDic in
+                print("Filters: --->\n\(filtersDic)\nFilters: <---")
+                self.filtersDictionary = filtersDic
             }
         default: break
         }

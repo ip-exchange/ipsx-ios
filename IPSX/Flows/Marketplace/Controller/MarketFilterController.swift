@@ -8,44 +8,105 @@
 
 import UIKit
 
-class MarketFilterController: UIViewController {
 
+class MarketFilterController: UIViewController {
     
-    
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var topSeparatorView: UIView!
-    
+    @IBOutlet weak var activeFiltersConterLabel: UILabel?
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollContentView: UIView!
+    @IBOutlet weak var countriesCollectionView: UICollectionView!
+    @IBOutlet weak var countriesCollectionViewLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var searchContriesButton: UIButton!
+    @IBOutlet weak var worldwideLabel: RoundedView!
+    @IBOutlet weak var sortPickerView: UIPickerView!
+    @IBOutlet weak var sortPickerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sortPickerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sortArrowImage: UIImageView!
+    @IBOutlet weak var sortButton: UIButton!
     
+    //MARK: filter values related outlets
+    @IBOutlet weak var selectedSortOptionLabel: UILabel!
+    @IBOutlet weak var priceRangeView: RangeView!
+    @IBOutlet weak var durationRangeView: RangeView!
+    @IBOutlet weak var trafficRangeView: RangeView!
+    @IBOutlet weak var slaRangeView: RangeView!
+    @IBOutlet weak var bandwithRangeView: RangeView!
+    @IBOutlet weak var ipTypeGroupedView: GroupedOptionsView!
+    @IBOutlet weak var proxyTypeGroupedView: GroupedOptionsView!
+    @IBOutlet weak var offerTypeGroupedView: GroupedOptionsView!
+    @IBOutlet weak var featuresMatrixView: GroupedMatrixView!
+    
+    //MARK: toast alert outlets and vars
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet { topConstraint = topSeparatorConstraint }
     }
-    
-    @IBOutlet weak var sortOptionsTableView: UITableView!
-    @IBOutlet weak var selectedSortOptionLabel: UILabel!
-    @IBOutlet weak var countriesCollectionView: UICollectionView!
-    @IBOutlet weak var countriesCollectionViewLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var priceRangeView: RangeView!
-    @IBOutlet weak var searchContriesButton: UIButton!
-    @IBOutlet weak var worldwideLabel: RoundedView!
-    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    
+    //MARK: Public properties
+    public var filtersDictionary: [String:Any] = [:] {
+        didSet { updateCounterUI() }
+    }
+    public var onApplyFilters: ((_ filtersDic: [String:Any])->())?
 
-    private let searchSegueID = "SearchCountriesSegueID"
-    
+    //MARK: internal kictchen
+    fileprivate let searchSegueID = "SearchCountriesSegueID"
     fileprivate let reuseIdentifier = "CountryCellID"
-    
-    fileprivate var selectedCountries:[String] = []
+    fileprivate let unwindToMarketID = "UnwindToMarketSegueID"
+    fileprivate var selectedCountries:[String] = [] {
+        didSet {
+            if selectedCountries.count > 0 {
+                filtersDictionary["location"] = selectedCountries
+            } else {
+                filtersDictionary.removeValue(forKey: "location")
+            }
+            worldwideLabel.isHidden = selectedCountries.count > 0
+            countriesCollectionView.reloadData()
+        }
+    }
     fileprivate var availableCountries:[String] = []
+
+    fileprivate let sortingOptions = [
+                                      (title: "Random Descending".localized,   filterKey: "random", orderKey: "DESC"),
+                                      (title: "Random Ascending".localized,    filterKey: "random", orderKey: "ASC"),
+                                      (title: "Traffic Descending".localized,  filterKey: "traffic", orderKey: "DESC"),
+                                      (title: "Traffic Ascending".localized,   filterKey: "traffic", orderKey: "ASC"),
+                                      (title: "Date Descending".localized,     filterKey: "date", orderKey: "DESC"),
+                                      (title: "Date Ascending".localized,      filterKey: "date", orderKey: "ASC"),
+                                      (title: "Duration Descending".localized, filterKey: "duration", orderKey: "DESC"),
+                                      (title: "Duration Ascending".localized,  filterKey: "duration", orderKey: "ASC"),
+                                      (title: "Cost Descending".localized,     filterKey: "cost", orderKey: "DESC"),
+                                      (title: "Cost Ascending".localized,      filterKey: "cost", orderKey: "ASC")
+    ]
+    private let defaultSortIndex = 4
+    private var defaultSortSelected = false
     
-    fileprivate let sortingOptions = ["Descending SLA", "Ascending SLA", "Descending Price", "Ascending Price", "Descending Duration", "Ascending Duration"]
-    
+    //MARK: viewcontroller delegates
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let countries = ProxyManager.shared.proxyCountries  {
-            availableCountries = countries
+        activeFiltersConterLabel?.text = "\(filtersDictionary.values.count) Filters active"
+        activeFiltersConterLabel?.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
+        observeSliders()
+        observeGroupedViews()
+        updatePickerUI(visible: false, animated: false)
+        selectedSortOptionLabel.text = sortingOptions[defaultSortIndex].title
+        if let countries = UserManager.shared.allCountries  {
+            availableCountries = countries.map { item in
+                return item.values.first ?? ""}
+        }
+        loadFilterValues()
+    }
+    
+    private func loadFilterValues() {
+        if let selCountries = filtersDictionary["location"] as? [String], selCountries.count > 0 {
+            selectedCountries = selCountries
+        }
+        if let sortDic = filtersDictionary["sort"] as? [String:Any], let sortRow = sortDic["sort_row"] as? Int {
+            defaultSortSelected = true
+            sortPickerView.selectRow(sortRow, inComponent: 0, animated: false)
+            selectedSortOptionLabel.text = sortingOptions[sortRow].title
         }
     }
     
@@ -60,15 +121,8 @@ class MarketFilterController: UIViewController {
         worldwideLabel.isHidden = selectedCountries.count > 0
     }
     
-    @IBAction func sortByAction(_ sender: Any) {
-        let newAlpha: CGFloat = sortOptionsTableView.alpha < 1 ? 1.0 : 0.0
-        scrollView.isScrollEnabled = newAlpha < 1.0
-        UIView.animate(withDuration: 0.25) {
-            self.sortOptionsTableView.alpha = newAlpha
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == searchSegueID {
             let searchController = segue.destination as? SearchViewController
             searchController?.countries = availableCountries
@@ -80,38 +134,155 @@ class MarketFilterController: UIViewController {
             }
         }
     }
+    
+    
+    //MARK: UIControls actions
+    @IBAction func sortByAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if !defaultSortSelected {
+            sortPickerView.selectRow(defaultSortIndex, inComponent: 0, animated: false)
+            defaultSortSelected = true
+        }
+        updatePickerUI(visible: sender.isSelected)
+    }
+    
+    @IBAction func resetFilters(_ sender: Any) {
+        resetSliders()
+        resetGroupedViews()
+        selectedCountries = []
+        selectedSortOptionLabel.text = sortingOptions[defaultSortIndex].title
+        sortPickerView.selectRow(defaultSortIndex, inComponent: 0, animated: true)
+        filtersDictionary.removeValue(forKey: "sort")
+    }
+    
+    @IBAction func applyFilters(_ sender: Any) {
+        self.onApplyFilters?(filtersDictionary)
+        self.performSegue(withIdentifier: unwindToMarketID, sender: self)
+    }
+    
+    
+    //MARK: Internal logic
+    private func resetSliders() {
+        priceRangeView.reset()
+        durationRangeView.reset()
+        trafficRangeView.reset()
+        slaRangeView.reset()
+        bandwithRangeView.reset()
+    }
+    
+    private func resetGroupedViews() {
+        ipTypeGroupedView.reset()
+        proxyTypeGroupedView.reset()
+        offerTypeGroupedView.reset()
+        featuresMatrixView.reset()
+    }
+    
+    private func observeSliders() {
+        priceRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "price", values: ["min_price":Int(values.low), "max_price":Int(values.high)])
+        }
+        durationRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "duration", values: ["min_duration":Int(values.low), "max_duration":Int(values.high)])
+        }
+        trafficRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "traffic", values: ["min_traffic":Int(values.low), "max_traffic":Int(values.high)])
+        }
+        slaRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "sla", values: ["min_sla":Int(values.low), "max_sla":Int(values.high)])
+        }
+        bandwithRangeView.onNewState = { activeState, values in
+            self.updateFiltersDictionary(activeState: activeState, key: "bandwidth", values: ["min_bandwidth":Int(values.low), "max_bandwidth":Int(values.high)])
+        }
+    }
+    
+    private func observeGroupedViews() {
+        ipTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("4")}
+            if values.second { vals.append("6")}
+            self.updateFiltersDictionary(activeState: activeState, key: "ip_type", values: vals)
+        }
+        proxyTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("dedicated")}
+            if values.second { vals.append("shared")}
+            self.updateFiltersDictionary(activeState: activeState, key: "proxy_type", values: vals)
+        }
+        offerTypeGroupedView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.first { vals.append("single")}
+            if values.second { vals.append("group")}
+            self.updateFiltersDictionary(activeState: activeState, key: "offer_type", values: vals)
+        }
+        featuresMatrixView.onNewState = { activeState, values in
+            var vals: [String] = []
+            if values.r1c1 { vals.append("http(s)")}
+            if values.r1c2 { vals.append("socks5")}
+            if values.r2c1 { vals.append("vpn")}
+            if values.r2c2 { vals.append("shadowsocks")}
+            self.updateFiltersDictionary(activeState: activeState, key: "features", values: vals)
+        }
+    }
+
+    private func updatePickerUI(visible: Bool, animated: Bool = true) {
+        
+        sortButton.isSelected = visible
+        sortArrowImage.isHidden = visible
+        sortPickerTopConstraint.constant = visible ? 0 : -60
+        sortPickerHeightConstraint.constant = visible ? 220 : 60
+        if animated {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+                self.view.layoutIfNeeded()
+            })} else {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func updateCounterUI() {
+        activeFiltersConterLabel?.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
+        let tailString = filtersDictionary.values.count == 1 ? "Filter active".localized : "Filters active".localized
+        activeFiltersConterLabel?.text = "\(filtersDictionary.values.count) \(tailString)"
+    }
+
+    private func updateFiltersDictionary(activeState: Bool, key: String, values: Any) {
+        if activeState {
+            self.filtersDictionary[key] = values
+        }
+        else {
+            self.filtersDictionary.removeValue(forKey: key)
+        }
+    }
 }
 
 
-extension MarketFilterController: UITableViewDataSource {
+extension MarketFilterController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return sortingOptions.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SortOptionCellID", for: indexPath)
-        if let sortCell = cell as? MarketFilterSortCell {
-            sortCell.sortOptionLabel.text = sortingOptions[indexPath.item]
-        }
-        return cell
-    }
 }
 
-extension MarketFilterController: UITableViewDelegate {
+extension MarketFilterController: UIPickerViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        scrollView.isScrollEnabled = true
-        selectedSortOptionLabel.text = sortingOptions[indexPath.item]
-        UIView.animate(withDuration: 0.25) {
-            self.sortOptionsTableView.alpha = 0
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return sortingOptions[row].title
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedSortOptionLabel.text = sortingOptions[row].title
+        if row == defaultSortIndex {
+            filtersDictionary.removeValue(forKey: "sort")
+        } else {
+            filtersDictionary["sort"] = ["sort_criteria":sortingOptions[row].filterKey, "sort_order":sortingOptions[row].orderKey, "sort_row": row]
         }
     }
 }
 
+
+//MARK: Countries collectionview delegate and datasource
 extension MarketFilterController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -155,6 +326,8 @@ extension MarketFilterController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+
+//MARK: Toast alert protocol
 extension MarketFilterController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {

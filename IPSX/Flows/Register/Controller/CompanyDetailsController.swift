@@ -64,13 +64,13 @@ class CompanyDetailsController: UIViewController {
 
         self.nextButton.isEnabled = self.canContinue()
         
-        if UserManager.shared.userCountries == nil {
+        if UserManager.shared.allCountries == nil {
             
             UserInfoService().getUserCountryList(completionHandler: { result in
                 
                 switch result {
                 case .success(let countryList):
-                    UserManager.shared.userCountries = countryList as? [[String: String]]
+                    UserManager.shared.allCountries = countryList as? [[String: String]]
                     
                 case .failure(_): break
                 }
