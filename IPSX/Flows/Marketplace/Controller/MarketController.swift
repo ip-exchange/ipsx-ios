@@ -29,7 +29,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    public var filtersDictionary: [String:Any] = [:] {
+    private var normalisedFiltersDictionary: [String:Any] = [:]
+    private var filtersDictionary: [String:Any] = [:] {
         didSet {
             filtersCounterLabel.textColor = filtersDictionary.values.count > 0 ? UIColor.darkBlue : .warmGrey
             filtersTitleLabel.text =  filtersDictionary.values.count == 1 ? "Filter".localized : "Filters".localized
@@ -188,7 +189,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     func loadOffers() {
         
         loadingView?.startAnimating()
-        MarketplaceService().retrieveOffers(filters: filtersDictionary, completionHandler: { result in
+        MarketplaceService().retrieveOffers(filters: normalisedFiltersDictionary, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
@@ -257,9 +258,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             let navController = segue.destination as? UINavigationController
             let filterController = navController?.viewControllers.first as? MarketFilterController
             filterController?.filtersDictionary = self.filtersDictionary
-            filterController?.onApplyFilters = { filtersDic in
-                print("Filters: --->\n\(filtersDic)\nFilters: <---")
+            filterController?.onApplyFilters = { filtersDic, normalisedDic in
+                print("Filters: --->\n\(normalisedDic)\nFilters: <---")
                 self.filtersDictionary = filtersDic
+                self.normalisedFiltersDictionary = normalisedDic
             }
         default: break
         }
