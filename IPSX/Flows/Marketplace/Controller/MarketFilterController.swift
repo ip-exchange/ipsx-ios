@@ -167,16 +167,16 @@ class MarketFilterController: UIViewController {
     
     private func observeSliders() {
         priceRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState, key: "price", values: ["min_price":Int(values.low), "max_price":Int(values.high)])
+            self.updateFiltersDictionary(activeState: activeState, key: "price", values: ["ips_min":Int(values.low), "ips_max":Int(values.high)])
         }
         durationRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState, key: "duration", values: ["min_duration":Int(values.low), "max_duration":Int(values.high)])
+            self.updateFiltersDictionary(activeState: activeState, key: "duration", values: ["duration_min":Int(values.low), "duration_max":Int(values.high)])
         }
         trafficRangeView.onNewState = { activeState, values in
             self.updateFiltersDictionary(activeState: activeState, key: "traffic", values: ["min_traffic":Int(values.low), "max_traffic":Int(values.high)])
         }
         slaRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState, key: "sla", values: ["min_sla":Int(values.low), "max_sla":Int(values.high)])
+            self.updateFiltersDictionary(activeState: activeState, key: "sla", values: ["sla_min":Int(values.low), "sla_max":Int(values.high)])
         }
         bandwithRangeView.onNewState = { activeState, values in
             self.updateFiltersDictionary(activeState: activeState, key: "bandwidth", values: ["min_bandwidth":Int(values.low), "max_bandwidth":Int(values.high)])
@@ -221,16 +221,16 @@ class MarketFilterController: UIViewController {
             sortPickerView.selectRow(sortRow, inComponent: 0, animated: false)
             selectedSortOptionLabel.text = sortingOptions[sortRow].title
         }
-        if let prices = filtersDictionary["price"] as? [String:Int], let min = prices["min_price"], let max = prices["max_price"] {
+        if let prices = filtersDictionary["price"] as? [String:Int], let min = prices["ips_min"], let max = prices["ips_max"] {
             priceRangeView.updateSlider(lower: Double(min) / priceRangeView.maxVal, upper: Double(max) / priceRangeView.maxVal)
         }
-        if let durations = filtersDictionary["duration"] as? [String:Int], let min = durations["min_duration"], let max = durations["max_duration"] {
+        if let durations = filtersDictionary["duration"] as? [String:Int], let min = durations["duration_min"], let max = durations["duration_max"] {
             durationRangeView.updateSlider(lower: Double(min) / durationRangeView.maxVal, upper: Double(max) / durationRangeView.maxVal)
         }
         if let traffics = filtersDictionary["traffic"] as? [String:Int], let min = traffics["min_traffic"], let max = traffics["max_traffic"] {
             trafficRangeView.updateSlider(lower: Double(min) / trafficRangeView.maxVal, upper: Double(max) / trafficRangeView.maxVal)
         }
-        if let slas = filtersDictionary["sla"] as? [String:Int], let min = slas["min_sla"], let max = slas["max_sla"] {
+        if let slas = filtersDictionary["sla"] as? [String:Int], let min = slas["sla_min"], let max = slas["sla_max"] {
             slaRangeView.updateSlider(lower: Double(min) / slaRangeView.maxVal, upper: Double(max) / slaRangeView.maxVal)
         }
         if let bandwiths = filtersDictionary["bandwidth"] as? [String:Int], let min = bandwiths["min_bandwidth"], let max = bandwiths["max_bandwidth"] {
