@@ -193,7 +193,7 @@ public class ToastAlertView: UIView {
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
                 self.superview?.layoutIfNeeded()
-                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height + 7 + self.extraOffest : -self.frame.size.height
+                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height - 3.5 + self.extraOffest : -self.frame.size.height
                 self.alpha = (visible) ? 1.0 : 0.0
             }, completion: {success in
                 completion?()
