@@ -11,10 +11,11 @@ import IPSXNetworkingFramework
 
 class MarketplaceService {
     
+    //MARK: Offers
+    
     func retrieveOffers(filters: [String: Any]? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let urlParams: [String: String] = [:] //TODO for filters
-        let request = createRequest(requestType: RequestType.getOffers, urlParams: urlParams, filters: filters)
+        let request = createRequest(requestType: RequestType.getOffers, filters: filters)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -99,6 +100,55 @@ class MarketplaceService {
         }
         return features
     }
-  
+    
+    //MARK: Cart
+    
+    func addToCart(offerIds: [Int], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: [Int]] = ["offer_ids": offerIds]
+        
+        let request = createRequest(requestType: RequestType.addToCart, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let json = JSON(data)
+            let items = json["items"].arrayValue
+            var offerIds: [Int] = []
+            
+            for item in items {
+                offerIds.append(item["offer_id"].intValue)
+            }
+            let usdSubtotal = json["totals"]["usd"]["subtotal"].doubleValue
+            let usdVat      = json["totals"]["usd"]["vat"].doubleValue
+            let usdTotal    = json["totals"]["usd"]["total"].doubleValue
+            
+            let ipsxSubtotal = json["totals"]["ipsx"]["subtotal"].doubleValue
+            let ipsxVat      = json["totals"]["ipsx"]["vat"].doubleValue
+            let ipsxTotal    = json["totals"]["ipsx"]["total"].doubleValue
+            
+            let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+            cart.setOffers(offerIds: offerIds)
+            completionHandler(ServiceResult.success(cart))
+        })
+    }
 }
 

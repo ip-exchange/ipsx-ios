@@ -64,6 +64,7 @@ struct RequestType {
     
     // Marketplace
     static let getOffers = "getSettings"
+    static let addToCart = "addToCart"
 }
 
 public struct KeychainKeys {
@@ -173,6 +174,10 @@ public struct Url {
     public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
     public static let offersArgs             = "/offers/search"
+    public static let addOffersArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
+    public static let getOffersArgs          = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
+    public static let deleteOffersArgs       = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
+    
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
@@ -259,6 +264,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.getOffers:
         url = (Url.baseApi + Url.offersArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
+        
+    case RequestType.addToCart:
+        url = (Url.baseApi + Url.addOffersArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
         
     //ETH addresses Requests
         
