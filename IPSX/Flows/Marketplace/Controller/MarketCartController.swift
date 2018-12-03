@@ -10,18 +10,38 @@ import UIKit
 
 class MarketCartController: UIViewController {
 
+    @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noWalletView: RoundedView!
     
     fileprivate let cellID = "MarketCellID"
     private let checkoutSegueID = "CheckoutSegueID"
+    private let addWalletSegueID = "AddWalletSegueID"
+    
+    private var hasWallet: Bool {
+        return UserManager.shared.roles?.contains(UserRoles.Requester) ?? false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.layer.cornerRadius = 5
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        checkoutButton.isEnabled = hasWallet
+        noWalletView.isHidden = hasWallet
+    }
+    
     @IBAction func checkout(_ sender: Any) {
         performSegue(withIdentifier: checkoutSegueID, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == addWalletSegueID {
+            let addWalletController = segue.destination as? WalletAddController
+            addWalletController?.shouldPop = true
+        }
     }
 }
 

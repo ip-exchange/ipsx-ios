@@ -14,7 +14,7 @@ struct FilterKeys {
     static let location = (root: "location")
     
     //root keys for sliders
-    static let price     = (root: "price",     min: "ipsx_min",      max: "ipsx_max")
+    static let price     = (root: "price",     min: "ips_min",       max: "ips_max")
     static let duration  = (root: "duration",  min: "duration_min",  max: "duration_max")
     static let traffic   = (root: "traffic",   min: "min_traffic",   max: "max_traffic")
     static let sla       = (root: "sla",       min: "sla_min",       max: "sla_max")

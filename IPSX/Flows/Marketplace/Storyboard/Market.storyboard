@@ -814,6 +814,52 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNX-b0-cvP" userLabel="No Wallet View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="15" y="102" width="344" height="49"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="bmD-ty-ztP">
+                                        <rect key="frame" x="17" y="16.666666666666671" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="Uia-sf-96y"/>
+                                            <constraint firstAttribute="height" constant="16" id="lVJ-Ch-H7q"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="You need to add your first IPSX Wallet in order to rent proxies." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xUh-Vm-Nhl">
+                                        <rect key="frame" x="49.999999999999986" y="7.9999999999999982" width="173.66666666666663" height="31.333333333333329"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khR-zK-Rgj">
+                                        <rect key="frame" x="227.66666666666666" y="0.0" width="99.333333333333343" height="49"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <state key="normal" title="ADD WALLET">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="r3g-ip-p3t" kind="show" identifier="AddWalletSegueID" id="OJz-a7-HwP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bmD-ty-ztP" firstAttribute="leading" secondItem="KNX-b0-cvP" secondAttribute="leading" constant="17" id="003-jr-Kbc"/>
+                                    <constraint firstItem="khR-zK-Rgj" firstAttribute="centerY" secondItem="KNX-b0-cvP" secondAttribute="centerY" id="AFc-Eu-7wv"/>
+                                    <constraint firstAttribute="height" constant="49" id="Drb-qf-d2g"/>
+                                    <constraint firstItem="xUh-Vm-Nhl" firstAttribute="leading" secondItem="bmD-ty-ztP" secondAttribute="trailing" constant="17" id="O8I-ZZ-4hU"/>
+                                    <constraint firstItem="xUh-Vm-Nhl" firstAttribute="top" secondItem="KNX-b0-cvP" secondAttribute="top" constant="8" id="W8Z-cE-kWr"/>
+                                    <constraint firstItem="bmD-ty-ztP" firstAttribute="centerY" secondItem="KNX-b0-cvP" secondAttribute="centerY" id="aSE-1W-x2D"/>
+                                    <constraint firstItem="khR-zK-Rgj" firstAttribute="height" secondItem="KNX-b0-cvP" secondAttribute="height" id="ao8-dw-ayX"/>
+                                    <constraint firstItem="khR-zK-Rgj" firstAttribute="leading" secondItem="xUh-Vm-Nhl" secondAttribute="trailing" constant="4" id="gU0-a3-BiI"/>
+                                    <constraint firstAttribute="trailing" secondItem="khR-zK-Rgj" secondAttribute="trailing" constant="17" id="qNw-mL-oB4"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEj-KQ-TmM">
                                 <rect key="frame" x="15" y="175" width="74" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -1109,9 +1155,12 @@
                             <constraint firstItem="VuK-LO-7lq" firstAttribute="leading" secondItem="MVQ-xz-sA7" secondAttribute="leading" id="1ym-8b-5fp"/>
                             <constraint firstItem="sba-SG-T9c" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" constant="3" id="7p7-7O-mzH"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="xIf-93-uwZ" secondAttribute="trailing" id="8W3-Kd-LfM"/>
+                            <constraint firstItem="KNX-b0-cvP" firstAttribute="centerX" secondItem="GQK-gK-74n" secondAttribute="centerX" id="CDs-Nj-NJM"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="MVQ-xz-sA7" secondAttribute="trailing" id="Fmu-eG-hE3"/>
                             <constraint firstItem="Sh8-Kb-t4h" firstAttribute="top" secondItem="sba-SG-T9c" secondAttribute="bottom" id="HHC-Vx-XBQ"/>
+                            <constraint firstItem="KNX-b0-cvP" firstAttribute="width" secondItem="GQK-gK-74n" secondAttribute="width" id="IYe-Sa-Myi"/>
                             <constraint firstItem="sba-SG-T9c" firstAttribute="trailing" secondItem="kkM-T1-Dzp" secondAttribute="trailing" constant="3" id="IwH-Ar-o5G"/>
+                            <constraint firstItem="KNX-b0-cvP" firstAttribute="centerY" secondItem="GQK-gK-74n" secondAttribute="centerY" id="JYy-3A-VAT"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="Sh8-Kb-t4h" secondAttribute="trailing" constant="1" id="LW0-GQ-BwS"/>
                             <constraint firstItem="xIf-93-uwZ" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="NgZ-Oz-bKu"/>
                             <constraint firstItem="VuK-LO-7lq" firstAttribute="trailing" secondItem="MVQ-xz-sA7" secondAttribute="trailing" id="PPQ-eO-ff0"/>
@@ -1121,6 +1170,7 @@
                             <constraint firstItem="GQK-gK-74n" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" constant="15" id="YdF-fQ-hOZ"/>
                             <constraint firstItem="H8W-eM-waL" firstAttribute="centerY" secondItem="xEj-KQ-TmM" secondAttribute="centerY" id="gc3-Ie-xol"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="GQK-gK-74n" secondAttribute="trailing" constant="16" id="ghn-Ec-fJM"/>
+                            <constraint firstItem="KNX-b0-cvP" firstAttribute="height" secondItem="GQK-gK-74n" secondAttribute="height" id="oIU-jj-SjM"/>
                             <constraint firstItem="sba-SG-T9c" firstAttribute="top" secondItem="xIf-93-uwZ" secondAttribute="bottom" id="oOQ-kW-7Bd"/>
                             <constraint firstItem="Sh8-Kb-t4h" firstAttribute="bottom" secondItem="kkM-T1-Dzp" secondAttribute="bottom" constant="50" id="pyr-mr-z69"/>
                             <constraint firstItem="xIf-93-uwZ" firstAttribute="top" secondItem="xEj-KQ-TmM" secondAttribute="bottom" constant="8" id="rxv-s1-MRy"/>
@@ -1134,6 +1184,8 @@
                     <navigationItem key="navigationItem" id="RjM-xz-VeN"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="checkoutButton" destination="xUd-lQ-7zY" id="c5X-Mk-5x8"/>
+                        <outlet property="noWalletView" destination="KNX-b0-cvP" id="Pbf-90-vbz"/>
                         <outlet property="tableView" destination="xIf-93-uwZ" id="QJ7-fX-bDD"/>
                         <segue destination="PtT-qt-9lH" kind="show" identifier="CheckoutSegueID" id="QsR-25-9q4"/>
                     </connections>
@@ -1141,7 +1193,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rNi-MU-FDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1nH-Pv-8eR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6741.6000000000004" y="6.746626686656672"/>
+            <point key="canvasLocation" x="6741.6000000000004" y="6.6502463054187197"/>
+        </scene>
+        <!--WalletEditID-->
+        <scene sceneID="0gr-Fs-oN9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="WalletAdd" referencedIdentifier="WalletEditID" id="r3g-ip-p3t" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QIA-Qq-g7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7292" y="-442"/>
         </scene>
         <!--Market Checkout Controller-->
         <scene sceneID="q9H-4n-FRj">
@@ -2958,6 +3018,7 @@ maximum 5 minutes after purchase!</string>
         <image name="cloudComputing" width="17" height="14"/>
         <image name="inclinedPaperPlane" width="17.666666030883789" height="14.333333015441895"/>
         <image name="info" width="10.333333015441895" height="42"/>
+        <image name="infoWhite" width="28" height="28"/>
         <image name="internet" width="16.666666030883789" height="16.666666030883789"/>
         <image name="ipsxIcon" width="16" height="16"/>
         <image name="proxyLarge" width="40.666667938232422" height="40.666667938232422"/>
