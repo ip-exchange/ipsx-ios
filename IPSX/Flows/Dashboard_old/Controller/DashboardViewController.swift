@@ -50,7 +50,6 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
     
     @IBAction func tokenRequestAction(_ sender: UIButton) {
         
