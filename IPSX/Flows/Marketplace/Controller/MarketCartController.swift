@@ -13,6 +13,7 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noWalletView: RoundedView!
+    @IBOutlet weak var editButton: UIButton!
     
     fileprivate let cellID = "MarketCellID"
     private let checkoutSegueID = "CheckoutSegueID"
@@ -33,6 +34,11 @@ class MarketCartController: UIViewController {
         noWalletView.isHidden = hasWallet
     }
     
+    @IBAction func editAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        tableView.reloadData()
+    }
+    
     @IBAction func checkout(_ sender: Any) {
         performSegue(withIdentifier: checkoutSegueID, sender: self)
     }
@@ -48,16 +54,25 @@ class MarketCartController: UIViewController {
 extension MarketCartController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return ProxyManager.shared.allOffers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MarketCell
+        cell.onDelete = { offer in
+            ProxyManager.shared.allOffers = ProxyManager.shared.allOffers?.filter { $0.id != offer.id }
+            let range = NSMakeRange(0, self.tableView.numberOfSections)
+            let sections = NSIndexSet(indexesIn: range)
+            self.tableView.reloadSections(sections as IndexSet, with: .automatic)
+        }
         cell.cellContentView.shadow = true
         let progress = Double(arc4random_uniform(100))
         cell.progressView.progress = progress
         cell.progressLabel.text = "\(Int(progress))%"
+        if let offer =  ProxyManager.shared.allOffers?[indexPath.item] {
+            cell.configure(offer: offer, editMode: editButton.isSelected)
+        }
         return cell
     }
 }

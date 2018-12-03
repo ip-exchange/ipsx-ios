@@ -20,7 +20,18 @@ class MarketCell: UITableViewCell {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var trafficLabel: UILabel!
     
-    func configure(offer: Offer) {
+    @IBOutlet weak var cellLeadingConstraint: NSLayoutConstraint?
+    
+    public var onDelete:((_ : Offer)->())?
+    private var cellOffer: Offer?
+    
+    @IBAction func deleteAction(_ sender: UIButton) {
+        if let offer = cellOffer { onDelete?(offer) }
+    }
+    
+    func configure(offer: Offer, editMode: Bool = false) {
+        
+        cellOffer = offer
         
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
@@ -44,6 +55,12 @@ class MarketCell: UITableViewCell {
             flagImageView.image = UIImage(named: "RO32") //TODO
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
+        }
+        
+        let newCosntraintValue: CGFloat = editMode ? 59 : 15
+        if let leadingConstraint = cellLeadingConstraint, newCosntraintValue != leadingConstraint.constant {
+            leadingConstraint.constant = newCosntraintValue
+            UIView.animate(withDuration: 0.15) { self.layoutIfNeeded() }
         }
     }
     
