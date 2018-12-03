@@ -139,9 +139,11 @@
 		EEE1FCA1212E9425002631E6 /* LegalDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */; };
 		EEE1FCA3212EA17E002631E6 /* CompanyDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */; };
 		EEE1FCA5212EA196002631E6 /* RepresentativeDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE1FCA4212EA196002631E6 /* RepresentativeDetailsController.swift */; };
+		EEE2918421B5675400A5048D /* DashboardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE2918321B5675400A5048D /* DashboardCell.swift */; };
 		EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEBF04A20999259008AB061 /* EditProfileController.swift */; };
 		EEF039C520D3D10500AF89D6 /* SimpleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF039C420D3D10500AF89D6 /* SimpleWebView.swift */; };
 		EEF6AFC121A6989900D4729F /* MarketCheckoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF6AFC021A6989900D4729F /* MarketCheckoutController.swift */; };
+		EEF7275321B5602600D93974 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7275221B5602600D93974 /* DashboardController.swift */; };
 		F848760500F5D1416B01EEE2 /* Pods_IPSXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D1559917C4E87494F213D4 /* Pods_IPSXUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -343,9 +345,11 @@
 		EEE1FCA0212E9425002631E6 /* LegalDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LegalDetails.storyboard; sourceTree = "<group>"; };
 		EEE1FCA2212EA17E002631E6 /* CompanyDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDetailsController.swift; sourceTree = "<group>"; };
 		EEE1FCA4212EA196002631E6 /* RepresentativeDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentativeDetailsController.swift; sourceTree = "<group>"; };
+		EEE2918321B5675400A5048D /* DashboardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCell.swift; sourceTree = "<group>"; };
 		EEEBF04A20999259008AB061 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		EEF039C420D3D10500AF89D6 /* SimpleWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWebView.swift; sourceTree = "<group>"; };
 		EEF6AFC021A6989900D4729F /* MarketCheckoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCheckoutController.swift; sourceTree = "<group>"; };
+		EEF7275221B5602600D93974 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,13 +473,14 @@
 		A46A614A20A32AC900F25CC1 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				EEF7275421B5603800D93974 /* Dashboard */,
+				A46A615320A32BB700F25CC1 /* Dashboard_old */,
 				EE79B6AD219D5E5F001C9FF6 /* Marketplace */,
 				EE79B6A42199BF6B001C9FF6 /* Wallets */,
 				EE4DF81020BBE33600CE87E2 /* EnrolStaking */,
 				EEAAD49A20B6A396001A2FAE /* EnrolTesting */,
 				A46A614B20A32AE600F25CC1 /* Login */,
 				A4F2F7402090A21B00515883 /* Register */,
-				A46A615320A32BB700F25CC1 /* Dashboard */,
 				A4F2F7412090A22100515883 /* New Proxy */,
 				EE37F8A32090BCC500783385 /* Settings */,
 				EE62F7422099C5EC00BE6120 /* Profile */,
@@ -554,13 +559,13 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		A46A615320A32BB700F25CC1 /* Dashboard */ = {
+		A46A615320A32BB700F25CC1 /* Dashboard_old */ = {
 			isa = PBXGroup;
 			children = (
 				A46A615420A32BD500F25CC1 /* Controller */,
 				A46A615520A32C7200F25CC1 /* Storyboard */,
 			);
-			path = Dashboard;
+			path = Dashboard_old;
 			sourceTree = "<group>";
 		};
 		A46A615420A32BD500F25CC1 /* Controller */ = {
@@ -995,6 +1000,15 @@
 			path = SimpleWebView;
 			sourceTree = "<group>";
 		};
+		EEF7275421B5603800D93974 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				EEF7275221B5602600D93974 /* DashboardController.swift */,
+				EEE2918321B5675400A5048D /* DashboardCell.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1255,6 +1269,7 @@
 			files = (
 				A48329CC209C5B1F003B19FC /* UserInfoService.swift in Sources */,
 				A4D5D923214FE79000B79361 /* BecomeProviderController.swift in Sources */,
+				EEF7275321B5602600D93974 /* DashboardController.swift in Sources */,
 				EE44ED1021A53B3E00426D01 /* MarketCartController.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				EE4DF81420BBE3C600CE87E2 /* EnrolStakeSubscribeController.swift in Sources */,
@@ -1306,6 +1321,7 @@
 				EEAAD4A320B6CB57001A2FAE /* EnrolTestLandingController .swift in Sources */,
 				A4AC76222099E99900504ED9 /* LoginService.swift in Sources */,
 				A4B57C2D20F24FE300EEE433 /* TokenDepositService.swift in Sources */,
+				EEE2918421B5675400A5048D /* DashboardCell.swift in Sources */,
 				A4DFBFFE20B44AD200FFC28F /* GeneralSettings.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */,

@@ -152,7 +152,7 @@ class DashboardViewController: UIViewController {
             self.fullMaskView.transform = shrink.concatenating(translate)
         }, completion: { completed in
             self.fullMaskView.isHidden = true
-            self.tabBarController?.setTabBarVisible(visible: true, animated: true)
+            //self.tabBarController?.setTabBarVisible(visible: true, animated: true)
         })
     }
     
