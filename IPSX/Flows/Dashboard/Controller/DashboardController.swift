@@ -37,7 +37,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
-    let cellID = "DashboardCellID"
+    
+    fileprivate let cellID = "DashboardCellID"
+    fileprivate let detailsSegueID = "DetailsSegueID"
+    
     private var timer: Timer?
     var selectedOffer: Offer?
     var shouldRefreshIp = true
@@ -166,7 +169,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == detailsSegueID {
+            let detailsController = segue.destination as? DashboardDetailsController
+            detailsController?.offer = selectedOffer
+        }
     }
     
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
@@ -214,7 +220,8 @@ extension DashboardController: UITableViewDataSource {
 extension DashboardController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        selectedOffer = offers[indexPath.row]
+        performSegue(withIdentifier: detailsSegueID, sender: self)
     }
 }
 

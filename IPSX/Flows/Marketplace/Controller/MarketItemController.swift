@@ -113,6 +113,7 @@ extension MarketItemController: UICollectionViewDataSource {
     }
 }
 
+//TODO: This is reused in dashboard, move in it's own file
 class CenteringFlowLayout: UICollectionViewFlowLayout {
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {

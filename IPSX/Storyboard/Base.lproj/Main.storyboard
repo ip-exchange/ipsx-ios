@@ -10,6 +10,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--DashboardDetailsID-->
+        <scene sceneID="Ypm-h2-kBt">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Dashboard" referencedIdentifier="DashboardDetailsID" id="dIQ-K7-fKc" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T6g-2S-sjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-966" y="1454"/>
+        </scene>
         <!--Marketplace-->
         <scene sceneID="IFr-bv-5eF">
             <objects>
@@ -1858,6 +1866,7 @@
                         <outlet property="tableView" destination="rOv-Iz-oI1" id="jnT-bb-44C"/>
                         <outlet property="topBarView" destination="foH-a0-b2v" id="GSt-Ho-rvE"/>
                         <outlet property="topConstraintOutlet" destination="yeU-jC-edd" id="FPy-dv-IAb"/>
+                        <segue destination="dIQ-K7-fKc" kind="show" identifier="DetailsSegueID" id="dXl-GO-Ec0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2X-Qv-1E1" userLabel="First Responder" sceneMemberID="firstResponder"/>
