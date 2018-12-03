@@ -22,6 +22,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var filtersImage: UIImageView!
     @IBOutlet weak var filtersTitleLabel: UILabel!
     @IBOutlet weak var filtersCounterLabel: UILabel!
+    @IBOutlet weak var orderCompleteOverlayView: UIView!
+    @IBOutlet weak var orderCompleteOverlayYAxis: NSLayoutConstraint!
+    @IBOutlet weak var orderCompleteNumberLabel: UILabel!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -61,11 +64,13 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var selectedOffer: Offer?
     var shouldRefreshIp = true
     private var tutorialPresented = false
+    private var showOrderComplete = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.delegate = self
         updateCountryOverlay(visible: false)
+        updateOrderOverlay(visible: false)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -99,10 +104,15 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             performSegue(withIdentifier: "MarketTutorialSegueID", sender: self)
             tutorialPresented = true
         }
+        if showOrderComplete {
+            showOrderComplete = false
+            updateOrderOverlay(visible: true)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        updateOrderOverlay(visible: false)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
@@ -234,6 +244,16 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         })
     }
 
+    private func updateOrderOverlay(visible: Bool) {
+        view.layoutIfNeeded()
+        self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
+        self.orderCompleteOverlayYAxis.constant = visible ? 0 : 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.orderCompleteOverlayView.alpha = visible ? 1 : 0
+        })
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         switch segue.identifier {
@@ -273,7 +293,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    @IBAction func unwindToMarket(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToMarket(segue:UIStoryboardSegue) {
+        if let _ = segue.source as? MarketCheckoutController {
+            self.showOrderComplete = true
+        }
+    }
 
 }
 
