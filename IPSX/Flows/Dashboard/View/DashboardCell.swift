@@ -17,20 +17,14 @@ class DashboardCell: UITableViewCell {
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var durationRemainedLabel: UILabel!
     @IBOutlet weak var trafficLabel: UILabel!
+    @IBOutlet weak var trafficRemainedLabel: UILabel!
     
-    @IBOutlet weak var cellLeadingConstraint: NSLayoutConstraint?
-    
-    public var onDelete:((_ : Offer)->())?
-    private var cellOffer: Offer?
-    
-    @IBAction func deleteAction(_ sender: UIButton) {
-        if let offer = cellOffer { onDelete?(offer) }
-    }
+    @IBOutlet weak var doubleProgressView: DoubleProgressView!
+    @IBOutlet weak var offerStateView: CellStateRoundedView!
     
     func configure(offer: Offer, editMode: Bool = false) {
-        
-        cellOffer = offer
         
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
@@ -53,12 +47,6 @@ class DashboardCell: UITableViewCell {
             flagImageView.image = UIImage(named: "RO32") //TODO
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
-        }
-        
-        let newCosntraintValue: CGFloat = editMode ? 59 : 15
-        if let leadingConstraint = cellLeadingConstraint, newCosntraintValue != leadingConstraint.constant {
-            leadingConstraint.constant = newCosntraintValue
-            UIView.animate(withDuration: 0.15) { self.layoutIfNeeded() }
         }
     }
     
