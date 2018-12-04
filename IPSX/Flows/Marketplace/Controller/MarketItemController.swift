@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IPSXNetworkingFramework
 
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
@@ -22,7 +23,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
     @IBOutlet weak var priceIPSXLabel: UILabel!
-    
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
@@ -30,7 +31,14 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
             topConstraint = topSeparatorConstraint
         }
     }
-    
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -135,6 +143,26 @@ extension MarketItemController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension MarketItemController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }
