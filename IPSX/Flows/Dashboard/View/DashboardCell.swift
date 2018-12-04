@@ -16,7 +16,6 @@ class DashboardCell: UITableViewCell {
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var priceIPSXLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var trafficLabel: UILabel!
     
@@ -41,7 +40,6 @@ class DashboardCell: UITableViewCell {
         
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
-        priceIPSXLabel.text = offer.priceIPSX
         progressView.progress = Double(sla)
         progressLabel.text = "\(sla)%"
         cellContentView.shadow = true
