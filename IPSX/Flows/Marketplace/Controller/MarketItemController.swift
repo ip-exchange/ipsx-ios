@@ -124,20 +124,19 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     func performAddToCartRequest(offerIds: [Int]) {
         
-        //loadingView?.startAnimating()
+        loadingView?.startAnimating()
         MarketplaceService().addToCart(offerIds: offerIds, completionHandler: { result in
             
-            //self.loadingView?.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
                 DispatchQueue.main.async { self.updateCountryOverlay(visible: true) }
                 
             case .failure(let error):
                 
-                print("error :(",error)
-//                self.handleError(error, requestType: RequestType.addToCart, completion: {
-//                    self.performAddToCartRequest(offerIds: offerIds)
-//                })
+                self.handleError(error, requestType: RequestType.addToCart, completion: {
+                    self.performAddToCartRequest(offerIds: offerIds)
+                })
             }
         })
     }

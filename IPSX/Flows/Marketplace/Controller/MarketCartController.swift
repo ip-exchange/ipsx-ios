@@ -49,6 +49,26 @@ class MarketCartController: UIViewController {
             addWalletController?.shouldPop = true
         }
     }
+    
+    func performViewCartRequest() {
+        
+        //loadingView?.startAnimating()
+        MarketplaceService().viewCart(completionHandler: { result in
+            
+            //self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                print("yey")
+                
+            case .failure(let error):
+                
+                print("lala", error)
+//                self.handleError(error, requestType: RequestType.viewCart, completion: {
+//                    self.performViewCartRequest()
+//                })
+            }
+        })
+    }
 }
 
 extension MarketCartController: UITableViewDataSource {
