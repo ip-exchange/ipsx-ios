@@ -75,7 +75,9 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func addToCart(_ sender: Any) {
-        updateCountryOverlay(visible: true)
+        
+        guard let offer = offer else { return }
+        self.performAddToCartRequest(offerIds: [offer.id])
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -93,6 +95,26 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
             self.view.layoutIfNeeded()
             self.cartOverlayView.alpha = visible ? 1 : 0
+        })
+    }
+    
+    func performAddToCartRequest(offerIds: [Int]) {
+        
+        //loadingView?.startAnimating()
+        MarketplaceService().addToCart(offerIds: offerIds, completionHandler: { result in
+            
+            //self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async { self.updateCountryOverlay(visible: true) }
+                
+            case .failure(let error):
+                
+                print("error :(",error)
+//                self.handleError(error, requestType: RequestType.addToCart, completion: {
+//                    self.performAddToCartRequest(offerIds: offerIds)
+//                })
+            }
         })
     }
 }

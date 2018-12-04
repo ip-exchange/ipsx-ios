@@ -126,6 +126,31 @@ class MarketplaceService {
                     return
                 }
             }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func viewCart(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.viewCart, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
             guard let data = data else {
                 completionHandler(ServiceResult.failure(RequestError.noData))
                 return
@@ -145,9 +170,14 @@ class MarketplaceService {
             let ipsxVat      = json["totals"]["ipsx"]["vat"].doubleValue
             let ipsxTotal    = json["totals"]["ipsx"]["total"].doubleValue
             
-            let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
-            cart.setOffers(offerIds: offerIds)
-            completionHandler(ServiceResult.success(cart))
+            if offerIds.count > 0 {
+                let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+                cart.setOffers(offerIds: offerIds)
+                completionHandler(ServiceResult.success(cart))
+            }
+            else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+            }
         })
     }
 }

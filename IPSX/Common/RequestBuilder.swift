@@ -63,8 +63,9 @@ struct RequestType {
     static let generalSettings = "generalSettings"
     
     // Marketplace
-    static let getOffers = "getSettings"
+    static let getOffers = "getOffers"
     static let addToCart = "addToCart"
+    static let viewCart = "viewCart"
 }
 
 public struct KeychainKeys {
