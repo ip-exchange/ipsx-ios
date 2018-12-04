@@ -14,7 +14,6 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressView: ProgressRoundView!
-    
     @IBOutlet weak var httpImageView: UIImageView!
     @IBOutlet weak var httpLabel: UILabel!
     @IBOutlet weak var socks5ImageView: UIImageView!
@@ -23,6 +22,17 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vpnLabel: UILabel!
     @IBOutlet weak var shadowsocksImageView: UIImageView!
     @IBOutlet weak var shadowsocksLabel: UILabel!
+    
+    @IBOutlet weak var packNameLabel: UILabel?
+    
+    var onCopy: ((_ : String, _ : String)->())?
+    
+    @IBAction func copyAction(_ sender: Any) {
+        onCopy?(proxyName, proxyUrl)
+    }
+    
+    private var proxyName = "1122334455.pac" //TODO - set in configure
+    private var proxyUrl = "url://balbla" //TODO - set in configure
     
     func configure(proxy: Proxy) {
         
