@@ -66,6 +66,7 @@ struct RequestType {
     static let getOffers = "getOffers"
     static let addToCart = "addToCart"
     static let viewCart = "viewCart"
+    static let deleteFromCart = "deleteFromCart"
 }
 
 public struct KeychainKeys {
@@ -174,7 +175,7 @@ public struct Url {
     public static let metaArgs               = "/Users/%USER_ID%/meta?access_token=%ACCESS_TOKEN%"
     public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
-    public static let offersArgs             = "/offers/search"
+    public static let offersArgs             = "/offers/search?access_token=%ACCESS_TOKEN%"
     public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
@@ -273,6 +274,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.viewCart:
         url = (Url.baseApi + Url.viewCartArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
+        
+    case RequestType.deleteFromCart:
+        url = (Url.baseApi + Url.deleteCartArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "DELETE"
         
     //ETH addresses Requests
         

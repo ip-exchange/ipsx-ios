@@ -38,7 +38,7 @@ class MarketCartController: UIViewController {
             }
         }
     }
-    
+    var offersIdsToDelete: [Int] = []
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -74,7 +74,13 @@ class MarketCartController: UIViewController {
     }
     
     @IBAction func editAction(_ sender: UIButton) {
+    
+        let doneAction = sender.isSelected
         sender.isSelected = !sender.isSelected
+        
+        if doneAction {
+            performDeleteRequest(offerIds: offersIdsToDelete)
+        }
         tableView.reloadData()
     }
     
@@ -120,6 +126,26 @@ class MarketCartController: UIViewController {
             }
         })
     }
+    
+    func performDeleteRequest(offerIds: [Int]) {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().deleteFromCart(offerIds: offerIds, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+                
+            case .success(_):
+                self.performViewCartRequest()
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.deleteFromCart, completion: {
+                    self.performDeleteRequest(offerIds: offerIds)
+                })
+            }
+        })
+    }
 }
 
 extension MarketCartController: UITableViewDataSource {
@@ -132,11 +158,16 @@ extension MarketCartController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MarketCell
         cell.onDelete = { offer in
+            
+            self.offersIdsToDelete.append(offer.id)
+            
+            //TODO: astea vor disparea (se face request de get dupa delete si reload la tot)
             ProxyManager.shared.allOffers = ProxyManager.shared.allOffers?.filter { $0.id != offer.id }
             let range = NSMakeRange(0, self.tableView.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
             self.tableView.reloadSections(sections as IndexSet, with: .automatic)
         }
+        
         cell.cellContentView.shadow = true
         let progress = Double(arc4random_uniform(100))
         cell.progressView.progress = progress

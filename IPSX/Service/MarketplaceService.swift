@@ -15,7 +15,9 @@ class MarketplaceService {
     
     func retrieveOffers(filters: [String: Any]? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let request = createRequest(requestType: RequestType.getOffers, filters: filters)
+        let urlParams: [String: String] = ["ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.getOffers, urlParams: urlParams, filters: filters)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {
@@ -127,6 +129,43 @@ class MarketplaceService {
                 }
             }
             completionHandler(ServiceResult.success(true))
+        })
+    }
+    
+    func deleteFromCart(offerIds: [Int], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: [Int]] = ["offer_ids": offerIds]
+        
+        let request = createRequest(requestType: RequestType.deleteFromCart, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let count = JSON(data)["count"].intValue
+            if count > 0 {
+                completionHandler(ServiceResult.success(true))
+            }
+            else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+            }
         })
     }
     
