@@ -28,6 +28,9 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    @IBOutlet weak var openSettingsOverlayView: UIView!
+    @IBOutlet weak var openSettingsCenterConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var activeStateView: CellStateRoundedView!
     @IBOutlet weak var doubleProgressView: DoubleProgressView!
     
@@ -52,6 +55,10 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
     func configureUI() {
         
         guard let offer = offer else { return }
+        
+        self.openSettingsOverlayView.alpha = 0
+        self.openSettingsCenterConstraint.constant = 500
+
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
@@ -88,7 +95,37 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-    }    
+    }
+    
+    @IBAction func closeOverlayAction(_ sender: Any) {
+        hideOverlay()
+    }
+
+    @IBAction func openSettingsAction(_ sender: Any) {
+        
+        guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
+            hideOverlay()
+            toast?.showToastAlert("Select Valid ETH Wallet Message".localized, type: .error)
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl)
+        } else {
+            hideOverlay()
+            toast?.showToastAlert("Redirect to Settings Error Message".localized, type: .error)
+        }
+    }
+
+    private func hideOverlay() {
+        view.layoutIfNeeded()
+        self.openSettingsCenterConstraint.constant = 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.openSettingsOverlayView.alpha = 0
+        })
+    }
+
 }
 
 
@@ -101,8 +138,12 @@ extension DashboardDetailsController: UICollectionViewDataSource {
             cell.configure(proxy: proxy)
             cell.onCopy = { packname, packurl in
                 UIPasteboard.general.string = packurl
-                let depositCopiedMessage = String(format: "%@ copied to cplipboard".localized, "\(packname)")
-                self.toast?.showToastAlert(depositCopiedMessage, type: .info)
+                self.openSettingsCenterConstraint.constant = 0
+                self.openSettingsOverlayView.alpha = 1
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+                    self.view.layoutIfNeeded()
+                })
+
             }
         }
         return cell
