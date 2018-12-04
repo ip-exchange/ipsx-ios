@@ -10,7 +10,8 @@ import UIKit
 
 class DashboardHeaderCell: UITableViewCell {
 
-    @IBOutlet weak var orderNumberLabel: UILabel!
+    @IBOutlet weak var orderNumberLabel: UILabel?
+    @IBOutlet weak var historyTitleLabel: UILabel?
     
     @IBAction func headerTap(_ sender: Any) {
         onTap?(section)
@@ -20,7 +21,8 @@ class DashboardHeaderCell: UITableViewCell {
     
     private var section: Int = 0
     
-    func updateCell(sectionIndex: Int) {
+    func updateCell(sectionIndex: Int, historyTitle: String = "") {
         section = sectionIndex
+        historyTitleLabel?.text = historyTitle
     }
 }

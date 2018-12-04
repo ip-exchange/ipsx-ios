@@ -1243,6 +1243,14 @@
                                     <constraint firstItem="xXb-SX-HyL" firstAttribute="top" secondItem="Iff-WU-kGM" secondAttribute="bottom" constant="1.5" id="tZs-Uj-VmU"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJY-Rl-lDg" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="071-EF-VFI"/>
+                                    <constraint firstAttribute="width" constant="44" id="JPK-lq-HCo"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -1259,6 +1267,7 @@
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="Sh8-Kb-t4h" secondAttribute="trailing" constant="1" id="LW0-GQ-BwS"/>
                             <constraint firstItem="xIf-93-uwZ" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="NgZ-Oz-bKu"/>
                             <constraint firstItem="VuK-LO-7lq" firstAttribute="trailing" secondItem="MVQ-xz-sA7" secondAttribute="trailing" id="PPQ-eO-ff0"/>
+                            <constraint firstItem="dJY-Rl-lDg" firstAttribute="centerX" secondItem="kkM-T1-Dzp" secondAttribute="centerX" id="QLo-44-QXV"/>
                             <constraint firstItem="xEj-KQ-TmM" firstAttribute="leading" secondItem="GQK-gK-74n" secondAttribute="leading" id="QRk-4s-2aM"/>
                             <constraint firstItem="MVQ-xz-sA7" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="Wcc-9t-0Di"/>
                             <constraint firstItem="GQK-gK-74n" firstAttribute="top" secondItem="MVQ-xz-sA7" secondAttribute="bottom" constant="14" id="Wvc-Iz-h3A"/>
@@ -1270,6 +1279,7 @@
                             <constraint firstItem="Sh8-Kb-t4h" firstAttribute="bottom" secondItem="kkM-T1-Dzp" secondAttribute="bottom" constant="50" id="pyr-mr-z69"/>
                             <constraint firstItem="xIf-93-uwZ" firstAttribute="top" secondItem="xEj-KQ-TmM" secondAttribute="bottom" constant="8" id="rxv-s1-MRy"/>
                             <constraint firstItem="xEj-KQ-TmM" firstAttribute="top" secondItem="GQK-gK-74n" secondAttribute="bottom" constant="24" id="ryS-XS-nNh"/>
+                            <constraint firstItem="dJY-Rl-lDg" firstAttribute="centerY" secondItem="kkM-T1-Dzp" secondAttribute="centerY" id="tQu-LQ-Tpe"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="top" secondItem="MVQ-xz-sA7" secondAttribute="top" constant="50" id="tmb-XF-5uB"/>
                             <constraint firstItem="H8W-eM-waL" firstAttribute="leading" secondItem="xEj-KQ-TmM" secondAttribute="trailing" constant="8" id="xEg-92-ZGH"/>
                             <constraint firstItem="Sh8-Kb-t4h" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="yYg-I3-z1m"/>
@@ -1279,10 +1289,20 @@
                     <navigationItem key="navigationItem" id="RjM-xz-VeN"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bottomTotalLabel" destination="xXb-SX-HyL" id="zxR-US-pnX"/>
                         <outlet property="checkoutButton" destination="xUd-lQ-7zY" id="c5X-Mk-5x8"/>
                         <outlet property="editButton" destination="NGI-QW-sJp" id="QFl-uy-jvk"/>
+                        <outlet property="footerSubtotalLabel" destination="McX-W7-Grf" id="S4q-Q0-oAO"/>
+                        <outlet property="footerTotalLabel" destination="rb1-5O-IY8" id="zYe-cX-paA"/>
+                        <outlet property="footerVATLabel" destination="fW2-TW-NNk" id="eTe-qn-8kg"/>
+                        <outlet property="headerTotalBalanceLabel" destination="1ZW-Kr-1M6" id="2ML-aG-jHj"/>
+                        <outlet property="loadingView" destination="dJY-Rl-lDg" id="IUP-oe-n25"/>
                         <outlet property="noWalletView" destination="KNX-b0-cvP" id="Pbf-90-vbz"/>
+                        <outlet property="offersCounterLabel" destination="H8W-eM-waL" id="82A-S3-gI6"/>
                         <outlet property="tableView" destination="xIf-93-uwZ" id="QJ7-fX-bDD"/>
+                        <outlet property="topBarView" destination="MVQ-xz-sA7" id="pIs-bX-9aN"/>
+                        <outlet property="topSeparator" destination="VuK-LO-7lq" id="FHW-6e-Lju"/>
+                        <outlet property="topSeparatorConstraint" destination="1Au-Va-BsG" id="Jhd-3c-AAx"/>
                         <segue destination="PtT-qt-9lH" kind="show" identifier="CheckoutSegueID" id="QsR-25-9q4"/>
                     </connections>
                 </viewController>
@@ -1454,6 +1474,14 @@
                                     <constraint firstAttribute="trailing" secondItem="EVT-4X-AMC" secondAttribute="trailing" constant="8" id="Xd6-T7-q6s"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bJ-52-WLr" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="QK1-Uo-Hg2"/>
+                                    <constraint firstAttribute="width" constant="44" id="lE1-fl-3Fh"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B91-Nh-N9N" userLabel="Activate View">
                                 <rect key="frame" x="0.0" y="515.66666666666663" width="375" height="203"/>
                                 <subviews>
@@ -1514,6 +1542,8 @@ maximum 5 minutes after purchase!</string>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="heu-o6-dsd" secondAttribute="trailing" constant="1" id="XiO-1V-dyM"/>
                             <constraint firstItem="B91-Nh-N9N" firstAttribute="top" secondItem="FYm-jB-wsH" secondAttribute="bottom" constant="3" id="Ydg-cd-3kg"/>
                             <constraint firstItem="heu-o6-dsd" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="ajP-tV-NN6"/>
+                            <constraint firstItem="8bJ-52-WLr" firstAttribute="centerY" secondItem="g3q-UE-5eb" secondAttribute="centerY" id="bGM-vs-QIu"/>
+                            <constraint firstItem="8bJ-52-WLr" firstAttribute="centerX" secondItem="g3q-UE-5eb" secondAttribute="centerX" id="cuQ-5t-ifo"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="centerX" secondItem="g3q-UE-5eb" secondAttribute="centerX" id="f0a-pp-jnD"/>
                             <constraint firstItem="Wcw-3m-bFg" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="lAz-Oc-mnA"/>
                             <constraint firstItem="5aH-IZ-x6G" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" constant="3" id="n8K-7N-kdo"/>
@@ -1528,6 +1558,14 @@ maximum 5 minutes after purchase!</string>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activationInfoAttributedLabel" destination="dd0-fx-BoO" id="YPU-N6-EZ6"/>
+                        <outlet property="ipLabel" destination="k0o-Pd-XQr" id="tWp-6f-dcc"/>
+                        <outlet property="loadingView" destination="8bJ-52-WLr" id="fb6-9w-oWr"/>
+                        <outlet property="lockedIPLabel" destination="ipo-8y-Ul4" id="3yg-0m-KSv"/>
+                        <outlet property="priceIPSXLabel" destination="Cip-wf-LeM" id="472-BF-JcK"/>
+                        <outlet property="priceUSDLabel" destination="RVN-IK-urF" id="gA7-rD-ErQ"/>
+                        <outlet property="topBarView" destination="Wcw-3m-bFg" id="oho-aP-CyF"/>
+                        <outlet property="topSeparatorConstraint" destination="nyy-hR-CqF" id="Jm3-og-GRm"/>
+                        <outlet property="topSeparatorView" destination="a5U-QH-L5b" id="uf8-Hl-r6l"/>
                         <segue destination="zTr-jp-rnc" kind="unwind" identifier="UnwindToMarketSegueID" unwindAction="unwindToMarketWithSegue:" id="gm3-sT-ITH"/>
                     </connections>
                 </viewController>
