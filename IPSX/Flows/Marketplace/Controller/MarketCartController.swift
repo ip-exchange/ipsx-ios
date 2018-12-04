@@ -8,6 +8,7 @@
 
 import UIKit
 import IPSXNetworkingFramework
+
 class MarketCartController: UIViewController {
 
     
@@ -31,11 +32,8 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var noWalletView: RoundedView!
     @IBOutlet weak var editButton: UIButton!
     
-    @IBOutlet weak var loadingView: CustomLoadingView! {
-        didSet {
-            topConstraint = topSeparatorConstraint
-        }
-    }
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {

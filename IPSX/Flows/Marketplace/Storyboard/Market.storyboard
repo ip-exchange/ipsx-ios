@@ -1474,6 +1474,14 @@
                                     <constraint firstAttribute="trailing" secondItem="EVT-4X-AMC" secondAttribute="trailing" constant="8" id="Xd6-T7-q6s"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bJ-52-WLr" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="QK1-Uo-Hg2"/>
+                                    <constraint firstAttribute="width" constant="44" id="lE1-fl-3Fh"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B91-Nh-N9N" userLabel="Activate View">
                                 <rect key="frame" x="0.0" y="515.66666666666663" width="375" height="203"/>
                                 <subviews>
@@ -1534,6 +1542,8 @@ maximum 5 minutes after purchase!</string>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="heu-o6-dsd" secondAttribute="trailing" constant="1" id="XiO-1V-dyM"/>
                             <constraint firstItem="B91-Nh-N9N" firstAttribute="top" secondItem="FYm-jB-wsH" secondAttribute="bottom" constant="3" id="Ydg-cd-3kg"/>
                             <constraint firstItem="heu-o6-dsd" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="ajP-tV-NN6"/>
+                            <constraint firstItem="8bJ-52-WLr" firstAttribute="centerY" secondItem="g3q-UE-5eb" secondAttribute="centerY" id="bGM-vs-QIu"/>
+                            <constraint firstItem="8bJ-52-WLr" firstAttribute="centerX" secondItem="g3q-UE-5eb" secondAttribute="centerX" id="cuQ-5t-ifo"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="centerX" secondItem="g3q-UE-5eb" secondAttribute="centerX" id="f0a-pp-jnD"/>
                             <constraint firstItem="Wcw-3m-bFg" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="lAz-Oc-mnA"/>
                             <constraint firstItem="5aH-IZ-x6G" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" constant="3" id="n8K-7N-kdo"/>
@@ -1548,6 +1558,14 @@ maximum 5 minutes after purchase!</string>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activationInfoAttributedLabel" destination="dd0-fx-BoO" id="YPU-N6-EZ6"/>
+                        <outlet property="ipLabel" destination="k0o-Pd-XQr" id="tWp-6f-dcc"/>
+                        <outlet property="loadingView" destination="8bJ-52-WLr" id="fb6-9w-oWr"/>
+                        <outlet property="lockedIPLabel" destination="ipo-8y-Ul4" id="3yg-0m-KSv"/>
+                        <outlet property="priceIPSXLabel" destination="Cip-wf-LeM" id="472-BF-JcK"/>
+                        <outlet property="priceUSDLabel" destination="RVN-IK-urF" id="gA7-rD-ErQ"/>
+                        <outlet property="topBarView" destination="Wcw-3m-bFg" id="oho-aP-CyF"/>
+                        <outlet property="topSeparatorConstraint" destination="nyy-hR-CqF" id="Jm3-og-GRm"/>
+                        <outlet property="topSeparatorView" destination="a5U-QH-L5b" id="uf8-Hl-r6l"/>
                         <segue destination="zTr-jp-rnc" kind="unwind" identifier="UnwindToMarketSegueID" unwindAction="unwindToMarketWithSegue:" id="gm3-sT-ITH"/>
                     </connections>
                 </viewController>
