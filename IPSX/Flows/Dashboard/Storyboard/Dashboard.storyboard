@@ -18,6 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zj7-hY-IZ8" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="241" width="375" height="0.5"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29915823060000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="FJC-ip-Z9h"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYH-0i-PEh" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-30" width="375" height="271"/>
                                 <subviews>
@@ -294,13 +301,6 @@
                                     <constraint firstItem="yvd-3X-Pmu" firstAttribute="height" secondItem="OYH-0i-PEh" secondAttribute="height" id="xby-AJ-xgM"/>
                                     <constraint firstItem="wXj-VV-I5G" firstAttribute="centerY" secondItem="Ydh-Ec-VD4" secondAttribute="centerY" id="zZl-2E-jSr"/>
                                     <constraint firstItem="B0s-0C-t9H" firstAttribute="leading" secondItem="OYH-0i-PEh" secondAttribute="leading" id="zjD-zF-O87"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zj7-hY-IZ8" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="241" width="375" height="0.5"/>
-                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29915823060000002" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="FJC-ip-Z9h"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 proxy items" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e09-DZ-6pU">

@@ -23,6 +23,17 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var noOfProxiesLabel: UILabel!
     @IBOutlet weak var priceIPSXLabel: UILabel!
     
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topSeparatorConstraint
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     private let cellSpacing: CGFloat = 12
     private let cartSegueID = "ViewCartSegueID"
     
@@ -34,6 +45,11 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         configureUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: separatorView, text: "")
+    }
+
     func configureUI() {
         
         guard let offer = offer else { return }
@@ -113,6 +129,16 @@ extension MarketItemController: UICollectionViewDataSource {
     }
 }
 
+extension MarketItemController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
 //TODO: This is reused in dashboard, move in it's own file
 class CenteringFlowLayout: UICollectionViewFlowLayout {
     
@@ -133,22 +159,3 @@ class CenteringFlowLayout: UICollectionViewFlowLayout {
     }
     
 }
-
-//extension MarketItemController: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//
-//        return cellSpacing
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        let frameSize = collectionView.frame.size
-//        return CGSize(width: frameSize.width - cellSpacing, height: frameSize.height)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//
-//        return UIEdgeInsets(top: 0, left: cellSpacing / 2, bottom: 0, right: cellSpacing / 2)
-//    }
-//}
