@@ -40,6 +40,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     fileprivate let cellID = "DashboardCellID"
     fileprivate let detailsSegueID = "DetailsSegueID"
+    fileprivate let viewOrderSegueID = "ViewOrderSegueID"
     
     private var timer: Timer?
     var selectedOffer: Offer?
@@ -211,7 +212,7 @@ extension DashboardController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
         cell?.updateCell(sectionIndex: section)
         cell?.onTap = { section in
-            print("Tapped header: \(section)")
+            self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self)
         }
         return cell
     }

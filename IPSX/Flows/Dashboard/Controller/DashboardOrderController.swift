@@ -1,5 +1,5 @@
 //
-//  DashboardHistoryController.swift
+//  DashboardOrderController.swift
 //  IPSX
 //
 //  Created by Calin Chitu on 04/12/2018.
@@ -9,7 +9,20 @@
 import UIKit
 import IPSXNetworkingFramework
 
-class DashboardHistoryController: UIViewController {
+class DashboardOrderController: UIViewController {
+
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var headerTotalLabel: UILabel!
+    @IBOutlet weak var headerVATLabel: UILabel!
+    @IBOutlet weak var headerSubtotalLabel: UILabel!
+
+    @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var startHourLabel: UILabel!
+    @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var endHourLabel: UILabel!
+    @IBOutlet weak var lockedIPLabel: UILabel!
+    @IBOutlet weak var offersCounter: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -39,17 +52,16 @@ class DashboardHistoryController: UIViewController {
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
     fileprivate let cellID = "DashboardCellID"
-    fileprivate let detailsSegueID = "DetailsSegueID"
+    fileprivate let itemDetailsSegueID = "ItemDetailsSegueID"
     
     private var timer: Timer?
-    private let orderSegueID = "OrderSegueID"
     
     var selectedOffer: Offer?
     var shouldRefreshIp = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self,
+         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
@@ -165,23 +177,25 @@ class DashboardHistoryController: UIViewController {
             }
         })
     }
+
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
     
+    @IBAction func refundAction(_ sender: Any) {
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == detailsSegueID {
+        if segue.identifier == itemDetailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer
         }
     }
-    
+
 }
 
 
-extension DashboardHistoryController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 30
-    }
+extension DashboardOrderController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
@@ -191,49 +205,21 @@ extension DashboardHistoryController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
         if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row], state: .canceled)
+            cell.configure(offer: offers[indexPath.row], state: .active)
         }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //TODO: Implement the proper condtion for Histroy section
-        if [0, 3, 7].contains(section) {
-            return 78
-        }
-        return section == 0 ? 50 : 38
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
-        cell?.onTap = { section in
-            print("Tapped header: \(section)")
-            self.performSegue(withIdentifier: self.orderSegueID, sender: self)
-        }
-        //TODO: Implement the proper condtion for Histroy section
-        if [0, 3, 7].contains(section) {
-            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week")
-        } else {
-            cell?.updateCell(sectionIndex: section)
-        }
-        
         return cell
     }
 }
 
-extension DashboardHistoryController: UITableViewDelegate {
+extension DashboardOrderController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedOffer = offers[indexPath.row]
-        performSegue(withIdentifier: detailsSegueID, sender: self)
+        performSegue(withIdentifier: itemDetailsSegueID, sender: self)
     }
 }
 
-extension DashboardHistoryController: ToastAlertViewPresentable {
+extension DashboardOrderController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
@@ -243,7 +229,7 @@ extension DashboardHistoryController: ToastAlertViewPresentable {
     }
 }
 
-extension DashboardHistoryController: ErrorPresentable {
+extension DashboardOrderController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
