@@ -674,6 +674,14 @@
                                     <constraint firstItem="eVf-em-eZ3" firstAttribute="centerY" secondItem="qoK-WY-LS5" secondAttribute="centerY" id="Yuj-3c-5Yw"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emp-3q-qBf" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Cae-wZ-POv"/>
+                                    <constraint firstAttribute="width" constant="44" id="uNZ-ka-lid"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -681,6 +689,7 @@
                             <constraint firstItem="qoK-WY-LS5" firstAttribute="bottom" secondItem="lFM-H4-C3e" secondAttribute="bottom" constant="100" id="7vd-g8-KE5"/>
                             <constraint firstItem="lFM-H4-C3e" firstAttribute="top" secondItem="Dk8-Su-NLW" secondAttribute="top" constant="50" id="9Ia-mG-QbV"/>
                             <constraint firstItem="qh6-cI-J6X" firstAttribute="leading" secondItem="Dk8-Su-NLW" secondAttribute="leading" id="9Ls-cL-nEm"/>
+                            <constraint firstItem="emp-3q-qBf" firstAttribute="centerX" secondItem="lFM-H4-C3e" secondAttribute="centerX" id="9uL-aG-3KS"/>
                             <constraint firstItem="qoK-WY-LS5" firstAttribute="trailing" secondItem="lFM-H4-C3e" secondAttribute="trailing" id="NSu-A5-AKy"/>
                             <constraint firstItem="qh6-cI-J6X" firstAttribute="top" secondItem="Dk8-Su-NLW" secondAttribute="bottom" id="QBp-6T-AEp"/>
                             <constraint firstItem="lFM-H4-C3e" firstAttribute="trailing" secondItem="Mfs-rd-6Oh" secondAttribute="trailing" id="S16-fm-Amy"/>
@@ -699,6 +708,7 @@
                             <constraint firstItem="lFM-H4-C3e" firstAttribute="top" secondItem="qoK-WY-LS5" secondAttribute="top" constant="100" id="vmJ-jf-ujW"/>
                             <constraint firstItem="tF8-MN-aOu" firstAttribute="top" secondItem="qh6-cI-J6X" secondAttribute="bottom" constant="30" id="w7N-VY-yCT"/>
                             <constraint firstItem="WNu-13-jpN" firstAttribute="top" secondItem="91H-v7-tup" secondAttribute="bottom" constant="24" id="wuh-en-It2"/>
+                            <constraint firstItem="emp-3q-qBf" firstAttribute="centerY" secondItem="lFM-H4-C3e" secondAttribute="centerY" id="zHu-5E-O4y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lFM-H4-C3e"/>
                     </view>
@@ -711,11 +721,15 @@
                         <outlet property="countryLabel" destination="iaD-KF-yzr" id="GKv-i2-8np"/>
                         <outlet property="durationLabel" destination="e5n-iy-Llb" id="Z8X-ai-L6b"/>
                         <outlet property="flagImageView" destination="N49-i0-cE3" id="BWO-j1-lqT"/>
+                        <outlet property="loadingView" destination="emp-3q-qBf" id="vZB-ni-gBG"/>
                         <outlet property="noOfProxiesLabel" destination="tF8-MN-aOu" id="gWO-9t-mu1"/>
                         <outlet property="offerTypeLabel" destination="eOX-gz-RoA" id="i4F-RC-vap"/>
                         <outlet property="priceIPSXLabel" destination="F2F-C1-dgj" id="t3q-RL-jen"/>
                         <outlet property="progressLabel" destination="Tzx-L0-Bi5" id="fKD-ts-kHJ"/>
                         <outlet property="progressView" destination="czV-6Q-iFg" id="1Tb-Xi-5O0"/>
+                        <outlet property="separatorView" destination="qh6-cI-J6X" id="Sji-bL-XXF"/>
+                        <outlet property="topBarView" destination="Dk8-Su-NLW" id="DlO-S7-oCT"/>
+                        <outlet property="topSeparatorConstraint" destination="QBp-6T-AEp" id="fYH-nS-hDv"/>
                         <outlet property="trafficLabel" destination="SJK-rl-7mb" id="ynP-iZ-Nug"/>
                         <segue destination="i3b-eM-f4N" kind="show" identifier="ViewCartSegueID" id="6eO-CG-Oxt"/>
                     </connections>
@@ -1064,7 +1078,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehV-56-shb">
-                                                            <rect key="frame" x="348" y="16" width="29" height="17"/>
+                                                            <rect key="frame" x="304" y="15.666666666666664" width="29" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1076,7 +1090,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudComputing" translatesAutoresizingMaskIntoConstraints="NO" id="RTL-kw-G0W">
-                                                            <rect key="frame" x="18" y="63" width="17" height="14"/>
+                                                            <rect key="frame" x="17.666666666666664" y="63" width="17" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="17" id="O6q-bG-vsF"/>
                                                                 <constraint firstAttribute="height" constant="14" id="lid-dS-XDy"/>
@@ -1089,7 +1103,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="6Bw-DD-nRH">
-                                                            <rect key="frame" x="19" y="85" width="15" height="14"/>
+                                                            <rect key="frame" x="18.666666666666664" y="85" width="15" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="15" id="L7j-8e-8v2"/>
                                                                 <constraint firstAttribute="height" constant="14" id="uer-5C-0c1"/>
@@ -1109,7 +1123,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUv-hA-rUi">
-                                                            <rect key="frame" x="324" y="83" width="27" height="18"/>
+                                                            <rect key="frame" x="280" y="83" width="27" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                             <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>

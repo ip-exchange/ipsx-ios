@@ -10,20 +10,33 @@ import UIKit
 
 class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
 
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var trafficLabel: UILabel!
+    @IBOutlet weak var trafficRemainedLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var durationRemainedLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
+    @IBOutlet weak var noOfproxiesTopConstraint: NSLayoutConstraint! {
+        didSet {
+            topConstraint = noOfproxiesTopConstraint
+        }
+    }
     
+    @IBOutlet weak var activeStateView: CellStateRoundedView!
+    @IBOutlet weak var doubleProgressView: DoubleProgressView!
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     private let cellSpacing: CGFloat = 12
-    private let cartSegueID = "ViewCartSegueID"
     
-    fileprivate let reuseIdentifier = "MarketItemCell"
+    fileprivate let reuseIdentifier = "DashboardtemCell"
     var offer: Offer?
     
     override func viewDidLoad() {
@@ -31,6 +44,11 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
         configureUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: noOfProxiesLabel, text: "")
+    }
+
     func configureUI() {
         
         guard let offer = offer else { return }
@@ -81,6 +99,11 @@ extension DashboardDetailsController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProxyItemCollectionViewCell
         if offer?.proxies.count ?? 0 > indexPath.row, let proxy = offer?.proxies[indexPath.row] {
             cell.configure(proxy: proxy)
+            cell.onCopy = { packname, packurl in
+                UIPasteboard.general.string = packurl
+                let depositCopiedMessage = String(format: "%@ copied to cplipboard".localized, "\(packname)")
+                self.toast?.showToastAlert(depositCopiedMessage, type: .info)
+            }
         }
         return cell
     }
@@ -90,3 +113,12 @@ extension DashboardDetailsController: UICollectionViewDataSource {
     }
 }
 
+extension DashboardDetailsController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
