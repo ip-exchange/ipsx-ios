@@ -616,6 +616,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIX-ol-iJT">
+                                                    <rect key="frame" x="15" y="20" width="85" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                    <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View Order" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLK-DO-hhH">
                                                     <rect key="frame" x="288" y="29" width="72" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -639,16 +645,19 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="WLK-DO-hhH" secondAttribute="trailing" constant="15" id="9dg-nn-oAU"/>
                                                 <constraint firstAttribute="bottom" secondItem="WLK-DO-hhH" secondAttribute="bottom" constant="6" id="GPW-aV-Vlc"/>
+                                                <constraint firstItem="jIX-ol-iJT" firstAttribute="top" secondItem="VGc-aO-L1b" secondAttribute="top" constant="20" id="Tjr-rh-dTK"/>
                                                 <constraint firstAttribute="bottom" secondItem="tua-Xn-Cjz" secondAttribute="bottom" constant="6" id="gHF-OM-3i2"/>
                                                 <constraint firstItem="5dG-LZ-QW2" firstAttribute="height" secondItem="VGc-aO-L1b" secondAttribute="height" id="ox7-WW-zpe"/>
                                                 <constraint firstItem="5dG-LZ-QW2" firstAttribute="width" secondItem="VGc-aO-L1b" secondAttribute="width" id="pcW-re-Uog"/>
                                                 <constraint firstItem="5dG-LZ-QW2" firstAttribute="centerY" secondItem="VGc-aO-L1b" secondAttribute="centerY" id="qSY-sW-Uar"/>
                                                 <constraint firstItem="5dG-LZ-QW2" firstAttribute="centerX" secondItem="VGc-aO-L1b" secondAttribute="centerX" id="s92-dJ-2Sj"/>
                                                 <constraint firstItem="tua-Xn-Cjz" firstAttribute="leading" secondItem="VGc-aO-L1b" secondAttribute="leading" constant="15" id="uJM-47-HkZ"/>
+                                                <constraint firstItem="jIX-ol-iJT" firstAttribute="leading" secondItem="VGc-aO-L1b" secondAttribute="leading" constant="15" id="zgl-Sv-RJq"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
+                                            <outlet property="historyTitleLabel" destination="jIX-ol-iJT" id="Mqt-H5-XPA"/>
                                             <outlet property="orderNumberLabel" destination="tua-Xn-Cjz" id="lel-hw-xxf"/>
                                         </connections>
                                     </tableViewCell>

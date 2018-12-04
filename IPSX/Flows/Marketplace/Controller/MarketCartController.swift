@@ -7,14 +7,46 @@
 //
 
 import UIKit
-
+import IPSXNetworkingFramework
 class MarketCartController: UIViewController {
 
+    
+    @IBOutlet weak var headerTotalBalanceLabel: UILabel!
+    @IBOutlet weak var offersCounterLabel: UILabel! //2 offers
+    @IBOutlet weak var footerTotalLabel: UILabel!
+    @IBOutlet weak var footerVATLabel: UILabel!
+    @IBOutlet weak var footerSubtotalLabel: UILabel!
+    @IBOutlet weak var bottomTotalLabel: UILabel!
+
+    @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var topSeparator: UIView!
+    @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
+        didSet {
+            topConstraint = topSeparatorConstraint
+        }
+    }
+    
     @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var noWalletView: RoundedView!
     @IBOutlet weak var editButton: UIButton!
     
+    @IBOutlet weak var loadingView: CustomLoadingView! {
+        didSet {
+            topConstraint = topSeparatorConstraint
+        }
+    }
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
+
     fileprivate let cellID = "MarketCellID"
     private let checkoutSegueID = "CheckoutSegueID"
     private let addWalletSegueID = "AddWalletSegueID"
@@ -28,6 +60,11 @@ class MarketCartController: UIViewController {
         tableView.layer.cornerRadius = 5
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createToastAlert(onTopOf: topSeparator, text: "")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         checkoutButton.isEnabled = hasWallet
@@ -83,6 +120,36 @@ extension MarketCartController: UITableViewDelegate {
         
         DispatchQueue.main.async {
             //self.performSegue(withIdentifier: self.marketItemID, sender: self)
+        }
+    }
+}
+
+extension MarketCartController: ToastAlertViewPresentable {
+    
+    func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
+        if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
+            self.toast = toastView
+            view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension MarketCartController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

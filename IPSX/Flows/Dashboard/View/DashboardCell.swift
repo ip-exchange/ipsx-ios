@@ -24,7 +24,9 @@ class DashboardCell: UITableViewCell {
     @IBOutlet weak var doubleProgressView: DoubleProgressView!
     @IBOutlet weak var offerStateView: CellStateRoundedView!
     
-    func configure(offer: Offer, editMode: Bool = false) {
+    func configure(offer: Offer, editMode: Bool = false, state: CellStateRoundedView.CellState = .active) {
+        
+        offerStateView.currentState = state
         
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"

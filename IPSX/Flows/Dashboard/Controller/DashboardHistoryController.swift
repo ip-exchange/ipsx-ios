@@ -181,7 +181,7 @@ class DashboardHistoryController: UIViewController, UITabBarControllerDelegate {
 extension DashboardHistoryController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -192,12 +192,16 @@ extension DashboardHistoryController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
         if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row])
+            cell.configure(offer: offers[indexPath.row], state: .canceled)
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        //TODO: Implement the proper condtion for Histroy section
+        if [0, 3, 7].contains(section) {
+            return 78
+        }
         return section == 0 ? 50 : 38
     }
     
@@ -207,10 +211,16 @@ extension DashboardHistoryController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
-        cell?.updateCell(sectionIndex: section)
         cell?.onTap = { section in
             print("Tapped header: \(section)")
         }
+        //TODO: Implement the proper condtion for Histroy section
+        if [0, 3, 7].contains(section) {
+            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week")
+        } else {
+            cell?.updateCell(sectionIndex: section)
+        }
+        
         return cell
     }
 }

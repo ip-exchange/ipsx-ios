@@ -11,6 +11,7 @@ import IPSXNetworkingFramework
 
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
+    
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cartOverlayView: UIView!
