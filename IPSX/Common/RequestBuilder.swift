@@ -175,9 +175,9 @@ public struct Url {
     public static let intentionsArgs         = "/Users/%USER_ID%/intentions?access_token=%ACCESS_TOKEN%"
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
     public static let offersArgs             = "/offers/search"
-    public static let addOffersArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
-    public static let getOffersArgs          = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
-    public static let deleteOffersArgs       = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
+    public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
+    public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
+    public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
     
 }
 
@@ -267,8 +267,12 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         httpMethod = "GET"
         
     case RequestType.addToCart:
-        url = (Url.baseApi + Url.addOffersArgs).replaceKeysWithValues(paramsDict: urlParams)
+        url = (Url.baseApi + Url.addToCartArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
+        
+    case RequestType.viewCart:
+        url = (Url.baseApi + Url.viewCartArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
         
     //ETH addresses Requests
         

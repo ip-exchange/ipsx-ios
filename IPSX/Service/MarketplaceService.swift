@@ -170,14 +170,9 @@ class MarketplaceService {
             let ipsxVat      = json["totals"]["ipsx"]["vat"].doubleValue
             let ipsxTotal    = json["totals"]["ipsx"]["total"].doubleValue
             
-            if offerIds.count > 0 {
-                let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
-                cart.setOffers(offerIds: offerIds)
-                completionHandler(ServiceResult.success(cart))
-            }
-            else {
-                completionHandler(ServiceResult.failure(CustomError.invalidJson))
-            }
+            let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+            cart.setOffers(offerIds: offerIds)
+            completionHandler(ServiceResult.success(cart))
         })
     }
 }

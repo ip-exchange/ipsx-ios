@@ -11,33 +11,30 @@ import IPSXNetworkingFramework
 
 class MarketCartController: UIViewController {
 
-    
     @IBOutlet weak var headerTotalBalanceLabel: UILabel!
     @IBOutlet weak var offersCounterLabel: UILabel! //2 offers
     @IBOutlet weak var footerTotalLabel: UILabel!
     @IBOutlet weak var footerVATLabel: UILabel!
     @IBOutlet weak var footerSubtotalLabel: UILabel!
     @IBOutlet weak var bottomTotalLabel: UILabel!
-
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparator: UIView!
+    @IBOutlet weak var checkoutButton: RoundedButton!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noWalletView: RoundedView!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
         }
     }
-    
-    @IBOutlet weak var checkoutButton: RoundedButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var noWalletView: RoundedView!
-    @IBOutlet weak var editButton: UIButton!
-    
-    @IBOutlet weak var loadingView: CustomLoadingView!
-    
     var errorMessage: String? {
         didSet {
-            if ReachabilityManager.shared.isReachable() {
-                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            if let toast = toast {
+                toast.showToastAlert(self.errorMessage, autoHideAfter: 5)
+                errorMessage = nil
             }
         }
     }
@@ -48,6 +45,7 @@ class MarketCartController: UIViewController {
     fileprivate let cellID = "MarketCellID"
     private let checkoutSegueID = "CheckoutSegueID"
     private let addWalletSegueID = "AddWalletSegueID"
+    var cart: Cart?
     
     private var hasWallet: Bool {
         return UserManager.shared.roles?.contains(UserRoles.Requester) ?? false
@@ -64,9 +62,15 @@ class MarketCartController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
+        performViewCartRequest()
         checkoutButton.isEnabled = hasWallet
         noWalletView.isHidden = hasWallet
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if errorMessage != nil { toast?.showToastAlert(self.errorMessage, autoHideAfter: 5) }
     }
     
     @IBAction func editAction(_ sender: UIButton) {
@@ -85,22 +89,34 @@ class MarketCartController: UIViewController {
         }
     }
     
+    func configureSummaryUI() {
+        
+        footerSubtotalLabel.text = cart?.ipsxSubtotal
+        footerVATLabel.text      = cart?.ipsxVat
+        footerTotalLabel.text    = cart?.ipsxTotal
+        bottomTotalLabel.text    = cart?.ipsxTotal
+    }
+    
     func performViewCartRequest() {
         
-        //loadingView?.startAnimating()
+        loadingView?.startAnimating()
         MarketplaceService().viewCart(completionHandler: { result in
             
-            //self.loadingView?.stopAnimating()
+            self.loadingView?.stopAnimating()
             switch result {
-            case .success(_):
-                print("yey")
                 
+            case .success(let cart):
+                
+                self.cart = cart as? Cart
+                DispatchQueue.main.async {
+                    self.configureSummaryUI()
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 
-                print("lala", error)
-//                self.handleError(error, requestType: RequestType.viewCart, completion: {
-//                    self.performViewCartRequest()
-//                })
+                self.handleError(error, requestType: RequestType.viewCart, completion: {
+                    self.performViewCartRequest()
+                })
             }
         })
     }
