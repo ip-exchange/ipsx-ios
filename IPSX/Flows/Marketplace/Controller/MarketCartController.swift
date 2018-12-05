@@ -23,7 +23,10 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var topSeparator: UIView!
     @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
+    
+    //TODO (CC): move to offer details
     @IBOutlet weak var noWalletView: RoundedView!
+    
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
     
@@ -53,18 +56,15 @@ class MarketCartController: UIViewController {
     private let addWalletSegueID = "AddWalletSegueID"
     private var selectedOffer: Offer?
     
-    
-    private var hasWallet: Bool {
-        return UserManager.shared.roles?.contains(UserRoles.Requester) ?? false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.layer.cornerRadius = 5
         self.bottomTotalLabel.alpha = 1
         self.botttomPriceTitleLabel.alpha = 1
         self.bottomIpsxIcon.alpha = 1
-
+        
+        //TODO (CC): move to offer details
+        self.noWalletView.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,8 +84,6 @@ class MarketCartController: UIViewController {
         performViewCartRequest()
         headerTotalBalanceLabel.text = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
         offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
-        checkoutButton.isEnabled = hasWallet
-        noWalletView.isHidden = hasWallet
     }
     
     override func viewDidAppear(_ animated: Bool) {
