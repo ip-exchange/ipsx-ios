@@ -2029,7 +2029,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="475"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izV-5y-unH" userLabel="Settings" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izV-5y-unH" userLabel="Deposit" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                             <rect key="frame" x="15" y="24" width="345" height="67"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Deposits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPq-xm-5k0">
@@ -2054,6 +2054,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gd-bG-eS0">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <segue destination="wsC-Pf-9O2" kind="show" id="nMe-C8-HFz"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2088,6 +2091,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPh-mv-tFN">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <segue destination="w2O-u4-2FT" kind="show" id="iMO-7F-x0M"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2122,6 +2128,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T21-kF-yPT">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <segue destination="Mo2-lI-WCu" kind="show" id="EFY-yM-Ydh"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2304,13 +2313,37 @@
             </objects>
             <point key="canvasLocation" x="628" y="1598"/>
         </scene>
+        <!--Deposit-->
+        <scene sceneID="USr-a2-6Yf">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Deposit" id="wsC-Pf-9O2" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jyA-W2-TJ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1145" y="1546"/>
+        </scene>
+        <!--Withdrawal-->
+        <scene sceneID="Lqb-xk-kZb">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Withdrawal" id="w2O-u4-2FT" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wqJ-AY-MEd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1153" y="1603"/>
+        </scene>
+        <!--RefundControllerID-->
+        <scene sceneID="B9f-MZ-jLr">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Funds" referencedIdentifier="RefundControllerID" id="Mo2-lI-WCu" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oyn-hj-QLA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1191" y="1658"/>
+        </scene>
         <!--ReferFriendID-->
         <scene sceneID="0m7-k9-bIU">
             <objects>
                 <viewControllerPlaceholder storyboardName="Funds" referencedIdentifier="ReferFriendID" id="oZD-gH-WTm" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Hq-wb-6r6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1179" y="1680"/>
+            <point key="canvasLocation" x="1174" y="1756"/>
         </scene>
     </scenes>
     <resources>

@@ -85,6 +85,11 @@
 		EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE37F8A62091F52700783385 /* SearchViewController.swift */; };
 		EE3BDFF420A1AC71007AEB1D /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */; };
 		EE42EAE121B7C37C00BF3A20 /* Funds.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE42EAE021B7C37C00BF3A20 /* Funds.storyboard */; };
+		EE42EAE321B7CD0300BF3A20 /* Deposit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE42EAE221B7CD0300BF3A20 /* Deposit.storyboard */; };
+		EE42EAE521B7CD5E00BF3A20 /* DepositListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */; };
+		EE42EAE721B7D70500BF3A20 /* Withdrawal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */; };
+		EE42EAE921B7D73900BF3A20 /* WithdrawalListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */; };
+		EE42EAEB21B7D97600BF3A20 /* RefundListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */; };
 		EE44ED0E21A2AE5700426D01 /* MarketItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */; };
 		EE44ED1021A53B3E00426D01 /* MarketCartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
@@ -284,6 +289,11 @@
 		EE37F8A82092035800783385 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EE3BDFF320A1AC71007AEB1D /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
 		EE42EAE021B7C37C00BF3A20 /* Funds.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Funds.storyboard; sourceTree = "<group>"; };
+		EE42EAE221B7CD0300BF3A20 /* Deposit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Deposit.storyboard; sourceTree = "<group>"; };
+		EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositListController.swift; sourceTree = "<group>"; };
+		EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Withdrawal.storyboard; sourceTree = "<group>"; };
+		EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalListController.swift; sourceTree = "<group>"; };
+		EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundListController.swift; sourceTree = "<group>"; };
 		EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketItemController.swift; sourceTree = "<group>"; };
 		EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCartController.swift; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
@@ -883,7 +893,12 @@
 			children = (
 				EE287EC321997D0A00C7AB2A /* FundsViewController.swift */,
 				EECFA9202105D54700F58ABE /* ReferFriendController.swift */,
+				EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */,
+				EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */,
+				EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */,
 				EE42EAE021B7C37C00BF3A20 /* Funds.storyboard */,
+				EE42EAE221B7CD0300BF3A20 /* Deposit.storyboard */,
+				EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */,
 			);
 			path = Funds;
 			sourceTree = "<group>";
@@ -1197,7 +1212,9 @@
 				EE354FCB20AB10A6002A8132 /* background.html in Resources */,
 				EE7AD95720B40C500022259D /* TokenRequest.storyboard in Resources */,
 				EE7AD94320B403180022259D /* Landing.storyboard in Resources */,
+				EE42EAE721B7D70500BF3A20 /* Withdrawal.storyboard in Resources */,
 				EE7AD95220B406A40022259D /* WalletAdd.storyboard in Resources */,
+				EE42EAE321B7CD0300BF3A20 /* Deposit.storyboard in Resources */,
 				EE354FC820AB10A6002A8132 /* style.css in Resources */,
 				885E0B1621B58F71001F4DE0 /* Dashboard.storyboard in Resources */,
 				EE7AD94820B403ED0022259D /* Login.storyboard in Resources */,
@@ -1377,12 +1394,15 @@
 				A4B57C2D20F24FE300EEE433 /* TokenDepositService.swift in Sources */,
 				EEE2918421B5675400A5048D /* DashboardCell.swift in Sources */,
 				A4DFBFFE20B44AD200FFC28F /* GeneralSettings.swift in Sources */,
+				EE42EAEB21B7D97600BF3A20 /* RefundListController.swift in Sources */,
 				A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */,
 				A46480E02091F9D500330CC9 /* UITableView+extensions.swift in Sources */,
 				EE0C536E21A7D59700D9ED11 /* RangeView.swift in Sources */,
 				EE0C536621A6AA4500D9ED11 /* MarketFilterController.swift in Sources */,
+				EE42EAE921B7D73900BF3A20 /* WithdrawalListController.swift in Sources */,
 				EE79B6AF219D5E8C001C9FF6 /* MarketController.swift in Sources */,
 				EE6DC2B421AAA36E00322D9A /* GroupedOptionsView.swift in Sources */,
+				EE42EAE521B7CD5E00BF3A20 /* DepositListController.swift in Sources */,
 				A4AC76272099F83D00504ED9 /* ProxyService.swift in Sources */,
 				EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */,
 				EE6FC03F209B2951007971DC /* CustomLoadingView.swift in Sources */,
