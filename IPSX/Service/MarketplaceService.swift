@@ -40,9 +40,9 @@ class MarketplaceService {
             let json = JSON(data)
             let jsonArray = json["offers"].arrayValue
             
-            var offers = self.parseOffers(offersJsonArray: jsonArray)
-            offers.sort { $0.id < $1.id }
-            completionHandler(ServiceResult.success(offers))
+            var availableOffers = self.parseOffers(offersJsonArray: jsonArray)
+            availableOffers.sort { $0.id < $1.id }
+            completionHandler(ServiceResult.success(availableOffers))
         })
     }
     
@@ -52,6 +52,7 @@ class MarketplaceService {
         for offerJson in offersJsonArray {
             
             let status       = offerJson["status"].stringValue
+            let available    = offerJson["available"].boolValue
             let offerID      = offerJson["id"].intValue
             let priceIPSX    = offerJson["cost_ipsx"].doubleValue
             let priceDollars = offerJson["cost"].doubleValue
@@ -64,7 +65,7 @@ class MarketplaceService {
             let proxies = self.parseProxyItems(proxyJsonArray: proxyJsonArray)
             offer.setProxies(proxyArray: proxies)
             
-            if status == "active" { offers.append(offer) }
+            if status == "active" && available { offers.append(offer) }
         }
         return offers
     }
@@ -196,11 +197,15 @@ class MarketplaceService {
             }
             let json = JSON(data)
             let items = json["items"].arrayValue
-            var offerIds: [Int] = []
+            var offers: [Offer] = []
             
             for item in items {
-                offerIds.append(item["offer_id"].intValue)
+                
+                let offerJsonArray = item["offer"].arrayValue
+                let availableOffers = self.parseOffers(offersJsonArray: offerJsonArray)
+                offers.append(contentsOf: availableOffers)
             }
+            offers.sort { $0.id < $1.id }
             let usdSubtotal = json["totals"]["usd"]["subtotal"].doubleValue
             let usdVat      = json["totals"]["usd"]["vat"].doubleValue
             let usdTotal    = json["totals"]["usd"]["total"].doubleValue
@@ -210,7 +215,7 @@ class MarketplaceService {
             let ipsxTotal    = json["totals"]["ipsx"]["total"].doubleValue
             
             let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
-            cart.setOffers(offerIds: offerIds)
+            cart.setOffers(offers: offers)
             completionHandler(ServiceResult.success(cart))
         })
     }

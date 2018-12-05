@@ -78,7 +78,7 @@ class MarketCartController: UIViewController {
         let doneAction = sender.isSelected
         sender.isSelected = !sender.isSelected
         
-        if doneAction {
+        if doneAction && offersIdsToDelete.count > 0 {
             performDeleteRequest(offerIds: offersIdsToDelete)
         }
         tableView.reloadData()
@@ -136,6 +136,7 @@ class MarketCartController: UIViewController {
             switch result {
                 
             case .success(_):
+                self.offersIdsToDelete = []
                 self.performViewCartRequest()
                 
             case .failure(let error):
@@ -151,29 +152,26 @@ class MarketCartController: UIViewController {
 extension MarketCartController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ProxyManager.shared.allOffers?.count ?? 0
+        return cart?.offers.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MarketCell
+        if cart?.offers.count ?? 0 > indexPath.row, let offer = cart?.offers[indexPath.row] {
+            cell.configure(offer: offer, editMode: editButton.isSelected)
+        }
+        
         cell.onDelete = { offer in
             
             self.offersIdsToDelete.append(offer.id)
             
-            //TODO: astea vor disparea (se face request de get dupa delete si reload la tot)
-            ProxyManager.shared.allOffers = ProxyManager.shared.allOffers?.filter { $0.id != offer.id }
+            if let filtered = self.cart?.offers.filter({ $0.id != offer.id }) {
+                self.cart?.offers = filtered
+            }
             let range = NSMakeRange(0, self.tableView.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
             self.tableView.reloadSections(sections as IndexSet, with: .automatic)
-        }
-        
-        cell.cellContentView.shadow = true
-        let progress = Double(arc4random_uniform(100))
-        cell.progressView.progress = progress
-        cell.progressLabel.text = "\(Int(progress))%"
-        if let offer =  ProxyManager.shared.allOffers?[indexPath.item] {
-            cell.configure(offer: offer, editMode: editButton.isSelected)
         }
         return cell
     }

@@ -10,7 +10,7 @@ import Foundation
 
 class Cart {
     
-    var offerIds: [Int] = []
+    var offers: [Offer] = []
     
     let usdSubtotal: String
     let usdVat: String
@@ -31,8 +31,8 @@ class Cart {
         self.ipsxTotal = ipsxTotal.cleanString
     }
     
-    func setOffers(offerIds: [Int]) {
-        self.offerIds = offerIds
+    func setOffers(offers: [Offer]) {
+        self.offers = offers
     }
     
 }
