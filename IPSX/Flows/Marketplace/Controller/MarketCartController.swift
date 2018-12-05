@@ -43,7 +43,6 @@ class MarketCartController: UIViewController {
     }
     
     var cart: Cart?
-    var offersIdsToDelete: [Int] = []
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
@@ -96,12 +95,7 @@ class MarketCartController: UIViewController {
     
     @IBAction func editAction(_ sender: UIButton) {
     
-        let doneAction = sender.isSelected
         sender.isSelected = !sender.isSelected
-        
-        if doneAction && offersIdsToDelete.count > 0 {
-            performDeleteRequest(offerIds: offersIdsToDelete)
-        }
         tableView.reloadData()
     }
     
@@ -166,7 +160,6 @@ class MarketCartController: UIViewController {
             switch result {
                 
             case .success(_):
-                self.offersIdsToDelete = []
                 self.performViewCartRequest()
                 
             case .failure(let error):
@@ -194,7 +187,7 @@ extension MarketCartController: UITableViewDataSource {
         
         cell.onDelete = { offer in
             
-            self.offersIdsToDelete.append(offer.id)
+            self.performDeleteRequest(offerIds: [offer.id])
             
             if let filtered = self.cart?.offers.filter({ $0.id != offer.id }) {
                 self.cart?.offers = filtered
@@ -216,17 +209,6 @@ extension MarketCartController: UITableViewDelegate {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: self.marketItemID, sender: self)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let intTotalrow = tableView.numberOfRows(inSection:indexPath.section)
-//        print(indexPath.row)
-//        let alpha: CGFloat = indexPath.row >= intTotalrow - 3 ? 1 : 0
-//            UIView.animate(withDuration: 0.3) {
-//                self.bottomTotalLabel.alpha = alpha
-//                self.botttomPriceTitleLabel.alpha = alpha
-//                self.bottomIpsxIcon.alpha = alpha
-//        }
     }
 }
 
