@@ -2161,6 +2161,9 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="at8-9I-RJu">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
+                                                    <connections>
+                                                        <segue destination="oZD-gH-WTm" kind="show" id="O6y-0t-tv9"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2199,7 +2202,7 @@
                                         <rect key="frame" x="0.0" y="499" width="375" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="95P-YM-OqQ" id="f0S-Vr-Gnu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="57.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQe-M5-UR5" userLabel="Separator">
@@ -2210,29 +2213,29 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Address from CryptoWallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTd-JL-daV">
-                                                    <rect key="frame" x="85" y="12" width="258" height="17"/>
+                                                    <rect key="frame" x="85" y="11" width="258" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0x000752563f7d0c7cE8edc761Bb7281957Df530EC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1XM-GT-oco">
-                                                    <rect key="frame" x="85" y="28" width="258" height="15"/>
+                                                    <rect key="frame" x="85" y="27" width="258" height="15"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="ufF-Je-YJ6">
-                                                    <rect key="frame" x="32" y="12" width="30" height="30"/>
+                                                    <rect key="frame" x="32" y="11" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="RightDisclosure" translatesAutoresizingMaskIntoConstraints="NO" id="Jrk-F1-H7e">
-                                                    <rect key="frame" x="351" y="20" width="9" height="16"/>
+                                                    <rect key="frame" x="351" y="19" width="9" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="huV-Rv-z7o">
-                                                    <rect key="frame" x="15" y="23" width="9" height="11"/>
+                                                    <rect key="frame" x="15" y="22" width="9" height="11"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -2300,6 +2303,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zw2-Rk-Fbm" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="628" y="1598"/>
+        </scene>
+        <!--ReferFriendID-->
+        <scene sceneID="0m7-k9-bIU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Funds" referencedIdentifier="ReferFriendID" id="oZD-gH-WTm" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Hq-wb-6r6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1179" y="1680"/>
         </scene>
     </scenes>
     <resources>

@@ -36,7 +36,7 @@ class ReferFriendController: UIViewController {
     }
 
     @IBAction func closeAction(_ sender: Any) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func copyLinkAction(_ sender: Any) {
