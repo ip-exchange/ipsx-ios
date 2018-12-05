@@ -27,6 +27,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var addToCartButton: RoundedButton!
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
@@ -42,6 +43,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var isInCartAlready = false
 
     private let cellSpacing: CGFloat = 12
     private let cartSegueID = "ViewCartSegueID"
@@ -68,6 +70,8 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
+        addToCartButton.isEnabled = !isInCartAlready
+        addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         priceIPSXLabel.text = offer.priceIPSX

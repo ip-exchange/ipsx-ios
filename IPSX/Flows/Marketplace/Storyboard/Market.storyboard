@@ -715,6 +715,7 @@
                     <navigationItem key="navigationItem" id="poJ-iU-GBz"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addToCartButton" destination="NpM-qD-rfo" id="vma-b1-5QR"/>
                         <outlet property="cartOverlayView" destination="qoK-WY-LS5" id="jEE-e9-DyK"/>
                         <outlet property="cartOverlayYConstraint" destination="Yuj-3c-5Yw" id="cwP-1x-te4"/>
                         <outlet property="collectionView" destination="91H-v7-tup" id="mWJ-QK-wYE"/>
@@ -1298,7 +1299,9 @@
                     <navigationItem key="navigationItem" id="RjM-xz-VeN"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bottomIpsxIcon" destination="kkZ-io-2Ex" id="jGN-cA-tEG"/>
                         <outlet property="bottomTotalLabel" destination="xXb-SX-HyL" id="zxR-US-pnX"/>
+                        <outlet property="botttomPriceTitleLabel" destination="Iff-WU-kGM" id="Ndh-uf-Kan"/>
                         <outlet property="checkoutButton" destination="xUd-lQ-7zY" id="c5X-Mk-5x8"/>
                         <outlet property="editButton" destination="NGI-QW-sJp" id="QFl-uy-jvk"/>
                         <outlet property="footerSubtotalLabel" destination="McX-W7-Grf" id="S4q-Q0-oAO"/>
@@ -1313,6 +1316,7 @@
                         <outlet property="topSeparator" destination="VuK-LO-7lq" id="FHW-6e-Lju"/>
                         <outlet property="topSeparatorConstraint" destination="1Au-Va-BsG" id="Jhd-3c-AAx"/>
                         <segue destination="PtT-qt-9lH" kind="show" identifier="CheckoutSegueID" id="QsR-25-9q4"/>
+                        <segue destination="sBJ-Zc-YxA" kind="show" identifier="MarketItemSegueID" id="7DU-41-qQy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rNi-MU-FDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3172,4 +3176,7 @@ maximum 5 minutes after purchase!</string>
         <image name="tutorial" width="375" height="272"/>
         <image name="walletLarge" width="51" height="51.666667938232422"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="7DU-41-qQy"/>
+    </inferredMetricsTieBreakers>
 </document>

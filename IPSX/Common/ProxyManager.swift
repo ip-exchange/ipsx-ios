@@ -14,6 +14,7 @@ public class ProxyManager: NSObject {
     private override init() {}
     
     var allOffers: [Offer]?
+    var cart: Cart?
     var proxyCountries: [String]?
 
 }

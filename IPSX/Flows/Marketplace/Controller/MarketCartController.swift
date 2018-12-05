@@ -17,6 +17,8 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var footerVATLabel: UILabel!
     @IBOutlet weak var footerSubtotalLabel: UILabel!
     @IBOutlet weak var bottomTotalLabel: UILabel!
+    @IBOutlet weak var botttomPriceTitleLabel: UILabel!
+    @IBOutlet weak var bottomIpsxIcon: UIImageView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparator: UIView!
     @IBOutlet weak var checkoutButton: RoundedButton!
@@ -30,6 +32,7 @@ class MarketCartController: UIViewController {
             topConstraint = topSeparatorConstraint
         }
     }
+    
     var errorMessage: String? {
         didSet {
             if let toast = toast {
@@ -38,14 +41,19 @@ class MarketCartController: UIViewController {
             }
         }
     }
+    
+    var cart: Cart?
     var offersIdsToDelete: [Int] = []
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
+    
+    private var backFromDetails = false
     fileprivate let cellID = "MarketCellID"
+    fileprivate let marketItemID = "MarketItemSegueID"
     private let checkoutSegueID = "CheckoutSegueID"
     private let addWalletSegueID = "AddWalletSegueID"
-    var cart: Cart?
+    private var selectedOffer: Offer?
+    
     
     private var hasWallet: Bool {
         return UserManager.shared.roles?.contains(UserRoles.Requester) ?? false
@@ -54,6 +62,10 @@ class MarketCartController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.layer.cornerRadius = 5
+        self.bottomTotalLabel.alpha = 1
+        self.botttomPriceTitleLabel.alpha = 1
+        self.bottomIpsxIcon.alpha = 1
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,7 +75,16 @@ class MarketCartController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    
+        guard !backFromDetails else {
+            backFromDetails = false
+            return
+        }
+        
+        self.tableView.alpha = 0
         performViewCartRequest()
+        headerTotalBalanceLabel.text = UserManager.shared.userInfo?.balance?.cleanString ?? "0"
+        offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
         checkoutButton.isEnabled = hasWallet
         noWalletView.isHidden = hasWallet
     }
@@ -93,10 +114,16 @@ class MarketCartController: UIViewController {
             let addWalletController = segue.destination as? WalletAddController
             addWalletController?.shouldPop = true
         }
+        if segue.identifier == marketItemID {
+            let itemController = segue.destination as? MarketItemController
+            itemController?.isInCartAlready = true
+            itemController?.offer = selectedOffer
+        }
     }
     
     func configureSummaryUI() {
         
+        offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
         footerSubtotalLabel.text = cart?.ipsxSubtotal
         footerVATLabel.text      = cart?.ipsxVat
         footerTotalLabel.text    = cart?.ipsxTotal
@@ -106,6 +133,7 @@ class MarketCartController: UIViewController {
     func performViewCartRequest() {
         
         loadingView?.startAnimating()
+        ProxyManager.shared.cart = nil
         MarketplaceService().viewCart(completionHandler: { result in
             
             self.loadingView?.stopAnimating()
@@ -114,7 +142,9 @@ class MarketCartController: UIViewController {
             case .success(let cart):
                 
                 self.cart = cart as? Cart
+                ProxyManager.shared.cart = self.cart
                 DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.5) { self.tableView.alpha = 1 }
                     self.configureSummaryUI()
                     self.tableView.reloadData()
                 }
@@ -181,9 +211,22 @@ extension MarketCartController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        selectedOffer = cart?.offers[indexPath.row]
+        backFromDetails = true
         DispatchQueue.main.async {
-            //self.performSegue(withIdentifier: self.marketItemID, sender: self)
+            self.performSegue(withIdentifier: self.marketItemID, sender: self)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let intTotalrow = tableView.numberOfRows(inSection:indexPath.section)
+//        print(indexPath.row)
+//        let alpha: CGFloat = indexPath.row >= intTotalrow - 3 ? 1 : 0
+//            UIView.animate(withDuration: 0.3) {
+//                self.bottomTotalLabel.alpha = alpha
+//                self.botttomPriceTitleLabel.alpha = alpha
+//                self.bottomIpsxIcon.alpha = alpha
+//        }
     }
 }
 

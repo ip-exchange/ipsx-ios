@@ -22,6 +22,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var filtersImage: UIImageView!
     @IBOutlet weak var filtersTitleLabel: UILabel!
     @IBOutlet weak var filtersCounterLabel: UILabel!
+    @IBOutlet weak var cartCountLabel: UILabel!
     @IBOutlet weak var orderCompleteOverlayView: UIView!
     @IBOutlet weak var orderCompleteOverlayYAxis: NSLayoutConstraint!
     @IBOutlet weak var orderCompleteNumberLabel: UILabel!
@@ -89,6 +90,13 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        
+        //TODO: Refactor when api retuns cart flag
+        let cartItemsCount = ProxyManager.shared.cart?.offers.count ?? 0
+        cartCountLabel.textColor = cartItemsCount > 0 ? UIColor.darkBlue : .warmGrey
+        let tailString = cartItemsCount == 1 ? "offer".localized : "offers".localized
+        cartCountLabel.text = "\(cartItemsCount) \(tailString)"
+
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         
