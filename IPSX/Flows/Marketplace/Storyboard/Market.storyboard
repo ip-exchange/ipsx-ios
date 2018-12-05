@@ -804,7 +804,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100.000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ZW-Kr-1M6">
                                         <rect key="frame" x="8" y="23.666666666666657" width="60" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                        <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NT-ed-30d">
@@ -814,13 +814,22 @@
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ipsxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2hK-9F-wQS">
+                                        <rect key="frame" x="74" y="25.666666666666671" width="14" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="14" id="8sf-XZ-xNv"/>
+                                            <constraint firstAttribute="height" constant="14" id="llo-nO-tlT"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="1ZW-Kr-1M6" firstAttribute="top" secondItem="deS-Fz-gv0" secondAttribute="bottom" constant="1.5" id="12M-j6-VhW"/>
                                     <constraint firstItem="deS-Fz-gv0" firstAttribute="leading" secondItem="GQK-gK-74n" secondAttribute="leading" constant="8" id="Ca5-hU-LGT"/>
+                                    <constraint firstItem="2hK-9F-wQS" firstAttribute="leading" secondItem="1ZW-Kr-1M6" secondAttribute="trailing" constant="6" id="OER-eO-xLU"/>
                                     <constraint firstItem="1ZW-Kr-1M6" firstAttribute="leading" secondItem="deS-Fz-gv0" secondAttribute="leading" id="eB1-5n-tRV"/>
                                     <constraint firstAttribute="trailing" secondItem="0NT-ed-30d" secondAttribute="trailing" constant="8" id="i8N-zf-FZp"/>
+                                    <constraint firstItem="2hK-9F-wQS" firstAttribute="centerY" secondItem="1ZW-Kr-1M6" secondAttribute="centerY" id="j7w-kr-bT7"/>
                                     <constraint firstAttribute="height" constant="49" id="jHv-3q-dgQ"/>
                                     <constraint firstItem="deS-Fz-gv0" firstAttribute="top" secondItem="GQK-gK-74n" secondAttribute="top" constant="8" id="qfb-r8-dlB"/>
                                     <constraint firstItem="0NT-ed-30d" firstAttribute="centerY" secondItem="GQK-gK-74n" secondAttribute="centerY" id="wdg-8S-chL"/>
