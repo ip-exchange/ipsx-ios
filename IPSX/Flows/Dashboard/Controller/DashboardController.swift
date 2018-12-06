@@ -87,6 +87,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+        self.timer?.invalidate()
     }
     
     func updateReachabilityInfo() {

@@ -91,8 +91,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         super.viewWillAppear(animated)
         
-        //TODO: Refactor when api retuns cart flag
-        let cartItemsCount = ProxyManager.shared.cart?.offers.count ?? 0
+        let cartItemsCount = offers.filter() { $0.isAddedToCart }.count 
         cartCountLabel.textColor = cartItemsCount > 0 ? UIColor.darkBlue : .warmGrey
         let tailString = cartItemsCount == 1 ? "offer".localized : "offers".localized
         cartCountLabel.text = "\(cartItemsCount) \(tailString)"
@@ -121,6 +120,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateOrderOverlay(visible: false)
+        self.timer?.invalidate()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     

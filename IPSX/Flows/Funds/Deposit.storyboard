@@ -86,7 +86,6 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="createDepositAction:" destination="v0F-n9-oxs" eventType="touchUpInside" id="gl4-3Y-IZI"/>
-                                                        <segue destination="zsV-9k-Sq5" kind="presentation" id="MF1-EZ-BtO"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -293,6 +292,8 @@
                         <outlet property="tableView" destination="rC6-x6-Gsz" id="Xyu-nt-KNG"/>
                         <outlet property="topBarView" destination="g9Z-Il-8x5" id="tcn-FJ-6Kd"/>
                         <outlet property="topConstraintOutlet" destination="hTB-xi-31T" id="J5Y-yZ-Cvw"/>
+                        <segue destination="zsV-9k-Sq5" kind="presentation" identifier="GenerateAddressSegueID" id="HQ8-vd-xIL"/>
+                        <segue destination="IOy-7w-hMr" kind="presentation" identifier="ViewAddressSegueID" id="ihi-aI-Uea"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3tK-eN-C33" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -302,7 +303,7 @@
         <!--Generate Address Controller-->
         <scene sceneID="kDf-AC-f0A">
             <objects>
-                <viewController storyboardIdentifier="ReferFriendID" hidesBottomBarWhenPushed="YES" id="zsV-9k-Sq5" customClass="GenerateAddressController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateAddress" hidesBottomBarWhenPushed="YES" id="zsV-9k-Sq5" customClass="GenerateAddressController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ukq-br-pdy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -424,7 +425,7 @@
                                                 <rect key="frame" x="0.0" y="49.666666666666629" width="345" height="547"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vh4-n7-sp8">
-                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="547"/>
+                                                        <rect key="frame" x="15" y="0.0" width="315" height="547"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="1. INTRODUCTION">
@@ -458,11 +459,11 @@ By accepting these Special Terms you represent and warrant that you have read, u
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 By accessing or using the Site or the Services, you, as IP Requester, represent and warrant that you are at least 18 years old and have not previously been suspended or removed from the Site. If you are under 18 years of age, then you must not use or access the Site at any time or in any manner. You also represent and warrant that you are not a resident of a Restricted State: 1. Afghanistan; 2. Belarus; 3. Bosnia &amp; Herzegovina; 4. Burundi; 5. Central African Republic; 6. Democratic People's Republic of Korea (North Korea); 7. Democratic Republic of the Congo; 8. Eritrea; 9. Guinea; 10. Guinea-Bissau; 11. Iran; 12. Iraq; 13. Lebanon; 14. Libya; 15. Maldives; 16. Mali; 17. Myanmar (Burma); 18. Somalia; 19. South Sudan; 20. Sudan; 21. Syria; 22. Tunisia; 23 Ukraine; 24 Venezuela; 25 Yemen; 26 Zimbabwe. The list of Restricted States is subject to change at any time. In the event a state becomes a Restricted State, IPSX will provide Users residing in that state with notice via email, a notification on our Site, or other means as we deem necessary, regarding their access to the Services.
 
 2.1 You, as IP Requester, represent and warrant that you are not:
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -471,54 +472,9 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">located in, under the control of, or a national or resident of any country to which the EU has embargoed goods or services;
-</string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">identified as a "Specially Designated National”; or
-</string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">placed on the Commerce Department's Denied Persons List.
+                                                                <string key="content">	- located in, under the control of, or a national or resident of any country to which the EU has embargoed goods or services;
+	- identified as a "Specially Designated National”; or
+	- placed on the Commerce Department's Denied Persons List.
 </string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
@@ -634,13 +590,13 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 2.3 You, as IP Requester, represent that you agree and understand that for a virtual and intangible product as the IP addresses, information and transparency are essential along the entire process. Finally, you represent and warrant that you understand that for IPSX it is essential to fully know how you are going to use the leased IPs and you hereby represent and warrant that any and all IPs leased will not be used for any illegal activity, including but not limited to illegal gambling, money laundering, fraud, blackmail, extortion, ransoming data or the financing of terrorism, or other violent activities.
 
 2.4 Notwithstanding the foregoing, IPSX may not make the Services, in whole or in part, available in every market, either in its sole discretion or due to legal or regulatory requirements, depending on the User’s location.
 
 
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -658,7 +614,7 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 
 3.1 In order to fund your Account and begin placing orders of IPs, you, as IP Requester, may need to first procure IPSX tokens. Once procured, you must deposit the IPSX tokens to an IPSX generated wallet associated to your Account and wait for the balance to appear in your Account. It is your responsibility to ensure you send IPSX tokens to the correct address, otherwise your funds may never be recovered. IPSX makes no representations or warranties regarding the amount of time that may be required to have IPSX tokens available in your Account.
 
@@ -667,7 +623,7 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
 3.3 IPSX reserves the right to limit the number of Accounts that any User or such User’s affiliates can open or hold.
 
 
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -685,7 +641,7 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 
 4.1 You acknowledge that we may conduct a check of your background and identity (where applicable) as required by applicable laws in connection with specific uses of the Site and in order to minimise the risk of crime and fraud against us and other Site and Services Users. You shall comply with such identification requirements that we may from time to time require without delay.
 
@@ -694,7 +650,7 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
 4.3 You agree and acknowledge that we may, at our sole discretion, deny you the right to access the Site and Services and/or participate in an offer made by any IP Provider. None of the IPSX Parties will have any liability to you or bear responsibility for any losses queries or investigations arising from this.
 
 4.4 We may share your personal information with law enforcement, data protection authorities, government officials, and other authorities when:
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -703,72 +659,10 @@ By accessing or using the Site or the Services, you, as IP Requester, represent 
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">required by law - including subpoena, court order, or other legal procedure;
-</string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">we believe that disclosure is necessary to prevent physical harm or financial loss;
-</string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">disclosure is necessary to report suspected illegal or suspicious activity; or
-</string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment>
-                                                                <string key="content">	- </string>
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                        <tabStops/>
-                                                                    </paragraphStyle>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment content="disclosure is necessary to investigate violations of these Special Terms and/or the ">
+                                                                <string key="content">	- required by law - including subpoena, court order, or other legal procedure;
+	- we believe that disclosure is necessary to prevent physical harm or financial loss;
+	- disclosure is necessary to report suspected illegal or suspicious activity; or
+	- disclosure is necessary to investigate violations of these Special Terms and/or the </string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -814,13 +708,13 @@ Cg
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 4.5 You agree and acknowledge that in order to use the Services, when you seek to enter into contractual relations with an IP Provider, it is necessary for us and the relevant IP Provider to process some of your Personal Data (as defined in the Privacy Policy) for billing purposes (for example, your identification information, your VAT code).
 
 4.6 You agree and acknowledge that all relevant Personal Data that you provide us for billing purposes (for example, your identification information, your VAT code) is reasonably required for us for your entering into a contractual relationship with us or with an IP Provider (or to enable us and the IP Providers to meet our and their legal obligations). All other personal information you provide to us shall not be shared with any IP Provider. When entering into a deal regarding the purchase of the right to use IP addresses leased to you, you are entering into a direct legal and contractual relationship with the relevant IP Provider and IPSX is not responsible with respect to the privacy policy and data processing of that IP Provider.
 
 
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -860,11 +754,11 @@ You agree that any notices, agreements, disclosures or other communications that
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment>
-                                                                <mutableString key="content">
+                                                                <string key="content">
 IPSX has no liability to IP Requesters for the actions, omission, representations or information provided by any IP Providers in the context of placing offer orders of IP addresses within the Site and Services. IPSX is not responsible or liable in any manner for the specifications at any level (legal, functional, technical or quality specifications) of the IP addresses intended to be leased or leased by IP Providers. For avoidance of doubt, IPSX will not be in any way liable or responsible to any IP Requester for any loss or liability arising from any failure to perform or default in the performance by the IP Providers of any obligationof the IP Providers towards IPSX or IP Requesters undertaken by IP Providers as per the Special Terms &amp; Conditions for IP Providers and/or the Terms. Any claims against an IP Provider or in respect of the purchase of the right to use of IP addresses offered by an IP Provider must be brought directly against the IP Provider.
 
 
-</mutableString>
+</string>
                                                                 <attributes>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -898,8 +792,8 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="vh4-n7-sp8" firstAttribute="leading" secondItem="sk1-R6-sUs" secondAttribute="leading" id="QJF-Gl-Rcr"/>
-                                                    <constraint firstAttribute="trailing" secondItem="vh4-n7-sp8" secondAttribute="trailing" id="SIJ-X7-CCU"/>
+                                                    <constraint firstItem="vh4-n7-sp8" firstAttribute="leading" secondItem="sk1-R6-sUs" secondAttribute="leading" constant="15" id="QJF-Gl-Rcr"/>
+                                                    <constraint firstAttribute="trailing" secondItem="vh4-n7-sp8" secondAttribute="trailing" constant="15" id="SIJ-X7-CCU"/>
                                                     <constraint firstAttribute="bottom" secondItem="vh4-n7-sp8" secondAttribute="bottom" id="iV4-Fs-40b"/>
                                                     <constraint firstItem="vh4-n7-sp8" firstAttribute="top" secondItem="sk1-R6-sUs" secondAttribute="top" id="ofE-pa-XqK"/>
                                                 </constraints>
@@ -998,11 +892,185 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                         <outlet property="topBarView" destination="Ibf-oJ-owQ" id="ax2-PL-vFf"/>
                         <outlet property="topConstraintOutlet" destination="rfF-hP-hbU" id="Oe0-rv-3Se"/>
                         <outlet property="topSeparatorView" destination="EHq-TD-jzg" id="LxY-GG-72a"/>
+                        <segue destination="IOy-7w-hMr" kind="show" identifier="AddressSegueID" id="eio-mW-33N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J96-CY-Qjv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2917.5999999999999" y="111.57635467980296"/>
+            <point key="canvasLocation" x="3132" y="-180"/>
+        </scene>
+        <!--View Generated Adrress Controller-->
+        <scene sceneID="sYK-qq-Vjw">
+            <objects>
+                <viewController storyboardIdentifier="ViewGeneratedAdrress" hidesBottomBarWhenPushed="YES" id="IOy-7w-hMr" customClass="ViewGeneratedAdrressController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Yny-wh-22d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9un-qZ-WXA" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="e90-hj-s7p"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPi-Px-CdW" userLabel="Top Bar">
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMO-Tt-yp3" userLabel="Close">
+                                        <rect key="frame" x="0.0" y="50" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="gWO-t8-Xxn"/>
+                                            <constraint firstAttribute="width" constant="44" id="zOF-ha-pDP"/>
+                                        </constraints>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeAction:" destination="IOy-7w-hMr" eventType="touchUpInside" id="rkv-fq-T2D"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Deposit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBt-oT-f93">
+                                        <rect key="frame" x="127.66666666666669" y="62" width="120" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="sMO-Tt-yp3" firstAttribute="leading" secondItem="lPi-Px-CdW" secondAttribute="leading" id="3Hj-g8-57q"/>
+                                    <constraint firstAttribute="bottom" secondItem="eBt-oT-f93" secondAttribute="bottom" constant="11" id="U7e-87-uqS"/>
+                                    <constraint firstItem="eBt-oT-f93" firstAttribute="centerX" secondItem="lPi-Px-CdW" secondAttribute="centerX" id="cxK-T7-hs9"/>
+                                    <constraint firstAttribute="height" constant="94" id="dUB-8v-DnX"/>
+                                    <constraint firstAttribute="bottom" secondItem="sMO-Tt-yp3" secondAttribute="bottom" id="zRw-gf-sCy"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walletLarge" translatesAutoresizingMaskIntoConstraints="NO" id="AdJ-Hc-ESl">
+                                <rect key="frame" x="152.66666666666666" y="253.33333333333337" width="70" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="gio-vP-VeZ"/>
+                                    <constraint firstAttribute="width" constant="70" id="xqs-kx-Kts"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My IPSX Wallet Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ld-dy-bL0">
+                                <rect key="frame" x="86.666666666666686" y="330.33333333333331" width="202" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created at: 14 Oct 2018" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GvY-zu-jcO">
+                                <rect key="frame" x="34" y="361.33333333333331" width="307" height="19.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3pV-03-Tau" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="410.66666666666669" width="375" height="0.66666666666668561"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="iId-PZ-hJI"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0x2B80208b17530F8b8c766010Bd1614FBe8946A52" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMr-cL-Xv4">
+                                <rect key="frame" x="15" y="427.33333333333331" width="345" height="15.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dkm-Sb-qjO" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="459" width="375" height="0.33333333333331439"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.49623129399999999" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="eW3-uD-WKt"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gUo-XO-IZO">
+                                <rect key="frame" x="145" y="445.66666666666669" width="85" height="27"/>
+                                <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="Etw-pu-5FP"/>
+                                    <constraint firstAttribute="width" constant="85" id="LEt-0M-Kbt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="Copy Link">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="copyLinkAction:" destination="IOy-7w-hMr" eventType="touchUpInside" id="BNu-q8-LRm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="010-iL-AAp" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="16" y="512.66666666666663" width="343" height="44"/>
+                                <color key="backgroundColor" red="0.1647058824" green="0.67450980390000004" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="1ic-9f-Udh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" red="0.16862745100000001" green="0.51399999860000001" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Buy IPSX from CryptoCoin">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
+                                        <color key="value" red="0.1647058824" green="0.67450980390000004" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="010-iL-AAp" firstAttribute="top" secondItem="gUo-XO-IZO" secondAttribute="bottom" constant="40" id="3Di-xh-H4y"/>
+                            <constraint firstItem="GvY-zu-jcO" firstAttribute="top" secondItem="4Ld-dy-bL0" secondAttribute="bottom" constant="9" id="Anb-EP-RJY"/>
+                            <constraint firstItem="gUo-XO-IZO" firstAttribute="centerY" secondItem="Dkm-Sb-qjO" secondAttribute="centerY" id="Bip-Fy-mRg"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="9un-qZ-WXA" secondAttribute="trailing" id="Dva-a8-ulh"/>
+                            <constraint firstItem="GvY-zu-jcO" firstAttribute="centerX" secondItem="I2w-pa-9Ki" secondAttribute="centerX" id="GH4-Db-AT8"/>
+                            <constraint firstItem="AdJ-Hc-ESl" firstAttribute="centerX" secondItem="4Ld-dy-bL0" secondAttribute="centerX" id="Hkt-6c-lpu"/>
+                            <constraint firstItem="NMr-cL-Xv4" firstAttribute="top" secondItem="3pV-03-Tau" secondAttribute="bottom" constant="16" id="MtN-pY-CKN"/>
+                            <constraint firstItem="010-iL-AAp" firstAttribute="leading" secondItem="I2w-pa-9Ki" secondAttribute="leading" constant="16" id="N7Y-Mh-TYO"/>
+                            <constraint firstItem="9un-qZ-WXA" firstAttribute="top" secondItem="lPi-Px-CdW" secondAttribute="bottom" id="Ore-bN-SD2"/>
+                            <constraint firstItem="4Ld-dy-bL0" firstAttribute="centerX" secondItem="GvY-zu-jcO" secondAttribute="centerX" id="Qqd-cJ-Xl0"/>
+                            <constraint firstItem="Dkm-Sb-qjO" firstAttribute="top" secondItem="NMr-cL-Xv4" secondAttribute="bottom" constant="16" id="Qxs-1F-sFY"/>
+                            <constraint firstItem="gUo-XO-IZO" firstAttribute="centerX" secondItem="Dkm-Sb-qjO" secondAttribute="centerX" id="RiC-2w-wGb"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="top" secondItem="lPi-Px-CdW" secondAttribute="top" constant="50" id="Vfi-L8-jHq"/>
+                            <constraint firstItem="lPi-Px-CdW" firstAttribute="leading" secondItem="I2w-pa-9Ki" secondAttribute="leading" id="XJD-09-HIP"/>
+                            <constraint firstItem="4Ld-dy-bL0" firstAttribute="top" secondItem="AdJ-Hc-ESl" secondAttribute="bottom" constant="15" id="aaZ-Sy-f7I"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="010-iL-AAp" secondAttribute="trailing" constant="16" id="fxQ-hC-nP7"/>
+                            <constraint firstItem="3pV-03-Tau" firstAttribute="centerY" secondItem="I2w-pa-9Ki" secondAttribute="centerY" id="g6v-1K-m1j"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="leading" secondItem="Dkm-Sb-qjO" secondAttribute="leading" id="gqF-fN-ltH"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="leading" secondItem="3pV-03-Tau" secondAttribute="leading" id="h4T-vo-Gik"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="lPi-Px-CdW" secondAttribute="trailing" id="hv3-7l-zK7"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="Dkm-Sb-qjO" secondAttribute="trailing" id="ijm-FR-kFW"/>
+                            <constraint firstItem="3pV-03-Tau" firstAttribute="top" secondItem="GvY-zu-jcO" secondAttribute="bottom" constant="30" id="kQh-V9-NtD"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="3pV-03-Tau" secondAttribute="trailing" id="krZ-Yl-Fep"/>
+                            <constraint firstItem="9un-qZ-WXA" firstAttribute="leading" secondItem="I2w-pa-9Ki" secondAttribute="leading" id="r4R-9E-x92"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="NMr-cL-Xv4" secondAttribute="trailing" constant="15" id="tPk-XW-peZ"/>
+                            <constraint firstItem="NMr-cL-Xv4" firstAttribute="centerX" secondItem="3pV-03-Tau" secondAttribute="centerX" id="vo5-Tr-BQk"/>
+                            <constraint firstItem="NMr-cL-Xv4" firstAttribute="leading" secondItem="I2w-pa-9Ki" secondAttribute="leading" constant="15" id="xS9-uT-EfF"/>
+                            <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="GvY-zu-jcO" secondAttribute="trailing" constant="34" id="zxP-12-nE4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="I2w-pa-9Ki"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wOY-Id-Qbn"/>
+                    <connections>
+                        <outlet property="addressLinkLabel" destination="NMr-cL-Xv4" id="x35-mf-r9T"/>
+                        <outlet property="copyLinkButton" destination="gUo-XO-IZO" id="qaH-4X-WJI"/>
+                        <outlet property="topBarView" destination="lPi-Px-CdW" id="ihO-xK-3Ug"/>
+                        <outlet property="topConstraintOutlet" destination="Ore-bN-SD2" id="2r7-xV-h36"/>
+                        <outlet property="topSeparatorView" destination="9un-qZ-WXA" id="vPD-q2-JJE"/>
+                        <segue destination="3wE-LW-dwT" kind="unwind" identifier="unwindToDepositListSegue" unwindAction="unwindToDepositListWithSegue:" id="hoq-xl-eqr"/>
+                        <segue destination="3wE-LW-dwT" kind="unwind" identifier="unwindToCartSegue" unwindAction="unwindToCartWithSegue:" id="xzg-Ws-It7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cuq-Ug-SmO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="3wE-LW-dwT" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3961" y="226"/>
         </scene>
     </scenes>
     <resources>
@@ -1012,4 +1080,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
         <image name="walletDeposit" width="30" height="38"/>
         <image name="walletLarge" width="51" height="51.666667938232422"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="eio-mW-33N"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IPSXNetworkingFramework
 
 class GenerateAddressController: UIViewController {
 
@@ -23,6 +24,15 @@ class GenerateAddressController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var cartFlow = false
+
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +61,7 @@ class GenerateAddressController: UIViewController {
     @IBAction func acceptTermsOverlay(_ sender: Any) {
         updateAgreementOverlay(visible: false)
         //TODO: Generate address API here
+        performSegue(withIdentifier: "AddressSegueID", sender: self)
     }
     
     private func updateAgreementOverlay(visible: Bool) {
@@ -62,7 +73,13 @@ class GenerateAddressController: UIViewController {
         })
     }
 
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddressSegueID" {
+            let destination = segue.destination as? ViewGeneratedAdrressController
+            destination?.newAdrressCreated = true
+            destination?.cartFlow = cartFlow
+        }
+    }
 }
 
 extension GenerateAddressController: ToastAlertViewPresentable {
@@ -71,6 +88,35 @@ extension GenerateAddressController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension GenerateAddressController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+            
+        default:
+            
+            switch requestType {
+            case RequestType.userInfo, RequestType.getEthAddress:
+                self.errorMessage = "Refresh Data Error Message".localized
+            case RequestType.deleteEthAddress:
+                self.errorMessage = "ETH Address Delete Failed Error Message".localized
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
         }
     }
 }

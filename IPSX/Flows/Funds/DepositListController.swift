@@ -29,7 +29,9 @@ class DepositListController: UIViewController {
             }
         }
     }
-
+    
+    var addressIsGenerated: Bool { return false }
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -44,12 +46,15 @@ class DepositListController: UIViewController {
 
     
     @IBAction func createDepositAction(_ sender: Any) {
+        let segueID = addressIsGenerated ? "ViewAddressSegueID" : "GenerateAddressSegueID"
+        performSegue(withIdentifier: segueID, sender: self)
     }
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func unwindToDepositList(segue:UIStoryboardSegue) {}
 }
 
 extension DepositListController: UITableViewDataSource {

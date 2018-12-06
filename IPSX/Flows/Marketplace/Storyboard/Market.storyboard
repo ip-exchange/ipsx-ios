@@ -739,6 +739,14 @@
             </objects>
             <point key="canvasLocation" x="5989.6000000000004" y="6.6502463054187197"/>
         </scene>
+        <!--ViewGeneratedAdrress-->
+        <scene sceneID="4Ug-jb-LOH">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BNo-wf-2ao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Deposit" referencedIdentifier="ViewGeneratedAdrress" id="MM7-I4-Oak" sceneMemberID="viewController"/>
+            </objects>
+            <point key="canvasLocation" x="7385" y="-401"/>
+        </scene>
         <!--Market Cart Controller-->
         <scene sceneID="99t-L6-ol4">
             <objects>
@@ -814,6 +822,9 @@
                                         <state key="normal" title="Create Deposit">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="createNewDeposit:" destination="i3b-eM-f4N" eventType="touchUpInside" id="ioe-UB-GqC"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ipsxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2hK-9F-wQS">
                                         <rect key="frame" x="74" y="25.666666666666671" width="14" height="14"/>
@@ -864,9 +875,6 @@
                                         <state key="normal" title="ADD WALLET">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="r3g-ip-p3t" kind="show" identifier="AddWalletSegueID" id="OJz-a7-HwP"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1337,20 +1345,13 @@
                         <outlet property="topSeparatorConstraint" destination="1Au-Va-BsG" id="Jhd-3c-AAx"/>
                         <segue destination="PtT-qt-9lH" kind="show" identifier="CheckoutSegueID" id="QsR-25-9q4"/>
                         <segue destination="sBJ-Zc-YxA" kind="show" identifier="MarketItemSegueID" id="7DU-41-qQy"/>
+                        <segue destination="MM7-I4-Oak" kind="presentation" identifier="CreateDepositSegue" id="L0X-oO-pJb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rNi-MU-FDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1nH-Pv-8eR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6741.6000000000004" y="6.6502463054187197"/>
-        </scene>
-        <!--WalletEditID-->
-        <scene sceneID="0gr-Fs-oN9">
-            <objects>
-                <viewControllerPlaceholder storyboardName="WalletAdd" referencedIdentifier="WalletEditID" id="r3g-ip-p3t" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QIA-Qq-g7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7292" y="-442"/>
         </scene>
         <!--Market Checkout Controller-->
         <scene sceneID="q9H-4n-FRj">
@@ -1605,7 +1606,7 @@ maximum 5 minutes after purchase!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jof-tO-mam" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="zTr-jp-rnc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7479.375" y="6.3380281690140849"/>
+            <point key="canvasLocation" x="7625" y="7"/>
         </scene>
         <!--Market Filter Controller-->
         <scene sceneID="mK9-kj-0Vr">
@@ -3165,7 +3166,7 @@ maximum 5 minutes after purchase!</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cKn-eN-sTi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8303" y="6"/>
+            <point key="canvasLocation" x="8444" y="7"/>
         </scene>
     </scenes>
     <resources>

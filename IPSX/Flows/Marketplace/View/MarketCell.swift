@@ -35,10 +35,9 @@ class MarketCell: UITableViewCell {
         
         cellOffer = offer
         
-        let rand = arc4random_uniform(2)
-        cartImageView.isHidden = rand == 0 ? false : true
-        favImageView.isHidden = rand == 0 ? false : true
-
+        cartImageView.isHidden = !offer.isAddedToCart
+        favImageView.isHidden = !offer.isFavourite
+        
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"

@@ -100,6 +100,10 @@ class MarketCartController: UIViewController {
         performSegue(withIdentifier: checkoutSegueID, sender: self)
     }
     
+    @IBAction func createNewDeposit(_ sender: Any) {
+        performSegue(withIdentifier: "CreateDepositSegue", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         backFromSegue = true
         if segue.identifier == addWalletSegueID {
@@ -111,6 +115,11 @@ class MarketCartController: UIViewController {
             itemController?.isInCartAlready = true
             itemController?.offer = selectedOffer
         }
+        if segue.identifier == "CreateDepositSegue" {
+            let dest = segue.destination as? ViewGeneratedAdrressController
+            dest?.cartFlow = true
+       }
+
     }
     
     func configureSummaryUI() {
@@ -178,6 +187,8 @@ class MarketCartController: UIViewController {
             self.bottomIpsxIcon.alpha = alpha
         }
     }
+    
+    @IBAction func unwindToCart(segue:UIStoryboardSegue) {}
 }
 
 extension MarketCartController: UITableViewDataSource {
