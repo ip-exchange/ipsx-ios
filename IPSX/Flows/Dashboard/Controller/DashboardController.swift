@@ -38,6 +38,8 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
+    var shouldShowOrderHint = false
+    
     fileprivate let cellID = "DashboardCellID"
     fileprivate let detailsSegueID = "DetailsSegueID"
     fileprivate let viewOrderSegueID = "ViewOrderSegueID"
@@ -176,7 +178,11 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    @IBAction func unwindToDashboard(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToDashboard(segue:UIStoryboardSegue) {
+        if let _ = segue.source as? MarketController {
+            shouldShowOrderHint = true
+        }
+    }
 
 }
 
@@ -184,7 +190,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
 extension DashboardController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -201,7 +207,13 @@ extension DashboardController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 50 : 38
+        var height: CGFloat = 50
+        if section == 0, shouldShowOrderHint {
+            height += 79
+        } else if section > 0 {
+            height -= 12
+        }
+        return height
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -210,6 +222,9 @@ extension DashboardController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
+        if section > 0 {
+            cell?.labelesTopConstraint?.constant -= 12
+        }
         cell?.updateCell(sectionIndex: section)
         cell?.onTap = { section in
             self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self)
@@ -221,6 +236,7 @@ extension DashboardController: UITableViewDataSource {
 extension DashboardController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 { shouldShowOrderHint = false }
         selectedOffer = offers[indexPath.row]
         performSegue(withIdentifier: detailsSegueID, sender: self)
     }
