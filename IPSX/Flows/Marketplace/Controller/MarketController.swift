@@ -329,7 +329,7 @@ extension MarketController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard UserManager.shared.getCountryName(countryID: userInfo?.countryID) != nil else {
+        guard userInfo?.countryID != nil else {
             updateCountryOverlay(visible: true)
             return
         }
