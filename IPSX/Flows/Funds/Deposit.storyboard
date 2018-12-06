@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v0F-n9-oxs">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,18 +15,18 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="v0F-n9-oxs" customClass="DepositListController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="za1-IL-cTs">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMO-a3-mq8" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="ueW-JQ-dsD"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9Z-Il-8x5" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRc-RY-06S" userLabel="Close">
                                         <rect key="frame" x="0.0" y="50" width="44" height="44"/>
@@ -53,7 +53,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="65" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rC6-x6-Gsz">
-                                <rect key="frame" x="0.0" y="64.5" width="375" height="602.5"/>
+                                <rect key="frame" x="0.0" y="88.666666666666686" width="375" height="689.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Btw-uE-1yA">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
@@ -63,7 +63,7 @@
                                             <rect key="frame" x="15" y="25" width="345" height="67"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Deposit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmn-uI-tnh">
-                                                    <rect key="frame" x="71" y="15" width="266" height="20"/>
+                                                    <rect key="frame" x="71" y="16" width="266" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -86,6 +86,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="createDepositAction:" destination="v0F-n9-oxs" eventType="touchUpInside" id="gl4-3Y-IZI"/>
+                                                        <segue destination="zsV-9k-Sq5" kind="presentation" id="MF1-EZ-BtO"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -134,7 +135,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ipsxIcon" translatesAutoresizingMaskIntoConstraints="NO" id="H2s-DL-R9L">
-                                                    <rect key="frame" x="96" y="18.5" width="11" height="11"/>
+                                                    <rect key="frame" x="96" y="18.666666666666668" width="11" height="11"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="11" id="enB-59-YTp"/>
                                                         <constraint firstAttribute="width" constant="11" id="tGW-dX-Msv"/>
@@ -147,7 +148,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A84-sz-RVA" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="64.5" width="375" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="64.666666666666671" width="375" height="0.3333333333333286"/>
                                                     <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="8Hc-SE-LU2"/>
@@ -260,7 +261,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8VJ-c3-o0d" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5VA-YX-am7"/>
@@ -296,12 +297,719 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3tK-eN-C33" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7572" y="-155.17241379310346"/>
+            <point key="canvasLocation" x="2038" y="112"/>
+        </scene>
+        <!--Generate Address Controller-->
+        <scene sceneID="kDf-AC-f0A">
+            <objects>
+                <viewController storyboardIdentifier="ReferFriendID" hidesBottomBarWhenPushed="YES" id="zsV-9k-Sq5" customClass="GenerateAddressController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ukq-br-pdy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHq-TD-jzg" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="L5o-ZC-uKm"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ibf-oJ-owQ" userLabel="Top Bar">
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7BW-Mf-YoC" userLabel="Close">
+                                        <rect key="frame" x="0.0" y="50" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="U5Z-4C-jBn"/>
+                                            <constraint firstAttribute="height" constant="44" id="tEz-7L-aWX"/>
+                                        </constraints>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backAction:" destination="zsV-9k-Sq5" eventType="touchUpInside" id="Bp3-gW-ygV"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9r-07-WeT">
+                                        <rect key="frame" x="125.66666666666669" y="62" width="124" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="X9r-07-WeT" secondAttribute="bottom" constant="11" id="amw-z7-Xq6"/>
+                                    <constraint firstItem="7BW-Mf-YoC" firstAttribute="leading" secondItem="Ibf-oJ-owQ" secondAttribute="leading" id="fJu-VH-ASV"/>
+                                    <constraint firstItem="X9r-07-WeT" firstAttribute="centerX" secondItem="Ibf-oJ-owQ" secondAttribute="centerX" id="leK-5v-Xcs"/>
+                                    <constraint firstAttribute="bottom" secondItem="7BW-Mf-YoC" secondAttribute="bottom" id="stY-KJ-2Xz"/>
+                                    <constraint firstAttribute="height" constant="94" id="vgM-oy-8u7"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walletLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aE2-ek-FCd">
+                                <rect key="frame" x="152.66666666666666" y="277" width="70" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="XyU-jf-aIK"/>
+                                    <constraint firstAttribute="height" constant="62" id="aJp-b6-u6q"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My IPSX Wallet Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WA-d5-PU3">
+                                <rect key="frame" x="86.666666666666686" y="361" width="202" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deposit IPSX by first creating a wallet address of your own" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPc-S0-Unp">
+                                <rect key="frame" x="34" y="392" width="307" height="38.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHF-l3-JsL" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="16" y="465.33333333333331" width="343" height="44"/>
+                                <color key="backgroundColor" red="0.16470588235294117" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="w3y-RO-OKT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" red="0.16862745100000001" green="0.51399999860000001" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Create my address">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
+                                        <color key="value" red="0.16470588235294117" green="0.67450980392156867" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createAddress:" destination="zsV-9k-Sq5" eventType="touchUpInside" id="HwI-8y-8PB"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyj-t1-VYY" userLabel="Terms Overlay View">
+                                <rect key="frame" x="0.0" y="-37" width="375" height="885"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZXU-qt-A5A" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                        <rect key="frame" x="15" y="121" width="345" height="654"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms and Conditions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0B-M7-CiZ">
+                                                <rect key="frame" x="15" y="15" width="141" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="82z-re-y4U">
+                                                <rect key="frame" x="301" y="1.6666666666666714" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="44" id="bvO-Rs-Abc"/>
+                                                    <constraint firstAttribute="height" constant="44" id="jaP-Zc-uA1"/>
+                                                </constraints>
+                                                <state key="normal" image="CloseBut"/>
+                                                <connections>
+                                                    <action selector="closeTermsOverlay:" destination="zsV-9k-Sq5" eventType="touchUpInside" id="MRv-gT-1pb"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QxT-nN-Nbu" userLabel="Separator">
+                                                <rect key="frame" x="0.0" y="49" width="345" height="0.6666666666666643"/>
+                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30391725349999998" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="Q3B-ps-W8f"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sk1-R6-sUs">
+                                                <rect key="frame" x="0.0" y="49.666666666666629" width="345" height="547"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vh4-n7-sp8">
+                                                        <rect key="frame" x="0.0" y="0.0" width="345" height="547"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="1. INTRODUCTION">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">
+By accepting these Special Terms you represent and warrant that you have read, understood and agree to be bound by the Terms also incorporated herein by reference. In these Special Terms, words/terms defined in the Terms shall have the same respective meaning when used in these Special Terms.
+
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="2. ELIGIBILITY">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+By accessing or using the Site or the Services, you, as IP Requester, represent and warrant that you are at least 18 years old and have not previously been suspended or removed from the Site. If you are under 18 years of age, then you must not use or access the Site at any time or in any manner. You also represent and warrant that you are not a resident of a Restricted State: 1. Afghanistan; 2. Belarus; 3. Bosnia &amp; Herzegovina; 4. Burundi; 5. Central African Republic; 6. Democratic People's Republic of Korea (North Korea); 7. Democratic Republic of the Congo; 8. Eritrea; 9. Guinea; 10. Guinea-Bissau; 11. Iran; 12. Iraq; 13. Lebanon; 14. Libya; 15. Maldives; 16. Mali; 17. Myanmar (Burma); 18. Somalia; 19. South Sudan; 20. Sudan; 21. Syria; 22. Tunisia; 23 Ukraine; 24 Venezuela; 25 Yemen; 26 Zimbabwe. The list of Restricted States is subject to change at any time. In the event a state becomes a Restricted State, IPSX will provide Users residing in that state with notice via email, a notification on our Site, or other means as we deem necessary, regarding their access to the Services.
+
+2.1 You, as IP Requester, represent and warrant that you are not:
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">located in, under the control of, or a national or resident of any country to which the EU has embargoed goods or services;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">identified as a "Specially Designated National”; or
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">placed on the Commerce Department's Denied Persons List.
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">
+2.2 You, as IP Requester, further represent and warrant that:
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	•	</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="10" name="Menlo-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">you are either acting on your own account or acting on a disclosed basis on behalf of an organisation and have the consent and authority to represent such organisation when accepting these Special Terms and/or the Terms incorporated by reference herein;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	•	</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="10" name="Menlo-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">all submitted information and documents are true, accurate and complete in all respects, that they are in accordance with the respective laws, rules and regulations and do not infringe any third party rights;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	•	</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="10" name="Menlo-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">at the soonest possible moment, you will notify us about, and correct, any inaccuracy with regards to any of the submitted information;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	•	</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="10" name="Menlo-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">you will not use the Site or the Services if the laws of your country prohibit you from doing so;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	•	</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="10" name="Menlo-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">you have sufficient understanding of the functionality, transmission mechanisms and other material characteristics of cryptographic tokens, token storage mechanisms (such as token wallets), blockchain technology and blockchain-based software systems to appreciate the risks and implications of our Services;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+2.3 You, as IP Requester, represent that you agree and understand that for a virtual and intangible product as the IP addresses, information and transparency are essential along the entire process. Finally, you represent and warrant that you understand that for IPSX it is essential to fully know how you are going to use the leased IPs and you hereby represent and warrant that any and all IPs leased will not be used for any illegal activity, including but not limited to illegal gambling, money laundering, fraud, blackmail, extortion, ransoming data or the financing of terrorism, or other violent activities.
+
+2.4 Notwithstanding the foregoing, IPSX may not make the Services, in whole or in part, available in every market, either in its sole discretion or due to legal or regulatory requirements, depending on the User’s location.
+
+
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="3. INITIAL FUNDING">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+
+3.1 In order to fund your Account and begin placing orders of IPs, you, as IP Requester, may need to first procure IPSX tokens. Once procured, you must deposit the IPSX tokens to an IPSX generated wallet associated to your Account and wait for the balance to appear in your Account. It is your responsibility to ensure you send IPSX tokens to the correct address, otherwise your funds may never be recovered. IPSX makes no representations or warranties regarding the amount of time that may be required to have IPSX tokens available in your Account.
+
+3.2 When you elect to transfer IPSX tokens from your Account to a third party wallet or other location, it is always possible the party administering the new location may reject your transfer or that the transfer may fail due to technical or other issues affecting our Platform. You agree that you shall not hold IPSX liable for any damages arising from a rejected transfer.
+
+3.3 IPSX reserves the right to limit the number of Accounts that any User or such User’s affiliates can open or hold.
+
+
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="4. COMPLIANCE">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+
+4.1 You acknowledge that we may conduct a check of your background and identity (where applicable) as required by applicable laws in connection with specific uses of the Site and in order to minimise the risk of crime and fraud against us and other Site and Services Users. You shall comply with such identification requirements that we may from time to time require without delay.
+
+4.2 You hereby consent and authorise us to, either directly or via third parties, make any inquiries and conduct any investigation we consider necessary to verify such information. You further consent and authorise any and all third parties to which any such queries or investigations may be directed to fully respond to such queries or investigations.
+
+4.3 You agree and acknowledge that we may, at our sole discretion, deny you the right to access the Site and Services and/or participate in an offer made by any IP Provider. None of the IPSX Parties will have any liability to you or bear responsibility for any losses queries or investigations arising from this.
+
+4.4 We may share your personal information with law enforcement, data protection authorities, government officials, and other authorities when:
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">required by law - including subpoena, court order, or other legal procedure;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">we believe that disclosure is necessary to prevent physical harm or financial loss;
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">disclosure is necessary to report suspected illegal or suspicious activity; or
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">	- </string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="disclosure is necessary to investigate violations of these Special Terms and/or the ">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="Terms">
+                                                                <attributes>
+                                                                    <color key="NSColor" red="0.89412000000000003" green="0.68627000000000005" blue="0.039219999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content=" and/or ">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="IPSX Privacy Policy">
+                                                                <attributes>
+                                                                    <color key="NSColor" red="0.89412000000000003" green="0.68627000000000005" blue="0.039219999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+4.5 You agree and acknowledge that in order to use the Services, when you seek to enter into contractual relations with an IP Provider, it is necessary for us and the relevant IP Provider to process some of your Personal Data (as defined in the Privacy Policy) for billing purposes (for example, your identification information, your VAT code).
+
+4.6 You agree and acknowledge that all relevant Personal Data that you provide us for billing purposes (for example, your identification information, your VAT code) is reasonably required for us for your entering into a contractual relationship with us or with an IP Provider (or to enable us and the IP Providers to meet our and their legal obligations). All other personal information you provide to us shall not be shared with any IP Provider. When entering into a deal regarding the purchase of the right to use IP addresses leased to you, you are entering into a direct legal and contractual relationship with the relevant IP Provider and IPSX is not responsible with respect to the privacy policy and data processing of that IP Provider.
+
+
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="5. CONSENT TO ELECTRONIC COMMUNICATIONS">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">
+You agree that any notices, agreements, disclosures or other communications that we send to you electronically will satisfy any legal communication requirements, including that such communications be in writing.
+
+
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="6. NO LIABILITY OF IPSX REGARDING THE LEASE OF IP ADRESSES">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <mutableString key="content">
+IPSX has no liability to IP Requesters for the actions, omission, representations or information provided by any IP Providers in the context of placing offer orders of IP addresses within the Site and Services. IPSX is not responsible or liable in any manner for the specifications at any level (legal, functional, technical or quality specifications) of the IP addresses intended to be leased or leased by IP Providers. For avoidance of doubt, IPSX will not be in any way liable or responsible to any IP Requester for any loss or liability arising from any failure to perform or default in the performance by the IP Providers of any obligationof the IP Providers towards IPSX or IP Requesters undertaken by IP Providers as per the Special Terms &amp; Conditions for IP Providers and/or the Terms. Any claims against an IP Provider or in respect of the purchase of the right to use of IP addresses offered by an IP Provider must be brought directly against the IP Provider.
+
+
+</mutableString>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment content="7. CONTACT US">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                            <fragment>
+                                                                <string key="content">
+Please contact us at support@ip.sx if you have any queries about these Special Terms. Although we make no representations or provide no warranties about the speed of response, we will get back to you as soon as possible.
+</string>
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                        <tabStops/>
+                                                                    </paragraphStyle>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="vh4-n7-sp8" firstAttribute="leading" secondItem="sk1-R6-sUs" secondAttribute="leading" id="QJF-Gl-Rcr"/>
+                                                    <constraint firstAttribute="trailing" secondItem="vh4-n7-sp8" secondAttribute="trailing" id="SIJ-X7-CCU"/>
+                                                    <constraint firstAttribute="bottom" secondItem="vh4-n7-sp8" secondAttribute="bottom" id="iV4-Fs-40b"/>
+                                                    <constraint firstItem="vh4-n7-sp8" firstAttribute="top" secondItem="sk1-R6-sUs" secondAttribute="top" id="ofE-pa-XqK"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xS-tR-5Je" userLabel="Separator">
+                                                <rect key="frame" x="0.0" y="596.66666666666663" width="345" height="0.33333333333337123"/>
+                                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="e9I-ex-e4I"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ol-Ym-6ms">
+                                                <rect key="frame" x="0.0" y="597" width="345" height="57"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <state key="normal" title="I accept">
+                                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="acceptTermsOverlay:" destination="zsV-9k-Sq5" eventType="touchUpInside" id="GMn-8l-ntL"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="6xS-tR-5Je" firstAttribute="top" secondItem="sk1-R6-sUs" secondAttribute="bottom" id="2Ik-8S-OpZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="QxT-nN-Nbu" secondAttribute="trailing" id="5Tw-mE-d1w"/>
+                                            <constraint firstItem="o0B-M7-CiZ" firstAttribute="top" secondItem="ZXU-qt-A5A" secondAttribute="top" constant="15" id="5m0-Qv-J31"/>
+                                            <constraint firstAttribute="trailing" secondItem="sk1-R6-sUs" secondAttribute="trailing" id="8Xl-dU-seZ"/>
+                                            <constraint firstItem="QxT-nN-Nbu" firstAttribute="top" secondItem="ZXU-qt-A5A" secondAttribute="top" constant="49" id="D9o-sV-2Ez"/>
+                                            <constraint firstItem="9Ol-Ym-6ms" firstAttribute="top" secondItem="6xS-tR-5Je" secondAttribute="bottom" id="OQy-Jv-bwb"/>
+                                            <constraint firstAttribute="bottom" secondItem="9Ol-Ym-6ms" secondAttribute="bottom" id="Wn4-Km-7hJ"/>
+                                            <constraint firstItem="o0B-M7-CiZ" firstAttribute="leading" secondItem="ZXU-qt-A5A" secondAttribute="leading" constant="15" id="czg-ME-5Ot"/>
+                                            <constraint firstAttribute="bottom" secondItem="6xS-tR-5Je" secondAttribute="bottom" constant="57" id="hdq-Y0-Wqc"/>
+                                            <constraint firstItem="6xS-tR-5Je" firstAttribute="leading" secondItem="ZXU-qt-A5A" secondAttribute="leading" id="j5n-pD-fvZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="6xS-tR-5Je" secondAttribute="trailing" id="jLV-5U-sJm"/>
+                                            <constraint firstAttribute="trailing" secondItem="82z-re-y4U" secondAttribute="trailing" id="l7d-cN-jUe"/>
+                                            <constraint firstItem="9Ol-Ym-6ms" firstAttribute="leading" secondItem="ZXU-qt-A5A" secondAttribute="leading" id="mXu-Pb-Aab"/>
+                                            <constraint firstItem="sk1-R6-sUs" firstAttribute="top" secondItem="QxT-nN-Nbu" secondAttribute="bottom" id="pTI-6b-BVC"/>
+                                            <constraint firstItem="sk1-R6-sUs" firstAttribute="leading" secondItem="ZXU-qt-A5A" secondAttribute="leading" id="qBu-3j-grt"/>
+                                            <constraint firstAttribute="trailing" secondItem="9Ol-Ym-6ms" secondAttribute="trailing" id="sqD-na-NBO"/>
+                                            <constraint firstItem="82z-re-y4U" firstAttribute="top" secondItem="ZXU-qt-A5A" secondAttribute="top" constant="1.5" id="uuJ-YE-eo2"/>
+                                            <constraint firstItem="QxT-nN-Nbu" firstAttribute="leading" secondItem="ZXU-qt-A5A" secondAttribute="leading" id="vQM-Sl-F6E"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.40118838029999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ZXU-qt-A5A" secondAttribute="trailing" constant="15" id="7ah-uS-2v4"/>
+                                    <constraint firstItem="ZXU-qt-A5A" firstAttribute="leading" secondItem="hyj-t1-VYY" secondAttribute="leading" constant="15" id="jNv-fh-5ES"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ZXU-qt-A5A" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" constant="15" id="0Pt-G4-Yrf"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="Ibf-oJ-owQ" secondAttribute="trailing" id="2EX-CD-CZ3"/>
+                            <constraint firstItem="Ibf-oJ-owQ" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" id="48D-fS-ApC"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="top" secondItem="hyj-t1-VYY" secondAttribute="top" constant="81" id="5Tx-HN-fcn"/>
+                            <constraint firstItem="3WA-d5-PU3" firstAttribute="top" secondItem="aE2-ek-FCd" secondAttribute="bottom" constant="22" id="8QG-3N-Xyg"/>
+                            <constraint firstItem="ZXU-qt-A5A" firstAttribute="top" secondItem="WdM-Lj-e6J" secondAttribute="top" constant="40" id="Cdd-RU-n8K"/>
+                            <constraint firstItem="hyj-t1-VYY" firstAttribute="trailing" secondItem="WdM-Lj-e6J" secondAttribute="trailing" id="DLn-EH-orZ"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="hPc-S0-Unp" secondAttribute="trailing" constant="34" id="Di0-I4-lfm"/>
+                            <constraint firstItem="nHF-l3-JsL" firstAttribute="top" secondItem="hPc-S0-Unp" secondAttribute="bottom" constant="35" id="Lct-0u-YqO"/>
+                            <constraint firstItem="hPc-S0-Unp" firstAttribute="centerY" secondItem="WdM-Lj-e6J" secondAttribute="centerY" id="LkY-Jw-wuL"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="ZXU-qt-A5A" secondAttribute="trailing" constant="15" id="OJ6-7A-ZpO"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="bottom" secondItem="ZXU-qt-A5A" secondAttribute="bottom" constant="40" id="Pcl-co-ZMP"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="EHq-TD-jzg" secondAttribute="trailing" id="QHO-s3-fk1"/>
+                            <constraint firstItem="3WA-d5-PU3" firstAttribute="centerX" secondItem="hPc-S0-Unp" secondAttribute="centerX" id="aKs-5Q-kzs"/>
+                            <constraint firstItem="nHF-l3-JsL" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" constant="16" id="hgt-35-m1I"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="nHF-l3-JsL" secondAttribute="trailing" constant="16" id="nI6-Qu-hos"/>
+                            <constraint firstItem="WdM-Lj-e6J" firstAttribute="top" secondItem="Ibf-oJ-owQ" secondAttribute="top" constant="50" id="nQd-YJ-51K"/>
+                            <constraint firstItem="hPc-S0-Unp" firstAttribute="top" secondItem="3WA-d5-PU3" secondAttribute="bottom" constant="9" id="qpg-fw-Avj"/>
+                            <constraint firstItem="hyj-t1-VYY" firstAttribute="bottom" secondItem="WdM-Lj-e6J" secondAttribute="bottom" constant="70" id="rBb-ka-dax"/>
+                            <constraint firstItem="EHq-TD-jzg" firstAttribute="top" secondItem="Ibf-oJ-owQ" secondAttribute="bottom" id="rfF-hP-hbU"/>
+                            <constraint firstItem="aE2-ek-FCd" firstAttribute="centerX" secondItem="3WA-d5-PU3" secondAttribute="centerX" id="sLB-xX-EaP"/>
+                            <constraint firstItem="hyj-t1-VYY" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" id="vdD-hA-yUm"/>
+                            <constraint firstItem="hPc-S0-Unp" firstAttribute="centerX" secondItem="WdM-Lj-e6J" secondAttribute="centerX" id="wOQ-hF-QdM"/>
+                            <constraint firstItem="EHq-TD-jzg" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" id="zlj-A7-x25"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WdM-Lj-e6J"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dUe-aY-Imt"/>
+                    <connections>
+                        <outlet property="termsOverlayBottomConstraint" destination="Pcl-co-ZMP" id="o0J-MC-BLd"/>
+                        <outlet property="termsOverlayTopConstraint" destination="Cdd-RU-n8K" id="BqT-x7-JNj"/>
+                        <outlet property="termsOverlayView" destination="hyj-t1-VYY" id="TvO-fF-v3c"/>
+                        <outlet property="topBarView" destination="Ibf-oJ-owQ" id="ax2-PL-vFf"/>
+                        <outlet property="topConstraintOutlet" destination="rfF-hP-hbU" id="Oe0-rv-3Se"/>
+                        <outlet property="topSeparatorView" destination="EHq-TD-jzg" id="LxY-GG-72a"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J96-CY-Qjv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2917.5999999999999" y="111.57635467980296"/>
         </scene>
     </scenes>
     <resources>
-        <image name="BackArrow" width="10.5" height="19"/>
+        <image name="BackArrow" width="10.333333015441895" height="19"/>
+        <image name="CloseBut" width="27" height="27"/>
         <image name="ipsxIcon" width="16" height="16"/>
         <image name="walletDeposit" width="30" height="38"/>
+        <image name="walletLarge" width="51" height="51.666667938232422"/>
     </resources>
 </document>
