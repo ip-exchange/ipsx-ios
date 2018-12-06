@@ -40,7 +40,8 @@ class MarketplaceService {
             let json = JSON(data)
             let jsonArray = json["offers"].arrayValue
             
-            var availableOffers = self.parseOffers(offersJsonArray: jsonArray)
+            let offers = self.parseOffers(offersJsonArray: jsonArray)
+            var availableOffers = offers.filter { return $0.isAvailable == true }
             availableOffers.sort { $0.id < $1.id }
             completionHandler(ServiceResult.success(availableOffers))
         })
@@ -51,21 +52,23 @@ class MarketplaceService {
         var offers: [Offer] = []
         for offerJson in offersJsonArray {
             
-            let status       = offerJson["status"].stringValue
-            let available    = offerJson["available"].boolValue
             let offerID      = offerJson["id"].intValue
             let priceIPSX    = offerJson["cost_ipsx"].doubleValue
             let priceDollars = offerJson["cost"].doubleValue
             let durationMin  = offerJson["duration"].stringValue
             let trafficMB    = offerJson["traffic"].stringValue
-            
+            let status       = offerJson["status"].stringValue
+            let available    = offerJson["available"].boolValue
+            let addedToCart  = offerJson["cart"].boolValue
+            let favourite    = offerJson["favorite"].boolValue
             let proxyJsonArray = offerJson["proxy_items"].arrayValue
             
             let offer = Offer(id: offerID, priceIPSX: priceIPSX, priceDollars: priceDollars, durationMin: durationMin, trafficMB: trafficMB)
             let proxies = self.parseProxyItems(proxyJsonArray: proxyJsonArray)
             offer.setProxies(proxyArray: proxies)
-            
-            if status == "active" && available { offers.append(offer) }
+            offer.setStatus(isActive: status == "active", isAvailable: available)
+            offer.setCartAndFavStates(isAddedToCart: addedToCart, isFavourite: favourite)
+            offers.append(offer)
         }
         return offers
     }
@@ -202,8 +205,8 @@ class MarketplaceService {
             for item in items {
                 
                 let offerJsonArray = item["offer"].arrayValue
-                let availableOffers = self.parseOffers(offersJsonArray: offerJsonArray)
-                offers.append(contentsOf: availableOffers)
+                let offersArray = self.parseOffers(offersJsonArray: offerJsonArray)
+                offers.append(contentsOf: offersArray)
             }
             offers.sort { $0.id < $1.id }
             let usdSubtotal = json["totals"]["usd"]["subtotal"].doubleValue

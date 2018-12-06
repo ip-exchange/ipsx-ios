@@ -17,6 +17,12 @@ class Offer {
     var trafficMB: String
     var proxies: [Proxy] = []
     
+    var isAvailable = true
+    var isActive = true
+    
+    var isAddedToCart = false
+    var isFavourite = false
+    
     init(id: Int, priceIPSX: Double, priceDollars: Double, durationMin: String, trafficMB: String) {
         
         self.id  = id
@@ -28,5 +34,17 @@ class Offer {
     
     func setProxies(proxyArray: [Proxy]) {
         self.proxies = proxyArray
+    }
+    
+    func setStatus(isActive: Bool, isAvailable: Bool) {
+        
+        self.isActive    = isActive
+        self.isAvailable = isAvailable
+    }
+    
+    func setCartAndFavStates(isAddedToCart: Bool, isFavourite: Bool) {
+        
+        self.isAddedToCart = isAddedToCart
+        self.isFavourite   = isFavourite
     }
 }
