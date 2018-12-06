@@ -19,6 +19,8 @@ class MarketCell: UITableViewCell {
     @IBOutlet weak var priceIPSXLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var trafficLabel: UILabel!
+    @IBOutlet weak var cartImageView: UIImageView!
+    @IBOutlet weak var favImageView: UIImageView!
     
     @IBOutlet weak var cellLeadingConstraint: NSLayoutConstraint?
     
@@ -33,6 +35,10 @@ class MarketCell: UITableViewCell {
         
         cellOffer = offer
         
+        let rand = arc4random_uniform(2)
+        cartImageView.isHidden = rand == 0 ? false : true
+        favImageView.isHidden = rand == 0 ? false : true
+
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"

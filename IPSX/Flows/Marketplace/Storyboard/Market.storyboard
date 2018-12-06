@@ -1074,6 +1074,13 @@
                                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartSmall" translatesAutoresizingMaskIntoConstraints="NO" id="w9a-6u-qd3">
+                                                            <rect key="frame" x="194" y="17.666666666666668" width="12" height="13"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="13" id="8PQ-Sp-ZCV"/>
+                                                                <constraint firstAttribute="width" constant="12" id="dFo-1P-bmI"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsf-xq-zR9" customClass="ProgressRoundView" customModule="IPSX" customModuleProvider="target">
                                                             <rect key="frame" x="285" y="17" width="14" height="14"/>
                                                             <color key="backgroundColor" red="0.0" green="0.75686274509999996" blue="0.25098039220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1112,6 +1119,13 @@
                                                             <color key="textColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favoritesSmall" translatesAutoresizingMaskIntoConstraints="NO" id="qjG-Mu-BmG">
+                                                            <rect key="frame" x="318.66666666666669" y="51.666666666666664" width="15" height="12.999999999999993"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="5ar-sc-awr"/>
+                                                                <constraint firstAttribute="height" constant="13" id="h54-hf-r7Y"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="6Bw-DD-nRH">
                                                             <rect key="frame" x="18.666666666666664" y="85" width="15" height="14"/>
                                                             <constraints>
@@ -1145,9 +1159,12 @@
                                                         <constraint firstItem="RTL-kw-G0W" firstAttribute="centerX" secondItem="Dqc-uc-rwR" secondAttribute="centerX" id="0jV-IC-imY"/>
                                                         <constraint firstItem="WPI-zi-dfw" firstAttribute="centerY" secondItem="Dqc-uc-rwR" secondAttribute="centerY" id="2BQ-A3-m1i"/>
                                                         <constraint firstItem="wwC-8Z-ndd" firstAttribute="leading" secondItem="Ayt-GZ-KZf" secondAttribute="leading" id="2UW-vw-bbh"/>
+                                                        <constraint firstItem="qjG-Mu-BmG" firstAttribute="centerX" secondItem="tBe-63-dnI" secondAttribute="centerX" id="6s1-JI-con"/>
                                                         <constraint firstItem="tBe-63-dnI" firstAttribute="top" secondItem="ehV-56-shb" secondAttribute="bottom" constant="52.333333333333336" id="83b-2O-bwy"/>
+                                                        <constraint firstItem="w9a-6u-qd3" firstAttribute="leading" secondItem="WPI-zi-dfw" secondAttribute="trailing" constant="5" id="AmB-J3-a3v"/>
                                                         <constraint firstItem="Dqc-uc-rwR" firstAttribute="top" secondItem="URD-dB-Nrt" secondAttribute="top" constant="13" id="B5H-Ur-Xst"/>
                                                         <constraint firstItem="WPI-zi-dfw" firstAttribute="leading" secondItem="Dqc-uc-rwR" secondAttribute="trailing" constant="8" id="Gwf-5H-BQt"/>
+                                                        <constraint firstItem="w9a-6u-qd3" firstAttribute="centerY" secondItem="WPI-zi-dfw" secondAttribute="centerY" id="Nkn-ho-mg7"/>
                                                         <constraint firstItem="tBe-63-dnI" firstAttribute="trailing" secondItem="ehV-56-shb" secondAttribute="trailing" id="Pmb-BC-hlX"/>
                                                         <constraint firstItem="6Bw-DD-nRH" firstAttribute="top" secondItem="RTL-kw-G0W" secondAttribute="bottom" constant="8" id="Qop-SN-lDb"/>
                                                         <constraint firstItem="Ayt-GZ-KZf" firstAttribute="leading" secondItem="WPI-zi-dfw" secondAttribute="leading" id="Uwa-jl-ouA"/>
@@ -1162,6 +1179,7 @@
                                                         <constraint firstItem="dyg-Cj-1e4" firstAttribute="top" secondItem="WPI-zi-dfw" secondAttribute="bottom" constant="0.3333333333333357" id="ox7-1t-5jP"/>
                                                         <constraint firstItem="Ayt-GZ-KZf" firstAttribute="top" secondItem="WPI-zi-dfw" secondAttribute="bottom" constant="28.333333333333336" id="rTj-7H-jxF"/>
                                                         <constraint firstItem="wwC-8Z-ndd" firstAttribute="top" secondItem="Ayt-GZ-KZf" secondAttribute="bottom" constant="5" id="sH2-LC-YcB"/>
+                                                        <constraint firstItem="qjG-Mu-BmG" firstAttribute="centerY" secondItem="URD-dB-Nrt" secondAttribute="centerY" id="vrE-cS-LNy"/>
                                                         <constraint firstAttribute="trailing" secondItem="ehV-56-shb" secondAttribute="trailing" constant="12" id="xFx-J2-9H3"/>
                                                     </constraints>
                                                 </view>
@@ -1178,10 +1196,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="cartImageView" destination="w9a-6u-qd3" id="qHB-Yv-x4M"/>
                                             <outlet property="cellContentView" destination="URD-dB-Nrt" id="1EK-P6-km5"/>
                                             <outlet property="cellLeadingConstraint" destination="t0y-Mx-Fwm" id="N3N-cg-V9U"/>
                                             <outlet property="countryLabel" destination="dyg-Cj-1e4" id="Law-OZ-mou"/>
                                             <outlet property="durationLabel" destination="wwC-8Z-ndd" id="zdK-uB-vEu"/>
+                                            <outlet property="favImageView" destination="qjG-Mu-BmG" id="kJ4-6s-Bgw"/>
                                             <outlet property="flagImageView" destination="Dqc-uc-rwR" id="S1m-XA-nNn"/>
                                             <outlet property="offerTypeLabel" destination="WPI-zi-dfw" id="Czh-vv-CGw"/>
                                             <outlet property="priceIPSXLabel" destination="nUv-hA-rUi" id="Yn6-bg-tOc"/>
@@ -3156,6 +3176,7 @@ maximum 5 minutes after purchase!</string>
         <image name="RO32" width="18" height="18"/>
         <image name="arrowDown" width="16" height="8.6666669845581055"/>
         <image name="bgMarketitem" width="375" height="142"/>
+        <image name="cartSmall" width="12.333333015441895" height="13.333333015441895"/>
         <image name="checkBoxChecked" width="20" height="20"/>
         <image name="checkBoxEmpty" width="20" height="20"/>
         <image name="checkboxBlueChecked" width="21" height="21"/>
@@ -3163,6 +3184,7 @@ maximum 5 minutes after purchase!</string>
         <image name="clock" width="14" height="14.333333015441895"/>
         <image name="closeSmall" width="13.666666984558105" height="13.666666984558105"/>
         <image name="cloudComputing" width="17" height="14"/>
+        <image name="favoritesSmall" width="15" height="13.333333015441895"/>
         <image name="garbageWhite" width="18" height="20.333333969116211"/>
         <image name="inclinedPaperPlane" width="17.666666030883789" height="14.333333015441895"/>
         <image name="info" width="10.333333015441895" height="42"/>

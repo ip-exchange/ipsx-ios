@@ -49,7 +49,7 @@ class MarketCartController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
-    private var backFromDetails = false
+    private var backFromSegue = false
     fileprivate let cellID = "MarketCellID"
     fileprivate let marketItemID = "MarketItemSegueID"
     private let checkoutSegueID = "CheckoutSegueID"
@@ -59,10 +59,9 @@ class MarketCartController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.layer.cornerRadius = 5
-        self.bottomTotalLabel.alpha = 1
-        self.botttomPriceTitleLabel.alpha = 1
-        self.bottomIpsxIcon.alpha = 1
-        
+        self.bottomTotalLabel.alpha = 0
+        self.botttomPriceTitleLabel.alpha = 0
+        self.bottomIpsxIcon.alpha = 0
         //TODO (CC): move to offer details
         self.noWalletView.isHidden = true
     }
@@ -75,8 +74,8 @@ class MarketCartController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
-        guard !backFromDetails else {
-            backFromDetails = false
+        guard !backFromSegue else {
+            backFromSegue = false
             return
         }
         
@@ -102,6 +101,7 @@ class MarketCartController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        backFromSegue = true
         if segue.identifier == addWalletSegueID {
             let addWalletController = segue.destination as? WalletAddController
             addWalletController?.shouldPop = true
@@ -137,6 +137,8 @@ class MarketCartController: UIViewController {
                 ProxyManager.shared.cart = self.cart
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.5) { self.tableView.alpha = 1 }
+                    let items = self.cart?.offers.count ?? 0
+                    self.updateBottomLabels(alpha: items < 3 ? 0 : 1)
                     self.configureSummaryUI()
                     self.tableView.reloadData()
                 }
@@ -167,6 +169,14 @@ class MarketCartController: UIViewController {
                 })
             }
         })
+    }
+    
+    func updateBottomLabels(alpha: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            self.bottomTotalLabel.alpha = alpha
+            self.botttomPriceTitleLabel.alpha = alpha
+            self.bottomIpsxIcon.alpha = alpha
+        }
     }
 }
 
@@ -203,7 +213,6 @@ extension MarketCartController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         selectedOffer = cart?.offers[indexPath.row]
-        backFromDetails = true
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: self.marketItemID, sender: self)
         }
