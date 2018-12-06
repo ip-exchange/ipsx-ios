@@ -12,6 +12,7 @@ import IPSXNetworkingFramework
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     
+    @IBOutlet weak var noWalletTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cartOverlayView: UIView!
@@ -53,7 +54,13 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noWalletTopConstraint.constant = -60
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        noWalletTopConstraint.constant = -60
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,7 +113,14 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBAction func addToCart(_ sender: Any) {
         
         guard let offer = offer else { return }
-        self.performAddToCartRequest(offerIds: [offer.id])
+        
+        if UserManager.shared.roles?.contains(.Requester) == false {
+            noWalletTopConstraint.constant = 7
+            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
+        } else {
+            self.performAddToCartRequest(offerIds: [offer.id])
+        }
+        
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -145,6 +159,16 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
             }
         })
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CreateWalletSegue" {
+            let dest = segue.destination as? GenerateAddressController
+            dest?.cartFlow = true
+        }
+    }
+    
+    @IBAction func unwindMarketItem(segue:UIStoryboardSegue) {}
+
 }
 
 extension MarketItemController: UICollectionViewDataSource {

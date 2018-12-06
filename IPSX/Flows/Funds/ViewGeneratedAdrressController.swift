@@ -24,6 +24,7 @@ class ViewGeneratedAdrressController: UIViewController {
     
     var newAdrressCreated = false
     var cartFlow = false
+    var shouldDismiss = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,11 @@ class ViewGeneratedAdrressController: UIViewController {
     }
     
     @IBAction func closeAction(_ sender: Any) {
-        let identifier = cartFlow ? "unwindToCartSegue" : "unwindToDepositListSegue"
+        guard !shouldDismiss else {
+            dismiss(animated: true)
+            return
+        }
+        let identifier = cartFlow ? "unwindToMarketItem" : "unwindToDepositListSegue"
         performSegue(withIdentifier: identifier, sender: self)
     }
     

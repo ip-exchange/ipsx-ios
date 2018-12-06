@@ -117,7 +117,7 @@ class MarketCartController: UIViewController {
         }
         if segue.identifier == "CreateDepositSegue" {
             let dest = segue.destination as? ViewGeneratedAdrressController
-            dest?.cartFlow = true
+            dest?.shouldDismiss = true
        }
 
     }
