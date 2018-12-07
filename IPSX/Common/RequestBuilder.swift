@@ -89,6 +89,8 @@ enum Newsletter {
     case off
 }
 
+public let offersLimitPerRequest = 50
+
 public struct Url {
     
     // DEV ENV:
