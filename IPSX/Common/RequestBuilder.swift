@@ -67,6 +67,7 @@ struct RequestType {
     static let addToCart = "addToCart"
     static let viewCart = "viewCart"
     static let deleteFromCart = "deleteFromCart"
+    static let placeOrder = "placeOrder"
 }
 
 public struct KeychainKeys {
@@ -181,7 +182,7 @@ public struct Url {
     public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
-    
+    public static let placeOrderArgs         = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
@@ -280,6 +281,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.deleteFromCart:
         url = (Url.baseApi + Url.deleteCartArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "DELETE"
+        
+    case RequestType.placeOrder:
+        url = (Url.baseApi + Url.placeOrderArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
         
     //ETH addresses Requests
         

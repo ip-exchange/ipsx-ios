@@ -54,14 +54,22 @@ class MarketCartController: UIViewController {
     fileprivate let marketItemID = "MarketItemSegueID"
     private let checkoutSegueID = "CheckoutSegueID"
     private let addWalletSegueID = "AddWalletSegueID"
+    private let createDepositSegueID = "CreateDepositSegue"
     private var selectedOffer: Offer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+    }
+    
+    func configureUI() {
+        
         tableView.layer.cornerRadius = 5
         self.bottomTotalLabel.alpha = 0
         self.botttomPriceTitleLabel.alpha = 0
         self.bottomIpsxIcon.alpha = 0
+        //TODO (CC): pt isEnabled = false trebuie sa fie greyed out
+        self.checkoutButton.isEnabled = cart?.ipsxTotal != 0
         //TODO (CC): move to offer details
         self.noWalletView.isHidden = true
     }
@@ -97,7 +105,13 @@ class MarketCartController: UIViewController {
     }
     
     @IBAction func checkout(_ sender: Any) {
-        performSegue(withIdentifier: checkoutSegueID, sender: self)
+        
+        if UserManager.shared.userInfo?.balance ?? 0 < cart?.ipsxTotal ?? 0 {
+            self.errorMessage = "Insufficient Balance Error Message".localized
+        }
+        else {
+            performSegue(withIdentifier: checkoutSegueID, sender: self)
+        }
     }
     
     @IBAction func createNewDeposit(_ sender: Any) {
@@ -105,30 +119,39 @@ class MarketCartController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         backFromSegue = true
-        if segue.identifier == addWalletSegueID {
+        
+        switch segue.identifier {
+            
+        case addWalletSegueID:
             let addWalletController = segue.destination as? WalletAddController
             addWalletController?.shouldPop = true
-        }
-        if segue.identifier == marketItemID {
+            
+        case marketItemID:
             let itemController = segue.destination as? MarketItemController
             itemController?.isInCartAlready = true
             itemController?.offer = selectedOffer
-        }
-        if segue.identifier == "CreateDepositSegue" {
+            
+        case createDepositSegueID:
             let dest = segue.destination as? ViewGeneratedAdrressController
             dest?.shouldDismiss = true
-       }
-
+            
+        case checkoutSegueID:
+            let dest = segue.destination as? MarketCheckoutController
+            dest?.cart = cart
+            
+        default: break
+        }
     }
     
     func configureSummaryUI() {
         
         offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
-        footerSubtotalLabel.text = cart?.ipsxSubtotal
-        footerVATLabel.text      = cart?.ipsxVat
-        footerTotalLabel.text    = cart?.ipsxTotal
-        bottomTotalLabel.text    = cart?.ipsxTotal
+        footerSubtotalLabel.text = cart?.ipsxSubtotal.cleanString
+        footerVATLabel.text      = cart?.ipsxVat.cleanString
+        footerTotalLabel.text    = cart?.ipsxTotal.cleanString
+        bottomTotalLabel.text    = cart?.ipsxTotal.cleanString
     }
     
     func performViewCartRequest() {

@@ -13,15 +13,18 @@ class MarketCheckoutController: UIViewController {
 
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    @IBOutlet weak var activationInfoAttributedLabel: UILabel!
+    @IBOutlet weak var ipLabel: UILabel!
+    @IBOutlet weak var priceIPSXLabel: UILabel!
+    @IBOutlet weak var priceUSDLabel: UILabel!
+    
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
         }
     }
-    @IBOutlet weak var loadingView: CustomLoadingView!
-    
-    @IBOutlet weak var activationInfoAttributedLabel: UILabel!
-    
+
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -29,19 +32,18 @@ class MarketCheckoutController: UIViewController {
             }
         }
     }
-    
+    var cart: Cart?
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
     private let unwindToMarketSegueID = "UnwindToMarketSegueID"
-    
-    @IBOutlet weak var lockedIPLabel: UILabel!
-    @IBOutlet weak var ipLabel: UILabel!
-    @IBOutlet weak var priceIPSXLabel: UILabel!
-    @IBOutlet weak var priceUSDLabel: UILabel!
+    var ipAddress: String = "Getting IP info...".localized
+    var orderIdString: String = "Order #"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureUI()
+        getIPAddress()
         
         let attributedString = NSMutableAttributedString(string: "The proxies will be activated in \nmaximum 5 minutes after purchase!", attributes: [
             .font: UIFont.systemFont(ofSize: 14.0, weight: .regular),
@@ -51,21 +53,70 @@ class MarketCheckoutController: UIViewController {
         activationInfoAttributedLabel.attributedText = attributedString
     }
     
+    func configureUI() {
+        
+        ipLabel.text = ipAddress
+        priceIPSXLabel.text = cart?.ipsxTotal.cleanString
+        priceUSDLabel.text  = "(\(cart?.usdTotal.cleanString ?? "-") $)"
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
     }
 
     @IBAction func rentAction(_ sender: Any) {
-        self.performSegue(withIdentifier: unwindToMarketSegueID, sender: self)
+        performOrderRequest(ipAddress: ipAddress)
     }
     
     @IBAction func backAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     
+    func getIPAddress() {
+        
+        loadingView?.startAnimating()
+        IPService().getPublicIPAddress(completion: { error, ipAddress in
+            
+            self.loadingView?.stopAnimating()
+            guard let ipAddress = ipAddress, error == nil else {
+                self.errorMessage = "Generic Error Message".localized
+                return
+            }
+            self.ipAddress = ipAddress
+            DispatchQueue.main.async { self.configureUI() }
+        })
+    }
+    
+    func performOrderRequest(ipAddress: String) {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().placeOrder(ipAddress: ipAddress, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let orderId):
+                self.orderIdString += (orderId as? String) ?? ""
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: self.unwindToMarketSegueID, sender: self)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.placeOrder, completion: {
+                    self.performOrderRequest(ipAddress: ipAddress)
+                })
+            }
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == unwindToMarketSegueID {
+            let destinationVC = segue.destination as? MarketController
+            destinationVC?.orderId = self.orderIdString
+        }
+    }
 }
-
 
 extension MarketCheckoutController: ToastAlertViewPresentable {
     

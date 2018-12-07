@@ -66,6 +66,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var shouldRefreshIp = true
     private var tutorialPresented = false
     private var showOrderComplete = false
+    var orderId: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -261,6 +262,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         self.orderCompleteOverlayYAxis.constant = visible ? 0 : 500
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
             self.view.layoutIfNeeded()
+            self.orderCompleteNumberLabel.text = self.orderId
             self.orderCompleteOverlayView.alpha = visible ? 1 : 0
         })
     }
@@ -305,6 +307,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
     
     @IBAction func unwindToMarket(segue:UIStoryboardSegue) {
+        
         if let _ = segue.source as? MarketCheckoutController {
             self.showOrderComplete = true
         }
