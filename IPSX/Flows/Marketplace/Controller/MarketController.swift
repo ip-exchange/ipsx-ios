@@ -206,7 +206,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     
     func loadOffers() {
         
-        let offset = ProxyManager.shared.allOffers?.count ?? 0
+        //TODO (CVI): offset logic
+        let offset = 0
+        
         loadingView?.startAnimating()
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
             
