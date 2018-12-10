@@ -94,6 +94,9 @@
 		EE42EAEF21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */; };
 		EE44ED0E21A2AE5700426D01 /* MarketItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */; };
 		EE44ED1021A53B3E00426D01 /* MarketCartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */; };
+		EE47240021BE4E1F0034F60A /* DepositCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4723FF21BE4E1F0034F60A /* DepositCell.swift */; };
+		EE47240221BE4FF30034F60A /* RefundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240121BE4FF30034F60A /* RefundCell.swift */; };
+		EE47240421BE501D0034F60A /* WithdrawallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240321BE501D0034F60A /* WithdrawallCell.swift */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
 		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
 		EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */; };
@@ -300,6 +303,9 @@
 		EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewGeneratedAdrressController.swift; sourceTree = "<group>"; };
 		EE44ED0D21A2AE5700426D01 /* MarketItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketItemController.swift; sourceTree = "<group>"; };
 		EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCartController.swift; sourceTree = "<group>"; };
+		EE4723FF21BE4E1F0034F60A /* DepositCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositCell.swift; sourceTree = "<group>"; };
+		EE47240121BE4FF30034F60A /* RefundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundCell.swift; sourceTree = "<group>"; };
+		EE47240321BE501D0034F60A /* WithdrawallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawallCell.swift; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
 		EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTermsController.swift; sourceTree = "<group>"; };
@@ -895,16 +901,9 @@
 		EE287EC521997D1400C7AB2A /* Funds */ = {
 			isa = PBXGroup;
 			children = (
-				EE287EC321997D0A00C7AB2A /* FundsViewController.swift */,
-				EECFA9202105D54700F58ABE /* ReferFriendController.swift */,
-				EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */,
-				EE42EAEC21B91D0000BF3A20 /* GenerateAddressController.swift */,
-				EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */,
-				EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */,
-				EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */,
-				EE42EAE021B7C37C00BF3A20 /* Funds.storyboard */,
-				EE42EAE221B7CD0300BF3A20 /* Deposit.storyboard */,
-				EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */,
+				EE47240521BE541D0034F60A /* View */,
+				EE47240621BE54280034F60A /* Controller */,
+				EE47240721BE54430034F60A /* Storyboard */,
 			);
 			path = Funds;
 			sourceTree = "<group>";
@@ -943,6 +942,40 @@
 				EE287EC221996D5800C7AB2A /* Storyboard */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		EE47240521BE541D0034F60A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EE4723FF21BE4E1F0034F60A /* DepositCell.swift */,
+				EE47240121BE4FF30034F60A /* RefundCell.swift */,
+				EE47240321BE501D0034F60A /* WithdrawallCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EE47240621BE54280034F60A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EE287EC321997D0A00C7AB2A /* FundsViewController.swift */,
+				EECFA9202105D54700F58ABE /* ReferFriendController.swift */,
+				EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */,
+				EE42EAEC21B91D0000BF3A20 /* GenerateAddressController.swift */,
+				EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */,
+				EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */,
+				EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EE47240721BE54430034F60A /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				EE42EAE021B7C37C00BF3A20 /* Funds.storyboard */,
+				EE42EAE221B7CD0300BF3A20 /* Deposit.storyboard */,
+				EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		EE4DF81020BBE33600CE87E2 /* EnrolStaking */ = {
@@ -1349,6 +1382,7 @@
 				EEE2918621B65AA300A5048D /* CellStateRoundedView.swift in Sources */,
 				A498E44621A7FF57005B5E9E /* MarketplaceService.swift in Sources */,
 				A4DD0BA32097590E00D27759 /* RegisterService.swift in Sources */,
+				EE47240221BE4FF30034F60A /* RefundCell.swift in Sources */,
 				A48329CE209C5D41003B19FC /* UserInfo.swift in Sources */,
 				885E0B1221B58B1E001F4DE0 /* DashboardHeaderCell.swift in Sources */,
 				A456C8D1214AA93C00B823A1 /* ProviderView.swift in Sources */,
@@ -1368,6 +1402,7 @@
 				EE4DF81620BBE3DD00CE87E2 /* EnrolStakeSummaryController.swift in Sources */,
 				A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */,
 				EED38F2120A5B1CD004DA2CC /* DateFormatter+extensions.swift in Sources */,
+				EE47240021BE4E1F0034F60A /* DepositCell.swift in Sources */,
 				EECFA9212105D54700F58ABE /* ReferFriendController.swift in Sources */,
 				EEF6AFC121A6989900D4729F /* MarketCheckoutController.swift in Sources */,
 				EE287EC721998A9D00C7AB2A /* EditProfileInfoConstroller.swift in Sources */,
@@ -1435,6 +1470,7 @@
 				EE37F8A72091F52700783385 /* SearchViewController.swift in Sources */,
 				EE81B80F2190324600E9EC6D /* CountryAndCertificateController.swift in Sources */,
 				EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */,
+				EE47240421BE501D0034F60A /* WithdrawallCell.swift in Sources */,
 				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				EEE2918821B6605600A5048D /* DoubleProgressView.swift in Sources */,

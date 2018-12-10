@@ -23,9 +23,7 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var topSeparator: UIView!
     @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
-    
-    //TODO (CC): move to offer details
-    @IBOutlet weak var noWalletView: RoundedView!
+    @IBOutlet weak var createDepositButton: UIButton!
     
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -45,7 +43,13 @@ class MarketCartController: UIViewController {
         }
     }
     
-    var cart: Cart?
+    var cart: Cart? {
+        didSet {
+            DispatchQueue.main.async {
+                self.checkoutButton.isEnabled = self.cart != nil && self.cart?.ipsxTotal != 0
+            }
+        }
+    }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
@@ -68,10 +72,7 @@ class MarketCartController: UIViewController {
         self.bottomTotalLabel.alpha = 0
         self.botttomPriceTitleLabel.alpha = 0
         self.bottomIpsxIcon.alpha = 0
-        //TODO (CC): pt isEnabled = false trebuie sa fie greyed out
-        self.checkoutButton.isEnabled = cart?.ipsxTotal != 0
-        //TODO (CC): move to offer details
-        self.noWalletView.isHidden = true
+        createDepositButton.isEnabled = UserManager.shared.roles?.contains(.Requester) == true
     }
     
     override func viewDidLayoutSubviews() {

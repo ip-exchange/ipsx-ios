@@ -57,7 +57,7 @@ class LoginOptionsController: UIViewController {
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: { loginResult in
             
-            switch loginResult {
+                                      switch loginResult {
                 
             case .failed(_):
                 self.errorMessage = "Facebook Login Error Message".localized

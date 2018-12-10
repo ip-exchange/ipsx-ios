@@ -13,6 +13,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     
     @IBOutlet weak var noWalletTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var noWalletView: RoundedView!
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cartOverlayView: UIView!
@@ -114,7 +115,11 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         
         guard let offer = offer else { return }
         
-        if UserManager.shared.roles?.contains(.Requester) == false {
+        noWalletView.isHidden = true
+        if UserManager.shared.roles == nil {
+            self.errorMessage = "Generic Error Message".localized
+        } else if UserManager.shared.roles?.contains(.Requester) == false {
+            noWalletView.isHidden = false
             noWalletTopConstraint.constant = 7
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
         } else {

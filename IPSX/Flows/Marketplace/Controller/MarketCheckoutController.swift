@@ -19,6 +19,10 @@ class MarketCheckoutController: UIViewController {
     @IBOutlet weak var priceIPSXLabel: UILabel!
     @IBOutlet weak var priceUSDLabel: UILabel!
     
+    @IBOutlet weak var orderCompleteOverlayView: UIView!
+    @IBOutlet weak var orderCompleteOverlayYAxis: NSLayoutConstraint!
+    @IBOutlet weak var orderCompleteNumberLabel: UILabel!
+
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
@@ -44,7 +48,8 @@ class MarketCheckoutController: UIViewController {
         
         configureUI()
         getIPAddress()
-        
+        updateOrderOverlay(visible: false)
+
         let attributedString = NSMutableAttributedString(string: "The proxies will be activated in \nmaximum 5 minutes after purchase!", attributes: [
             .font: UIFont.systemFont(ofSize: 14.0, weight: .regular),
             .foregroundColor: UIColor(white: 153.0 / 255.0, alpha: 1.0)
@@ -92,15 +97,15 @@ class MarketCheckoutController: UIViewController {
         
         loadingView?.startAnimating()
         MarketplaceService().placeOrder(ipAddress: ipAddress, completionHandler: { result in
-            
+
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let orderId):
                 self.orderIdString += (orderId as? String) ?? ""
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: self.unwindToMarketSegueID, sender: self)
+                    self.updateOrderOverlay(visible: true)
                 }
-                
+
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.placeOrder, completion: {
                     self.performOrderRequest(ipAddress: ipAddress)
@@ -109,13 +114,16 @@ class MarketCheckoutController: UIViewController {
         })
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == unwindToMarketSegueID {
-            let destinationVC = segue.destination as? MarketController
-            destinationVC?.orderId = self.orderIdString
-        }
+    private func updateOrderOverlay(visible: Bool) {
+        view.layoutIfNeeded()
+        self.orderCompleteOverlayYAxis.constant = visible ? 0 : 500
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+            self.view.layoutIfNeeded()
+            self.orderCompleteNumberLabel.text = self.orderIdString
+            self.orderCompleteOverlayView.alpha = visible ? 1 : 0
+        })
     }
+    
 }
 
 extension MarketCheckoutController: ToastAlertViewPresentable {

@@ -180,7 +180,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     }
     
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) {
-        if let _ = segue.source as? MarketController {
+        if let _ = segue.source as? MarketCheckoutController {
             shouldShowOrderHint = true
         }
     }
