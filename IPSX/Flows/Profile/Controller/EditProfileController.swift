@@ -183,11 +183,9 @@ class EditProfileController: UIViewController {
     private func configureUI() {
         
         DispatchQueue.main.async {
-                        
+            
             if UserManager.shared.userInfo?.source == "facebook" {
-                
                 self.changePasswordHolderView.isHidden = true
-                self.typeOfUserView.isHidden = true
             }
             
             self.individualCheckmarkImage.isHidden = UserManager.shared.companyVerified

@@ -97,7 +97,7 @@ class RegisterTermsController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        configureUI()
+        isFbFlow = fbToken != ""
      }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -109,17 +109,6 @@ class RegisterTermsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
-    }
-    
-    func configureUI() {
-        
-        isFbFlow = fbToken != ""
-        
-        if isFbFlow {
-            companySelectorView.isHidden = true
-            individualCheckButton.isSelected = false
-            individualCheckButton.isEnabled = false
-        }
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -205,7 +194,7 @@ class RegisterTermsController: UIViewController {
     func registerWithFacebook(fbToken: String, countryID: String) {
         
         self.loadingView?.startAnimating()
-        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, countryID: countryID, newsletter: newsletter, completionHandler: { result in
+        SocialIntegrationService().facebook(requestType: RequestType.fbRegister, fbToken: fbToken, countryID: countryID, newsletter: newsletter, type: userType, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {

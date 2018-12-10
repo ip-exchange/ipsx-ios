@@ -13,7 +13,7 @@ import IPSXNetworkingFramework
 
 class SocialIntegrationService {
     
-    func facebook(requestType: String, fbToken: String?, countryID: String = "", newsletter: Bool = true, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func facebook(requestType: String, fbToken: String?, countryID: String = "", newsletter: Bool = true, type: UserType? = nil, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         guard let fbToken = fbToken else {
             completionHandler(ServiceResult.failure(CustomError.invalidParams))
@@ -22,15 +22,15 @@ class SocialIntegrationService {
         
         var bodyParams: [String: Any] = [:]
         
-        if requestType == RequestType.fbRegister  {
+        if requestType == RequestType.fbRegister, let type = type  {
             
             let cID = Double(countryID) ?? -1
             bodyParams = ["token"              : fbToken,
                           "country_id"         : cID,
-                          "newsletter"         : newsletter as Any]
+                          "newsletter"         : newsletter as Any,
+                          "intention_company"  : type.rawValue]
         }
         else if requestType == RequestType.fbLogin {
-            
             bodyParams = ["token" : fbToken]
         }
         

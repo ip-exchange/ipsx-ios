@@ -8,6 +8,8 @@ target 'IPSX' do
   # Pods for IPSX
 
   pod 'FacebookLogin'
+  pod 'FBSDKCoreKit', '~> 4.38.0'
+  pod 'FBSDKLoginKit', '~> 4.38.0'
   pod 'Alamofire'
 
   target 'IPSXTests' do
