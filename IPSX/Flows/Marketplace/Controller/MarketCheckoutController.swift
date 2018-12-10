@@ -150,6 +150,10 @@ extension MarketCheckoutController: ErrorPresentable {
             }, successHandler: {
                 completion?()
             })
+            
+        case CustomError.ipNotSupported:
+            self.errorMessage = "IP Not Supported Error Message".localized
+            
         default:
             self.errorMessage = "Generic Error Message".localized
         }

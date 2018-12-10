@@ -31,6 +31,7 @@ public enum CustomError: Error {
     case notPossible
     case notSuccessful
     case fbNoEmailError
+    case ipNotSupported
     
     public var errorDescription: String? {
         
@@ -53,6 +54,9 @@ public enum CustomError: Error {
             
         case .fbNoEmailError:
             return "Facebook account without email"
+         
+        case .ipNotSupported:
+            return "Your current IP address is IPv6 or invalid"
             
         case .statusCodeNOK(let statusCode):
             return "Error status code:" + "\(statusCode)"
@@ -109,7 +113,6 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             switch requestType {
                 
             case RequestType.login, RequestType.fbLogin, RequestType.resetPassword: customError = CustomError.userDeleted
-                
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
@@ -126,7 +129,6 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             switch requestType {
                 
             case RequestType.addEthAddress, RequestType.fbRegister, RequestType.register: customError = CustomError.alreadyExists
-                
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
@@ -135,6 +137,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             switch requestType {
                 
             case RequestType.fbRegister: customError = CustomError.fbNoEmailError
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
+        case 491:
+            
+            switch requestType {
+                
+            case RequestType.placeOrder: customError = CustomError.ipNotSupported
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
