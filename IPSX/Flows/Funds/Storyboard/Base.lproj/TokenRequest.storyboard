@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="In1-qX-URR">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,18 +15,18 @@
             <objects>
                 <viewController id="9x0-LF-Zd9" customClass="TokenRequestListController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Uyi-xS-brR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tri-Ec-HJv" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="Nvp-yh-9In"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqy-AL-kfs" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-7q-b7x" userLabel="Close">
                                         <rect key="frame" x="0.0" y="50" width="44" height="44"/>
@@ -35,7 +35,7 @@
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="lDk-bw-qv3" kind="unwind" unwindAction="unwindToDashboardWithSegue:" id="GBO-dy-u9u"/>
+                                            <segue destination="lDk-bw-qv3" kind="unwind" unwindAction="unwindToWiewGeneratedAddressWithSegue:" id="Nlw-zp-Cqv"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwQ-Om-RlS">
@@ -50,7 +50,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T2-NX-UlG">
-                                        <rect key="frame" x="128.5" y="62" width="118" height="21"/>
+                                        <rect key="frame" x="128.66666666666666" y="62" width="118" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -64,26 +64,26 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YI5-I1-vzb">
-                                <rect key="frame" x="15" y="91" width="79" height="22"/>
+                                <rect key="frame" x="15" y="115" width="79" height="22"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on the + button in the right upper corner to create a token request!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGt-lo-kkP">
-                                <rect key="frame" x="16" y="140" width="343" height="38.5"/>
+                                <rect key="frame" x="16" y="164" width="343" height="38.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXc-1c-sUJ" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="125.5" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="149.66666666666666" width="375" height="0.33333333333334281"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="c0W-5V-MmF"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cOM-dK-uZM">
-                                <rect key="frame" x="0.0" y="126" width="375" height="541"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="628"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TokenRequestCellID" id="bb1-Gh-Ksg" customClass="TokenRequestCell" customModule="IPSX" customModuleProvider="target">
@@ -94,7 +94,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCx-Jz-UgC" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="78.5" width="375" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="78.666666666666671" width="375" height="0.3333333333333286"/>
                                                     <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="kOQ-gW-Ah0"/>
@@ -201,7 +201,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xna-OU-vYh" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="87k-Eo-SVS"/>
@@ -275,11 +275,11 @@
             <objects>
                 <viewController id="8al-NV-Tf2" customClass="TokenRequestController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgE-Bl-iqK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laa-fY-OYI">
-                                <rect key="frame" x="37" y="134" width="311" height="41.5"/>
+                                <rect key="frame" x="37" y="158" width="311" height="41.333333333333343"/>
                                 <attributedString key="attributedText">
                                     <fragment content="The following request will be honored exactly as requested">
                                         <attributes>
@@ -307,10 +307,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG1-wu-o3B" userLabel="Amount">
-                                <rect key="frame" x="0.0" y="212.5" width="375" height="58"/>
+                                <rect key="frame" x="0.0" y="236.33333333333337" width="375" height="58"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlh-Tq-ubH" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="BCh-4u-2wJ"/>
@@ -324,7 +324,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C02-oI-w4f" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="57.5" width="375" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="57.666666666666657" width="375" height="0.3333333333333357"/>
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="9B2-J7-j7R"/>
@@ -350,7 +350,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="58" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="h7y-nr-hpN">
-                                <rect key="frame" x="0.0" y="-536" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="-512" width="375" height="690"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ETHAddressCellID" id="kwD-tW-SVm" customClass="EthWalletCell" customModule="IPSX" customModuleProvider="target">
@@ -361,7 +361,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G1H-Wm-OqD" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="57.5" width="375" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="57.666666666666664" width="375" height="0.3333333333333357"/>
                                                     <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.3032570423" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="ECc-f2-XZ0"/>
@@ -411,10 +411,10 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHQ-f6-bq2" userLabel="Dropdown">
-                                <rect key="frame" x="0.0" y="64" width="375" height="58"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="58"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-Mm-tzC" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="57.5" width="375" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="57.666666666666657" width="375" height="0.3333333333333357"/>
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="gOg-l2-MEq"/>
@@ -459,7 +459,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BYq-qQ-WSS" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSS-xQ-9qq" userLabel="Close">
                                         <rect key="frame" x="0.0" y="50" width="44" height="44"/>
@@ -487,7 +487,7 @@
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Token Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1s5-7n-nPX">
-                                        <rect key="frame" x="99.5" y="61" width="176" height="21"/>
+                                        <rect key="frame" x="99.666666666666686" y="61" width="176" height="21"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -515,13 +515,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TnA-LT-bmV" userLabel="Telegram Overlay View">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="747"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="834"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Wc-8D-AIa" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="224.5" width="345" height="298"/>
+                                        <rect key="frame" x="15" y="268" width="345" height="298"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUM-CA-DSr">
-                                                <rect key="frame" x="301" y="1.5" width="44" height="44"/>
+                                                <rect key="frame" x="301" y="1.6666666666666856" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="BUp-ue-9fH"/>
                                                     <constraint firstAttribute="width" constant="44" id="Tr0-I4-Hnu"/>
@@ -532,23 +532,23 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMv-Wu-q4Z" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="49" width="345" height="0.5"/>
+                                                <rect key="frame" x="0.0" y="49" width="345" height="0.6666666666666643"/>
                                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30391725349999998" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="LTX-ub-NK8"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyy-5T-WeD">
-                                                <rect key="frame" x="0.0" y="49.5" width="345" height="191"/>
+                                                <rect key="frame" x="0.0" y="49.666666666666686" width="345" height="191"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Because our goal is to grow our community, please provide us your Telegram ID" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rhw-Cw-i8r">
-                                                        <rect key="frame" x="20" y="27" width="305" height="57.5"/>
+                                                        <rect key="frame" x="20" y="27.000000000000004" width="305" height="57.333333333333343"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nTa-gV-or3" userLabel="Telegram ID" customClass="RichTextFieldView" customModule="IPSX" customModuleProvider="target">
-                                                        <rect key="frame" x="20" y="105" width="305" height="68"/>
+                                                        <rect key="frame" x="20" y="104.66666666666663" width="305" height="68"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Telegram" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xC-ja-nCx">
                                                                 <rect key="frame" x="0.0" y="0.0" width="275" height="17"/>
@@ -600,7 +600,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNd-kt-nz1" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="240.5" width="345" height="0.5"/>
+                                                <rect key="frame" x="0.0" y="240.66666666666669" width="345" height="0.33333333333334281"/>
                                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="6A6-ua-cfH"/>
@@ -657,7 +657,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJc-0c-HBC" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="ONV-l4-07K"/>
@@ -722,12 +722,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackArrow" width="10.5" height="19"/>
+        <image name="BackArrow" width="10.333333015441895" height="19"/>
         <image name="CloseBut" width="27" height="27"/>
-        <image name="Dropdown" width="12.5" height="7"/>
+        <image name="Dropdown" width="12.666666984558105" height="6.6666665077209473"/>
         <image name="PlusSymbol" width="19" height="19"/>
-        <image name="RightDisclosure" width="9" height="16"/>
-        <image name="Wallet" width="26" height="26"/>
-        <image name="walletAccepted" width="32.5" height="32"/>
+        <image name="RightDisclosure" width="8.6666669845581055" height="16"/>
+        <image name="Wallet" width="25.666666030883789" height="26"/>
+        <image name="walletAccepted" width="32.333332061767578" height="32"/>
     </resources>
 </document>

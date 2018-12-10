@@ -41,7 +41,7 @@ class TokenRequestController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
-    var hasTelegramID = UserManager.shared.userInfo?.kycStatus == .Accepted
+    var hasTelegramID = true//UserManager.shared.userInfo?.kycStatus == .Accepted
     
     var errorMessage: String? {
         didSet {

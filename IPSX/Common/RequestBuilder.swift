@@ -10,12 +10,13 @@ import Foundation
 import IPSXNetworkingFramework
 
 /// CURRENT ENVIRONMENT (DEV / DEMO):
-let environment = Environment.dev
+let environment = UserManager.shared.environment
 
 enum Environment: String {
     
     case dev  = "DEV"
     case demo = "DEMO"
+    case prod = "PROD"
 }
 
 struct RequestType {
@@ -102,11 +103,16 @@ public struct Url {
     public static let baseDEMOApi    = "https://api.ipsx.io/api"
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
     
+    // PROD ENV:
+    public static let basePRODApi    = "TBD" //TODO: Define prod env
+    public static let pacBaseUrlPROD = "TBD" //TODO: Define prod env
+
     public static var baseUrl: String {
         get {
             switch environment {
             case .dev:  return "https://app.dev.ip.sx"
             case .demo: return "https://demo.ip.sx"
+            case .prod: return "TBD" //TODO: Define prod env
             }
         }
     }
@@ -114,10 +120,9 @@ public struct Url {
     public static var baseApi: String {
         get {
             switch environment {
-            case .dev:
-                return baseDEVApi
-            case .demo:
-                return baseDEMOApi
+            case .dev: return baseDEVApi
+            case .demo: return baseDEMOApi
+            case .prod: return basePRODApi
             }
         }
     }
@@ -125,10 +130,9 @@ public struct Url {
     public static var pacBaseUrl: String {
         get {
             switch environment {
-            case .dev:
-                return pacBaseUrlDEV
-            case .demo:
-                return pacBaseUrlDEMO
+            case .dev: return pacBaseUrlDEV
+            case .demo: return pacBaseUrlDEMO
+            case .prod: return pacBaseUrlPROD
             }
         }
     }

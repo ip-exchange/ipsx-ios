@@ -30,10 +30,6 @@ class TabBarViewController: UITabBarController {
             presentLandingFlow()
         }
         
-        if let dashboard = viewControllers?.first as? DashboardViewController {
-            dashboard.hideMaskView()
-        }
-        
         if UserManager.shared.hasPerformedLogout {
             hasPresentedLegalFlow = false
             UserManager.shared.hasPerformedLogout = false

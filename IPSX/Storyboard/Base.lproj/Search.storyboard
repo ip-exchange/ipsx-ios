@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zjk-F1-ml2">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="zjk-F1-ml2" customClass="SearchViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="W61-wD-cKw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Dvd-kE-kkV">
-                                <rect key="frame" x="0.0" y="84" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="THV-4d-Cjf"/>
@@ -48,7 +48,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="closeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="3jj-zw-kRO">
-                                                            <rect key="frame" x="71" y="8.5" width="13" height="13"/>
+                                                            <rect key="frame" x="71" y="8.6666666666666661" width="13" height="12.999999999999998"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -86,7 +86,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhr-9L-cfB" userLabel="Search View">
-                                <rect key="frame" x="0.0" y="124" width="375" height="130"/>
+                                <rect key="frame" x="0.0" y="148" width="375" height="130"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUr-Lf-y1z">
                                         <rect key="frame" x="15" y="24" width="71" height="27"/>
@@ -123,7 +123,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQo-Db-FUb" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="129.5" width="375" height="0.5"/>
+                                        <rect key="frame" x="0.0" y="129.66666666666669" width="375" height="0.33333333333334281"/>
                                         <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.7054907570422535" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="b4w-ij-FVZ"/>
@@ -145,14 +145,14 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="58" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WVZ-01-mjG">
-                                <rect key="frame" x="0.0" y="254" width="375" height="413"/>
+                                <rect key="frame" x="0.0" y="278" width="375" height="500"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCellID" id="jpZ-jA-pFY" customClass="SearchCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jpZ-jA-pFY" id="OZO-0P-1cb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="57.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="57.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlanetEarth" translatesAutoresizingMaskIntoConstraints="NO" id="BMe-Zz-8DP">
@@ -186,7 +186,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aK-81-k3s" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qf3-EU-BHL" userLabel="Back">
                                         <rect key="frame" x="0.0" y="50" width="44" height="44"/>
@@ -238,14 +238,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEu-8F-3QN" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29874559859154931" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="lot-La-3Yr"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDO-tK-6Ak" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="sKG-A3-POk"/>
@@ -290,30 +290,19 @@
                         <outlet property="topBarView" destination="2aK-81-k3s" id="N8M-8X-125"/>
                         <outlet property="topConstraintOutlet" destination="15F-nf-KJG" id="ocm-Rh-Yxc"/>
                         <outlet property="topSeparatorView" destination="bEu-8F-3QN" id="C47-8u-6nb"/>
-                        <segue destination="wdf-BT-Yzy" kind="show" identifier="NewProxyFlowSegueID" id="xCJ-lL-dTm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w56-cX-BWW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5572" y="-154.27286356821591"/>
         </scene>
-        <!--NewProxy-->
-        <scene sceneID="PbU-to-1lq">
-            <objects>
-                <viewControllerPlaceholder storyboardName="NewProxy" id="wdf-BT-Yzy" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="rwf-CA-UKQ"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gfD-Lg-hI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6206" y="-155"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="BackArrow" width="10.5" height="19"/>
+        <image name="BackArrow" width="10.333333015441895" height="19"/>
         <image name="CloseBut" width="27" height="27"/>
         <image name="PlanetEarth" width="26" height="26"/>
-        <image name="RightDisclosure" width="9" height="16"/>
-        <image name="SearchIcon" width="12" height="12"/>
-        <image name="closeSmall" width="13.5" height="13.5"/>
+        <image name="RightDisclosure" width="8.6666669845581055" height="16"/>
+        <image name="SearchIcon" width="11.666666984558105" height="11.666666984558105"/>
+        <image name="closeSmall" width="13.666666984558105" height="13.666666984558105"/>
     </resources>
 </document>

@@ -1021,6 +1021,9 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                                         <color key="value" red="0.1647058824" green="0.67450980390000004" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tokenBuyOrRequest:" destination="IOy-7w-hMr" eventType="touchUpInside" id="hPm-o1-D9C"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1059,18 +1062,28 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                     <navigationItem key="navigationItem" id="wOY-Id-Qbn"/>
                     <connections>
                         <outlet property="addressLinkLabel" destination="NMr-cL-Xv4" id="x35-mf-r9T"/>
+                        <outlet property="buyTokensButton" destination="010-iL-AAp" id="cag-B0-zje"/>
                         <outlet property="copyLinkButton" destination="gUo-XO-IZO" id="qaH-4X-WJI"/>
                         <outlet property="topBarView" destination="lPi-Px-CdW" id="ihO-xK-3Ug"/>
                         <outlet property="topConstraintOutlet" destination="Ore-bN-SD2" id="2r7-xV-h36"/>
                         <outlet property="topSeparatorView" destination="9un-qZ-WXA" id="vPD-q2-JJE"/>
                         <segue destination="3wE-LW-dwT" kind="unwind" identifier="unwindToDepositListSegue" unwindAction="unwindToDepositListWithSegue:" id="hoq-xl-eqr"/>
                         <segue destination="3wE-LW-dwT" kind="unwind" identifier="unwindToMarketItem" unwindAction="unwindMarketItemWithSegue:" id="nhv-Jw-JSr"/>
+                        <segue destination="VNd-b9-qeY" kind="presentation" identifier="TokenrequestSegueID" id="GyS-fP-Yvw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cuq-Ug-SmO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="3wE-LW-dwT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3961" y="226"/>
+        </scene>
+        <!--TokenRequest-->
+        <scene sceneID="3d9-O0-594">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TokenRequest" id="VNd-b9-qeY" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IG0-ks-Zx6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4538" y="225"/>
         </scene>
     </scenes>
     <resources>

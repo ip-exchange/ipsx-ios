@@ -27,6 +27,10 @@ class FundsViewController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
     
+    private var totalAmount: String {
+        return UserManager.shared.userInfo?.balance?.cleanString ?? "0"
+    }
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -119,7 +123,8 @@ class FundsViewController: UIViewController {
     func refreshProfileUI() {
         
         DispatchQueue.main.async {
-            //TODO: Get here the amount to display
+            self.amountLargeLabel.text = self.totalAmount
+            self.amountTopSmallLabel.text = self.totalAmount
         }
     }
     

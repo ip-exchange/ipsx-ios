@@ -13,6 +13,9 @@ public class UserManager: NSObject {
     public static var shared = UserManager()
     private override init() {}
     
+    /// CURRENT ENVIRONMENT (DEV / PROD):
+    let environment = Environment.dev
+    
     var userId: String = ""
     var accessToken: String = ""
     var facebookToken: String = ""

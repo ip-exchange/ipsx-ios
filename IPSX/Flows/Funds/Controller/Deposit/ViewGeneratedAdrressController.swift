@@ -19,6 +19,9 @@ class ViewGeneratedAdrressController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
+    @IBOutlet weak var buyTokensButton: RoundedButton!
+    
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     
@@ -28,6 +31,9 @@ class ViewGeneratedAdrressController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if UserManager.shared.environment == .dev {
+            buyTokensButton.setTitle("Request Tokens".localized, for: .normal)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,10 +57,21 @@ class ViewGeneratedAdrressController: UIViewController {
         performSegue(withIdentifier: identifier, sender: self)
     }
     
+    @IBAction func tokenBuyOrRequest(_ sender: Any) {
+        if UserManager.shared.environment == .dev {
+            performSegue(withIdentifier: "TokenrequestSegueID", sender: self)
+            
+        } else {
+            //TODO: Buy from Cryptocoin
+        }
+    }
+    
     @IBAction func copyLinkAction(_ sender: Any) {
         UIPasteboard.general.string = addressLinkLabel.text
         toast?.showToastAlert("ETH Address Copied Message".localized, autoHideAfter: 5, type: .info, dismissable: true)
     }
+    
+    @IBAction func unwindToWiewGeneratedAddress(segue:UIStoryboardSegue) {}
 }
 
 extension ViewGeneratedAdrressController: ToastAlertViewPresentable {
