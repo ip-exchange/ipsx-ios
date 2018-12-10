@@ -18,8 +18,6 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var proxiesSegmentController: UISegmentedControl!
     @IBOutlet weak var slidableView: UIView!
-    @IBOutlet weak var providerViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var providerView: ProviderView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -80,7 +78,6 @@ class DashboardViewController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        providerView.providerDelegate = self
     }
     
     @objc func appWillEnterForeground() {
@@ -104,9 +101,6 @@ class DashboardViewController: UIViewController {
             }
             if UserManager.shared.company == nil {
                 companyDetails()
-            }
-            if UserManager.shared.providerSubmissionStatus == nil {
-                providerDetails()
             }
             if UserManager.shared.roles == nil {
                 userRoles()
@@ -155,26 +149,6 @@ class DashboardViewController: UIViewController {
         })
     }
     
-    func configureProviderView() {
-        
-        if UserManager.shared.userInfo?.hasOptedForProvider == false {
-            hideProviderView()
-        }
-        else {
-            providerViewHeight.constant = 66
-            let providerStatus = UserManager.shared.providerSubmissionStatus
-            providerView.subbmissionStatus = providerStatus
-        }
-    }
-    
-    func hideProviderView() {
-        
-        DispatchQueue.main.async {
-            self.providerView.clipsToBounds = true
-            self.providerViewHeight.constant = 0
-        }
-    }
-    
     func updateReachabilityInfo() {
         DispatchQueue.main.async {
             if !ReachabilityManager.shared.isReachable() {
@@ -214,26 +188,6 @@ class DashboardViewController: UIViewController {
                 
                 self.handleError(error, requestType: RequestType.getCompany, completion: {
                     self.companyDetails()
-                })
-            }
-        })
-    }
-    
-    func providerDetails() {
-        
-        ProviderService().getProviderStatus(completionHandler: { result in
-            
-            switch result {
-            case .success(let status):
-                UserManager.shared.providerSubmissionStatus = status as? ProviderStatus
-                DispatchQueue.main.async {
-                    self.configureProviderView()
-                }
-                
-            case .failure(let error):
-                
-                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
-                    self.providerDetails()
                 })
             }
         })
@@ -397,11 +351,7 @@ extension DashboardViewController: ErrorPresentable {
             })
         case CustomError.emptyJson: break
         default:
-            if requestType == RequestType.getProviderDetails {
-                self.hideProviderView()
-            }  else {
-                self.errorMessage = "Refresh Data Error Message".localized
-            }
+            self.errorMessage = "Refresh Data Error Message".localized
         }
     }
 }

@@ -70,7 +70,6 @@ struct UserInfo {
     var refferalCode: String?
     var deleteAccountDate: Date?
     var hasOptedForLegal: Bool?
-    var hasOptedForProvider: Bool?
 
     init(userDict: [String: Any]) {
         
@@ -87,7 +86,6 @@ struct UserInfo {
         self.refferalCode  = userDict["referral_code"] as? String
         
         self.hasOptedForLegal    = userDict["intention_company"] as? Bool
-        self.hasOptedForProvider = userDict["intention_provider"] as? Bool 
         
         self.deleteAccountDate = userDict["delete_account_date"] as? Date
         let kyc = userDict["kyc_status"] as? Int ?? -1

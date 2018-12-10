@@ -39,9 +39,6 @@ class ProviderView: RoundedView {
     
     @IBAction func ProviderButtonAction(_ sender: UIButton) {
         
-        if UserManager.shared.userInfo?.hasOptedForProvider == false {
-            return
-        }
         let hasSubmittedProviderRequest = UserManager.shared.providerSubmissionStatus != .notSubmitted
         providerDelegate?.openProviderDetails(hasSubmittedProviderRequest: hasSubmittedProviderRequest)
     }

@@ -25,7 +25,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var enrolStakingTitleLabel: UILabel!
     @IBOutlet weak var enroledStakingImageView: UIImageView!
     @IBOutlet weak var userRoleLabel: UILabel!
-    
+    @IBOutlet weak var providerView: ProviderView!
+    @IBOutlet weak var providerViewHeight: NSLayoutConstraint!
+
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
     var previousScrollOffset: CGFloat = 0;
@@ -89,6 +91,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         updateHeader()
+        providerView.providerDelegate = self
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -108,6 +111,7 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+        providerDetails()
         refreshProfileUI()
     }
     
@@ -122,6 +126,43 @@ class ProfileViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
+    func configureProviderView() {
+        
+        providerViewHeight.constant = 66
+        let providerStatus = UserManager.shared.providerSubmissionStatus
+        providerView.subbmissionStatus = providerStatus
+    }
+    
+    func providerDetails() {
+        
+        ProviderService().getProviderStatus(completionHandler: { result in
+            
+            switch result {
+            case .success(let status):
+                UserManager.shared.providerSubmissionStatus = status as? ProviderStatus
+                DispatchQueue.main.async {
+                    self.configureProviderView()
+                }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
+                    self.providerDetails()
+                })
+            }
+        })
+    }
+    
+
+    func hideProviderView() {
+        
+        DispatchQueue.main.async {
+            self.providerView.clipsToBounds = true
+            self.providerViewHeight.constant = 0
+        }
+    }
+    
+
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
             let reachability = note.object as! Reachability
@@ -349,3 +390,15 @@ extension ProfileViewController: ErrorPresentable {
     }
 }
 
+extension ProfileViewController: ProviderDelegate {
+    
+    func openProviderDetails(hasSubmittedProviderRequest: Bool) {
+        
+        if hasSubmittedProviderRequest {
+            performSegue(withIdentifier: "showAboutProviderSegue", sender: nil)
+        }
+        else {
+            performSegue(withIdentifier: "showBecomeProviderSegue", sender: nil)
+        }
+    }
+}
