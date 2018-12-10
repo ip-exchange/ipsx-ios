@@ -85,23 +85,23 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         priceIPSXLabel.text = offer.priceIPSX
         progressView.progress = Double(sla)
         progressLabel.text = "\(sla)%"
+        flagImageView.image = UIImage(named: "worldPins")
         
         if noOfProxies > 1 {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy items"
-            flagImageView.image = UIImage(named: "worldPins")
             offerTypeLabel.text = "Grouped offer".localized
             countryLabel.text = ""
         }
         else {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
-            flagImageView.image = UIImage(named: "RO32")
+            offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
+            countryLabel.text = countryString
+            
             if let flagString = offer.proxies.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),
                 let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
                 flagImageView.image = flagImage
             }
-            offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
-            countryLabel.text = countryString
         }
         cartOverlayView.alpha = 0
         updateCountryOverlay(visible: false)

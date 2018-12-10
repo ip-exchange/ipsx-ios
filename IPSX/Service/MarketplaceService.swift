@@ -220,7 +220,9 @@ class MarketplaceService {
             let ipsxVat      = json["totals"]["ipsx"]["vat"].doubleValue
             let ipsxTotal    = json["totals"]["ipsx"]["total"].doubleValue
             
-            let cart = Cart(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+            let summary = Summary(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+            let cart = Cart()
+            cart.setSummary(summary: summary)
             cart.setOffers(offers: offers)
             completionHandler(ServiceResult.success(cart))
         })
@@ -258,6 +260,67 @@ class MarketplaceService {
             let json = JSON(data)
             let orderId = json["id"].stringValue
             completionHandler(ServiceResult.success(orderId))
+        })
+    }
+    
+    //MARK: Dashboard
+    
+    func getOrders(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.getOrders, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let jsonArray = JSON(data).arrayValue
+            let dateFormatter = DateFormatter.backendResponseParse()
+            
+            var orders: [Order] = []
+            
+            for order in jsonArray {
+                
+                let id = order["id"].intValue
+                let createdString = order["created_at"].stringValue
+                let createdDate   = dateFormatter.date(from: createdString)
+                
+                let usdSubtotal = order["order_offers"][0]["usd_cost"].doubleValue
+                let usdVat      = order["order_offers"][0]["usd_vat"].doubleValue
+                let usdTotal    = order["order_offers"][0]["?????"].doubleValue
+                
+                let ipsxSubtotal = order["order_offers"][0]["cost"].doubleValue
+                let ipsxVat      = order["order_offers"][0]["vat"].doubleValue
+                let ipsxTotal    = order["order_offers"][0]["?????"].doubleValue
+                
+                let lockedOnIp = order["order_offers"][0]["?????"].stringValue
+                
+                let offerJsonArray = order["order_offers"][0]["offer"].arrayValue
+                let offersArray = self.parseOffers(offersJsonArray: offerJsonArray)
+                
+                let summary = Summary(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
+                let order = Order(id: id, created: createdDate, lockedOnIp: lockedOnIp)
+                order.setSummary(summary: summary)
+                order.setOffers(offers: offersArray)
+                orders.append(order)
+            }
+            completionHandler(ServiceResult.success(orders))
         })
     }
 }

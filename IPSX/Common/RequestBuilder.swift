@@ -69,6 +69,9 @@ struct RequestType {
     static let viewCart = "viewCart"
     static let deleteFromCart = "deleteFromCart"
     static let placeOrder = "placeOrder"
+    
+    // Dashboard
+    static let getOrders = "getOrders"
 }
 
 public struct KeychainKeys {
@@ -186,7 +189,7 @@ public struct Url {
     public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
-    public static let placeOrderArgs         = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
+    public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
@@ -264,7 +267,7 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         url = (Url.baseApi + Url.userRolesArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
-    //Proxy Requests
+    //Proxy Requests (Dashboard, Marketplace)
         
     case RequestType.getProxyCountryList:
         url = (Url.baseApi + Url.proxyCountriesArgs).replaceKeysWithValues(paramsDict: urlParams)
@@ -287,8 +290,12 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         httpMethod = "DELETE"
         
     case RequestType.placeOrder:
-        url = (Url.baseApi + Url.placeOrderArgs).replaceKeysWithValues(paramsDict: urlParams)
+        url = (Url.baseApi + Url.ordersArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
+       
+    case RequestType.getOrders:
+        url = (Url.baseApi + Url.ordersArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
         
     //ETH addresses Requests
         

@@ -22,8 +22,9 @@ class DashboardHeaderCell: UITableViewCell {
     
     private var section: Int = 0
     
-    func updateCell(sectionIndex: Int, historyTitle: String = "") {
+    func updateCell(sectionIndex: Int, historyTitle: String = "", orderNumber: String = "") {
         section = sectionIndex
         historyTitleLabel?.text = historyTitle
+        orderNumberLabel?.text = orderNumber
     }
 }

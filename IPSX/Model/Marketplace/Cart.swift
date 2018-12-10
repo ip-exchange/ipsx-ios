@@ -11,24 +11,10 @@ import Foundation
 class Cart {
     
     var offers: [Offer] = []
+    var summary: Summary?
     
-    let usdSubtotal: Double
-    let usdVat: Double
-    let usdTotal: Double
-    
-    let ipsxSubtotal: Double
-    let ipsxVat: Double
-    let ipsxTotal: Double
-    
-    init(usdSubtotal: Double, usdVat: Double, usdTotal: Double, ipsxSubtotal: Double, ipsxVat: Double, ipsxTotal: Double) {
-        
-        self.usdSubtotal = usdSubtotal
-        self.usdVat = usdVat
-        self.usdTotal = usdTotal
-        
-        self.ipsxSubtotal = ipsxSubtotal
-        self.ipsxVat = ipsxVat
-        self.ipsxTotal = ipsxTotal
+    func setSummary(summary: Summary) {
+        self.summary = summary
     }
     
     func setOffers(offers: [Offer]) {

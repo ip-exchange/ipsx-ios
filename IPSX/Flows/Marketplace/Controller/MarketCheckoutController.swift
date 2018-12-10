@@ -61,8 +61,8 @@ class MarketCheckoutController: UIViewController {
     func configureUI() {
         
         ipLabel.text = ipAddress
-        priceIPSXLabel.text = cart?.ipsxTotal.cleanString
-        priceUSDLabel.text  = "(\(cart?.usdTotal.cleanString ?? "-") $)"
+        priceIPSXLabel.text = cart?.summary?.ipsxTotal.cleanString
+        priceUSDLabel.text  = "(\(cart?.summary?.usdTotal.cleanString ?? "-") $)"
     }
     
     override func viewDidLayoutSubviews() {

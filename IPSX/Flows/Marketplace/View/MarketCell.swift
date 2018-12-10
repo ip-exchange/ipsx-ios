@@ -50,20 +50,20 @@ class MarketCell: UITableViewCell {
         progressView.progress = Double(sla)
         progressLabel.text = "\(sla)%"
         cellContentView.shadow = true
+        flagImageView.image = UIImage(named: "worldPins")
         
         if noOfProxies > 1 {
-            flagImageView.image = UIImage(named: "worldPins")
             offerTypeLabel.text = "Grouped offer".localized
             countryLabel.text = ""
         }  else {
-            flagImageView.image = UIImage(named: "RO32")
+            offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
+            countryLabel.text = countryString
+            
             if let flagString = offer.proxies.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),
                 let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
                 flagImageView.image = flagImage
             }
-            offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
-            countryLabel.text = countryString
         }
         
         let newCosntraintValue: CGFloat = editMode ? 59 : 15

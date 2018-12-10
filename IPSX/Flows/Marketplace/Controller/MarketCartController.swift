@@ -46,7 +46,7 @@ class MarketCartController: UIViewController {
     var cart: Cart? {
         didSet {
             DispatchQueue.main.async {
-                self.checkoutButton.isEnabled = self.cart != nil && self.cart?.ipsxTotal != 0
+                self.checkoutButton.isEnabled = self.cart != nil && self.cart?.summary?.ipsxTotal != 0
             }
         }
     }
@@ -107,7 +107,7 @@ class MarketCartController: UIViewController {
     
     @IBAction func checkout(_ sender: Any) {
         
-        if UserManager.shared.userInfo?.balance ?? 0 < cart?.ipsxTotal ?? 0 {
+        if UserManager.shared.userInfo?.balance ?? 0 < cart?.summary?.ipsxTotal ?? 0 {
             self.errorMessage = "Insufficient Balance Error Message".localized
         }
         else {
@@ -149,10 +149,10 @@ class MarketCartController: UIViewController {
     func configureSummaryUI() {
         
         offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
-        footerSubtotalLabel.text = cart?.ipsxSubtotal.cleanString
-        footerVATLabel.text      = cart?.ipsxVat.cleanString
-        footerTotalLabel.text    = cart?.ipsxTotal.cleanString
-        bottomTotalLabel.text    = cart?.ipsxTotal.cleanString
+        footerSubtotalLabel.text = cart?.summary?.ipsxSubtotal.cleanString
+        footerVATLabel.text      = cart?.summary?.ipsxVat.cleanString
+        footerTotalLabel.text    = cart?.summary?.ipsxTotal.cleanString
+        bottomTotalLabel.text    = cart?.summary?.ipsxTotal.cleanString
     }
     
     func performViewCartRequest() {

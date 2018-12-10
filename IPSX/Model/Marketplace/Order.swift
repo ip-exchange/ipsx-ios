@@ -11,13 +11,12 @@ import Foundation
 class Order {
     
     var id: Int
-    var created: Date
+    var created: Date?
     var lockedOnIp: String
     var offers: [Offer] = []
+    var summary: Summary?
     
-    //summary?
-    
-    init(id: Int, created: Date, lockedOnIp: String) {
+    init(id: Int, created: Date?, lockedOnIp: String) {
         
         self.id  = id
         self.created = created
@@ -26,5 +25,9 @@ class Order {
     
     func setOffers(offers: [Offer]) {
         self.offers = offers
+    }
+    
+    func setSummary(summary: Summary) {
+        self.summary = summary
     }
 }

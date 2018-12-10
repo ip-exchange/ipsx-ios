@@ -38,7 +38,7 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
         
         initialConfig()
         
-        flagImageView.image = UIImage(named: "RO32")
+        flagImageView.image = UIImage(named: "worldPins")
         if let flagUrl = URL(string: proxy.flagUrlName),
             let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
             flagImageView.image = flagImage
