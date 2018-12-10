@@ -137,8 +137,7 @@ class DashboardHistoryController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let offers):
-                ProxyManager.shared.allOffers = offers as? [Offer]
-                self.offers = ProxyManager.shared.allOffers ?? []
+                self.offers = offers as? [Offer] ?? []
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOffers, completion: {

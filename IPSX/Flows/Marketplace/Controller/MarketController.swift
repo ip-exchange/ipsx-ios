@@ -23,6 +23,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var filtersTitleLabel: UILabel!
     @IBOutlet weak var filtersCounterLabel: UILabel!
     @IBOutlet weak var cartCountLabel: UILabel!
+    @IBOutlet weak var favoritesCounterLabel: UILabel!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -63,6 +64,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var shouldRefreshIp = true
     private var tutorialPresented = false
     
+    private var cartItemsCount: Int {
+        return ProxyManager.shared.allOffers?.filter() { $0.isAddedToCart }.count ?? 0
+    }
+    
+    private var favoritesItemsCount: Int {
+        return ProxyManager.shared.allOffers?.filter() { $0.isFavourite }.count ?? 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.delegate = self
@@ -86,11 +95,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         super.viewWillAppear(animated)
         
-        let cartItemsCount = offers.filter() { $0.isAddedToCart }.count 
-        cartCountLabel.textColor = cartItemsCount > 0 ? UIColor.darkBlue : .warmGrey
-        let tailString = cartItemsCount == 1 ? "offer".localized : "offers".localized
-        cartCountLabel.text = "\(cartItemsCount) \(tailString)"
-
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         
@@ -205,8 +209,13 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let offers):
-                ProxyManager.shared.allOffers = offers as? [Offer]
-                self.offers = ProxyManager.shared.allOffers ?? []
+                 if self.normalisedFiltersDictionary.values.count == 0 {
+                    ProxyManager.shared.allOffers = offers as? [Offer]
+                }
+                self.offers = offers as? [Offer] ?? []
+                DispatchQueue.main.async {
+                    self.updateHeaderCounters()
+                }
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOffers, completion: {
@@ -232,6 +241,18 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 })
             }
         })
+    }
+    
+    private func updateHeaderCounters() {
+        
+        cartCountLabel.textColor = cartItemsCount > 0 ? UIColor.darkBlue : .warmGrey
+        let tailString = cartItemsCount == 1 ? "offer".localized : "offers".localized
+        cartCountLabel.text = "\(cartItemsCount) \(tailString)"
+        
+        favoritesCounterLabel.textColor = favoritesItemsCount > 0 ? UIColor.darkBlue : .warmGrey
+        let favTailString = "saved".localized
+        favoritesCounterLabel.text = "\(favoritesItemsCount) \(favTailString)"
+        
     }
     
     private func updateCountryOverlay(visible: Bool) {
