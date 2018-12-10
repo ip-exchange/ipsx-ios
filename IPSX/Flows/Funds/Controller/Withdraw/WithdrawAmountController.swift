@@ -1,27 +1,27 @@
 //
-//  WithdrawalListController.swift
+//  WithdrawAmountController.swift
 //  IPSX
 //
-//  Created by Calin Chitu on 05/12/2018.
+//  Created by Calin Chitu on 10/12/2018.
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
-
 
 import UIKit
 import IPSXNetworkingFramework
 
-class WithdrawalListController: UIViewController {
+class WithdrawAmountController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingView: CustomLoadingView!
-    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var topBarView: UIView!
-    
+    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
+    
+    var toast: ToastAlertView?
+    var topConstraint: NSLayoutConstraint?
     
     var errorMessage: String? {
         didSet {
@@ -31,11 +31,11 @@ class WithdrawalListController: UIViewController {
         }
     }
     
-    var toast: ToastAlertView?
-    var topConstraint: NSLayoutConstraint?
+    var selectedAddress: EthAddress?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -43,31 +43,36 @@ class WithdrawalListController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.amountTextField.becomeFirstResponder()
+     }
     
-    @IBAction func newWithdrawAction(_ sender: Any) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.amountTextField.resignFirstResponder()
+    }
+    
+    @IBAction func nextStepAction(_ sender: Any) {
+        performSegue(withIdentifier: "SubmitWithdrawSegueID", sender: self)
     }
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-}
-
-extension WithdrawalListController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SubmitWithdrawSegueID" {
+            let dest = segue.destination as? WithdrawSubmitController
+            dest?.selectedAddress = selectedAddress
+            let valueString = amountTextField.text ?? "0.0"
+            dest?.selectedAmoun = Double(valueString) ?? 0.0
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: WithdrawallCell.cellID, for: indexPath) as! WithdrawallCell
-        cell.configure()
-        return cell
-    }
 }
 
-extension WithdrawalListController: ToastAlertViewPresentable {
+extension WithdrawAmountController: ToastAlertViewPresentable {
     
     func createToastAlert(onTopOf parentUnderView: UIView, text: String) {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
@@ -77,8 +82,7 @@ extension WithdrawalListController: ToastAlertViewPresentable {
     }
 }
 
-
-extension WithdrawalListController: ErrorPresentable {
+extension WithdrawAmountController: ErrorPresentable {
     
     func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
         
@@ -98,8 +102,6 @@ extension WithdrawalListController: ErrorPresentable {
             switch requestType {
             case RequestType.userInfo, RequestType.getEthAddress:
                 self.errorMessage = "Refresh Data Error Message".localized
-            case RequestType.deleteEthAddress:
-                self.errorMessage = "ETH Address Delete Failed Error Message".localized
             default:
                 self.errorMessage = "Generic Error Message".localized
             }

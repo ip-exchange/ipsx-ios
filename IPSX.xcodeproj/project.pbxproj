@@ -97,6 +97,9 @@
 		EE47240021BE4E1F0034F60A /* DepositCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4723FF21BE4E1F0034F60A /* DepositCell.swift */; };
 		EE47240221BE4FF30034F60A /* RefundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240121BE4FF30034F60A /* RefundCell.swift */; };
 		EE47240421BE501D0034F60A /* WithdrawallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240321BE501D0034F60A /* WithdrawallCell.swift */; };
+		EE47240B21BE840C0034F60A /* WithdrawWaletsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240A21BE840C0034F60A /* WithdrawWaletsListController.swift */; };
+		EE47240D21BE878C0034F60A /* WithdrawAmountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240C21BE878C0034F60A /* WithdrawAmountController.swift */; };
+		EE47240F21BE8C360034F60A /* WithdrawSubmitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240E21BE8C360034F60A /* WithdrawSubmitController.swift */; };
 		EE4AAB912089D7D700FE149D /* RichTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */; };
 		EE4AAB932089D7F900FE149D /* RegisterCredentialsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */; };
 		EE4AAB952089DA9900FE149D /* RegisterTermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */; };
@@ -306,6 +309,9 @@
 		EE4723FF21BE4E1F0034F60A /* DepositCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositCell.swift; sourceTree = "<group>"; };
 		EE47240121BE4FF30034F60A /* RefundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundCell.swift; sourceTree = "<group>"; };
 		EE47240321BE501D0034F60A /* WithdrawallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawallCell.swift; sourceTree = "<group>"; };
+		EE47240A21BE840C0034F60A /* WithdrawWaletsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawWaletsListController.swift; sourceTree = "<group>"; };
+		EE47240C21BE878C0034F60A /* WithdrawAmountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawAmountController.swift; sourceTree = "<group>"; };
+		EE47240E21BE8C360034F60A /* WithdrawSubmitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawSubmitController.swift; sourceTree = "<group>"; };
 		EE4AAB902089D7D700FE149D /* RichTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextFieldView.swift; sourceTree = "<group>"; };
 		EE4AAB922089D7F900FE149D /* RegisterCredentialsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterCredentialsController.swift; sourceTree = "<group>"; };
 		EE4AAB942089DA9900FE149D /* RegisterTermsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTermsController.swift; sourceTree = "<group>"; };
@@ -959,11 +965,9 @@
 			children = (
 				EE287EC321997D0A00C7AB2A /* FundsViewController.swift */,
 				EECFA9202105D54700F58ABE /* ReferFriendController.swift */,
-				EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */,
-				EE42EAEC21B91D0000BF3A20 /* GenerateAddressController.swift */,
-				EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */,
-				EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */,
 				EE42EAEA21B7D97600BF3A20 /* RefundListController.swift */,
+				EE47241021BE918E0034F60A /* Deposit */,
+				EE47241121BE91A50034F60A /* Withdraw */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -976,6 +980,27 @@
 				EE42EAE621B7D70500BF3A20 /* Withdrawal.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		EE47241021BE918E0034F60A /* Deposit */ = {
+			isa = PBXGroup;
+			children = (
+				EE42EAE421B7CD5E00BF3A20 /* DepositListController.swift */,
+				EE42EAEC21B91D0000BF3A20 /* GenerateAddressController.swift */,
+				EE42EAEE21B92B7D00BF3A20 /* ViewGeneratedAdrressController.swift */,
+			);
+			path = Deposit;
+			sourceTree = "<group>";
+		};
+		EE47241121BE91A50034F60A /* Withdraw */ = {
+			isa = PBXGroup;
+			children = (
+				EE42EAE821B7D73900BF3A20 /* WithdrawalListController.swift */,
+				EE47240A21BE840C0034F60A /* WithdrawWaletsListController.swift */,
+				EE47240C21BE878C0034F60A /* WithdrawAmountController.swift */,
+				EE47240E21BE8C360034F60A /* WithdrawSubmitController.swift */,
+			);
+			path = Withdraw;
 			sourceTree = "<group>";
 		};
 		EE4DF81020BBE33600CE87E2 /* EnrolStaking */ = {
@@ -1376,6 +1401,7 @@
 				A48329CC209C5B1F003B19FC /* UserInfoService.swift in Sources */,
 				A4D5D923214FE79000B79361 /* BecomeProviderController.swift in Sources */,
 				EEF7275321B5602600D93974 /* DashboardController.swift in Sources */,
+				EE47240D21BE878C0034F60A /* WithdrawAmountController.swift in Sources */,
 				EE44ED1021A53B3E00426D01 /* MarketCartController.swift in Sources */,
 				EE4AAB9B208DDA6500FE149D /* ForgotPassController.swift in Sources */,
 				EE4DF81420BBE3C600CE87E2 /* EnrolStakeSubscribeController.swift in Sources */,
@@ -1410,6 +1436,8 @@
 				EEDB132420A9BE9C00FBFFD0 /* Date+extensions.swift in Sources */,
 				EE44ED0E21A2AE5700426D01 /* MarketItemController.swift in Sources */,
 				A46A614920A2F21300F25CC1 /* UserDefaults+extensions.swift in Sources */,
+				EE47240F21BE8C360034F60A /* WithdrawSubmitController.swift in Sources */,
+				EE47240B21BE840C0034F60A /* WithdrawWaletsListController.swift in Sources */,
 				A4A83FC62105C385000DD2F4 /* URL+extensions.swift in Sources */,
 				A473002C205AC16900488009 /* IPService.swift in Sources */,
 				EE37F8A22090BCBC00783385 /* SettingsViewController.swift in Sources */,
