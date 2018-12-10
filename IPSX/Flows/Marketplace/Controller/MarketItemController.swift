@@ -94,7 +94,12 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         }
         else {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
-            flagImageView.image = UIImage(named: "RO32") //TODO
+            flagImageView.image = UIImage(named: "RO32")
+            if let flagString = offer.proxies.first?.flagUrlName,
+                let flagUrl = URL(string: flagString),
+                let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
+                flagImageView.image = flagImage
+            }
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
         }

@@ -38,7 +38,11 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
         
         initialConfig()
         
-        flagImageView.image = UIImage(named: "RO32") //TODO
+        flagImageView.image = UIImage(named: "RO32")
+        if let flagUrl = URL(string: proxy.flagUrlName),
+            let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
+            flagImageView.image = flagImage
+        }
         countryLabel.text = proxy.countryName
         progressView.progress = Double(proxy.sla)
         progressLabel.text = "\(proxy.sla)%"

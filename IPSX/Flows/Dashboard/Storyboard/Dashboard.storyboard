@@ -120,8 +120,12 @@
                                             <action selector="backAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="8lv-w1-IWa"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RO32" translatesAutoresizingMaskIntoConstraints="NO" id="hrH-gD-0Zr">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RO32" translatesAutoresizingMaskIntoConstraints="NO" id="hrH-gD-0Zr">
                                         <rect key="frame" x="70.666666666666671" y="56.666666666666657" width="18" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="18" id="cUp-il-9gD"/>
+                                            <constraint firstAttribute="width" constant="18" id="qQW-xd-LLl"/>
+                                        </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hh6-7f-QLk" customClass="DoubleProgressView" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="16" y="195" width="348" height="22"/>
