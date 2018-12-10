@@ -183,6 +183,7 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCountry = filteredCountries?[indexPath.item]
+        tableView.deselectRow(at: indexPath, animated: true)
         
         if multipleSelections {
             if let validCountry = selectedCountry {
