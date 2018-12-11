@@ -57,7 +57,17 @@ class LoginService {
                     
                 case .success(let user):
                     UserManager.shared.userInfo = user as? UserInfo
-                    completionHandler(ServiceResult.success(true))
+                    UserInfoService().getRoles(completionHandler: { result in
+                        switch result {
+                            
+                        case .failure(let error):
+                            completionHandler(ServiceResult.failure(error))
+                            
+                        case .success(let userRoles):
+                            UserManager.shared.roles = userRoles as? [UserRoles]
+                            completionHandler(ServiceResult.success(true))
+                        }
+                    })
                 }
             })
         })
