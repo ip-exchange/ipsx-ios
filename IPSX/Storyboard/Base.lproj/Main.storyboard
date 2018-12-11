@@ -1462,6 +1462,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlu-rV-KRZ" userLabel="No Data View">
+                                <rect key="frame" x="37.666666666666657" y="322.66666666666669" width="300" height="128"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Technology" translatesAutoresizingMaskIntoConstraints="NO" id="V3i-Hi-XK1">
+                                        <rect key="frame" x="124" y="0.0" width="52" height="52"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycm-44-xQ2">
+                                        <rect key="frame" x="0.0" y="74" width="300" height="40.666666666666657"/>
+                                        <string key="text">Go to Marketplace
+and rent your first proxy.</string>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ycm-44-xQ2" secondAttribute="trailing" id="3iJ-We-A9b"/>
+                                    <constraint firstItem="Ycm-44-xQ2" firstAttribute="centerX" secondItem="V3i-Hi-XK1" secondAttribute="centerX" id="Q43-f1-gE6"/>
+                                    <constraint firstItem="V3i-Hi-XK1" firstAttribute="centerX" secondItem="hlu-rV-KRZ" secondAttribute="centerX" id="Sei-GV-LjZ"/>
+                                    <constraint firstItem="Ycm-44-xQ2" firstAttribute="top" secondItem="V3i-Hi-XK1" secondAttribute="bottom" constant="22" id="irU-yy-lS7"/>
+                                    <constraint firstAttribute="width" constant="300" id="qZ8-Rf-EvL"/>
+                                    <constraint firstItem="V3i-Hi-XK1" firstAttribute="top" secondItem="hlu-rV-KRZ" secondAttribute="top" id="ueh-aO-4NR"/>
+                                    <constraint firstItem="Ycm-44-xQ2" firstAttribute="leading" secondItem="hlu-rV-KRZ" secondAttribute="leading" id="vFV-gI-VjU"/>
+                                    <constraint firstAttribute="height" constant="128" id="xxj-C8-dr4"/>
+                                </constraints>
+                            </view>
                             <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="164" estimatedRowHeight="-1" sectionHeaderHeight="53" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="rOv-Iz-oI1">
                                 <rect key="frame" x="0.0" y="87.666666666666686" width="375" height="641.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1873,8 +1900,10 @@
                             <constraint firstItem="cXb-Cx-jfH" firstAttribute="trailing" secondItem="foH-a0-b2v" secondAttribute="trailing" id="7aR-rr-h33"/>
                             <constraint firstItem="foH-a0-b2v" firstAttribute="leading" secondItem="wFK-bX-p2G" secondAttribute="leading" id="Ffm-Pw-TOS"/>
                             <constraint firstItem="wFK-bX-p2G" firstAttribute="trailing" secondItem="foH-a0-b2v" secondAttribute="trailing" id="G5B-wP-mM0"/>
+                            <constraint firstItem="hlu-rV-KRZ" firstAttribute="centerY" secondItem="wFK-bX-p2G" secondAttribute="centerY" id="GsP-7F-cMQ"/>
                             <constraint firstItem="LxI-ic-oJm" firstAttribute="centerY" secondItem="wFK-bX-p2G" secondAttribute="centerY" id="IPX-rr-Quz"/>
                             <constraint firstItem="rOv-Iz-oI1" firstAttribute="leading" secondItem="wFK-bX-p2G" secondAttribute="leading" id="UXy-GN-By9"/>
+                            <constraint firstItem="hlu-rV-KRZ" firstAttribute="centerX" secondItem="wFK-bX-p2G" secondAttribute="centerX" id="c5B-JL-sYB"/>
                             <constraint firstItem="LxI-ic-oJm" firstAttribute="centerX" secondItem="wFK-bX-p2G" secondAttribute="centerX" id="rlq-el-v1S"/>
                             <constraint firstItem="rOv-Iz-oI1" firstAttribute="top" secondItem="cXb-Cx-jfH" secondAttribute="bottom" constant="-1" id="xEl-nT-b7J"/>
                             <constraint firstItem="wFK-bX-p2G" firstAttribute="top" secondItem="foH-a0-b2v" secondAttribute="top" constant="50" id="yRc-wW-V7X"/>
@@ -1886,6 +1915,7 @@
                     <navigationItem key="navigationItem" id="yHA-Tn-6oO"/>
                     <connections>
                         <outlet property="loadingView" destination="LxI-ic-oJm" id="Mel-NI-eY0"/>
+                        <outlet property="noDataView" destination="hlu-rV-KRZ" id="KG4-1g-ltk"/>
                         <outlet property="separatorView" destination="cXb-Cx-jfH" id="XvD-Dh-A1y"/>
                         <outlet property="tableView" destination="rOv-Iz-oI1" id="jnT-bb-44C"/>
                         <outlet property="topBarView" destination="foH-a0-b2v" id="GSt-Ho-rvE"/>
@@ -2389,6 +2419,7 @@
         <image name="Profile" width="28.333333969116211" height="28.333333969116211"/>
         <image name="RO32" width="18" height="18"/>
         <image name="RightDisclosure" width="8.6666669845581055" height="16"/>
+        <image name="Technology" width="52" height="52"/>
         <image name="Wallet" width="25.666666030883789" height="26"/>
         <image name="arrowDownRed" width="23.666666030883789" height="24.666666030883789"/>
         <image name="cart" width="16.333333969116211" height="17.333333969116211"/>

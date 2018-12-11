@@ -15,6 +15,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var noDataView: UIView!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -54,6 +55,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noDataView.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         NotificationCenter.default.addObserver(self,
@@ -150,6 +152,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
             switch result {
             case .success(let orders):
                 self.orders = orders as? [Order] ?? []
+                self.noDataView.isHidden = self.orders.count > 0
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOrders, completion: {
