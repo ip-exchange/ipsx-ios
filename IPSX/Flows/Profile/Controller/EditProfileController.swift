@@ -17,6 +17,7 @@ class EditProfileController: UIViewController {
     @IBOutlet weak var keyIconImageView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var changePasswordHolderView: RoundedView!
+    @IBOutlet weak var changePasswordHeight: NSLayoutConstraint!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -190,6 +191,7 @@ class EditProfileController: UIViewController {
             
             if UserManager.shared.userInfo?.source == "facebook" {
                 self.changePasswordHolderView.isHidden = true
+                self.changePasswordHeight.constant = 0
             }
             
             self.individualCheckmarkImage.isHidden = UserManager.shared.companyVerified
