@@ -1594,7 +1594,7 @@ maximum 5 minutes after purchase!</string>
                                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="zTr-jp-rnc" kind="unwind" unwindAction="unwindToDashboardWithSegue:" id="KKj-VD-Xfo"/>
+                                                            <action selector="goToDashboard:" destination="PtT-qt-9lH" eventType="touchUpInside" id="2k7-oU-tQG"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1714,6 +1714,7 @@ maximum 5 minutes after purchase!</string>
                         <outlet property="topBarView" destination="Wcw-3m-bFg" id="oho-aP-CyF"/>
                         <outlet property="topSeparatorConstraint" destination="nyy-hR-CqF" id="Jm3-og-GRm"/>
                         <outlet property="topSeparatorView" destination="a5U-QH-L5b" id="uf8-Hl-r6l"/>
+                        <segue destination="zTr-jp-rnc" kind="unwind" identifier="UnwindToDashboardSegue" unwindAction="unwindToDashboardWithSegue:" id="jgL-hh-yNy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jof-tO-mam" userLabel="First Responder" sceneMemberID="firstResponder"/>

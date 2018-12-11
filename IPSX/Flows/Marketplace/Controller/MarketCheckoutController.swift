@@ -78,6 +78,11 @@ class MarketCheckoutController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func goToDashboard(_ sender: Any) {
+        performSegue(withIdentifier: "UnwindToDashboardSegue", sender: self)
+        navigationController?.popToRootViewController(animated: false)
+    }
+    
     func getIPAddress() {
         
         loadingView?.startAnimating()
