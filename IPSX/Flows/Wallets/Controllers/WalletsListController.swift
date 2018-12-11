@@ -115,7 +115,7 @@ class WalletsListController: UIViewController {
         let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0
         
         if ethAddresses < maxETHaddresses {
-            self.performSegue(withIdentifier: "AddWalletSegueID", sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "AddWalletSegueID", sender: self) }
         } else {
             let formatedMessage = String(format: "Max %@ ETH addresses Error Message".localized, "\(maxETHaddresses)")
             self.errorMessage = formatedMessage.localized
@@ -166,7 +166,7 @@ extension WalletsListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = ethAdresses[indexPath.item]
-        performSegue(withIdentifier: "ViewWalletSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "ViewWalletSegueID", sender: self) }
     }
 }
 

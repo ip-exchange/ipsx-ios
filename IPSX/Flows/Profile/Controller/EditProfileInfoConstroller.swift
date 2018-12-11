@@ -57,19 +57,21 @@ class EditProfileInfoConstroller: UIViewController {
     
     @IBAction func deleteAction(_ sender: UIButton) {
         
-        let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
-        
-        switch deleteAccountState {
+        DispatchQueue.main.async {
+            let deleteAccountState = UserManager.shared.userInfo?.deleteAccountState ?? .notRequested
             
-        case .notRequested:
-            if UserManager.shared.userInfo?.source == "ios" {
-                performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
-            } else {
-                presentDeleteAlert()
+            switch deleteAccountState {
+                
+            case .notRequested:
+                if UserManager.shared.userInfo?.source == "ios" {
+                    self.performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
+                } else {
+                    self.presentDeleteAlert()
+                }
+                
+            case .pending, .confirmed:
+                self.abortDelete()
             }
-            
-        case .pending, .confirmed:
-            abortDelete()
         }
     }
     
@@ -78,7 +80,7 @@ class EditProfileInfoConstroller: UIViewController {
     }
     
     @IBAction func selectCountryAction(_ sender: UIButton) {
-        self.performSegue(withIdentifier: self.countrySelectionID, sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.countrySelectionID, sender: nil) }
     }
     
     

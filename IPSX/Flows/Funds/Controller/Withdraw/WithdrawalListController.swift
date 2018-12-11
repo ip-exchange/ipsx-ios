@@ -45,7 +45,7 @@ class WithdrawalListController: UIViewController {
     
     
     @IBAction func newWithdrawAction(_ sender: Any) {
-        performSegue(withIdentifier: "ValidWalletsListSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "ValidWalletsListSegueID", sender: self) }
     }
     
     @IBAction func backAction(_ sender: Any) {

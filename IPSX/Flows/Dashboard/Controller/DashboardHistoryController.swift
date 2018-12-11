@@ -49,6 +49,7 @@ class DashboardHistoryController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -211,7 +212,7 @@ extension DashboardHistoryController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
         cell?.onTap = { section in
             print("Tapped header: \(section)")
-            self.performSegue(withIdentifier: self.orderSegueID, sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
         }
         //TODO: Implement the proper condtion for Histroy section
         if [0, 3, 7].contains(section) {
@@ -228,7 +229,7 @@ extension DashboardHistoryController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedOffer = offers[indexPath.row]
-        performSegue(withIdentifier: detailsSegueID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.detailsSegueID, sender: self) }
     }
 }
 

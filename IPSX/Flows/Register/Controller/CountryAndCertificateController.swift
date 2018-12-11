@@ -126,7 +126,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
             toast?.showToastAlert("Missing Certificate Message".localized, type: .info, dismissable: false)
             return
         }
-        self.performSegue(withIdentifier: "RepresentativeSegueID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "RepresentativeSegueID", sender: nil) }
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -144,7 +144,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     
     @IBAction func signWithAnotherAccount(_ sender: Any) {
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil) }
     }
     
     private func setupTextViews() {

@@ -138,7 +138,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func viewCart(_ sender: Any) {
-        performSegue(withIdentifier: cartSegueID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.cartSegueID, sender: self) }
     }
     
     private func updateCountryOverlay(visible: Bool) {

@@ -49,11 +49,11 @@ class RegisterTermsController: UIViewController {
     }
     
     @IBAction func termsAndConditionsAction(_ sender: Any) {
-        performSegue(withIdentifier: "TermsWebViewSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "TermsWebViewSegueID", sender: self) }
     }
     
     @IBAction func privacyPolicyAction(_ sender: Any) {
-        performSegue(withIdentifier: "PrivacyPolicyWebViewSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "PrivacyPolicyWebViewSegueID", sender: self) }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

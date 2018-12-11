@@ -54,7 +54,7 @@ class WithdrawAmountController: UIViewController {
     }
     
     @IBAction func nextStepAction(_ sender: Any) {
-        performSegue(withIdentifier: "SubmitWithdrawSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "SubmitWithdrawSegueID", sender: self) }
     }
     
     @IBAction func backAction(_ sender: Any) {

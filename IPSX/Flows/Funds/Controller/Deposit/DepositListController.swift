@@ -47,7 +47,7 @@ class DepositListController: UIViewController {
     
     @IBAction func createDepositAction(_ sender: Any) {
         let segueID = addressIsGenerated ? "ViewAddressSegueID" : "GenerateAddressSegueID"
-        performSegue(withIdentifier: segueID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: segueID, sender: self) }
     }
     
     @IBAction func backAction(_ sender: Any) {

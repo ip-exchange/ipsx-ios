@@ -79,8 +79,10 @@ class MarketCheckoutController: UIViewController {
     }
     
     @IBAction func goToDashboard(_ sender: Any) {
-        performSegue(withIdentifier: "UnwindToDashboardSegue", sender: self)
-        navigationController?.popToRootViewController(animated: false)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "UnwindToDashboardSegue", sender: self)
+            self.navigationController?.popToRootViewController(animated: false)
+        }
     }
     
     func getIPAddress() {

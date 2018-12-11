@@ -103,7 +103,7 @@ class CompanyDetailsController: UIViewController {
     
     @IBAction func nextAction(_ sender: Any) {
         self.view.endEditing(true)
-        self.performSegue(withIdentifier: "CompanyDetailsSegueID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "CompanyDetailsSegueID", sender: nil) }
     }
     
     @IBAction func closeButtonAction(_ sender: Any) {
@@ -114,7 +114,7 @@ class CompanyDetailsController: UIViewController {
     
     @IBAction func signWithAnotherAccount(_ sender: Any) {
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil) }
     }
 
     private func setupTextViews() {

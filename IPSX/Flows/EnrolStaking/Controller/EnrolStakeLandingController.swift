@@ -10,6 +10,11 @@ import UIKit
 
 class EnrolStakeLandingController: UIViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationWebController = segue.destination as? SimpleWebView {
             destinationWebController.loadingURLString = Url.faqPageUrl

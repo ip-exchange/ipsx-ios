@@ -49,6 +49,7 @@ class FundsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         configureUI()
         updateHeader()
         NotificationCenter.default.addObserver(self,

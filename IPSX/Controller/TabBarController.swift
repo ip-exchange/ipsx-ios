@@ -37,7 +37,7 @@ class TabBarViewController: UITabBarController {
         
         if !hasPresentedLegalFlow && (UserManager.shared.userInfo?.hasOptedForLegal == true && UserManager.shared.company == nil) {
             hasPresentedLegalFlow = true
-            self.performSegue(withIdentifier: "CollectLegalDetailsSegueID", sender: nil)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "CollectLegalDetailsSegueID", sender: nil) }
         }
     
         if hasConfirmedDeleteAccount {
@@ -70,7 +70,9 @@ class TabBarViewController: UITabBarController {
     }
 
     func presentLandingFlow() {
-        self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+        }
     }
     
     @IBAction func unwindToTabBar(segue:UIStoryboardSegue) { }

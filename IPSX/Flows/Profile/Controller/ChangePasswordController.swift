@@ -169,12 +169,14 @@ class ChangePasswordController: UIViewController {
     
     func autologinFailed() {
         
-        let ac = UIAlertController(title: "Login After Change Password Alert Message".localized, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK".localized, style: .default) { (action:UIAlertAction) in
-            self.performSegue(withIdentifier: "LoginSegueID", sender: nil)
+        DispatchQueue.main.async {
+            let ac = UIAlertController(title: "Login After Change Password Alert Message".localized, message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK".localized, style: .default) { (action:UIAlertAction) in
+                self.performSegue(withIdentifier: "LoginSegueID", sender: nil)
+            }
+            ac.addAction(okAction)
+            self.present(ac, animated: true)
         }
-        ac.addAction(okAction)
-        present(ac, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

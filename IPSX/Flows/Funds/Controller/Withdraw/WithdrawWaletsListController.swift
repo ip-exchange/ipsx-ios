@@ -145,7 +145,7 @@ extension WithdrawWaletsListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAddress = validAdddresses[indexPath.item]
-        performSegue(withIdentifier: "AmountSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "AmountSegueID", sender: self) }
     }
 }
 

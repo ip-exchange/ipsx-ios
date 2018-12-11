@@ -56,7 +56,7 @@ class WalletAddController: UIViewController {
     func loginAnotherAccount() {
         
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil) }
     }
     
     override func viewDidLoad() {

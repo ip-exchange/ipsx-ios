@@ -80,7 +80,7 @@ class RegisterFBCountryController: UIViewController {
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
     
     @IBAction func continueAction(_ sender: Any) {
-        performSegue(withIdentifier: "TermsSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "TermsSegueID", sender: self) }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

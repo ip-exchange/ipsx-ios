@@ -214,7 +214,7 @@ extension DashboardOrderController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedOffer = offers[indexPath.row]
-        performSegue(withIdentifier: itemDetailsSegueID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.itemDetailsSegueID, sender: self) }
     }
 }
 

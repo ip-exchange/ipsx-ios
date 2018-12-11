@@ -61,7 +61,7 @@ class GenerateAddressController: UIViewController {
     @IBAction func acceptTermsOverlay(_ sender: Any) {
         updateAgreementOverlay(visible: false)
         //TODO: Generate address API here
-        performSegue(withIdentifier: "AddressSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "AddressSegueID", sender: self) }
     }
     
     private func updateAgreementOverlay(visible: Bool) {

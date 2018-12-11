@@ -74,7 +74,7 @@ class RepresentativeDetailsController: UIViewController {
     
     @IBAction func signWithAnotherAccount(_ sender: Any) {
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil) }
     }
     
     private func setupTextViews() {

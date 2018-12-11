@@ -54,12 +54,12 @@ class ViewGeneratedAdrressController: UIViewController {
             return
         }
         let identifier = cartFlow ? "unwindToMarketItem" : "unwindToDepositListSegue"
-        performSegue(withIdentifier: identifier, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: identifier, sender: self) }
     }
     
     @IBAction func tokenBuyOrRequest(_ sender: Any) {
         if UserManager.shared.environment == .dev {
-            performSegue(withIdentifier: "TokenrequestSegueID", sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "TokenrequestSegueID", sender: self) }
             
         } else {
             //TODO: Buy from Cryptocoin

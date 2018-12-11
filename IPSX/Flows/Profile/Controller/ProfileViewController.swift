@@ -42,26 +42,30 @@ class ProfileViewController: UIViewController {
     }
   
     @IBAction func enrolTestingAction(_ sender: Any) {
-        if UserManager.shared.isEnroledForTesting {
-            performSegue(withIdentifier: "enrollTestingSummarySegueID", sender: self)
-        } else if !UserManager.shared.hasValidAddress {
-            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
-        } else {
-            performSegue(withIdentifier: "enrollTestingSegueID", sender: self)
+        DispatchQueue.main.async {
+            if UserManager.shared.isEnroledForTesting {
+                self.performSegue(withIdentifier: "enrollTestingSummarySegueID", sender: self)
+            } else if !UserManager.shared.hasValidAddress {
+                self.toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            } else {
+                self.performSegue(withIdentifier: "enrollTestingSegueID", sender: self)
+            }
         }
     }
     
     @IBAction func EnrolStakingAction(_ sender: Any) {
-        if UserManager.shared.isEnroledForStaking {
-            performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
-        } else if UserManager.shared.generalSettings?.stakingStatus == false {
-            let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
-            let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
-            toast?.showToastAlert(stakingEndAlertText, autoHideAfter: 5, type: .info)
-        } else if !UserManager.shared.hasValidAddress {
-            toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
-        } else {
-            performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
+        DispatchQueue.main.async {
+            if UserManager.shared.isEnroledForStaking {
+                self.performSegue(withIdentifier: "enrollStakingSummarySegueID", sender: self)
+            } else if UserManager.shared.generalSettings?.stakingStatus == false {
+                let endStakingDate = UserManager.shared.generalSettings?.stakingEndDate ?? "--:--:--"
+                let stakingEndAlertText = String(format: "Staking Program end alert message %@".localized, "\(endStakingDate)")
+                self.toast?.showToastAlert(stakingEndAlertText, autoHideAfter: 5, type: .info)
+            } else if !UserManager.shared.hasValidAddress {
+                self.toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            } else {
+                self.performSegue(withIdentifier: "enrollStakingSegueID", sender: self)
+            }
         }
     }
     
@@ -78,17 +82,18 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func manageWalletsAction(_ sender: Any) {
-        performSegue(withIdentifier: "WalletsListID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "WalletsListID", sender: nil) }
     }
         
     func logout() {
         
         UserManager.shared.logout()
-        self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "showLandingSegueID", sender: nil) }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         configureUI()
         updateHeader()
         providerView.providerDelegate = self
@@ -394,11 +399,13 @@ extension ProfileViewController: ProviderDelegate {
     
     func openProviderDetails(hasSubmittedProviderRequest: Bool) {
         
-        if hasSubmittedProviderRequest {
-            performSegue(withIdentifier: "showAboutProviderSegue", sender: nil)
-        }
-        else {
-            performSegue(withIdentifier: "showBecomeProviderSegue", sender: nil)
+        DispatchQueue.main.async {
+            if hasSubmittedProviderRequest {
+                self.performSegue(withIdentifier: "showAboutProviderSegue", sender: nil)
+            }
+            else {
+                self.performSegue(withIdentifier: "showBecomeProviderSegue", sender: nil)
+            }
         }
     }
 }

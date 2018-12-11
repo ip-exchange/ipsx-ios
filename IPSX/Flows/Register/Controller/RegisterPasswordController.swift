@@ -68,7 +68,7 @@ class RegisterPasswordController: UIViewController {
     }
     
     @IBAction func continueAction(_ sender: Any) {
-        performSegue(withIdentifier: "RegistrationTermsSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "RegistrationTermsSegueID", sender: self) }
     }
     
     @IBAction func backAction(_ sender: Any) {

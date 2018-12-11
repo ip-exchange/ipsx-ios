@@ -172,7 +172,7 @@ class MarketFilterController: UIViewController {
     
     @IBAction func applyFilters(_ sender: Any) {
         self.onApplyFilters?(filtersDictionary, normalisedFilters(sourceDic: filtersDictionary))
-        self.performSegue(withIdentifier: unwindToMarketID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.unwindToMarketID, sender: self) }
     }
     
     //MARK: Internal logic

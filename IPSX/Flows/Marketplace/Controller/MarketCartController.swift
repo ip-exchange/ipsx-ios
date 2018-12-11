@@ -111,12 +111,12 @@ class MarketCartController: UIViewController {
             self.errorMessage = "Insufficient Balance Error Message".localized
         }
         else {
-            performSegue(withIdentifier: checkoutSegueID, sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: self.checkoutSegueID, sender: self) }
         }
     }
     
     @IBAction func createNewDeposit(_ sender: Any) {
-        performSegue(withIdentifier: "CreateDepositSegue", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "CreateDepositSegue", sender: self) }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

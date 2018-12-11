@@ -63,7 +63,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     var selectedOffer: Offer?
     var shouldRefreshIp = true
     private var tutorialPresented = false
-    
+    private var backFromSegue = false
+
     private var cartItemsCount: Int {
         return ProxyManager.shared.allOffers?.filter() { $0.isAddedToCart }.count ?? 0
     }
@@ -74,6 +75,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         updateCountryOverlay(visible: false)
         NotificationCenter.default.addObserver(self,
@@ -98,7 +100,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         
-        self.updateData()
+        if !backFromSegue { self.updateData() }
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
     }
@@ -106,8 +108,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if backFromSegue { self.updateData() }
+        backFromSegue = false
+        
         if !UserDefaults.standard.marketTutorialChecked(), !tutorialPresented {
-            performSegue(withIdentifier: "MarketTutorialSegueID", sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "MarketTutorialSegueID", sender: self) }
             tutorialPresented = true
         }
     }
@@ -151,7 +156,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
     
     @IBAction func selectCountry(_ sender: Any) {
-        performSegue(withIdentifier: "CountrySearchSegueID", sender: nil)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "CountrySearchSegueID", sender: nil) }
     }
     
     func updateReachabilityInfo() {
@@ -267,6 +272,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        backFromSegue = true
         
         switch segue.identifier {
             

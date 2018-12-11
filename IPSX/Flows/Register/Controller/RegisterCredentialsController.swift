@@ -92,7 +92,7 @@ class RegisterCredentialsController: UIViewController {
     @IBAction func unwindToRegCredentials(segue:UIStoryboardSegue) { }
     
     @IBAction func continueAction(_ sender: Any) {
-        performSegue(withIdentifier: "PasswordSegueID", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "PasswordSegueID", sender: self) }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

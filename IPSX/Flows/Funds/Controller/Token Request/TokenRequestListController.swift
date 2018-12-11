@@ -101,7 +101,7 @@ class TokenRequestListController: UIViewController {
             }
         }
         if noOfTokenRequests <= maxTokenRequests {
-            self.performSegue(withIdentifier: "showCreateTokenSegueID", sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "showCreateTokenSegueID", sender: self) }
         } else {
             let formatedMessage = String(format: "Max %@ Token Requests Error Message".localized, "\(maxTokenRequests)")
             self.errorMessage = formatedMessage

@@ -93,18 +93,22 @@ class EditProfileController: UIViewController {
     }
     
     @IBAction func corporateDetailsAction(_ sender: Any) {
-        self.view.endEditing(true)
-        self.toast?.hideToast()
         
-        if UserManager.shared.userInfo?.hasOptedForLegal == true {
-            getCompanyDetails() { self.performSegue(withIdentifier: self.legalDetailsSegueID, sender: nil) }
-        } else {
-            self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+        DispatchQueue.main.async {
+            self.view.endEditing(true)
+            self.toast?.hideToast()
+            
+            if UserManager.shared.userInfo?.hasOptedForLegal == true {
+                self.getCompanyDetails() { self.performSegue(withIdentifier: self.legalDetailsSegueID, sender: nil) }
+            } else {
+                self.performSegue(withIdentifier: "LegalDetailsSegueID", sender: nil)
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         keyIconImageView.tintColor = .lightBlue
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
@@ -242,7 +246,7 @@ class EditProfileController: UIViewController {
     @IBAction func saveButtonAction(_ sender: UIButton) {
         
         if individualCheckmarkImage.isHidden && !registeredAsCompany && self.company == nil {
-            createAndShowCorpDetailsAlert()
+            DispatchQueue.main.async { self.createAndShowCorpDetailsAlert() }
             return
         }
         

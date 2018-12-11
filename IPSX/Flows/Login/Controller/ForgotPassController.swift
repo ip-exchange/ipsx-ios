@@ -146,10 +146,12 @@ class ForgotPassController: UIViewController {
     }
     
     @IBAction func haveAnAccountAction(_ sender: Any) {
-        if noLandingScreen {
-            performSegue(withIdentifier: "UnwindToLandingID", sender: self)
-        } else {
-            performSegue(withIdentifier: "UnwindToLoginOptionsID", sender: self)
+        DispatchQueue.main.async {
+            if self.noLandingScreen {
+                self.performSegue(withIdentifier: "UnwindToLandingID", sender: self)
+            } else {
+                self.performSegue(withIdentifier: "UnwindToLoginOptionsID", sender: self)
+            }
         }
     }
     

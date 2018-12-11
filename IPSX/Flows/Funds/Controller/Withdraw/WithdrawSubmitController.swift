@@ -60,7 +60,7 @@ class WithdrawSubmitController: UIViewController {
     
     @IBAction func submitAction(_ sender: Any) {
         //TODO: Submit API here
-        self.performSegue(withIdentifier: "UnwindToWithdrawsList", sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindToWithdrawsList", sender: self) }
     }
     
     @IBAction func backAction(_ sender: Any) {

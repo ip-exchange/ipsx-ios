@@ -50,8 +50,11 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     private var tutorialPresented = false
     private var showOrderComplete = false
     
+    private var backFromSegue = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
@@ -77,14 +80,15 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         
-        self.updateData()
+        if !backFromSegue { self.updateData() }
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        if backFromSegue { self.updateData() }
+        backFromSegue = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -175,6 +179,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        backFromSegue = true
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer
@@ -229,7 +234,7 @@ extension DashboardController: UITableViewDataSource {
         let orderNumber = "Order".localized + " #\(orders[section].id)"
         cell?.updateCell(sectionIndex: section, orderNumber: orderNumber)
         cell?.onTap = { section in
-            self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self)
+            DispatchQueue.main.async { self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self) }
         }
         return cell
     }
@@ -240,7 +245,7 @@ extension DashboardController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 { shouldShowOrderHint = false }
         selectedOffer = orders[indexPath.section].offers[indexPath.row]
-        performSegue(withIdentifier: detailsSegueID, sender: self)
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.detailsSegueID, sender: self) }
     }
 }
 
