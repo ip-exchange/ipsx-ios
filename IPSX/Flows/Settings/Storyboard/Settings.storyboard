@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="E11-qr-b9r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="I9Q-4h-Lq5" customClass="SettingsViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3y0-XJ-QhF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jEP-Wg-i7q" userLabel="Top Bar">
-                                <rect key="frame" x="0.0" y="-30" width="375" height="94"/>
+                                <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWw-0i-NB7" userLabel="Close">
                                         <rect key="frame" x="0.0" y="50" width="44" height="44"/>
@@ -45,22 +45,29 @@
                                     <constraint firstAttribute="height" constant="94" id="r9B-Qv-fIL"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fg4-hx-az9" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="64" width="375" height="0.5"/>
-                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fg4-hx-az9" userLabel="Toast holder">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="rXa-Zf-02l"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhj-dk-QeX" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="Yma-ef-mkp"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ixx-RQ-DTh" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="90.5" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="114.66666666666667" width="375" height="0.3333333333333286"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29560959510000001" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="mik-si-5r9"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="91A-T3-faM" userLabel="Notifications View">
-                                <rect key="frame" x="0.0" y="91" width="375" height="58"/>
+                                <rect key="frame" x="0.0" y="115" width="375" height="58"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgb-vW-0n8">
                                         <rect key="frame" x="14" y="20" width="126" height="17"/>
@@ -83,14 +90,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="exl-NJ-W3a" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="149" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="173" width="375" height="0.66666666666665719"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29560959510000001" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="DGI-j7-2tW"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6qp-kY-wMm" userLabel="Newsletter View">
-                                <rect key="frame" x="0.0" y="149.5" width="375" height="58"/>
+                                <rect key="frame" x="0.0" y="173.66666666666666" width="375" height="58"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Newsletter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6O-K9-Bjk">
                                         <rect key="frame" x="14" y="20" width="74" height="17"/>
@@ -113,14 +120,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEP-AZ-2Md" userLabel="Separator">
-                                <rect key="frame" x="0.0" y="207.5" width="375" height="0.5"/>
+                                <rect key="frame" x="0.0" y="231.66666666666666" width="375" height="0.33333333333334281"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29560959510000001" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="4rI-no-9xw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yvb-PR-GDg" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.5" y="321.5" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="6Ok-IW-FPa"/>
@@ -137,9 +144,11 @@
                             <constraint firstItem="jEP-Wg-i7q" firstAttribute="leading" secondItem="2k9-xR-ccu" secondAttribute="leading" id="Cgb-1r-HtL"/>
                             <constraint firstItem="91A-T3-faM" firstAttribute="top" secondItem="ixx-RQ-DTh" secondAttribute="bottom" id="GWh-0l-qGx"/>
                             <constraint firstItem="fg4-hx-az9" firstAttribute="top" secondItem="jEP-Wg-i7q" secondAttribute="bottom" id="JLX-ha-BGH"/>
+                            <constraint firstItem="zhj-dk-QeX" firstAttribute="leading" secondItem="2k9-xR-ccu" secondAttribute="leading" id="KWV-mp-aNT"/>
                             <constraint firstItem="2k9-xR-ccu" firstAttribute="top" secondItem="jEP-Wg-i7q" secondAttribute="top" constant="50" id="Kjn-SW-YZZ"/>
                             <constraint firstItem="LEP-AZ-2Md" firstAttribute="leading" secondItem="2k9-xR-ccu" secondAttribute="leading" id="OtM-GN-h76"/>
                             <constraint firstItem="2k9-xR-ccu" firstAttribute="trailing" secondItem="91A-T3-faM" secondAttribute="trailing" id="Rox-60-UY5"/>
+                            <constraint firstItem="2k9-xR-ccu" firstAttribute="trailing" secondItem="zhj-dk-QeX" secondAttribute="trailing" id="WGh-oe-YtS"/>
                             <constraint firstItem="2k9-xR-ccu" firstAttribute="trailing" secondItem="jEP-Wg-i7q" secondAttribute="trailing" id="X8u-2u-1jl"/>
                             <constraint firstItem="LEP-AZ-2Md" firstAttribute="top" secondItem="6qp-kY-wMm" secondAttribute="bottom" id="czs-su-0IT"/>
                             <constraint firstItem="ixx-RQ-DTh" firstAttribute="top" secondItem="fg4-hx-az9" secondAttribute="bottom" constant="26" id="dBN-fU-9Ic"/>
@@ -153,6 +162,7 @@
                             <constraint firstItem="ixx-RQ-DTh" firstAttribute="leading" secondItem="2k9-xR-ccu" secondAttribute="leading" id="vuG-k7-Ktl"/>
                             <constraint firstItem="91A-T3-faM" firstAttribute="leading" secondItem="2k9-xR-ccu" secondAttribute="leading" id="yW9-Ss-GhW"/>
                             <constraint firstItem="6qp-kY-wMm" firstAttribute="top" secondItem="exl-NJ-W3a" secondAttribute="bottom" constant="2.8421709430404007e-14" id="yyV-wj-L2U"/>
+                            <constraint firstItem="zhj-dk-QeX" firstAttribute="top" secondItem="jEP-Wg-i7q" secondAttribute="bottom" id="zTA-u3-gQE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2k9-xR-ccu"/>
                     </view>

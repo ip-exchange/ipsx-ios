@@ -18,11 +18,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tri-Ec-HJv" userLabel="Separator">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tri-Ec-HJv" userLabel="Toast Holder">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="Nvp-yh-9In"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3P-wJ-EsW" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="Nvp-yh-9In"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="w87-Qh-Z1T"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqy-AL-kfs" userLabel="Top Bar">
@@ -222,14 +229,17 @@
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="fqy-AL-kfs" secondAttribute="trailing" id="DGP-w4-qgi"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="jXc-1c-sUJ" secondAttribute="trailing" id="Dly-E1-dU4"/>
                             <constraint firstItem="HGt-lo-kkP" firstAttribute="top" secondItem="YI5-I1-vzb" secondAttribute="bottom" constant="27" id="EFJ-lQ-vmw"/>
+                            <constraint firstItem="K3P-wJ-EsW" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" id="Hr4-Er-Yv9"/>
                             <constraint firstItem="YI5-I1-vzb" firstAttribute="top" secondItem="tri-Ec-HJv" secondAttribute="bottom" constant="26.5" id="Kea-KM-KrQ"/>
                             <constraint firstItem="cOM-dK-uZM" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" id="fbX-33-L0j"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YI5-I1-vzb" secondAttribute="trailing" constant="20" symbolic="YES" id="gWv-2f-I3S"/>
                             <constraint firstItem="HGt-lo-kkP" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" constant="16" id="gZc-cM-e7A"/>
                             <constraint firstItem="tri-Ec-HJv" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="bottom" id="itf-A7-p2M"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="top" constant="50" id="kZ8-Mj-hYZ"/>
+                            <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="K3P-wJ-EsW" secondAttribute="trailing" id="kvk-Bi-Jep"/>
                             <constraint firstItem="Xna-OU-vYh" firstAttribute="centerY" secondItem="Cm1-31-EpC" secondAttribute="centerY" id="leW-yQ-bka"/>
                             <constraint firstItem="cOM-dK-uZM" firstAttribute="top" secondItem="jXc-1c-sUJ" secondAttribute="bottom" id="qvY-5X-nu8"/>
+                            <constraint firstItem="K3P-wJ-EsW" firstAttribute="top" secondItem="fqy-AL-kfs" secondAttribute="bottom" id="suF-7u-H8e"/>
                             <constraint firstItem="Cm1-31-EpC" firstAttribute="trailing" secondItem="tri-Ec-HJv" secondAttribute="trailing" id="whp-8w-atR"/>
                             <constraint firstItem="YI5-I1-vzb" firstAttribute="leading" secondItem="Cm1-31-EpC" secondAttribute="leading" constant="15" id="zAz-Cv-ROv"/>
                         </constraints>

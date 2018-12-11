@@ -849,11 +849,18 @@
                                     <constraint firstAttribute="bottom" secondItem="NGI-QW-sJp" secondAttribute="bottom" constant="6" id="iWn-fF-gJZ"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VuK-LO-7lq" userLabel="Separator">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VuK-LO-7lq" userLabel="Toast Holder">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="GCv-ak-DSQ"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XuU-mG-LUb" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29915823060000002" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="GCv-ak-DSQ"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="Dyg-Kz-8KV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQK-gK-74n" userLabel="Header View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
@@ -1322,10 +1329,13 @@
                             <constraint firstItem="xEj-KQ-TmM" firstAttribute="leading" secondItem="GQK-gK-74n" secondAttribute="leading" id="QRk-4s-2aM"/>
                             <constraint firstItem="MVQ-xz-sA7" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="Wcc-9t-0Di"/>
                             <constraint firstItem="GQK-gK-74n" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" constant="15" id="YdF-fQ-hOZ"/>
+                            <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="XuU-mG-LUb" secondAttribute="trailing" id="ezS-H2-IjF"/>
                             <constraint firstItem="H8W-eM-waL" firstAttribute="centerY" secondItem="xEj-KQ-TmM" secondAttribute="centerY" id="gc3-Ie-xol"/>
                             <constraint firstItem="kkM-T1-Dzp" firstAttribute="trailing" secondItem="GQK-gK-74n" secondAttribute="trailing" constant="16" id="ghn-Ec-fJM"/>
                             <constraint firstItem="sba-SG-T9c" firstAttribute="top" secondItem="xIf-93-uwZ" secondAttribute="bottom" id="oOQ-kW-7Bd"/>
+                            <constraint firstItem="XuU-mG-LUb" firstAttribute="top" secondItem="MVQ-xz-sA7" secondAttribute="bottom" id="ozY-jR-e21"/>
                             <constraint firstItem="Sh8-Kb-t4h" firstAttribute="bottom" secondItem="kkM-T1-Dzp" secondAttribute="bottom" constant="50" id="pyr-mr-z69"/>
+                            <constraint firstItem="XuU-mG-LUb" firstAttribute="leading" secondItem="kkM-T1-Dzp" secondAttribute="leading" id="r41-4P-LAZ"/>
                             <constraint firstItem="xIf-93-uwZ" firstAttribute="top" secondItem="xEj-KQ-TmM" secondAttribute="bottom" constant="8" id="rxv-s1-MRy"/>
                             <constraint firstItem="xEj-KQ-TmM" firstAttribute="top" secondItem="GQK-gK-74n" secondAttribute="bottom" constant="24" id="ryS-XS-nNh"/>
                             <constraint firstItem="dJY-Rl-lDg" firstAttribute="centerY" secondItem="kkM-T1-Dzp" secondAttribute="centerY" id="tQu-LQ-Tpe"/>
@@ -1399,11 +1409,18 @@
                                     <constraint firstItem="DRN-Gc-3kq" firstAttribute="centerX" secondItem="Wcw-3m-bFg" secondAttribute="centerX" id="sdH-yb-V7M"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-QH-L5b" userLabel="Separator">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5U-QH-L5b" userLabel="Toast Holder">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="udQ-03-Tej"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Xe-5Y-xJ6" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29915823060000002" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="0.5" id="udQ-03-Tej"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="cIG-5I-2fN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eR0-nv-nXr" userLabel="IP View">
@@ -1669,15 +1686,18 @@ maximum 5 minutes after purchase!</string>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="OA1-LG-05v" secondAttribute="trailing" id="5UB-Rc-Ykz"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="7oy-Bg-fGk"/>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="Wcw-3m-bFg" secondAttribute="trailing" id="86h-Mg-83B"/>
+                            <constraint firstItem="4Xe-5Y-xJ6" firstAttribute="top" secondItem="Wcw-3m-bFg" secondAttribute="bottom" id="97m-fM-bCY"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="centerY" secondItem="g3q-UE-5eb" secondAttribute="centerY" id="BAI-eE-0kY"/>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="FYm-jB-wsH" secondAttribute="trailing" id="Cil-OA-XWD"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="height" secondItem="3Ia-T6-tMv" secondAttribute="height" multiplier="1:4" id="D8K-NN-n9d"/>
                             <constraint firstItem="OA1-LG-05v" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="ESd-MJ-fcs"/>
+                            <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="4Xe-5Y-xJ6" secondAttribute="trailing" id="EdC-II-i5d"/>
                             <constraint firstItem="a5U-QH-L5b" firstAttribute="leading" secondItem="Wcw-3m-bFg" secondAttribute="leading" id="Eur-Ue-RHG"/>
                             <constraint firstItem="5aH-IZ-x6G" firstAttribute="trailing" secondItem="g3q-UE-5eb" secondAttribute="trailing" constant="3" id="Exi-Pa-xYe"/>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="B91-Nh-N9N" secondAttribute="trailing" id="HYN-OV-Wi7"/>
                             <constraint firstItem="FYm-jB-wsH" firstAttribute="top" secondItem="eR0-nv-nXr" secondAttribute="bottom" constant="3" id="Lzc-OR-toL"/>
                             <constraint firstItem="heu-o6-dsd" firstAttribute="bottom" secondItem="g3q-UE-5eb" secondAttribute="bottom" constant="50" id="NYx-gi-a8X"/>
+                            <constraint firstItem="4Xe-5Y-xJ6" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="OFH-VO-sPW"/>
                             <constraint firstItem="a5U-QH-L5b" firstAttribute="trailing" secondItem="Wcw-3m-bFg" secondAttribute="trailing" id="UdI-Ss-chy"/>
                             <constraint firstItem="B91-Nh-N9N" firstAttribute="height" secondItem="FYm-jB-wsH" secondAttribute="height" id="VWs-WP-9pv"/>
                             <constraint firstItem="g3q-UE-5eb" firstAttribute="trailing" secondItem="eR0-nv-nXr" secondAttribute="trailing" id="WPO-y4-bDY"/>
@@ -3322,6 +3342,6 @@ maximum 5 minutes after purchase!</string>
         <image name="walletLarge" width="51" height="51.666667938232422"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6eO-CG-Oxt"/>
+        <segue reference="7DU-41-qQy"/>
     </inferredMetricsTieBreakers>
 </document>
