@@ -65,13 +65,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var tutorialPresented = false
     private var backFromSegue = false
 
-    private var cartItemsCount: Int {
-        return ProxyManager.shared.allOffers?.filter() { $0.isAddedToCart }.count ?? 0
-    }
-    
-    private var favoritesItemsCount: Int {
-        return ProxyManager.shared.allOffers?.filter() { $0.isFavourite }.count ?? 0
-    }
+    private var cartItemsCount: Int = 0
+    private var favoritesItemsCount: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -213,11 +208,16 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             
             self.loadingView?.stopAnimating()
             switch result {
-            case .success(let offers):
-                 if self.normalisedFiltersDictionary.values.count == 0 {
-                    ProxyManager.shared.allOffers = offers as? [Offer]
+            case .success(let offersData):
+                
+                let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
+                if self.normalisedFiltersDictionary.values.count == 0  {
+                    ProxyManager.shared.allOffers = data?.offers
                 }
-                self.offers = offers as? [Offer] ?? []
+                self.offers = data?.offers ?? []
+                self.cartItemsCount = data?.cart ?? 0
+                self.favoritesItemsCount = data?.fav ?? 0
+                
                 DispatchQueue.main.async {
                     self.updateHeaderCounters()
                 }
