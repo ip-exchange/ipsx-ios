@@ -68,7 +68,14 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserManager.shared.roles == nil {
+            getUserRoles(completionHandler: { _ in })
+        }
+    }
+    
     func configureUI() {
         
         guard let offer = offer else { return }
@@ -141,6 +148,23 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.cartSegueID, sender: self) }
     }
     
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        self.loadingView.startAnimating()
+        UserInfoService().getRoles(completionHandler: { result in
+            self.loadingView.stopAnimating()
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
+
     private func updateCountryOverlay(visible: Bool) {
         view.layoutIfNeeded()
         //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)

@@ -58,12 +58,10 @@ class ViewGeneratedAdrressController: UIViewController {
         super.viewDidAppear(animated)
         if addressLinkLabel.text == "---" { retrieveWaccAddress() }
         if newAdrressCreated {
+            newAdrressCreated = false
             toast?.showToastAlert("Your wallet address was successfully created!".localized, autoHideAfter: 5, type: .info, dismissable: true)
+            getUserRoles(completionHandler: { _ in})
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        newAdrressCreated = false
     }
     
     @IBAction func closeAction(_ sender: Any) {
@@ -91,6 +89,21 @@ class ViewGeneratedAdrressController: UIViewController {
     
     @IBAction func unwindToWiewGeneratedAddress(segue:UIStoryboardSegue) {}
     
+    
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        UserInfoService().getRoles(completionHandler: { result in
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
+
     private func retrieveWaccAddress() {
         self.addressLinkLabel.text = "Retrieving the address...".localized
         loadingView.startAnimating()

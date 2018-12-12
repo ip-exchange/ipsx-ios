@@ -123,6 +123,9 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
+        if userRoleLabel.text == "" {
+            getUserRoles(completionHandler: { _ in })
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -167,6 +170,25 @@ class ProfileViewController: UIViewController {
         }
     }
     
+
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        self.loadingView.startAnimating()
+        UserInfoService().getRoles(completionHandler: { result in
+            self.loadingView.stopAnimating()
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                DispatchQueue.main.async {
+                    self.userRoleLabel.text = UserManager.shared.userRoleString
+                }
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
 
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {

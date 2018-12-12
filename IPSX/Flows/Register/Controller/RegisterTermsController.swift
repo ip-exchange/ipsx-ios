@@ -256,13 +256,27 @@ class RegisterDoneController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundImageView.createParticlesAnimation()
+        getUserRoles(completionHandler: { _ in })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         backgroundImageView.removeParticlesAnimation()
     }
-
+    
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        UserInfoService().getRoles(completionHandler: { result in
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
 }
 
 extension RegisterTermsController: ErrorPresentable {

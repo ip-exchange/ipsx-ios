@@ -60,6 +60,11 @@ class DepositListController: UIViewController {
             switch result {
             case .success(let deposits):
                 self.deposits = deposits as? [Deposit] ?? []
+                self.deposits = self.deposits.sorted() {
+                    let d1 = $0.createdAt ?? Date()
+                    let d2 = $1.createdAt ?? Date()
+                    return d1.compare(d2) == .orderedDescending
+                }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
