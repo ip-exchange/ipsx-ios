@@ -128,10 +128,96 @@ class FundsService {
         })
     }
 
+    func getRefundsList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.getRefundsList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var refunds: [Refund] = []
+            for json in jsonArray {
+                refunds.append(self.mapRefundResponse(json: json))
+            }
+            completionHandler(ServiceResult.success(refunds))
+        })
+    }
+
+    func getWithdrawalsList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.getWithdrawalsList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var withdrawals: [Withdrawal] = []
+            for json in jsonArray {
+                withdrawals.append(self.mapWithdrawalResponse(json: json))
+            }
+            completionHandler(ServiceResult.success(withdrawals))
+        })
+    }
+
     func mapDepositResponse(json: JSON) -> Deposit {
         
         let deposit = Deposit(json: json)
         return deposit
     }
     
+    func mapRefundResponse(json: JSON) -> Refund {
+        
+        let refund = Refund(json: json)
+        return refund
+    }
+
+    func mapWithdrawalResponse(json: JSON) -> Withdrawal {
+        
+        let withdrawal = Withdrawal(json: json)
+        return withdrawal
+    }
+
 }

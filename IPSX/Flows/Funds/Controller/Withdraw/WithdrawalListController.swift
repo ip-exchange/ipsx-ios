@@ -33,7 +33,8 @@ class WithdrawalListController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var withdrawals: [Withdrawal] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -43,6 +44,35 @@ class WithdrawalListController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getWithdrawals()
+    }
+    
+    private func getWithdrawals() {
+        loadingView.startAnimating()
+        FundsService().getWithdrawalsList(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let withdrawals):
+                self.withdrawals = withdrawals as? [Withdrawal] ?? []
+                self.withdrawals = self.withdrawals.sorted() {
+                    let d1 = $0.createdAt ?? Date()
+                    let d2 = $1.createdAt ?? Date()
+                    return d1.compare(d2) == .orderedDescending
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                    self.getWithdrawals()
+                })
+            }
+        })
+    }
+
     
     @IBAction func newWithdrawAction(_ sender: Any) {
         DispatchQueue.main.async { self.performSegue(withIdentifier: "ValidWalletsListSegueID", sender: self) }
@@ -58,13 +88,14 @@ class WithdrawalListController: UIViewController {
 extension WithdrawalListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return withdrawals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: WithdrawallCell.cellID, for: indexPath) as! WithdrawallCell
-        cell.configure()
+        let withdrawal = withdrawals[indexPath.item]
+        cell.configure(withdrawal: withdrawal)
         return cell
     }
 }

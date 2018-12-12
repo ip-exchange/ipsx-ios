@@ -21,12 +21,17 @@ class RefundCell: UITableViewCell {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var expiredView: RoundedView!
     
-    func configure() {
-        dateLabel.text = DateFormatter.dateStringForTokenRequests(date: Date())
-        quantityLabel.text = "100"
-        pendingView.isHidden   = true
-        completedView.isHidden = true
-        canceledView.isHidden  = false
-        expiredView.isHidden   = true
+    func configure(refund: Refund) {
+        
+        if let createdDate = refund.createdAt {
+            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: createdDate)
+        }
+        
+        let amount =  refund.amount
+        quantityLabel.text = amount + " IPSX"
+        pendingView.isHidden   = refund.status != "pending"
+        completedView.isHidden = refund.status != "completed"
+        canceledView.isHidden  = refund.status != "canceled"
+        expiredView.isHidden   = refund.status != "expired"
     }
 }

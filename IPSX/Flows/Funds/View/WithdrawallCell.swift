@@ -19,12 +19,17 @@ class WithdrawallCell: UITableViewCell {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var expiredView: RoundedView!
     
-    func configure() {
-        dateLabel.text = DateFormatter.dateStringForTokenRequests(date: Date())
-        quantityLabel.text = "100"
-        pendingView.isHidden   = false
-        completedView.isHidden = true
-        canceledView.isHidden  = true
-        expiredView.isHidden   = true
+    func configure(withdrawal: Withdrawal) {
+        
+        if let createdDate = withdrawal.createdAt {
+            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: createdDate)
+        }
+        
+        let amount =  withdrawal.amount
+        quantityLabel.text = amount + " IPSX"
+        pendingView.isHidden   = withdrawal.status != "pending"
+        completedView.isHidden = withdrawal.status != "completed"
+        canceledView.isHidden  = withdrawal.status != "canceled"
+        expiredView.isHidden   = withdrawal.status != "expired"
     }
 }

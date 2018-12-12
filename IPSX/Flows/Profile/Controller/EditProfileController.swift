@@ -38,7 +38,7 @@ class EditProfileController: UIViewController {
     var company: Company? = UserManager.shared.company
         
     var registeredAsCompany = UserManager.shared.userInfo?.hasOptedForLegal == true
-    var hasCompany = UserManager.shared.company != nil
+    var hasCompany: Bool { return UserManager.shared.company != nil }
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
