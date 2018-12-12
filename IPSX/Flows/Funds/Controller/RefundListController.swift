@@ -50,7 +50,7 @@ class RefundListController: UIViewController {
     
     private func getRefunds() {
         loadingView.startAnimating()
-        FundsService().getWithdrawalsList(completionHandler: { result in
+        FundsService().getRefundsList(completionHandler: { result in
             DispatchQueue.main.async { self.loadingView.stopAnimating() }
             switch result {
             case .success(let refunds):
