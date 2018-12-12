@@ -864,6 +864,14 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                                     <constraint firstItem="ZXU-qt-A5A" firstAttribute="leading" secondItem="hyj-t1-VYY" secondAttribute="leading" constant="15" id="jNv-fh-5ES"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogA-Dg-JeF" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="3ce-XE-TSO"/>
+                                    <constraint firstAttribute="height" constant="44" id="Xd5-DN-IT8"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -875,6 +883,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                             <constraint firstItem="ZXU-qt-A5A" firstAttribute="top" secondItem="WdM-Lj-e6J" secondAttribute="top" constant="40" id="Cdd-RU-n8K"/>
                             <constraint firstItem="hyj-t1-VYY" firstAttribute="trailing" secondItem="WdM-Lj-e6J" secondAttribute="trailing" id="DLn-EH-orZ"/>
                             <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="hPc-S0-Unp" secondAttribute="trailing" constant="34" id="Di0-I4-lfm"/>
+                            <constraint firstItem="ogA-Dg-JeF" firstAttribute="centerX" secondItem="WdM-Lj-e6J" secondAttribute="centerX" id="ElQ-6L-did"/>
                             <constraint firstItem="nHF-l3-JsL" firstAttribute="top" secondItem="hPc-S0-Unp" secondAttribute="bottom" constant="35" id="Lct-0u-YqO"/>
                             <constraint firstItem="hPc-S0-Unp" firstAttribute="centerY" secondItem="WdM-Lj-e6J" secondAttribute="centerY" id="LkY-Jw-wuL"/>
                             <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="ZXU-qt-A5A" secondAttribute="trailing" constant="15" id="OJ6-7A-ZpO"/>
@@ -884,6 +893,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                             <constraint firstItem="nHF-l3-JsL" firstAttribute="leading" secondItem="WdM-Lj-e6J" secondAttribute="leading" constant="16" id="hgt-35-m1I"/>
                             <constraint firstItem="WdM-Lj-e6J" firstAttribute="trailing" secondItem="nHF-l3-JsL" secondAttribute="trailing" constant="16" id="nI6-Qu-hos"/>
                             <constraint firstItem="WdM-Lj-e6J" firstAttribute="top" secondItem="Ibf-oJ-owQ" secondAttribute="top" constant="50" id="nQd-YJ-51K"/>
+                            <constraint firstItem="ogA-Dg-JeF" firstAttribute="centerY" secondItem="WdM-Lj-e6J" secondAttribute="centerY" id="oZl-bY-9TI"/>
                             <constraint firstItem="hPc-S0-Unp" firstAttribute="top" secondItem="3WA-d5-PU3" secondAttribute="bottom" constant="9" id="qpg-fw-Avj"/>
                             <constraint firstItem="hyj-t1-VYY" firstAttribute="bottom" secondItem="WdM-Lj-e6J" secondAttribute="bottom" constant="70" id="rBb-ka-dax"/>
                             <constraint firstItem="EHq-TD-jzg" firstAttribute="top" secondItem="Ibf-oJ-owQ" secondAttribute="bottom" id="rfF-hP-hbU"/>
@@ -896,6 +906,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                     </view>
                     <navigationItem key="navigationItem" id="dUe-aY-Imt"/>
                     <connections>
+                        <outlet property="loadingView" destination="ogA-Dg-JeF" id="xdq-ul-5jJ"/>
                         <outlet property="termsOverlayBottomConstraint" destination="Pcl-co-ZMP" id="o0J-MC-BLd"/>
                         <outlet property="termsOverlayTopConstraint" destination="Cdd-RU-n8K" id="BqT-x7-JNj"/>
                         <outlet property="termsOverlayView" destination="hyj-t1-VYY" id="TvO-fF-v3c"/>
@@ -1042,6 +1053,14 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                                     <action selector="tokenBuyOrRequest:" destination="IOy-7w-hMr" eventType="touchUpInside" id="hPm-o1-D9C"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7mO-yb-iu9" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="BIR-Z1-ucB"/>
+                                    <constraint firstAttribute="width" constant="44" id="Yup-ii-CTA"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1051,6 +1070,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                             <constraint firstItem="gUo-XO-IZO" firstAttribute="centerY" secondItem="Dkm-Sb-qjO" secondAttribute="centerY" id="Bip-Fy-mRg"/>
                             <constraint firstItem="DFf-A0-64a" firstAttribute="top" secondItem="lPi-Px-CdW" secondAttribute="bottom" id="C9z-oE-bmD"/>
                             <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="9un-qZ-WXA" secondAttribute="trailing" id="Dva-a8-ulh"/>
+                            <constraint firstItem="7mO-yb-iu9" firstAttribute="centerY" secondItem="I2w-pa-9Ki" secondAttribute="centerY" id="FYS-Mp-bTh"/>
                             <constraint firstItem="GvY-zu-jcO" firstAttribute="centerX" secondItem="I2w-pa-9Ki" secondAttribute="centerX" id="GH4-Db-AT8"/>
                             <constraint firstItem="AdJ-Hc-ESl" firstAttribute="centerX" secondItem="4Ld-dy-bL0" secondAttribute="centerX" id="Hkt-6c-lpu"/>
                             <constraint firstItem="NMr-cL-Xv4" firstAttribute="top" secondItem="3pV-03-Tau" secondAttribute="bottom" constant="16" id="MtN-pY-CKN"/>
@@ -1062,6 +1082,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                             <constraint firstItem="I2w-pa-9Ki" firstAttribute="top" secondItem="lPi-Px-CdW" secondAttribute="top" constant="50" id="Vfi-L8-jHq"/>
                             <constraint firstItem="lPi-Px-CdW" firstAttribute="leading" secondItem="I2w-pa-9Ki" secondAttribute="leading" id="XJD-09-HIP"/>
                             <constraint firstItem="4Ld-dy-bL0" firstAttribute="top" secondItem="AdJ-Hc-ESl" secondAttribute="bottom" constant="15" id="aaZ-Sy-f7I"/>
+                            <constraint firstItem="7mO-yb-iu9" firstAttribute="centerX" secondItem="I2w-pa-9Ki" secondAttribute="centerX" id="fqN-jr-Dxu"/>
                             <constraint firstItem="I2w-pa-9Ki" firstAttribute="trailing" secondItem="010-iL-AAp" secondAttribute="trailing" constant="16" id="fxQ-hC-nP7"/>
                             <constraint firstItem="3pV-03-Tau" firstAttribute="centerY" secondItem="I2w-pa-9Ki" secondAttribute="centerY" id="g6v-1K-m1j"/>
                             <constraint firstItem="I2w-pa-9Ki" firstAttribute="leading" secondItem="Dkm-Sb-qjO" secondAttribute="leading" id="gqF-fN-ltH"/>
@@ -1084,6 +1105,7 @@ Please contact us at support@ip.sx if you have any queries about these Special T
                         <outlet property="addressLinkLabel" destination="NMr-cL-Xv4" id="x35-mf-r9T"/>
                         <outlet property="buyTokensButton" destination="010-iL-AAp" id="cag-B0-zje"/>
                         <outlet property="copyLinkButton" destination="gUo-XO-IZO" id="qaH-4X-WJI"/>
+                        <outlet property="loadingView" destination="7mO-yb-iu9" id="WZn-Qd-r4h"/>
                         <outlet property="topBarView" destination="lPi-Px-CdW" id="ihO-xK-3Ug"/>
                         <outlet property="topConstraintOutlet" destination="Ore-bN-SD2" id="2r7-xV-h36"/>
                         <outlet property="topSeparatorView" destination="9un-qZ-WXA" id="vPD-q2-JJE"/>

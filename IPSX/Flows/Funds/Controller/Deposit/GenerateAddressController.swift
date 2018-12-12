@@ -15,6 +15,7 @@ class GenerateAddressController: UIViewController {
     @IBOutlet weak var termsOverlayTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var termsOverlayBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -60,8 +61,23 @@ class GenerateAddressController: UIViewController {
     
     @IBAction func acceptTermsOverlay(_ sender: Any) {
         updateAgreementOverlay(visible: false)
-        //TODO: Generate address API here
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "AddressSegueID", sender: self) }
+        createWaccAdddress()
+    }
+    
+    private func createWaccAdddress() {
+        loadingView.startAnimating()
+        FundsService().createWaccAddress(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async { self.performSegue(withIdentifier: "AddressSegueID", sender: self) }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                    self.createWaccAdddress()
+                })
+            }
+        })
     }
     
     private func updateAgreementOverlay(visible: Bool) {

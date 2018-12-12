@@ -63,6 +63,9 @@ struct RequestType {
     static let updateSettings = "updateSettings"
     static let generalSettings = "generalSettings"
     
+    static let addWaccAddress = "addWaccAddress"
+    static let getWaccAddress = "getWaccAddress"
+
     // Marketplace
     static let getOffers = "getOffers"
     static let addToCart = "addToCart"
@@ -190,6 +193,7 @@ public struct Url {
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
     public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
+    public static let wacAddressArhs         = "/Users/%USER_ID%/waccaddress?access_token=%ACCESS_TOKEN%"
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
@@ -313,6 +317,14 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         
     case RequestType.getEthAddress:
         url = (Url.baseApi + Url.ethEnrolmentsArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case RequestType.addWaccAddress:
+        url = (Url.baseApi + Url.wacAddressArhs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case RequestType.getWaccAddress:
+        url = (Url.baseApi + Url.wacAddressArhs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
     //Token Requests
