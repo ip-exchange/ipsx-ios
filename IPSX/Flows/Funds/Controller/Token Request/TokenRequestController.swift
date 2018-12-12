@@ -41,7 +41,7 @@ class TokenRequestController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
-    var hasTelegramID = true//UserManager.shared.userInfo?.kycStatus == .Accepted
+    var hasTelegramID = UserManager.shared.userInfo?.kycStatus == .Accepted
     
     var errorMessage: String? {
         didSet {
@@ -51,6 +51,20 @@ class TokenRequestController: UIViewController {
     
     @IBAction func submitAction(_ sender: UIButton) {
         
+        let amount = amountTextField.text ?? "0"
+        let options = UserManager.shared.generalSettings
+        let amountInt = Int(amount) ?? 0
+
+        guard amountInt >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
+            let min = options?.depositMin ?? 20
+            let max = options?.depositMax ?? 5000
+            let limitsString = String(format: "Amount Limits Error Message Min %@ Max %@".localized, "\(min)", "\(max)")
+            toast?.hideToastAlert() {
+                self.toast?.showToastAlert(limitsString, autoHideAfter: 5)
+            }
+            return
+        }
+
         if hasTelegramID {
             requestTokens()
         } else {
