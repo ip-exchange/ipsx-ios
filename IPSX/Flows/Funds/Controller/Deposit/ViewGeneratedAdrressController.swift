@@ -11,6 +11,7 @@ import IPSXNetworkingFramework
 
 class ViewGeneratedAdrressController: UIViewController {
 
+    @IBOutlet weak var createdAtLabel: UILabel!
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var addressLinkLabel: UILabel!
     @IBOutlet weak var copyLinkButton: RoundedButton!
@@ -42,6 +43,7 @@ class ViewGeneratedAdrressController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addressLinkLabel.text = "---"
+        createdAtLabel.text = "Created at:".localized + " -- -- ----"
         if UserManager.shared.environment == .dev {
             buyTokensButton.setTitle("Request Tokens".localized, for: .normal)
         }
@@ -58,6 +60,10 @@ class ViewGeneratedAdrressController: UIViewController {
         if newAdrressCreated {
             toast?.showToastAlert("Your wallet address was successfully created!".localized, autoHideAfter: 5, type: .info, dismissable: true)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        newAdrressCreated = false
     }
     
     @IBAction func closeAction(_ sender: Any) {
@@ -91,8 +97,13 @@ class ViewGeneratedAdrressController: UIViewController {
         FundsService().retrieveWaccAddress(completionHandler: { result in
             DispatchQueue.main.async { self.loadingView.stopAnimating() }
             switch result {
-            case .success(let address):
-                DispatchQueue.main.async { self.addressLinkLabel.text = address as? String ?? "---" }
+            case .success(let addressData):
+                let data = addressData as? (address: String, creationDate: Date)
+                DispatchQueue.main.async {
+                    self.addressLinkLabel.text = data?.address ?? "---"
+                    let dateString = data?.creationDate.dateToString(format: "dd MMM yyyy") ?? "-- -- ----"
+                    self.createdAtLabel.text = "Created at:".localized + " " + dateString
+                }
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.userInfo, completion: {

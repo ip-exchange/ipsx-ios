@@ -192,8 +192,12 @@ public class ToastAlertView: UIView {
             self.underViewTopConstraint?.constant = (visible) ? self.initialParentConstraint + self.frame.size.height + 7 : self.initialParentConstraint
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+                guard let parent = self.parent else {
+                    self.alpha = (visible) ? 1.0 : 0.0
+                    return
+                }
                 self.superview?.layoutIfNeeded()
-                self.frame.origin.y = (visible) ? (self.parent?.frame.origin.y)! - self.frame.size.height - 3.5 + self.extraOffest : -self.frame.size.height
+                self.frame.origin.y = (visible) ? parent.frame.origin.y - self.frame.size.height - 3.5 + self.extraOffest : -self.frame.size.height
                 self.alpha = (visible) ? 1.0 : 0.0
             }, completion: {success in
                 completion?()

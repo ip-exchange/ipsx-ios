@@ -19,7 +19,8 @@ class DepositCell: UITableViewCell {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var expiredView: RoundedView!
     
-    func configure() {
+    func configure(deposit: Deposit) {
+        
         dateLabel.text = DateFormatter.dateStringForTokenRequests(date: Date())
         quantityLabel.text = "100"
         pendingView.isHidden   = true

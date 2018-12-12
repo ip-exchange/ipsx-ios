@@ -83,8 +83,55 @@ class FundsService {
             
             let json = JSON(data: data)
             let address = json["address"]["public_key"].stringValue
-            completionHandler(ServiceResult.success(address))
+            
+            let dateFormatter = DateFormatter.backendResponseParse()
+            let createdDate = dateFormatter.date(from: json["account"]["created_at"].stringValue)
+
+            completionHandler(ServiceResult.success((address, createdDate)))
+        })
+    }
+    
+    func getDepositsList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let request = createRequest(requestType: RequestType.getDepositList, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            guard let jsonArray = JSON(data: data).array else {
+                completionHandler(ServiceResult.failure(CustomError.invalidJson))
+                return
+            }
+            var deposits: [Deposit] = []
+            for json in jsonArray {
+                deposits.append(self.mapDepositResponse(json: json))
+            }
+            completionHandler(ServiceResult.success(deposits))
         })
     }
 
+    func mapDepositResponse(json: JSON) -> Deposit {
+        
+        let deposit = Deposit(json: json)
+        return deposit
+    }
+    
 }

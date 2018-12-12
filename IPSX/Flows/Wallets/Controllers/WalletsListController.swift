@@ -110,6 +110,10 @@ class WalletsListController: UIViewController {
         }
     }
 
+    @IBAction func closeButton(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func addWalletAction(_ sender: Any) {
         let maxETHaddresses = UserManager.shared.generalSettings?.maxETHaddresses ?? 5
         let ethAddresses = UserManager.shared.ethAddresses?.count ?? 0

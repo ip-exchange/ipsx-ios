@@ -22,6 +22,7 @@ class TokenRequestListController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
+    @IBOutlet weak var addWalletButton: RoundedButton!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -61,6 +62,7 @@ class TokenRequestListController: UIViewController {
         
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
+        self.addWalletButton.isHidden = true
         updateReachabilityInfo()
         getTokenRequestList()
         timer?.invalidate()
@@ -87,6 +89,7 @@ class TokenRequestListController: UIViewController {
         
         guard UserManager.shared.hasValidAddress else {
             toast?.showToastAlert("Need one validated ETH address message.".localized, autoHideAfter: 5)
+            self.addWalletButton.isHidden = false
             return
         }
         
@@ -134,7 +137,7 @@ class TokenRequestListController: UIViewController {
         
         DispatchQueue.main.async {
             self.tokenRequests = UserManager.shared.tokenRequests ?? []
-            self.tokenRequests.sort { $0.created ?? Date() > $1.created ?? Date() } 
+            self.tokenRequests.sort { $0.created ?? Date() > $1.created ?? Date() }
             self.separatorView.isHidden = self.tokenRequests.count < 1
             self.noItemsLabel.isHidden = self.tokenRequests.count > 0
             self.tableView.reloadData()
