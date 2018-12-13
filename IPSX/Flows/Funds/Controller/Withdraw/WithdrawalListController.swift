@@ -16,6 +16,9 @@ class WithdrawalListController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -33,9 +36,14 @@ class WithdrawalListController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var withdrawals: [Withdrawal] = []
+
+    private var timer: Timer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -43,7 +51,51 @@ class WithdrawalListController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getWithdrawals()
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.timer?.invalidate()
+    }
+
+    private func getWithdrawals() {
+        
+        self.timer?.invalidate()
+        loadingView.startAnimating()
+        FundsService().getWithdrawalsList(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let withdrawals):
+                self.withdrawals = withdrawals as? [Withdrawal] ?? []
+                self.withdrawals = self.withdrawals.sorted() {
+                    let d1 = $0.createdAt ?? Date()
+                    let d2 = $1.createdAt ?? Date()
+                    return d1.compare(d2) == .orderedDescending
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.contentSeparator.isHidden = self.withdrawals.count < 1
+                    self.noDataLabel.isHidden = self.withdrawals.count > 0
+                    if self.withdrawals.filter({ $0.status == "pending" }).count > 0 {
+                        self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+                    }
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.getWithdrawalsList, completion: {
+                    self.getWithdrawals()
+                })
+            }
+        })
+    }
+
+    @objc func updateData() {
+        getWithdrawals()
+    }
+
     @IBAction func newWithdrawAction(_ sender: Any) {
         DispatchQueue.main.async { self.performSegue(withIdentifier: "ValidWalletsListSegueID", sender: self) }
     }
@@ -58,13 +110,14 @@ class WithdrawalListController: UIViewController {
 extension WithdrawalListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return withdrawals.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: WithdrawallCell.cellID, for: indexPath) as! WithdrawallCell
-        cell.configure()
+        let withdrawal = withdrawals[indexPath.item]
+        cell.configure(withdrawal: withdrawal)
         return cell
     }
 }

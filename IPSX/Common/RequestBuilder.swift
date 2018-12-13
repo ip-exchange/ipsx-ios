@@ -49,6 +49,10 @@ struct RequestType {
     static let createDeposit = "createDeposit"
     static let cancelDeposit = "cancelDeposit"
     
+    static let createWithdraw = "createWithdraw"
+    static let getWithdrawalsList = "getWithdrawalsList"
+    static let getRefundsList = "getRefundsList"
+
     static let addEthAddress = "addEthAddress"
     static let getEthAddress = "getEthAddress"
     static let updateEthAddress = "updateEthAddress"
@@ -63,9 +67,13 @@ struct RequestType {
     static let updateSettings = "updateSettings"
     static let generalSettings = "generalSettings"
     
+    static let addWaccAddress = "addWaccAddress"
+    static let getWaccAddress = "getWaccAddress"
+
     // Marketplace
     static let getOffers = "getOffers"
     static let addToCart = "addToCart"
+    static let addOrRemoveFavorites = "addOrRemoveFavorites"
     static let viewCart = "viewCart"
     static let deleteFromCart = "deleteFromCart"
     static let placeOrder = "placeOrder"
@@ -187,9 +195,15 @@ public struct Url {
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
     public static let offersArgs             = "/offers/search?access_token=%ACCESS_TOKEN%"
     public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
+    public static let addorRemoveFavArgs     = "/Users/%USER_ID%/favorites?access_token=%ACCESS_TOKEN%"
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
     public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
+    public static let wacAddressArhs         = "/Users/%USER_ID%/waccaddress?access_token=%ACCESS_TOKEN%"
+    public static let withdrawalArgs         = "/Users/%USER_ID%/withdrawals?access_token=%ACCESS_TOKEN%"
+    public static let createWithdrawalArgs   = "/Users/%USER_ID%/withdrawal?access_token=%ACCESS_TOKEN%"
+    public static let refundArgs             = "/Users/%USER_ID%/refunds?access_token=%ACCESS_TOKEN%"
+
 }
 
 func createRequest(requestType:String, urlParams: [String: String] = [:], bodyParams: Any = "", filters: [String: Any]? = nil) -> Request {
@@ -281,6 +295,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         url = (Url.baseApi + Url.addToCartArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
+    case RequestType.addOrRemoveFavorites:
+        url = (Url.baseApi + Url.addorRemoveFavArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
     case RequestType.viewCart:
         url = (Url.baseApi + Url.viewCartArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
@@ -315,6 +333,14 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         url = (Url.baseApi + Url.ethEnrolmentsArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
+    case RequestType.addWaccAddress:
+        url = (Url.baseApi + Url.wacAddressArhs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case RequestType.getWaccAddress:
+        url = (Url.baseApi + Url.wacAddressArhs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
     //Token Requests
         
     case RequestType.requestTokens:
@@ -336,7 +362,18 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.cancelDeposit:
         url = (Url.baseApi + Url.cancelDepositArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "PUT"
+
+    case RequestType.getWithdrawalsList:
+        url = (Url.baseApi + Url.withdrawalArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
         
+    case RequestType.createWithdraw:
+        url = (Url.baseApi + Url.createWithdrawalArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+
+    case RequestType.getRefundsList:
+        url = (Url.baseApi + Url.refundArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
     // Settings
         
     case RequestType.getSettings:

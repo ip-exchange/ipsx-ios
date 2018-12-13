@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import IPSXNetworkingFramework
 
 class ViewGeneratedAdrressController: UIViewController {
 
+    @IBOutlet weak var createdAtLabel: UILabel!
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var addressLinkLabel: UILabel!
     @IBOutlet weak var copyLinkButton: RoundedButton!
     @IBOutlet weak var topBarView: UIView!
@@ -21,6 +24,14 @@ class ViewGeneratedAdrressController: UIViewController {
     }
     @IBOutlet weak var buyTokensButton: RoundedButton!
     
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
+
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -31,6 +42,8 @@ class ViewGeneratedAdrressController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addressLinkLabel.text = "---"
+        createdAtLabel.text = "Created at:".localized + " -- -- ----"
         if UserManager.shared.environment == .dev {
             buyTokensButton.setTitle("Request Tokens".localized, for: .normal)
         }
@@ -43,8 +56,11 @@ class ViewGeneratedAdrressController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if addressLinkLabel.text == "---" { retrieveWaccAddress() }
         if newAdrressCreated {
+            newAdrressCreated = false
             toast?.showToastAlert("Your wallet address was successfully created!".localized, autoHideAfter: 5, type: .info, dismissable: true)
+            getUserRoles(completionHandler: { _ in})
         }
     }
     
@@ -72,6 +88,44 @@ class ViewGeneratedAdrressController: UIViewController {
     }
     
     @IBAction func unwindToWiewGeneratedAddress(segue:UIStoryboardSegue) {}
+    
+    
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        UserInfoService().getRoles(completionHandler: { result in
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
+
+    private func retrieveWaccAddress() {
+        self.addressLinkLabel.text = "Retrieving the address...".localized
+        loadingView.startAnimating()
+        FundsService().retrieveWaccAddress(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let addressData):
+                let data = addressData as? (address: String, creationDate: Date)
+                DispatchQueue.main.async {
+                    self.addressLinkLabel.text = data?.address ?? "---"
+                    let dateString = data?.creationDate.dateToString(format: "dd MMM yyyy") ?? "-- -- ----"
+                    self.createdAtLabel.text = "Created at:".localized + " " + dateString
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                    self.retrieveWaccAddress()
+                })
+            }
+        })
+    }
+
 }
 
 extension ViewGeneratedAdrressController: ToastAlertViewPresentable {
@@ -80,6 +134,35 @@ extension ViewGeneratedAdrressController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension ViewGeneratedAdrressController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+            
+        default:
+            
+            switch requestType {
+            case RequestType.userInfo, RequestType.getEthAddress:
+                self.errorMessage = "Refresh Data Error Message".localized
+            case RequestType.deleteEthAddress:
+                self.errorMessage = "ETH Address Delete Failed Error Message".localized
+            default:
+                self.errorMessage = "Generic Error Message".localized
+            }
         }
     }
 }

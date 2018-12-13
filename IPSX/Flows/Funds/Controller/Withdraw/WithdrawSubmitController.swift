@@ -15,8 +15,8 @@ class WithdrawSubmitController: UIViewController {
     @IBOutlet weak var walletNameLabel: UILabel!
     @IBOutlet weak var walletAddressLabel: UILabel!
     @IBOutlet weak var priceIPSXLabel: UILabel!
-    @IBOutlet weak var priceUSDLabel: UILabel!
-    
+    @IBOutlet weak var priceUSDLabel: UILabel!    
+    @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -59,8 +59,7 @@ class WithdrawSubmitController: UIViewController {
     }
     
     @IBAction func submitAction(_ sender: Any) {
-        //TODO: Submit API here
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindToWithdrawsList", sender: self) }
+        createWithdrawal()
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -70,6 +69,30 @@ class WithdrawSubmitController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
     
+    private func createWithdrawal() {
+        
+        guard let addrString = selectedAddress?.address, selectedAmoun > 0 else {
+            toast?.showToastAlert("Missing address or insuficient amount".localized, autoHideAfter: 5, type: .error, dismissable: true)
+            return
+        }
+        
+        loadingView.startAnimating()
+        FundsService().createWithdrawal(ethAddrString: addrString, amount: selectedAmoun) { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindToWithdrawsList", sender: self) }
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.createWithdraw, completion: {
+                    self.createWithdrawal()
+                })
+            }
+        }
+    }
+
     private func updateUI() {
         walletNameLabel.text = selectedAddress?.alias
         walletAddressLabel.text = selectedAddress?.address

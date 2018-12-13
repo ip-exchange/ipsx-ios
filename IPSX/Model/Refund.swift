@@ -1,15 +1,15 @@
 //
-//  Deposit.swift
+//  Refund.swift
 //  IPSX
 //
-//  Created by Cristina Virlan on 08/07/2018.
+//  Created by Calin Chitu on 12/12/2018.
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 
 import Foundation
 import IPSXNetworkingFramework
 
-struct Deposit {
+struct Refund {
     
     var depositID: Int
     var ethID: Int
@@ -17,7 +17,7 @@ struct Deposit {
     var status: String //pending, complete, canceled, expired
     var createdAt: Date?
     var updatedAt: Date?
-
+    
     init(json: JSON) {
         
         let dateFormatter = DateFormatter.backendResponseParse()
@@ -30,5 +30,5 @@ struct Deposit {
         self.createdAt        = dateFormatter.date(from: createdAtString)
         let updatedAtString   = json["updated_at"].stringValue
         self.updatedAt        = dateFormatter.date(from: updatedAtString)
-   }
+    }
 }

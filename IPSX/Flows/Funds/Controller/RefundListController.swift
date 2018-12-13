@@ -16,6 +16,9 @@ class RefundListController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -32,9 +35,12 @@ class RefundListController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
+    var refunds: [Refund] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -42,7 +48,37 @@ class RefundListController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getRefunds()
+    }
     
+    private func getRefunds() {
+        loadingView.startAnimating()
+        FundsService().getRefundsList(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let refunds):
+                self.refunds = refunds as? [Refund] ?? []
+                self.refunds = self.refunds.sorted() {
+                    let d1 = $0.createdAt ?? Date()
+                    let d2 = $1.createdAt ?? Date()
+                    return d1.compare(d2) == .orderedDescending
+                }
+                DispatchQueue.main.async {
+                    self.contentSeparator.isHidden = self.refunds.count < 1
+                    self.noDataLabel.isHidden = self.refunds.count > 0
+                    self.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.getRefundsList, completion: {
+                    self.getRefunds()
+                })
+            }
+        })
+    }
+
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -52,13 +88,14 @@ class RefundListController: UIViewController {
 extension RefundListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return refunds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: RefundCell.cellID, for: indexPath) as! RefundCell
-        cell.configure()
+        let refund = refunds[indexPath.item]
+        cell.configure(refund: refund)
         return cell
     }
 }

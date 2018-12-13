@@ -310,6 +310,7 @@ class EditProfileInfoConstroller: UIViewController {
                 UserManager.shared.userInfo = user as? UserInfo
                 DispatchQueue.main.async {
                     self.updateUI()
+                    self.updateFields()
                 }
                 
             case .failure(let error):

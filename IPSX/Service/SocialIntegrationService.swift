@@ -66,18 +66,29 @@ class SocialIntegrationService {
             //Store access details in keychain
             UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, facebookToken: fbToken)
             
-            //Execute User Info request
-            UserInfoService().retrieveUserInfo(completionHandler: { result in
+            LegalPersonService().getCompanyDetails(completionHandler: { result in
+                
                 switch result {
-                    
+                case .success(let company):
+                    UserManager.shared.company = company as? Company
+                    //Execute User Info request
+                    UserInfoService().retrieveUserInfo(completionHandler: { result in
+                        switch result {
+                            
+                        case .failure(let error):
+                            completionHandler(ServiceResult.failure(error))
+                            
+                        case .success(let user):
+                            UserManager.shared.userInfo = user as? UserInfo
+                            completionHandler(ServiceResult.success(true))
+                        }
+                    })
+
                 case .failure(let error):
                     completionHandler(ServiceResult.failure(error))
-                    
-                case .success(let user):
-                    UserManager.shared.userInfo = user as? UserInfo
-                    completionHandler(ServiceResult.success(true))
                 }
             })
+
         })
     }
     

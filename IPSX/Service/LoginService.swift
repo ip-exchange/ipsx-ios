@@ -48,28 +48,29 @@ class LoginService {
             //Store access details in keychain
             UserManager.shared.storeAccessDetails(userId: userId, accessToken: accessToken, email: email, password: password)
             
-            //Execute User Info request
-            UserInfoService().retrieveUserInfo(completionHandler: { result in
+            LegalPersonService().getCompanyDetails(completionHandler: { result in
+                
                 switch result {
-                    
-                case .failure(let error):
-                    completionHandler(ServiceResult.failure(error))
-                    
-                case .success(let user):
-                    UserManager.shared.userInfo = user as? UserInfo
-                    UserInfoService().getRoles(completionHandler: { result in
+                case .success(let company):
+                    UserManager.shared.company = company as? Company
+                    //Execute User Info request
+                    UserInfoService().retrieveUserInfo(completionHandler: { result in
                         switch result {
                             
                         case .failure(let error):
                             completionHandler(ServiceResult.failure(error))
                             
-                        case .success(let userRoles):
-                            UserManager.shared.roles = userRoles as? [UserRoles]
+                        case .success(let user):
+                            UserManager.shared.userInfo = user as? UserInfo
                             completionHandler(ServiceResult.success(true))
                         }
                     })
+
+                case .failure(let error):
+                    completionHandler(ServiceResult.failure(error))
                 }
             })
+
         })
     }
         

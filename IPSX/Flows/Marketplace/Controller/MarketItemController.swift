@@ -30,6 +30,8 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var addToCartButton: RoundedButton!
+    @IBOutlet weak var favoritesButton: UIButton!
+    
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
@@ -68,7 +70,14 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if UserManager.shared.roles == nil {
+            getUserRoles(completionHandler: { _ in })
+        }
+    }
+    
     func configureUI() {
         
         guard let offer = offer else { return }
@@ -78,6 +87,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
+        favoritesButton.isSelected = offer.isFavourite
         addToCartButton.isEnabled = !isInCartAlready
         addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
         trafficLabel.text = offer.trafficMB + " MB"
@@ -141,9 +151,33 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.cartSegueID, sender: self) }
     }
     
+    @IBAction func favoritesAction(_ sender: UIButton) {
+        
+        guard let offer = offer else { return }
+        
+        sender.isSelected = !sender.isSelected
+        self.performAddOrRemovefavoritesRequest(offerId: offer.id)
+    }
+    
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        self.loadingView.startAnimating()
+        UserInfoService().getRoles(completionHandler: { result in
+            self.loadingView.stopAnimating()
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
+
     private func updateCountryOverlay(visible: Bool) {
         view.layoutIfNeeded()
-        //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
         self.cartOverlayYConstraint.constant = visible ? 0 : 500
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
             self.view.layoutIfNeeded()
@@ -170,6 +204,25 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         })
     }
     
+    func performAddOrRemovefavoritesRequest(offerId: Int) {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().addOrRemovefavorites(offerId: offerId, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async { }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.addOrRemoveFavorites, completion: {
+                    self.performAddOrRemovefavoritesRequest(offerId: offerId)
+                })
+            }
+        })
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CreateWalletSegue" {
             let dest = segue.destination as? GenerateAddressController

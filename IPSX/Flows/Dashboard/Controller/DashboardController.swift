@@ -15,7 +15,9 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
-    
+    @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var customTabBar: CustomTabBar!
+
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -54,6 +56,11 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noDataView.isHidden = true
+        customTabBar.selectIndex(0)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         NotificationCenter.default.addObserver(self,
@@ -75,6 +82,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         
         super.viewWillAppear(animated)
         
+        tabBarController?.tabBar.isHidden = true
         guard UserManager.shared.isLoggedIn else { return }
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
@@ -150,6 +158,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
             switch result {
             case .success(let orders):
                 self.orders = orders as? [Order] ?? []
+                self.noDataView.isHidden = self.orders.count > 0
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOrders, completion: {
@@ -180,6 +189,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         backFromSegue = true
+        segue.destination.hidesBottomBarWhenPushed = true
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer

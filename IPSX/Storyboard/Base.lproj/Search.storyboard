@@ -237,11 +237,18 @@
                                     <constraint firstAttribute="height" constant="94" id="unJ-aE-7t1"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEu-8F-3QN" userLabel="Separator">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bEu-8F-3QN" userLabel="Toast Holder">
                                 <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
-                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.29874559859154931" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="lot-La-3Yr"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DXd-Dj-CYB" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="88" width="375" height="0.6666666666666714"/>
+                                <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.2987455986" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="rel-pf-PmX"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BDO-tK-6Ak" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
@@ -258,14 +265,17 @@
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="WVZ-01-mjG" secondAttribute="trailing" id="0lT-Jg-nHh"/>
                             <constraint firstItem="bEu-8F-3QN" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="0ry-fq-o9Q"/>
                             <constraint firstItem="bEu-8F-3QN" firstAttribute="top" secondItem="2aK-81-k3s" secondAttribute="bottom" id="15F-nf-KJG"/>
+                            <constraint firstItem="DXd-Dj-CYB" firstAttribute="top" secondItem="2aK-81-k3s" secondAttribute="bottom" id="Es8-sA-6B7"/>
                             <constraint firstItem="Dvd-kE-kkV" firstAttribute="top" secondItem="bEu-8F-3QN" secondAttribute="bottom" constant="19.5" id="FSC-Fd-bnJ"/>
                             <constraint firstItem="BDO-tK-6Ak" firstAttribute="centerY" secondItem="D5S-dm-6q1" secondAttribute="centerY" id="H41-YX-oFJ"/>
                             <constraint firstItem="WVZ-01-mjG" firstAttribute="top" secondItem="Yhr-9L-cfB" secondAttribute="bottom" id="IPp-b3-7dR"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="bottom" secondItem="WVZ-01-mjG" secondAttribute="bottom" id="IVY-YZ-q4h"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="2aK-81-k3s" secondAttribute="trailing" id="Ji6-fR-zk1"/>
                             <constraint firstItem="WVZ-01-mjG" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="KXV-0y-LR0"/>
+                            <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="DXd-Dj-CYB" secondAttribute="trailing" id="Ve2-Vd-32b"/>
                             <constraint firstItem="BDO-tK-6Ak" firstAttribute="centerX" secondItem="D5S-dm-6q1" secondAttribute="centerX" id="WVa-XO-jwh"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="trailing" secondItem="bEu-8F-3QN" secondAttribute="trailing" id="XHW-Cr-XKO"/>
+                            <constraint firstItem="DXd-Dj-CYB" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="XL7-PC-RjZ"/>
                             <constraint firstItem="D5S-dm-6q1" firstAttribute="top" secondItem="2aK-81-k3s" secondAttribute="top" constant="50" id="efq-by-8hw"/>
                             <constraint firstItem="Dvd-kE-kkV" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="hJ7-4c-Lun"/>
                             <constraint firstItem="Yhr-9L-cfB" firstAttribute="leading" secondItem="D5S-dm-6q1" secondAttribute="leading" id="ivf-Q9-S5n"/>

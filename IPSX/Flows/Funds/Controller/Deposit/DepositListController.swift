@@ -8,6 +8,7 @@
 
 import UIKit
 import IPSXNetworkingFramework
+import IPSXNetworkingFramework
 
 class DepositListController: UIViewController {
 
@@ -15,7 +16,9 @@ class DepositListController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
-
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -35,8 +38,12 @@ class DepositListController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
+    var deposits: [Deposit] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -44,7 +51,37 @@ class DepositListController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "")
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getDeposits()
+    }
     
+    private func getDeposits() {
+        loadingView.startAnimating()
+        FundsService().getDepositsList(completionHandler: { result in
+            DispatchQueue.main.async { self.loadingView.stopAnimating() }
+            switch result {
+            case .success(let deposits):
+                self.deposits = deposits as? [Deposit] ?? []
+                self.deposits = self.deposits.sorted() {
+                    let d1 = $0.createdAt ?? Date()
+                    let d2 = $1.createdAt ?? Date()
+                    return d1.compare(d2) == .orderedDescending
+                }
+                DispatchQueue.main.async {
+                    self.contentSeparator.isHidden = self.deposits.count < 1
+                    self.noDataLabel.isHidden = self.deposits.count > 0
+                    self.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.getDepositList, completion: {
+                    self.getDeposits()
+                })
+            }
+        })
+    }
+
     @IBAction func createDepositAction(_ sender: Any) {
         let segueID = addressIsGenerated ? "ViewAddressSegueID" : "GenerateAddressSegueID"
         DispatchQueue.main.async { self.performSegue(withIdentifier: segueID, sender: self) }
@@ -60,13 +97,14 @@ class DepositListController: UIViewController {
 extension DepositListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return self.deposits.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: DepositCell.cellID, for: indexPath) as! DepositCell
-        cell.configure()
+        let deposit = deposits[indexPath.item]
+        cell.configure(deposit: deposit)
         return cell
     }
 }

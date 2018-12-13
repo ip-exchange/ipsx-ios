@@ -19,12 +19,18 @@ class DepositCell: UITableViewCell {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var expiredView: RoundedView!
     
-    func configure() {
-        dateLabel.text = DateFormatter.dateStringForTokenRequests(date: Date())
-        quantityLabel.text = "100"
-        pendingView.isHidden   = true
-        completedView.isHidden = false
-        canceledView.isHidden  = true
-        expiredView.isHidden   = true
+    func configure(deposit: Deposit) {
+        
+        if let createdDate = deposit.createdAt {
+            dateLabel.text = DateFormatter.dateStringForTokenRequests(date: createdDate)
+        }
+        
+        let amount =  deposit.amount
+        quantityLabel.text = amount + " IPSX"
+        pendingView.isHidden   = deposit.status != "pending"
+        completedView.isHidden = deposit.status != "completed"
+        canceledView.isHidden  = deposit.status != "canceled"
+        expiredView.isHidden   = deposit.status != "expired"
     }
 }
+

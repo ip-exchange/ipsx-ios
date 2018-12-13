@@ -27,6 +27,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userRoleLabel: UILabel!
     @IBOutlet weak var providerView: ProviderView!
     @IBOutlet weak var providerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var customTabBar: CustomTabBar!
 
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -94,6 +95,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        customTabBar.selectIndex(3)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
         configureUI()
         updateHeader()
         providerView.providerDelegate = self
@@ -114,6 +119,7 @@ class ProfileViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         providerDetails()
@@ -123,6 +129,9 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
+        if userRoleLabel.text == "" {
+            getUserRoles(completionHandler: { _ in })
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -167,6 +176,25 @@ class ProfileViewController: UIViewController {
         }
     }
     
+
+    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        self.loadingView.startAnimating()
+        UserInfoService().getRoles(completionHandler: { result in
+            self.loadingView.stopAnimating()
+            switch result {
+                
+            case .failure(let error):
+                completionHandler(ServiceResult.failure(error))
+                
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                DispatchQueue.main.async {
+                    self.userRoleLabel.text = UserManager.shared.userRoleString
+                }
+                completionHandler(ServiceResult.success(true))
+            }
+        })
+    }
 
     @objc public func reachabilityChanged(_ note: Notification) {
         DispatchQueue.main.async {
@@ -230,6 +258,7 @@ class ProfileViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        segue.destination.hidesBottomBarWhenPushed = true
         switch segue.identifier {
             
         case "showProfileSegueID":
