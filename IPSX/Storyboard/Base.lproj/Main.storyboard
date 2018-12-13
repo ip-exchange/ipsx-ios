@@ -37,13 +37,13 @@
         <!--Marketplace-->
         <scene sceneID="IFr-bv-5eF">
             <objects>
-                <viewController title="Marketplace" id="6jc-WL-DqT" customClass="MarketController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Marketplace" extendedLayoutIncludesOpaqueBars="YES" id="6jc-WL-DqT" customClass="MarketController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T69-ub-Uaa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
-                                <rect key="frame" x="0.0" y="133.66666666666669" width="375" height="546.33333333333326"/>
+                                <rect key="frame" x="0.0" y="133.66666666666669" width="375" height="595.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="FoS-zs-qAy">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
@@ -406,7 +406,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zot-aD-WGB" userLabel="Custom Tabbar" customClass="CustomTabBar" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="680" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="149"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DsH-Sz-JTl" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
@@ -450,6 +450,7 @@
                                             <constraint firstItem="rw9-h7-Tsn" firstAttribute="centerX" secondItem="pA1-pT-9wg" secondAttribute="centerX" id="aJQ-Md-3gR"/>
                                             <constraint firstItem="Fc3-Bl-D7H" firstAttribute="centerX" secondItem="pA1-pT-9wg" secondAttribute="centerX" id="axj-iK-Qxt"/>
                                             <constraint firstItem="rw9-h7-Tsn" firstAttribute="height" secondItem="pA1-pT-9wg" secondAttribute="height" id="de1-RX-gUW"/>
+                                            <constraint firstAttribute="height" constant="49" id="ldH-ed-R9z"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="image" destination="Fc3-Bl-D7H" id="0ou-Sp-9Ul"/>
@@ -580,21 +581,20 @@
                                         </connections>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="pA1-pT-9wg" firstAttribute="centerY" secondItem="Zot-aD-WGB" secondAttribute="centerY" id="0rX-2d-0I4"/>
                                     <constraint firstItem="YzW-yg-rRY" firstAttribute="height" secondItem="LPK-Rl-9Fm" secondAttribute="height" id="4mL-6l-z32"/>
                                     <constraint firstItem="LOm-Hr-EAt" firstAttribute="centerY" secondItem="pA1-pT-9wg" secondAttribute="centerY" id="CVk-xI-0UJ"/>
                                     <constraint firstItem="LPK-Rl-9Fm" firstAttribute="height" secondItem="LOm-Hr-EAt" secondAttribute="height" id="Gba-5c-y7f"/>
-                                    <constraint firstItem="pA1-pT-9wg" firstAttribute="height" secondItem="Zot-aD-WGB" secondAttribute="height" id="IL9-8Q-eKG"/>
                                     <constraint firstItem="DsH-Sz-JTl" firstAttribute="top" secondItem="Zot-aD-WGB" secondAttribute="top" id="JVG-My-keA"/>
                                     <constraint firstItem="pA1-pT-9wg" firstAttribute="leading" secondItem="Zot-aD-WGB" secondAttribute="leading" id="Kxe-Xv-aDb"/>
                                     <constraint firstItem="LPK-Rl-9Fm" firstAttribute="centerY" secondItem="LOm-Hr-EAt" secondAttribute="centerY" id="LF8-zC-ZqC"/>
                                     <constraint firstAttribute="trailing" secondItem="DsH-Sz-JTl" secondAttribute="trailing" id="NZS-oa-ZT8"/>
-                                    <constraint firstAttribute="height" constant="49" id="Nwg-EV-HWY"/>
+                                    <constraint firstAttribute="height" constant="149" id="Nwg-EV-HWY"/>
                                     <constraint firstItem="YzW-yg-rRY" firstAttribute="leading" secondItem="LPK-Rl-9Fm" secondAttribute="trailing" id="Re3-ca-jGo"/>
                                     <constraint firstItem="LOm-Hr-EAt" firstAttribute="height" secondItem="pA1-pT-9wg" secondAttribute="height" id="VTs-RY-Vd5"/>
                                     <constraint firstItem="LPK-Rl-9Fm" firstAttribute="leading" secondItem="LOm-Hr-EAt" secondAttribute="trailing" id="ZAq-hz-0hU"/>
+                                    <constraint firstItem="pA1-pT-9wg" firstAttribute="top" secondItem="Zot-aD-WGB" secondAttribute="top" id="cQZ-0q-OB2"/>
                                     <constraint firstItem="LOm-Hr-EAt" firstAttribute="leading" secondItem="pA1-pT-9wg" secondAttribute="trailing" id="fzn-fp-S1g"/>
                                     <constraint firstItem="YzW-yg-rRY" firstAttribute="width" secondItem="LPK-Rl-9Fm" secondAttribute="width" id="giY-Uq-vbd"/>
                                     <constraint firstItem="LOm-Hr-EAt" firstAttribute="width" secondItem="pA1-pT-9wg" secondAttribute="width" id="gpu-BU-ez1"/>
@@ -611,13 +611,13 @@
                                 </connections>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xs-5a-Py6" userLabel="Country Overlay View">
-                                <rect key="frame" x="0.0" y="-56" width="375" height="885"/>
+                                <rect key="frame" x="0.0" y="-56" width="375" height="934"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQL-hX-DdX" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="307" width="345" height="271"/>
+                                        <rect key="frame" x="15" y="331.66666666666669" width="345" height="271.00000000000006"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnE-Vj-pou">
-                                                <rect key="frame" x="301" y="1.6666666666666572" width="44" height="44"/>
+                                                <rect key="frame" x="301" y="1.3333333333333144" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="QzR-dT-5oj"/>
                                                     <constraint firstAttribute="height" constant="44" id="cCs-9y-SKf"/>
@@ -628,14 +628,14 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gav-ze-Cf0" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="49" width="345" height="0.6666666666666643"/>
+                                                <rect key="frame" x="0.0" y="49" width="345" height="0.3333333333333357"/>
                                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30391725349999998" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="IWu-YT-CAX"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfH-C4-kTW">
-                                                <rect key="frame" x="0.0" y="49.666666666666686" width="345" height="164"/>
+                                                <rect key="frame" x="0.0" y="49.333333333333314" width="345" height="164"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select your country before proceeding to the offer page" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1T-15-Dpv">
                                                         <rect key="frame" x="20" y="27.000000000000004" width="305" height="38.333333333333343"/>
@@ -714,7 +714,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9g-y9-Onc" userLabel="Separator">
-                                                <rect key="frame" x="0.0" y="213.66666666666669" width="345" height="0.33333333333334281"/>
+                                                <rect key="frame" x="0.0" y="213.33333333333331" width="345" height="0.66666666666665719"/>
                                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30276188380000002" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="0.5" id="QxQ-P0-8y5"/>
@@ -771,7 +771,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9wh-bB-9UA" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.66666666666666" y="364.66666666666669" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="S7p-Cv-Egs"/>
@@ -783,13 +783,13 @@
                         <constraints>
                             <constraint firstItem="J8a-NR-0V7" firstAttribute="top" secondItem="9P1-sa-ISd" secondAttribute="bottom" id="26C-tq-v8b"/>
                             <constraint firstItem="9wh-bB-9UA" firstAttribute="centerY" secondItem="gIv-Tu-HaQ" secondAttribute="centerY" id="574-gm-K5k"/>
-                            <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="Zot-aD-WGB" secondAttribute="bottom" id="7XU-1L-o3n"/>
+                            <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="Zot-aD-WGB" secondAttribute="bottom" constant="-100" id="7XU-1L-o3n"/>
                             <constraint firstItem="s7w-JR-Nif" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="BGF-r9-wGa"/>
                             <constraint firstItem="Zot-aD-WGB" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="Bgx-7h-YZR"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="top" secondItem="2Xs-5a-Py6" secondAttribute="top" constant="100" id="Cdd-4l-d1T"/>
-                            <constraint firstItem="gIv-Tu-HaQ" firstAttribute="bottom" secondItem="s7w-JR-Nif" secondAttribute="bottom" constant="49" id="EsX-hO-JFe"/>
                             <constraint firstItem="9P1-sa-ISd" firstAttribute="top" secondItem="gar-De-dh8" secondAttribute="top" id="JLj-Ta-98X"/>
                             <constraint firstItem="4f7-ik-z4J" firstAttribute="centerY" secondItem="EX3-po-RYU" secondAttribute="centerY" id="Nm3-vO-lEj"/>
+                            <constraint firstItem="Zot-aD-WGB" firstAttribute="top" secondItem="s7w-JR-Nif" secondAttribute="bottom" id="RAJ-pM-3k8"/>
                             <constraint firstItem="2Xs-5a-Py6" firstAttribute="trailing" secondItem="gIv-Tu-HaQ" secondAttribute="trailing" id="RG2-ol-hBb"/>
                             <constraint firstItem="gIv-Tu-HaQ" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="top" constant="50" id="U1X-mo-Zlz"/>
                             <constraint firstItem="9P1-sa-ISd" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="Ur7-n3-LlL"/>
@@ -1122,13 +1122,13 @@
         <!--Profile View Controller-->
         <scene sceneID="Vye-WP-72c">
             <objects>
-                <viewController id="pEl-nG-Fp4" customClass="ProfileViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="pEl-nG-Fp4" customClass="ProfileViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wB2-9f-0EH"/>
                         <viewControllerLayoutGuide type="bottom" id="a97-84-n07"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UV5-bD-6x6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ff-7j-qth" userLabel="Header">
@@ -1198,7 +1198,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="58" sectionHeaderHeight="24" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="vDC-kx-BOD">
-                                <rect key="frame" x="0.0" y="259.66666666666674" width="375" height="420.33333333333326"/>
+                                <rect key="frame" x="0.0" y="259.66666666666674" width="375" height="469.33333333333326"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="n2r-iV-TAw">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="552"/>
@@ -1557,7 +1557,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="smJ-7h-ibg" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.66666666666666" y="364.66666666666669" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="7Gb-IM-SWv"/>
@@ -1565,7 +1565,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1d-lg-79B" userLabel="Custom Tabbar" customClass="CustomTabBar" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="680" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="149"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kYp-5S-vAK" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
@@ -1608,6 +1608,7 @@
                                             <constraint firstItem="nBJ-27-Mcc" firstAttribute="centerY" secondItem="78V-8O-fJR" secondAttribute="centerY" id="anR-gn-lHQ"/>
                                             <constraint firstAttribute="trailing" secondItem="Uqe-jT-hbM" secondAttribute="trailing" constant="4" id="hZa-Qm-DFh"/>
                                             <constraint firstItem="nBJ-27-Mcc" firstAttribute="centerX" secondItem="78V-8O-fJR" secondAttribute="centerX" id="ia1-0q-jne"/>
+                                            <constraint firstAttribute="height" constant="49" id="lEB-Bp-V0Y"/>
                                             <constraint firstItem="Je8-py-Cek" firstAttribute="centerX" secondItem="78V-8O-fJR" secondAttribute="centerX" id="qmJ-Li-boy"/>
                                         </constraints>
                                         <connections>
@@ -1750,15 +1751,14 @@
                                     <constraint firstAttribute="trailing" secondItem="kYp-5S-vAK" secondAttribute="trailing" id="EwG-tG-Ton"/>
                                     <constraint firstItem="nbt-F7-XdJ" firstAttribute="width" secondItem="78V-8O-fJR" secondAttribute="width" id="F8W-BD-Njm"/>
                                     <constraint firstItem="Upm-Dk-vcf" firstAttribute="height" secondItem="FwR-WH-o9q" secondAttribute="height" id="K9v-LH-3MJ"/>
+                                    <constraint firstItem="78V-8O-fJR" firstAttribute="top" secondItem="s1d-lg-79B" secondAttribute="top" id="PbD-jJ-3Ao"/>
                                     <constraint firstItem="nbt-F7-XdJ" firstAttribute="height" secondItem="78V-8O-fJR" secondAttribute="height" id="Rb7-7G-tkt"/>
                                     <constraint firstItem="78V-8O-fJR" firstAttribute="leading" secondItem="s1d-lg-79B" secondAttribute="leading" id="T8x-qq-9PT"/>
                                     <constraint firstItem="nbt-F7-XdJ" firstAttribute="leading" secondItem="78V-8O-fJR" secondAttribute="trailing" id="UnZ-8T-vhp"/>
                                     <constraint firstItem="FwR-WH-o9q" firstAttribute="centerY" secondItem="nbt-F7-XdJ" secondAttribute="centerY" id="VDB-xh-T50"/>
-                                    <constraint firstItem="78V-8O-fJR" firstAttribute="centerY" secondItem="s1d-lg-79B" secondAttribute="centerY" id="aij-oa-HGP"/>
                                     <constraint firstItem="kYp-5S-vAK" firstAttribute="top" secondItem="s1d-lg-79B" secondAttribute="top" id="hjS-xi-q07"/>
                                     <constraint firstItem="Upm-Dk-vcf" firstAttribute="leading" secondItem="FwR-WH-o9q" secondAttribute="trailing" id="iUs-5y-H7d"/>
-                                    <constraint firstAttribute="height" constant="49" id="oNO-UZ-jq6"/>
-                                    <constraint firstItem="78V-8O-fJR" firstAttribute="height" secondItem="s1d-lg-79B" secondAttribute="height" id="p21-RC-FFV"/>
+                                    <constraint firstAttribute="height" constant="149" id="oNO-UZ-jq6"/>
                                     <constraint firstItem="Upm-Dk-vcf" firstAttribute="width" secondItem="FwR-WH-o9q" secondAttribute="width" id="tIh-AU-PUf"/>
                                     <constraint firstItem="kYp-5S-vAK" firstAttribute="leading" secondItem="s1d-lg-79B" secondAttribute="leading" id="ybW-Sd-QE0"/>
                                 </constraints>
@@ -1773,7 +1773,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="1Ff-7j-qth" firstAttribute="top" secondItem="wB2-9f-0EH" secondAttribute="bottom" id="5lQ-bt-gse"/>
-                            <constraint firstItem="ztl-gH-st4" firstAttribute="bottom" secondItem="s1d-lg-79B" secondAttribute="bottom" id="Byz-0A-s0e"/>
+                            <constraint firstItem="ztl-gH-st4" firstAttribute="bottom" secondItem="s1d-lg-79B" secondAttribute="bottom" constant="-100" id="Byz-0A-s0e"/>
                             <constraint firstItem="smJ-7h-ibg" firstAttribute="centerX" secondItem="ztl-gH-st4" secondAttribute="centerX" id="Ifz-Im-hxd"/>
                             <constraint firstAttribute="trailing" secondItem="vDC-kx-BOD" secondAttribute="trailing" id="MEi-Tu-80G"/>
                             <constraint firstItem="ztl-gH-st4" firstAttribute="trailing" secondItem="s1d-lg-79B" secondAttribute="trailing" id="Pq2-PT-gsE"/>
@@ -1784,7 +1784,7 @@
                             <constraint firstItem="2Nd-OT-dcG" firstAttribute="leading" secondItem="ztl-gH-st4" secondAttribute="leading" id="Y3v-60-rkT"/>
                             <constraint firstAttribute="trailing" secondItem="1Ff-7j-qth" secondAttribute="trailing" id="YhM-Dh-gr5"/>
                             <constraint firstItem="ztl-gH-st4" firstAttribute="trailing" secondItem="MOw-ZA-pYO" secondAttribute="trailing" constant="8" id="de5-RB-cCO"/>
-                            <constraint firstItem="a97-84-n07" firstAttribute="top" secondItem="vDC-kx-BOD" secondAttribute="bottom" constant="49" id="kFc-Cc-Hf1"/>
+                            <constraint firstItem="s1d-lg-79B" firstAttribute="top" secondItem="vDC-kx-BOD" secondAttribute="bottom" id="gqA-a6-4Yq"/>
                             <constraint firstItem="smJ-7h-ibg" firstAttribute="centerY" secondItem="ztl-gH-st4" secondAttribute="centerY" id="ngA-ou-VKr"/>
                             <constraint firstItem="2Nd-OT-dcG" firstAttribute="top" secondItem="1Ff-7j-qth" secondAttribute="bottom" id="t8n-Yc-e1B"/>
                             <constraint firstItem="s1d-lg-79B" firstAttribute="leading" secondItem="ztl-gH-st4" secondAttribute="leading" id="yJl-2x-SFN"/>
@@ -1885,13 +1885,13 @@
         <!--Dashboard-->
         <scene sceneID="5lm-fU-gth">
             <objects>
-                <viewController title="Dashboard" id="HWT-Sk-n3y" customClass="DashboardController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Dashboard" extendedLayoutIncludesOpaqueBars="YES" id="HWT-Sk-n3y" customClass="DashboardController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Bl-g3-wYz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlu-rV-KRZ" userLabel="No Data View">
-                                <rect key="frame" x="37.666666666666657" y="322.66666666666669" width="300" height="128"/>
+                                <rect key="frame" x="37.666666666666657" y="347" width="300" height="128"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Technology" translatesAutoresizingMaskIntoConstraints="NO" id="V3i-Hi-XK1">
                                         <rect key="frame" x="124" y="0.0" width="52" height="52"/>
@@ -1918,7 +1918,7 @@ and rent your first proxy.</string>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="164" estimatedRowHeight="-1" sectionHeaderHeight="53" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="rOv-Iz-oI1">
-                                <rect key="frame" x="0.0" y="87.666666666666686" width="375" height="592.33333333333326"/>
+                                <rect key="frame" x="0.0" y="87.666666666666686" width="375" height="641.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2320,7 +2320,7 @@ and rent your first proxy.</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LxI-ic-oJm" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.66666666666666" y="364.66666666666669" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="7SO-tN-ssZ"/>
@@ -2328,7 +2328,7 @@ and rent your first proxy.</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJE-Ia-LAd" userLabel="Custom Tabbar" customClass="CustomTabBar" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="680" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="149"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lg5-dE-QL7" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
@@ -2365,6 +2365,7 @@ and rent your first proxy.</string>
                                         <constraints>
                                             <constraint firstItem="kg0-8t-WZl" firstAttribute="top" secondItem="KPd-e1-ubK" secondAttribute="top" constant="5" id="4LM-wh-TEx"/>
                                             <constraint firstAttribute="bottom" secondItem="SdW-eX-Tut" secondAttribute="bottom" constant="1" id="9gv-HU-aOX"/>
+                                            <constraint firstAttribute="height" constant="49" id="Fcp-ok-2VX"/>
                                             <constraint firstItem="kg0-8t-WZl" firstAttribute="centerX" secondItem="KPd-e1-ubK" secondAttribute="centerX" id="TK3-gT-qLY"/>
                                             <constraint firstItem="dlG-Cf-9PZ" firstAttribute="centerX" secondItem="KPd-e1-ubK" secondAttribute="centerX" id="VlD-wL-g6q"/>
                                             <constraint firstItem="SdW-eX-Tut" firstAttribute="leading" secondItem="KPd-e1-ubK" secondAttribute="leading" constant="4" id="bYd-LI-oJ8"/>
@@ -2508,11 +2509,11 @@ and rent your first proxy.</string>
                                     <constraint firstItem="1ub-L3-xga" firstAttribute="width" secondItem="Ltb-LC-bj6" secondAttribute="width" id="39U-ue-ME8"/>
                                     <constraint firstItem="1ub-L3-xga" firstAttribute="height" secondItem="Ltb-LC-bj6" secondAttribute="height" id="4Iw-MF-sWC"/>
                                     <constraint firstItem="KPd-e1-ubK" firstAttribute="width" secondItem="dJE-Ia-LAd" secondAttribute="width" multiplier="1:4" id="5Vp-cP-621"/>
-                                    <constraint firstItem="KPd-e1-ubK" firstAttribute="centerY" secondItem="dJE-Ia-LAd" secondAttribute="centerY" id="B68-u6-z2s"/>
                                     <constraint firstItem="lg5-dE-QL7" firstAttribute="top" secondItem="dJE-Ia-LAd" secondAttribute="top" id="G6V-Ta-G5P"/>
                                     <constraint firstAttribute="trailing" secondItem="lg5-dE-QL7" secondAttribute="trailing" id="GD6-F7-ZUS"/>
-                                    <constraint firstAttribute="height" constant="49" id="HgJ-Ha-eyE"/>
+                                    <constraint firstAttribute="height" constant="149" id="HgJ-Ha-eyE"/>
                                     <constraint firstItem="Ltb-LC-bj6" firstAttribute="leading" secondItem="KPd-e1-ubK" secondAttribute="trailing" id="IYd-vW-ln5"/>
+                                    <constraint firstItem="KPd-e1-ubK" firstAttribute="top" secondItem="dJE-Ia-LAd" secondAttribute="top" id="Pme-ZY-9xs"/>
                                     <constraint firstItem="1ub-L3-xga" firstAttribute="centerY" secondItem="Ltb-LC-bj6" secondAttribute="centerY" id="Tva-NZ-Qwa"/>
                                     <constraint firstItem="KPd-e1-ubK" firstAttribute="leading" secondItem="dJE-Ia-LAd" secondAttribute="leading" id="UEm-qm-0Qc"/>
                                     <constraint firstItem="1cE-Mg-bTx" firstAttribute="leading" secondItem="1ub-L3-xga" secondAttribute="trailing" id="UYL-TM-25J"/>
@@ -2522,7 +2523,6 @@ and rent your first proxy.</string>
                                     <constraint firstItem="1cE-Mg-bTx" firstAttribute="height" secondItem="1ub-L3-xga" secondAttribute="height" id="fdc-XJ-LAw"/>
                                     <constraint firstItem="lg5-dE-QL7" firstAttribute="leading" secondItem="dJE-Ia-LAd" secondAttribute="leading" id="feK-uz-xCZ"/>
                                     <constraint firstItem="Ltb-LC-bj6" firstAttribute="width" secondItem="KPd-e1-ubK" secondAttribute="width" id="gzn-uk-YrC"/>
-                                    <constraint firstItem="KPd-e1-ubK" firstAttribute="height" secondItem="dJE-Ia-LAd" secondAttribute="height" id="jQA-B5-RfQ"/>
                                     <constraint firstItem="Ltb-LC-bj6" firstAttribute="centerY" secondItem="KPd-e1-ubK" secondAttribute="centerY" id="yZz-Ts-hxz"/>
                                 </constraints>
                                 <connections>
@@ -2547,14 +2547,14 @@ and rent your first proxy.</string>
                             <constraint firstItem="LxI-ic-oJm" firstAttribute="centerY" secondItem="wFK-bX-p2G" secondAttribute="centerY" id="IPX-rr-Quz"/>
                             <constraint firstItem="rOv-Iz-oI1" firstAttribute="leading" secondItem="wFK-bX-p2G" secondAttribute="leading" id="UXy-GN-By9"/>
                             <constraint firstItem="hlu-rV-KRZ" firstAttribute="centerX" secondItem="wFK-bX-p2G" secondAttribute="centerX" id="c5B-JL-sYB"/>
-                            <constraint firstItem="wFK-bX-p2G" firstAttribute="bottom" secondItem="dJE-Ia-LAd" secondAttribute="bottom" id="kO7-gM-nAG"/>
+                            <constraint firstItem="dJE-Ia-LAd" firstAttribute="top" secondItem="rOv-Iz-oI1" secondAttribute="bottom" id="dpq-a7-nSj"/>
+                            <constraint firstItem="wFK-bX-p2G" firstAttribute="bottom" secondItem="dJE-Ia-LAd" secondAttribute="bottom" constant="-100" id="kO7-gM-nAG"/>
                             <constraint firstItem="LxI-ic-oJm" firstAttribute="centerX" secondItem="wFK-bX-p2G" secondAttribute="centerX" id="rlq-el-v1S"/>
                             <constraint firstItem="wFK-bX-p2G" firstAttribute="trailing" secondItem="dJE-Ia-LAd" secondAttribute="trailing" id="saF-6Y-tFe"/>
                             <constraint firstItem="set-Wj-sFF" firstAttribute="top" secondItem="foH-a0-b2v" secondAttribute="bottom" id="uZV-73-Lac"/>
                             <constraint firstItem="rOv-Iz-oI1" firstAttribute="top" secondItem="cXb-Cx-jfH" secondAttribute="bottom" constant="-1" id="xEl-nT-b7J"/>
                             <constraint firstItem="wFK-bX-p2G" firstAttribute="top" secondItem="foH-a0-b2v" secondAttribute="top" constant="50" id="yRc-wW-V7X"/>
                             <constraint firstItem="cXb-Cx-jfH" firstAttribute="top" secondItem="foH-a0-b2v" secondAttribute="bottom" id="yeU-jC-edd"/>
-                            <constraint firstItem="wFK-bX-p2G" firstAttribute="bottom" secondItem="rOv-Iz-oI1" secondAttribute="bottom" constant="49" id="yih-l4-Quu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wFK-bX-p2G"/>
                     </view>
@@ -2597,13 +2597,13 @@ and rent your first proxy.</string>
         <!--Funds View Controller-->
         <scene sceneID="bfS-a5-Hud">
             <objects>
-                <viewController id="Vdw-yR-k98" customClass="FundsViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Vdw-yR-k98" customClass="FundsViewController" customModule="IPSX" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wia-Gd-XCR"/>
                         <viewControllerLayoutGuide type="bottom" id="ruf-OX-DFt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iBp-VV-agK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uyJ-BD-90W" userLabel="Separator">
@@ -2720,7 +2720,7 @@ and rent your first proxy.</string>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="58" sectionHeaderHeight="24" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="h9w-5m-OcA">
-                                <rect key="frame" x="0.0" y="276.66666666666674" width="375" height="403.33333333333326"/>
+                                <rect key="frame" x="0.0" y="276.66666666666674" width="375" height="452.33333333333326"/>
                                 <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="4ZZ-jI-hx5">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="475"/>
@@ -2967,7 +2967,7 @@ and rent your first proxy.</string>
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WP4-14-aBX" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="165.66666666666666" y="364.66666666666669" width="44" height="44"/>
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="czF-vZ-phk"/>
@@ -2975,7 +2975,7 @@ and rent your first proxy.</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghq-RR-9r5" userLabel="Custom Tabbar" customClass="CustomTabBar" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="680" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="149"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hed-I7-eR4" userLabel="Separator">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
@@ -3014,6 +3014,7 @@ and rent your first proxy.</string>
                                             <constraint firstItem="pHR-ld-k9b" firstAttribute="leading" secondItem="6do-Sh-CCX" secondAttribute="leading" constant="4" id="8UC-vS-f2g"/>
                                             <constraint firstAttribute="bottom" secondItem="pHR-ld-k9b" secondAttribute="bottom" constant="1" id="U3K-Fi-qIM"/>
                                             <constraint firstItem="ptj-z0-iFb" firstAttribute="centerX" secondItem="6do-Sh-CCX" secondAttribute="centerX" id="XBf-OS-fUW"/>
+                                            <constraint firstAttribute="height" constant="49" id="ZCk-lA-gs0"/>
                                             <constraint firstItem="ptj-z0-iFb" firstAttribute="width" secondItem="6do-Sh-CCX" secondAttribute="width" id="aBl-Er-O4w"/>
                                             <constraint firstItem="ptj-z0-iFb" firstAttribute="centerY" secondItem="6do-Sh-CCX" secondAttribute="centerY" id="ayt-sU-wTS"/>
                                             <constraint firstAttribute="trailing" secondItem="pHR-ld-k9b" secondAttribute="trailing" constant="4" id="l6l-Mr-ppL"/>
@@ -3154,21 +3155,20 @@ and rent your first proxy.</string>
                                     <constraint firstItem="ztg-Py-sdB" firstAttribute="height" secondItem="6do-Sh-CCX" secondAttribute="height" id="0zf-wM-UKg"/>
                                     <constraint firstItem="ztg-Py-sdB" firstAttribute="centerY" secondItem="6do-Sh-CCX" secondAttribute="centerY" id="1Lm-Cv-Ebl"/>
                                     <constraint firstItem="tbD-3B-esx" firstAttribute="height" secondItem="ezU-FQ-BjL" secondAttribute="height" id="1VD-kC-bbx"/>
+                                    <constraint firstItem="6do-Sh-CCX" firstAttribute="top" secondItem="Ghq-RR-9r5" secondAttribute="top" id="2Bt-wl-c0O"/>
                                     <constraint firstItem="ztg-Py-sdB" firstAttribute="leading" secondItem="6do-Sh-CCX" secondAttribute="trailing" id="6Mt-Ci-Ybo"/>
                                     <constraint firstItem="tbD-3B-esx" firstAttribute="leading" secondItem="ezU-FQ-BjL" secondAttribute="trailing" id="EkC-Q5-GIv"/>
                                     <constraint firstItem="hed-I7-eR4" firstAttribute="top" secondItem="Ghq-RR-9r5" secondAttribute="top" id="JcD-aS-nvn"/>
                                     <constraint firstItem="hed-I7-eR4" firstAttribute="leading" secondItem="Ghq-RR-9r5" secondAttribute="leading" id="LII-wi-8KM"/>
                                     <constraint firstItem="ezU-FQ-BjL" firstAttribute="width" secondItem="ztg-Py-sdB" secondAttribute="width" id="LbB-zh-yBk"/>
                                     <constraint firstItem="6do-Sh-CCX" firstAttribute="width" secondItem="Ghq-RR-9r5" secondAttribute="width" multiplier="1:4" id="MZf-PM-3Bx"/>
-                                    <constraint firstAttribute="height" constant="49" id="NRn-kp-dpa"/>
+                                    <constraint firstAttribute="height" constant="149" id="NRn-kp-dpa"/>
                                     <constraint firstItem="tbD-3B-esx" firstAttribute="width" secondItem="ezU-FQ-BjL" secondAttribute="width" id="RZL-Yv-hmc"/>
                                     <constraint firstItem="ezU-FQ-BjL" firstAttribute="height" secondItem="ztg-Py-sdB" secondAttribute="height" id="TFN-Sr-IQx"/>
                                     <constraint firstItem="ezU-FQ-BjL" firstAttribute="leading" secondItem="ztg-Py-sdB" secondAttribute="trailing" id="Vgs-mZ-SDp"/>
                                     <constraint firstItem="ezU-FQ-BjL" firstAttribute="centerY" secondItem="ztg-Py-sdB" secondAttribute="centerY" id="WzH-7c-Vuf"/>
                                     <constraint firstItem="tbD-3B-esx" firstAttribute="centerY" secondItem="ezU-FQ-BjL" secondAttribute="centerY" id="bzR-Wd-uON"/>
                                     <constraint firstAttribute="trailing" secondItem="hed-I7-eR4" secondAttribute="trailing" id="hqc-9P-dbm"/>
-                                    <constraint firstItem="6do-Sh-CCX" firstAttribute="centerY" secondItem="Ghq-RR-9r5" secondAttribute="centerY" id="m87-ao-Aey"/>
-                                    <constraint firstItem="6do-Sh-CCX" firstAttribute="height" secondItem="Ghq-RR-9r5" secondAttribute="height" id="s4d-1E-Joq"/>
                                     <constraint firstItem="6do-Sh-CCX" firstAttribute="leading" secondItem="Ghq-RR-9r5" secondAttribute="leading" id="vII-NP-pcl"/>
                                     <constraint firstItem="ztg-Py-sdB" firstAttribute="width" secondItem="6do-Sh-CCX" secondAttribute="width" id="yq3-Ax-s4T"/>
                                 </constraints>
@@ -3184,10 +3184,10 @@ and rent your first proxy.</string>
                         <constraints>
                             <constraint firstItem="2Zz-ea-ljx" firstAttribute="top" secondItem="wia-Gd-XCR" secondAttribute="bottom" id="0oj-nN-EAp"/>
                             <constraint firstAttribute="trailing" secondItem="h9w-5m-OcA" secondAttribute="trailing" id="A21-U0-Oz7"/>
-                            <constraint firstItem="ruf-OX-DFt" firstAttribute="top" secondItem="h9w-5m-OcA" secondAttribute="bottom" constant="49" id="DMC-ZE-mPb"/>
                             <constraint firstItem="2Zz-ea-ljx" firstAttribute="leading" secondItem="iBp-VV-agK" secondAttribute="leading" id="FXH-sU-CoD"/>
                             <constraint firstItem="h9w-5m-OcA" firstAttribute="leading" secondItem="iBp-VV-agK" secondAttribute="leading" id="JwL-g9-0Fg"/>
                             <constraint firstItem="WP4-14-aBX" firstAttribute="centerX" secondItem="8y3-Vt-dPf" secondAttribute="centerX" id="LSu-Xk-Giw"/>
+                            <constraint firstItem="Ghq-RR-9r5" firstAttribute="top" secondItem="h9w-5m-OcA" secondAttribute="bottom" id="MES-Y1-Qha"/>
                             <constraint firstItem="8y3-Vt-dPf" firstAttribute="trailing" secondItem="Ghq-RR-9r5" secondAttribute="trailing" id="WiS-Fe-Ycs"/>
                             <constraint firstItem="uyJ-BD-90W" firstAttribute="top" secondItem="2Zz-ea-ljx" secondAttribute="bottom" id="c6A-AT-clh"/>
                             <constraint firstItem="uyJ-BD-90W" firstAttribute="leading" secondItem="8y3-Vt-dPf" secondAttribute="leading" id="dfm-f1-u28"/>
@@ -3196,7 +3196,7 @@ and rent your first proxy.</string>
                             <constraint firstAttribute="trailing" secondItem="2Zz-ea-ljx" secondAttribute="trailing" id="s2z-8k-qSi"/>
                             <constraint firstItem="Ghq-RR-9r5" firstAttribute="leading" secondItem="8y3-Vt-dPf" secondAttribute="leading" id="sBN-Eg-HZH"/>
                             <constraint firstItem="h9w-5m-OcA" firstAttribute="top" secondItem="uyJ-BD-90W" secondAttribute="bottom" constant="17" id="yG7-hs-Ko1"/>
-                            <constraint firstItem="8y3-Vt-dPf" firstAttribute="bottom" secondItem="Ghq-RR-9r5" secondAttribute="bottom" id="zF0-ht-GAY"/>
+                            <constraint firstItem="8y3-Vt-dPf" firstAttribute="bottom" secondItem="Ghq-RR-9r5" secondAttribute="bottom" constant="-100" id="zF0-ht-GAY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8y3-Vt-dPf"/>
                     </view>

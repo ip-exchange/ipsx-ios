@@ -96,7 +96,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        
+        tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         
@@ -278,6 +278,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         backFromSegue = true
+        segue.destination.hidesBottomBarWhenPushed = true
         
         switch segue.identifier {
             

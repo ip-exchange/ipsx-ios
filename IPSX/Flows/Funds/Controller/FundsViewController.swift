@@ -55,6 +55,7 @@ class FundsViewController: UIViewController {
         updateHeader()
         customTabBar.selectIndex(2)
         customTabBar.onTap = { index in
+            print("index")
             self.tabBarController?.selectedIndex = index
         }
         
@@ -78,6 +79,7 @@ class FundsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         refreshProfileUI()
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,13 +138,7 @@ class FundsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        switch segue.identifier {
-            
-            
-        default:
-            break
-        }
+        segue.destination.hidesBottomBarWhenPushed = true
     }
     
     func retrieveUserInfo() {

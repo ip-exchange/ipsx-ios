@@ -82,6 +82,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         
         super.viewWillAppear(animated)
         
+        tabBarController?.tabBar.isHidden = true
         guard UserManager.shared.isLoggedIn else { return }
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
@@ -188,6 +189,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         backFromSegue = true
+        segue.destination.hidesBottomBarWhenPushed = true
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer
