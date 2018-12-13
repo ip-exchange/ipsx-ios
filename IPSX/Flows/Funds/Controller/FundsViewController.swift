@@ -19,6 +19,7 @@ class FundsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var amountLargeLabel: UILabel!
     @IBOutlet weak var amountTopSmallLabel: UILabel!
+    @IBOutlet weak var customTabBar: CustomTabBar!
     
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -52,6 +53,11 @@ class FundsViewController: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         configureUI()
         updateHeader()
+        customTabBar.selectIndex(2)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,

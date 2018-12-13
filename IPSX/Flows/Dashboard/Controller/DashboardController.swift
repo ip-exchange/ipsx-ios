@@ -16,7 +16,8 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noDataView: UIView!
-    
+    @IBOutlet weak var customTabBar: CustomTabBar!
+
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -56,6 +57,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         noDataView.isHidden = true
+        customTabBar.selectIndex(0)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         NotificationCenter.default.addObserver(self,

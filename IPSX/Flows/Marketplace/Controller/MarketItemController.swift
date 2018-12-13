@@ -175,7 +175,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     private func updateCountryOverlay(visible: Bool) {
         view.layoutIfNeeded()
-        //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
         self.cartOverlayYConstraint.constant = visible ? 0 : 500
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
             self.view.layoutIfNeeded()

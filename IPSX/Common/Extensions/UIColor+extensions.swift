@@ -15,6 +15,10 @@ public extension UIColor {
         return UIColor(red: 42.0 / 255.0, green: 42.0 / 255.0, blue: 42.0 / 255.0, alpha: 1.0)
     }
         
+    static var tabBarGray: UIColor {
+        return UIColor(red: 146.0 / 255.0, green: 146.0 / 255.0, blue: 146.0 / 255.0, alpha: 1.0)
+    }
+
     static var darktext: UIColor {
         return UIColor(white: 17.0 / 255.0, alpha: 1.0)
     }

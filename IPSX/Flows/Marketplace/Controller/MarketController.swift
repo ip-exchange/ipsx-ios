@@ -24,7 +24,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var filtersCounterLabel: UILabel!
     @IBOutlet weak var cartCountLabel: UILabel!
     @IBOutlet weak var favoritesCounterLabel: UILabel!
-    
+    @IBOutlet weak var customTabBar: CustomTabBar!
+
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -70,6 +71,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customTabBar.selectIndex(1)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
         updateCountryOverlay(visible: false)
@@ -262,7 +267,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     
     private func updateCountryOverlay(visible: Bool) {
         view.layoutIfNeeded()
-        //self.tabBarController?.setTabBarVisible(visible: !visible, animated: true)
         self.submitCountryButton.isEnabled = self.countryRComponent.contentTextField?.text != ""
         self.countryViewYAxiscenter.constant = visible ? 0 : 500
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {

@@ -27,6 +27,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userRoleLabel: UILabel!
     @IBOutlet weak var providerView: ProviderView!
     @IBOutlet weak var providerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var customTabBar: CustomTabBar!
 
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
@@ -94,6 +95,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        customTabBar.selectIndex(3)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
         configureUI()
         updateHeader()
         providerView.providerDelegate = self
