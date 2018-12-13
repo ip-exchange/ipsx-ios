@@ -250,6 +250,12 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no refunds processed so far" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAs-F8-2B8">
+                                            <rect key="frame" x="16" y="70" width="343" height="15.666666666666671"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmp-AI-8g6" userLabel="Separator">
                                             <rect key="frame" x="0.0" y="60.333333333333336" width="375" height="0.6666666666666643"/>
                                             <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
@@ -263,6 +269,9 @@
                                         <constraint firstItem="cHX-jl-3ba" firstAttribute="leading" secondItem="gED-ZW-W1m" secondAttribute="leading" constant="15" id="6av-mh-LwX"/>
                                         <constraint firstAttribute="bottom" secondItem="cHX-jl-3ba" secondAttribute="bottom" constant="15" id="CKk-Wu-vUt"/>
                                         <constraint firstItem="pmp-AI-8g6" firstAttribute="leading" secondItem="gED-ZW-W1m" secondAttribute="leading" id="RRQ-UT-bnl"/>
+                                        <constraint firstItem="TAs-F8-2B8" firstAttribute="top" secondItem="cHX-jl-3ba" secondAttribute="bottom" constant="24" id="SmD-6T-ZrP"/>
+                                        <constraint firstAttribute="trailing" secondItem="TAs-F8-2B8" secondAttribute="trailing" constant="16" id="cGw-ch-6JO"/>
+                                        <constraint firstItem="TAs-F8-2B8" firstAttribute="leading" secondItem="gED-ZW-W1m" secondAttribute="leading" constant="16" id="fUD-vE-rth"/>
                                         <constraint firstAttribute="bottom" secondItem="pmp-AI-8g6" secondAttribute="bottom" id="gvo-7h-xVm"/>
                                         <constraint firstAttribute="trailing" secondItem="pmp-AI-8g6" secondAttribute="trailing" id="lo1-SK-ugm"/>
                                     </constraints>
@@ -470,7 +479,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="3y2-72-Ru4"/>
                     <connections>
+                        <outlet property="contentSeparator" destination="pmp-AI-8g6" id="QVr-aS-Qge"/>
                         <outlet property="loadingView" destination="74x-PB-a0e" id="ML8-qc-PTG"/>
+                        <outlet property="noDataLabel" destination="TAs-F8-2B8" id="5BO-eU-fSD"/>
                         <outlet property="separatorView" destination="wch-uz-mYI" id="2qd-hW-qI6"/>
                         <outlet property="tableView" destination="Fen-ur-KNA" id="v5b-2R-xEp"/>
                         <outlet property="topBarView" destination="5qn-vh-EpB" id="oju-h8-13d"/>

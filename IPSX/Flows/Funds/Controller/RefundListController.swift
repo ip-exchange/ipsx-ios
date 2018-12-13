@@ -16,6 +16,9 @@ class RefundListController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
     
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -36,6 +39,8 @@ class RefundListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,11 +66,13 @@ class RefundListController: UIViewController {
                     return d1.compare(d2) == .orderedDescending
                 }
                 DispatchQueue.main.async {
+                    self.contentSeparator.isHidden = self.refunds.count < 1
+                    self.noDataLabel.isHidden = self.refunds.count > 0
                     self.tableView.reloadData()
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.getRefundsList, completion: {
                     self.getRefunds()
                 })
             }

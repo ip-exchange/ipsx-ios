@@ -16,7 +16,9 @@ class DepositListController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
-
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -40,7 +42,8 @@ class DepositListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -66,11 +69,13 @@ class DepositListController: UIViewController {
                     return d1.compare(d2) == .orderedDescending
                 }
                 DispatchQueue.main.async {
+                    self.contentSeparator.isHidden = self.deposits.count < 1
+                    self.noDataLabel.isHidden = self.deposits.count > 0
                     self.tableView.reloadData()
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.getDepositList, completion: {
                     self.getDeposits()
                 })
             }

@@ -49,6 +49,7 @@ struct RequestType {
     static let createDeposit = "createDeposit"
     static let cancelDeposit = "cancelDeposit"
     
+    static let createWithdraw = "createWithdraw"
     static let getWithdrawalsList = "getWithdrawalsList"
     static let getRefundsList = "getRefundsList"
 
@@ -198,6 +199,7 @@ public struct Url {
     public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
     public static let wacAddressArhs         = "/Users/%USER_ID%/waccaddress?access_token=%ACCESS_TOKEN%"
     public static let withdrawalArgs         = "/Users/%USER_ID%/withdrawals?access_token=%ACCESS_TOKEN%"
+    public static let createWithdrawalArgs   = "/Users/%USER_ID%/withdrawal?access_token=%ACCESS_TOKEN%"
     public static let refundArgs             = "/Users/%USER_ID%/refunds?access_token=%ACCESS_TOKEN%"
 
 }
@@ -358,6 +360,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.getWithdrawalsList:
         url = (Url.baseApi + Url.withdrawalArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
+        
+    case RequestType.createWithdraw:
+        url = (Url.baseApi + Url.createWithdrawalArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
 
     case RequestType.getRefundsList:
         url = (Url.baseApi + Url.refundArgs).replaceKeysWithValues(paramsDict: urlParams)

@@ -16,6 +16,9 @@ class WithdrawalListController: UIViewController {
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var contentSeparator: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -35,8 +38,12 @@ class WithdrawalListController: UIViewController {
     var topConstraint: NSLayoutConstraint?
     var withdrawals: [Withdrawal] = []
 
+    private var timer: Timer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        contentSeparator.isHidden = true
+        noDataLabel.isHidden = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -49,7 +56,14 @@ class WithdrawalListController: UIViewController {
         getWithdrawals()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.timer?.invalidate()
+    }
+
     private func getWithdrawals() {
+        
+        self.timer?.invalidate()
         loadingView.startAnimating()
         FundsService().getWithdrawalsList(completionHandler: { result in
             DispatchQueue.main.async { self.loadingView.stopAnimating() }
@@ -63,17 +77,25 @@ class WithdrawalListController: UIViewController {
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.contentSeparator.isHidden = self.withdrawals.count < 1
+                    self.noDataLabel.isHidden = self.withdrawals.count > 0
+                    if self.withdrawals.filter({ $0.status == "pending" }).count > 0 {
+                        self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+                    }
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                self.handleError(error, requestType: RequestType.getWithdrawalsList, completion: {
                     self.getWithdrawals()
                 })
             }
         })
     }
 
-    
+    @objc func updateData() {
+        getWithdrawals()
+    }
+
     @IBAction func newWithdrawAction(_ sender: Any) {
         DispatchQueue.main.async { self.performSegue(withIdentifier: "ValidWalletsListSegueID", sender: self) }
     }

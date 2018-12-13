@@ -110,13 +110,32 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Create Deposit to move IPSX tokens from your private wallet to your IPSX account wallet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5N-8M-m0w">
+                                            <rect key="frame" x="16" y="160" width="343" height="31.333333333333343"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s4N-SA-ny5" userLabel="Separator">
+                                            <rect key="frame" x="0.0" y="150.33333333333334" width="375" height="0.66666666666665719"/>
+                                            <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.30163402290000002" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.6666666666666714" id="qmX-ld-8YG"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="xLO-Pb-tJM" secondAttribute="bottom" constant="15" id="6Fa-ox-Tbk"/>
+                                        <constraint firstAttribute="trailing" secondItem="c5N-8M-m0w" secondAttribute="trailing" constant="16" id="8o3-2G-pVa"/>
+                                        <constraint firstItem="s4N-SA-ny5" firstAttribute="leading" secondItem="Btw-uE-1yA" secondAttribute="leading" id="Hhc-AQ-hce"/>
+                                        <constraint firstItem="c5N-8M-m0w" firstAttribute="top" secondItem="xLO-Pb-tJM" secondAttribute="bottom" constant="24" id="UJw-16-kLW"/>
+                                        <constraint firstAttribute="bottom" secondItem="s4N-SA-ny5" secondAttribute="bottom" id="VqW-wk-UKf"/>
                                         <constraint firstItem="xLO-Pb-tJM" firstAttribute="leading" secondItem="Btw-uE-1yA" secondAttribute="leading" constant="15" id="Z5I-ef-m5a"/>
                                         <constraint firstItem="AER-MK-htm" firstAttribute="leading" secondItem="Btw-uE-1yA" secondAttribute="leading" constant="15" id="dPX-VI-mvI"/>
+                                        <constraint firstAttribute="trailing" secondItem="s4N-SA-ny5" secondAttribute="trailing" id="lSL-3J-1rz"/>
                                         <constraint firstAttribute="trailing" secondItem="AER-MK-htm" secondAttribute="trailing" constant="15" id="pXJ-eK-h6n"/>
+                                        <constraint firstItem="c5N-8M-m0w" firstAttribute="leading" secondItem="Btw-uE-1yA" secondAttribute="leading" constant="16" id="wqC-kV-jie"/>
                                         <constraint firstItem="AER-MK-htm" firstAttribute="top" secondItem="Btw-uE-1yA" secondAttribute="top" constant="25" id="yck-2b-03w"/>
                                     </constraints>
                                 </view>
@@ -297,7 +316,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="vGw-ns-7Oi"/>
                     <connections>
+                        <outlet property="contentSeparator" destination="s4N-SA-ny5" id="XDB-42-5zU"/>
                         <outlet property="loadingView" destination="8VJ-c3-o0d" id="aRa-f7-DI6"/>
+                        <outlet property="noDataLabel" destination="c5N-8M-m0w" id="iHi-Ve-K8x"/>
                         <outlet property="separatorView" destination="KMO-a3-mq8" id="C7j-ea-ZNc"/>
                         <outlet property="tableView" destination="rC6-x6-Gsz" id="Xyu-nt-KNG"/>
                         <outlet property="topBarView" destination="g9Z-Il-8x5" id="tcn-FJ-6Kd"/>
