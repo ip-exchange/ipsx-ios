@@ -295,31 +295,68 @@ class MarketplaceService {
             
             var orders: [Order] = []
             
-            for order in jsonArray {
+            for orderJson in jsonArray {
                 
-                let id = order["id"].intValue
-                let createdString = order["created_at"].stringValue
-                let createdDate   = dateFormatter.date(from: createdString)
+                let id = orderJson["id"].intValue
+                let status = orderJson["status"].stringValue
+                let createdString = orderJson["created_at"].stringValue
+                let createdDate = dateFormatter.date(from: createdString) ?? Date()
                 
-                let usdSubtotal = order["order_offers"][0]["usd_cost"].doubleValue
-                let usdVat      = order["order_offers"][0]["usd_vat"].doubleValue
-                let usdTotal    = order["order_offers"][0]["?????"].doubleValue
+                let order = Order(id: id, created: createdDate, status: status)
                 
-                let ipsxSubtotal = order["order_offers"][0]["cost"].doubleValue
-                let ipsxVat      = order["order_offers"][0]["vat"].doubleValue
-                let ipsxTotal    = order["order_offers"][0]["?????"].doubleValue
+                let usdSubtotal = orderJson["usd_cost"].doubleValue
+                let usdVat      = orderJson["usd_vat"].doubleValue
+                let usdTotal    = orderJson["usd_total"].doubleValue
                 
-                let lockedOnIp = order["order_offers"][0]["?????"].stringValue
-                
-                let offerJsonArray = order["order_offers"][0]["offer"].arrayValue
-                let offersArray = self.parseOffers(offersJsonArray: offerJsonArray)
+                let ipsxSubtotal = orderJson["cost"].doubleValue
+                let ipsxVat      = orderJson["vat"].doubleValue
+                let ipsxTotal    = orderJson["total"].doubleValue
                 
                 let summary = Summary(usdSubtotal: usdSubtotal, usdVat: usdVat, usdTotal: usdTotal, ipsxSubtotal: ipsxSubtotal, ipsxVat: ipsxVat, ipsxTotal: ipsxTotal)
-                let order = Order(id: id, created: createdDate, lockedOnIp: lockedOnIp)
                 order.setSummary(summary: summary)
-                order.setOffers(offers: offersArray)
+                
+                let orderOffers = orderJson["order_offers"].arrayValue
+                
+                for orderOffer in orderOffers {
+                    
+                    let offerJsonArray = orderOffer["offer"].arrayValue
+                    let offersArray = self.parseOffers(offersJsonArray: offerJsonArray)
+                    order.setOffers(offers: offersArray)
+                    
+                    let orderOfferProxies = orderOffer["order_offer_pr"].arrayValue
+                    
+                    for proxy in orderOfferProxies {
+                        
+                        var lockedOnIPs: [String] = []
+                        
+                        let id = proxy["proxy_item_id"].intValue
+                        let status = proxy["status"].stringValue
+                        let usage = proxy["usage"].stringValue
+                        
+                        let startString = proxy["start_date"].stringValue
+                        let startDate   = dateFormatter.date(from: startString)
+                        
+                        let endString = proxy["end_date"].stringValue
+                        let endDate   = dateFormatter.date(from: endString)
+                        
+                        let createdString = proxy["created_at"].stringValue
+                        let createdDate   = dateFormatter.date(from: createdString)
+                        
+                        let userIp = proxy["user_ip"].stringValue
+                        lockedOnIPs.append(userIp)
+                        
+                        //TODO: asteptam API update, sa avem [String]. Acum e un String dubios
+                        
+                        if let optionalIPs = proxy["user_optional_ip"].arrayObject as? [String] {
+                            lockedOnIPs.append(contentsOf: optionalIPs)
+                        }
+                        order.addProxyDetails(forProxyId: id, lockedOnIPs: lockedOnIPs, usage: usage, status: status, startDate: startDate, endDate: endDate, createdDate: createdDate)
+                    }
+                }
                 orders.append(order)
             }
+            orders.sort { $0.created > $1.created }
+            
             completionHandler(ServiceResult.success(orders))
         })
     }

@@ -40,7 +40,7 @@ public extension String {
         return trimmedString
     }
     
-    ///  PAC file naming convention: /proxy/pac/1361527085819.pac?type=ios
+    ///  PAC file naming convention: base_url/order/proxy/pac/1361527085819.pac?type=ios
     ///  1361527085819 = {id_proxy}{timestamp_created_at}
     static func generatePacLink(createdDate: String, proxyId: String) -> String {
         

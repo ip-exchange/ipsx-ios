@@ -11,16 +11,16 @@ import Foundation
 class Order {
     
     var id: Int
-    var created: Date?
-    var lockedOnIp: String
+    var created: Date
+    var status: String
     var offers: [Offer] = []
     var summary: Summary?
     
-    init(id: Int, created: Date?, lockedOnIp: String) {
+    init(id: Int, created: Date, status: String) {
         
         self.id  = id
         self.created = created
-        self.lockedOnIp = lockedOnIp
+        self.status = status
     }
     
     func setOffers(offers: [Offer]) {
@@ -29,5 +29,19 @@ class Order {
     
     func setSummary(summary: Summary) {
         self.summary = summary
+    }
+    
+    func addProxyDetails(forProxyId id: Int, lockedOnIPs: [String], usage: String, status: String, startDate: Date?, endDate: Date?, createdDate: Date?) {
+        
+        for offer in offers {
+            
+            let proxy = offer.proxies.filter({$0.id == id}).first
+            proxy?.lockedOnIPs = lockedOnIPs
+            proxy?.usage = usage
+            proxy?.startDate = startDate
+            proxy?.endDate = endDate
+            proxy?.createdDate = createdDate
+            proxy?.status = status
+        }
     }
 }

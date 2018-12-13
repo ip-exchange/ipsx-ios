@@ -10,15 +10,15 @@ import UIKit
 
 extension Date {
     
-    func dateToString(format: String) -> String
-    {
+    func dateToString(format: String) -> String {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
     
-    func isFromToday() -> Bool
-    {
+    func isFromToday() -> Bool {
+        
         let calendar = NSCalendar.current
         return calendar.isDateInToday(self)
     }
