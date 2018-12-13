@@ -30,6 +30,8 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var addToCartButton: RoundedButton!
+    @IBOutlet weak var favoritesButton: UIButton!
+    
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = topSeparatorConstraint
@@ -85,6 +87,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
+        favoritesButton.isSelected = offer.isFavourite
         addToCartButton.isEnabled = !isInCartAlready
         addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
         trafficLabel.text = offer.trafficMB + " MB"
@@ -146,6 +149,11 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func viewCart(_ sender: Any) {
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.cartSegueID, sender: self) }
+    }
+    
+    @IBAction func favoritesAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        //TODO: Favorites API here when ready
     }
     
     private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
