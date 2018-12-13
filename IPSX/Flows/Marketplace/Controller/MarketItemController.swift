@@ -152,8 +152,11 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func favoritesAction(_ sender: UIButton) {
+        
+        guard let offer = offer else { return }
+        
         sender.isSelected = !sender.isSelected
-        //TODO: Favorites API here when ready
+        self.performAddOrRemovefavoritesRequest(offerId: offer.id)
     }
     
     private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
@@ -201,6 +204,25 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         })
     }
     
+    func performAddOrRemovefavoritesRequest(offerId: Int) {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().addOrRemovefavorites(offerId: offerId, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async { }
+                
+            case .failure(let error):
+                
+                self.handleError(error, requestType: RequestType.addOrRemoveFavorites, completion: {
+                    self.performAddOrRemovefavoritesRequest(offerId: offerId)
+                })
+            }
+        })
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CreateWalletSegue" {
             let dest = segue.destination as? GenerateAddressController

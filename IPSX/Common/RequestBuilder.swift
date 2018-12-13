@@ -73,6 +73,7 @@ struct RequestType {
     // Marketplace
     static let getOffers = "getOffers"
     static let addToCart = "addToCart"
+    static let addOrRemoveFavorites = "addOrRemoveFavorites"
     static let viewCart = "viewCart"
     static let deleteFromCart = "deleteFromCart"
     static let placeOrder = "placeOrder"
@@ -194,6 +195,7 @@ public struct Url {
     public static let userRolesArgs          = "/Users/%USER_ID%/roles?access_token=%ACCESS_TOKEN%"
     public static let offersArgs             = "/offers/search?access_token=%ACCESS_TOKEN%"
     public static let addToCartArgs          = "/Users/%USER_ID%/carts/add?access_token=%ACCESS_TOKEN%"
+    public static let addorRemoveFavArgs     = "/Users/%USER_ID%/favorites?access_token=%ACCESS_TOKEN%"
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
     public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
@@ -291,6 +293,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         
     case RequestType.addToCart:
         url = (Url.baseApi + Url.addToCartArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
+    case RequestType.addOrRemoveFavorites:
+        url = (Url.baseApi + Url.addorRemoveFavArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
         
     case RequestType.viewCart:

@@ -142,6 +142,33 @@ class MarketplaceService {
         })
     }
     
+    func addOrRemovefavorites(offerId: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: Int] = ["offer_id": offerId]
+        
+        let request = createRequest(requestType: RequestType.addOrRemoveFavorites, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+
     func deleteFromCart(offerIds: [Int], completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
