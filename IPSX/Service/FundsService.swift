@@ -122,7 +122,7 @@ class FundsService {
             }
             var deposits: [Deposit] = []
             for json in jsonArray {
-                deposits.append(self.mapDepositResponse(json: json))
+                deposits.append(Deposit(json: json))
             }
             completionHandler(ServiceResult.success(deposits))
         })
@@ -159,7 +159,7 @@ class FundsService {
             }
             var refunds: [Refund] = []
             for json in jsonArray {
-                refunds.append(self.mapRefundResponse(json: json))
+                refunds.append(Refund(json: json))
             }
             completionHandler(ServiceResult.success(refunds))
         })
@@ -196,7 +196,7 @@ class FundsService {
             }
             var withdrawals: [Withdrawal] = []
             for json in jsonArray {
-                withdrawals.append(self.mapWithdrawalResponse(json: json))
+                withdrawals.append(Withdrawal(json: json))
             }
             completionHandler(ServiceResult.success(withdrawals))
         })
@@ -234,23 +234,4 @@ class FundsService {
             completionHandler(ServiceResult.success(json))
         })
     }
-
-    func mapDepositResponse(json: JSON) -> Deposit {
-        
-        let deposit = Deposit(json: json)
-        return deposit
-    }
-    
-    func mapRefundResponse(json: JSON) -> Refund {
-        
-        let refund = Refund(json: json)
-        return refund
-    }
-
-    func mapWithdrawalResponse(json: JSON) -> Withdrawal {
-        
-        let withdrawal = Withdrawal(json: json)
-        return withdrawal
-    }
-
 }
