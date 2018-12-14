@@ -11,24 +11,25 @@ import IPSXNetworkingFramework
 
 struct Refund {
     
-    var depositID: Int
-    var ethID: Int
-    var amount: String
-    var status: String //pending, complete, canceled, expired
+    var id: Int
+    var value: String
+    var status: String //pending, completed, rejected
     var createdAt: Date?
-    var updatedAt: Date?
+    var issuedByUser: Bool
+    var userReason: String
+    var adminReason: String
     
     init(json: JSON) {
         
         let dateFormatter = DateFormatter.backendResponseParse()
         
-        self.depositID        = json["id"].intValue
-        self.ethID            = json["usereth_id"].intValue
-        self.amount           = json["value"].doubleValue.cleanString
-        self.status           = json["status"].stringValue
-        let createdAtString   = json["created_at"].stringValue
-        self.createdAt        = dateFormatter.date(from: createdAtString)
-        let updatedAtString   = json["updated_at"].stringValue
-        self.updatedAt        = dateFormatter.date(from: updatedAtString)
+        self.id = json["id"].intValue
+        self.value = json["value"].doubleValue.cleanString
+        self.status = json["status"].stringValue
+        let createdAtString = json["created_at"].stringValue
+        self.createdAt = dateFormatter.date(from: createdAtString)
+        self.userReason = json["reason"].stringValue
+        self.adminReason = json["admin_reason"].stringValue
+        self.issuedByUser = json["by_user_id"].stringValue == UserManager.shared.userId
     }
 }

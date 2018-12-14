@@ -11,6 +11,7 @@ import UIKit
 extension DateFormatter {
     
     class func backendResponseParse(format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> DateFormatter {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -22,6 +23,7 @@ extension DateFormatter {
     }
     
     class func readableDaysHoursMinutes(components: (d: Int, h: Int, m: Int)) -> String {
+        
         var days    = ""
         var hours   = ""
         var minutes = "0 min"
@@ -31,7 +33,9 @@ extension DateFormatter {
         return days+hours+minutes
     }
     
+    //TODO: change this !!!
     class func dateStringForTokenRequests(date: Date) -> String {
+        
         let dateFormat = "dd MMM yyyy  HH:mm"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

@@ -41,6 +41,7 @@
 		A4935045212EE86900482BA5 /* Representative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4935044212EE86900482BA5 /* Representative.swift */; };
 		A4935047212EE8F500482BA5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4935046212EE8F500482BA5 /* Company.swift */; };
 		A493504A212EEADB00482BA5 /* LegalPersonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4935049212EEADB00482BA5 /* LegalPersonService.swift */; };
+		A4944DA021C3D3200073A523 /* WithdrawallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4944D9F21C3D3200073A523 /* WithdrawallCell.swift */; };
 		A498E44621A7FF57005B5E9E /* MarketplaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A498E44521A7FF57005B5E9E /* MarketplaceService.swift */; };
 		A498E44821A80951005B5E9E /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A498E44721A80951005B5E9E /* Proxy.swift */; };
 		A498E44A21A80EC2005B5E9E /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A498E44921A80EC2005B5E9E /* Offer.swift */; };
@@ -100,7 +101,6 @@
 		EE44ED1021A53B3E00426D01 /* MarketCartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */; };
 		EE47240021BE4E1F0034F60A /* DepositCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4723FF21BE4E1F0034F60A /* DepositCell.swift */; };
 		EE47240221BE4FF30034F60A /* RefundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240121BE4FF30034F60A /* RefundCell.swift */; };
-		EE47240421BE501D0034F60A /* WithdrawallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240321BE501D0034F60A /* WithdrawallCell.swift */; };
 		EE47240B21BE840C0034F60A /* WithdrawWaletsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240A21BE840C0034F60A /* WithdrawWaletsListController.swift */; };
 		EE47240D21BE878C0034F60A /* WithdrawAmountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240C21BE878C0034F60A /* WithdrawAmountController.swift */; };
 		EE47240F21BE8C360034F60A /* WithdrawSubmitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE47240E21BE8C360034F60A /* WithdrawSubmitController.swift */; };
@@ -245,6 +245,7 @@
 		A4935044212EE86900482BA5 /* Representative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Representative.swift; sourceTree = "<group>"; };
 		A4935046212EE8F500482BA5 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		A4935049212EEADB00482BA5 /* LegalPersonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalPersonService.swift; sourceTree = "<group>"; };
+		A4944D9F21C3D3200073A523 /* WithdrawallCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawallCell.swift; sourceTree = "<group>"; };
 		A498E44521A7FF57005B5E9E /* MarketplaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceService.swift; sourceTree = "<group>"; };
 		A498E44721A80951005B5E9E /* Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		A498E44921A80EC2005B5E9E /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
@@ -313,7 +314,6 @@
 		EE44ED0F21A53B3E00426D01 /* MarketCartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCartController.swift; sourceTree = "<group>"; };
 		EE4723FF21BE4E1F0034F60A /* DepositCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositCell.swift; sourceTree = "<group>"; };
 		EE47240121BE4FF30034F60A /* RefundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundCell.swift; sourceTree = "<group>"; };
-		EE47240321BE501D0034F60A /* WithdrawallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawallCell.swift; sourceTree = "<group>"; };
 		EE47240A21BE840C0034F60A /* WithdrawWaletsListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawWaletsListController.swift; sourceTree = "<group>"; };
 		EE47240C21BE878C0034F60A /* WithdrawAmountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawAmountController.swift; sourceTree = "<group>"; };
 		EE47240E21BE8C360034F60A /* WithdrawSubmitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawSubmitController.swift; sourceTree = "<group>"; };
@@ -903,8 +903,8 @@
 			isa = PBXGroup;
 			children = (
 				EE4723FF21BE4E1F0034F60A /* DepositCell.swift */,
+				A4944D9F21C3D3200073A523 /* WithdrawallCell.swift */,
 				EE47240121BE4FF30034F60A /* RefundCell.swift */,
-				EE47240321BE501D0034F60A /* WithdrawallCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1362,6 +1362,7 @@
 				EE47240221BE4FF30034F60A /* RefundCell.swift in Sources */,
 				A48329CE209C5D41003B19FC /* UserInfo.swift in Sources */,
 				885E0B1221B58B1E001F4DE0 /* DashboardHeaderCell.swift in Sources */,
+				A4944DA021C3D3200073A523 /* WithdrawallCell.swift in Sources */,
 				A456C8D1214AA93C00B823A1 /* ProviderView.swift in Sources */,
 				EE81B813219172E800E9EC6D /* RegisterFBCountryController.swift in Sources */,
 				A4787C4821A8803F00A029C8 /* ProxyManager.swift in Sources */,
@@ -1451,7 +1452,6 @@
 				EE12783021C2469B0070C92B /* CustomTabBarItem.swift in Sources */,
 				EE81B80F2190324600E9EC6D /* CountryAndCertificateController.swift in Sources */,
 				EEEBF04B20999259008AB061 /* EditProfileController.swift in Sources */,
-				EE47240421BE501D0034F60A /* WithdrawallCell.swift in Sources */,
 				EE4AAB9F208DDD0B00FE149D /* RegisterOptionsController.swift in Sources */,
 				EE1A0544208F593900522426 /* TabBarController.swift in Sources */,
 				EEE2918821B6605600A5048D /* DoubleProgressView.swift in Sources */,
