@@ -18,6 +18,7 @@ struct Refund {
     var issuedByUser: Bool
     var userReason: String
     var adminReason: String
+    var proxyId: Int
     
     init(json: JSON) {
         
@@ -31,5 +32,6 @@ struct Refund {
         self.userReason = json["reason"].stringValue
         self.adminReason = json["admin_reason"].stringValue
         self.issuedByUser = json["by_user_id"].stringValue == UserManager.shared.userId
+        self.proxyId = json["order_offer_proxy_id"].intValue
     }
 }
