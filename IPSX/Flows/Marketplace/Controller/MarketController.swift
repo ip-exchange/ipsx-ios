@@ -26,6 +26,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var favoritesCounterLabel: UILabel!
     @IBOutlet weak var customTabBar: CustomTabBar!
 
+    @IBOutlet weak var fetchPageFooterView: UIView!
+    @IBOutlet weak var fetchpageActivityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -69,6 +72,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var cartItemsCount: Int = 0
     private var favoritesItemsCount: Int = 0
     
+    //TODO: Test purpose
+    var pagestFetched = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customTabBar.selectIndex(1)
@@ -99,6 +105,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+        
+        fetchpageActivityIndicator.stopAnimating()
         
         if !backFromSegue { self.updateData() }
         self.timer?.invalidate()
@@ -203,7 +211,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         loadOffers()
     }
     
-    func loadOffers() {
+    func loadOffers(_ append: Bool = false) {
         
         //TODO (CVI): offset logic
         let offset = 0
@@ -211,7 +219,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         loadingView?.startAnimating()
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
             
-            self.loadingView?.stopAnimating()
+            DispatchQueue.main.async {
+                self.loadingView?.stopAnimating()
+                self.fetchpageActivityIndicator.stopAnimating()
+            }
+            
             switch result {
             case .success(let offersData):
                 
@@ -219,7 +231,12 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 if self.normalisedFiltersDictionary.values.count == 0  {
                     ProxyManager.shared.allOffers = data?.offers
                 }
-                self.offers = data?.offers ?? []
+                //TODO: Append (if append, let validOffers = data?.offers) is for test purposes, delete it when complete
+                if append, let validOffers = data?.offers {
+                    self.offers.append(contentsOf: validOffers)
+                } else {
+                    self.offers = data?.offers ?? []
+                }
                 self.cartItemsCount = data?.cart ?? 0
                 self.favoritesItemsCount = data?.fav ?? 0
                 
@@ -336,6 +353,21 @@ extension MarketController: UITableViewDataSource {
         }
         return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        if indexPath.row == (offers.count - 1)
+        {
+            //TODO: pagestFetched is for test, replace with real logic
+            if pagestFetched < 3 {
+                fetchpageActivityIndicator.startAnimating()
+                self.loadOffers(true)
+                pagestFetched += 1
+            }
+        }
+    }
+
 }
 
 extension MarketController: UITableViewDelegate {

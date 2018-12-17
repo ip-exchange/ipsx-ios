@@ -50,6 +50,20 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
+                                <view key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" id="9H8-MV-D8k">
+                                    <rect key="frame" x="0.0" y="186" width="375" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZXs-6x-BTc">
+                                            <rect key="frame" x="177.66666666666666" y="2" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="ZXs-6x-BTc" firstAttribute="centerY" secondItem="9H8-MV-D8k" secondAttribute="centerY" constant="-3" id="KrK-bQ-wuW"/>
+                                        <constraint firstItem="ZXs-6x-BTc" firstAttribute="centerX" secondItem="9H8-MV-D8k" secondAttribute="centerX" id="PRa-1Q-y0a"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MarketCellID" id="Ymp-gl-Ske" customClass="MarketCell" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="63" width="375" height="123"/>
@@ -826,6 +840,8 @@
                         <outlet property="countryViewYAxiscenter" destination="HE6-z5-Mzh" id="AQd-Ra-T2f"/>
                         <outlet property="customTabBar" destination="Zot-aD-WGB" id="Ust-cY-Pdv"/>
                         <outlet property="favoritesCounterLabel" destination="cvM-hA-32F" id="EHr-sO-bZj"/>
+                        <outlet property="fetchPageFooterView" destination="9H8-MV-D8k" id="LfM-88-5ap"/>
+                        <outlet property="fetchpageActivityIndicator" destination="ZXs-6x-BTc" id="rG4-RZ-1gM"/>
                         <outlet property="filtersCounterLabel" destination="XfL-VT-vgL" id="2kR-21-6FI"/>
                         <outlet property="filtersImage" destination="VaV-k4-vxl" id="p7e-BL-L06"/>
                         <outlet property="filtersTitleLabel" destination="Dcz-ep-m10" id="G70-NZ-wyO"/>
