@@ -19,9 +19,6 @@ class DashboardOrderController: UIViewController {
 
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var startHourLabel: UILabel!
-    @IBOutlet weak var endDateLabel: UILabel!
-    @IBOutlet weak var endHourLabel: UILabel!
-    @IBOutlet weak var lockedIPLabel: UILabel!
     @IBOutlet weak var offersCounter: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
@@ -32,6 +29,12 @@ class DashboardOrderController: UIViewController {
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
+        }
+    }
+    
+    var order: Order? = nil {
+        didSet {
+            offers = order?.offers ?? []
         }
     }
     
@@ -81,10 +84,8 @@ class DashboardOrderController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+        titleLabel.text = "Order".localized + " #\(order?.id ?? 0)"
         
-        self.updateData()
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,46 +138,6 @@ class DashboardOrderController: UIViewController {
         }
     }
     
-    @objc func updateData() {
-        loadOffers()
-    }
-    
-    func loadOffers() {
-        
-        loadingView?.startAnimating()
-        MarketplaceService().retrieveOffers(filters: [:], completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let offers):
-                self.offers = offers as? [Offer] ?? []
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOffers, completion: {
-                    self.loadOffers()
-                })
-            }
-        })
-    }
-    
-    func retrieveUserInfo() {
-        
-        loadingView?.startAnimating()
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let user):
-                UserManager.shared.userInfo = user as? UserInfo
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
-            }
-        })
-    }
-
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

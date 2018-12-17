@@ -14,27 +14,35 @@ class CellStateRoundedView: UIView {
         case active
         case canceled
         case expired
+        case pending
+        case unavailable
+        case unknown
     }
     
     @IBOutlet weak var canceledView: UIView?
     @IBOutlet weak var activeView: UIView?
     @IBOutlet weak var expiredView: UIView?
-    
+    @IBOutlet weak var pendingView: UIView?
+    @IBOutlet weak var unavailableView: UIView?
+    @IBOutlet weak var unknownView: UIView?
+
     public var currentState: CellState = .active {
         didSet {
+            
+            activeView?.isHidden      = true
+            canceledView?.isHidden    = true
+            expiredView?.isHidden     = true
+            pendingView?.isHidden     = true
+            unavailableView?.isHidden = true
+            unknownView?.isHidden     = true
+            
             switch currentState {
-            case .active:
-                activeView?.isHidden = false
-                canceledView?.isHidden = true
-                expiredView?.isHidden = true
-            case .canceled:
-                canceledView?.isHidden = false
-                expiredView?.isHidden = true
-                activeView?.isHidden = true
-            case .expired:
-                expiredView?.isHidden = false
-                canceledView?.isHidden = true
-                activeView?.isHidden = true
+            case .active:   activeView?.isHidden         = false
+            case .canceled: canceledView?.isHidden       = false
+            case .expired:  expiredView?.isHidden        = false
+            case .pending:  pendingView?.isHidden        = false
+            case .unavailable: unavailableView?.isHidden = false
+            case .unknown:  unknownView?.isHidden        = false
           }
         }
     }
@@ -42,6 +50,5 @@ class CellStateRoundedView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = .clear
-        self.currentState = .active
     }
 }

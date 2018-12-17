@@ -11,41 +11,23 @@ import UIKit
 class DashboardCell: UITableViewCell {
 
     @IBOutlet weak var cellContentView: RoundedView!
-    @IBOutlet weak var progressView: ProgressRoundView!
-    @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var durationRemainedLabel: UILabel!
-    @IBOutlet weak var trafficLabel: UILabel!
-    @IBOutlet weak var trafficRemainedLabel: UILabel!
-    
-    @IBOutlet weak var doubleProgressView: DoubleProgressView!
     @IBOutlet weak var offerStateView: CellStateRoundedView!
+    @IBOutlet weak var expiredCountLabel: UILabel!
     
-    func configure(offer: Offer, editMode: Bool = false, state: CellStateRoundedView.CellState = .active) {
-        
-        offerStateView.currentState = state
+    func configure(offer: Offer, editMode: Bool = false, state: CellStateRoundedView.CellState = .pending) {
         
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
         let countryString = offer.proxies.first?.countryName ?? ""
-        let sla = slaToDisplay(proxies: offer.proxies)
         
-        trafficLabel.text = offer.trafficMB + " MB"
-        durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
-        progressView.progress = Double(sla)
-        progressLabel.text = "\(sla)%"
         cellContentView.shadow = true
         flagImageView.image = UIImage(named: "worldPins")
         
-        if noOfProxies > 1 {
-            offerTypeLabel.text = "Grouped offer".localized
-            countryLabel.text = ""
-        }
-        else {
+        if noOfProxies == 1 {
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             countryLabel.text = countryString
             
@@ -54,6 +36,41 @@ class DashboardCell: UITableViewCell {
                 let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
                 flagImageView.image = flagImage
             }
+        }
+        
+        var index: Int   = 0
+        var expired: Int = 0
+        var countries: [String] = []
+        for proxy in offer.proxies {
+            if !countries.contains(proxy.countryName) {
+                countries.append(proxy.countryName)
+            }
+            if index == 0 {
+                setActiveState(proxy.status)
+            } else {
+                if proxy.status == "active" { setActiveState(proxy.status) }
+                offerTypeLabel.text = "Grouped offer".localized
+            }
+            if proxy.status == "expired" { expired += 1}
+            index += 1
+        }
+        let firstCountry = countries.first ?? "Unknown"
+        if index > 1 { countryLabel.text = firstCountry + " " + "and \(countries.count - 1) more".localized }
+        expiredCountLabel.text = "\(expired)/\(index) " + "ACTIVE".localized
+    }
+    
+    private func setActiveState(_ state: String?) {
+        guard let validState = state else {
+            offerStateView.currentState = .unknown
+            return
+        }
+        switch validState {
+        case "active":      offerStateView.currentState = .active
+        case "expired":     offerStateView.currentState = .expired
+        case "unavailable": offerStateView.currentState = .unavailable
+        case "pending":     offerStateView.currentState = .pending
+        case "canceled":    offerStateView.currentState = .canceled
+        default: offerStateView.currentState = .unknown
         }
     }
     

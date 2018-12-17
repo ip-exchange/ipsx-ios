@@ -48,6 +48,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     
     private var timer: Timer?
     var selectedOffer: Offer?
+    var selectedOrder: Order?
     var shouldRefreshIp = true
     private var tutorialPresented = false
     private var showOrderComplete = false
@@ -168,31 +169,16 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         })
     }
     
-    func retrieveUserInfo() {
-        
-        loadingView?.startAnimating()
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let user):
-                UserManager.shared.userInfo = user as? UserInfo
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
-            }
-        })
-    }
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         backFromSegue = true
         segue.destination.hidesBottomBarWhenPushed = true
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer
+        }
+        if segue.identifier == viewOrderSegueID {
+            let detailsController = segue.destination as? DashboardOrderController
+            detailsController?.order = selectedOrder
         }
     }
     
@@ -244,6 +230,7 @@ extension DashboardController: UITableViewDataSource {
         let orderNumber = "Order".localized + " #\(orders[section].id)"
         cell?.updateCell(sectionIndex: section, orderNumber: orderNumber)
         cell?.onTap = { section in
+            self.selectedOrder = self.orders[section]
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self) }
         }
         return cell

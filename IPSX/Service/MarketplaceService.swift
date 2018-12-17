@@ -349,9 +349,8 @@ class MarketplaceService {
                 for orderOffer in orderOffers {
                     
                     let offerJsonArray = orderOffer["offer"].arrayValue
-                    let offersArray = self.parseOffers(offersJsonArray: offerJsonArray)
-                    order.setOffers(offers: offersArray)
-                    
+                    let offerArray = self.parseOffers(offersJsonArray: offerJsonArray)
+                    if let offerObject = offerArray.first { order.offers.append(offerObject) }
                     let orderOfferProxies = orderOffer["order_offer_pr"].arrayValue
                     
                     for proxy in orderOfferProxies {

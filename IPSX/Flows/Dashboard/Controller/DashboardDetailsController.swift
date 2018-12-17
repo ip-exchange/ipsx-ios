@@ -98,6 +98,9 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
         return slaTotal / proxies.count
     }
     
+    @IBAction func orderDetailsAction(_ sender: Any) {
+    }
+    
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

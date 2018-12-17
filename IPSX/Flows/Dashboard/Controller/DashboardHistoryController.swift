@@ -22,7 +22,7 @@ class DashboardHistoryController: UIViewController {
         }
     }
     
-    var offers: [Offer] = [] {
+    var orders: [Order] = [] {
         didSet {
             DispatchQueue.main.async { self.tableView.reloadData() }
         }
@@ -127,46 +127,27 @@ class DashboardHistoryController: UIViewController {
     }
     
     @objc func updateData() {
-        loadOffers()
+        loadOrders()
     }
     
-    func loadOffers() {
+    func loadOrders() {
         
         loadingView?.startAnimating()
-        MarketplaceService().retrieveOffers(filters: [:], completionHandler: { result in
+        MarketplaceService().getOrders(completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
-            case .success(let offers):
-                self.offers = offers as? [Offer] ?? []
+            case .success(let orders):
+                self.orders = orders as? [Order] ?? []
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOffers, completion: {
-                    self.loadOffers()
+                self.handleError(error, requestType: RequestType.getOrders, completion: {
+                    self.loadOrders()
                 })
             }
         })
     }
-    
-    func retrieveUserInfo() {
-        
-        loadingView?.startAnimating()
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let user):
-                UserManager.shared.userInfo = user as? UserInfo
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
-            }
-        })
-    }
-    
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
@@ -180,19 +161,17 @@ class DashboardHistoryController: UIViewController {
 extension DashboardHistoryController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 30
+        return orders.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return orders[section].offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
-        if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row], state: .canceled)
-        }
+        cell.configure(offer: orders[indexPath.section].offers[indexPath.row])
         return cell
     }
     
@@ -228,7 +207,7 @@ extension DashboardHistoryController: UITableViewDataSource {
 extension DashboardHistoryController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedOffer = offers[indexPath.row]
+        selectedOffer = orders[indexPath.section].offers[indexPath.row]
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.detailsSegueID, sender: self) }
     }
 }
