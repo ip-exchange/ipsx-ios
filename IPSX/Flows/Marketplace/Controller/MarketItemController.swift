@@ -11,7 +11,6 @@ import IPSXNetworkingFramework
 
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
-    
     @IBOutlet weak var noWalletTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var noWalletView: RoundedView!
     @IBOutlet weak var progressView: ProgressRoundView!
@@ -57,13 +56,12 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        noWalletTopConstraint.constant = -60
-        configureUI()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        noWalletTopConstraint.constant = -60
+        configureUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,7 +72,9 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if UserManager.shared.roles == nil {
-            getUserRoles(completionHandler: { _ in })
+            getUserRoles(completionHandler: { _ in
+                DispatchQueue.main.async { self.configureUI() }
+            })
         }
     }
     
@@ -87,9 +87,23 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
+        if UserManager.shared.roles?.contains(.Requester) == false {
+            
+            addToCartButton.isEnabled = false
+            noWalletView.isHidden = false
+            noWalletTopConstraint.constant = 7
+            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
+        }
+        else {
+            addToCartButton.isEnabled = !isInCartAlready
+            noWalletView.isHidden = true
+            noWalletTopConstraint.constant = -60
+            if isInCartAlready {
+                addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
+            }
+        }
+        
         favoritesButton.isSelected = offer.isFavourite
-        addToCartButton.isEnabled = !isInCartAlready
-        addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         priceIPSXLabel.text = offer.priceIPSX
@@ -129,18 +143,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBAction func addToCart(_ sender: Any) {
         
         guard let offer = offer else { return }
-        
-        noWalletView.isHidden = true
-        if UserManager.shared.roles == nil {
-            self.errorMessage = "Generic Error Message".localized
-        } else if UserManager.shared.roles?.contains(.Requester) == false {
-            noWalletView.isHidden = false
-            noWalletTopConstraint.constant = 7
-            UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
-        } else {
-            self.performAddToCartRequest(offerIds: [offer.id])
-        }
-        
+        self.performAddToCartRequest(offerIds: [offer.id])
     }
     
     @IBAction func backAction(_ sender: Any) {

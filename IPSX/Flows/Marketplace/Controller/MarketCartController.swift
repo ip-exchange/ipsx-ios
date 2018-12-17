@@ -148,7 +148,13 @@ class MarketCartController: UIViewController {
     
     func configureSummaryUI() {
         
-        offersCounterLabel.text = "\(cart?.offers.count ?? 0) " + "offers".localized
+        let noOfOffers = cart?.offers.count ?? 0
+        if noOfOffers == 1 {
+            offersCounterLabel.text = "\(noOfOffers) " + "offer".localized
+        }
+        else {
+            offersCounterLabel.text = "\(noOfOffers) " + "offers".localized
+        }
         footerSubtotalLabel.text = cart?.summary?.ipsxSubtotal.cleanString
         footerVATLabel.text      = cart?.summary?.ipsxVat.cleanString
         footerTotalLabel.text    = cart?.summary?.ipsxTotal.cleanString
