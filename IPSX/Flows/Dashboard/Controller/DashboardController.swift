@@ -45,6 +45,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     fileprivate let cellID = "DashboardCellID"
     fileprivate let detailsSegueID = "DetailsSegueID"
     fileprivate let viewOrderSegueID = "ViewOrderSegueID"
+    fileprivate let historySegueID = "HistorySegueID"
     
     private var timer: Timer?
     var selectedOffer: Offer?
@@ -181,6 +182,11 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         if segue.identifier == viewOrderSegueID {
             let detailsController = segue.destination as? DashboardOrderController
             detailsController?.order = selectedOrder
+        }
+        if segue.identifier == historySegueID {
+            let nav = segue.destination as? UINavigationController
+            let detailsController = nav?.viewControllers.first as? DashboardHistoryController
+            detailsController?.orders = self.orders
         }
     }
     

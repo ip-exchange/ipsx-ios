@@ -11,7 +11,7 @@ import IPSXNetworkingFramework
 
 class DashboardHistoryController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -24,7 +24,7 @@ class DashboardHistoryController: UIViewController {
     
     var orders: [Order] = [] {
         didSet {
-            DispatchQueue.main.async { self.tableView.reloadData() }
+            DispatchQueue.main.async { self.tableView?.reloadData() }
         }
     }
     var errorMessage: String? {
@@ -41,7 +41,6 @@ class DashboardHistoryController: UIViewController {
     fileprivate let cellID = "DashboardCellID"
     fileprivate let detailsSegueID = "DetailsSegueID"
     
-    private var timer: Timer?
     private let orderSegueID = "OrderSegueID"
     
     var selectedOffer: Offer?
@@ -70,10 +69,7 @@ class DashboardHistoryController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        
-        self.updateData()
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,28 +122,6 @@ class DashboardHistoryController: UIViewController {
         }
     }
     
-    @objc func updateData() {
-        loadOrders()
-    }
-    
-    func loadOrders() {
-        
-        loadingView?.startAnimating()
-        MarketplaceService().getOrders(completionHandler: { result in
-            
-            self.loadingView?.stopAnimating()
-            switch result {
-            case .success(let orders):
-                self.orders = orders as? [Order] ?? []
-                
-            case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOrders, completion: {
-                    self.loadOrders()
-                })
-            }
-        })
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == detailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
@@ -194,10 +168,12 @@ extension DashboardHistoryController: UITableViewDataSource {
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
         }
         //TODO: Implement the proper condtion for Histroy section
+        let order = orders[section]
+        let orderTitle =  "Order".localized + " #\(order.id)"
         if [0, 3, 7].contains(section) {
-            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week")
+            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week", orderNumber: orderTitle)
         } else {
-            cell?.updateCell(sectionIndex: section)
+            cell?.updateCell(sectionIndex: section, orderNumber: orderTitle)
         }
         
         return cell
