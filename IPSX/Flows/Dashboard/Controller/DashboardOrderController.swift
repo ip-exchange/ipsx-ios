@@ -142,9 +142,6 @@ class DashboardOrderController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func refundAction(_ sender: Any) {
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == itemDetailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
