@@ -11,21 +11,25 @@ import Foundation
 public struct GeneralSettings {
 
     //per day
-    var maxTokenRequests: Int? //using default = 5
+    var maxTokenRequests: Int = 5
     
-    var maxETHaddresses: Int? //using default = 5
-    var depositMin: Int? //using default = 20
-    var depositMax: Int? //using default = 5000
+    var maxETHaddresses: Int = 5
+    var depositMin: Int = 20
+    var depositMax: Int = 5000
     var depositEthAddress: String?
     var stakingStatus: Bool = false
     var stakingEndDate: String?
+    var proxyDaysRefund: String?
     
-    init(depositMin: Int? = nil, depositMax: Int? = nil, maxETHaddresses: Int? = nil,maxTokenRequests: Int? = nil, depositEthAddress: String? = nil) {
+    init(depositMin: Int, depositMax: Int, maxETHaddresses: Int, maxTokenRequests: Int, depositEthAddress: String? = nil, proxyDaysRefund: String? = nil) {
         
         self.depositMin = depositMin
         self.depositMax = depositMax
         self.maxETHaddresses = maxETHaddresses
         self.maxTokenRequests = maxTokenRequests
         self.depositEthAddress = depositEthAddress
+        self.proxyDaysRefund = proxyDaysRefund
     }
+    
+    init() { }
 }

@@ -75,6 +75,9 @@ class SettingsService {
                     //TODO: This is a date string format that cant be parsed atm, changes to come.
                     settings.stakingEndDate = valueString
                     
+                case "system_refund_proxy_days_after_end_date":
+                    settings.proxyDaysRefund = valueString
+                    
                 default:
                     break
                 }
