@@ -256,13 +256,13 @@
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ2-11-Xgd" userLabel="Fav">
-                                        <rect key="frame" x="331" y="49" width="44" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ2-11-Xgd" userLabel="Fav">
+                                        <rect key="frame" x="316" y="49" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="KJ8-bk-mTc"/>
                                             <constraint firstAttribute="height" constant="44" id="wzd-QL-1W5"/>
                                         </constraints>
-                                        <state key="normal" image="favorites">
+                                        <state key="normal" image="addFav">
                                             <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="savedFav"/>
@@ -330,7 +330,7 @@
                                     <constraint firstItem="Tzx-L0-Bi5" firstAttribute="centerX" secondItem="czV-6Q-iFg" secondAttribute="centerX" id="goY-9b-VFl"/>
                                     <constraint firstItem="czV-6Q-iFg" firstAttribute="top" secondItem="G5h-zI-x9u" secondAttribute="top" id="iD8-eG-eLI"/>
                                     <constraint firstItem="N49-i0-cE3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MIO-Ox-i6d" secondAttribute="trailing" constant="5" id="lCr-75-JRv"/>
-                                    <constraint firstAttribute="trailing" secondItem="dZ2-11-Xgd" secondAttribute="trailing" id="qeb-at-oQK"/>
+                                    <constraint firstAttribute="trailing" secondItem="dZ2-11-Xgd" secondAttribute="trailing" constant="15" id="qeb-at-oQK"/>
                                     <constraint firstItem="N49-i0-cE3" firstAttribute="centerY" secondItem="eOX-gz-RoA" secondAttribute="centerY" id="rPP-fY-hAI"/>
                                     <constraint firstItem="dZ2-11-Xgd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eOX-gz-RoA" secondAttribute="trailing" constant="5" id="stU-gO-y5J"/>
                                     <constraint firstItem="oDB-aL-YP8" firstAttribute="centerX" secondItem="Dk8-Su-NLW" secondAttribute="centerX" id="uaB-E7-w4B"/>
@@ -3322,6 +3322,7 @@ maximum 5 minutes after purchase!</string>
         <image name="CloseBut" width="27" height="27"/>
         <image name="PlusSymbol" width="19" height="19"/>
         <image name="RO32" width="18" height="18"/>
+        <image name="addFav" width="28.666666030883789" height="17.333333969116211"/>
         <image name="arrowDown" width="16" height="8.6666669845581055"/>
         <image name="bgMarketitem" width="375" height="142"/>
         <image name="cartSmall" width="12.333333015441895" height="13.333333015441895"/>
@@ -3332,7 +3333,6 @@ maximum 5 minutes after purchase!</string>
         <image name="clock" width="14" height="14.333333015441895"/>
         <image name="closeSmall" width="13.666666984558105" height="13.666666984558105"/>
         <image name="cloudComputing" width="17" height="14"/>
-        <image name="favorites" width="19.666666030883789" height="17.333333969116211"/>
         <image name="favoritesSmall" width="15" height="13.333333015441895"/>
         <image name="garbageWhite" width="18" height="20.333333969116211"/>
         <image name="inclinedPaperPlane" width="17.666666030883789" height="14.333333015441895"/>
@@ -3348,6 +3348,6 @@ maximum 5 minutes after purchase!</string>
         <image name="walletLarge" width="51" height="51.666667938232422"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7DU-41-qQy"/>
+        <segue reference="6eO-CG-Oxt"/>
     </inferredMetricsTieBreakers>
 </document>
