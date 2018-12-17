@@ -158,8 +158,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let orders):
-                self.orders = orders as? [Order] ?? []
-                self.noDataView.isHidden = self.orders.count > 0
+                DispatchQueue.main.async {
+                    self.orders = orders as? [Order] ?? []
+                    self.noDataView.isHidden = self.orders.count > 0
+                }
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOrders, completion: {
