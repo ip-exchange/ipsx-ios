@@ -63,7 +63,7 @@ class RefundDetailsController: UIViewController {
         proxyNumber.text = "#\(refund.proxyId)"
         
         reasonTextView.text = refund.userReason.count > 0 ? refund.userReason : "No reason".localized
-        adminResponseTextView.text = refund.userReason.count > 0 ? refund.adminReason : "No reason".localized
+        adminResponseTextView.text = refund.adminReason.count > 0 ? refund.adminReason : "No reason".localized
         
         pendingView.isHidden   = refund.status != "pending"
         completedView.isHidden = refund.status != "completed"
