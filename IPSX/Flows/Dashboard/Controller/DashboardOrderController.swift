@@ -142,9 +142,6 @@ class DashboardOrderController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func refundAction(_ sender: Any) {
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == itemDetailsSegueID {
             let detailsController = segue.destination as? DashboardDetailsController
@@ -158,15 +155,13 @@ class DashboardOrderController: UIViewController {
 extension DashboardOrderController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
-        if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row], state: .active)
-        }
+        cell.configure(offer: offers[indexPath.row], state: .active)
         return cell
     }
 }

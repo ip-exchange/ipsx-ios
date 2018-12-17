@@ -599,15 +599,15 @@
                                     <outlet property="delegate" destination="uMo-jK-dNo" id="qDm-0d-XRC"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdn-kE-p30" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdn-kE-p30" userLabel="Refund" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="101" y="537" width="173" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="CH9-Qu-iZh"/>
                                     <constraint firstAttribute="width" constant="173" id="zHX-Dz-HRZ"/>
                                 </constraints>
-                                <state key="normal" title="Order Details">
-                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Refund">
+                                    <color key="titleColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
@@ -616,9 +616,6 @@
                                         <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="orderDetailsAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="D9e-ki-uRD"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Tz-9X-Xrg" userLabel="Open Settings Overlay">
                                 <rect key="frame" x="0.0" y="-11" width="375" height="834"/>
@@ -1400,38 +1397,6 @@
                                         <constraint firstAttribute="trailing" secondItem="Iyo-gj-ofg" secondAttribute="trailing" constant="15" id="WhW-eL-VJd"/>
                                         <constraint firstItem="JQh-rN-10g" firstAttribute="top" secondItem="2w0-bz-5w1" secondAttribute="top" constant="25" id="jLU-BX-hfR"/>
                                         <constraint firstItem="3TZ-ea-zXr" firstAttribute="leading" secondItem="2w0-bz-5w1" secondAttribute="leading" constant="15" id="p7c-Na-5fL"/>
-                                    </constraints>
-                                </view>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="rQw-JS-3Wn">
-                                    <rect key="frame" x="0.0" y="488.33333333333337" width="375" height="115"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-Ak-KoJ" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
-                                            <rect key="frame" x="101" y="39.666666666666664" width="173" height="35.999999999999993"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="36" id="Hiy-VG-Imq"/>
-                                                <constraint firstAttribute="width" constant="173" id="fmy-t0-Z3j"/>
-                                            </constraints>
-                                            <state key="normal" title="Refund">
-                                                <color key="titleColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
-                                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="refundAction:" destination="jDM-tk-fH5" eventType="touchUpInside" id="eJm-5e-1Mz"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="2pc-Ak-KoJ" firstAttribute="centerY" secondItem="rQw-JS-3Wn" secondAttribute="centerY" id="L9T-8p-g6v"/>
-                                        <constraint firstItem="2pc-Ak-KoJ" firstAttribute="centerX" secondItem="rQw-JS-3Wn" secondAttribute="centerX" id="hVJ-Bl-WJf"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
