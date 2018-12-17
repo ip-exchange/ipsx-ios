@@ -158,15 +158,13 @@ class DashboardOrderController: UIViewController {
 extension DashboardOrderController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
-        if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row], state: .active)
-        }
+        cell.configure(offer: offers[indexPath.row], state: .active)
         return cell
     }
 }
