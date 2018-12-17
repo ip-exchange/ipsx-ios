@@ -36,6 +36,7 @@ class RefundListController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var refunds: [Refund] = []
+    var selectedRefund: Refund?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,12 @@ class RefundListController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RefundDetailsSegueID" {
+            let dest = segue.destination as? RefundDetailsController
+            dest?.refund = selectedRefund
+        }
+    }
 }
 
 extension RefundListController: UITableViewDataSource {
@@ -97,6 +104,16 @@ extension RefundListController: UITableViewDataSource {
         let refund = refunds[indexPath.item]
         cell.configure(refund: refund)
         return cell
+    }
+}
+
+extension RefundListController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRefund = refunds[indexPath.item]
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "RefundDetailsSegueID", sender: self)
+        }
     }
 }
 
