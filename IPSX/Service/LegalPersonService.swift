@@ -100,7 +100,7 @@ class LegalPersonService {
         
         if UserManager.shared.allCountries == nil {
             
-            UserInfoService().getUserCountryList(completionHandler: { result in
+            UserInfoService().getCountryList(completionHandler: { result in
                 
                 switch result {
                 case .success(let countryList):

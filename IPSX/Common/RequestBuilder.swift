@@ -35,8 +35,7 @@ struct RequestType {
     static let resetPassword = "resetPassword"
     static let changePassword = "changePassword"
     
-    static let getUserCountryList = "getUserCountryList"
-    static let getProxyCountryList = "getProxyCountryList"
+    static let getCountryList = "getCountryList"
     
     static let userInfo = "userInfo"
     static let userRoles = "userRoles"
@@ -170,12 +169,11 @@ public struct Url {
     public static let publicIPArgs           = "/Users/ip"
     public static let registerArgs           = "/Users"
     public static let fbRegisterArgs         = "/Users/social/register/facebook"
-    public static let userCountriesArgs      = "/countries?filter[where][whitelisted]=1"
+    public static let countries              = "/countries?filter[where][whitelisted]=1"
     public static let loginArgs              = "/Users/auth"
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
     public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
-    public static let proxyCountriesArgs     = "/proxies/countries?access_token=%ACCESS_TOKEN%"
     public static let ethEnrolmentsArgs      = "/Users/%USER_ID%/eths/enrolments?access_token=%ACCESS_TOKEN%"
     public static let ethArgs                = "/Users/%USER_ID%/eths?access_token=%ACCESS_TOKEN%"
     public static let updateEthAddressArgs   = "/Users/%USER_ID%/eths/%ETH_ID%?access_token=%ACCESS_TOKEN%"
@@ -249,8 +247,8 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         
     //User Info Requests
         
-    case RequestType.getUserCountryList:
-        url = Url.baseApi + Url.userCountriesArgs
+    case RequestType.getCountryList:
+        url = Url.baseApi + Url.countries
         httpMethod = "GET"
         
     case RequestType.getCompany, RequestType.getProviderDetails:
@@ -282,11 +280,7 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
         httpMethod = "GET"
         
     //Proxy Requests (Dashboard, Marketplace)
-        
-    case RequestType.getProxyCountryList:
-        url = (Url.baseApi + Url.proxyCountriesArgs).replaceKeysWithValues(paramsDict: urlParams)
-        httpMethod = "GET"
-        
+                
     case RequestType.getOffers:
         url = (Url.baseApi + Url.offersArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"

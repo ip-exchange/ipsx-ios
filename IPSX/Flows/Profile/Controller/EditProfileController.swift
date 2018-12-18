@@ -46,7 +46,6 @@ class EditProfileController: UIViewController {
     var addCompanyBannerShown = false
     var editMode = false
     
-    private var searchController: SearchViewController?
     private var backFromSearch = false
     private var companyEdited = false
     
@@ -138,24 +137,6 @@ class EditProfileController: UIViewController {
         if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-
-        // After Logout
-        if UserManager.shared.allCountries == nil {
-            
-            loadingView?.startAnimating()
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                
-                self.loadingView?.stopAnimating()
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.allCountries = countryList as? [[String: String]]
-                    DispatchQueue.main.async { self.configureUI() }
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

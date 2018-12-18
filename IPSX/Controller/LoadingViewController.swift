@@ -27,7 +27,7 @@ class LoadingViewController: UIViewController {
     var hasConfirmedDeleteAccount = false
     
     // Update the total number of requests
-    var noOfRequests: Float = 8
+    var noOfRequests: Float = 7
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -104,8 +104,7 @@ class LoadingViewController: UIViewController {
         userInfo()
         userRoles()
         tokenRequestList()
-        proxyCountryList()
-        generalSettings()
+        generalSettings() //7
         
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -117,7 +116,7 @@ class LoadingViewController: UIViewController {
     func userCountryList() {
         
         dispatchGroup.enter()
-        UserInfoService().getUserCountryList(completionHandler: { result in
+        UserInfoService().getCountryList(completionHandler: { result in
             
             self.dispatchGroup.leave()
             switch result {
@@ -251,27 +250,6 @@ class LoadingViewController: UIViewController {
                 
                 self.handleError(error, requestType: RequestType.getTokenRequestList, completion: {
                     self.tokenRequestList()
-                })
-            }
-        })
-    }
-    
-    func proxyCountryList() {
-        
-        dispatchGroup.enter()
-        ProxyService().getProxyCountryList(completionHandler: { result in
-            
-            self.dispatchGroup.leave()
-            
-            switch result {
-            case .success(let countryList):
-                ProxyManager.shared.proxyCountries = countryList as? [String]
-                DispatchQueue.main.async { self.progressView.progress +=  1 / self.noOfRequests }
-
-            case .failure(let error):
-                
-                self.handleError(error, requestType: RequestType.getProxyCountryList, completion: {
-                    self.proxyCountryList()
                 })
             }
         })

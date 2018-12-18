@@ -109,24 +109,6 @@ class EditProfileInfoConstroller: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         retrieveUserInfo()
-        
-        // After Logout
-        if UserManager.shared.allCountries == nil {
-            
-            loadingView?.startAnimating()
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                
-                self.loadingView?.stopAnimating()
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.allCountries = countryList as? [[String: String]]
-                    DispatchQueue.main.async { self.updateFields() }
-                    
-                case .failure(_):
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            })
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -386,7 +368,7 @@ class EditProfileInfoConstroller: UIViewController {
             }
             backFromSearch = true
             srcController.dismissOnSelect = true
-            srcController.countries = UserManager.shared.getUserCountryList()
+            srcController.countries = UserManager.shared.getCountryList()
             let userInfo = UserManager.shared.userInfo
             searchController = srcController
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)

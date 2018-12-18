@@ -63,19 +63,6 @@ class CompanyDetailsController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         self.nextButton.isEnabled = self.canContinue()
-        
-        if UserManager.shared.allCountries == nil {
-            
-            UserInfoService().getUserCountryList(completionHandler: { result in
-                
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.allCountries = countryList as? [[String: String]]
-                    
-                case .failure(_): break
-                }
-            })
-        }
     }
     
     override func viewDidLayoutSubviews() {

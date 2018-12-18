@@ -10,13 +10,10 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    
     @IBOutlet weak var selectedItemsCollectionview: UICollectionView!
     @IBOutlet weak var collectionTopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
-    
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -53,9 +50,6 @@ class SearchViewController: UIViewController {
     var onCountrySelected: ((_ selectedCountry: String)->())?
     var onSaveSelected: ((_ selectedCountres: [String])->())?
 
-    private var countriesRefreshed = false
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,39 +78,7 @@ class SearchViewController: UIViewController {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidLoad()
-        if isProxyFlow == true, !countriesRefreshed {
-            proxyCountryList()
-            countriesRefreshed = true
-        }
-    }
     
-    func proxyCountryList() {
-        
-        loadingView.startAnimating()
-        ProxyService().getProxyCountryList(completionHandler: { result in
-            
-            self.loadingView.stopAnimating()
-            switch result {
-            case .success(let countryList):
-                ProxyManager.shared.proxyCountries = countryList as? [String]
-                self.filteredCountries = ProxyManager.shared.proxyCountries
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
-            case .failure(_):
-                self.errorMessage = "Proxy Contries Fetch Error Message".localized
-                self.filteredCountries = self.countries
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        })
-    }
-
     @IBAction func saveAction(_ sender: Any) {
         onSaveSelected?(selectedCountries)
         if dismissPresentingNav {

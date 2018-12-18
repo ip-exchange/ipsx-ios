@@ -71,7 +71,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         
         if UserManager.shared.allCountries == nil {
             
-            UserInfoService().getUserCountryList(completionHandler: { result in
+            UserInfoService().getCountryList(completionHandler: { result in
                 
                 switch result {
                 case .success(let countryList):
@@ -113,7 +113,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
             }
             
             srcController.dismissOnSelect = true
-            srcController.countries = UserManager.shared.getUserCountryList()
+            srcController.countries = UserManager.shared.getCountryList()
             let userInfo = UserManager.shared.userInfo
             searchController = srcController
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)

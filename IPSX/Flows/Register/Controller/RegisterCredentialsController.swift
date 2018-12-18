@@ -48,7 +48,7 @@ class RegisterCredentialsController: UIViewController {
 
         if UserManager.shared.allCountries == nil {
             
-            UserInfoService().getUserCountryList(completionHandler: { result in
+            UserInfoService().getCountryList(completionHandler: { result in
                 
                 switch result {
                 case .success(let countryList):
@@ -114,7 +114,7 @@ class RegisterCredentialsController: UIViewController {
             }
             
             srcController.dismissOnSelect = true
-            srcController.countries = UserManager.shared.getUserCountryList()
+            srcController.countries = UserManager.shared.getCountryList()
             let userInfo = UserManager.shared.userInfo
             searchController = srcController
             searchController?.selectedCountry = UserManager.shared.getCountryName(countryID: userInfo?.countryID)

@@ -15,6 +15,4 @@ public class ProxyManager: NSObject {
     
     var allOffers: [Offer]?
     var cart: Cart?
-    var proxyCountries: [String]?
-
 }

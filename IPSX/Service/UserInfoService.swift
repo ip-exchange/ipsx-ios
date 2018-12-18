@@ -155,9 +155,9 @@ class UserInfoService {
         })
     }
     
-    func getUserCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func getCountryList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
-        let request = createRequest(requestType: RequestType.getUserCountryList)
+        let request = createRequest(requestType: RequestType.getCountryList)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

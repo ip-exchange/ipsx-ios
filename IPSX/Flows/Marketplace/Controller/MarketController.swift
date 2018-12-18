@@ -164,7 +164,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
     
     @IBAction func selectCountry(_ sender: Any) {
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "CountrySearchSegueID", sender: nil) }
+        DispatchQueue.main.async { self.performSegue(withIdentifier: self.countrySelectionID, sender: nil) }
     }
     
     func updateReachabilityInfo() {
@@ -309,7 +309,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             let navController = segue.destination as? UINavigationController
             if let srcController = navController?.viewControllers.first as? SearchViewController {
                 srcController.dismissPresentingNav = true
-                srcController.countries = UserManager.shared.getUserCountryList()
+                srcController.countries = UserManager.shared.getCountryList()
                 
                 srcController.onCountrySelected = { selectedCountry in
                     self.countryRComponent.contentTextField?.text = selectedCountry
@@ -374,7 +374,7 @@ extension MarketController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard userInfo?.countryID != nil else {
+        guard userInfo?.countryID != "" && userInfo?.countryID != nil else {
             updateCountryOverlay(visible: true)
             return
         }

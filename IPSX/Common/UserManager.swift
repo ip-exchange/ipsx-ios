@@ -187,7 +187,7 @@ public class UserManager: NSObject {
         roles = nil
     }
     
-    func getUserCountryList() -> [String] {
+    func getCountryList() -> [String] {
         
         var countryArray: [String] = []
         if let countries = UserManager.shared.allCountries {

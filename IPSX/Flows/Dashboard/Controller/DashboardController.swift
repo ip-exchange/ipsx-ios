@@ -93,6 +93,8 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         if !backFromSegue { self.updateData() }
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+        
+        loadDataIfNeeded()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -105,6 +107,22 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
         self.timer?.invalidate()
+    }
+    
+    func loadDataIfNeeded() {
+        
+        if UserManager.shared.allCountries == nil {
+            
+            UserInfoService().getCountryList(completionHandler: { result in
+                
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.allCountries = countryList as? [[String: String]]
+                    
+                case .failure(_): break
+                }
+            })
+        }
     }
     
     func updateReachabilityInfo() {
