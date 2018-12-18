@@ -12,8 +12,8 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var progressLabel: UILabel!
-    @IBOutlet weak var progressView: ProgressRoundView!
+    @IBOutlet weak var progressLabel: UILabel?
+    @IBOutlet weak var progressView: ProgressRoundView?
     @IBOutlet weak var httpImageView: UIImageView!
     @IBOutlet weak var httpLabel: UILabel!
     @IBOutlet weak var socks5ImageView: UIImageView!
@@ -44,8 +44,8 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
             flagImageView.image = flagImage
         }
         countryLabel.text = proxy.countryName
-        progressView.progress = Double(proxy.sla)
-        progressLabel.text = "\(proxy.sla)%"
+        progressView?.progress = Double(proxy.sla)
+        progressLabel?.text = "\(proxy.sla)%"
         
         configureFeatures(proxy: proxy)
     }

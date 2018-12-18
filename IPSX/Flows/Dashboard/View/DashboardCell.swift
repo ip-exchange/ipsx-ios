@@ -46,9 +46,9 @@ class DashboardCell: UITableViewCell {
                 countries.append(proxy.countryName)
             }
             if index == 0 {
-                setActiveState(proxy.status)
+                offerStateView.setActiveState(proxy.status)
             } else {
-                if proxy.status == "active" { setActiveState(proxy.status) }
+                if proxy.status == "active" { offerStateView.setActiveState(proxy.status) }
                 offerTypeLabel.text = "Grouped offer".localized
             }
             if proxy.status == "expired" { expired += 1}
@@ -56,22 +56,7 @@ class DashboardCell: UITableViewCell {
         }
         let firstCountry = countries.first ?? "Unknown"
         if index > 1 { countryLabel.text = firstCountry + " " + "and \(countries.count - 1) more".localized }
-        expiredCountLabel.text = "\(expired)/\(index) " + "ACTIVE".localized
-    }
-    
-    private func setActiveState(_ state: String?) {
-        guard let validState = state else {
-            offerStateView.currentState = .unknown
-            return
-        }
-        switch validState {
-        case "active":      offerStateView.currentState = .active
-        case "expired":     offerStateView.currentState = .expired
-        case "unavailable": offerStateView.currentState = .unavailable
-        case "pending":     offerStateView.currentState = .pending
-        case "canceled":    offerStateView.currentState = .canceled
-        default: offerStateView.currentState = .unknown
-        }
+        expiredCountLabel.text = "\(expired)/\(index) " + "EXPIRED".localized
     }
     
     private func slaToDisplay(proxies: [Proxy]) -> Int {

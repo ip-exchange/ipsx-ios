@@ -8,10 +8,9 @@
 
 import UIKit
 
-class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
+class DashboardDetailsController: UIViewController {
 
     @IBOutlet weak var topBarView: UIView!
-    @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var offerTypeLabel: UILabel!
     @IBOutlet weak var countryLabel: UILabel!
@@ -20,7 +19,6 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var trafficRemainedLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var durationRemainedLabel: UILabel!
-    @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
     @IBOutlet weak var noOfproxiesTopConstraint: NSLayoutConstraint! {
         didSet {
@@ -34,6 +32,12 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var activeStateView: CellStateRoundedView!
     @IBOutlet weak var doubleProgressView: DoubleProgressView!
     
+    @IBOutlet weak var lockedOnIp1Label: UILabel!
+    @IBOutlet weak var lockedOnIp2Label: UILabel!
+    @IBOutlet weak var lockedOnIp3Label: UILabel!
+    
+    @IBOutlet weak var refundButton: RoundedButton!
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -45,6 +49,9 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        if let firstProxy = offer?.proxies.first {
+            updateHeaderWithProxy(firstProxy)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,12 +70,9 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
         let countryString = offer.proxies.first?.countryName ?? ""
-        let sla = slaToDisplay(proxies: offer.proxies)
         
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
-        progressView.progress = Double(sla)
-        progressLabel.text = "\(sla)%"
         flagImageView.image = UIImage(named: "worldPins")
         
         if noOfProxies > 1 {
@@ -106,6 +110,9 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
         hideOverlay()
     }
 
+    @IBAction func refundAction(_ sender: Any) {
+    }
+    
     @IBAction func openSettingsAction(_ sender: Any) {
         
         guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
@@ -130,6 +137,96 @@ class DashboardDetailsController: UIViewController, UIScrollViewDelegate {
             self.openSettingsOverlayView.alpha = 0
         })
     }
+
+    fileprivate func updateHeaderWithProxy(_ proxy: Proxy?) {
+        
+        guard let validProxy = proxy, let offer = offer else {
+            self.doubleProgressView.setProgress(upProgress: 0, downProgress: 0)
+            self.refundButton.isEnabled = false
+            self.lockedOnIp1Label.labelTransition(0.15)
+            self.lockedOnIp1Label.text = "---.---.---.---"
+            self.lockedOnIp2Label.labelTransition(0.15)
+            self.lockedOnIp2Label.text = "---.---.---.---"
+            self.lockedOnIp3Label.labelTransition(0.15)
+            self.lockedOnIp3Label.text = "---.---.---.---"
+            
+            self.trafficLabel.labelTransition(0.15)
+            self.trafficLabel.text = "--- MB"
+            
+            self.trafficRemainedLabel.labelTransition(0.15)
+            self.trafficRemainedLabel.text = "--- MB"
+            
+            self.durationLabel.labelTransition(0.15)
+            self.durationLabel.text = "--- min"
+
+            self.durationRemainedLabel.labelTransition(0.15)
+            self.durationRemainedLabel.text = "--- min"
+            
+            UIView.animate(withDuration: 0.15) {
+                self.activeStateView.alpha = 0
+                self.flagImageView.alpha = 0
+            }
+            return
+        }
+        
+        let usageMb = Double(validProxy.usage ?? "0") ?? 0
+        let progressMb = Double(offer.trafficMB) ?? 0
+        var usageProgress = progressMb > 0 ? usageMb / progressMb : 0
+        
+        let remainedMin = Double(validProxy.remainingMinutes()) ?? 0
+        let durationMin = Double(offer.durationMin) ?? 0
+        var durationProgress = durationMin > 0 ? (durationMin - remainedMin) / durationMin : 0
+        
+        self.trafficLabel.labelTransition(0.15)
+        self.trafficLabel.text = offer.trafficMB + " MB"
+        
+        self.durationLabel.labelTransition(0.15)
+        self.durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
+
+        self.refundButton.isEnabled = true
+        self.lockedOnIp1Label.labelTransition(0.15)
+        self.lockedOnIp2Label.labelTransition(0.15)
+        self.lockedOnIp3Label.labelTransition(0.15)
+        
+        var pos = 0
+        for lockedIp in validProxy.lockedOnIPs ?? ["---.---.---.---", "---.---.---.---", "---.---.---.---"] {
+            if pos == 0 { self.lockedOnIp1Label.text = lockedIp }
+            if pos == 1 { self.lockedOnIp1Label.text = lockedIp }
+            if pos == 2 { self.lockedOnIp1Label.text = lockedIp }
+            pos += 1
+        }
+        
+        if let flagString = proxy?.flagUrlName,
+            let flagUrl = URL(string: flagString),
+            let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
+            flagImageView.image = flagImage
+        }
+
+        activeStateView.setActiveState(validProxy.status)
+
+        if validProxy.status == "unavailable" {
+            self.trafficRemainedLabel.labelTransition(0.15)
+            self.trafficRemainedLabel.text = "--- MB"
+            self.durationRemainedLabel.labelTransition(0.15)
+            self.durationRemainedLabel.text = "--- min"
+            durationProgress = 0
+            usageProgress = 0
+        } else {
+            self.trafficRemainedLabel.labelTransition(0.15)
+            self.trafficRemainedLabel.text = "\(Int(usageMb))" + " MB"
+            self.durationRemainedLabel.labelTransition(0.15)
+            self.durationRemainedLabel.text = "\(Int(durationMin - remainedMin))".daysHoursMinutesFormated()
+        }
+        
+        self.doubleProgressView.setProgress(upProgress: Float(usageProgress), downProgress: Float(durationProgress))
+        
+        UIView.animate(withDuration: 0.15) {
+            self.activeStateView.alpha = 1
+            self.flagImageView.alpha = 1
+        }
+
+    }
+    
 
 }
 
@@ -157,6 +254,24 @@ extension DashboardDetailsController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return offer?.proxies.count ?? 0
     }
+}
+
+extension DashboardDetailsController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        updateHeaderWithProxy(nil)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        let visiblePoint = CGPoint(x: self.collectionView.contentOffset.x + self.collectionView.frame.size.width / 2,
+                                  y: self.collectionView.frame.size.height / 2)
+        if let path = self.collectionView.indexPathForItem(at: visiblePoint),
+             let proxy = self.offer?.proxies[path.item] {
+           self.updateHeaderWithProxy(proxy)
+        }
+        
+     }
 }
 
 extension DashboardDetailsController: ToastAlertViewPresentable {

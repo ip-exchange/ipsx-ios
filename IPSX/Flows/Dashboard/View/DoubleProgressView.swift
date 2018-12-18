@@ -17,12 +17,12 @@ class DoubleProgressView: UIView {
 
     public func setProgress(upProgress: Float? = nil, downProgress: Float? = nil) {
         if let up = upProgress {
-            cellProgressUp?.progress = up
-            cellProgressUpBis?.progress = up
+            cellProgressUp?.setProgress(up, animated: true)
+            cellProgressUpBis?.setProgress(up, animated: true)
         }
         if let down = downProgress {
-            cellProgressDown?.progress = down
-            cellProgressDownBis?.progress = down
+            cellProgressDown?.setProgress(down, animated: true)
+            cellProgressDownBis?.setProgress(down, animated: true)
         }
     }
     

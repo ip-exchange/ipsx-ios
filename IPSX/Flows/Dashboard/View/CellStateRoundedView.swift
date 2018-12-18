@@ -51,4 +51,21 @@ class CellStateRoundedView: UIView {
         super.layoutSubviews()
         self.backgroundColor = .clear
     }
+    
+    func setActiveState(_ state: String?) {
+        guard let validState = state else {
+            currentState = .unknown
+            return
+        }
+        switch validState {
+        case "active":      currentState = .active
+        case "expired":     currentState = .expired
+        case "unavailable": currentState = .unavailable
+        case "pending":     currentState = .pending
+        case "canceled":    currentState = .canceled
+        default: currentState = .unknown
+        }
+    }
+    
+
 }
