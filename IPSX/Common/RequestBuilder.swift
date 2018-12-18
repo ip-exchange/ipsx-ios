@@ -107,7 +107,7 @@ public struct Url {
     
     // DEV ENV:
     public static let baseDEVApi    = "https://api.dev.ip.sx/api"
-    public static let pacBaseUrlDEV = "https://app.dev.ip.sx/order/proxy/pac"
+    public static let pacBaseUrlDEV = "https://app.dev.ip.sx/order/proxy/pac/"
     
     // DEMO ENV:
     public static let baseDEMOApi    = "https://api.ipsx.io/api"

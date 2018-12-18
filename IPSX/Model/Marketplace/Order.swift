@@ -31,7 +31,7 @@ class Order {
         self.summary = summary
     }
     
-    func addProxyDetails(forProxyId id: Int, lockedOnIPs: [String], usage: String, status: String, startDate: Date?, endDate: Date?, createdDate: Date?) {
+    func addProxyDetails(forProxyId id: Int, pacId: Int, lockedOnIPs: [String], usage: String, status: String, startDate: Date?, endDate: Date?, createdDate: Date?, createdAtString: String) {
         
         for offer in offers {
             
@@ -41,7 +41,9 @@ class Order {
             proxy?.startDate = startDate
             proxy?.endDate = endDate
             proxy?.createdDate = createdDate
+            proxy?.createdAtString = createdAtString
             proxy?.status = status
+            proxy?.pacId = pacId
         }
     }
 }

@@ -31,12 +31,17 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
         onCopy?(proxyName, proxyUrl)
     }
     
-    private var proxyName = "1122334455.pac" //TODO - set in configure
-    private var proxyUrl = "url://balbla" //TODO - set in configure
+    private var proxyName = ""
+    private var proxyUrl = ""
     
     func configure(proxy: Proxy) {
         
         initialConfig()
+        
+        
+        proxyUrl = String.generatePacLink(createdDate: proxy.createdAtString ?? "", proxyId: "\(proxy.pacId ?? 0)")
+        proxyName = URL(string: proxyUrl)?.lastPathComponent ?? "No name".localized
+        packNameLabel?.text = proxyName
         
         flagImageView.image = UIImage(named: "worldPins")
         if let flagUrl = URL(string: proxy.flagUrlName),

@@ -11,6 +11,7 @@ import Foundation
 class Proxy {
     
     var id: Int
+    var pacId: Int?
     var countryName: String
     var flagUrlName: String
     var sla: Int
@@ -20,6 +21,7 @@ class Proxy {
     var startDate: Date?
     var endDate: Date?
     var createdDate: Date?
+    var createdAtString: String?
     var usage: String?
     var status: String? //active, expired, ...
     var lockedOnIPs: [String]?
