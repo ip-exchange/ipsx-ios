@@ -283,23 +283,3 @@ extension MarketItemController: ErrorPresentable {
     }
 }
 
-//TODO: This is reused in dashboard, move in it's own file
-class CenteringFlowLayout: UICollectionViewFlowLayout {
-    
-    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        
-        guard let collectionView = collectionView,
-            let layoutAttributesArray = layoutAttributesForElements(in: collectionView.bounds),
-            var candidate = layoutAttributesArray.first else { return proposedContentOffset }
-        
-        layoutAttributesArray.filter({$0.representedElementCategory == .cell }).forEach { layoutAttributes in
-            
-            if (velocity.x > 0 && layoutAttributes.center.x > candidate.center.x) ||
-                (velocity.x <= 0 && layoutAttributes.center.x < candidate.center.x) {
-                candidate = layoutAttributes
-            }
-        }
-        return CGPoint(x: candidate.center.x - collectionView.bounds.width / 2, y: proposedContentOffset.y)
-    }
-    
-}

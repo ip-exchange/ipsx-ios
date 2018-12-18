@@ -57,4 +57,13 @@ public extension UIView {
         view.frame = bounds
         return view
     }
+    
+    func labelTransition(_ duration : CFTimeInterval) {
+        let animation = CATransition()
+        animation.timingFunction = CAMediaTimingFunction(name:
+            CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.moveIn
+        animation.duration = duration
+        layer.add(animation, forKey: CATransitionType.fade.rawValue)
+    }
 }
