@@ -170,7 +170,7 @@ public struct Url {
     public static let publicIPArgs           = "/Users/ip"
     public static let registerArgs           = "/Users"
     public static let fbRegisterArgs         = "/Users/social/register/facebook"
-    public static let userCountriesArgs      = "/countries"
+    public static let userCountriesArgs      = "/countries?filter[where][whitelisted]=1"
     public static let loginArgs              = "/Users/auth"
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
