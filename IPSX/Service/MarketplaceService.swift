@@ -361,6 +361,7 @@ class MarketplaceService {
                         let pacId = proxy["id"].intValue
                         let status = proxy["status"].stringValue
                         let usage = proxy["usage"].stringValue
+                        let hasRequestedRefund = proxy["refunds"].boolValue
                         
                         let startString = proxy["start_date"].stringValue
                         let startDate   = dateFormatter.date(from: startString)
@@ -379,7 +380,7 @@ class MarketplaceService {
                         if let optionalIPs = proxy["user_optional_ip"].arrayObject as? [String] {
                             lockedOnIPs.append(contentsOf: optionalIPs)
                         }
-                        order.addProxyDetails(forProxyId: id, pacId: pacId, lockedOnIPs: lockedOnIPs, usage: usage, status: status, startDate: startDate, endDate: endDate, createdDate: createdDate, createdAtString: createdString)
+                        order.addProxyDetails(forProxyId: id, pacId: pacId, lockedOnIPs: lockedOnIPs, usage: usage, status: status, startDate: startDate, endDate: endDate, createdDate: createdDate, createdAtString: createdString, hasRequestedRefund: hasRequestedRefund)
                     }
                 }
                 orders.append(order)

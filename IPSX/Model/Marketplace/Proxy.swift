@@ -25,6 +25,7 @@ class Proxy {
     var usage: String?
     var status: String? //active, expired, ...
     var lockedOnIPs: [String]?
+    var hasRequestedRefund: Bool?
     
     init(id: Int, countryName: String, flagUrlName: String, sla: Int, ipType: Int, proxyType: String, features: [String]) {
         
