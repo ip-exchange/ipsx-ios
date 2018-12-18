@@ -128,6 +128,39 @@ class FundsService {
         })
     }
 
+    func createRefund(proxyId: String, reason: String, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] =  ["USER_ID"      : UserManager.shared.userId,
+                                            "PROXY_ID"     : proxyId,
+                                            "ACCESS_TOKEN" : UserManager.shared.accessToken]
+        
+        let bodyParams: [String: String] = ["reason" : reason]
+
+        let request = createRequest(requestType: RequestType.createRefund, urlParams: urlParams, bodyParams: bodyParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let _ = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            
+            completionHandler(ServiceResult.success(true))
+        })
+    }
+
     func getRefundsList(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,

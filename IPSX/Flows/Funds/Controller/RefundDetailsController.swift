@@ -24,16 +24,6 @@ class RefundDetailsController: UIViewController {
 
     var refund: Refund?
     
-    
-//    var id: Int
-//    var value: String
-//    var status: String //pending, completed, rejected
-//    var createdAt: Date?
-//    var issuedByUser: Bool
-//    var userReason: String
-//    var adminReason: String
-//    var proxyId: Int
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

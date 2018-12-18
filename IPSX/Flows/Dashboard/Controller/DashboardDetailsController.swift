@@ -42,6 +42,7 @@ class DashboardDetailsController: UIViewController {
     var topConstraint: NSLayoutConstraint?
 
     private let cellSpacing: CGFloat = 12
+    private var currentProxy: Proxy?
     
     fileprivate let reuseIdentifier = "DashboardtemCell"
     var offer: Offer?
@@ -123,6 +124,7 @@ class DashboardDetailsController: UIViewController {
     }
 
     @IBAction func refundAction(_ sender: Any) {
+        self.performSegue(withIdentifier: "ShowrefundSegueID", sender: self)
     }
     
     @IBAction func openSettingsAction(_ sender: Any) {
@@ -150,7 +152,19 @@ class DashboardDetailsController: UIViewController {
         })
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowrefundSegueID" {
+            let dest = segue.destination as? RefundRequestController
+            dest?.proxy = currentProxy
+            let price: Double = Double(offer?.priceIPSX ?? "0") ?? 0
+            let proxies: Double = Double(offer?.proxies.count ?? 1)
+            dest?.amount = price / proxies
+        }
+    }
+    
     fileprivate func updateHeaderWithProxy(_ proxy: Proxy?, animated: Bool = true) {
+        
+        currentProxy = proxy
         
         if animated {
             self.lockedOnIp1Label.labelTransition(0.15)
