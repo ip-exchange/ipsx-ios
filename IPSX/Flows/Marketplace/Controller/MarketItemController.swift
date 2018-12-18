@@ -84,7 +84,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
-        let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
         if UserManager.shared.roles?.contains(.Requester) == false {
@@ -110,16 +109,15 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         progressView.progress = Double(sla)
         progressLabel.text = "\(sla)%"
         flagImageView.image = UIImage(named: "worldPins")
+        countryLabel.text = offer.calculateCountryToDisplay()
         
         if noOfProxies > 1 {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy items"
             offerTypeLabel.text = "Grouped offer".localized
-            countryLabel.text = ""
         }
         else {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
-            countryLabel.text = countryString
             
             if let flagString = offer.proxies.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),

@@ -41,7 +41,6 @@ class MarketCell: UITableViewCell {
         let noOfProxies = offer.proxies.count
         let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
         let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
-        let countryString = offer.proxies.first?.countryName ?? ""
         let sla = slaToDisplay(proxies: offer.proxies)
         
         trafficLabel.text = offer.trafficMB + " MB"
@@ -51,13 +50,12 @@ class MarketCell: UITableViewCell {
         progressLabel.text = "\(sla)%"
         cellContentView.shadow = true
         flagImageView.image = UIImage(named: "worldPins")
+        countryLabel.text = offer.calculateCountryToDisplay()
         
         if noOfProxies > 1 {
             offerTypeLabel.text = "Grouped offer".localized
-            countryLabel.text = ""
         }  else {
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
-            countryLabel.text = countryString
             
             if let flagString = offer.proxies.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),

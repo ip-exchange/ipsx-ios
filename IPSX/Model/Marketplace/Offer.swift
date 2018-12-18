@@ -32,6 +32,20 @@ class Offer {
         self.trafficMB = trafficMB
     }
     
+    func calculateCountryToDisplay() -> String {
+        var countries: [String] = []
+        for prox in proxies {
+            if !countries.contains(prox.countryName) {
+                countries.append(prox.countryName)
+            }
+        }
+        var textToDisplay = countries.first ?? "Unknown"
+        if countries.count > 1 {
+            textToDisplay = textToDisplay + " " + "and \(countries.count - 1) more".localized
+        }
+        return textToDisplay
+    }
+    
     func setProxies(proxyArray: [Proxy]) {
         self.proxies = proxyArray
     }

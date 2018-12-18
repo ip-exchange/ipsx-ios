@@ -15,14 +15,14 @@ class DoubleProgressView: UIView {
     @IBOutlet weak var cellProgressDown: UIProgressView?
     @IBOutlet weak var cellProgressDownBis: UIProgressView?
 
-    public func setProgress(upProgress: Float? = nil, downProgress: Float? = nil) {
+    public func setProgress(upProgress: Float? = nil, downProgress: Float? = nil, animated: Bool = true) {
         if let up = upProgress {
-            cellProgressUp?.setProgress(up, animated: true)
-            cellProgressUpBis?.setProgress(up, animated: true)
+            cellProgressUp?.setProgress(up, animated: animated)
+            cellProgressUpBis?.setProgress(up, animated: animated)
         }
         if let down = downProgress {
-            cellProgressDown?.setProgress(down, animated: true)
-            cellProgressDownBis?.setProgress(down, animated: true)
+            cellProgressDown?.setProgress(down, animated: animated)
+            cellProgressDownBis?.setProgress(down, animated: animated)
         }
     }
     

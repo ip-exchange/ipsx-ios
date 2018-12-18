@@ -41,7 +41,8 @@ class Proxy {
     
     func remainingMinutes() -> String {
         
-        guard let startDate = startDate, let endDate = endDate else { return "-- min" }
+        guard let endDate = endDate else { return "-- min" }
+        let startDate = Date()
         let difference = endDate.timeIntervalSince(startDate)
         let minutes = (Int(difference) / 60) % 60
         return "\(minutes)"

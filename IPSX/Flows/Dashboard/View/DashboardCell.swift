@@ -40,11 +40,7 @@ class DashboardCell: UITableViewCell {
         
         var index: Int   = 0
         var expired: Int = 0
-        var countries: [String] = []
         for proxy in offer.proxies {
-            if !countries.contains(proxy.countryName) {
-                countries.append(proxy.countryName)
-            }
             if index == 0 {
                 offerStateView.setActiveState(proxy.status)
             } else {
@@ -54,8 +50,7 @@ class DashboardCell: UITableViewCell {
             if proxy.status == "expired" { expired += 1}
             index += 1
         }
-        let firstCountry = countries.first ?? "Unknown"
-        if index > 1 { countryLabel.text = firstCountry + " " + "and \(countries.count - 1) more".localized }
+        countryLabel.text = offer.calculateCountryToDisplay()
         expiredCountLabel.text = "\(expired)/\(index) " + "EXPIRED".localized
     }
     
