@@ -112,17 +112,84 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     func loadDataIfNeeded() {
         
         if UserManager.shared.allCountries == nil {
-            
-            UserInfoService().getCountryList(completionHandler: { result in
-                
-                switch result {
-                case .success(let countryList):
-                    UserManager.shared.allCountries = countryList as? [[String: String]]
-                    
-                case .failure(_): break
-                }
-            })
+            loadCountries()
         }
+        if UserManager.shared.userInfo == nil {
+            retrieveUserInfo()
+        }
+        if UserManager.shared.roles == nil {
+            userRoles()
+        }
+        if UserManager.shared.generalSettings == nil {
+            generalSettings()
+        }
+    }
+    
+    func loadCountries() {
+        
+        UserInfoService().getCountryList(completionHandler: { result in
+            
+            switch result {
+            case .success(let countryList):
+                UserManager.shared.allCountries = countryList as? [[String: String]]
+                
+            case .failure(_): break
+            }
+        })
+    }
+    
+    func retrieveUserInfo() {
+        
+        loadingView?.startAnimating()
+        UserInfoService().retrieveUserInfo(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let user):
+                UserManager.shared.userInfo = user as? UserInfo
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.userInfo, completion: {
+                    self.retrieveUserInfo()
+                })
+            }
+        })
+    }
+    
+    func userRoles() {
+        
+        loadingView?.startAnimating()
+        UserInfoService().getRoles(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let userRoles):
+                UserManager.shared.roles = userRoles as? [UserRoles]
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.userRoles, completion: {
+                    self.userRoles()
+                })
+            }
+        })
+    }
+    
+    func generalSettings() {
+        
+        loadingView?.startAnimating()
+        SettingsService().retrieveSettings(completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let settings):
+                UserManager.shared.generalSettings = settings as? GeneralSettings
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.generalSettings, completion: {
+                    self.generalSettings()
+                })
+            }
+        })
     }
     
     func updateReachabilityInfo() {

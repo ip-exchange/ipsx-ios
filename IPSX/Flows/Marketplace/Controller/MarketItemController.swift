@@ -69,15 +69,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         createToastAlert(onTopOf: separatorView, text: "")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if UserManager.shared.roles == nil {
-            getUserRoles(completionHandler: { _ in
-                DispatchQueue.main.async { self.configureUI() }
-            })
-        }
-    }
-    
     func configureUI() {
         
         guard let offer = offer else { return }
@@ -158,23 +149,6 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         
         sender.isSelected = !sender.isSelected
         self.performAddOrRemovefavoritesRequest(offerId: offer.id)
-    }
-    
-    private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
-        
-        self.loadingView.startAnimating()
-        UserInfoService().getRoles(completionHandler: { result in
-            self.loadingView.stopAnimating()
-            switch result {
-                
-            case .failure(let error):
-                completionHandler(ServiceResult.failure(error))
-                
-            case .success(let userRoles):
-                UserManager.shared.roles = userRoles as? [UserRoles]
-                completionHandler(ServiceResult.success(true))
-            }
-        })
     }
 
     private func updateCountryOverlay(visible: Bool) {
