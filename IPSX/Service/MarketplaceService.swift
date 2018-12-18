@@ -358,6 +358,7 @@ class MarketplaceService {
                         var lockedOnIPs: [String] = []
                         
                         let id = proxy["proxy_item_id"].intValue
+                        let pacId = proxy["id"].intValue
                         let status = proxy["status"].stringValue
                         let usage = proxy["usage"].stringValue
                         
@@ -378,7 +379,7 @@ class MarketplaceService {
                         if let optionalIPs = proxy["user_optional_ip"].arrayObject as? [String] {
                             lockedOnIPs.append(contentsOf: optionalIPs)
                         }
-                        order.addProxyDetails(forProxyId: id, lockedOnIPs: lockedOnIPs, usage: usage, status: status, startDate: startDate, endDate: endDate, createdDate: createdDate)
+                        order.addProxyDetails(forProxyId: id, pacId: pacId, lockedOnIPs: lockedOnIPs, usage: usage, status: status, startDate: startDate, endDate: endDate, createdDate: createdDate, createdAtString: createdString)
                     }
                 }
                 orders.append(order)
