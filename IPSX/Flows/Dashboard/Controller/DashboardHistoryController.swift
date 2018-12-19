@@ -42,6 +42,7 @@ class DashboardHistoryController: UIViewController {
     fileprivate let detailsSegueID = "DetailsSegueID"
     
     private let orderSegueID = "OrderSegueID"
+    private var daysTobeConsideredOlder: Int = 7
     
     var selectedOffer: Offer?
     var shouldRefreshIp = true
@@ -150,11 +151,23 @@ extension DashboardHistoryController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //TODO: Implement the proper condtion for Histroy section
-        if [0, 3, 7].contains(section) {
+
+        let order = orders[section]
+        let prevOrder = section > 0 ? orders[section - 1] : orders[section]
+        
+        let diffInDays = Calendar.current.dateComponents([.day], from: order.created, to: Date()).day ?? 0
+        let diffInDaysPrev = Calendar.current.dateComponents([.day], from: prevOrder.created, to: Date()).day ?? 0
+        
+        switch (section, diffInDays, diffInDaysPrev) {
+        case (0, 0...daysTobeConsideredOlder, _):
             return 78
+        case (0, daysTobeConsideredOlder + 1...Int.max, _):
+            return 78
+        case (1...Int.max, daysTobeConsideredOlder + 1...Int.max, daysTobeConsideredOlder):
+            return 78
+        default:
+            return 38
         }
-        return section == 0 ? 50 : 38
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -167,12 +180,22 @@ extension DashboardHistoryController: UITableViewDataSource {
             print("Tapped header: \(section)")
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
         }
-        //TODO: Implement the proper condtion for Histroy section
+        
         let order = orders[section]
+        let prevOrder = section > 0 ? orders[section - 1] : orders[section]
         let orderTitle =  "Order".localized + " #\(order.id)"
-        if [0, 3, 7].contains(section) {
-            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week", orderNumber: orderTitle)
-        } else {
+        
+        let diffInDays = Calendar.current.dateComponents([.day], from: order.created, to: Date()).day ?? 0
+        let diffInDaysPrev = Calendar.current.dateComponents([.day], from: prevOrder.created, to: Date()).day ?? 0
+
+        switch (section, diffInDays, diffInDaysPrev) {
+        case (0, 0...daysTobeConsideredOlder, _):
+            cell?.updateCell(sectionIndex: section, historyTitle: "Last Week".localized, orderNumber: orderTitle)
+        case (0, daysTobeConsideredOlder + 1...Int.max, _):
+            cell?.updateCell(sectionIndex: section, historyTitle: "Older Than \(daysTobeConsideredOlder) Days".localized, orderNumber: orderTitle)
+        case (1...Int.max, daysTobeConsideredOlder + 1...Int.max, daysTobeConsideredOlder):
+            cell?.updateCell(sectionIndex: section, historyTitle: "Older".localized, orderNumber: orderTitle)
+        default:
             cell?.updateCell(sectionIndex: section, orderNumber: orderTitle)
         }
         
