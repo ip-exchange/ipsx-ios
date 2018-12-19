@@ -156,9 +156,6 @@ class DashboardDetailsController: UIViewController {
         if segue.identifier == "ShowrefundSegueID" {
             let dest = segue.destination as? RefundRequestController
             dest?.proxy = currentProxy
-            let price: Double = Double(offer?.priceIPSX ?? "0") ?? 0
-            let proxies: Double = Double(offer?.proxies.count ?? 1)
-            dest?.amount = price / proxies
         }
     }
     

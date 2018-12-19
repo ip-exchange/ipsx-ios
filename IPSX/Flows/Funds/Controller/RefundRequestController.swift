@@ -13,7 +13,6 @@ class RefundRequestController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var refundTitleLabel: UILabel!
-    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var proxyTitle: UILabel!
     
@@ -37,7 +36,6 @@ class RefundRequestController: UIViewController {
     var topConstraint: NSLayoutConstraint?
 
     var proxy: Proxy?
-    var amount: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +102,6 @@ class RefundRequestController: UIViewController {
         
         reasonTextView.becomeFirstResponder()
         reasonTextView.text = ""
-        amountLabel.text = amount.cleanString
         proxyTitle.text = "Refund for Proxy #\(String(describing: validProxy.pacId))".localized
     }
 

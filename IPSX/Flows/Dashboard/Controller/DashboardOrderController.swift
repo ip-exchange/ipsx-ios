@@ -21,7 +21,7 @@ class DashboardOrderController: UIViewController {
     @IBOutlet weak var startHourLabel: UILabel!
     @IBOutlet weak var offersCounter: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
@@ -40,7 +40,7 @@ class DashboardOrderController: UIViewController {
     
     var offers: [Offer] = [] {
         didSet {
-            DispatchQueue.main.async { self.tableView.reloadData() }
+            DispatchQueue.main.async { self.tableView?.reloadData() }
         }
     }
     var errorMessage: String? {
