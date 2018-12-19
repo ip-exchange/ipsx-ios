@@ -16,6 +16,22 @@ class Order {
     var offers: [Offer] = []
     var summary: Summary?
     
+    var validForDashboard: Bool {
+        for offer in offers {
+            for proxy in offer.proxies {
+                if let validState = proxy.status {
+                switch validState {
+                case "active":      return true
+                case "unavailable": return true
+                case "pending":     return true
+                default: break
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
     init(id: Int, created: Date, status: String) {
         
         self.id  = id

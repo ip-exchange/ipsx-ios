@@ -27,6 +27,10 @@ class DashboardHistoryController: UIViewController {
             DispatchQueue.main.async { self.tableView?.reloadData() }
         }
     }
+    var ordersDatasource: [Order] {
+        return orders.filter { $0.validForDashboard == false }
+    }
+
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -136,24 +140,24 @@ class DashboardHistoryController: UIViewController {
 extension DashboardHistoryController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return orders.count
+        return ordersDatasource.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orders[section].offers.count
+        return ordersDatasource[section].offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
-        cell.configure(offer: orders[indexPath.section].offers[indexPath.row])
+        cell.configure(offer: ordersDatasource[indexPath.section].offers[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 
-        let order = orders[section]
-        let prevOrder = section > 0 ? orders[section - 1] : orders[section]
+        let order = ordersDatasource[section]
+        let prevOrder = section > 0 ? ordersDatasource[section - 1] : ordersDatasource[section]
         
         let diffInDays = Calendar.current.dateComponents([.day], from: order.created, to: Date()).day ?? 0
         let diffInDaysPrev = Calendar.current.dateComponents([.day], from: prevOrder.created, to: Date()).day ?? 0
@@ -181,8 +185,8 @@ extension DashboardHistoryController: UITableViewDataSource {
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
         }
         
-        let order = orders[section]
-        let prevOrder = section > 0 ? orders[section - 1] : orders[section]
+        let order = ordersDatasource[section]
+        let prevOrder = section > 0 ? ordersDatasource[section - 1] : ordersDatasource[section]
         let orderTitle =  "Order".localized + " #\(order.id)"
         
         let diffInDays = Calendar.current.dateComponents([.day], from: order.created, to: Date()).day ?? 0
@@ -206,7 +210,7 @@ extension DashboardHistoryController: UITableViewDataSource {
 extension DashboardHistoryController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedOffer = orders[indexPath.section].offers[indexPath.row]
+        selectedOffer = ordersDatasource[indexPath.section].offers[indexPath.row]
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.detailsSegueID, sender: self) }
     }
 }

@@ -29,6 +29,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
             DispatchQueue.main.async { self.tableView.reloadData() }
         }
     }
+    var ordersDatasource: [Order] {
+        return orders.filter { $0.validForDashboard }
+    }
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -246,7 +250,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
             case .success(let orders):
                 DispatchQueue.main.async {
                     self.orders = orders as? [Order] ?? []
-                    self.noDataView.isHidden = self.orders.count > 0
+                    self.noDataView.isHidden = self.ordersDatasource.count > 0
                 }
                 
             case .failure(let error):
@@ -287,17 +291,17 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
 extension DashboardController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return orders.count
+        return ordersDatasource.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return orders[section].offers.count
+        return ordersDatasource[section].offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! DashboardCell
-        cell.configure(offer: orders[indexPath.section].offers[indexPath.row])
+        cell.configure(offer: ordersDatasource[indexPath.section].offers[indexPath.row])
         return cell
     }
     
@@ -320,10 +324,10 @@ extension DashboardController: UITableViewDataSource {
         if section > 0 {
             cell?.labelesTopConstraint?.constant -= 12
         }
-        let orderNumber = "Order".localized + " #\(orders[section].id)"
+        let orderNumber = "Order".localized + " #\(ordersDatasource[section].id)"
         cell?.updateCell(sectionIndex: section, orderNumber: orderNumber)
         cell?.onTap = { section in
-            self.selectedOrder = self.orders[section]
+            self.selectedOrder = self.ordersDatasource[section]
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self) }
         }
         return cell
@@ -334,7 +338,7 @@ extension DashboardController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 { shouldShowOrderHint = false }
-        selectedOffer = orders[indexPath.section].offers[indexPath.row]
+        selectedOffer = ordersDatasource[indexPath.section].offers[indexPath.row]
         DispatchQueue.main.async { self.performSegue(withIdentifier: self.detailsSegueID, sender: self) }
     }
 }
