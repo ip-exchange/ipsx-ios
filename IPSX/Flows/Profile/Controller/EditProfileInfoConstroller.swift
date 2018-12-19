@@ -46,6 +46,7 @@ class EditProfileInfoConstroller: UIViewController {
     
     private var searchController: SearchViewController?
     private var backFromSearch = false
+    private var newSelectedCountry: String?
     
     let countrySelectionID  = "SearchSegueID"
     
@@ -108,6 +109,10 @@ class EditProfileInfoConstroller: UIViewController {
         detectChangesAndValidity()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         retrieveUserInfo()
     }
     
@@ -153,7 +158,9 @@ class EditProfileInfoConstroller: UIViewController {
             self.lastNameTextField.text    = userInfo?.lastName
             self.telegramTextField.text    = userInfo?.telegram
         }
-        self.selectedCountryLabel.text = countryName ?? "Select a country".localized
+        if self.newSelectedCountry == nil {
+            self.selectedCountryLabel.text = countryName ?? "Select a country".localized
+        }
     }
     
     private func detectChangesAndValidity(textfield: UITextField? = nil, newText: String = "") {
@@ -365,6 +372,7 @@ class EditProfileInfoConstroller: UIViewController {
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
             srcController.onCountrySelected = { selectedCountry in
                 self.selectedCountryLabel.text = selectedCountry
+                self.newSelectedCountry = selectedCountry
             }
             backFromSearch = true
             srcController.dismissOnSelect = true
