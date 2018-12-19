@@ -60,11 +60,18 @@ class RefundRequestController: UIViewController {
     }
     
     @IBAction func requestRefundAction(_ sender: Any) {
+        
+        guard reasonTextView.text.count >= 10, reasonTextView.text.count <= 1000 else {
+            let toastText = "The reason must be at least 10 characters, maximum 1000.".localized
+            toast?.showToastAlert(toastText, autoHideAfter: 5, type: .error, dismissable: true)
+            return
+        }
+        
         submitRefund()
     }
     
     @IBAction func closeAction(_ sender: Any) {
-        dismiss(animated: true)
+         dismiss(animated: true)
     }
     
     private func submitRefund() {
@@ -83,7 +90,7 @@ class RefundRequestController: UIViewController {
                     }
                     
                 case .failure(let error):
-                    self.handleError(error, requestType: RequestType.getRefundsList, completion: {
+                    self.handleError(error, requestType: RequestType.createRefund, completion: {
                         self.submitRefund()
                     })
                 }
@@ -131,15 +138,7 @@ extension RefundRequestController: ErrorPresentable {
             })
             
         default:
-            
-            switch requestType {
-            case RequestType.userInfo, RequestType.getEthAddress:
-                self.errorMessage = "Refresh Data Error Message".localized
-            case RequestType.deleteEthAddress:
-                self.errorMessage = "ETH Address Delete Failed Error Message".localized
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

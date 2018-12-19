@@ -205,7 +205,9 @@ class DashboardDetailsController: UIViewController {
         
         self.trafficLabel.text = offer.trafficMB + " MB"
         self.durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
-        self.refundButton.isEnabled = true
+        
+        let refundRequested: Bool = proxy?.hasRequestedRefund ?? false
+        self.refundButton.isEnabled = !refundRequested
         
         var pos = 0
         for lockedIp in validProxy.lockedOnIPs ?? ["---.---.---.---"] {
