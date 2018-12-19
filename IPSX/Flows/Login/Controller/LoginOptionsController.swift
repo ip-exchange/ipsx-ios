@@ -98,7 +98,7 @@ class LoginOptionsController: UIViewController {
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                    self.performSegue(withIdentifier: "UnwindToLoadingView", sender: nil)
                 }
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getEthAddress)

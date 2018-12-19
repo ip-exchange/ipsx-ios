@@ -110,6 +110,7 @@ class EditProfileController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         keyIconImageView.tintColor = .lightBlue
+        configureUI()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -125,9 +126,9 @@ class EditProfileController: UIViewController {
         createToastAlert(onTopOf: separatorView, text: "Saved".localized)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         
         getCompanyDetails() {
             self.updateLegalStatusUI()

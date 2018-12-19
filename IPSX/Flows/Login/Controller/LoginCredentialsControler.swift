@@ -81,7 +81,7 @@ class LoginCredentialsControler: UIViewController {
                 UserManager.shared.ethAddresses = ethAddresses as? [EthAddress]
                 
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showDashboardSegueID", sender: nil)
+                    self.performSegue(withIdentifier: "UnwindToLoadingView", sender: nil)
                 }
             case .failure(_):
                 self.errorMessage = "Generic Error Message".localized

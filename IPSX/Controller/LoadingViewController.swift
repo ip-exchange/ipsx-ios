@@ -279,6 +279,10 @@ class LoadingViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+     @IBAction func unwindToLoadingView(segue:UIStoryboardSegue) {
+        self.progressView.progress = 0
+    }
 }
 
 extension LoadingViewController: ToastAlertViewPresentable {
