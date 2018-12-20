@@ -86,7 +86,7 @@ class MarketplaceService {
             let status      = proxyJson["resource"]["status"].stringValue
             let proxyID     = proxyJson["id"].intValue
             let countryName = proxyJson["resource"]["location"]["country"][0]["name"].stringValue
-            let flagUrlName = proxyJson["resource"]["location"]["country_flag"].stringValue
+            let flagUrlName = proxyJson["resource"]["location"]["country"][0]["flag"].stringValue
             let sla         = proxyJson["resource"]["sla"].intValue
             let ipType      = proxyJson["resource"]["ip_version"].intValue
             let proxyType   = proxyJson["resource"]["resource_type"].stringValue
