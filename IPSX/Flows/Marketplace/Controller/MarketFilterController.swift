@@ -9,6 +9,9 @@
 import UIKit
 
 struct FilterKeys {
+    
+    static let unavailableOffers = (root: "show_unavailable_offers")
+    
     //root keys for sort and location
     static let sort     = (root: "sort", criteria: "order_by", order: "order", row : "sort_row")
     static let location = (root: "location")
@@ -47,6 +50,7 @@ struct FilterKeys {
 
 class MarketFilterController: UIViewController {
     
+    @IBOutlet weak var unavailableOffers: UISwitch!
     @IBOutlet weak var activeFiltersConterLabel: UILabel?
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollContentView: UIView!
@@ -168,6 +172,8 @@ class MarketFilterController: UIViewController {
         selectedSortOptionLabel.text = FilterKeys.sortingOptions[defaultSortIndex].title
         sortPickerView.selectRow(defaultSortIndex, inComponent: 0, animated: true)
         filtersDictionary.removeValue(forKey: FilterKeys.sort.root)
+        filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers.root)
+        unavailableOffers.setOn(false, animated: true)
     }
     
     @IBAction func applyFilters(_ sender: Any) {
@@ -249,7 +255,19 @@ class MarketFilterController: UIViewController {
         }
     }
 
+    @IBAction func showUnavailableOffers(_ sender: UISwitch) {
+        if sender.isOn {
+            filtersDictionary[FilterKeys.unavailableOffers.root] = sender.isOn
+        } else {
+            filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers.root)
+        }
+    }
+    
     private func loadFilterValues() {
+        
+        if let unavOffers = filtersDictionary[FilterKeys.unavailableOffers.root] as? Bool {
+            unavailableOffers.setOn(unavOffers, animated: false)
+        }
         if let selCountries = filtersDictionary[FilterKeys.location.root] as? [String], selCountries.count > 0 {
             selectedCountries = selCountries
         }
