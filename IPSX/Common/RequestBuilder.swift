@@ -115,15 +115,15 @@ public struct Url {
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
     
     // PROD ENV:
-    public static let basePRODApi    = "TBD" //TODO: Define prod env
-    public static let pacBaseUrlPROD = "TBD" //TODO: Define prod env
+    public static let basePRODApi    = "https://api.ip.sx/api"
+    public static let pacBaseUrlPROD = "https://app.ip.sx/order/proxy/pac/"
 
     public static var baseUrl: String {
         get {
             switch environment {
             case .dev:  return "https://app.dev.ip.sx"
             case .demo: return "https://demo.ip.sx"
-            case .prod: return "TBD" //TODO: Define prod env
+            case .prod: return "https://app.ip.sx"
             }
         }
     }
