@@ -32,7 +32,11 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         }
     }
     var ordersDatasource: [Order] {
-        return orders.filter { $0.validForDashboard }
+        let filtered = orders.filter { $0.validForDashboard }
+        if filtered.count == 0, orders.count > 0 {
+            return Array(orders.prefix(min(3, orders.count)))
+        }
+        return filtered
     }
     
     var errorMessage: String? {
