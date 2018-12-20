@@ -49,6 +49,8 @@ class DashboardDetailsController: UIViewController {
     private var currentProxy: Proxy?
     
     fileprivate let reuseIdentifier = "DashboardtemCell"
+    private var viewRefundSegue = "ViewRefundDetailsSegue"
+    
     var offer: Offer?
     
     private var firstProxyLoaded = false
@@ -123,6 +125,7 @@ class DashboardDetailsController: UIViewController {
     }
     
     @IBAction func refundInfoViewAction(_ sender: Any) {
+        self.performSegue(withIdentifier: self.viewRefundSegue, sender: self)
     }
     
     @IBAction func openSettingsAction(_ sender: Any) {
@@ -160,6 +163,10 @@ class DashboardDetailsController: UIViewController {
                 self.refundInfoTopConstraint.constant = 16
                 self.view.layoutIfNeeded()
             }
+        }
+        if segue.identifier == viewRefundSegue {
+            let dest = segue.destination as? RefundDetailsController
+            //TODO (CVI): Pass data here
         }
     }
     
