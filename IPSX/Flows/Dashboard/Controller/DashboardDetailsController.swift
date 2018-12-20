@@ -37,6 +37,10 @@ class DashboardDetailsController: UIViewController {
     @IBOutlet weak var lockedOnIp3Label: UILabel!
     
     @IBOutlet weak var refundButton: RoundedButton!
+    @IBOutlet weak var refundButtonTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var refundInfoHolderView: RoundedView!
+    @IBOutlet weak var refundInfoTopConstraint: NSLayoutConstraint!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -106,15 +110,6 @@ class DashboardDetailsController: UIViewController {
         }
     }
     
-    private func slaToDisplay(proxies: [Proxy]) -> Int {
-        
-        var slaTotal: Int = 0
-        for proxy in proxies {
-            slaTotal += proxy.sla
-        }
-        return slaTotal / proxies.count
-    }
-    
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -125,6 +120,9 @@ class DashboardDetailsController: UIViewController {
 
     @IBAction func refundAction(_ sender: Any) {
         self.performSegue(withIdentifier: "ShowrefundSegueID", sender: self)
+    }
+    
+    @IBAction func refundInfoViewAction(_ sender: Any) {
     }
     
     @IBAction func openSettingsAction(_ sender: Any) {
@@ -156,12 +154,22 @@ class DashboardDetailsController: UIViewController {
         if segue.identifier == "ShowrefundSegueID" {
             let dest = segue.destination as? RefundRequestController
             dest?.proxy = currentProxy
+            dest?.onRefundSuccess = {
+                self.currentProxy?.hasRequestedRefund = true
+                self.refundButtonTopConstraint.constant = -100
+                self.refundInfoTopConstraint.constant = 16
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
     fileprivate func updateHeaderWithProxy(_ proxy: Proxy?, animated: Bool = true) {
         
         currentProxy = proxy
+        refundInfoTopConstraint.constant = -100
+        refundButtonTopConstraint.constant = -100
+        
+        if animated { UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() } }
         
         if animated {
             self.lockedOnIp1Label.labelTransition(0.15)
@@ -174,8 +182,6 @@ class DashboardDetailsController: UIViewController {
         }
         
         guard let validProxy = proxy, let offer = offer else {
-            self.refundButton.isEnabled = false
-            
             self.lockedOnIp1Label.text = "---.---.---.---"
             self.lockedOnIp2Label.text = ""
             self.lockedOnIp3Label.text = ""
@@ -203,8 +209,19 @@ class DashboardDetailsController: UIViewController {
         self.trafficLabel.text = offer.trafficMB + " MB"
         self.durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         
-        let refundRequested: Bool = proxy?.hasRequestedRefund ?? false
-        self.refundButton.isEnabled = !refundRequested
+        if let endDate = validProxy.endDate {
+            let refundRequested: Bool = proxy?.hasRequestedRefund ?? false
+            if refundRequested {
+                refundInfoTopConstraint.constant = 16
+            }
+            let daysToRefund: Int = Int(UserManager.shared.generalSettings?.proxyDaysRefund ?? "0") ?? 0
+            let diffInDays = Calendar.current.dateComponents([.day], from: endDate, to: Date()).day ?? 0
+            if !refundRequested && diffInDays <= daysToRefund {
+                refundButtonTopConstraint.constant = 24
+                refundButton.isEnabled = true
+            }
+            if animated { UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() } }
+        }
         
         var pos = 0
         for lockedIp in validProxy.lockedOnIPs ?? ["---.---.---.---"] {

@@ -22,7 +22,9 @@ class Order {
                 if let validState = proxy.status {
                 switch validState {
                 case "active":      return true
-                case "unavailable": return true
+                case "unavailable":
+                    let diffInDays = Calendar.current.dateComponents([.day], from: created, to: Date()).day ?? 0
+                    return diffInDays < 2
                 case "pending":     return true
                 default: break
                     }

@@ -84,8 +84,7 @@ class DashboardOrderController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        titleLabel.text = "Order".localized + " #\(order?.id ?? 0)"
-        
+        updateUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,6 +95,27 @@ class DashboardOrderController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    private func updateUI() {
+        titleLabel.text = "Order".localized + " #\(order?.id ?? 0)"
+        let tailString = offers.count == 1 ? "offer".localized : "offers".localized
+        offersCounter.text = "\(offers.count) " + tailString
+        
+        headerSubtotalLabel.text = "\(order?.summary?.ipsxSubtotal.cleanString ?? "0")"
+        headerVATLabel.text      = "\(order?.summary?.ipsxVat.cleanString ?? "0")"
+        headerTotalLabel.text    = "\(order?.summary?.ipsxTotal.cleanString ?? "0")"
+        
+        if let createdDate = order?.created {
+            
+            let dateFormatter = DateFormatter()
+            let dateFormat = "dd MMM yyyy"
+            let hourFormat = "HH:mm"
+            dateFormatter.dateFormat = dateFormat
+            startDateLabel.text = dateFormatter.string(from: createdDate)
+            dateFormatter.dateFormat = hourFormat
+            startHourLabel.text = dateFormatter.string(from: createdDate)
+        }
     }
     
     func updateReachabilityInfo() {

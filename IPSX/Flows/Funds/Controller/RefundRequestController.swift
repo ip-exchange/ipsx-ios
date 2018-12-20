@@ -34,7 +34,8 @@ class RefundRequestController: UIViewController {
 
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
+    var onRefundSuccess:(()->())?
+    
     var proxy: Proxy?
     
     override func viewDidLoad() {
@@ -83,8 +84,11 @@ class RefundRequestController: UIViewController {
                 DispatchQueue.main.async { self.loadingView.stopAnimating() }
                 switch result {
                 case .success(_):
+                    self.proxy?.hasRequestedRefund = true
                     DispatchQueue.main.async {
-                         self.dismiss(animated: true)
+                        self.dismiss(animated: true) {
+                            self.onRefundSuccess?()
+                        }
                     }
                     
                 case .failure(let error):

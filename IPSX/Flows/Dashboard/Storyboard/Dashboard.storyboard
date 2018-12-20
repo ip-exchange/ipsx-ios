@@ -381,9 +381,80 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdn-kE-p30" userLabel="Refund" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="101" y="402" width="173" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="CH9-Qu-iZh"/>
+                                    <constraint firstAttribute="width" constant="173" id="zHX-Dz-HRZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Refund">
+                                    <color key="titleColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="refundAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="Akj-q5-ovK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WvD-hh-NCW" userLabel="Refund View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="15" y="402" width="345" height="49"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="sr4-Ci-rQ9">
+                                        <rect key="frame" x="17" y="16.666666666666686" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="SC6-Yg-Omd"/>
+                                            <constraint firstAttribute="width" constant="16" id="gx7-li-3az"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="A refund has been requested for this proxy" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ykt-IF-lgI">
+                                        <rect key="frame" x="50" y="7.9999999999999982" width="144.66666666666666" height="31.333333333333329"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdV-Ow-ccD">
+                                        <rect key="frame" x="198.66666666666663" y="0.0" width="129.33333333333337" height="49"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <state key="normal" title="VIEW REFUND">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="refundInfoViewAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="9Mr-mw-2Gy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="centerY" secondItem="WvD-hh-NCW" secondAttribute="centerY" id="0Ig-gb-guw"/>
+                                    <constraint firstAttribute="height" constant="49" id="2Sa-F1-N0R"/>
+                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="leading" secondItem="ykt-IF-lgI" secondAttribute="trailing" constant="4" id="Ahh-Ny-YQ9"/>
+                                    <constraint firstAttribute="trailing" secondItem="FdV-Ow-ccD" secondAttribute="trailing" constant="17" id="MM8-vU-Pt9"/>
+                                    <constraint firstItem="sr4-Ci-rQ9" firstAttribute="centerY" secondItem="WvD-hh-NCW" secondAttribute="centerY" id="UiP-ek-LyL"/>
+                                    <constraint firstItem="sr4-Ci-rQ9" firstAttribute="leading" secondItem="WvD-hh-NCW" secondAttribute="leading" constant="17" id="Zr5-5w-9GX"/>
+                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="top" secondItem="WvD-hh-NCW" secondAttribute="top" constant="8" id="cUM-Oq-TDk"/>
+                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="leading" secondItem="sr4-Ci-rQ9" secondAttribute="trailing" constant="17" id="hvV-7f-mit"/>
+                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="height" secondItem="WvD-hh-NCW" secondAttribute="height" id="jf8-jD-ajg"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wry-z4-0vl">
                                 <rect key="frame" x="-22.666666666666657" y="314" width="420.33333333333326" height="188"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="420" id="eAe-0d-pkO"/>
                                     <constraint firstAttribute="height" constant="188" id="fAN-Z0-NWk"/>
@@ -588,31 +659,6 @@
                                     <outlet property="delegate" destination="uMo-jK-dNo" id="qDm-0d-XRC"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdn-kE-p30" userLabel="Refund" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="101" y="526" width="173" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="CH9-Qu-iZh"/>
-                                    <constraint firstAttribute="width" constant="173" id="zHX-Dz-HRZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Refund">
-                                    <color key="titleColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <state key="disabled">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="NO"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="refundAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="Akj-q5-ovK"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Tz-9X-Xrg" userLabel="Open Settings Overlay">
                                 <rect key="frame" x="0.0" y="-11" width="375" height="834"/>
                                 <subviews>
@@ -777,17 +823,20 @@
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="trailing" secondItem="OYH-0i-PEh" secondAttribute="trailing" id="2gR-He-X9V"/>
                             <constraint firstItem="e09-DZ-6pU" firstAttribute="centerX" secondItem="zj7-hY-IZ8" secondAttribute="centerX" id="EEN-9H-0EQ"/>
                             <constraint firstItem="Wry-z4-0vl" firstAttribute="top" secondItem="e09-DZ-6pU" secondAttribute="bottom" constant="14.5" id="KtS-gf-iqW"/>
+                            <constraint firstItem="WvD-hh-NCW" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="-100" id="NVE-b4-NMW"/>
                             <constraint firstItem="0Tz-9X-Xrg" firstAttribute="leading" secondItem="Ogi-jV-lGF" secondAttribute="leading" id="Ooi-WL-Myd"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="top" secondItem="OYH-0i-PEh" secondAttribute="top" constant="50" id="QLO-1l-mEO"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="leading" secondItem="OYH-0i-PEh" secondAttribute="leading" id="RgE-RO-Bta"/>
                             <constraint firstItem="fdn-kE-p30" firstAttribute="centerX" secondItem="Ogi-jV-lGF" secondAttribute="centerX" id="TEL-De-nCl"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="top" secondItem="0Tz-9X-Xrg" secondAttribute="top" constant="55" id="Uew-Mp-XVS"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="trailing" secondItem="OYH-0i-PEh" secondAttribute="trailing" id="UxK-s9-wHX"/>
+                            <constraint firstItem="WvD-hh-NCW" firstAttribute="leading" secondItem="Ogi-jV-lGF" secondAttribute="leading" constant="15" id="bhC-JX-9Tc"/>
                             <constraint firstItem="0Tz-9X-Xrg" firstAttribute="bottom" secondItem="Ogi-jV-lGF" secondAttribute="bottom" constant="45" id="ccO-FQ-eEP"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="trailing" secondItem="0Tz-9X-Xrg" secondAttribute="trailing" id="i6O-yx-J96"/>
                             <constraint firstItem="Wry-z4-0vl" firstAttribute="centerX" secondItem="e09-DZ-6pU" secondAttribute="centerX" id="l66-uG-3OG"/>
+                            <constraint firstItem="WvD-hh-NCW" firstAttribute="trailing" secondItem="Ogi-jV-lGF" secondAttribute="trailing" constant="-15" id="nGY-fs-z9a"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="top" secondItem="OYH-0i-PEh" secondAttribute="bottom" id="qbA-F1-jb1"/>
-                            <constraint firstItem="fdn-kE-p30" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="24" id="r5a-UT-FSQ"/>
+                            <constraint firstItem="fdn-kE-p30" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="-100" id="r5a-UT-FSQ"/>
                             <constraint firstItem="e09-DZ-6pU" firstAttribute="top" secondItem="zj7-hY-IZ8" secondAttribute="bottom" constant="24" id="smJ-4s-tuk"/>
                             <constraint firstItem="OYH-0i-PEh" firstAttribute="leading" secondItem="Ogi-jV-lGF" secondAttribute="leading" id="z9E-bA-SxK"/>
                         </constraints>
@@ -812,6 +861,9 @@
                         <outlet property="openSettingsCenterConstraint" destination="co1-y3-Ju8" id="Bc7-oU-zcA"/>
                         <outlet property="openSettingsOverlayView" destination="0Tz-9X-Xrg" id="VbU-fQ-gYw"/>
                         <outlet property="refundButton" destination="fdn-kE-p30" id="waX-6C-s2G"/>
+                        <outlet property="refundButtonTopConstraint" destination="r5a-UT-FSQ" id="vzd-qg-QqS"/>
+                        <outlet property="refundInfoHolderView" destination="WvD-hh-NCW" id="bLP-Ou-y00"/>
+                        <outlet property="refundInfoTopConstraint" destination="NVE-b4-NMW" id="aYb-Me-8A3"/>
                         <outlet property="topBarView" destination="OYH-0i-PEh" id="gcO-v6-kPa"/>
                         <outlet property="trafficLabel" destination="rUf-gj-aQq" id="eoF-yK-64W"/>
                         <outlet property="trafficRemainedLabel" destination="kgu-ib-MUt" id="p0W-zL-fr5"/>
@@ -1313,7 +1365,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20,200.50" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1r-A3-ext">
-                                                    <rect key="frame" x="237" y="42" width="70" height="17"/>
+                                                    <rect key="frame" x="241" y="42" width="70" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="0.74771676939999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1363,7 +1415,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="oJS-L7-IrE" secondAttribute="bottom" constant="43" id="fBQ-5h-GmI"/>
                                                 <constraint firstItem="cQQ-b5-ZJ2" firstAttribute="top" secondItem="Iyo-gj-ofg" secondAttribute="top" constant="15" id="h6M-kp-a0h"/>
                                                 <constraint firstAttribute="height" constant="113" id="hdD-BS-xOX"/>
-                                                <constraint firstItem="UMt-0H-Wza" firstAttribute="leading" secondItem="n1r-A3-ext" secondAttribute="trailing" constant="12" id="l8x-ic-My3"/>
+                                                <constraint firstItem="UMt-0H-Wza" firstAttribute="leading" secondItem="n1r-A3-ext" secondAttribute="trailing" constant="8" id="l8x-ic-My3"/>
                                                 <constraint firstItem="Gzb-gV-4DB" firstAttribute="leading" secondItem="h3z-rW-SKj" secondAttribute="trailing" constant="8" id="mWQ-9O-Don"/>
                                                 <constraint firstAttribute="trailing" secondItem="z7H-FB-XBn" secondAttribute="trailing" constant="10" id="vRM-bB-LpV"/>
                                                 <constraint firstItem="tyv-ZU-f1Z" firstAttribute="leading" secondItem="Qj5-yb-41W" secondAttribute="leading" id="vag-LU-PfT"/>
@@ -1713,6 +1765,7 @@
         <image name="clock" width="14" height="14.333333015441895"/>
         <image name="cloudComputing" width="17" height="14"/>
         <image name="inclinedPaperPlane" width="17.666666030883789" height="14.333333015441895"/>
+        <image name="infoWhite" width="28" height="28"/>
         <image name="internet" width="16.666666030883789" height="16.666666030883789"/>
         <image name="ipsxIcon" width="16" height="16"/>
         <image name="server" width="18.333333969116211" height="16.666666030883789"/>

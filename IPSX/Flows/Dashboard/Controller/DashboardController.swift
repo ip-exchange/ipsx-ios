@@ -16,6 +16,8 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var noDataView: UIView!
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var customTabBar: CustomTabBar!
 
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
@@ -251,6 +253,7 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
                 DispatchQueue.main.async {
                     self.orders = orders as? [Order] ?? []
                     self.noDataView.isHidden = self.ordersDatasource.count > 0
+                    self.noDataLabel.text = self.orders.count == 0 ? "Go to Marketplace and rent your first proxy.".localized : "Go to Marketplace and rent a new proxy.".localized
                 }
                 
             case .failure(let error):

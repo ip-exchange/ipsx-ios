@@ -49,6 +49,7 @@ class DashboardHistoryController: UIViewController {
     private var daysTobeConsideredOlder: Int = 7
     
     var selectedOffer: Offer?
+    var selectedOrder: Order?
     var shouldRefreshIp = true
     
     override func viewDidLoad() {
@@ -132,6 +133,10 @@ class DashboardHistoryController: UIViewController {
             let detailsController = segue.destination as? DashboardDetailsController
             detailsController?.offer = selectedOffer
         }
+        if segue.identifier == orderSegueID {
+            let detailsController = segue.destination as? DashboardOrderController
+            detailsController?.order = selectedOrder
+        }
     }
     
 }
@@ -181,7 +186,7 @@ extension DashboardHistoryController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
         cell?.onTap = { section in
-            print("Tapped header: \(section)")
+            self.selectedOrder = self.ordersDatasource[section]
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
         }
         
