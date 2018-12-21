@@ -229,7 +229,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 
                 let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
                 if self.normalisedFiltersDictionary.values.count == 0  {
-                    ProxyManager.shared.allOffers = data?.offers
+                    ProxyManager.shared.allOffers = data?.offers ?? []
                 }
                 //TODO: Append (if append, let validOffers = data?.offers) is for test purposes, delete it when complete
                 if append, let validOffers = data?.offers {
