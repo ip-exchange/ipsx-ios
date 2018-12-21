@@ -85,6 +85,7 @@ class FundsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
+        retrieveUserInfo()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,8 +151,8 @@ class FundsViewController: UIViewController {
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                self.refreshProfileUI()
-                
+                DispatchQueue.main.async { self.refreshProfileUI() }
+
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.userInfo, completion: {
                     self.retrieveUserInfo()
