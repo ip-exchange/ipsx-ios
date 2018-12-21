@@ -88,6 +88,7 @@ class RefundListController: UIViewController {
         if segue.identifier == "RefundDetailsSegueID" {
             let dest = segue.destination as? RefundDetailsController
             dest?.refund = selectedRefund
+            dest?.hideProxButton = false
         }
     }
 }

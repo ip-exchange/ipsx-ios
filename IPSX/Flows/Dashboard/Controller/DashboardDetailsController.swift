@@ -26,6 +26,9 @@ class DashboardDetailsController: UIViewController {
         }
     }
     
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var dismissButton: UIButton!
+    
     @IBOutlet weak var openSettingsOverlayView: UIView!
     @IBOutlet weak var openSettingsCenterConstraint: NSLayoutConstraint!
 
@@ -52,6 +55,7 @@ class DashboardDetailsController: UIViewController {
     private var viewRefundSegue = "ViewRefundDetailsSegue"
     
     var offer: Offer?
+    var shouldDismiss = false
     
     private var firstProxyLoaded = false
     
@@ -81,20 +85,21 @@ class DashboardDetailsController: UIViewController {
     
     func configureUI() {
         
-        guard let offer = offer else { return }
+        backButton.isHidden = shouldDismiss
+        dismissButton.isHidden = !shouldDismiss
         
         self.openSettingsOverlayView.alpha = 0
         self.openSettingsCenterConstraint.constant = 500
         
-        let noOfProxies = offer.proxies.count
-        let proxyTypeString = offer.proxies.first?.proxyType ?? "N/A"
-        let ipTypeString = offer.proxies.first?.ipType ?? "N/A"
+        let noOfProxies = offer?.proxies.count ?? 0
+        let proxyTypeString = offer?.proxies.first?.proxyType ?? "N/A"
+        let ipTypeString = offer?.proxies.first?.ipType ?? "N/A"
         
-        trafficLabel.text = offer.trafficMB + " MB"
-        durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
+        trafficLabel.text = offer?.trafficMB ?? "0" + " MB"
+        durationLabel.text = offer?.durationMin.daysHoursMinutesFormated()
         flagImageView.image = UIImage(named: "worldPins")
         
-        countryLabel.text = offer.calculateCountryToDisplay()
+        countryLabel.text = offer?.calculateCountryToDisplay()
         
         if noOfProxies > 1 {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy items"
@@ -104,12 +109,16 @@ class DashboardDetailsController: UIViewController {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             
-            if let flagString = offer.proxies.first?.flagUrlName,
+            if let flagString = offer?.proxies.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),
                 let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
                 flagImageView.image = flagImage
             }
         }
+    }
+    
+    @IBAction func dismissAction(_ sender: Any) {
+        self.dismiss(animated: true)
     }
     
     @IBAction func backAction(_ sender: Any) {

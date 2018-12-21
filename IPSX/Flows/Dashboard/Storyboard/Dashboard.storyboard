@@ -89,6 +89,19 @@
                                             <action selector="backAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="8lv-w1-IWa"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DnW-r2-Tmu" userLabel="Close">
+                                        <rect key="frame" x="0.0" y="49" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="0F4-r1-MpG"/>
+                                            <constraint firstAttribute="width" constant="44" id="2Jd-0j-lZI"/>
+                                        </constraints>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismissAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="b7E-h0-lbp"/>
+                                        </connections>
+                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldPins" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hrH-gD-0Zr">
                                         <rect key="frame" x="70.666666666666671" y="56.666666666666657" width="18" height="18"/>
                                         <constraints>
@@ -347,6 +360,7 @@
                                     <constraint firstItem="hrH-gD-0Zr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YvN-x4-aRh" secondAttribute="trailing" constant="5" id="MUb-21-f5h"/>
                                     <constraint firstItem="yvd-3X-Pmu" firstAttribute="centerY" secondItem="OYH-0i-PEh" secondAttribute="centerY" id="Pdf-gN-XeO"/>
                                     <constraint firstItem="hh6-7f-QLk" firstAttribute="trailing" secondItem="wXj-VV-I5G" secondAttribute="trailing" id="Skr-7Z-pTz"/>
+                                    <constraint firstItem="DnW-r2-Tmu" firstAttribute="leading" secondItem="OYH-0i-PEh" secondAttribute="leading" id="U5u-Bd-bsh"/>
                                     <constraint firstAttribute="height" constant="260" id="V6K-3b-N6y"/>
                                     <constraint firstItem="nML-s6-8Gs" firstAttribute="trailing" secondItem="wXj-VV-I5G" secondAttribute="trailing" id="WWz-hW-LoH"/>
                                     <constraint firstItem="Oni-rT-6Ch" firstAttribute="centerX" secondItem="OYH-0i-PEh" secondAttribute="centerX" id="WeM-nF-4zs"/>
@@ -359,6 +373,7 @@
                                     <constraint firstItem="YvN-x4-aRh" firstAttribute="leading" secondItem="OYH-0i-PEh" secondAttribute="leading" id="fBX-E4-0zr"/>
                                     <constraint firstItem="Goi-H2-g7d" firstAttribute="top" secondItem="Oni-rT-6Ch" secondAttribute="bottom" constant="1" id="gC5-bw-pmZ"/>
                                     <constraint firstItem="9ix-Ao-ZsC" firstAttribute="leading" secondItem="OYH-0i-PEh" secondAttribute="leading" id="gRq-tZ-Tna"/>
+                                    <constraint firstItem="DnW-r2-Tmu" firstAttribute="top" secondItem="OYH-0i-PEh" secondAttribute="top" constant="49" id="gzJ-Jm-aJk"/>
                                     <constraint firstAttribute="trailing" secondItem="B0s-0C-t9H" secondAttribute="trailing" id="jGn-bt-NHt"/>
                                     <constraint firstItem="hh6-7f-QLk" firstAttribute="top" secondItem="1H8-77-3Jh" secondAttribute="bottom" constant="1" id="jti-kO-cc5"/>
                                     <constraint firstItem="yvd-3X-Pmu" firstAttribute="centerX" secondItem="OYH-0i-PEh" secondAttribute="centerX" id="nNB-Uz-7To"/>
@@ -840,8 +855,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activeStateView" destination="MdM-a3-zNM" id="rLz-Xl-YSc"/>
+                        <outlet property="backButton" destination="YvN-x4-aRh" id="5mI-FP-jpk"/>
                         <outlet property="collectionView" destination="Wry-z4-0vl" id="J0Y-32-Muu"/>
                         <outlet property="countryLabel" destination="Goi-H2-g7d" id="VYB-OQ-d2W"/>
+                        <outlet property="dismissButton" destination="DnW-r2-Tmu" id="SYw-Zh-eVn"/>
                         <outlet property="doubleProgressView" destination="hh6-7f-QLk" id="YrL-SA-qLQ"/>
                         <outlet property="durationLabel" destination="Ydh-Ec-VD4" id="gwb-zo-ZFX"/>
                         <outlet property="durationRemainedLabel" destination="wXj-VV-I5G" id="ZEL-CP-rla"/>

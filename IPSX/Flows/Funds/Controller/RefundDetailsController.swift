@@ -21,12 +21,14 @@ class RefundDetailsController: UIViewController {
     @IBOutlet weak var completedView: RoundedView!
     @IBOutlet weak var pendingView: RoundedView!
     @IBOutlet weak var canceledView: RoundedView!
-
+    @IBOutlet weak var viewProxyButton: UIButton!
+    
     var refund: Refund?
+    var hideProxButton = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewProxyButton.isHidden = hideProxButton
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +43,7 @@ class RefundDetailsController: UIViewController {
     private func updateUI() {
         
         guard let refund = refund else { return }
+        
         
         let refundNb = refund.id
         refundTitleLabel.text = "Refund".localized + " #\(refundNb)"
@@ -61,4 +64,10 @@ class RefundDetailsController: UIViewController {
 
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ViewProxySegue" {
+            let dest = segue.destination as? DashboardDetailsController
+            dest?.shouldDismiss = true
+        }
+    }
 }
