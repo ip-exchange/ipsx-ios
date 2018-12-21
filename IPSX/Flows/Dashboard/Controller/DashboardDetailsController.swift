@@ -212,6 +212,7 @@ class DashboardDetailsController: UIViewController {
         let durationMin = Double(offer.durationMin) ?? 0
         var durationProgress = durationMin > 0 ? (durationMin - remainedMin) / durationMin : 1
         if durationProgress < 0 { durationProgress = 1 }
+        if durationProgress > 1 { durationProgress = 1 }
 
         self.trafficLabel.text = offer.trafficMB + " MB"
         self.durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
