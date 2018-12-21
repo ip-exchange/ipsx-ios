@@ -42,16 +42,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
-                                <rect key="frame" x="0.0" y="133.66666666666669" width="375" height="595.33333333333326"/>
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
+                                <rect key="frame" x="0.0" y="158.66666666666669" width="375" height="570.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="FoS-zs-qAy">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </view>
                                 <view key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" id="9H8-MV-D8k">
-                                    <rect key="frame" x="0.0" y="186" width="375" height="30"/>
+                                    <rect key="frame" x="0.0" y="161" width="375" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZXs-6x-BTc">
@@ -66,16 +61,16 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MarketCellID" id="Ymp-gl-Ske" customClass="MarketCell" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="63" width="375" height="123"/>
+                                        <rect key="frame" x="0.0" y="38" width="375" height="123"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ymp-gl-Ske" id="H0s-u9-PN0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lfs-8S-10I" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="116"/>
+                                                    <rect key="frame" x="15" y="3" width="345" height="116"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RO32" translatesAutoresizingMaskIntoConstraints="NO" id="0y5-dF-3x0">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldPins" translatesAutoresizingMaskIntoConstraints="NO" id="0y5-dF-3x0">
                                                             <rect key="frame" x="15" y="13" width="22" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="k34-d4-SXz"/>
@@ -83,7 +78,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 IPs - Shared - IPv4" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="irT-Zl-NgT">
-                                                            <rect key="frame" x="45" y="15.666666666666664" width="144" height="17"/>
+                                                            <rect key="frame" x="45" y="15.666666666666668" width="144" height="17.000000000000004"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                             <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -128,7 +123,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 MB" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ey-Z6-trd">
-                                                            <rect key="frame" x="45" y="61.666666666666657" width="49" height="17"/>
+                                                            <rect key="frame" x="45" y="61.666666666666671" width="49" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -200,8 +195,8 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="lfs-8S-10I" secondAttribute="bottom" constant="7" id="B2U-MY-JgU"/>
-                                                <constraint firstItem="lfs-8S-10I" firstAttribute="top" secondItem="H0s-u9-PN0" secondAttribute="top" id="NhE-Ca-hl1"/>
+                                                <constraint firstAttribute="bottom" secondItem="lfs-8S-10I" secondAttribute="bottom" constant="4" id="B2U-MY-JgU"/>
+                                                <constraint firstItem="lfs-8S-10I" firstAttribute="top" secondItem="H0s-u9-PN0" secondAttribute="top" constant="3" id="NhE-Ca-hl1"/>
                                                 <constraint firstAttribute="trailing" secondItem="lfs-8S-10I" secondAttribute="trailing" constant="15" id="Pip-CH-HFT"/>
                                                 <constraint firstItem="lfs-8S-10I" firstAttribute="leading" secondItem="H0s-u9-PN0" secondAttribute="leading" constant="15" id="Uhf-du-a4G"/>
                                             </constraints>
@@ -819,7 +814,7 @@
                             <constraint firstItem="4f7-ik-z4J" firstAttribute="leading" secondItem="EX3-po-RYU" secondAttribute="trailing" id="inB-58-msb"/>
                             <constraint firstItem="gar-De-dh8" firstAttribute="leading" secondItem="YHk-Zj-Naz" secondAttribute="leading" id="iqJ-xA-hOm"/>
                             <constraint firstItem="YHk-Zj-Naz" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="nZl-8X-NcZ"/>
-                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="J8a-NR-0V7" secondAttribute="bottom" id="oi6-MH-dGc"/>
+                            <constraint firstItem="s7w-JR-Nif" firstAttribute="top" secondItem="J8a-NR-0V7" secondAttribute="bottom" constant="25" id="oi6-MH-dGc"/>
                             <constraint firstItem="J8a-NR-0V7" firstAttribute="leading" secondItem="gIv-Tu-HaQ" secondAttribute="leading" id="ow1-d6-Ruh"/>
                             <constraint firstItem="EX3-po-RYU" firstAttribute="centerY" secondItem="9P1-sa-ISd" secondAttribute="centerY" id="pzG-JD-sTc"/>
                             <constraint firstItem="qfA-BR-FNk" firstAttribute="top" secondItem="YHk-Zj-Naz" secondAttribute="bottom" id="ryE-bc-pt2"/>
@@ -2104,7 +2099,7 @@ and rent your first proxy.</string>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pOj-Ks-ZTO" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="3" width="345" height="67"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RO32" translatesAutoresizingMaskIntoConstraints="NO" id="haQ-qP-ekd">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldPins" translatesAutoresizingMaskIntoConstraints="NO" id="haQ-qP-ekd">
                                                             <rect key="frame" x="15" y="13" width="22" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="22" id="4FV-x2-ROX"/>
@@ -3296,7 +3291,6 @@ and rent your first proxy.</string>
         <image name="LogoLarge" width="72" height="72"/>
         <image name="Marketplace" width="28.333333969116211" height="28.333333969116211"/>
         <image name="Profile" width="28.333333969116211" height="28.333333969116211"/>
-        <image name="RO32" width="18" height="18"/>
         <image name="RightDisclosure" width="8.6666669845581055" height="16"/>
         <image name="Technology" width="52" height="52"/>
         <image name="Wallet" width="25.666666030883789" height="26"/>
@@ -3320,6 +3314,7 @@ and rent your first proxy.</string>
         <image name="settingsProfile" width="30.333333969116211" height="30.333333969116211"/>
         <image name="walletDeposit" width="30" height="38"/>
         <image name="walletWidthdrawals" width="30" height="38"/>
+        <image name="worldPins" width="17" height="17"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Kc9-Od-4gN"/>
