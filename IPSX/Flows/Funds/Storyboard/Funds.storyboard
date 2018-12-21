@@ -838,12 +838,23 @@
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="dwa-wd-jfa" id="wsq-Fh-C3u"/>
+                                        </connections>
                                     </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We recommend to specify every details…" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUk-RU-5aH">
+                                        <rect key="frame" x="15" y="50.999999999999986" width="265.66666666666669" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="c7A-RP-QM6" firstAttribute="leading" secondItem="iPJ-rO-kCo" secondAttribute="leading" constant="10" id="0Le-9D-041"/>
                                     <constraint firstItem="WRk-3E-6B2" firstAttribute="leading" secondItem="iPJ-rO-kCo" secondAttribute="leading" constant="15" id="5XL-iF-MDN"/>
+                                    <constraint firstItem="VUk-RU-5aH" firstAttribute="leading" secondItem="WRk-3E-6B2" secondAttribute="leading" id="8Ad-8j-ZYF"/>
+                                    <constraint firstItem="VUk-RU-5aH" firstAttribute="top" secondItem="WRk-3E-6B2" secondAttribute="bottom" constant="18" id="KiL-BS-fu8"/>
                                     <constraint firstItem="c7A-RP-QM6" firstAttribute="top" secondItem="WRk-3E-6B2" secondAttribute="bottom" constant="10" id="bga-TA-2x7"/>
                                     <constraint firstItem="WRk-3E-6B2" firstAttribute="top" secondItem="iPJ-rO-kCo" secondAttribute="top" constant="15" id="iOA-bU-gpW"/>
                                     <constraint firstAttribute="trailing" secondItem="c7A-RP-QM6" secondAttribute="trailing" constant="10" id="xcq-gV-YOX"/>
@@ -918,6 +929,7 @@
                         <outlet property="loadingView" destination="hfP-9O-gem" id="D0B-UW-uQq"/>
                         <outlet property="proxyTitle" destination="YAZ-l7-4bC" id="hoi-dK-S3W"/>
                         <outlet property="reasonTextView" destination="c7A-RP-QM6" id="zpf-5c-a2L"/>
+                        <outlet property="refundPlaceholder" destination="VUk-RU-5aH" id="T30-V4-HR0"/>
                         <outlet property="refundTitleLabel" destination="YAZ-l7-4bC" id="azM-mZ-5hH"/>
                         <outlet property="separatorView" destination="X93-C9-yrd" id="ol3-Ig-Y1p"/>
                         <outlet property="topBarView" destination="vhZ-Wj-KmD" id="ct2-vU-8SD"/>

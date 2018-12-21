@@ -23,6 +23,7 @@ class RefundRequestController: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
+    @IBOutlet weak var refundPlaceholder: UILabel!
     
     var errorMessage: String? {
         didSet {
@@ -111,6 +112,16 @@ class RefundRequestController: UIViewController {
 
 }
 
+extension RefundRequestController: UITextViewDelegate {
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        refundPlaceholder.isHidden = textView.text.count > 0
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        refundPlaceholder.isHidden = textView.text.count > 0
+    }
+}
 
 extension RefundRequestController: ToastAlertViewPresentable {
     
