@@ -45,7 +45,7 @@ class Proxy {
         guard let endDate = endDate else { return "-- min" }
         let startDate = Date()
         let difference = endDate.timeIntervalSince(startDate)
-        let minutes = (Int(difference) / 60) % 60
+        let minutes = (Int(difference) / 60)
         return "\(minutes)"
     }
 }

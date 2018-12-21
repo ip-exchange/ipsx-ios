@@ -210,9 +210,9 @@ class DashboardDetailsController: UIViewController {
 
         let remainedMin = Double(validProxy.remainingMinutes()) ?? 0
         let durationMin = Double(offer.durationMin) ?? 0
-        var durationProgress = durationMin > 0 ? remainedMin / durationMin : 0
+        var durationProgress = durationMin > 0 ? (durationMin - remainedMin) / durationMin : 1
         if durationProgress < 0 { durationProgress = 1 }
-        
+
         self.trafficLabel.text = offer.trafficMB + " MB"
         self.durationLabel.text = offer.durationMin.daysHoursMinutesFormated()
         
@@ -247,7 +247,8 @@ class DashboardDetailsController: UIViewController {
             usageProgress = 0
         } else {
             self.trafficRemainedLabel.text = "\(Int(usageMb))" + " MB"
-            self.durationRemainedLabel.text = "~ " + "\(Int(durationMin - remainedMin))".daysHoursMinutesFormated()
+            let duration = remainedMin >  0 ? Int(durationMin - remainedMin) : Int(durationMin)
+            self.durationRemainedLabel.text = "~ " + "\(duration)".daysHoursMinutesFormated()
         }
         
         self.doubleProgressView.setProgress(upProgress: Float(usageProgress), downProgress: Float(durationProgress), animated: animated)
