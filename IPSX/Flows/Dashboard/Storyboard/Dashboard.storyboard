@@ -407,23 +407,19 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WvD-hh-NCW" userLabel="Refund View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="15" y="402" width="345" height="49"/>
+                                <rect key="frame" x="52.666666666666657" y="402" width="270" height="49"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="sr4-Ci-rQ9">
-                                        <rect key="frame" x="17" y="16.666666666666686" width="16" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="SC6-Yg-Omd"/>
-                                            <constraint firstAttribute="width" constant="16" id="gx7-li-3az"/>
-                                        </constraints>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="A refund has been requested for this proxy" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ykt-IF-lgI">
-                                        <rect key="frame" x="50" y="7.9999999999999982" width="144.66666666666666" height="31.333333333333329"/>
+                                        <rect key="frame" x="8" y="8.9999999999999982" width="138" height="31.333333333333329"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdV-Ow-ccD">
-                                        <rect key="frame" x="198.66666666666663" y="0.0" width="129.33333333333337" height="49"/>
+                                        <rect key="frame" x="150" y="0.0" width="120" height="49"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="umR-4L-O1q"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <state key="normal" title="VIEW REFUND">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -435,20 +431,19 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="centerY" secondItem="WvD-hh-NCW" secondAttribute="centerY" id="0Ig-gb-guw"/>
+                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="leading" secondItem="WvD-hh-NCW" secondAttribute="leading" constant="8" id="1wx-xu-FcE"/>
                                     <constraint firstAttribute="height" constant="49" id="2Sa-F1-N0R"/>
-                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="leading" secondItem="ykt-IF-lgI" secondAttribute="trailing" constant="4" id="Ahh-Ny-YQ9"/>
-                                    <constraint firstAttribute="trailing" secondItem="FdV-Ow-ccD" secondAttribute="trailing" constant="17" id="MM8-vU-Pt9"/>
-                                    <constraint firstItem="sr4-Ci-rQ9" firstAttribute="centerY" secondItem="WvD-hh-NCW" secondAttribute="centerY" id="UiP-ek-LyL"/>
-                                    <constraint firstItem="sr4-Ci-rQ9" firstAttribute="leading" secondItem="WvD-hh-NCW" secondAttribute="leading" constant="17" id="Zr5-5w-9GX"/>
-                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="top" secondItem="WvD-hh-NCW" secondAttribute="top" constant="8" id="cUM-Oq-TDk"/>
-                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="leading" secondItem="sr4-Ci-rQ9" secondAttribute="trailing" constant="17" id="hvV-7f-mit"/>
-                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="height" secondItem="WvD-hh-NCW" secondAttribute="height" id="jf8-jD-ajg"/>
+                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="leading" secondItem="ykt-IF-lgI" secondAttribute="trailing" constant="4" id="64Q-ku-qon"/>
+                                    <constraint firstAttribute="width" constant="270" id="P9B-vd-Vgp"/>
+                                    <constraint firstAttribute="bottom" secondItem="FdV-Ow-ccD" secondAttribute="bottom" id="Y9Z-Mj-WnK"/>
+                                    <constraint firstItem="FdV-Ow-ccD" firstAttribute="top" secondItem="WvD-hh-NCW" secondAttribute="top" id="ZUl-cd-tVT"/>
+                                    <constraint firstItem="ykt-IF-lgI" firstAttribute="centerY" secondItem="WvD-hh-NCW" secondAttribute="centerY" id="fec-3Y-7yz"/>
+                                    <constraint firstAttribute="trailing" secondItem="FdV-Ow-ccD" secondAttribute="trailing" id="r5o-Nf-Cpc"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
@@ -821,6 +816,7 @@
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="trailing" secondItem="OYH-0i-PEh" secondAttribute="trailing" id="2gR-He-X9V"/>
+                            <constraint firstItem="WvD-hh-NCW" firstAttribute="centerX" secondItem="Ogi-jV-lGF" secondAttribute="centerX" id="5RD-GJ-n2d"/>
                             <constraint firstItem="e09-DZ-6pU" firstAttribute="centerX" secondItem="zj7-hY-IZ8" secondAttribute="centerX" id="EEN-9H-0EQ"/>
                             <constraint firstItem="Wry-z4-0vl" firstAttribute="top" secondItem="e09-DZ-6pU" secondAttribute="bottom" constant="14.5" id="KtS-gf-iqW"/>
                             <constraint firstItem="WvD-hh-NCW" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="-100" id="NVE-b4-NMW"/>
@@ -830,11 +826,9 @@
                             <constraint firstItem="fdn-kE-p30" firstAttribute="centerX" secondItem="Ogi-jV-lGF" secondAttribute="centerX" id="TEL-De-nCl"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="top" secondItem="0Tz-9X-Xrg" secondAttribute="top" constant="55" id="Uew-Mp-XVS"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="trailing" secondItem="OYH-0i-PEh" secondAttribute="trailing" id="UxK-s9-wHX"/>
-                            <constraint firstItem="WvD-hh-NCW" firstAttribute="leading" secondItem="Ogi-jV-lGF" secondAttribute="leading" constant="15" id="bhC-JX-9Tc"/>
                             <constraint firstItem="0Tz-9X-Xrg" firstAttribute="bottom" secondItem="Ogi-jV-lGF" secondAttribute="bottom" constant="45" id="ccO-FQ-eEP"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="trailing" secondItem="0Tz-9X-Xrg" secondAttribute="trailing" id="i6O-yx-J96"/>
                             <constraint firstItem="Wry-z4-0vl" firstAttribute="centerX" secondItem="e09-DZ-6pU" secondAttribute="centerX" id="l66-uG-3OG"/>
-                            <constraint firstItem="WvD-hh-NCW" firstAttribute="trailing" secondItem="Ogi-jV-lGF" secondAttribute="trailing" constant="-15" id="nGY-fs-z9a"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="top" secondItem="OYH-0i-PEh" secondAttribute="bottom" id="qbA-F1-jb1"/>
                             <constraint firstItem="fdn-kE-p30" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="-100" id="r5a-UT-FSQ"/>
                             <constraint firstItem="e09-DZ-6pU" firstAttribute="top" secondItem="zj7-hY-IZ8" secondAttribute="bottom" constant="24" id="smJ-4s-tuk"/>
@@ -1774,7 +1768,6 @@
         <image name="clock" width="14" height="14.333333015441895"/>
         <image name="cloudComputing" width="17" height="14"/>
         <image name="inclinedPaperPlane" width="17.666666030883789" height="14.333333015441895"/>
-        <image name="infoWhite" width="28" height="28"/>
         <image name="internet" width="16.666666030883789" height="16.666666030883789"/>
         <image name="ipsxIcon" width="16" height="16"/>
         <image name="server" width="18.333333969116211" height="16.666666030883789"/>
