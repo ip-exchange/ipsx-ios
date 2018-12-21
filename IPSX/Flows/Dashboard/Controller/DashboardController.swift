@@ -61,9 +61,10 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
     var selectedOffer: Offer?
     var selectedOrder: Order?
     var shouldRefreshIp = true
+    
     private var tutorialPresented = false
     private var showOrderComplete = false
-    
+
     private var backFromSegue = false
     
     override func viewDidLoad() {
@@ -292,6 +293,18 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         }
     }
 
+    private func isAnyPending() -> Bool {
+        for order in ordersDatasource {
+            for offer in order.offers {
+                for proxy in offer.proxies {
+                    if proxy.status == "pending" {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
 }
 
 
@@ -333,6 +346,8 @@ extension DashboardController: UITableViewDataSource {
         }
         let orderNumber = "Order".localized + " #\(ordersDatasource[section].id)"
         cell?.updateCell(sectionIndex: section, orderNumber: orderNumber)
+        cell?.hintViewCopyPacLink.isHidden = self.isAnyPending()
+        cell?.hintViewPendingProxy.isHidden = !self.isAnyPending()
         cell?.onTap = { section in
             self.selectedOrder = self.ordersDatasource[section]
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self) }

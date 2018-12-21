@@ -1958,7 +1958,7 @@ and rent your first proxy.</string>
                                                     <color key="textColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TML-Jc-Jp3" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TML-Jc-Jp3" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                     <rect key="frame" x="15" y="51" width="345" height="63"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDownRed" translatesAutoresizingMaskIntoConstraints="NO" id="lhS-li-vdd">
@@ -2008,6 +2008,58 @@ and rent your first proxy.</string>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="czG-i3-B0X" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                    <rect key="frame" x="15" y="51" width="345" height="63"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowDownYellow" translatesAutoresizingMaskIntoConstraints="NO" id="HQt-ES-SBm">
+                                                            <rect key="frame" x="15" y="19.666666666666671" width="24" height="24"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="24" id="8Km-fz-9ig"/>
+                                                                <constraint firstAttribute="height" constant="24" id="z6I-3i-0ty"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="G94-8X-Zyy">
+                                                            <rect key="frame" x="54" y="14.666666666666671" width="276" height="33.666666666666664"/>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="New Order! ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.75686274509803919" green="0.55686274509803924" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="14" name=".AppleSystemUIFontEmphasized"/>
+                                                                        <font key="NSOriginalFont" size="14" name=".AppleSystemUIFontEmphasized"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content="Your proxies will be ready in about 10 minutes.">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.75686274509803919" green="0.55686274509803924" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" metaFont="system" size="14"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="G94-8X-Zyy" firstAttribute="centerY" secondItem="czG-i3-B0X" secondAttribute="centerY" id="J8G-PH-mWH"/>
+                                                        <constraint firstItem="G94-8X-Zyy" firstAttribute="leading" secondItem="HQt-ES-SBm" secondAttribute="trailing" constant="15" id="JS8-4M-Wlk"/>
+                                                        <constraint firstItem="HQt-ES-SBm" firstAttribute="centerY" secondItem="czG-i3-B0X" secondAttribute="centerY" id="PQa-GM-6vx"/>
+                                                        <constraint firstItem="HQt-ES-SBm" firstAttribute="leading" secondItem="czG-i3-B0X" secondAttribute="leading" constant="15" id="Pga-M0-PZg"/>
+                                                        <constraint firstAttribute="height" constant="63" id="TDP-g5-aHU"/>
+                                                        <constraint firstAttribute="trailing" secondItem="G94-8X-Zyy" secondAttribute="trailing" constant="15" id="xHb-E1-gt8"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.75686274509803919" green="0.55686274509803924" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3r-br-jur">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
                                                     <connections>
@@ -2021,17 +2073,23 @@ and rent your first proxy.</string>
                                                 <constraint firstItem="m3r-br-jur" firstAttribute="centerX" secondItem="cUX-qe-jNE" secondAttribute="centerX" id="4n3-U3-GqY"/>
                                                 <constraint firstItem="TML-Jc-Jp3" firstAttribute="trailing" secondItem="A1A-dc-KNu" secondAttribute="trailing" id="77E-zx-cpd"/>
                                                 <constraint firstItem="m3r-br-jur" firstAttribute="width" secondItem="cUX-qe-jNE" secondAttribute="width" id="8Ro-8A-O34"/>
+                                                <constraint firstItem="czG-i3-B0X" firstAttribute="centerX" secondItem="TML-Jc-Jp3" secondAttribute="centerX" id="8oP-iQ-EUy"/>
+                                                <constraint firstItem="czG-i3-B0X" firstAttribute="height" secondItem="TML-Jc-Jp3" secondAttribute="height" id="I8e-9P-ZHm"/>
+                                                <constraint firstItem="czG-i3-B0X" firstAttribute="width" secondItem="TML-Jc-Jp3" secondAttribute="width" id="K8g-Yz-XqN"/>
                                                 <constraint firstAttribute="trailing" secondItem="A1A-dc-KNu" secondAttribute="trailing" constant="15" id="drM-du-8o3"/>
                                                 <constraint firstItem="K0Y-cp-Odr" firstAttribute="leading" secondItem="cUX-qe-jNE" secondAttribute="leading" constant="15" id="duS-8U-oh2"/>
                                                 <constraint firstItem="m3r-br-jur" firstAttribute="height" secondItem="cUX-qe-jNE" secondAttribute="height" id="eLX-YW-2te"/>
                                                 <constraint firstItem="m3r-br-jur" firstAttribute="centerY" secondItem="cUX-qe-jNE" secondAttribute="centerY" id="haN-UD-zpv"/>
                                                 <constraint firstItem="A1A-dc-KNu" firstAttribute="centerY" secondItem="K0Y-cp-Odr" secondAttribute="centerY" id="iwL-r0-w7G"/>
                                                 <constraint firstItem="TML-Jc-Jp3" firstAttribute="leading" secondItem="K0Y-cp-Odr" secondAttribute="leading" id="lDa-UD-CiL"/>
+                                                <constraint firstItem="czG-i3-B0X" firstAttribute="centerY" secondItem="TML-Jc-Jp3" secondAttribute="centerY" id="meD-0J-cYM"/>
                                                 <constraint firstItem="K0Y-cp-Odr" firstAttribute="top" secondItem="cUX-qe-jNE" secondAttribute="top" constant="24" id="yCK-Un-PaG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="hintViewCopyPacLink" destination="TML-Jc-Jp3" id="yQ6-zG-aTK"/>
+                                            <outlet property="hintViewPendingProxy" destination="czG-i3-B0X" id="qaB-z0-dzG"/>
                                             <outlet property="labelesTopConstraint" destination="yCK-Un-PaG" id="yF3-hq-UMg"/>
                                             <outlet property="orderNumberLabel" destination="K0Y-cp-Odr" id="kPW-b0-Dav"/>
                                         </connections>
@@ -3243,6 +3301,7 @@ and rent your first proxy.</string>
         <image name="Technology" width="52" height="52"/>
         <image name="Wallet" width="25.666666030883789" height="26"/>
         <image name="arrowDownRed" width="23.666666030883789" height="24.666666030883789"/>
+        <image name="arrowDownYellow" width="23.666666030883789" height="24.666666030883789"/>
         <image name="cart" width="16.333333969116211" height="17.333333969116211"/>
         <image name="cartSmall" width="12.333333015441895" height="13.333333015441895"/>
         <image name="clock" width="14" height="14.333333015441895"/>

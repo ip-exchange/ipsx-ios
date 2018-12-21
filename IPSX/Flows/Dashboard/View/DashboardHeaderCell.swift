@@ -13,6 +13,8 @@ class DashboardHeaderCell: UITableViewCell {
     @IBOutlet weak var orderNumberLabel: UILabel?
     @IBOutlet weak var historyTitleLabel: UILabel?
     @IBOutlet weak var labelesTopConstraint: NSLayoutConstraint?
+    @IBOutlet weak var hintViewCopyPacLink: RoundedView!
+    @IBOutlet weak var hintViewPendingProxy: RoundedView!
     
     @IBAction func headerTap(_ sender: Any) {
         onTap?(section)
