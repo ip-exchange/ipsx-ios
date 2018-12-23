@@ -536,24 +536,6 @@
                                     <outlet property="delegate" destination="sBJ-Zc-YxA" id="UXO-VC-fcN"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WNu-13-jpN" customClass="RoundedButton" customModule="IPSX" customModuleProvider="target">
-                                <rect key="frame" x="101" y="442" width="173" height="36"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="eWo-PN-Yna"/>
-                                    <constraint firstAttribute="width" constant="173" id="wQC-sJ-nvy"/>
-                                </constraints>
-                                <state key="normal" title="Similar Offers">
-                                    <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="border" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="activeColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mfs-rd-6Oh" userLabel="Separator">
                                 <rect key="frame" x="0.0" y="720.66666666666663" width="375" height="0.33333333333337123"/>
                                 <color key="backgroundColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -675,7 +657,8 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="Tf0-YY-exD" firstAttribute="centerY" secondItem="lnR-68-9r3" secondAttribute="centerY" constant="5" id="GbV-ka-FPW"/>
-                                                    <constraint firstItem="yE2-Bx-iV6" firstAttribute="leading" secondItem="lnR-68-9r3" secondAttribute="leading" constant="31" id="JZG-bK-30E"/>
+                                                    <constraint firstItem="Tf0-YY-exD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yE2-Bx-iV6" secondAttribute="trailing" constant="10" id="Iei-UE-3Ym"/>
+                                                    <constraint firstItem="yE2-Bx-iV6" firstAttribute="leading" secondItem="lnR-68-9r3" secondAttribute="leading" priority="750" constant="31" id="JZG-bK-30E"/>
                                                     <constraint firstItem="yE2-Bx-iV6" firstAttribute="centerY" secondItem="Tf0-YY-exD" secondAttribute="centerY" id="VjY-P0-gud"/>
                                                     <constraint firstAttribute="trailing" secondItem="Tf0-YY-exD" secondAttribute="trailing" constant="14" id="g5J-GS-twh"/>
                                                     <constraint firstAttribute="height" constant="67" id="tem-vG-3eF"/>
@@ -755,7 +738,6 @@
                             <constraint firstItem="91H-v7-tup" firstAttribute="top" secondItem="tF8-MN-aOu" secondAttribute="bottom" constant="14.5" id="aD9-2l-cS1"/>
                             <constraint firstItem="9S6-nA-yJT" firstAttribute="leading" secondItem="eAz-Xh-vQX" secondAttribute="leading" id="boh-hK-66n"/>
                             <constraint firstItem="Dk8-Su-NLW" firstAttribute="leading" secondItem="lFM-H4-C3e" secondAttribute="leading" id="csl-Gp-yNq"/>
-                            <constraint firstItem="WNu-13-jpN" firstAttribute="centerX" secondItem="lFM-H4-C3e" secondAttribute="centerX" id="dW5-ll-QcB"/>
                             <constraint firstItem="qh6-cI-J6X" firstAttribute="trailing" secondItem="Dk8-Su-NLW" secondAttribute="trailing" id="ics-Is-lmB"/>
                             <constraint firstItem="lFM-H4-C3e" firstAttribute="bottom" secondItem="dqe-Og-r97" secondAttribute="bottom" constant="-50" id="meN-GW-N3y"/>
                             <constraint firstItem="dqe-Og-r97" firstAttribute="top" secondItem="Mfs-rd-6Oh" secondAttribute="bottom" id="o9w-HH-YAv"/>
@@ -764,7 +746,6 @@
                             <constraint firstItem="91H-v7-tup" firstAttribute="centerX" secondItem="tF8-MN-aOu" secondAttribute="centerX" id="qaY-LE-0rc"/>
                             <constraint firstItem="lFM-H4-C3e" firstAttribute="top" secondItem="qoK-WY-LS5" secondAttribute="top" constant="100" id="vmJ-jf-ujW"/>
                             <constraint firstItem="tF8-MN-aOu" firstAttribute="top" secondItem="qh6-cI-J6X" secondAttribute="bottom" constant="30" id="w7N-VY-yCT"/>
-                            <constraint firstItem="WNu-13-jpN" firstAttribute="top" secondItem="91H-v7-tup" secondAttribute="bottom" constant="24" id="wuh-en-It2"/>
                             <constraint firstItem="emp-3q-qBf" firstAttribute="centerY" secondItem="lFM-H4-C3e" secondAttribute="centerY" id="zHu-5E-O4y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lFM-H4-C3e"/>
@@ -1553,10 +1534,10 @@
                                 <rect key="frame" x="0.0" y="515.66666666666663" width="375" height="203"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info" translatesAutoresizingMaskIntoConstraints="NO" id="Bfb-iX-ytB">
-                                        <rect key="frame" x="182.66666666666666" y="38.333333333333371" width="10" height="42"/>
+                                        <rect key="frame" x="182.66666666666666" y="18.333333333333371" width="10" height="42"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dd0-fx-BoO">
-                                        <rect key="frame" x="15" y="95.333333333333371" width="345" height="33.666666666666657"/>
+                                        <rect key="frame" x="15" y="75.333333333333371" width="345" height="33.666666666666657"/>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">The proxies will be activated in 
@@ -1718,7 +1699,7 @@ maximum 5 minutes after purchase!</string>
                             <constraint firstItem="5aH-IZ-x6G" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" constant="3" id="n8K-7N-kdo"/>
                             <constraint firstItem="a5U-QH-L5b" firstAttribute="top" secondItem="Wcw-3m-bFg" secondAttribute="bottom" id="nyy-hR-CqF"/>
                             <constraint firstItem="B91-Nh-N9N" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="oNN-4f-COe"/>
-                            <constraint firstItem="Bfb-iX-ytB" firstAttribute="top" secondItem="3Od-cR-ozo" secondAttribute="bottom" constant="80" id="tGl-lh-lzo"/>
+                            <constraint firstItem="Bfb-iX-ytB" firstAttribute="top" secondItem="3Od-cR-ozo" secondAttribute="bottom" constant="60" id="tGl-lh-lzo"/>
                             <constraint firstItem="OA1-LG-05v" firstAttribute="bottom" secondItem="g3q-UE-5eb" secondAttribute="bottom" constant="70" id="uDV-q0-fJs"/>
                             <constraint firstItem="eR0-nv-nXr" firstAttribute="leading" secondItem="g3q-UE-5eb" secondAttribute="leading" id="wfT-zR-vwH"/>
                             <constraint firstItem="eR0-nv-nXr" firstAttribute="height" secondItem="FYm-jB-wsH" secondAttribute="height" id="zHo-W8-nAP"/>
@@ -2503,7 +2484,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="JKH-YQ-jid"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc1-iz-4Zd">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc1-iz-4Zd">
                                                                         <rect key="frame" x="15" y="0.66666666666674246" width="315" height="40.666666666666664"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="k5f-TW-cmg"/>
@@ -2524,7 +2505,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="Vb2-ce-vcR"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LfE-8s-t0l">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LfE-8s-t0l">
                                                                         <rect key="frame" x="15" y="41.666666666666742" width="315" height="41"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="HCG-Ze-SSX"/>
@@ -2550,13 +2531,13 @@ maximum 5 minutes after purchase!</string>
                                                                 <constraints>
                                                                     <constraint firstItem="LfE-8s-t0l" firstAttribute="top" secondItem="N7v-bU-zbd" secondAttribute="bottom" id="32Y-Qc-JZS"/>
                                                                     <constraint firstItem="8xm-Rs-muF" firstAttribute="top" secondItem="AcD-ei-2QD" secondAttribute="top" id="4RZ-fK-scm"/>
-                                                                    <constraint firstItem="LfE-8s-t0l" firstAttribute="leading" secondItem="N7v-bU-zbd" secondAttribute="leading" id="4kN-Bq-Oaj"/>
+                                                                    <constraint firstItem="oc1-iz-4Zd" firstAttribute="leading" secondItem="AcD-ei-2QD" secondAttribute="leading" constant="15" id="4yK-P1-lbD"/>
                                                                     <constraint firstItem="N7v-bU-zbd" firstAttribute="leading" secondItem="AcD-ei-2QD" secondAttribute="leading" constant="15" id="6PJ-uW-hkX"/>
                                                                     <constraint firstItem="Mvo-0Q-WFG" firstAttribute="leading" secondItem="AcD-ei-2QD" secondAttribute="leading" id="6tV-5e-fRk"/>
                                                                     <constraint firstItem="N7v-bU-zbd" firstAttribute="top" secondItem="oc1-iz-4Zd" secondAttribute="bottom" id="9d2-Qj-jd4"/>
-                                                                    <constraint firstItem="oc1-iz-4Zd" firstAttribute="leading" secondItem="N7v-bU-zbd" secondAttribute="leading" id="ACZ-H4-JeO"/>
                                                                     <constraint firstItem="oc1-iz-4Zd" firstAttribute="top" secondItem="8xm-Rs-muF" secondAttribute="bottom" id="ALj-Aq-wOG"/>
                                                                     <constraint firstAttribute="bottom" secondItem="Mvo-0Q-WFG" secondAttribute="bottom" id="DVI-w2-OrU"/>
+                                                                    <constraint firstItem="LfE-8s-t0l" firstAttribute="leading" secondItem="AcD-ei-2QD" secondAttribute="leading" constant="15" id="HZf-tX-8Rz"/>
                                                                     <constraint firstItem="Mvo-0Q-WFG" firstAttribute="top" secondItem="LfE-8s-t0l" secondAttribute="bottom" id="K40-YW-tR8"/>
                                                                     <constraint firstItem="N7v-bU-zbd" firstAttribute="centerY" secondItem="AcD-ei-2QD" secondAttribute="centerY" id="R4q-cm-kVY"/>
                                                                     <constraint firstAttribute="trailing" secondItem="8xm-Rs-muF" secondAttribute="trailing" id="dhZ-pR-IKX"/>
@@ -2586,7 +2567,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="1gv-JM-KLB"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE5-B8-fxM">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE5-B8-fxM">
                                                                         <rect key="frame" x="15" y="0.66666666666651508" width="315" height="40.666666666666664"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="HpG-Bc-7sO"/>
@@ -2607,7 +2588,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="BBH-98-8tc"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gut-9d-S2G">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gut-9d-S2G">
                                                                         <rect key="frame" x="15" y="41.666666666666515" width="315" height="41"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="g3O-Tp-B8P"/>
@@ -2635,12 +2616,12 @@ maximum 5 minutes after purchase!</string>
                                                                     <constraint firstItem="gut-9d-S2G" firstAttribute="top" secondItem="e9n-MM-NZd" secondAttribute="bottom" id="6Ny-ap-t2v"/>
                                                                     <constraint firstItem="gE5-B8-fxM" firstAttribute="top" secondItem="4ng-76-7r0" secondAttribute="bottom" id="7Lc-iC-E36"/>
                                                                     <constraint firstAttribute="trailing" secondItem="e9n-MM-NZd" secondAttribute="trailing" id="8HB-eh-Rcn"/>
+                                                                    <constraint firstItem="gut-9d-S2G" firstAttribute="leading" secondItem="4xx-WK-bQF" secondAttribute="leading" constant="15" id="8qp-1t-ZyR"/>
                                                                     <constraint firstItem="4ng-76-7r0" firstAttribute="leading" secondItem="4xx-WK-bQF" secondAttribute="leading" id="A3X-3F-CDz"/>
                                                                     <constraint firstAttribute="trailing" secondItem="W6N-jV-Z54" secondAttribute="trailing" id="BuT-BP-QHj"/>
                                                                     <constraint firstAttribute="bottom" secondItem="W6N-jV-Z54" secondAttribute="bottom" id="DIu-hA-TP2"/>
                                                                     <constraint firstItem="e9n-MM-NZd" firstAttribute="leading" secondItem="4xx-WK-bQF" secondAttribute="leading" constant="15" id="Fwp-gF-KaC"/>
-                                                                    <constraint firstItem="gE5-B8-fxM" firstAttribute="leading" secondItem="e9n-MM-NZd" secondAttribute="leading" id="OAd-la-aWS"/>
-                                                                    <constraint firstItem="gut-9d-S2G" firstAttribute="leading" secondItem="e9n-MM-NZd" secondAttribute="leading" id="SfX-ld-R52"/>
+                                                                    <constraint firstItem="gE5-B8-fxM" firstAttribute="leading" secondItem="4xx-WK-bQF" secondAttribute="leading" constant="15" id="Y2R-85-VMC"/>
                                                                     <constraint firstAttribute="height" constant="83" id="b8H-WV-R8a"/>
                                                                     <constraint firstItem="W6N-jV-Z54" firstAttribute="top" secondItem="gut-9d-S2G" secondAttribute="bottom" id="ewn-B1-Ktq"/>
                                                                     <constraint firstAttribute="trailing" secondItem="4ng-76-7r0" secondAttribute="trailing" id="gMf-qu-u5c"/>
@@ -2908,7 +2889,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="Gxe-nm-7Yb"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyg-iG-41G">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyg-iG-41G">
                                                                         <rect key="frame" x="15" y="0.66666666666674246" width="315" height="40.666666666666664"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="Yzy-nA-ARC"/>
@@ -2929,7 +2910,7 @@ maximum 5 minutes after purchase!</string>
                                                                             <constraint firstAttribute="height" constant="0.5" id="nZh-76-EQT"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LCD-rY-BTb">
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LCD-rY-BTb">
                                                                         <rect key="frame" x="15" y="41.666666666666742" width="315" height="41"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="315" id="Upc-yO-BGn"/>
@@ -2959,13 +2940,13 @@ maximum 5 minutes after purchase!</string>
                                                                     <constraint firstItem="0Gy-hU-Uhp" firstAttribute="leading" secondItem="FKy-Xp-w8T" secondAttribute="leading" id="3gs-0f-8Zw"/>
                                                                     <constraint firstItem="BNb-fS-TB6" firstAttribute="top" secondItem="eyg-iG-41G" secondAttribute="bottom" id="4pF-Bb-oz2"/>
                                                                     <constraint firstAttribute="bottom" secondItem="0Gy-hU-Uhp" secondAttribute="bottom" id="EfV-KT-LVE"/>
-                                                                    <constraint firstItem="LCD-rY-BTb" firstAttribute="leading" secondItem="BNb-fS-TB6" secondAttribute="leading" id="Jzn-6z-M34"/>
                                                                     <constraint firstItem="BNb-fS-TB6" firstAttribute="centerY" secondItem="FKy-Xp-w8T" secondAttribute="centerY" id="NIU-Mb-H4V"/>
                                                                     <constraint firstAttribute="height" constant="83" id="bwf-g9-lZV"/>
-                                                                    <constraint firstItem="eyg-iG-41G" firstAttribute="leading" secondItem="BNb-fS-TB6" secondAttribute="leading" id="hcb-sG-d1a"/>
+                                                                    <constraint firstItem="eyg-iG-41G" firstAttribute="leading" secondItem="FKy-Xp-w8T" secondAttribute="leading" constant="15" id="hS4-qE-scf"/>
                                                                     <constraint firstItem="eyg-iG-41G" firstAttribute="top" secondItem="30E-Fl-iyN" secondAttribute="bottom" id="j6q-Ph-cTf"/>
                                                                     <constraint firstItem="30E-Fl-iyN" firstAttribute="top" secondItem="FKy-Xp-w8T" secondAttribute="top" id="lJa-Ud-afl"/>
                                                                     <constraint firstItem="0Gy-hU-Uhp" firstAttribute="top" secondItem="LCD-rY-BTb" secondAttribute="bottom" id="stW-fm-ctH"/>
+                                                                    <constraint firstItem="LCD-rY-BTb" firstAttribute="leading" secondItem="FKy-Xp-w8T" secondAttribute="leading" constant="15" id="tWc-TX-1EK"/>
                                                                     <constraint firstItem="LCD-rY-BTb" firstAttribute="top" secondItem="BNb-fS-TB6" secondAttribute="bottom" id="wIR-xQ-9g8"/>
                                                                     <constraint firstAttribute="trailing" secondItem="0Gy-hU-Uhp" secondAttribute="trailing" id="xUO-HS-izF"/>
                                                                     <constraint firstAttribute="trailing" secondItem="BNb-fS-TB6" secondAttribute="trailing" id="zk0-7N-aTb"/>

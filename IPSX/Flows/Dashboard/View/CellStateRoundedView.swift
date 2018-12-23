@@ -12,6 +12,7 @@ class CellStateRoundedView: UIView {
     
     enum CellState {
         case active
+        case consumed
         case canceled
         case expired
         case pending
@@ -21,6 +22,7 @@ class CellStateRoundedView: UIView {
     
     @IBOutlet weak var canceledView: UIView?
     @IBOutlet weak var activeView: UIView?
+    @IBOutlet weak var consumedView: UIView?
     @IBOutlet weak var expiredView: UIView?
     @IBOutlet weak var pendingView: UIView?
     @IBOutlet weak var unavailableView: UIView?
@@ -30,6 +32,7 @@ class CellStateRoundedView: UIView {
         didSet {
             
             activeView?.isHidden      = true
+            consumedView?.isHidden    = true
             canceledView?.isHidden    = true
             expiredView?.isHidden     = true
             pendingView?.isHidden     = true
@@ -38,6 +41,7 @@ class CellStateRoundedView: UIView {
             
             switch currentState {
             case .active:   activeView?.isHidden         = false
+            case .consumed: consumedView?.isHidden       = false
             case .canceled: canceledView?.isHidden       = false
             case .expired:  expiredView?.isHidden        = false
             case .pending:  pendingView?.isHidden        = false
@@ -59,6 +63,7 @@ class CellStateRoundedView: UIView {
         }
         switch validState {
         case "active":      currentState = .active
+        case "consumed":    currentState = .consumed
         case "expired":     currentState = .expired
         case "unavailable": currentState = .unavailable
         case "pending":     currentState = .pending

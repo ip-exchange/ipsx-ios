@@ -2165,6 +2165,25 @@ and rent your first proxy.</string>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEL-Se-T45" userLabel="Consumed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                                    <rect key="frame" x="20" y="1" width="75" height="20"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CONSUMED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJM-Yt-ITh">
+                                                                            <rect key="frame" x="8" y="4" width="59" height="12"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                            <color key="textColor" red="0.36470588240000001" green="0.36470588240000001" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oE2-5M-aUQ" userLabel="Active View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                                     <rect key="frame" x="28" y="1" width="58" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2250,6 +2269,7 @@ and rent your first proxy.</string>
                                                             <connections>
                                                                 <outlet property="activeView" destination="oE2-5M-aUQ" id="9it-h0-po2"/>
                                                                 <outlet property="canceledView" destination="eMn-cp-Mh2" id="ovz-36-EHq"/>
+                                                                <outlet property="consumedView" destination="cEL-Se-T45" id="oOC-hE-Rdd"/>
                                                                 <outlet property="expiredView" destination="tyA-Mo-Rf6" id="KkG-U7-m1J"/>
                                                                 <outlet property="pendingView" destination="DbO-cA-EKy" id="ZFL-b2-Eal"/>
                                                                 <outlet property="unavailableView" destination="a67-ws-ZPy" id="dvp-kb-q13"/>
