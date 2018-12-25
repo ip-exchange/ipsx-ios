@@ -211,7 +211,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         loadOffers()
     }
     
-    func loadOffers(_ append: Bool = false) {
+    func loadOffers() {
         
         //TODO (CVI): offset logic
         let offset = 0
@@ -228,13 +228,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             case .success(let offersData):
                 
                 let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
-                if self.normalisedFiltersDictionary.values.count == 0  {
-                    ProxyManager.shared.allOffers = data?.offers ?? []
+                if offset != 0 {
+                    self.offers.append(contentsOf: data?.offers ?? [])
                 }
-                //TODO: Append (if append, let validOffers = data?.offers) is for test purposes, delete it when complete
-                if append, let validOffers = data?.offers {
-                    self.offers.append(contentsOf: validOffers)
-                } else {
+                else {
                     self.offers = data?.offers ?? []
                 }
                 self.cartItemsCount = data?.cart ?? 0
@@ -355,17 +352,17 @@ extension MarketController: UITableViewDataSource {
     }
     
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    {
-        if indexPath.row == (offers.count - 1)
-        {
-            //TODO: pagestFetched is for test, replace with real logic
-            if pagestFetched < 3 {
-                fetchpageActivityIndicator.startAnimating()
-                self.loadOffers(true)
-                pagestFetched += 1
-            }
-        }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+//        if indexPath.row == (offers.count - 1)
+//        {
+//            //TODO: pagestFetched is for test, replace with real logic
+//            if pagestFetched < 3 {
+//                fetchpageActivityIndicator.startAnimating()
+//                self.loadOffers()
+//                pagestFetched += 1
+//            }
+//        }
     }
 
 }
