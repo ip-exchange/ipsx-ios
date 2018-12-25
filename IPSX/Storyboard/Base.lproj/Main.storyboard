@@ -308,6 +308,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dOX-ok-BZa">
                                                 <rect key="frame" x="0.0" y="-1" width="100" height="45"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <connections>
+                                                    <action selector="favButtonAction:" destination="6jc-WL-DqT" eventType="touchUpInside" id="m49-6U-ZMI"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -830,6 +833,7 @@
                         <outlet property="countryViewYAxiscenter" destination="HE6-z5-Mzh" id="AQd-Ra-T2f"/>
                         <outlet property="customTabBar" destination="Zot-aD-WGB" id="Ust-cY-Pdv"/>
                         <outlet property="favoritesCounterLabel" destination="cvM-hA-32F" id="EHr-sO-bZj"/>
+                        <outlet property="favoritesImageView" destination="NOc-sp-8G0" id="grJ-Pw-ZlC"/>
                         <outlet property="fetchPageFooterView" destination="9H8-MV-D8k" id="LfM-88-5ap"/>
                         <outlet property="fetchpageActivityIndicator" destination="ZXs-6x-BTc" id="rG4-RZ-1gM"/>
                         <outlet property="filtersCounterLabel" destination="XfL-VT-vgL" id="2kR-21-6FI"/>

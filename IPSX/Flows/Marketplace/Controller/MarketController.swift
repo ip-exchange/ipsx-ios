@@ -25,7 +25,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var cartCountLabel: UILabel!
     @IBOutlet weak var favoritesCounterLabel: UILabel!
     @IBOutlet weak var customTabBar: CustomTabBar!
-
+    @IBOutlet weak var favoritesImageView: UIImageView!
     @IBOutlet weak var fetchPageFooterView: UIView!
     @IBOutlet weak var fetchpageActivityIndicator: UIActivityIndicatorView!
     
@@ -66,14 +66,27 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var timer: Timer?
     var selectedOffer: Offer?
     var shouldRefreshIp = true
+    var favoritesSelected = false
     private var tutorialPresented = false
     private var backFromSegue = false
-
     private var cartItemsCount: Int = 0
     private var favoritesItemsCount: Int = 0
     
     //TODO: Test purpose
     var pagestFetched = 0
+    
+    @IBAction func favButtonAction(_ sender: UIButton) {
+        
+        favoritesSelected = !favoritesSelected
+        if favoritesSelected {
+            favoritesImageView.image = UIImage(named: "savedFav")
+        }
+        else {
+            favoritesImageView.image = UIImage(named: "favorites")
+        }
+        normalisedFiltersDictionary["favorites"] = favoritesSelected
+        loadOffers() { self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true) }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,7 +224,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         loadOffers()
     }
     
-    func loadOffers() {
+    func loadOffers(completion:(()->Void)? = nil) {
         
         //TODO (CVI): offset logic
         let offset = 0
@@ -239,6 +252,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 
                 DispatchQueue.main.async {
                     self.updateHeaderCounters()
+                    completion?()
                 }
                 
             case .failure(let error):
