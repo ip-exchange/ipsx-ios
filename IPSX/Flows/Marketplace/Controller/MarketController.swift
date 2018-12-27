@@ -34,7 +34,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             topConstraint = topConstraintOutlet
         }
     }
-    
+    var viewMarketNoLogin = false
     private var normalisedFiltersDictionary: [String:Any] = [:]
     private var filtersDictionary: [String:Any] = [:] {
         didSet {
@@ -90,6 +90,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        customTabBar.isHidden = viewMarketNoLogin
         customTabBar.selectIndex(1)
         customTabBar.onTap = { index in
             self.tabBarController?.selectedIndex = index
@@ -101,6 +103,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+        
+        //TODO: Favorites si Cart -> disabled
+        //TODO: on MarketDetails: hide add to favorites, disable Add to Cart button
+        //TODO: Add Close button on Marketplace and show when viewMarketNoLogin = true
     }
     
     @objc func appWillEnterForeground() {
@@ -378,14 +384,13 @@ extension MarketController: UITableViewDataSource {
 //            }
 //        }
     }
-
 }
 
 extension MarketController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard userInfo?.countryID != "" && userInfo?.countryID != nil else {
+        guard viewMarketNoLogin || (userInfo?.countryID != "" && userInfo?.countryID != nil) else {
             updateCountryOverlay(visible: true)
             return
         }

@@ -98,7 +98,7 @@ class LoadingViewController: UIViewController {
     
     func initDataAndContinueFlow() {
         
-        userCountryList()
+        countries()
         ethAddresses()
         companyDetails()
         userInfo()
@@ -113,7 +113,7 @@ class LoadingViewController: UIViewController {
         }
     }
     
-    func userCountryList() {
+    func countries() {
         
         dispatchGroup.enter()
         UserInfoService().getCountryList(completionHandler: { result in

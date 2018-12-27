@@ -15,9 +15,8 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
-    
+
     @IBOutlet weak var marketplaceImageView: UIImageView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,11 +36,19 @@ class LandingViewController: UIViewController {
     func configureUI() {
         
         let deviceHeight = UIScreen.main.bounds.height
-        labelTopConstraint.constant = ((deviceHeight - bottomView.frame.height) / 2) - 30        
+        labelTopConstraint.constant = ((deviceHeight - bottomView.frame.height) / 2) - 30
         let image = UIImage(named: "Technology")?.withRenderingMode(.alwaysTemplate)
         marketplaceImageView.image = image
         marketplaceImageView.tintColor = .white
     }
     
     @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMarketSegueID" {
+            let destNavController = segue.destination as? UINavigationController
+            let marketVC = destNavController?.viewControllers.first as? MarketController
+            marketVC?.viewMarketNoLogin = true
+        }
+    }
 }
