@@ -107,7 +107,9 @@ class MarketCartController: UIViewController {
     
     @IBAction func checkout(_ sender: Any) {
         
-        if UserManager.shared.userInfo?.balance ?? 0 < cart?.summary?.ipsxTotal ?? 0 {
+        if let unavalables = cart?.offers.filter({ $0.isAvailable == false }), unavalables.count > 0 {
+            self.toast?.showToastAlert("Remove Unavailable Offers Alert".localized, autoHideAfter: 5, type: .info, dismissable: true)
+        } else if UserManager.shared.userInfo?.balance ?? 0 < cart?.summary?.ipsxTotal ?? 0 {
             self.errorMessage = "Insufficient Balance Error Message".localized
         }
         else {
@@ -180,6 +182,12 @@ class MarketCartController: UIViewController {
                     self.updateBottomLabels(alpha: items < 3 ? 0 : 1)
                     self.configureSummaryUI()
                     self.tableView.reloadData()
+                    
+                    if self.cart?.offers.count == 0 {
+                        self.editButton.isEnabled = false
+                        self.editButton.isSelected = false
+                    }
+
                 }
             case .failure(let error):
                 
@@ -244,6 +252,10 @@ extension MarketCartController: UITableViewDataSource {
             let range = NSMakeRange(0, self.tableView.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
             self.tableView.reloadSections(sections as IndexSet, with: .automatic)
+            if let items = self.cart?.offers.count, items < 1 {
+                self.editButton.isEnabled = false
+                self.editButton.isSelected = false
+            }
         }
         return cell
     }
