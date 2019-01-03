@@ -392,6 +392,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YHk-Zj-Naz" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-6" width="375" height="94"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOf-Sj-ZKA" userLabel="Close">
+                                        <rect key="frame" x="5" y="50" width="44" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="CloseBut">
+                                            <color key="titleColor" red="0.16862745100000001" green="0.51372549020000002" blue="0.65499997139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="w2q-G3-Grc" kind="unwind" unwindAction="unwindToLandingConstrollerWithSegue:" id="56u-2w-Lfm"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Marketplace" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7c-3L-4rb">
                                         <rect key="frame" x="144" y="64" width="100" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -829,6 +839,7 @@
                     <connections>
                         <outlet property="cartCountLabel" destination="2pj-PB-74g" id="EI5-Nc-tAP"/>
                         <outlet property="cartView" destination="kSy-pO-qmy" id="CLB-Y0-AqZ"/>
+                        <outlet property="closeButton" destination="HOf-Sj-ZKA" id="ifM-zd-wws"/>
                         <outlet property="countryOverlayView" destination="2Xs-5a-Py6" id="gfW-UH-P3j"/>
                         <outlet property="countryRComponent" destination="wMJ-Xf-01h" id="FOh-8I-ddh"/>
                         <outlet property="countryViewYAxiscenter" destination="HE6-z5-Mzh" id="AQd-Ra-T2f"/>
@@ -853,6 +864,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAj-hP-pBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="w2q-G3-Grc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-514" y="1592"/>
         </scene>

@@ -35,6 +35,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var favoritesView: UIView!
     @IBOutlet weak var cartView: UIView!
     
@@ -104,12 +105,12 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         
-        //TODO: Add Close button on Marketplace and show when isLoggedIn = false
     }
     
     func configureUI() {
        
         customTabBar.isHidden = !isLoggedIn
+        closeButton.isHidden = isLoggedIn
         customTabBar.selectIndex(1)
         customTabBar.onTap = { index in
             self.tabBarController?.selectedIndex = index
