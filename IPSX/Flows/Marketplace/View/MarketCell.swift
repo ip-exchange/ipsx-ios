@@ -21,6 +21,7 @@ class MarketCell: UITableViewCell {
     @IBOutlet weak var trafficLabel: UILabel!
     @IBOutlet weak var cartImageView: UIImageView!
     @IBOutlet weak var favImageView: UIImageView!
+    @IBOutlet weak var deleteView: RoundedView?
     
     @IBOutlet weak var cellLeadingConstraint: NSLayoutConstraint?
     
@@ -33,6 +34,8 @@ class MarketCell: UITableViewCell {
     
     func configure(offer: Offer, editMode: Bool = false) {
         
+        cellContentView.alpha = offer.isActive ? 1 : 0.5
+        deleteView?.alpha = editMode ? 1 : offer.isActive ? 1 : 0
         cellOffer = offer
         
         cartImageView.isHidden = !offer.isAddedToCart
