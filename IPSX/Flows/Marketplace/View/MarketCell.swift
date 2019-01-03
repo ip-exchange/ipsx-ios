@@ -34,8 +34,8 @@ class MarketCell: UITableViewCell {
     
     func configure(offer: Offer, editMode: Bool = false) {
         
-        cellContentView.alpha = offer.isActive ? 1 : 0.5
-        deleteView?.alpha = editMode ? 1 : offer.isActive ? 1 : 0
+        cellContentView.alpha = offer.isAvailable ? 1 : 0.5
+        deleteView?.alpha = editMode ? 1 : offer.isAvailable ? 1 : 0
         cellOffer = offer
         
         cartImageView.isHidden = !offer.isAddedToCart

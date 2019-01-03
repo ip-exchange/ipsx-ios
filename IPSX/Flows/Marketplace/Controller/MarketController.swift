@@ -415,8 +415,8 @@ extension MarketController: UITableViewDelegate {
             selectedOffer = offers[indexPath.row]
         }
         
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: self.marketItemID, sender: self)
+        if selectedOffer?.isAvailable == true {
+            DispatchQueue.main.async { self.performSegue(withIdentifier: self.marketItemID, sender: self) }
         }
     }
 }
