@@ -68,17 +68,16 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
     let filtersSegueID = "FiltersSegueID"
-    private var timer: Timer?
     var selectedOffer: Offer?
-    var shouldRefreshIp = true
     var favoritesSelected = false
     private var tutorialPresented = false
-    private var backFromSegue = false
+    private var shouldRefreshIp = true
+    private var shouldRefreshData = true
+    private var isLastCell = false
     private var cartItemsCount: Int = 0
     private var favoritesItemsCount: Int = 0
     
-    //TODO: Test purpose
-    var pagestFetched = 0
+    var noOfOffersLoaded = 0
     
     @IBAction func favButtonAction(_ sender: UIButton) {
         
@@ -90,7 +89,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             favoritesImageView.image = UIImage(named: "favorites")
         }
         normalisedFiltersDictionary["favorites"] = favoritesSelected
-        loadOffers() { self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true) }
+        loadOffers() {
+            if self.offers.count > 0 {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -141,30 +144,26 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
-        
         fetchpageActivityIndicator.stopAnimating()
-        
-        if !backFromSegue { self.updateData() }
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        if backFromSegue { self.updateData() }
-        backFromSegue = false
+        super.viewDidAppear(animated)
         
         if !UserDefaults.standard.marketTutorialChecked(), !tutorialPresented {
             DispatchQueue.main.async { self.performSegue(withIdentifier: "MarketTutorialSegueID", sender: self) }
             tutorialPresented = true
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.timer?.invalidate()
-        NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+        else if shouldRefreshData {
+            offers = []
+            self.loadOffers {
+                if self.offers.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
+            }
+        }
+        shouldRefreshData = false
     }
     
     @IBAction func closeCountryOverlay(_ sender: Any) {
@@ -242,15 +241,12 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             self.updateReachabilityInfo()
         }
     }
-    
-    @objc func updateData() {
-        loadOffers()
-    }
-    
-    func loadOffers(completion:(()->Void)? = nil) {
+
+    @objc func loadOffers(completion:(()->Void)? = nil) {
         
-        //TODO (CVI): offset logic
-        let offset = 0
+        let offset = offers.count
+        
+        print("CVI - offers loaded: ", offers.count, "offset ",offset)
         
         loadingView?.startAnimating()
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
@@ -264,12 +260,12 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             case .success(let offersData):
                 
                 let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
-                if offset != 0 {
-                    self.offers.append(contentsOf: data?.offers ?? [])
+
+                if self.normalisedFiltersDictionary.values.count == 0  {
+                    ProxyManager.shared.allOffers.append(contentsOf: data?.offers ?? [])
                 }
-                else {
-                    self.offers = data?.offers ?? []
-                }
+                self.offers.append(contentsOf: data?.offers ?? [])
+                self.noOfOffersLoaded = data?.offers.count ?? 0
                 self.cartItemsCount = data?.cart ?? 0
                 self.favoritesItemsCount = data?.fav ?? 0
                 
@@ -280,7 +276,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 
             case .failure(let error):
                 self.handleError(error, requestType: RequestType.getOffers, completion: {
-                    self.loadOffers()
+                    self.loadOffers(completion: completion)
                 })
             }
         })
@@ -313,7 +309,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         favoritesCounterLabel.textColor = favoritesItemsCount > 0 ? UIColor.darkBlue : .warmGrey
         let favTailString = "saved".localized
         favoritesCounterLabel.text = "\(favoritesItemsCount) \(favTailString)"
-        
     }
     
     private func updateCountryOverlay(visible: Bool) {
@@ -328,12 +323,13 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        backFromSegue = true
+        shouldRefreshData = false
         segue.destination.hidesBottomBarWhenPushed = true
         
         switch segue.identifier {
             
         case marketItemID:
+            
             let destinationVC = segue.destination as? MarketItemController
             destinationVC?.offer = selectedOffer
             destinationVC?.isInCartAlready = selectedOffer?.isAddedToCart ?? false
@@ -351,6 +347,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 }
             }
         case filtersSegueID:
+            
+            shouldRefreshData = true
             let navController = segue.destination as? UINavigationController
             let filterController = navController?.viewControllers.first as? MarketFilterController
             filterController?.filtersDictionary = self.filtersDictionary
@@ -370,7 +368,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
     
     @IBAction func unwindToMarket(segue:UIStoryboardSegue) {}
-
 }
 
 extension MarketController: UITableViewDataSource {
@@ -388,18 +385,11 @@ extension MarketController: UITableViewDataSource {
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-//        if indexPath.row == (offers.count - 1)
-//        {
-//            //TODO: pagestFetched is for test, replace with real logic
-//            if pagestFetched < 3 {
-//                fetchpageActivityIndicator.startAnimating()
-//                self.loadOffers()
-//                pagestFetched += 1
-//            }
-//        }
+        if indexPath.row == (offers.count - 1) && tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
+            isLastCell = true
+        }
     }
 }
 
@@ -417,6 +407,21 @@ extension MarketController: UITableViewDelegate {
         
         if selectedOffer?.isAvailable == true {
             DispatchQueue.main.async { self.performSegue(withIdentifier: self.marketItemID, sender: self) }
+        }
+    }
+}
+
+extension MarketController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        if isLastCell && noOfOffersLoaded != 0 {
+            
+            self.fetchpageActivityIndicator.startAnimating()
+            
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.0, execute: {
+                self.loadOffers()
+            })
         }
     }
 }

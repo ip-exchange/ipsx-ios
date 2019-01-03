@@ -102,7 +102,7 @@ enum Newsletter {
     case off
 }
 
-public let offersLimitPerRequest = 50
+public let offersLimitPerRequest = 5
 
 public struct Url {
     
