@@ -74,10 +74,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var shouldRefreshIp = true
     private var shouldRefreshData = true
     private var isLastCell = false
-    private var cartItemsCount: Int = 0
-    private var favoritesItemsCount: Int = 0
-    
-    var noOfOffersLoaded = 0
+    private var cartItemsCount = 0
+    private var favoritesItemsCount = 0
+    private var offersLoadedCount = 0
     
     @IBAction func favButtonAction(_ sender: UIButton) {
         
@@ -246,8 +245,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         let offset = offers.count
         
-        print("CVI - offers loaded: ", offers.count, "offset ",offset)
-        
         loadingView?.startAnimating()
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
             
@@ -260,14 +257,20 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             case .success(let offersData):
                 
                 let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
-
-                if self.normalisedFiltersDictionary.values.count == 0  {
-                    ProxyManager.shared.allOffers.append(contentsOf: data?.offers ?? [])
+                self.offersLoadedCount = (data?.offers ?? []).count
+                
+                if self.normalisedFiltersDictionary["show_unavailable_offers"] as? Bool == true {
+                    self.offers.append(contentsOf: data?.offers ?? [])
                 }
-                self.offers.append(contentsOf: data?.offers ?? [])
-                self.noOfOffersLoaded = data?.offers.count ?? 0
+                else {
+                    let availableOffers = (data?.offers ?? []).filter { return $0.isAvailable == true }
+                    self.offers.append(contentsOf: availableOffers)
+                }
+            
                 self.cartItemsCount = data?.cart ?? 0
                 self.favoritesItemsCount = data?.fav ?? 0
+                
+                print("CVI - offers loaded: ",self.offersLoadedCount, "offset ",offset)
                 
                 DispatchQueue.main.async {
                     self.updateHeaderCounters()
@@ -415,7 +418,7 @@ extension MarketController: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
-        if isLastCell && noOfOffersLoaded != 0 {
+        if isLastCell && offersLoadedCount == offersLimitPerRequest {
             
             self.fetchpageActivityIndicator.startAnimating()
             

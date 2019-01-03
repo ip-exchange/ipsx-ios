@@ -13,6 +13,5 @@ public class ProxyManager: NSObject {
     public static var shared = ProxyManager()
     private override init() {}
     
-    var allOffers: [Offer] = []
     var cart: Cart?
 }

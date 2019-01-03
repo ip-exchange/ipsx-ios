@@ -42,19 +42,12 @@ class MarketplaceService {
                 return
             }
             let json = JSON(data)
-            let jsonArray = json["offers"].arrayValue
-            let totalCart = json["total_cart"].intValue
-            let totalFav  = json["total_favorite"].intValue
+            let jsonArray   = json["offers"].arrayValue
+            let totalCart   = json["total_cart"].intValue
+            let totalFav    = json["total_favorite"].intValue
             
             let allOffers = self.parseOffers(offersJsonArray: jsonArray)
-            let availableOffers = allOffers.filter { return $0.isAvailable == true }
-            
-            if filters?["show_unavailable_offers"] as? Bool == true {
-                completionHandler(ServiceResult.success((allOffers, totalFav, totalCart)))
-            }
-            else {
-                completionHandler(ServiceResult.success((availableOffers, totalFav, totalCart)))
-            }
+            completionHandler(ServiceResult.success((allOffers, totalFav, totalCart)))
         })
     }
     
