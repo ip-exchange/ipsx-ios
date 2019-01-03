@@ -11,8 +11,8 @@ import IPSXNetworkingFramework
 
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
-    @IBOutlet weak var noWalletTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var noWalletView: RoundedView!
+    @IBOutlet weak var alertTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var alertView: RoundedView!
     @IBOutlet weak var progressView: ProgressRoundView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var cartOverlayView: UIView!
@@ -36,6 +36,21 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
             topConstraint = topSeparatorConstraint
         }
     }
+    
+    // notification banner
+    @IBOutlet weak var alertMessageLabel: UILabel!
+    @IBOutlet weak var alertButton: UIButton!
+    
+    @IBAction func alertAction(_ sender: UIButton) {
+        
+        if sender.titleLabel?.text == "ADD WALLET".localized {
+            performSegue(withIdentifier: "CreateWalletSegueID", sender: nil)
+        }
+        else if sender.titleLabel?.text == "OK".localized {
+            performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+        }
+    }
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -80,19 +95,31 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         if UserManager.shared.roles?.contains(.Requester) == false {
             
             addToCartButton.isEnabled = false
-            noWalletView.isHidden = false
-            noWalletTopConstraint.constant = 7
+            alertView.isHidden = false
+            alertTopConstraint.constant = 7
+            alertMessageLabel.text = "Add Wallet Message".localized
+            alertButton.setTitle("ADD WALLET".localized, for: .normal)
             UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
         }
         else {
             addToCartButton.isEnabled = !isInCartAlready
-            noWalletView.isHidden = true
-            noWalletTopConstraint.constant = -60
+            alertView.isHidden = true
+            alertTopConstraint.constant = -60
             if isInCartAlready {
                 addToCartButton.setTitle("Added to Cart".localized, for: .disabled)
             }
         }
         
+        if !UserManager.shared.isLoggedIn {
+            
+            addToCartButton.isEnabled = false
+            favoritesButton.isEnabled = false
+            alertView.isHidden = false
+            alertTopConstraint.constant = 7
+            alertMessageLabel.text = "Sign In Message".localized
+            alertButton.setTitle("OK".localized, for: .normal)
+        }
+       
         favoritesButton.isSelected = offer.isFavourite
         trafficLabel.text = offer.trafficMB + " MB"
         durationLabel.text = offer.durationMin.daysHoursMinutesFormated()

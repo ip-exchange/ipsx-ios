@@ -146,7 +146,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9S6-nA-yJT" userLabel="No Wallet View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9S6-nA-yJT" userLabel="Alert View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                 <rect key="frame" x="16" y="237.66666666666663" width="334.66666666666669" height="49"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="T1s-dh-Qvc">
@@ -156,7 +156,7 @@
                                             <constraint firstAttribute="height" constant="16" id="VEo-Mu-tyM"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="You need to add your first IPSX Wallet in order to rent proxies." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nqs-fM-uly">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="You need to add your first IPSX Wallet in order to rent proxies." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nqs-fM-uly">
                                         <rect key="frame" x="50" y="7.9999999999999982" width="169" height="31.333333333333329"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -169,7 +169,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="0i1-8b-q0o" kind="presentation" identifier="CreateWalletSegue" id="cuR-ep-1Jg"/>
+                                            <action selector="alertAction:" destination="sBJ-Zc-YxA" eventType="touchUpInside" id="U0M-ve-6yG"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -754,6 +754,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addToCartButton" destination="NpM-qD-rfo" id="vma-b1-5QR"/>
+                        <outlet property="alertButton" destination="Hkg-nh-uQ8" id="B0W-0w-8iD"/>
+                        <outlet property="alertMessageLabel" destination="nqs-fM-uly" id="hKz-sE-5Ed"/>
+                        <outlet property="alertTopConstraint" destination="8Aa-mh-aSr" id="foG-co-oNY"/>
+                        <outlet property="alertView" destination="9S6-nA-yJT" id="Bh6-0R-gy2"/>
                         <outlet property="cartOverlayView" destination="qoK-WY-LS5" id="jEE-e9-DyK"/>
                         <outlet property="cartOverlayYConstraint" destination="Yuj-3c-5Yw" id="cwP-1x-te4"/>
                         <outlet property="collectionView" destination="91H-v7-tup" id="mWJ-QK-wYE"/>
@@ -763,8 +767,6 @@
                         <outlet property="flagImageView" destination="N49-i0-cE3" id="BWO-j1-lqT"/>
                         <outlet property="loadingView" destination="emp-3q-qBf" id="vZB-ni-gBG"/>
                         <outlet property="noOfProxiesLabel" destination="tF8-MN-aOu" id="gWO-9t-mu1"/>
-                        <outlet property="noWalletTopConstraint" destination="8Aa-mh-aSr" id="M3H-rf-uCo"/>
-                        <outlet property="noWalletView" destination="9S6-nA-yJT" id="arq-d8-34N"/>
                         <outlet property="offerTypeLabel" destination="eOX-gz-RoA" id="i4F-RC-vap"/>
                         <outlet property="priceIPSXLabel" destination="F2F-C1-dgj" id="t3q-RL-jen"/>
                         <outlet property="progressLabel" destination="Tzx-L0-Bi5" id="fKD-ts-kHJ"/>
@@ -774,9 +776,12 @@
                         <outlet property="topSeparatorConstraint" destination="QBp-6T-AEp" id="fYH-nS-hDv"/>
                         <outlet property="trafficLabel" destination="SJK-rl-7mb" id="ynP-iZ-Nug"/>
                         <segue destination="i3b-eM-f4N" kind="show" identifier="ViewCartSegueID" id="6eO-CG-Oxt"/>
+                        <segue destination="6Dg-8v-Ark" kind="unwind" identifier="showLandingSegueID" unwindAction="unwindToLandingConstrollerWithSegue:" id="YzW-XN-tdi"/>
+                        <segue destination="0i1-8b-q0o" kind="presentation" identifier="CreateWalletSegueID" id="ZXA-kr-5gF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M2-xO-Bsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6Dg-8v-Ark" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5989.6000000000004" y="6.6502463054187197"/>
         </scene>

@@ -104,7 +104,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         
-        //TODO: on MarketDetails: hide add to favorites, disable Add to Cart button
         //TODO: Add Close button on Marketplace and show when isLoggedIn = false
     }
     
