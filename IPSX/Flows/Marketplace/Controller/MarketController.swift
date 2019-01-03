@@ -34,7 +34,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             topConstraint = topConstraintOutlet
         }
     }
-    var viewMarketNoLogin = false
+    
+    @IBOutlet weak var favoritesView: UIView!
+    @IBOutlet weak var cartView: UIView!
+    
+    var isLoggedIn = UserManager.shared.isLoggedIn
     private var normalisedFiltersDictionary: [String:Any] = [:]
     private var filtersDictionary: [String:Any] = [:] {
         didSet {
@@ -89,24 +93,37 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
-        customTabBar.isHidden = viewMarketNoLogin
-        customTabBar.selectIndex(1)
-        customTabBar.onTap = { index in
-            self.tabBarController?.selectedIndex = index
-        }
+        super.viewDidLoad()
+        configureUI()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
-        updateCountryOverlay(visible: false)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
         
-        //TODO: Favorites si Cart -> disabled
         //TODO: on MarketDetails: hide add to favorites, disable Add to Cart button
-        //TODO: Add Close button on Marketplace and show when viewMarketNoLogin = true
+        //TODO: Add Close button on Marketplace and show when isLoggedIn = false
+    }
+    
+    func configureUI() {
+       
+        customTabBar.isHidden = !isLoggedIn
+        customTabBar.selectIndex(1)
+        customTabBar.onTap = { index in
+            self.tabBarController?.selectedIndex = index
+        }
+        updateCountryOverlay(visible: false)
+        
+        if !isLoggedIn {
+            
+            favoritesView.alpha = 0.3
+            cartView.alpha = 0.3
+            favoritesView.isUserInteractionEnabled = false
+            cartView.isUserInteractionEnabled = false
+        }
     }
     
     @objc func appWillEnterForeground() {
@@ -390,7 +407,7 @@ extension MarketController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard viewMarketNoLogin || (userInfo?.countryID != "" && userInfo?.countryID != nil) else {
+        guard !isLoggedIn || (userInfo?.countryID != "" && userInfo?.countryID != nil) else {
             updateCountryOverlay(visible: true)
             return
         }

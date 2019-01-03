@@ -43,12 +43,4 @@ class LandingViewController: UIViewController {
     }
     
     @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showMarketSegueID" {
-            let destNavController = segue.destination as? UINavigationController
-            let marketVC = destNavController?.viewControllers.first as? MarketController
-            marketVC?.viewMarketNoLogin = true
-        }
-    }
 }
