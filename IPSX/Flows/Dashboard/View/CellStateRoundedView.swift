@@ -14,6 +14,7 @@ class CellStateRoundedView: UIView {
         case active
         case consumed
         case canceled
+        case closed
         case expired
         case pending
         case unavailable
@@ -22,6 +23,7 @@ class CellStateRoundedView: UIView {
     
     @IBOutlet weak var canceledView: UIView?
     @IBOutlet weak var activeView: UIView?
+    @IBOutlet weak var closedView: UIView?
     @IBOutlet weak var consumedView: UIView?
     @IBOutlet weak var expiredView: UIView?
     @IBOutlet weak var pendingView: UIView?
@@ -38,11 +40,13 @@ class CellStateRoundedView: UIView {
             pendingView?.isHidden     = true
             unavailableView?.isHidden = true
             unknownView?.isHidden     = true
+            closedView?.isHidden      = true
             
             switch currentState {
             case .active:   activeView?.isHidden         = false
             case .consumed: consumedView?.isHidden       = false
             case .canceled: canceledView?.isHidden       = false
+            case .closed:   closedView?.isHidden         = false
             case .expired:  expiredView?.isHidden        = false
             case .pending:  pendingView?.isHidden        = false
             case .unavailable: unavailableView?.isHidden = false
@@ -68,6 +72,7 @@ class CellStateRoundedView: UIView {
         case "unavailable": currentState = .unavailable
         case "pending":     currentState = .pending
         case "canceled":    currentState = .canceled
+        case "closed":      currentState = .closed
         default: currentState = .unknown
         }
     }

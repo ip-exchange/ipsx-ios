@@ -42,11 +42,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="38" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="s7w-JR-Nif">
                                 <rect key="frame" x="0.0" y="158.66666666666669" width="375" height="570.33333333333326"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" id="9H8-MV-D8k">
-                                    <rect key="frame" x="0.0" y="161" width="375" height="30"/>
+                                    <rect key="frame" x="0.0" y="124" width="375" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZXs-6x-BTc">
@@ -61,7 +61,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MarketCellID" id="Ymp-gl-Ske" customClass="MarketCell" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="38" width="375" height="123"/>
+                                        <rect key="frame" x="0.0" y="1" width="375" height="123"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ymp-gl-Ske" id="H0s-u9-PN0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="123"/>
@@ -2159,6 +2159,25 @@ and rent your first proxy.</string>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bOr-Lp-C1c" userLabel="Closed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                                    <rect key="frame" x="20" y="1" width="75" height="20"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JwB-4F-JZs">
+                                                                            <rect key="frame" x="17" y="4" width="41" height="12"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                            <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.95294117649999999" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyA-Mo-Rf6" userLabel="Expired View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                                     <rect key="frame" x="20" y="1" width="75" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2282,6 +2301,7 @@ and rent your first proxy.</string>
                                                             <connections>
                                                                 <outlet property="activeView" destination="oE2-5M-aUQ" id="9it-h0-po2"/>
                                                                 <outlet property="canceledView" destination="eMn-cp-Mh2" id="ovz-36-EHq"/>
+                                                                <outlet property="closedView" destination="bOr-Lp-C1c" id="9Sh-VM-tK0"/>
                                                                 <outlet property="consumedView" destination="cEL-Se-T45" id="oOC-hE-Rdd"/>
                                                                 <outlet property="expiredView" destination="tyA-Mo-Rf6" id="KkG-U7-m1J"/>
                                                                 <outlet property="pendingView" destination="DbO-cA-EKy" id="ZFL-b2-Eal"/>

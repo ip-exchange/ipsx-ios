@@ -49,7 +49,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             filtersCounterLabel.text = "\(filtersDictionary.values.count) \(tailString)"
         }
     }
-    var offers: [Offer] = [] {
+    var allOffers: [Offer] = []
+    var offersDataSource: [Offer] = [] {
         didSet {
             DispatchQueue.main.async { self.tableView.reloadData() }
         }
@@ -76,7 +77,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var isLastCell = false
     private var cartItemsCount = 0
     private var favoritesItemsCount = 0
-    private var offersLoadedCount = 0
+    private var offersLoadedOnLastRequest = 0
     
     @IBAction func favButtonAction(_ sender: UIButton) {
         
@@ -89,7 +90,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
         normalisedFiltersDictionary["favorites"] = favoritesSelected
         loadOffers() {
-            if self.offers.count > 0 {
+            if self.offersDataSource.count > 0 {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
         }
@@ -106,7 +107,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
-        
+        self.tableView.estimatedRowHeight = 0
+        self.tableView.estimatedSectionHeaderHeight = 0
+        self.tableView.estimatedSectionFooterHeight = 0
     }
     
     func configureUI() {
@@ -155,9 +158,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             tutorialPresented = true
         }
         else if shouldRefreshData {
-            offers = []
+            offersDataSource = []
             self.loadOffers {
-                if self.offers.count > 0 {
+                if self.offersDataSource.count > 0 {
                     self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                 }
             }
@@ -243,7 +246,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 
     @objc func loadOffers(completion:(()->Void)? = nil) {
         
-        let offset = offers.count
+        let offset = allOffers.count
         
         loadingView?.startAnimating()
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
@@ -257,20 +260,21 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             case .success(let offersData):
                 
                 let data = offersData as? (offers: [Offer], fav: Int, cart: Int)
-                self.offersLoadedCount = (data?.offers ?? []).count
+                self.offersLoadedOnLastRequest = (data?.offers ?? []).count
+                self.allOffers.append(contentsOf: data?.offers ?? [])
                 
                 if self.normalisedFiltersDictionary["show_unavailable_offers"] as? Bool == true {
-                    self.offers.append(contentsOf: data?.offers ?? [])
+                    self.offersDataSource.append(contentsOf: data?.offers ?? [])
                 }
                 else {
                     let availableOffers = (data?.offers ?? []).filter { return $0.isAvailable == true }
-                    self.offers.append(contentsOf: availableOffers)
+                    self.offersDataSource.append(contentsOf: availableOffers)
                 }
             
                 self.cartItemsCount = data?.cart ?? 0
                 self.favoritesItemsCount = data?.fav ?? 0
                 
-                print("CVI - offers loaded: ",self.offersLoadedCount, "offset ",offset)
+                print("CVI - offers loaded: ",self.offersLoadedOnLastRequest, "offset ",offset)
                 
                 DispatchQueue.main.async {
                     self.updateHeaderCounters()
@@ -376,21 +380,21 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 extension MarketController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return offers.count
+        return offersDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MarketCell
-        if offers.count > indexPath.row {
-            cell.configure(offer: offers[indexPath.row])
+        if offersDataSource.count > indexPath.row {
+            cell.configure(offer: offersDataSource[indexPath.row])
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.row == (offers.count - 1) && tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
+        if indexPath.row == (offersDataSource.count - 1) && tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
             isLastCell = true
         }
     }
@@ -404,8 +408,8 @@ extension MarketController: UITableViewDelegate {
             updateCountryOverlay(visible: true)
             return
         }
-        if offers.count > indexPath.row {
-            selectedOffer = offers[indexPath.row]
+        if offersDataSource.count > indexPath.row {
+            selectedOffer = offersDataSource[indexPath.row]
         }
         
         if selectedOffer?.isAvailable == true {
@@ -418,7 +422,7 @@ extension MarketController: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
-        if isLastCell && offersLoadedCount == offersLimitPerRequest {
+        if isLastCell && offersLoadedOnLastRequest == offersLimitPerRequest {
             
             self.fetchpageActivityIndicator.startAnimating()
             

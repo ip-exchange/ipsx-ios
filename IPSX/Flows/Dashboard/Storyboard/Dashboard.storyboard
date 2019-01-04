@@ -231,6 +231,25 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
+                                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvs-mt-pze" userLabel="Closed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="1" width="75" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBU-Xg-cwh">
+                                                        <rect key="frame" x="17" y="4" width="41" height="12"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                        <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.95294117649999999" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kM9-sE-I7L" userLabel="Expired View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="1" width="75" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -354,6 +373,7 @@
                                         <connections>
                                             <outlet property="activeView" destination="Tc3-9z-sJ7" id="4Sp-C8-Jx2"/>
                                             <outlet property="canceledView" destination="0b1-3Y-9v4" id="ePz-R4-fbH"/>
+                                            <outlet property="closedView" destination="mvs-mt-pze" id="0tr-kG-OMK"/>
                                             <outlet property="consumedView" destination="Rd3-6k-bxQ" id="pd5-cX-elp"/>
                                             <outlet property="expiredView" destination="kM9-sE-I7L" id="ZmG-pk-fEV"/>
                                             <outlet property="pendingView" destination="01E-bh-zW2" id="fOR-wF-tjU"/>
@@ -1039,6 +1059,25 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RjW-Fk-V2C" userLabel="Closed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                                    <rect key="frame" x="20" y="1" width="75" height="20"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWE-HJ-z5Y">
+                                                                            <rect key="frame" x="17" y="4" width="41" height="12"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                            <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.95294117649999999" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oKf-AL-KWu" userLabel="Expired View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                                     <rect key="frame" x="20" y="1" width="75" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1162,6 +1201,7 @@
                                                             <connections>
                                                                 <outlet property="activeView" destination="rDb-Fp-lup" id="9au-zk-YKh"/>
                                                                 <outlet property="canceledView" destination="OS1-g7-K6b" id="lAW-6y-NqL"/>
+                                                                <outlet property="closedView" destination="RjW-Fk-V2C" id="R7Z-62-Igp"/>
                                                                 <outlet property="consumedView" destination="g3x-UJ-0WL" id="oO3-v3-eZa"/>
                                                                 <outlet property="expiredView" destination="oKf-AL-KWu" id="LC6-uV-V49"/>
                                                                 <outlet property="pendingView" destination="O9g-lj-dge" id="dRy-t0-oVK"/>
@@ -1595,6 +1635,25 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8R4-QR-E6Y" userLabel="Closed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
+                                                                    <rect key="frame" x="20" y="1" width="75" height="20"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CLOSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6C-L2-v5V">
+                                                                            <rect key="frame" x="17" y="4" width="41" height="12"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                            <color key="textColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" red="0.95294117649999999" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
                                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELM-pU-mXn" userLabel="Consumed View" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                                                     <rect key="frame" x="20" y="1" width="75" height="20"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1699,6 +1758,7 @@
                                                             <connections>
                                                                 <outlet property="activeView" destination="UmS-h9-nnN" id="b3V-H7-RIP"/>
                                                                 <outlet property="canceledView" destination="CLd-0g-suc" id="6Zy-DL-Zs8"/>
+                                                                <outlet property="closedView" destination="8R4-QR-E6Y" id="eYj-Mi-YLW"/>
                                                                 <outlet property="consumedView" destination="ELM-pU-mXn" id="cHA-Hf-XDE"/>
                                                                 <outlet property="expiredView" destination="3vQ-YJ-wP0" id="Jmz-RP-iY3"/>
                                                                 <outlet property="pendingView" destination="dhG-Yp-7zt" id="y3L-9M-ZBj"/>

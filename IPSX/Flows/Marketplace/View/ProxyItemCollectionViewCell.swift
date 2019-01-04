@@ -38,7 +38,6 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
         
         initialConfig()
         
-        
         proxyUrl = String.generatePacLink(createdDate: proxy.createdAtString ?? "", proxyId: "\(proxy.pacId ?? 0)")
         proxyName = URL(string: proxyUrl)?.lastPathComponent ?? "No name".localized
         packNameLabel?.text = proxyName
