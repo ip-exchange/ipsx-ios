@@ -68,6 +68,7 @@ class RefundDetailsController: UIViewController {
         if segue.identifier == "ViewProxySegue" {
             let dest = segue.destination as? DashboardDetailsController
             dest?.shouldDismiss = true
+            dest?.proxyId = refund?.proxyId ?? 0
         }
     }
 }

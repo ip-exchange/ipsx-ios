@@ -56,6 +56,8 @@ class DashboardDetailsController: UIViewController {
     
     var offer: Offer?
     var shouldDismiss = false
+    var proxyId = 0
+    var proxiesDataSource: [Proxy] = []
     
     private var firstProxyLoaded = false
     
@@ -76,8 +78,10 @@ class DashboardDetailsController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
-        if let firstProxy = offer?.proxies.first, !firstProxyLoaded {
+        proxiesDataSource = offer?.proxies ?? []
+        if let firstProxy = proxiesDataSource.first, !firstProxyLoaded {
             updateHeaderWithProxy(firstProxy, animated: true)
         }
         firstProxyLoaded = true
@@ -91,9 +95,9 @@ class DashboardDetailsController: UIViewController {
         self.openSettingsOverlayView.alpha = 0
         self.openSettingsCenterConstraint.constant = 500
         
-        let noOfProxies = offer?.proxies.count ?? 0
-        let proxyTypeString = offer?.proxies.first?.proxyType ?? "N/A"
-        let ipTypeString = offer?.proxies.first?.ipType ?? "N/A"
+        let noOfProxies = proxiesDataSource.count
+        let proxyTypeString = proxiesDataSource.first?.proxyType ?? "N/A"
+        let ipTypeString = proxiesDataSource.first?.ipType ?? "N/A"
         
         trafficLabel.text = offer?.trafficMB ?? "0" + " MB"
         durationLabel.text = offer?.durationMin.daysHoursMinutesFormated()
@@ -109,7 +113,7 @@ class DashboardDetailsController: UIViewController {
             noOfProxiesLabel.text = "\(noOfProxies)" + " proxy item"
             offerTypeLabel.text = "\(noOfProxies)" + "IP-" + proxyTypeString + "-" + ipTypeString
             
-            if let flagString = offer?.proxies.first?.flagUrlName,
+            if let flagString = proxiesDataSource.first?.flagUrlName,
                 let flagUrl = URL(string: flagString),
                 let flagImage = UIImage(named: flagUrl.deletingPathExtension().lastPathComponent) {
                 flagImageView.image = flagImage
@@ -279,23 +283,22 @@ extension DashboardDetailsController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProxyItemCollectionViewCell
-        if offer?.proxies.count ?? 0 > indexPath.row, let proxy = offer?.proxies[indexPath.row] {
-            cell.configure(proxy: proxy)
-            cell.onCopy = { packname, packurl in
-                UIPasteboard.general.string = packurl
-                self.openSettingsCenterConstraint.constant = 0
-                self.openSettingsOverlayView.alpha = 1
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
-                    self.view.layoutIfNeeded()
-                })
+        
+        cell.configure(proxy: proxiesDataSource[indexPath.row])
+        cell.onCopy = { packname, packurl in
+            UIPasteboard.general.string = packurl
+            self.openSettingsCenterConstraint.constant = 0
+            self.openSettingsOverlayView.alpha = 1
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
+                self.view.layoutIfNeeded()
+            })
 
-            }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return offer?.proxies.count ?? 0
+        return proxiesDataSource.count
     }
 }
 
@@ -309,11 +312,9 @@ extension DashboardDetailsController: UIScrollViewDelegate {
         
         let visiblePoint = CGPoint(x: self.collectionView.contentOffset.x + self.collectionView.frame.size.width / 2,
                                   y: self.collectionView.frame.size.height / 2)
-        if let path = self.collectionView.indexPathForItem(at: visiblePoint),
-             let proxy = self.offer?.proxies[path.item] {
-           self.updateHeaderWithProxy(proxy)
+        if let path = self.collectionView.indexPathForItem(at: visiblePoint), self.proxiesDataSource.count > path.item {
+           self.updateHeaderWithProxy(self.proxiesDataSource[path.item] )
         }
-        
      }
 }
 
