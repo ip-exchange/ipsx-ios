@@ -89,13 +89,20 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             favoritesImageView.image = UIImage(named: "favorites")
         }
         normalisedFiltersDictionary["favorites"] = favoritesSelected
+        shouldRefreshData = true
+        offersDataSource = []
+        allOffers = []
+        updateData()
+        shouldRefreshData = false
+    }
+    
+    func updateData() {
         loadOffers() {
             if self.offersDataSource.count > 0 {
                 self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
         }
     }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -158,12 +165,10 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             tutorialPresented = true
         }
         else if shouldRefreshData {
+            
             offersDataSource = []
-            self.loadOffers {
-                if self.offersDataSource.count > 0 {
-                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                }
-            }
+            allOffers = []
+            self.updateData()
         }
         shouldRefreshData = false
     }
@@ -274,8 +279,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 self.cartItemsCount = data?.cart ?? 0
                 self.favoritesItemsCount = data?.fav ?? 0
                 
-                print("CVI - offers loaded: ",self.offersLoadedOnLastRequest, "offset ",offset)
-                
                 DispatchQueue.main.async {
                     self.updateHeaderCounters()
                     completion?()
@@ -330,7 +333,6 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        shouldRefreshData = false
         segue.destination.hidesBottomBarWhenPushed = true
         
         switch segue.identifier {
@@ -355,14 +357,21 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             }
         case filtersSegueID:
             
-            shouldRefreshData = true
             let navController = segue.destination as? UINavigationController
             let filterController = navController?.viewControllers.first as? MarketFilterController
             filterController?.filtersDictionary = self.filtersDictionary
             filterController?.onApplyFilters = { filtersDic, normalisedDic in
                 print("Filters: --->\n\(normalisedDic)\nFilters: <---")
                 self.filtersDictionary = filtersDic
-                self.normalisedFiltersDictionary = normalisedDic
+                
+                if let favSelection = self.normalisedFiltersDictionary["favorites"] as? Bool {
+                    self.normalisedFiltersDictionary = normalisedDic
+                    self.normalisedFiltersDictionary["favorites"] = favSelection
+                }
+                else {
+                    self.normalisedFiltersDictionary = normalisedDic
+                }
+                self.shouldRefreshData = true
             }
         default: break
         }
