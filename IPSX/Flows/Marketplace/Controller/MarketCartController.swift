@@ -24,7 +24,6 @@ class MarketCartController: UIViewController {
     @IBOutlet weak var checkoutButton: RoundedButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var createDepositButton: UIButton!
-    
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var loadingView: CustomLoadingView!
     
@@ -52,7 +51,7 @@ class MarketCartController: UIViewController {
     }
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+    var onDataChanged: (()->())?
     private var backFromSegue = false
     fileprivate let cellID = "MarketCellID"
     fileprivate let marketItemID = "MarketItemSegueID"
@@ -143,6 +142,7 @@ class MarketCartController: UIViewController {
         case checkoutSegueID:
             let dest = segue.destination as? MarketCheckoutController
             dest?.cart = cart
+            onDataChanged?()
             
         default: break
         }
@@ -256,6 +256,7 @@ extension MarketCartController: UITableViewDataSource {
                 self.editButton.isEnabled = false
                 self.editButton.isSelected = false
             }
+            self.onDataChanged?()
         }
         return cell
     }

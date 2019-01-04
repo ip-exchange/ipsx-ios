@@ -69,6 +69,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     let countrySelectionID = "CountrySearchSegueID"
     let marketItemID = "MarketItemSegueID"
     let filtersSegueID = "FiltersSegueID"
+    let cartSegueID = "MarketCartSegueID"
     var selectedOffer: Offer?
     var favoritesSelected = false
     private var tutorialPresented = false
@@ -94,6 +95,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         allOffers = []
         updateData()
         shouldRefreshData = false
+    }
+    
+    
+    @IBAction func cartButtonAction(_ sender: UIButton) {
+        performSegue(withIdentifier: cartSegueID, sender: nil)
     }
     
     func updateData() {
@@ -342,6 +348,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             let destinationVC = segue.destination as? MarketItemController
             destinationVC?.offer = selectedOffer
             destinationVC?.isInCartAlready = selectedOffer?.isAddedToCart ?? false
+            destinationVC?.onDataChanged = {
+                self.shouldRefreshData = true
+            }
             
         case countrySelectionID:
             
@@ -373,6 +382,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 }
                 self.shouldRefreshData = true
             }
+            
+        case cartSegueID:
+            
+            let destinationVC = segue.destination as? MarketCartController
+            destinationVC?.onDataChanged = {
+                self.shouldRefreshData = true
+            }
+            
         default: break
         }
     }

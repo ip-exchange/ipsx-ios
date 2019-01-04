@@ -68,6 +68,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     
     fileprivate let reuseIdentifier = "MarketItemCell"
     var offer: Offer?
+    var onDataChanged: (()->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +161,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         
         guard let offer = offer else { return }
         self.performAddToCartRequest(offerIds: [offer.id])
+        onDataChanged?()
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -176,6 +178,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         
         sender.isSelected = !sender.isSelected
         self.performAddOrRemovefavoritesRequest(offerId: offer.id)
+        onDataChanged?()
     }
 
     private func updateCountryOverlay(visible: Bool) {
