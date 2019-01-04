@@ -172,11 +172,11 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         }
         else if shouldRefreshData {
             
+            shouldRefreshData = false
             offersDataSource = []
             allOffers = []
             self.updateData()
         }
-        shouldRefreshData = false
     }
     
     @IBAction func closeCountryOverlay(_ sender: Any) {
