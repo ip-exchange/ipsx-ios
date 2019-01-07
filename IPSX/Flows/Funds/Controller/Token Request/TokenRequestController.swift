@@ -41,7 +41,7 @@ class TokenRequestController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
-    var hasTelegramID = UserManager.shared.userInfo?.kycStatus == .Accepted
+    var hasTelegramID = UserManager.shared.userInfo?.telegram?.count ?? 0 > 0 ? true : false
     
     var errorMessage: String? {
         didSet {
@@ -80,8 +80,8 @@ class TokenRequestController: UIViewController {
             self.loadingView?.stopAnimating()
             switch result {
             case .success(_):
-                
                 DispatchQueue.main.async {
+                    UserManager.shared.userInfo?.telegram = self.telegramIDRtextField.contentTextField?.text
                     self.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
@@ -114,6 +114,7 @@ class TokenRequestController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        hasTelegramID = UserManager.shared.userInfo?.telegram?.count ?? 0 > 0 ? true : false
         loadAndSetDefaultAddres()
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
@@ -171,6 +172,7 @@ class TokenRequestController: UIViewController {
     
     @IBAction func submitTelegramID(_ sender: Any) {
         
+        hasTelegramID = true
         updateTelegramOverlay(visible: true)
         let telegramID = telegramIDRtextField.contentTextField?.text ?? "No ID"
         requestTokens(telegramID: telegramID.removeCharacters(characters: "@"))
@@ -248,7 +250,7 @@ class TokenRequestController: UIViewController {
         let amount = amountTextField.text ?? "0"
         let options = UserManager.shared.generalSettings
         let amountInt = Int(amount) ?? 0
-        let telegramID = telegramID ?? ""
+        let tgID = telegramID ?? ""
         
         guard amountInt >= (options?.depositMin ?? 20), Int(amount)! <= (options?.depositMax ?? 5000) else {
             let min = options?.depositMin ?? 20
@@ -264,7 +266,8 @@ class TokenRequestController: UIViewController {
             toast?.showToastAlert("Select Valid ETH Wallet Message".localized, autoHideAfter: 5)
             return
         }
-        requestTokens(ethID: ethID, amount: amount, telegramID: telegramID)
+        
+        requestTokens(ethID: ethID, amount: amount, telegramID: tgID)
     }
 }
 
