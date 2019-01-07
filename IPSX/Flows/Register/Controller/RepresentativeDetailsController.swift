@@ -80,10 +80,11 @@ class RepresentativeDetailsController: UIViewController {
     private func setupTextViews() {
         //TODO: Add the proper regex when defined by design
         companyRTextField.validationRegex    = RichTextFieldView.validName
+        companyRTextField.limitLenght        = 30
         companyRTextField.nextResponderField = emailRtextField.contentTextField
         emailRtextField.validationRegex      = RichTextFieldView.validEmailRegex
         emailRtextField.nextResponderField   = phoneRTextField.contentTextField
-        phoneRTextField.validationRegex      = RichTextFieldView.validName
+        phoneRTextField.limitLenght          = 30
         
         companyRTextField.contentTextField?.text = company?.representative?.name
         emailRtextField.contentTextField?.text = company?.representative?.email

@@ -409,6 +409,8 @@ extension EditProfileInfoConstroller: UITextFieldDelegate {
         let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         detectChangesAndValidity(textfield: textField, newText: newString)
         
+        if newString.count > 30 { return false }
+        
         return true
     }
     

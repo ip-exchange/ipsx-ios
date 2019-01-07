@@ -107,6 +107,7 @@ class CompanyDetailsController: UIViewController {
     private func setupTextViews() {
         //TODO: Add the proper regex when defined by design
         nameRTextField.validationRegex           = RichTextFieldView.validName
+        nameRTextField.limitLenght               = 30
         nameRTextField.nextResponderField        = addressRTextField.contentTextField
         addressRTextField.validationRegex        = RichTextFieldView.validName
         addressRTextField.nextResponderField     = regNumberRTextField.contentTextField

@@ -144,6 +144,7 @@ class WalletAddController: UIViewController {
     private func setupTextViews() {
         walletNameRichTextField.nextResponderField = ethAddresRichTextField.contentTextField
         walletNameRichTextField.validationRegex    = RichTextFieldView.validName
+        walletNameRichTextField.limitLenght        = 30
         ethAddresRichTextField.validationRegex     = RichTextFieldView.validEthAddress
     }
     

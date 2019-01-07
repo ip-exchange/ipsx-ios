@@ -18,6 +18,7 @@ class RichTextFieldView: UIView {
     static let validTelegramID    = "(@){1}[A-Za-z0-9_]{5,32}"
 
     var onFieldStateChange: ((_ newState: Bool)->())?
+    var limitLenght: Int = 0
     
     var nextResponderField: UIResponder? = nil
     var validationRegex: String? = nil
@@ -85,6 +86,9 @@ extension RichTextFieldView: UITextFieldDelegate {
         
         let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
         updateColors(isValid: isValid(text: newString))
+        if limitLenght > 0, newString.count >= limitLenght {
+            return false
+        }
         return true
     }
     
