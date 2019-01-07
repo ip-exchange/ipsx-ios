@@ -44,7 +44,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBAction func alertAction(_ sender: UIButton) {
         
         if sender.titleLabel?.text == "ADD WALLET".localized {
-            performSegue(withIdentifier: "CreateWalletSegueID", sender: nil)
+            performSegue(withIdentifier: createWalletSegue, sender: nil)
         }
         else if sender.titleLabel?.text == "OK".localized {
             performSegue(withIdentifier: "showLandingSegueID", sender: nil)
@@ -65,6 +65,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     private let cellSpacing: CGFloat = 12
     private let cartSegueID = "ViewCartSegueID"
+    private let createWalletSegue = "CreateWalletSegueID"
     
     fileprivate let reuseIdentifier = "MarketItemCell"
     var offer: Offer?
@@ -229,7 +230,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "CreateWalletSegue" {
+        if segue.identifier == createWalletSegue {
             let dest = segue.destination as? GenerateAddressController
             dest?.cartFlow = true
         }
