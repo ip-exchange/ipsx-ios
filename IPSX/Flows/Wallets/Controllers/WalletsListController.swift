@@ -25,7 +25,9 @@ class WalletsListController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-
+    var longPressGesture: UILongPressGestureRecognizer?
+    var singlePressGesture: UITapGestureRecognizer?
+    
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -40,6 +42,8 @@ class WalletsListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        setupLongPress()
+        setupTapPress()
         retrieveETHaddresses()
     }
     
@@ -169,8 +173,6 @@ extension WalletsListController: UITableViewDataSource {
 extension WalletsListController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedAddress = ethAdresses[indexPath.item]
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "ViewWalletSegueID", sender: self) }
     }
 }
 
@@ -230,6 +232,55 @@ extension WalletsListController: ErrorPresentable {
             default:
                 self.errorMessage = "Generic Error Message".localized
             }
+        }
+    }
+}
+
+
+extension WalletsListController : UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func setupTapPress() {
+        
+        singlePressGesture = UITapGestureRecognizer(target: self, action: #selector(tapPress))
+        singlePressGesture?.delegate = self
+        singlePressGesture?.cancelsTouchesInView = false
+        if let gesture = singlePressGesture {
+            self.tableView.addGestureRecognizer(gesture)
+        }
+    }
+    
+    @objc func tapPress(gesture: UIGestureRecognizer) {
+        
+        if gesture.state == .ended {
+            let touchPoint = gesture.location(in: self.tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                selectedAddress = ethAdresses[indexPath.item]
+                DispatchQueue.main.async { self.performSegue(withIdentifier: "ViewWalletSegueID", sender: self) }
+            }
+        }
+    }
+
+    func setupLongPress() {
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
+        longPressGesture?.minimumPressDuration = 1.0 // 1 second press
+        longPressGesture?.delegate = self
+        longPressGesture?.cancelsTouchesInView = false
+        if let gesture = longPressGesture {
+            self.tableView.addGestureRecognizer(gesture)
+        }
+    }
+    
+    
+    @objc func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            let _ = singlePressGesture?.cancelsTouchesInView
+            let touchPoint = longPressGestureRecognizer.location(in: self.tableView)
+            if let _ = tableView.indexPathForRow(at: touchPoint) {}
         }
     }
 }
