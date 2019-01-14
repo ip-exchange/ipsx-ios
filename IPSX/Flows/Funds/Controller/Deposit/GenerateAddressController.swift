@@ -94,6 +94,7 @@ class GenerateAddressController: UIViewController {
             let destination = segue.destination as? ViewGeneratedAdrressController
             destination?.newAdrressCreated = true
             destination?.cartFlow = cartFlow
+            destination?.shouldDismiss = true
         }
     }
 }
