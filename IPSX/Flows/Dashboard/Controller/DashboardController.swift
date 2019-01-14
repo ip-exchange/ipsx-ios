@@ -287,6 +287,15 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
+    @IBAction func showHistory(_ sender: Any) {
+        guard orders.count > 0 else {
+            toast?.showToastAlert("There is no history to show yet.", autoHideAfter: 5, type: .info, dismissable: true)
+            return
+        }
+        
+        self.performSegue(withIdentifier: historySegueID, sender: self)
+    }
+    
     @IBAction func unwindToDashboard(segue:UIStoryboardSegue) {
         if let _ = segue.source as? MarketCheckoutController {
             shouldShowOrderHint = true

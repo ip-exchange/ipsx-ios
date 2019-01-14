@@ -2588,7 +2588,7 @@ and rent your first proxy.</string>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <state key="normal" image="history"/>
                                         <connections>
-                                            <segue destination="U5d-SP-6Uu" kind="presentation" identifier="HistorySegueID" id="CyX-fU-6VS"/>
+                                            <action selector="showHistory:" destination="HWT-Sk-n3y" eventType="touchUpInside" id="De4-ml-iPq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2850,6 +2850,7 @@ and rent your first proxy.</string>
                         <outlet property="topConstraintOutlet" destination="yeU-jC-edd" id="FPy-dv-IAb"/>
                         <segue destination="dIQ-K7-fKc" kind="show" identifier="DetailsSegueID" id="dXl-GO-Ec0"/>
                         <segue destination="KRo-vI-EOL" kind="show" identifier="ViewOrderSegueID" id="VFZ-zt-bhn"/>
+                        <segue destination="U5d-SP-6Uu" kind="presentation" identifier="HistorySegueID" id="fdK-Z5-Pmr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n2X-Qv-1E1" userLabel="First Responder" sceneMemberID="firstResponder"/>
