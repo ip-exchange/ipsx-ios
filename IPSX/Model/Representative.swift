@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Representative {
+class Representative: Equatable {
     
     var name : String
     var email: String
@@ -20,4 +20,13 @@ class Representative {
         self.email = email
         self.phone = phone
     }
+    
+    static func == (lhs: Representative, rhs: Representative) -> Bool {
+        let isEqual =
+                lhs.name == rhs.name &&
+                lhs.email == rhs.email &&
+                lhs.phone == rhs.phone
+        return isEqual
+    }
+
 }

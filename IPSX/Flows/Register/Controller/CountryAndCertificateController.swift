@@ -18,6 +18,8 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var signWithAnotherAccount: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var countryButton: UIButton!
+    @IBOutlet weak var certificateButton: UIButton!
     
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
@@ -29,7 +31,8 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     var topConstraint: NSLayoutConstraint?
     var nonDismissable = true
     var firstLoginFlow = false
-    
+    var readOnly = false
+
     private var searchController: SearchViewController?
     private var representativeController: RepresentativeDetailsController?
     
@@ -39,6 +42,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         didSet {
             DispatchQueue.main.async {
                 self.countryRTextField.contentTextField?.text = self.country
+                self.nextButton.isEnabled = self.canContinue()
             }
         }
     }
@@ -47,12 +51,13 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        setupTextViews()
         
-        prePopulate()
         if company == nil {
             company = Company()
+        } else {
+            prePopulate()
         }
+        setupTextViews()
         signWithAnotherAccount.isHidden = !nonDismissable
     }
     
@@ -86,8 +91,11 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
+        if readOnly {
+            toast?.showToastAlert("Company under review alert".localized, type: .validatePending, dismissable: false)
+        }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -100,6 +108,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         if segue.identifier == "RepresentativeSegueID", let repController = segue.destination as? RepresentativeDetailsController {
             representativeController = repController
             collectData()
+            repController.readOnly = readOnly
             repController.company = company
             repController.nonDismissable = self.nonDismissable
             repController.firstLoginFlow = self.firstLoginFlow
@@ -149,10 +158,14 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     
     private func setupTextViews() {
         countryRTextField.contentTextField?.text = "Select a country".localized
+        if readOnly {
+            countryButton.isEnabled = false
+            certificateButton.isEnabled = false
+        }
     }
     
     private func canContinue() -> Bool {
-        return self.countryRTextField.contentTextField?.text != "Select a country".localized
+        return (self.countryRTextField.contentTextField?.text != "Select a country".localized && self.company?.certificateFilename != nil)
     }
     
     private func collectData() {
@@ -164,6 +177,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         guard company != nil else { return }
         choosenFileLabel.text = company?.certificateFilename ?? "Choose file to upload".localized
         country = company?.countryName ?? "Select a country".localized
+        if country == "" { country = "Select a country".localized }
         countryRTextField.contentTextField?.text = country
     }
     
@@ -188,6 +202,7 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
             company?.certificateURL = url
             company?.certificateFilename = url.lastPathComponent
             choosenFileLabel.text = company?.certificateFilename
+            nextButton.isEnabled = canContinue()
         }
     }
 }

@@ -46,9 +46,10 @@ class EditProfileController: UIViewController {
     var addCompanyBannerShown = false
     var editMode = false
     
-    private var backFromSearch = false
+    private var backFromSegue = false
     private var companyEdited = false
-    
+    private var companyCreated = false
+
     let countrySelectionID  = "SearchSegueID"
     let legalDetailsSegueID = "LegalDetailsSegueID"
     
@@ -71,7 +72,7 @@ class EditProfileController: UIViewController {
         individualCheckmarkImage.isHidden = false
         corporateDetailsView.isHidden = true
         
-        saveButton.isEnabled = true
+        saveButton.isEnabled = false
         UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() }
     }
     
@@ -111,6 +112,7 @@ class EditProfileController: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         keyIconImageView.tintColor = .lightBlue
         configureUI()
+        updateLegalStatusUI()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -130,14 +132,24 @@ class EditProfileController: UIViewController {
         
         super.viewDidAppear(animated)
         
-        getCompanyDetails() {
-            self.updateLegalStatusUI()
-            self.configureUI()
-        }
-        
-        if companyEdited { saveButton.isEnabled = true }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
+        
+        if !backFromSegue {
+            backFromSegue = true
+            getCompanyDetails() {
+                self.updateLegalStatusUI()
+                self.configureUI()
+            }
+        }
+        if companyCreated {
+            companyCreated = false
+            self.getCompanyDetails() {
+                self.companyStatusLabel.text = "Your corporate data is being reviewed".localized
+                self.companyStatusImageView.image = UIImage(named: "corporatePending")
+                self.saveButton.isEnabled = false
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -352,15 +364,25 @@ class EditProfileController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        backFromSegue = true
+        
         if segue.identifier == legalDetailsSegueID {
             let companyNavController = segue.destination as? UINavigationController
             let companyController = companyNavController?.viewControllers.first as? CompanyDetailsController
             companyController?.company = company
             companyController?.nonDismissable = false
-            self.editMode = company != nil
-            companyController?.editMode = self.editMode
+            companyController?.readOnly = companyStatusLabel.text == "Your corporate data is being reviewed".localized
+            editMode = company != nil
+            companyController?.editMode = editMode
+            if editMode { companyController?.company = Company(company: company) }
             companyController?.onCollectDataComplete = { company in
-                self.companyEdited = true
+                if self.company == nil {
+                    self.companyEdited = false
+                    self.companyCreated = true
+                } else if company != self.company {
+                    self.companyEdited = true
+                    self.saveButton.isEnabled = true
+                }
                 self.company = company
             }
         }

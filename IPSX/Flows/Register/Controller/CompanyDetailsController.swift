@@ -22,23 +22,24 @@ class CompanyDetailsController: UIViewController {
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var signWithAnotherAccount: UIButton!
-
+    
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
         }
     }
-
+    
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var nonDismissable = true
     var firstLoginFlow = false
-
-     private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : false]
-
+    
+    private var fieldsStateDic: [String : Bool] = ["name" : false, "address" : false, "regNum" : false, "vat" : true]
+    
     var company: Company? 
     var onCollectDataComplete: ((_ company: Company?)->())?
     var editMode = false
+    var readOnly = false
     
     override func viewDidLoad() {
         
@@ -68,8 +69,11 @@ class CompanyDetailsController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
+        if readOnly {
+            toast?.showToastAlert("Company under review alert".localized, type: .validatePending, dismissable: false)
+        }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -81,6 +85,8 @@ class CompanyDetailsController: UIViewController {
         
         if segue.identifier == "CompanyDetailsSegueID", let certController = segue.destination as? CountryAndCertificateController {
             collectData()
+            certController.readOnly = readOnly
+            certController.onCollectDataComplete = onCollectDataComplete
             certController.company = company
             certController.nonDismissable = nonDismissable
             certController.firstLoginFlow = firstLoginFlow
@@ -114,6 +120,13 @@ class CompanyDetailsController: UIViewController {
         regNumberRTextField.validationRegex      = RichTextFieldView.validName
         regNumberRTextField.nextResponderField   = vatRTextField.contentTextField
         vatRTextField.validationRegex            = RichTextFieldView.validName
+        
+        if readOnly {
+            nameRTextField.contentTextField?.isEnabled = false
+            addressRTextField.contentTextField?.isEnabled = false
+            regNumberRTextField.contentTextField?.isEnabled = false
+            vatRTextField.contentTextField?.isEnabled = false
+       }
     }
     
     private func observreFieldsState() {
@@ -131,7 +144,7 @@ class CompanyDetailsController: UIViewController {
             self.nextButton.isEnabled = self.canContinue()
         }
         vatRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["vat"] = state
+            self.fieldsStateDic["vat"] = true
             self.nextButton.isEnabled = self.canContinue()
         }
     }
@@ -145,7 +158,8 @@ class CompanyDetailsController: UIViewController {
         company?.name = nameRTextField.contentTextField?.text ?? ""
         company?.address = addressRTextField.contentTextField?.text ?? ""
         company?.registrationNumber = regNumberRTextField.contentTextField?.text ?? ""
-        company?.vat = vatRTextField.contentTextField?.text ?? ""
+        let vatText = (vatRTextField.contentTextField?.text == nil || vatRTextField.contentTextField?.text == "") ? "0" : vatRTextField.contentTextField?.text
+        company?.vat = vatText ?? "0"
     }
     
     private func prePopulate() {

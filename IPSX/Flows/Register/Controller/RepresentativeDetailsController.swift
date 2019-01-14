@@ -39,6 +39,7 @@ class RepresentativeDetailsController: UIViewController {
     var nonDismissable = true
     var onCollectDataComplete: ((_ company: Company?)->())?
     var firstLoginFlow = false
+    var readOnly = false
 
     private var fieldsStateDic: [String : Bool] = ["repName" : false, "repEmail" : false, "repPhone" : false]
 
@@ -53,6 +54,9 @@ class RepresentativeDetailsController: UIViewController {
         
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: topSeparatorView, text: "")
+        if readOnly {
+            toast?.showToastAlert("Company under review alert".localized, type: .validatePending, dismissable: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,11 +64,16 @@ class RepresentativeDetailsController: UIViewController {
         super.viewWillAppear(animated)
         self.doneButton.isEnabled = self.canContinue()
     }
-
+    
     @IBAction func doneButtonAction(_ sender: Any) {
         
         collectData()
-        submitCompanyDetails()
+        if editMode {
+            self.onCollectDataComplete?(self.company)
+            self.navigationController?.dismiss(animated: true)
+        } else {
+            submitCompanyDetails()
+        }
     }
     
     @IBAction func backButtonAction(_ sender: Any) {
@@ -84,15 +93,22 @@ class RepresentativeDetailsController: UIViewController {
         companyRTextField.nextResponderField = emailRtextField.contentTextField
         emailRtextField.validationRegex      = RichTextFieldView.validEmailRegex
         emailRtextField.nextResponderField   = phoneRTextField.contentTextField
+        phoneRTextField.validationRegex      = RichTextFieldView.minOneCharRegex
         phoneRTextField.limitLenght          = 30
         
         companyRTextField.contentTextField?.text = company?.representative?.name
         emailRtextField.contentTextField?.text = company?.representative?.email
         phoneRTextField.contentTextField?.text = company?.representative?.phone
         
-        fieldsStateDic["repName"] = company?.representative?.name != nil
-        fieldsStateDic["repEmail"] = company?.representative?.email != nil
-        fieldsStateDic["repPhone"] = company?.representative?.phone != nil
+        fieldsStateDic["repName"] = companyRTextField.isContentValid
+        fieldsStateDic["repEmail"] = emailRtextField.isContentValid
+        fieldsStateDic["repPhone"] =  phoneRTextField.isContentValid
+        
+        if readOnly {
+            companyRTextField.contentTextField?.isEnabled = false
+            emailRtextField.contentTextField?.isEnabled = false
+            phoneRTextField.contentTextField?.isEnabled = false
+        }
     }
     
     private func observreFieldsState() {
@@ -134,6 +150,7 @@ class RepresentativeDetailsController: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
+                    self.onCollectDataComplete?(self.company)
                     if self.firstLoginFlow {
                         self.performSegue(withIdentifier: "CongratsSegueID", sender: nil)
                     } else {

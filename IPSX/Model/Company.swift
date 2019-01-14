@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Company {
+class Company: Equatable {
     
     enum CompanyStatus: String {
         
@@ -42,16 +42,44 @@ class Company {
         self.representative = representative
     }
     
-    init() {
+    init(company: Company? = nil) {
         
-        self.name = ""
-        self.status = .unknown
-        self.address = ""
-        self.registrationNumber = ""
-        self.vat = ""
-        self.countryName = ""
-        self.certificateFilename = nil
-        self.certificateURL = nil
-        self.representative = nil
+        if let validCompany = company {
+            self.name = validCompany.name
+            self.status = validCompany.status
+            self.address = validCompany.address
+            self.registrationNumber = validCompany.registrationNumber
+            self.vat = validCompany.vat
+            self.countryName = validCompany.countryName
+            self.certificateFilename = validCompany.certificateFilename
+            self.certificateURL = validCompany.certificateURL
+            self.representative = validCompany.representative
+            
+        } else {
+            self.name = ""
+            self.status = .unknown
+            self.address = ""
+            self.registrationNumber = ""
+            self.vat = ""
+            self.countryName = ""
+            self.certificateFilename = nil
+            self.certificateURL = nil
+            self.representative = nil
+        }
     }
+    
+    static func == (lhs: Company, rhs: Company) -> Bool {
+        let isEqual =
+                lhs.name == rhs.name &&
+                lhs.status == rhs.status &&
+                lhs.address == rhs.address &&
+                lhs.registrationNumber == rhs.registrationNumber &&
+                lhs.vat == rhs.vat &&
+                lhs.countryName == rhs.countryName &&
+                lhs.certificateFilename == rhs.certificateFilename &&
+                lhs.certificateURL == rhs.certificateURL &&
+                lhs.representative == rhs.representative
+        return isEqual
+    }
+
 }
