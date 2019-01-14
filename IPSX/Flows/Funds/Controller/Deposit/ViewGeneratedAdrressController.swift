@@ -77,8 +77,8 @@ class ViewGeneratedAdrressController: UIViewController {
         if UserManager.shared.environment == .dev {
             DispatchQueue.main.async { self.performSegue(withIdentifier: "TokenrequestSegueID", sender: self) }
             
-        } else {
-            //TODO: Buy from Cryptocoin
+        } else if let url = URL(string: "https://www.cryptocoin.pro/") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     

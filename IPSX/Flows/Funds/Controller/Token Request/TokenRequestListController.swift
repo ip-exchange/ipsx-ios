@@ -85,6 +85,10 @@ class TokenRequestListController: UIViewController {
         getTokenRequestList()
     }
 
+    @IBAction func closeButton(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     @IBAction func createRequestAction(_ sender: Any) {
         
         guard UserManager.shared.hasValidAddress else {

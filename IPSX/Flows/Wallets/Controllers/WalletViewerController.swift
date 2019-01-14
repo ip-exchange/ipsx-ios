@@ -27,6 +27,7 @@ class WalletViewerController: UIViewController {
     @IBOutlet weak var approveStateImageView: UIImageView!
     @IBOutlet weak var approveStateLabel: UILabel!
     @IBOutlet weak var lockedHolderWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var buyTokensButton: RoundedButton!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -40,6 +41,9 @@ class WalletViewerController: UIViewController {
         if ethereumAddress?.status != "locked" {
             lockedStateHolderView.isHidden = true
             lockedHolderWidthConstraint.constant = lockedHolderWidthConstraint.constant / 2
+        }
+        if UserManager.shared.environment == .dev {
+            buyTokensButton.setTitle("Request Tokens".localized, for: .normal)
         }
     }
     
@@ -61,6 +65,11 @@ class WalletViewerController: UIViewController {
     }
     
     @IBAction func buyFormCCoinAction(_ sender: Any) {
+        if UserManager.shared.environment == .dev {
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "TokenrequestSegueID", sender: self) }
+        } else if let url = URL(string: "https://www.cryptocoin.pro/") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func backAction(_ sender: Any) {
