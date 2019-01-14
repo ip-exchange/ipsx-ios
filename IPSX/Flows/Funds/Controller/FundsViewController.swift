@@ -183,6 +183,15 @@ class FundsViewController: UIViewController {
         self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: position)
     }
     
+    @IBAction func withdrawAction(_ sender: Any) {
+        guard let balance = UserManager.shared.userInfo?.balance, balance > 0 else {
+            toast?.showToastAlert("No tokens for withdraw alert message".localized, autoHideAfter: 5, type: .info, dismissable: true)
+            return
+        }
+        self.performSegue(withIdentifier: "WithdrawSegueID", sender: self)
+    }
+    
+    
 }
 
 
