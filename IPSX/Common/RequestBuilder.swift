@@ -80,6 +80,7 @@ struct RequestType {
     
     // Dashboard
     static let getOrders = "getOrders"
+    static let getOrderOfferProxy = "getOrderOfferProxy"
 }
 
 public struct KeychainKeys {
@@ -198,6 +199,7 @@ public struct Url {
     public static let viewCartArgs           = "/Users/%USER_ID%/carts/get?access_token=%ACCESS_TOKEN%"
     public static let deleteCartArgs         = "/Users/%USER_ID%/carts/delete?access_token=%ACCESS_TOKEN%"
     public static let ordersArgs             = "/Users/%USER_ID%/orders?access_token=%ACCESS_TOKEN%"
+    public static let orderOffProxArgs       = "/Users/%USER_ID%/order_offer_proxies/%PROXY_ID%?access_token=%ACCESS_TOKEN%"
     public static let wacAddressArhs         = "/Users/%USER_ID%/waccaddress?access_token=%ACCESS_TOKEN%"
     public static let withdrawalArgs         = "/Users/%USER_ID%/withdrawals?access_token=%ACCESS_TOKEN%"
     public static let createWithdrawalArgs   = "/Users/%USER_ID%/withdrawal?access_token=%ACCESS_TOKEN%"
@@ -308,6 +310,10 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
        
     case RequestType.getOrders:
         url = (Url.baseApi + Url.ordersArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "GET"
+        
+    case RequestType.getOrderOfferProxy:
+        url = (Url.baseApi + Url.orderOffProxArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "GET"
         
     //ETH addresses Requests

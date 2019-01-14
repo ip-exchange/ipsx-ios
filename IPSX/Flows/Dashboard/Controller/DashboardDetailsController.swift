@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IPSXNetworkingFramework
 
 class DashboardDetailsController: UIViewController {
 
@@ -20,6 +21,10 @@ class DashboardDetailsController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var durationRemainedLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
+    
+    //TODO(CC): add loadingView to this screen
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
     @IBOutlet weak var noOfproxiesTopConstraint: NSLayoutConstraint! {
         didSet {
             topConstraint = noOfproxiesTopConstraint
@@ -56,14 +61,21 @@ class DashboardDetailsController: UIViewController {
     
     var offer: Offer?
     var shouldDismiss = false
+    var orderOfferProxyId: Int?
     
     private var firstProxyLoaded = false
+    
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        self.doubleProgressView.setProgress(upProgress: 0, downProgress: 0, animated: false)
-        updateHeaderWithProxy(nil, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,10 +89,25 @@ class DashboardDetailsController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if offer == nil {
+            retrieveOrderOfferProxyDetails(proxyId: orderOfferProxyId) {
+                self.configureUI()
+                self.configureProxyUI()
+                self.collectionView.reloadData()
+            }
+        }
+        else {
+            configureProxyUI()
+        }
+    }
+    
+    func configureProxyUI() {
+        
         if let firstProxy = offer?.proxies.first, !firstProxyLoaded {
             updateHeaderWithProxy(firstProxy, animated: true)
+            firstProxyLoaded = true
         }
-        firstProxyLoaded = true
     }
     
     func configureUI() {
@@ -115,6 +142,27 @@ class DashboardDetailsController: UIViewController {
                 flagImageView.image = flagImage
             }
         }
+        doubleProgressView.setProgress(upProgress: 0, downProgress: 0, animated: false)
+        updateHeaderWithProxy(nil, animated: false)
+    }
+    
+    func retrieveOrderOfferProxyDetails(proxyId: Int?, completion:(() -> ())? = nil) {
+        
+        loadingView?.startAnimating()
+        MarketplaceService().getOrderOfferProxy(proxyId: proxyId ?? 0, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let offer):
+                self.offer = offer as? Offer
+                DispatchQueue.main.async { completion?() }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.getOrderOfferProxy, completion: {
+                    self.retrieveOrderOfferProxyDetails(proxyId: proxyId)
+                })
+            }
+        })
     }
     
     @IBAction func dismissAction(_ sender: Any) {
@@ -267,10 +315,7 @@ class DashboardDetailsController: UIViewController {
             self.activeStateView.alpha = 1
             self.flagImageView.alpha = 1
         }
-
     }
-    
-
 }
 
 
@@ -313,7 +358,6 @@ extension DashboardDetailsController: UIScrollViewDelegate {
              let proxy = self.offer?.proxies[path.item] {
            self.updateHeaderWithProxy(proxy)
         }
-        
      }
 }
 
@@ -323,6 +367,26 @@ extension DashboardDetailsController: ToastAlertViewPresentable {
         if self.toast == nil, let toastView = ToastAlertView(parentUnderView: parentUnderView, parentUnderViewConstraint: self.topConstraint!, alertText:text) {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
+        }
+    }
+}
+
+extension DashboardDetailsController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

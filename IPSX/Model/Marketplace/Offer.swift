@@ -23,11 +23,11 @@ class Offer {
     var isAddedToCart = false
     var isFavourite = false
     
-    init(id: Int, priceIPSX: Double, priceDollars: Double, durationMin: String, trafficMB: String) {
+    init(id: Int, priceIPSX: Double? = nil, priceDollars: Double? = nil, durationMin: String, trafficMB: String) {
         
         self.id  = id
-        self.priceIPSX = priceIPSX.cleanString
-        self.priceDollars = priceDollars.cleanString
+        self.priceIPSX = priceIPSX?.cleanString ?? ""
+        self.priceDollars = priceDollars?.cleanString ?? ""
         self.durationMin = durationMin
         self.trafficMB = trafficMB
     }

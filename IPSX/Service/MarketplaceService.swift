@@ -389,5 +389,66 @@ class MarketplaceService {
             completionHandler(ServiceResult.success(orders))
         })
     }
+    
+    func getOrderOfferProxy(proxyId: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken,
+                                           "PROXY_ID"     : "\(proxyId)"]
+        
+        let request = createRequest(requestType: RequestType.getOrderOfferProxy, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            
+            let offerId     = json["offer_id"].intValue
+            let dateFormatter = DateFormatter.backendResponseParse()
+            let createdString = json["created_at"].stringValue
+            let createdDate   = dateFormatter.date(from: createdString)
+            
+            let durationMin = json["duration"].stringValue
+            let trafficMB   = json["traffic"].stringValue
+            let usage       = json["usage"].stringValue
+            let proxyStatus = json["status"].stringValue
+            let userIp      = json["user_ip"].stringValue
+            var lockedOnIPs = [userIp]
+            
+            //TODO: asteptam API update, sa avem [String]. Acum e un String dubios
+            
+            if let optionalIPs = json["user_optional_ip"].arrayObject as? [String] {
+                lockedOnIPs.append(contentsOf: optionalIPs)
+            }
+            
+            let proxyJson = json["proxy_item"]
+            let proxies = self.parseProxyItems(proxyJsonArray: [proxyJson])
+            proxies.first?.status = proxyStatus
+            proxies.first?.lockedOnIPs = lockedOnIPs
+            proxies.first?.pacId = proxyId
+            proxies.first?.createdDate = createdDate
+            proxies.first?.createdAtString = createdString
+            proxies.first?.usage = usage
+            let offer = Offer(id: offerId, durationMin: durationMin, trafficMB: trafficMB)
+            offer.setProxies(proxyArray: proxies)
+            
+            completionHandler(ServiceResult.success(offer))
+        })
+    }
 }
 
