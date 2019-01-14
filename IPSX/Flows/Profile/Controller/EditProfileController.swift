@@ -145,8 +145,11 @@ class EditProfileController: UIViewController {
         if companyCreated {
             companyCreated = false
             self.getCompanyDetails() {
+                //We set this manually because API is not fast enough in response to reflect pending state
                 self.companyStatusLabel.text = "Your corporate data is being reviewed".localized
                 self.companyStatusImageView.image = UIImage(named: "corporatePending")
+                self.companyPendingView.startAnimating()
+                self.companyPendingView.isHidden = false
                 self.saveButton.isEnabled = false
             }
         }
