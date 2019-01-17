@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IPSXNetworkingFramework
 
 class RefundDetailsController: UIViewController {
 
@@ -23,7 +24,19 @@ class RefundDetailsController: UIViewController {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var viewProxyButton: UIButton!
     
+    //TODO(CC): add loadingView to this screen
+    @IBOutlet weak var loadingView: CustomLoadingView!
+    
+    var errorMessage: String? {
+        didSet {
+            if ReachabilityManager.shared.isReachable() {
+                toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
+            }
+        }
+    }
+    var toast: ToastAlertView?
     var refund: Refund?
+    var orderOfferProxyId: Int?
     var hideProxButton = true
     
     override func viewDidLoad() {
@@ -33,7 +46,17 @@ class RefundDetailsController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateUI()
+        
+        if refund == nil {
+            getRefundDetails() { refund in
+                DispatchQueue.main.async {
+                    self.refund = refund 
+                    self.updateUI()
+                }
+            }
+        } else {
+            updateUI()
+        }
     }
     
     @IBAction func closeAction(_ sender: Any) {
@@ -43,7 +66,6 @@ class RefundDetailsController: UIViewController {
     private func updateUI() {
         
         guard let refund = refund else { return }
-        
         
         let refundNb = refund.id
         refundTitleLabel.text = "Refund".localized + " #\(refundNb)"
@@ -61,7 +83,28 @@ class RefundDetailsController: UIViewController {
         pendingView.isHidden   = refund.status != "pending"
         completedView.isHidden = refund.status != "completed"
         canceledView.isHidden  = refund.status != "rejected"
-
+    }
+    
+    func getRefundDetails(completion:@escaping ((Refund?) -> ())) {
+        
+        guard let orderOfferProxyId = orderOfferProxyId else { return }
+        loadingView?.startAnimating()
+        
+        FundsService().getRefundDetails(proxyId: orderOfferProxyId, completionHandler: { result in
+            
+            self.loadingView?.stopAnimating()
+            switch result {
+            case .success(let refund):
+                DispatchQueue.main.async {
+                    completion(refund as? Refund)
+                }
+                
+            case .failure(let error):
+                self.handleError(error, requestType: RequestType.viewRefund, completion: {
+                    self.getRefundDetails(completion: completion)
+                })
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,6 +112,26 @@ class RefundDetailsController: UIViewController {
             let dest = segue.destination as? DashboardDetailsController
             dest?.shouldDismiss = true
             dest?.orderOfferProxyId = refund?.proxyId 
+        }
+    }
+}
+
+extension RefundDetailsController: ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                self.errorMessage = "Generic Error Message".localized
+                
+            }, successHandler: {
+                completion?()
+            })
+        default:
+            self.errorMessage = "Generic Error Message".localized
         }
     }
 }

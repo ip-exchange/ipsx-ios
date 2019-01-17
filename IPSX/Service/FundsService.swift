@@ -267,4 +267,51 @@ class FundsService {
             completionHandler(ServiceResult.success(json))
         })
     }
+    
+    func getRefundDetails(proxyId: Int, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let urlParams: [String: String] = ["USER_ID"      : UserManager.shared.userId,
+                                           "ACCESS_TOKEN" : UserManager.shared.accessToken,
+                                           "PROXY_ID"     : "\(proxyId)"]
+        
+        let request = createRequest(requestType: RequestType.viewRefund, urlParams: urlParams)
+        RequestManager.shared.executeRequest(request: request, completion: { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            let refunds = json["refund_items"].arrayValue
+            var refund: Refund?
+            
+            for refundJson in refunds {
+                
+                // Refund with comission is for providers, so refund without comission is for requesters
+                if refundJson["commission_id"].stringValue == "" {
+                    refund = Refund(json: refundJson)
+                    
+                    //double check to be sure the refund is for the proxy we want
+                    if refund?.proxyId == proxyId {
+                        completionHandler(ServiceResult.success(refund as Any))
+                        return
+                    }
+                }
+            }
+            completionHandler(ServiceResult.success(false))
+        })
+    }
 }

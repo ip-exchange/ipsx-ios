@@ -223,13 +223,14 @@ class DashboardDetailsController: UIViewController {
         }
         if segue.identifier == viewRefundSegue {
             let dest = segue.destination as? RefundDetailsController
-            //TODO (CVI): Pass data here
+            dest?.orderOfferProxyId = orderOfferProxyId
         }
     }
     
     fileprivate func updateHeaderWithProxy(_ proxy: Proxy?, animated: Bool = true) {
         
         currentProxy = proxy
+        orderOfferProxyId = currentProxy?.pacId
         refundInfoTopConstraint.constant = -100
         refundButtonTopConstraint.constant = -100
         
@@ -318,13 +319,13 @@ class DashboardDetailsController: UIViewController {
     }
 }
 
-
 extension DashboardDetailsController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProxyItemCollectionViewCell
         if offer?.proxies.count ?? 0 > indexPath.row, let proxy = offer?.proxies[indexPath.row] {
+            
             cell.configure(proxy: proxy)
             cell.onCopy = { packname, packurl in
                 UIPasteboard.general.string = packurl
