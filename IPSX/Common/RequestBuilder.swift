@@ -31,6 +31,7 @@ struct RequestType {
     static let fbRegister = "fbRegister"
     static let login = "login"
     static let fbLogin = "fbLogin"
+    static let logout = "logout"
     
     static let resetPassword = "resetPassword"
     static let changePassword = "changePassword"
@@ -173,6 +174,7 @@ public struct Url {
     public static let fbRegisterArgs         = "/Users/social/register/facebook"
     public static let countries              = "/countries?filter[where][whitelisted]=1"
     public static let loginArgs              = "/Users/auth"
+    public static let logoutArgs             = "/Users/logout?access_token=%ACCESS_TOKEN%"
     public static let fbLoginArgs            = "/Users/social/login/facebook"
     public static let resetPassArgs          = "/Users/reset"
     public static let changePassArgs         = "/Users/%USER_ID%/changePassword?access_token=%ACCESS_TOKEN%"
@@ -233,6 +235,11 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     case RequestType.changePassword:
         url = (Url.baseApi + Url.changePassArgs).replaceKeysWithValues(paramsDict: urlParams)
         httpMethod = "POST"
+        
+    case RequestType.logout:
+        url = (Url.baseApi + Url.logoutArgs).replaceKeysWithValues(paramsDict: urlParams)
+        httpMethod = "POST"
+        
         
     //Register Requests
         

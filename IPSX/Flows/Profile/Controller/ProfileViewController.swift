@@ -88,8 +88,14 @@ class ProfileViewController: UIViewController {
         
     func logout() {
         
-        UserManager.shared.logout()
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "showLandingSegueID", sender: nil) }
+        loadingView?.startAnimating()
+        LoginService().logout(completionHandler: { result in
+            self.loadingView?.stopAnimating()
+            DispatchQueue.main.async {
+                UserManager.shared.logout()
+                self.performSegue(withIdentifier: "showLandingSegueID", sender: nil)
+            }
+        })
     }
     
     override func viewDidLoad() {
