@@ -27,6 +27,17 @@ class SearchViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var navTitleLabel: UILabel!
+    @IBOutlet weak var searchTitleLabel: UILabel!
+    @IBOutlet weak var searchTextfield: UITextField!
+    
+    private func localiseStoryboard() {
+        navTitleLabel.text = "Country".localized
+        searchTitleLabel.text = "Search".localized
+        searchTextfield.placeholder = "Country...".localized
+        saveButton.setTitle("Save".localized, for: .normal)
+    }
+    
     fileprivate let cellID = "SearchCellID"
     fileprivate let newProxyFlowID = "NewProxyFlowSegueID"
     fileprivate let reuseIdentifier = "CountryCellID"
@@ -52,6 +63,8 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        localiseStoryboard()
         
         closeButton.isHidden = (isProxyFlow == false)
         backButton.isHidden  = !closeButton.isHidden

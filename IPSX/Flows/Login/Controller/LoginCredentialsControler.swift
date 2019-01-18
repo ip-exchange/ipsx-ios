@@ -25,6 +25,30 @@ class LoginCredentialsControler: UIViewController {
             topConstraint = topConstraintOutlet
         }
     }
+    
+    
+    @IBOutlet weak var loginEmailTitle: UILabel!
+    @IBOutlet weak var emailAddressFieldTitle: UILabel!
+    @IBOutlet weak var emailAddressFieldPlaceholder: UITextField!
+    @IBOutlet weak var emailAddressErrorLabel: UILabel!
+    @IBOutlet weak var paswordFieldTitle: UILabel!
+    @IBOutlet weak var passwordFieldPlaceholder: UITextField!
+    @IBOutlet weak var passwordFieldErrorLabel: UILabel!
+    @IBOutlet weak var forgotPassButton: UIButton!
+    @IBOutlet weak var loginButton: RoundedButton!
+    
+    private func localiseStoryboard() {
+        loginEmailTitle.text = "Login with Email".localized
+        emailAddressFieldTitle.text = "Email Address".localized
+        emailAddressFieldPlaceholder.placeholder = "Type a valid email address".localized
+        emailAddressErrorLabel.text = "The email must be a valid address.".localized;
+        paswordFieldTitle.text = "Password".localized
+        passwordFieldPlaceholder.placeholder = "Type your password".localized
+        passwordFieldErrorLabel.text = "Password incorrect label text".localized;
+        forgotPassButton.setTitle("Forgot Your Password?".localized, for: .normal)
+        loginButton.setTitle("Login".localized, for: .normal)
+    }
+
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
 
@@ -94,6 +118,7 @@ class LoginCredentialsControler: UIViewController {
         continueBottomDist = bottomContinueConstraint.constant
         backButton.isHidden = hideBackButton
         observreFieldsState()
+        localiseStoryboard()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,

@@ -29,7 +29,27 @@ class LoginOptionsController: UIViewController {
     }
 
     @IBOutlet weak var backgroundImageView: UIImageView!
+    
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var loginTitle: UILabel!
+    @IBOutlet weak var loginSubtitle: UILabel!
+    @IBOutlet weak var loginEmailButton: RoundedButton!
+    @IBOutlet weak var loginFacebookButton: RoundedButton!
+    
     var dict: [String : AnyObject] = [:]
+    
+    private func localiseStoryboard() {
+        closeButton.setTitle("Close".localized, for: .normal)
+        loginTitle.text = "Login".localized
+        loginSubtitle.text = "Login with email or facebook".localized
+        loginEmailButton.setTitle("Login with Email".localized, for: .normal)
+        loginFacebookButton.setTitle("Login with Facebook".localized, for: .normal)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        localiseStoryboard()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
