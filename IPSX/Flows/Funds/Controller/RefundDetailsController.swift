@@ -100,7 +100,7 @@ class RefundDetailsController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.viewRefund, completion: {
+                self.handleError(error, requestType: RequestType.getOrderOfferProxy, completion: {
                     self.getRefundDetails(completion: completion)
                 })
             }
@@ -111,7 +111,8 @@ class RefundDetailsController: UIViewController {
         if segue.identifier == "ViewProxySegue" {
             let dest = segue.destination as? DashboardDetailsController
             dest?.shouldDismiss = true
-            dest?.orderOfferProxyId = refund?.proxyId 
+            dest?.orderOfferProxyId = refund?.proxyId
+            dest?.singleProxyView = true
         }
     }
 }

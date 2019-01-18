@@ -274,7 +274,7 @@ class FundsService {
                                            "ACCESS_TOKEN" : UserManager.shared.accessToken,
                                            "PROXY_ID"     : "\(proxyId)"]
         
-        let request = createRequest(requestType: RequestType.viewRefund, urlParams: urlParams)
+        let request = createRequest(requestType: RequestType.getOrderOfferProxy, urlParams: urlParams)
         RequestManager.shared.executeRequest(request: request, completion: { error, data in
             
             guard error == nil else {

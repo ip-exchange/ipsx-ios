@@ -63,6 +63,7 @@ class DashboardDetailsController: UIViewController {
     var offer: Offer?
     var shouldDismiss = false
     var orderOfferProxyId: Int?
+    var singleProxyView = false
     
     private var firstProxyLoaded = false
     
@@ -91,7 +92,7 @@ class DashboardDetailsController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if offer == nil {
+        if singleProxyView {
             retrieveOrderOfferProxyDetails(proxyId: orderOfferProxyId) {
                 self.configureUI()
                 self.configureProxyUI()
@@ -231,14 +232,13 @@ class DashboardDetailsController: UIViewController {
         }
         if segue.identifier == viewRefundSegue {
             let dest = segue.destination as? RefundDetailsController
-            dest?.orderOfferProxyId = orderOfferProxyId
+            dest?.orderOfferProxyId = currentProxy?.pacId
         }
     }
     
     fileprivate func updateHeaderWithProxy(_ proxy: Proxy?, animated: Bool = true) {
         
         currentProxy = proxy
-        orderOfferProxyId = currentProxy?.pacId
         refundInfoTopConstraint.constant = -100
         refundButtonTopConstraint.constant = -100
         addMoreIPsButton.isHidden = true
