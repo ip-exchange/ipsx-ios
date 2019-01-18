@@ -199,7 +199,7 @@ class DashboardDetailsController: UIViewController {
     
     @objc func updateData() {
         retrieveOrderOfferProxyDetails(proxyId: currentProxy?.pacId) {
-            self.updateHeaderWithProxy(self.currentProxy)
+            self.updateHeaderWithProxy(self.currentProxy, animated: false)
         }
     }
 
@@ -403,7 +403,11 @@ extension DashboardDetailsController: UIScrollViewDelegate {
         if let path = self.collectionView.indexPathForItem(at: visiblePoint),
             let proxy = self.offer?.proxies[path.item] {
             
+            if proxy.status == "pending" {
             self.retrieveOrderOfferProxyDetails(proxyId: proxy.pacId) {
+                self.updateHeaderWithProxy(proxy)
+                }
+            } else {
                 self.updateHeaderWithProxy(proxy)
             }
         }
