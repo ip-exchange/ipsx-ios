@@ -19,7 +19,7 @@ class RegisterPasswordController: UIViewController {
     
     var continueBottomDist: CGFloat = 0.0
     private var fieldsStateDic: [String : Bool] = ["pass1" : false, "pass2" : false]
-    var userCredentials: [String: String] = ["email": "", "pass": "", "country_id": ""]
+    var userCredentials: [String: String] = ["username": "", "email": "", "pass": "", "country_id": ""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,11 +80,13 @@ class RegisterPasswordController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "RegistrationTermsSegueID" {
-            if let email = userCredentials["email"],
+            if let username = userCredentials["username"],
+                let email = userCredentials["email"],
                 let password = passRichTextField.contentTextField?.text,
                 let countryID = self.userCredentials["country_id"] {
                 let nextScreen = segue.destination as? RegisterTermsController
-                nextScreen?.userCredentials = ["email": email,
+                nextScreen?.userCredentials = ["username": username,
+                                               "email": email,
                                                "pass" : password,
                                                "country_id": countryID]
             }

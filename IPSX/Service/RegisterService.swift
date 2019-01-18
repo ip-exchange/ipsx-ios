@@ -11,14 +11,15 @@ import IPSXNetworkingFramework
 
 class RegisterService {
     
-    func registerUser(email: String, password: String, ip: String, countryID: String, newsletter: Bool, type: UserType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+    func registerUser(username: String, email: String, password: String, ip: String, countryID: String, newsletter: Bool, type: UserType, completionHandler: @escaping (ServiceResult<Any>) -> ()) {
         
         /*
          "intention_company" - 0 = normal user / 1 = company user
          "intention_provider" - 0 = requester / 1 = provider
          */
         
-        let bodyParams: [String: Any] = ["email"             : email,
+        let bodyParams: [String: Any] = ["username"          : username,
+                                         "email"             : email,
                                          "password"          : password,
                                          "ip"                : ip,
                                          "country_id"        : countryID,

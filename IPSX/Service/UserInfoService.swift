@@ -78,7 +78,8 @@ class UserInfoService {
             pendingDeleteAccount = true
         }
         
-        let userDict: [String: Any] = [ "first_name":    json["first_name"].stringValue,
+        let userDict: [String: Any] = [ "username":      json["username"].stringValue,
+                                        "first_name":    json["first_name"].stringValue,
                                         "middle_name":   json["middle_name"].stringValue,
                                         "last_name":     json["last_name"].stringValue,
                                         "telegram":      json["telegram"].stringValue,

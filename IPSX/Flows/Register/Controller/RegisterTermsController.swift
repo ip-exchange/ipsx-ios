@@ -32,7 +32,7 @@ class RegisterTermsController: UIViewController {
     var isFbFlow = false
     
     private var statesDic: [String : Bool] = [:]
-    var userCredentials: [String: String] = ["email": "", "pass": "", "country_id": ""]
+    var userCredentials: [String: String] = ["username": "", "email": "", "pass": "", "country_id": ""]
     var errorMessage: String? {
         didSet {
             toast?.showToastAlert(self.errorMessage, autoHideAfter: 5)
@@ -182,8 +182,8 @@ class RegisterTermsController: UIViewController {
         if isFbFlow, let countryID = self.userCredentials["country_id"] {
             self.registerWithFacebook(fbToken: fbToken, countryID: countryID)
         }
-        else if let email = self.userCredentials["email"], let pass = self.userCredentials["pass"], let countryID = self.userCredentials["country_id"] {
-            self.registerWithEmailPass(email: email, pass: pass, ipAddress: ipAddress, countryID: countryID)
+        else if let username = self.userCredentials["username"], let email = self.userCredentials["email"], let pass = self.userCredentials["pass"], let countryID = self.userCredentials["country_id"] {
+            self.registerWithEmailPass(username: username, email: email, pass: pass, ipAddress: ipAddress, countryID: countryID)
         }
         else {
             self.loadingView?.stopAnimating()
@@ -208,10 +208,10 @@ class RegisterTermsController: UIViewController {
         })
     }
     
-    func registerWithEmailPass(email: String, pass: String, ipAddress: String, countryID: String) {
+    func registerWithEmailPass(username: String, email: String, pass: String, ipAddress: String, countryID: String) {
         
         self.loadingView?.startAnimating()
-        RegisterService().registerUser(email: email, password: pass, ip: ipAddress, countryID: countryID, newsletter: newsletter, type: userType, completionHandler: { result in
+        RegisterService().registerUser(username: username, email: email, password: pass, ip: ipAddress, countryID: countryID, newsletter: newsletter, type: userType, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {

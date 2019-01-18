@@ -48,15 +48,15 @@ class RichTextFieldView: UIView {
         updateColors(isValid: isValid(text: currentText))
     }
     
-    private func updateColors(isValid: Bool) {
+   func updateColors(isValid: Bool) {
         
         let chars = contentTextField?.text?.count ?? 0
         onFieldStateChange?(isValid)
         
         invalidContentLabel?.isHidden  = isValid || chars == 0
-        titleLabel?.textColor          = isValid || chars == 0 ? .warmGrey : .inputError
-        separatorView?.backgroundColor = chars == 0 ? .silverAlpha : isValid ? .lightBlue : .inputError
-        leftIconImageView?.tintColor   = separatorView?.backgroundColor
+        titleLabel?.textColor          = isValid || chars == 0 ? .textfieldsGray : .inputError
+        separatorView?.backgroundColor = chars == 0 ? .silver : isValid ? .lightBlue : .inputError
+        leftIconImageView?.tintColor   = chars == 0 ? .iconGray : isValid ? .lightBlue : .inputError
         contentTextField?.textColor    = isValid || chars == 0 ? .darktext : .inputError
     }
     

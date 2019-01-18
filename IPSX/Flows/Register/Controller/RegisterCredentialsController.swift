@@ -12,13 +12,14 @@ import UIKit
 class RegisterCredentialsController: UIViewController {
 
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var userNameRichTextView: RichTextFieldView!
     @IBOutlet weak var emailRichTextView: RichTextFieldView!
     @IBOutlet weak var countryRTextField: RichTextFieldView!
     @IBOutlet weak var bottomContinueConstraint: NSLayoutConstraint!
     @IBOutlet weak var continueButton: RoundedButton!
     
     var continueBottomDist: CGFloat = 0.0
-    private var fieldsStateDic: [String : Bool] = ["email" : false, "country_id": false]
+    private var fieldsStateDic: [String : Bool] = ["username" : false, "email" : false, "country_id": false]
     private var searchController: SearchViewController?
     var country: String? {
         didSet {
@@ -28,12 +29,13 @@ class RegisterCredentialsController: UIViewController {
         }
     }
     
-    var userCredentials: [String: String] = ["email": "", "country_id": ""]
+    var userCredentials: [String: String] = ["username" : "", "email" : "", "country_id" : ""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         continueBottomDist = bottomContinueConstraint.constant
         observreFieldsState()
+        userNameRichTextView.updateColors(isValid: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -75,10 +77,15 @@ class RegisterCredentialsController: UIViewController {
     }
     
     private func setupTextViews() {
-        emailRichTextView.validationRegex       = RichTextFieldView.validEmailRegex
+        emailRichTextView.validationRegex = RichTextFieldView.validEmailRegex
+        userNameRichTextView.validationRegex = RichTextFieldView.minOneCharRegex
     }
     
     private func observreFieldsState() {
+        userNameRichTextView.onFieldStateChange = { state in
+            self.fieldsStateDic["username"] = state
+            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
         emailRichTextView.onFieldStateChange = { state in
             self.fieldsStateDic["email"] = state
             self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
@@ -98,9 +105,9 @@ class RegisterCredentialsController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "PasswordSegueID" {
-            if let email = emailRichTextView.contentTextField?.text, let countryID = self.userCredentials["country_id"] {
+            if let username = userNameRichTextView.contentTextField?.text, let email = emailRichTextView.contentTextField?.text, let countryID = self.userCredentials["country_id"] {
                 let nextScreen = segue.destination as? RegisterPasswordController
-                nextScreen?.userCredentials = ["email": email, "country_id": countryID]
+                nextScreen?.userCredentials = ["username" : username, "email": email, "country_id": countryID]
             }
         }
         

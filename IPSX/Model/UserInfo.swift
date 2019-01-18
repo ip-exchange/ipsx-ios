@@ -66,6 +66,7 @@ struct UserInfo {
     var kycStatusString: String = "Unknown Status Text".localized
     var kycStatus: KycStatus
     var socialName: String?
+    var userName: String?
     var source: String?
     var refferalCode: String?
     var deleteAccountDate: Date?
@@ -73,6 +74,7 @@ struct UserInfo {
 
     init(userDict: [String: Any]) {
         
+        self.userName      = userDict["username"] as? String
         self.firstName     = userDict["first_name"] as? String
         self.middleName    = userDict["middle_name"] as? String
         self.lastName      = userDict["last_name"] as? String

@@ -217,7 +217,10 @@ class ProfileViewController: UIViewController {
         DispatchQueue.main.async {
 
             self.userRoleLabel.text = UserManager.shared.userRoleString
-            if let firstName = self.userInfo?.firstName {
+            if let username = self.userInfo?.userName {
+                self.usernameLabel.text = username
+                self.usernameTopLabel.text = username
+            } else if let firstName = self.userInfo?.firstName {
                 let lastName = self.userInfo?.lastName ?? ""
                 self.usernameLabel.text    = firstName + " " + lastName
                 self.usernameTopLabel.text = self.usernameLabel.text
