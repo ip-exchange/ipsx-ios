@@ -14,13 +14,18 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
-    @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
-
     @IBOutlet weak var marketplaceImageView: UIImageView!
+    
+    @IBOutlet weak var welcomeTopLabel: UILabel!
+    @IBOutlet weak var registerButton: RoundedButton!
+    @IBOutlet weak var loginButton: RoundedButton!
+    @IBOutlet weak var viewMarketplaceButton: RoundedButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        outletsLocalisation()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -42,5 +47,14 @@ class LandingViewController: UIViewController {
         marketplaceImageView.tintColor = .white
     }
     
+    private func outletsLocalisation() {
+        welcomeTopLabel.text = "Welcome to".localized
+        registerButton.setTitle("Register".localized, for: .normal)
+        loginButton.setTitle("Login".localized, for: .normal)
+        viewMarketplaceButton.setTitle("View or Marketplace".localized, for: .normal)
+    }
+    
     @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToMain(segue:UIStoryboardSegue) { }
+    
 }
