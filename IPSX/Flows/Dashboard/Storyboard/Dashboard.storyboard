@@ -879,6 +879,14 @@
                                     <constraint firstAttribute="trailing" secondItem="Ex8-fp-iqq" secondAttribute="trailing" constant="15" id="wb5-Tl-dxR"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTx-gc-flo" customClass="CustomLoadingView" customModule="IPSX" customModuleProvider="target">
+                                <rect key="frame" x="165.66666666666666" y="389" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.054901960780000002" blue="0.054901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="gq5-R9-Pnl"/>
+                                    <constraint firstAttribute="height" constant="44" id="xYD-d0-HsU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -894,9 +902,11 @@
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="top" secondItem="0Tz-9X-Xrg" secondAttribute="top" constant="55" id="Uew-Mp-XVS"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="trailing" secondItem="OYH-0i-PEh" secondAttribute="trailing" id="UxK-s9-wHX"/>
                             <constraint firstItem="0Tz-9X-Xrg" firstAttribute="bottom" secondItem="Ogi-jV-lGF" secondAttribute="bottom" constant="45" id="ccO-FQ-eEP"/>
+                            <constraint firstItem="LTx-gc-flo" firstAttribute="centerY" secondItem="Ogi-jV-lGF" secondAttribute="centerY" id="dpa-JQ-jdz"/>
                             <constraint firstItem="Ogi-jV-lGF" firstAttribute="trailing" secondItem="0Tz-9X-Xrg" secondAttribute="trailing" id="i6O-yx-J96"/>
                             <constraint firstItem="Wry-z4-0vl" firstAttribute="centerX" secondItem="e09-DZ-6pU" secondAttribute="centerX" id="l66-uG-3OG"/>
                             <constraint firstItem="zj7-hY-IZ8" firstAttribute="top" secondItem="OYH-0i-PEh" secondAttribute="bottom" id="qbA-F1-jb1"/>
+                            <constraint firstItem="LTx-gc-flo" firstAttribute="centerX" secondItem="Ogi-jV-lGF" secondAttribute="centerX" id="r3W-YH-EQ7"/>
                             <constraint firstItem="fdn-kE-p30" firstAttribute="top" secondItem="Wry-z4-0vl" secondAttribute="bottom" constant="-100" id="r5a-UT-FSQ"/>
                             <constraint firstItem="e09-DZ-6pU" firstAttribute="top" secondItem="zj7-hY-IZ8" secondAttribute="bottom" constant="24" id="smJ-4s-tuk"/>
                             <constraint firstItem="OYH-0i-PEh" firstAttribute="leading" secondItem="Ogi-jV-lGF" secondAttribute="leading" id="z9E-bA-SxK"/>
@@ -916,6 +926,7 @@
                         <outlet property="durationLabel" destination="Ydh-Ec-VD4" id="gwb-zo-ZFX"/>
                         <outlet property="durationRemainedLabel" destination="wXj-VV-I5G" id="ZEL-CP-rla"/>
                         <outlet property="flagImageView" destination="hrH-gD-0Zr" id="MOB-iz-YgY"/>
+                        <outlet property="loadingView" destination="LTx-gc-flo" id="f9W-W6-48h"/>
                         <outlet property="lockedOnIp1Label" destination="vsl-No-HZw" id="WHV-iL-ygO"/>
                         <outlet property="lockedOnIp2Label" destination="sB7-op-NYr" id="5BJ-cq-Vv0"/>
                         <outlet property="lockedOnIp3Label" destination="nML-s6-8Gs" id="oAn-qF-LAf"/>

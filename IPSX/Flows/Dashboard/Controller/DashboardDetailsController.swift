@@ -22,8 +22,6 @@ class DashboardDetailsController: UIViewController {
     @IBOutlet weak var durationRemainedLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
     @IBOutlet weak var addMoreIPsButton: UIView!
-    
-    //TODO(CC): add loadingView to this screen
     @IBOutlet weak var loadingView: CustomLoadingView!
     
     @IBOutlet weak var noOfproxiesTopConstraint: NSLayoutConstraint! {
@@ -56,7 +54,8 @@ class DashboardDetailsController: UIViewController {
 
     private let cellSpacing: CGFloat = 12
     private var currentProxy: Proxy?
-    
+    private var timer: Timer?
+
     fileprivate let reuseIdentifier = "DashboardtemCell"
     private var viewRefundSegue = "ViewRefundDetailsSegue"
     
@@ -78,8 +77,21 @@ class DashboardDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        self.currentProxy = self.offer?.proxies.first
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
     
+    @objc func appWillEnterForeground() {
+        self.updateData()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: noOfProxiesLabel, text: "")
@@ -98,12 +110,19 @@ class DashboardDetailsController: UIViewController {
                 self.configureProxyUI()
                 self.collectionView.reloadData()
             }
-        }
-        else {
+        } else {
             configureProxyUI()
+            if self.offer?.proxies.first?.status == "pending" {
+                self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+            }
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.timer?.invalidate()
+    }
+
     func configureProxyUI() {
         
         if let firstProxy = offer?.proxies.first, !firstProxyLoaded {
@@ -151,12 +170,23 @@ class DashboardDetailsController: UIViewController {
     func retrieveOrderOfferProxyDetails(proxyId: Int?, completion:(() -> ())? = nil) {
         
         loadingView?.startAnimating()
+        self.timer?.invalidate()
         MarketplaceService().getOrderOfferProxy(proxyId: proxyId ?? 0, completionHandler: { result in
             
             self.loadingView?.stopAnimating()
             switch result {
             case .success(let offer):
-                self.offer = offer as? Offer
+                if let fetchedOffer = offer as? Offer, fetchedOffer.proxies.count == 1, let firstProxy = fetchedOffer.proxies.first {
+                    
+                    if let row = self.offer?.proxies.index(where: {$0.pacId == firstProxy.pacId }) {
+                        self.offer?.proxies[row] = firstProxy
+                        self.currentProxy = firstProxy
+                        if firstProxy.status == "pending" {
+                            self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.updateData), userInfo: nil, repeats: true)
+                        }
+                    }
+                }
+                
                 DispatchQueue.main.async { completion?() }
                 
             case .failure(let error):
@@ -167,6 +197,12 @@ class DashboardDetailsController: UIViewController {
         })
     }
     
+    @objc func updateData() {
+        retrieveOrderOfferProxyDetails(proxyId: currentProxy?.pacId) {
+            self.updateHeaderWithProxy(self.currentProxy)
+        }
+    }
+
     @IBAction func addMoreIPsAction(_ sender: Any) {
         let proxyID: Int = currentProxy?.pacId ?? 0
         if let url = URL(string: Url.baseUrl + "/proxies/\(proxyID)/authorization") {
@@ -363,12 +399,15 @@ extension DashboardDetailsController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         let visiblePoint = CGPoint(x: self.collectionView.contentOffset.x + self.collectionView.frame.size.width / 2,
-                                  y: self.collectionView.frame.size.height / 2)
+                                   y: self.collectionView.frame.size.height / 2)
         if let path = self.collectionView.indexPathForItem(at: visiblePoint),
-             let proxy = self.offer?.proxies[path.item] {
-           self.updateHeaderWithProxy(proxy)
+            let proxy = self.offer?.proxies[path.item] {
+            
+            self.retrieveOrderOfferProxyDetails(proxyId: proxy.pacId) {
+                self.updateHeaderWithProxy(proxy)
+            }
         }
-     }
+    }
 }
 
 extension DashboardDetailsController: ToastAlertViewPresentable {
