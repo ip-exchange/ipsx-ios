@@ -21,6 +21,7 @@ class DashboardDetailsController: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var durationRemainedLabel: UILabel!
     @IBOutlet weak var noOfProxiesLabel: UILabel!
+    @IBOutlet weak var addMoreIPsButton: UIView!
     
     //TODO(CC): add loadingView to this screen
     @IBOutlet weak var loadingView: CustomLoadingView!
@@ -165,6 +166,13 @@ class DashboardDetailsController: UIViewController {
         })
     }
     
+    @IBAction func addMoreIPsAction(_ sender: Any) {
+        let proxyID: Int = currentProxy?.pacId ?? 0
+        if let url = URL(string: Url.baseUrl + "/proxies/\(proxyID)/authorization") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
     @IBAction func dismissAction(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -233,6 +241,7 @@ class DashboardDetailsController: UIViewController {
         orderOfferProxyId = currentProxy?.pacId
         refundInfoTopConstraint.constant = -100
         refundButtonTopConstraint.constant = -100
+        addMoreIPsButton.isHidden = true
         
         if animated { UIView.animate(withDuration: 0.15) { self.view.layoutIfNeeded() } }
         
@@ -292,11 +301,11 @@ class DashboardDetailsController: UIViewController {
         var pos = 0
         for lockedIp in validProxy.lockedOnIPs ?? ["---.---.---.---"] {
             if pos == 0 { self.lockedOnIp1Label.text = lockedIp }
-            if pos == 1 { self.lockedOnIp1Label.text = lockedIp }
-            if pos == 2 { self.lockedOnIp1Label.text = lockedIp }
+            if pos == 1 { self.lockedOnIp2Label.text = lockedIp }
+            if pos == 2 { self.lockedOnIp3Label.text = lockedIp }
             pos += 1
         }
-        
+        addMoreIPsButton.isHidden = !(pos < 3 && proxy?.status == "active")
         activeStateView.setActiveState(validProxy.status)
 
         if validProxy.status == "unavailable" {

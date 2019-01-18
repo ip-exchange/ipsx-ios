@@ -176,6 +176,16 @@
                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBd-5K-BZi">
+                                                <rect key="frame" x="244" y="3.6666666666666856" width="120" height="27"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <state key="normal" title="Add more IPs on web">
+                                                    <color key="titleColor" red="0.16862745098039217" green="0.51372549019607838" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addMoreIPsAction:" destination="uMo-jK-dNo" eventType="touchUpInside" id="b1y-Au-5nS"/>
+                                                </connections>
+                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---.---.---.---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vsl-No-HZw">
                                                 <rect key="frame" x="14.999999999999993" y="32" width="110.33333333333331" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -202,10 +212,12 @@
                                             <constraint firstItem="WgB-Vv-gUr" firstAttribute="top" secondItem="mVY-jg-zLh" secondAttribute="top" constant="10" id="AST-YE-4mA"/>
                                             <constraint firstItem="sB7-op-NYr" firstAttribute="width" secondItem="vsl-No-HZw" secondAttribute="width" id="B06-WN-rw4"/>
                                             <constraint firstItem="WgB-Vv-gUr" firstAttribute="leading" secondItem="mVY-jg-zLh" secondAttribute="leading" constant="15" id="Dl4-BO-x0V"/>
+                                            <constraint firstItem="bBd-5K-BZi" firstAttribute="centerY" secondItem="WgB-Vv-gUr" secondAttribute="centerY" id="JpQ-g5-IYw"/>
                                             <constraint firstItem="nML-s6-8Gs" firstAttribute="centerY" secondItem="sB7-op-NYr" secondAttribute="centerY" id="YWY-zn-GQx"/>
                                             <constraint firstItem="vsl-No-HZw" firstAttribute="leading" secondItem="WgB-Vv-gUr" secondAttribute="leading" id="ewi-Wb-SaW"/>
                                             <constraint firstItem="sB7-op-NYr" firstAttribute="centerY" secondItem="vsl-No-HZw" secondAttribute="centerY" id="ksb-Xi-Ebh"/>
                                             <constraint firstItem="vsl-No-HZw" firstAttribute="width" secondItem="mVY-jg-zLh" secondAttribute="width" multiplier="1:3.4" id="ksg-mZ-tq4"/>
+                                            <constraint firstItem="bBd-5K-BZi" firstAttribute="trailing" secondItem="nML-s6-8Gs" secondAttribute="trailing" id="pVn-Nt-dtv"/>
                                             <constraint firstItem="sB7-op-NYr" firstAttribute="centerX" secondItem="mVY-jg-zLh" secondAttribute="centerX" id="yof-5Q-JLo"/>
                                         </constraints>
                                     </view>
@@ -895,6 +907,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activeStateView" destination="MdM-a3-zNM" id="rLz-Xl-YSc"/>
+                        <outlet property="addMoreIPsButton" destination="bBd-5K-BZi" id="yAF-xc-2dG"/>
                         <outlet property="backButton" destination="YvN-x4-aRh" id="5mI-FP-jpk"/>
                         <outlet property="collectionView" destination="Wry-z4-0vl" id="J0Y-32-Muu"/>
                         <outlet property="countryLabel" destination="Goi-H2-g7d" id="VYB-OQ-d2W"/>
