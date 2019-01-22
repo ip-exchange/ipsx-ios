@@ -69,28 +69,28 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AER-MK-htm" userLabel="Deposit" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                             <rect key="frame" x="15" y="25" width="345" height="67"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Deposit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmn-uI-tnh">
-                                                    <rect key="frame" x="71" y="16" width="266" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walletDeposit" translatesAutoresizingMaskIntoConstraints="NO" id="CkA-dc-srB">
+                                                    <rect key="frame" x="18" y="18.666666666666664" width="30" height="30"/>
+                                                    <color key="tintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="Jhc-wA-xkz"/>
+                                                        <constraint firstAttribute="width" constant="30" id="uEq-iB-eny"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Deposit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmn-uI-tnh">
+                                                    <rect key="frame" x="71" y="8.6666666666666643" width="266" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gimme a text to put it here :D" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wn6-Ol-NQQ">
-                                                    <rect key="frame" x="71" y="34" width="266" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move IPSX tokens from your wallet to the IPSX platform" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wn6-Ol-NQQ">
+                                                    <rect key="frame" x="71" y="28.666666666666664" width="266" height="31.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="walletDeposit" translatesAutoresizingMaskIntoConstraints="NO" id="CkA-dc-srB">
-                                                    <rect key="frame" x="18" y="18" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-oL-Gdy">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxp-oL-Gdy">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <action selector="createDepositAction:" destination="v0F-n9-oxs" eventType="touchUpInside" id="gl4-3Y-IZI"/>
                                                     </connections>
@@ -98,6 +98,18 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="wn6-Ol-NQQ" secondAttribute="trailing" constant="8" id="1Tt-n4-bWo"/>
+                                                <constraint firstItem="wn6-Ol-NQQ" firstAttribute="top" secondItem="Wmn-uI-tnh" secondAttribute="bottom" id="1y9-zL-tCl"/>
+                                                <constraint firstItem="Wmn-uI-tnh" firstAttribute="leading" secondItem="CkA-dc-srB" secondAttribute="trailing" constant="23" id="BOK-HH-0Nc"/>
+                                                <constraint firstItem="CkA-dc-srB" firstAttribute="leading" secondItem="AER-MK-htm" secondAttribute="leading" constant="18" id="CYw-bP-ZDA"/>
+                                                <constraint firstAttribute="trailing" secondItem="Yxp-oL-Gdy" secondAttribute="trailing" id="Euf-28-cTC"/>
+                                                <constraint firstItem="Yxp-oL-Gdy" firstAttribute="top" secondItem="AER-MK-htm" secondAttribute="top" id="I5l-r0-PYe"/>
+                                                <constraint firstItem="CkA-dc-srB" firstAttribute="centerY" secondItem="AER-MK-htm" secondAttribute="centerY" id="LxB-wk-AHA"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wmn-uI-tnh" secondAttribute="trailing" constant="8" id="Oea-a1-Shg"/>
+                                                <constraint firstItem="Wmn-uI-tnh" firstAttribute="top" secondItem="CkA-dc-srB" secondAttribute="top" constant="-10" id="RFM-cx-jB1"/>
+                                                <constraint firstItem="wn6-Ol-NQQ" firstAttribute="leading" secondItem="CkA-dc-srB" secondAttribute="trailing" constant="23" id="XHN-Ze-QY3"/>
+                                                <constraint firstItem="Yxp-oL-Gdy" firstAttribute="leading" secondItem="AER-MK-htm" secondAttribute="leading" id="Yd2-zd-vGC"/>
+                                                <constraint firstAttribute="bottom" secondItem="Yxp-oL-Gdy" secondAttribute="bottom" id="ZEt-9k-cw2"/>
                                                 <constraint firstAttribute="height" constant="67" id="kbd-26-XaS"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>

@@ -69,25 +69,26 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7e-Hk-SF6" userLabel="Deposit" customClass="RoundedView" customModule="IPSX" customModuleProvider="target">
                                             <rect key="frame" x="15" y="25" width="345" height="67"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Withdrawal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAL-Yg-9YC">
-                                                    <rect key="frame" x="71" y="14" width="266" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walletWidthdrawals" translatesAutoresizingMaskIntoConstraints="NO" id="bbK-Nz-ty8">
+                                                    <rect key="frame" x="18" y="18.666666666666664" width="30" height="30"/>
+                                                    <color key="tintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="EC1-Tu-7HT"/>
+                                                        <constraint firstAttribute="width" constant="30" id="L8g-nF-RSn"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Withdrawal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAL-Yg-9YC">
+                                                    <rect key="frame" x="71" y="8.6666666666666643" width="274" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gimme a text to put it here :D" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EA7-Y7-eIf">
-                                                    <rect key="frame" x="71" y="34" width="266" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Move IPSX tokens from the IPSX platform to your wallet" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EA7-Y7-eIf">
+                                                    <rect key="frame" x="71" y="28.666666666666664" width="274" height="31.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="walletWidthdrawals" translatesAutoresizingMaskIntoConstraints="NO" id="bbK-Nz-ty8">
-                                                    <rect key="frame" x="18" y="18" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <color key="tintColor" red="0.1647058824" green="0.67500001190000003" blue="0.87800002099999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp3-C6-8oo">
                                                     <rect key="frame" x="0.0" y="0.0" width="345" height="67"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -98,7 +99,15 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="bbK-Nz-ty8" firstAttribute="centerY" secondItem="l7e-Hk-SF6" secondAttribute="centerY" id="7wP-uz-s09"/>
+                                                <constraint firstItem="EA7-Y7-eIf" firstAttribute="leading" secondItem="fAL-Yg-9YC" secondAttribute="leading" id="9LJ-w1-Upe"/>
+                                                <constraint firstAttribute="trailing" secondItem="fAL-Yg-9YC" secondAttribute="trailing" id="9eY-CK-Ume"/>
+                                                <constraint firstItem="EA7-Y7-eIf" firstAttribute="trailing" secondItem="fAL-Yg-9YC" secondAttribute="trailing" id="QNf-kw-yu5"/>
+                                                <constraint firstItem="fAL-Yg-9YC" firstAttribute="top" secondItem="bbK-Nz-ty8" secondAttribute="top" constant="-10" id="TGB-pX-WLw"/>
                                                 <constraint firstAttribute="height" constant="67" id="flx-TY-NUu"/>
+                                                <constraint firstItem="bbK-Nz-ty8" firstAttribute="leading" secondItem="l7e-Hk-SF6" secondAttribute="leading" constant="18" id="nhn-tx-KwI"/>
+                                                <constraint firstItem="EA7-Y7-eIf" firstAttribute="top" secondItem="fAL-Yg-9YC" secondAttribute="bottom" id="tcY-N0-uil"/>
+                                                <constraint firstItem="fAL-Yg-9YC" firstAttribute="leading" secondItem="bbK-Nz-ty8" secondAttribute="trailing" constant="23" id="z6y-5d-EjP"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="shadow" value="YES"/>
