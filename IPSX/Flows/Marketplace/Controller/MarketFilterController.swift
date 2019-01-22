@@ -126,6 +126,22 @@ class MarketFilterController: UIViewController {
         if let countries = UserManager.shared.allCountries  {
             availableCountries = countries.map { item in
                 return item.values.first ?? ""}
+        } else {
+            UserInfoService().getCountryList(completionHandler: { result in
+                
+                switch result {
+                case .success(let countryList):
+                    UserManager.shared.allCountries = countryList as? [[String: String]]
+                    if let countries = UserManager.shared.allCountries  {
+                        self.availableCountries = countries.map { item in
+                            return item.values.first ?? ""}
+                    }
+                    DispatchQueue.main.async {
+                        self.searchContriesButton.isHidden = self.selectedCountries.count == self.availableCountries.count
+                    }
+                case .failure(_): break
+                }
+            })
         }
         loadFilterValues()
     }
