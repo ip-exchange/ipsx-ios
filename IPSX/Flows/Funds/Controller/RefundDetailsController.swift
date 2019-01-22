@@ -24,7 +24,6 @@ class RefundDetailsController: UIViewController {
     @IBOutlet weak var canceledView: RoundedView!
     @IBOutlet weak var viewProxyButton: UIButton!
     
-    //TODO(CC): add loadingView to this screen
     @IBOutlet weak var loadingView: CustomLoadingView!
     
     var errorMessage: String? {
