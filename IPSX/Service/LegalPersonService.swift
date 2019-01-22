@@ -150,7 +150,6 @@ class LegalPersonService {
             if  let name                 = jsonCompany["name"].string,
                 let address              = jsonCompany["address"].string,
                 let registrationNumber   = jsonCompany["registration_number"].string,
-                let vat                  = jsonCompany["vat"].string,
                 let countryId            = jsonCompany["country_id"].int,
                 let representativeName   = jsonCompany["representative_name"].string,
                 let representativeEmail  = jsonCompany["representative_email"].string,
@@ -162,6 +161,8 @@ class LegalPersonService {
                 let representative = Representative(name: representativeName, email: representativeEmail, phone: representativePhone)
                 let countryName = UserManager.shared.getCountryName(countryID: "\(countryId)") ?? ""
                 
+                let vat: String = jsonCompany["vat"].string ?? "0"
+
                 company = Company(name: name, address: address, registrationNumber: registrationNumber, vat: vat, countryName: countryName, certificateFilename: filename, representative: representative, statusString: companyStatusString)
             }
             completionHandler(ServiceResult.success(company as Any))
