@@ -288,6 +288,9 @@ extension RegisterTermsController: ErrorPresentable {
         case RequestType.fbRegister, RequestType.register:
             
             switch error {
+            case CustomError.usernameExists:
+                self.errorMessage = "Username taken error message".localized
+                
             case CustomError.alreadyExists:
                 self.errorMessage = "User already registered Error Message".localized
                 

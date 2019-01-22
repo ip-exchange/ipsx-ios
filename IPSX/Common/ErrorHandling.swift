@@ -28,6 +28,7 @@ public enum CustomError: Error {
     case loginFailed
     case invalidLogin
     case userDeleted
+    case usernameExists
     case notPossible
     case notSuccessful
     case fbNoEmailError
@@ -58,12 +59,15 @@ public enum CustomError: Error {
         case .ipNotSupported:
             return "Your current IP address is IPv6 or invalid"
             
+        case .usernameExists:
+            return "The username is taken, please use a different one"
+            
         case .statusCodeNOK(let statusCode):
             return "Error status code:" + "\(statusCode)"
             
         case .otherError(let err):
             return err.localizedDescription
-            
+           
         default:
             return self.localizedDescription
         }
@@ -116,14 +120,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
-        case 429:
+        case 422:
             
             switch requestType {
                 
-            case RequestType.fbLogin: customError = CustomError.notFound
+            case RequestType.register: customError = CustomError.usernameExists
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
-            
+
         case 430:
             
             switch requestType {
