@@ -151,6 +151,11 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         self.present(importMenu, animated: true, completion: nil)
     }
     
+    @IBAction func searchCountryAction(_ sender: Any) {
+        guard !readOnly else { return }
+        self.performSegue(withIdentifier: "SearchSegueID", sender: self)
+    }
+    
     @IBAction func signWithAnotherAccount(_ sender: Any) {
         UserManager.shared.logout()
         DispatchQueue.main.async { self.performSegue(withIdentifier: "UnwindAndShowLandingID", sender: nil) }
@@ -159,7 +164,6 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
     private func setupTextViews() {
         countryRTextField.contentTextField?.text = "Select a country".localized
         if readOnly {
-            countryButton.isEnabled = false
             certificateButton.isEnabled = false
         }
     }

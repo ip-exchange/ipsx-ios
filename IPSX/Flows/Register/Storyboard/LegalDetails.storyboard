@@ -67,7 +67,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="82"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <connections>
-                                                    <segue destination="27i-Zz-SOj" kind="show" identifier="SearchSegueID" id="Ehz-jQ-fCA"/>
+                                                    <action selector="searchCountryAction:" destination="S47-Bd-0BS" eventType="touchUpInside" id="kTS-Bd-utd"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -245,6 +245,7 @@
                         <outlet property="topConstraintOutlet" destination="32g-Sf-aPu" id="ase-Wb-ELJ"/>
                         <outlet property="topSeparatorView" destination="oOm-OL-EBe" id="WLa-g2-Ke5"/>
                         <segue destination="5A6-QR-psk" kind="show" identifier="RepresentativeSegueID" id="16R-aZ-4O1"/>
+                        <segue destination="27i-Zz-SOj" kind="show" identifier="SearchSegueID" id="ubR-dH-Fun"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NgK-ea-W0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -258,7 +259,7 @@
                 <viewControllerPlaceholder storyboardName="Search" id="27i-Zz-SOj" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C0v-Pi-s58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1252" y="567"/>
+            <point key="canvasLocation" x="2052" y="556"/>
         </scene>
         <!--Representative Details Controller-->
         <scene sceneID="QTZ-ba-dzd">
@@ -544,16 +545,13 @@
                                 <rect key="frame" x="0.0" y="24" width="375" height="754"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwL-Ug-gnj">
-                                <rect key="frame" x="16" y="114" width="171" height="21.666666666666657"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21.5" id="wco-PX-h9h"/>
-                                </constraints>
+                                <rect key="frame" x="16" y="114" width="171" height="26.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" red="0.1647058824" green="0.1647058824" blue="0.1650000066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="fi5-gl-9zJ">
-                                <rect key="frame" x="16" y="162" width="343" height="320"/>
+                                <rect key="frame" x="16" y="167" width="343" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2oH-mA-f3C" userLabel="Company name" customClass="RichTextFieldView" customModule="IPSX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="80"/>

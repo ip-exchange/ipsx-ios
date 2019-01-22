@@ -151,6 +151,8 @@ class EditProfileController: UIViewController {
                 self.companyPendingView.startAnimating()
                 self.companyPendingView.isHidden = false
                 self.saveButton.isEnabled = false
+                self.updateLegalStatusUI()
+                self.configureUI()
             }
         }
     }
@@ -199,8 +201,9 @@ class EditProfileController: UIViewController {
             if UserManager.shared.company?.status == .pending {
                 self.companyPendingView.startAnimating()
                 self.companyPendingView.isHidden = false
-            }
-            else {
+                self.companyCheckmarkImage.isHidden = true
+                self.individualCheckmarkImage.isHidden = false
+            } else {
                 self.companyPendingView.stopAnimating()
                 self.companyPendingView.isHidden = true
             }
@@ -255,7 +258,10 @@ class EditProfileController: UIViewController {
             submitCompanyDetails() { success in
                 
                 if success {
-                    self.getCompanyDetails() { self.updateLegalStatusUI() }
+                    self.getCompanyDetails() {
+                        self.updateLegalStatusUI()
+                        self.configureUI()
+                    }
                 }
             }
         }
@@ -332,6 +338,7 @@ class EditProfileController: UIViewController {
                 
             case .success(let company):
                 UserManager.shared.company = company as? Company
+                self.company = UserManager.shared.company
                 
             case .failure(let error):
                 
