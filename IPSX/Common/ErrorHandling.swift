@@ -26,6 +26,7 @@ public enum CustomError: Error {
     case notFound
     case wrongPassword
     case loginFailed
+    case loginEmailNotConfirmed
     case invalidLogin
     case userDeleted
     case usernameExists
@@ -141,6 +142,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             switch requestType {
                 
             case RequestType.fbRegister: customError = CustomError.fbNoEmailError
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
+        case 443:
+            
+            switch requestType {
+                
+            case RequestType.login: customError = CustomError.loginEmailNotConfirmed
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             

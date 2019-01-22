@@ -76,7 +76,10 @@ class LoginCredentialsControler: UIViewController {
             case .failure(let error):
                 
                 switch error {
-                    
+                  
+                case CustomError.loginEmailNotConfirmed:
+                    self.errorMessage = "Email Not Confirmed Error Message".localized
+
                 case CustomError.loginFailed:
                     self.errorMessage = "Login Failed Error Message".localized
                     
