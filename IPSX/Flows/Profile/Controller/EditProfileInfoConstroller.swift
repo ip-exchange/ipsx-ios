@@ -64,7 +64,7 @@ class EditProfileInfoConstroller: UIViewController {
             switch deleteAccountState {
                 
             case .notRequested:
-                if UserManager.shared.userInfo?.source == "ios" {
+                if UserManager.shared.userInfo?.source != "facebook" {
                     self.performSegue(withIdentifier: "DeleteAccountSegueID", sender: nil)
                 } else {
                     self.presentDeleteAlert()
