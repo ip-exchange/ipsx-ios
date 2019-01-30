@@ -21,7 +21,7 @@ class RangeView: UIView {
     @IBInspectable open var decimals: Int = 0 {
         didSet { if decimals < 0 { decimals = 0 } }
     }
-    @IBInspectable open var minVal: Double = 100
+    @IBInspectable open var minVal: Double = 10
     @IBInspectable open var maxVal: Double = 1000
     @IBInspectable open var lowerVal: Double = 200
     @IBInspectable open var upperVal: Double = 800
