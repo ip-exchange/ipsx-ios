@@ -12,8 +12,10 @@ import IPSXNetworkingFramework
 class WithdrawAmountController: UIViewController {
     
     @IBOutlet weak var amountTextField: UITextField!
+    @IBOutlet weak var amountView: RichTextFieldView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var nextButton: RoundedButton!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
         didSet {
             topConstraint = topConstraintOutlet
@@ -22,7 +24,7 @@ class WithdrawAmountController: UIViewController {
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
-    
+
     var errorMessage: String? {
         didSet {
             if ReachabilityManager.shared.isReachable() {
@@ -32,10 +34,13 @@ class WithdrawAmountController: UIViewController {
     }
     
     var selectedAddress: EthAddress?
+    private var fieldsStateDic: [String : Bool] = ["amount" : false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        observreFieldsState()
+        amountView.updateColors(isValid: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +52,11 @@ class WithdrawAmountController: UIViewController {
         super.viewWillAppear(animated)
         self.amountTextField.becomeFirstResponder()
      }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupTextViews()
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -61,12 +71,28 @@ class WithdrawAmountController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    private func setupTextViews() {
+        amountView.validationRegex = RichTextFieldView.minOneCharRegex
+    }
+    
+    private func observreFieldsState() {
+        amountView.onFieldStateChange = { state in
+            self.fieldsStateDic["amount"] = state
+            self.nextButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "SubmitWithdrawSegueID" {
-            let dest = segue.destination as? WithdrawSubmitController
-            dest?.selectedAddress = selectedAddress
-            let valueString = amountTextField.text ?? "0.0"
-            dest?.selectedAmoun = Double(valueString) ?? 0.0
+            
+            if let amount = amountTextField.text {
+                
+                self.fieldsStateDic["amount"] = true
+                let dest = segue.destination as? WithdrawSubmitController
+                dest?.selectedAddress = selectedAddress
+                dest?.selectedAmount = Double(amount) ?? 0.0
+            }
         }
     }
     

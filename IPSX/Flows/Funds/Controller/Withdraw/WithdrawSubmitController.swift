@@ -37,7 +37,7 @@ class WithdrawSubmitController: UIViewController {
     }
     
     var selectedAddress: EthAddress?
-    var selectedAmoun: Double = 0
+    var selectedAmount: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,13 +71,13 @@ class WithdrawSubmitController: UIViewController {
     
     private func createWithdrawal() {
         
-        guard let addrString = selectedAddress?.address, selectedAmoun > 0 else {
+        guard let addrString = selectedAddress?.address, selectedAmount > 0 else {
             toast?.showToastAlert("Missing address or insuficient amount".localized, autoHideAfter: 5, type: .error, dismissable: true)
             return
         }
         
         loadingView.startAnimating()
-        FundsService().createWithdrawal(ethAddrString: addrString, amount: selectedAmoun) { result in
+        FundsService().createWithdrawal(ethAddrString: addrString, amount: selectedAmount) { result in
             DispatchQueue.main.async { self.loadingView.stopAnimating() }
             switch result {
             case .success(_):
@@ -96,9 +96,9 @@ class WithdrawSubmitController: UIViewController {
     private func updateUI() {
         walletNameLabel.text = selectedAddress?.alias
         walletAddressLabel.text = selectedAddress?.address
-        priceIPSXLabel.text = "\(selectedAmoun)"
+        priceIPSXLabel.text = "\(selectedAmount)"
         //TODO: Use an api to get the actual rate for user selected amount in IPSX
-        priceUSDLabel.text = "(\(selectedAmoun / 100) $)"
+        priceUSDLabel.text = "(\(selectedAmount / 100) $)"
     }
 }
 
