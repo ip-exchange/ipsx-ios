@@ -90,7 +90,6 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case RequestType.login:    customError = CustomError.loginFailed
             case RequestType.register: customError = CustomError.statusCodeNOK(statusCode)
             default: customError = CustomError.expiredToken
             }
@@ -150,6 +149,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             switch requestType {
                 
             case RequestType.login: customError = CustomError.loginEmailNotConfirmed
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
+        case 448:
+            
+            switch requestType {
+                
+            case RequestType.login: customError = CustomError.loginFailed
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
