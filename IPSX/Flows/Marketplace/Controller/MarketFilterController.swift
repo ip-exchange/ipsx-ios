@@ -17,7 +17,7 @@ struct FilterKeys {
     static let location = (root: "location")
     
     //root keys for sliders
-    static let price     = (root: "price",     min: "ips_min",       max: "ips_max")
+    static let price     = (root: "price",     min: "min_price",     max: "max_price")
     static let duration  = (root: "duration",  min: "duration_min",  max: "duration_max")
     static let traffic   = (root: "traffic",   min: "min_traffic",   max: "max_traffic")
     static let sla       = (root: "sla",       min: "sla_min",       max: "sla_max")
@@ -34,8 +34,6 @@ struct FilterKeys {
     static let features = (root: "features", r1c1: "http(s)", r1c2: "socks5", r2c1: "vpn", r2c2: "shadowsocks")
     
     static let sortingOptions = [
-        (title: "Random Descending".localized,   filterKey: "random", orderKey: "DESC"),
-        (title: "Random Ascending".localized,    filterKey: "random", orderKey: "ASC"),
         (title: "Traffic Descending".localized,  filterKey: "traffic", orderKey: "DESC"),
         (title: "Traffic Ascending".localized,   filterKey: "traffic", orderKey: "ASC"),
         (title: "Date Descending".localized,     filterKey: "date", orderKey: "DESC"),
