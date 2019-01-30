@@ -91,7 +91,7 @@ class WithdrawAmountController: UIViewController {
                 self.fieldsStateDic["amount"] = true
                 let dest = segue.destination as? WithdrawSubmitController
                 dest?.selectedAddress = selectedAddress
-                dest?.selectedAmount = Double(amount) ?? 0.0
+                dest?.selectedAmount = Double(amount.replacingOccurrences(of: ",", with: ".")) ?? 0.0
             }
         }
     }
