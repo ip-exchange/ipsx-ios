@@ -259,8 +259,12 @@ class EditProfileController: UIViewController {
                 
                 if success {
                     self.getCompanyDetails() {
-                        self.updateLegalStatusUI()
-                        self.configureUI()
+                        DispatchQueue.main.async {
+                            self.updateLegalStatusUI()
+                            self.configureUI()
+                            self.saveButton.isEnabled = false
+                        }
+                        
                     }
                 }
             }
