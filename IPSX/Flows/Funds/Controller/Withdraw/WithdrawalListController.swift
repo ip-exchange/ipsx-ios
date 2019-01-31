@@ -8,7 +8,7 @@
 
 
 import UIKit
-import IPSXNetworkingFramework
+
 
 class WithdrawalListController: UIViewController {
     

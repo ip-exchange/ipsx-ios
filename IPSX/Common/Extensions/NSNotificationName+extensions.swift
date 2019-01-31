@@ -10,5 +10,7 @@ import Foundation
 
 public extension NSNotification.Name {
 
-    public static let userDeleted                = NSNotification.Name.init("USER_DELETED_NEED_LOGOUT")
+    public static let userDeleted = NSNotification.Name.init("USER_DELETED_NEED_LOGOUT")
+    
+    public static let networkReachabilityChanged = Notification.Name.init("NETWORK_REACHABLITY_CHANGED")
 }

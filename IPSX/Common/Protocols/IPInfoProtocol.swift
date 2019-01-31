@@ -6,7 +6,7 @@
 //  Copyright © 2018 Cristina Virlan. All rights reserved.
 //
 import Foundation
-import IPSXNetworkingFramework
+
 
 public protocol IPRetrievable {
     func executeIPRequest(completion:@escaping (Error?, Data?)->Void)

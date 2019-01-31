@@ -8,7 +8,7 @@
 
 import UIKit
 import FBSDKLoginKit
-import IPSXNetworkingFramework
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

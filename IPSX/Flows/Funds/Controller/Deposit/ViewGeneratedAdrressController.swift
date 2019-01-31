@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IPSXNetworkingFramework
+
 
 class ViewGeneratedAdrressController: UIViewController {
 
