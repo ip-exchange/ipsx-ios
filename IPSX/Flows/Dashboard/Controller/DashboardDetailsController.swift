@@ -200,6 +200,9 @@ class DashboardDetailsController: UIViewController {
     @objc func updateData() {
         retrieveOrderOfferProxyDetails(proxyId: currentProxy?.pacId) {
             self.updateHeaderWithProxy(self.currentProxy, animated: false)
+            if self.currentProxy?.status == "active" {
+                self.collectionView?.reloadData()
+            }
         }
     }
 

@@ -22,7 +22,7 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var vpnLabel: UILabel!
     @IBOutlet weak var shadowsocksImageView: UIImageView!
     @IBOutlet weak var shadowsocksLabel: UILabel!
-    
+    @IBOutlet weak var copyPacButton: RoundedButton!
     @IBOutlet weak var packNameLabel: UILabel?
     
     var onCopy: ((_ : String, _ : String)->())?
@@ -37,6 +37,8 @@ class ProxyItemCollectionViewCell: UICollectionViewCell {
     func configure(proxy: Proxy) {
         
         initialConfig()
+        
+        copyPacButton?.isEnabled = (proxy.status == "active")
         
         proxyUrl = String.generatePacLink(createdDate: proxy.createdAtString ?? "", proxyId: "\(proxy.pacId ?? 0)")
         proxyName = URL(string: proxyUrl)?.lastPathComponent ?? "No name".localized
