@@ -156,6 +156,9 @@ public struct Url {
     public static var referalCodeUrl: String {
         get { return baseUrl + "/register?referral=" }
     }
+    public static var faqReferalUrl: String {
+        get { return baseUrl + "/help/about-referral-program?webview=true" }
+    }
     public static var aboutProviderUrl: String {
         get { return baseUrl + "/provider?webview=true" }
     }

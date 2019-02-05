@@ -43,6 +43,14 @@ class ReferFriendController: UIViewController {
         UIPasteboard.general.string = referalLinkLabel.text
         toast?.showToastAlert("Reflink Copied Message".localized, autoHideAfter: 5, type: .info, dismissable: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let destinationWebController = segue.destination as? SimpleWebView {
+            destinationWebController.loadingURLString = Url.faqReferalUrl
+            destinationWebController.titleString = "About Referral Program".localized
+        }
+    }
 }
 
 extension ReferFriendController: ToastAlertViewPresentable {
