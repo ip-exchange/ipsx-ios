@@ -116,18 +116,10 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             
             switch requestType {
                 
-            case RequestType.fbLogin, RequestType.resetPassword: customError = CustomError.userDeleted
+            case RequestType.fbLogin, RequestType.resetPassword, RequestType.login: customError = CustomError.userDeleted
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
-            
-        case 405:
-            
-            switch requestType {
-                
-            case RequestType.login: customError = CustomError.userDeleted
-            default: customError = CustomError.statusCodeNOK(statusCode)
-            }
-            
+                        
         case 422:
             
             switch requestType {
