@@ -274,7 +274,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 self.offersLoadedOnLastRequest = (data?.offers ?? []).count
                 self.allOffers.append(contentsOf: data?.offers ?? [])
                 
-                if self.normalisedFiltersDictionary["show_unavailable_offers"] as? Bool == true {
+                if self.normalisedFiltersDictionary["show_unavailable_offers"] as? Bool == true ||
+                    self.normalisedFiltersDictionary["favorites"] as? Bool == true {
+                    
                     self.offersDataSource.append(contentsOf: data?.offers ?? [])
                 }
                 else {
