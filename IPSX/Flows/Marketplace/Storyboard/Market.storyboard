@@ -140,7 +140,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 proxy items" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tF8-MN-aOu">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 proxy items" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tF8-MN-aOu">
                                 <rect key="frame" x="133.66666666666666" y="260.66666666666669" width="108" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -347,21 +347,21 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="91H-v7-tup">
-                                <rect key="frame" x="-22.666666666666657" y="296" width="420.33333333333326" height="122"/>
+                                <rect key="frame" x="0.0" y="296" width="375" height="122"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="420" id="EvS-B9-5AQ"/>
+                                    <constraint firstAttribute="width" constant="375" id="EvS-B9-5AQ"/>
                                     <constraint firstAttribute="height" constant="122" id="f1c-4B-Rlb"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="9" minimumInteritemSpacing="0.0" id="gKA-qZ-yZW" customClass="CenteringFlowLayout" customModule="IPSX" customModuleProvider="target">
                                     <size key="itemSize" width="276" height="116"/>
-                                    <size key="headerReferenceSize" width="69" height="50"/>
+                                    <size key="headerReferenceSize" width="52" height="50"/>
                                     <size key="footerReferenceSize" width="69" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MarketItemCell" id="ZS5-10-qEt" customClass="ProxyItemCollectionViewCell" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="69" y="3" width="276" height="116"/>
+                                        <rect key="frame" x="52" y="3" width="276" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="276" height="116"/>
@@ -524,11 +524,11 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionHeader" id="d6I-l5-47A">
-                                    <rect key="frame" x="0.0" y="0.0" width="69" height="122"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="52" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionFooter" id="Pgr-aX-N0A">
-                                    <rect key="frame" x="345" y="0.0" width="69" height="122"/>
+                                    <rect key="frame" x="328" y="0.0" width="69" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
