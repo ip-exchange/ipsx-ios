@@ -85,8 +85,8 @@ class RangeView: UIView {
         actualLow = lowerVal
         actualUp = upperVal
         
-        rangeSlider?.onValueChange = { lower, upper in
-            self.updateSlider(lower: lower, upper: upper, moveThumbs: false)
+        rangeSlider?.onValueChange = { [weak self] lower, upper in
+            self?.updateSlider(lower: lower, upper: upper, moveThumbs: false)
         }
     }
     

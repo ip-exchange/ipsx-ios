@@ -82,13 +82,17 @@ class RegisterCredentialsController: UIViewController {
     }
     
     private func observreFieldsState() {
-        userNameRichTextView.onFieldStateChange = { state in
-            self.fieldsStateDic["username"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        userNameRichTextView.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["username"] = state
+            weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
-        emailRichTextView.onFieldStateChange = { state in
-            self.fieldsStateDic["email"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        emailRichTextView.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["email"] = state
+            weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
     }
     
@@ -112,12 +116,14 @@ class RegisterCredentialsController: UIViewController {
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.country = selectedCountry
+            srcController.onCountrySelected = { [weak self] selectedCountry in
+                
+                guard let weakSelf = self else { return }
+                weakSelf.country = selectedCountry
                 let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) ?? ""
-                self.userCredentials["country_id"] = countryID
-                self.fieldsStateDic["country_id"] = true
-                self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+                weakSelf.userCredentials["country_id"] = countryID
+                weakSelf.fieldsStateDic["country_id"] = true
+                weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
             }
             
             srcController.dismissOnSelect = true

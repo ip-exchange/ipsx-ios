@@ -102,8 +102,8 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         customTabBar.selectIndex(3)
-        customTabBar.onTap = { index in
-            self.tabBarController?.selectedIndex = index
+        customTabBar.onTap = { [weak self] index in
+            self?.tabBarController?.selectedIndex = index
         }
         configureUI()
         updateHeader()
@@ -250,9 +250,10 @@ class ProfileViewController: UIViewController {
         case "showProfileSegueID":
             let navController = segue.destination as? UINavigationController
             let editProfileVC = navController?.viewControllers.first as? EditProfileController
-            editProfileVC?.onDismiss = { hasUpdatedProfile in
+            editProfileVC?.onDismiss = { [weak self] hasUpdatedProfile in
+                
                 if hasUpdatedProfile {
-                    self.retrieveUserInfo()
+                    self?.retrieveUserInfo()
                 }
             }
             

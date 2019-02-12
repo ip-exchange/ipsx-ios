@@ -99,20 +99,23 @@ class ChangePasswordController: UIViewController {
     }
 
     private func observreFieldsState() {
-        oldPassRTField.onFieldStateChange = { state in
-            self.fieldsStateDic["oldPass"] = state
-            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
-            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+        oldPassRTField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["oldPass"] = state
+            let newPassNotTheSame = weakSelf.oldPassRTField.contentTextField?.text != weakSelf.newPassRTField.contentTextField?.text
+            weakSelf.saveButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && newPassNotTheSame
         }
-        newPassRTField.onFieldStateChange = { state in
-            self.fieldsStateDic["newPass"] = state
-            self.saveButton.isEnabled = false
-            self.newPassBisRTField.contentTextField?.text = ""
+        newPassRTField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["newPass"] = state
+            weakSelf.saveButton.isEnabled = false
+            weakSelf.newPassBisRTField.contentTextField?.text = ""
         }
-        newPassBisRTField.onFieldStateChange = { state in
-            self.fieldsStateDic["newPassBis"] = state
-            let newPassNotTheSame = self.oldPassRTField.contentTextField?.text != self.newPassRTField.contentTextField?.text
-            self.saveButton.isEnabled = !self.fieldsStateDic.values.contains(false) && newPassNotTheSame
+        newPassBisRTField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["newPassBis"] = state
+            let newPassNotTheSame = weakSelf.oldPassRTField.contentTextField?.text != weakSelf.newPassRTField.contentTextField?.text
+            weakSelf.saveButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && newPassNotTheSame
         }
     }
 

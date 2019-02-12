@@ -117,8 +117,8 @@ class CountryAndCertificateController: UIViewController, UIDocumentPickerDelegat
         }
         
         if segue.identifier == "SearchSegueID", let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.country = selectedCountry
+            srcController.onCountrySelected = { [weak self] selectedCountry in
+                self?.country = selectedCountry
             }
             
             srcController.dismissOnSelect = true

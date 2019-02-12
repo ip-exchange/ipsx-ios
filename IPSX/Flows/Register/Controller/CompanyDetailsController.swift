@@ -131,21 +131,25 @@ class CompanyDetailsController: UIViewController {
     
     private func observreFieldsState() {
         self.nextButton.isEnabled = false
-        nameRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["name"] = state
-            self.nextButton.isEnabled = self.canContinue()
+        nameRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["name"] = state
+            weakSelf.nextButton.isEnabled = weakSelf.canContinue()
         }
-        addressRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["address"] = state
-            self.nextButton.isEnabled = self.canContinue()
+        addressRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["address"] = state
+            weakSelf.nextButton.isEnabled = weakSelf.canContinue()
         }
-        regNumberRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["regNum"] = state
-            self.nextButton.isEnabled = self.canContinue()
+        regNumberRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["regNum"] = state
+            weakSelf.nextButton.isEnabled = weakSelf.canContinue()
         }
-        vatRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["vat"] = true
-            self.nextButton.isEnabled = self.canContinue()
+        vatRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["vat"] = true
+            weakSelf.nextButton.isEnabled = weakSelf.canContinue()
         }
     }
     

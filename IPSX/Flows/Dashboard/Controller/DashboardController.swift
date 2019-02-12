@@ -71,8 +71,8 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
         super.viewDidLoad()
         noDataView.isHidden = true
         customTabBar.selectIndex(0)
-        customTabBar.onTap = { index in
-            self.tabBarController?.selectedIndex = index
+        customTabBar.onTap = { [weak self] index in
+            self?.tabBarController?.selectedIndex = index
         }
         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
         self.tabBarController?.delegate = self
@@ -357,10 +357,14 @@ extension DashboardController: UITableViewDataSource {
         cell?.updateCell(sectionIndex: section, orderNumber: orderNumber)
         cell?.hintViewCopyPacLink.isHidden = self.isAnyPending()
         cell?.hintViewPendingProxy.isHidden = !self.isAnyPending()
-        cell?.onTap = { section in
-            self.selectedOrder = self.ordersDatasource[section]
-            DispatchQueue.main.async { self.performSegue(withIdentifier: self.viewOrderSegueID, sender: self) }
+        
+        cell?.onTap = { [weak self] section in
+            guard let weakSelf = self else { return }
+            weakSelf.selectedOrder = weakSelf.ordersDatasource[section]
+            DispatchQueue.main.async { weakSelf.performSegue(withIdentifier: weakSelf.viewOrderSegueID,
+                                                             sender: weakSelf) }
         }
+        
         return cell
     }
 }

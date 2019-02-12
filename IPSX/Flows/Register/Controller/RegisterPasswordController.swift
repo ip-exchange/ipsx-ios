@@ -56,14 +56,18 @@ class RegisterPasswordController: UIViewController {
     }
     
     private func observreFieldsState() {
-        passRichTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["pass1"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
-            self.passCheckRichTextField.contentTextField?.text = ""
+        passRichTextField.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["pass1"] = state
+            weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
+            weakSelf.passCheckRichTextField.contentTextField?.text = ""
         }
-        passCheckRichTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["pass2"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        passCheckRichTextField.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["pass2"] = state
+            weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
     }
     

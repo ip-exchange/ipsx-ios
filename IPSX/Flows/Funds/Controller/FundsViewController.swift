@@ -54,9 +54,8 @@ class FundsViewController: UIViewController {
         configureUI()
         updateHeader()
         customTabBar.selectIndex(2)
-        customTabBar.onTap = { index in
-            print("index")
-            self.tabBarController?.selectedIndex = index
+        customTabBar.onTap = { [weak self] index in
+            self?.tabBarController?.selectedIndex = index
         }
         
         NotificationCenter.default.addObserver(self,

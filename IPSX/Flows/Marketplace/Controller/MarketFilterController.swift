@@ -162,9 +162,9 @@ class MarketFilterController: UIViewController {
             searchController?.countries = availableCountries
             searchController?.multipleSelections = true
             searchController?.selectedCountries = selectedCountries
-            searchController?.onSaveSelected = { selected in
-                self.selectedCountries = selected
-                self.countriesCollectionView.reloadData()
+            searchController?.onSaveSelected = { [weak self] selected in
+                self?.selectedCountries = selected
+                self?.countriesCollectionView.reloadData()
             }
         }
     }
@@ -213,59 +213,59 @@ class MarketFilterController: UIViewController {
     
     
     private func observeSliders() {
-        priceRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState,
+        priceRangeView.onNewState = { [weak self] activeState, values in
+            self?.updateFiltersDictionary(activeState: activeState,
                                          key: FilterKeys.price.root, values: [FilterKeys.price.min : Int(values.low),
                                                   FilterKeys.price.max : Int(values.high)])
         }
-        durationRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState,
+        durationRangeView.onNewState = { [weak self] activeState, values in
+            self?.updateFiltersDictionary(activeState: activeState,
                                          key: FilterKeys.duration.root,
                                          values: [FilterKeys.duration.min : Int(values.low), FilterKeys.duration.max : Int(values.high)])
         }
-        trafficRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState,
+        trafficRangeView.onNewState = { [weak self] activeState, values in
+            self?.updateFiltersDictionary(activeState: activeState,
                                          key: FilterKeys.traffic.root,
                                          values: [FilterKeys.traffic.min : Int(values.low), FilterKeys.traffic.max : Int(values.high)])
         }
-        slaRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState,
+        slaRangeView.onNewState = { [weak self] activeState, values in
+            self?.updateFiltersDictionary(activeState: activeState,
                                          key: FilterKeys.sla.root,
                                          values: [FilterKeys.sla.min : Int(values.low), FilterKeys.sla.max : Int(values.high)])
         }
-        bandwithRangeView.onNewState = { activeState, values in
-            self.updateFiltersDictionary(activeState: activeState,
+        bandwithRangeView.onNewState = { [weak self] activeState, values in
+            self?.updateFiltersDictionary(activeState: activeState,
                                          key: FilterKeys.bandwidth.root,
                                          values: [FilterKeys.bandwidth.min : Int(values.low), FilterKeys.bandwidth.max : Int(values.high)])
         }
     }
     
     private func observeGroupedViews() {
-        ipTypeGroupedView.onNewState = { activeState, values in
+        ipTypeGroupedView.onNewState = { [weak self] activeState, values in
             var vals: [String] = []
             if values.first { vals.append(FilterKeys.ip_type.first)}
             if values.second { vals.append(FilterKeys.ip_type.second)}
-            self.updateFiltersDictionary(activeState: activeState, key: FilterKeys.ip_type.root, values: vals)
+            self?.updateFiltersDictionary(activeState: activeState, key: FilterKeys.ip_type.root, values: vals)
         }
-        proxyTypeGroupedView.onNewState = { activeState, values in
+        proxyTypeGroupedView.onNewState = { [weak self]  activeState, values in
             var vals: [String] = []
             if values.first { vals.append(FilterKeys.proxy_type.first)}
             if values.second { vals.append(FilterKeys.proxy_type.second)}
-            self.updateFiltersDictionary(activeState: activeState, key: FilterKeys.proxy_type.root, values: vals)
+            self?.updateFiltersDictionary(activeState: activeState, key: FilterKeys.proxy_type.root, values: vals)
         }
-        offerTypeGroupedView.onNewState = { activeState, values in
+        offerTypeGroupedView.onNewState = { [weak self] activeState, values in
             var vals: [String] = []
             if values.first { vals.append(FilterKeys.offer_type.first)}
             if values.second { vals.append(FilterKeys.offer_type.second)}
-            self.updateFiltersDictionary(activeState: activeState, key: FilterKeys.offer_type.root, values: vals)
+            self?.updateFiltersDictionary(activeState: activeState, key: FilterKeys.offer_type.root, values: vals)
         }
-        featuresMatrixView.onNewState = { activeState, values in
+        featuresMatrixView.onNewState = { [weak self] activeState, values in
             var vals: [String] = []
             if values.r1c1 { vals.append(FilterKeys.features.r1c1)}
             if values.r1c2 { vals.append(FilterKeys.features.r1c2)}
             if values.r2c1 { vals.append(FilterKeys.features.r2c1)}
             if values.r2c2 { vals.append(FilterKeys.features.r2c2)}
-            self.updateFiltersDictionary(activeState: activeState, key: FilterKeys.features.root, values: vals)
+            self?.updateFiltersDictionary(activeState: activeState, key: FilterKeys.features.root, values: vals)
         }
     }
 

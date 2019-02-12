@@ -114,17 +114,20 @@ class RepresentativeDetailsController: UIViewController {
     private func observreFieldsState() {
         
         self.doneButton.isEnabled = false
-        companyRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["repName"] = state
-            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        companyRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["repName"] = state
+            weakSelf.doneButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
-        emailRtextField.onFieldStateChange = { state in
-            self.fieldsStateDic["repEmail"] = state
-            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        emailRtextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["repEmail"] = state
+            weakSelf.doneButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
-        phoneRTextField.onFieldStateChange = { state in
-            self.fieldsStateDic["repPhone"] = state
-            self.doneButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        phoneRTextField.onFieldStateChange = { [weak self] state in
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["repPhone"] = state
+            weakSelf.doneButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
     }
 

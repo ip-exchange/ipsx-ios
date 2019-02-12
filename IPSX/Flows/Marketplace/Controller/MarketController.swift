@@ -130,8 +130,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         customTabBar.isHidden = !isLoggedIn
         closeButton.isHidden = isLoggedIn
         customTabBar.selectIndex(1)
-        customTabBar.onTap = { index in
-            self.tabBarController?.selectedIndex = index
+        customTabBar.onTap = { [weak self] index in
+            self?.tabBarController?.selectedIndex = index
         }
         updateCountryOverlay(visible: false)
         
@@ -350,8 +350,8 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             let destinationVC = segue.destination as? MarketItemController
             destinationVC?.offer = selectedOffer
             destinationVC?.isInCartAlready = selectedOffer?.isAddedToCart ?? false
-            destinationVC?.onDataChanged = {
-                self.shouldRefreshData = true
+            destinationVC?.onDataChanged = { [weak self] in
+                self?.shouldRefreshData = true
             }
             
         case countrySelectionID:
@@ -361,9 +361,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 srcController.dismissPresentingNav = true
                 srcController.countries = UserManager.shared.getCountryList()
                 
-                srcController.onCountrySelected = { selectedCountry in
-                    self.countryRComponent.contentTextField?.text = selectedCountry
-                    self.submitCountryButton.isEnabled = true
+                srcController.onCountrySelected = { [weak self] selectedCountry in
+                    self?.countryRComponent.contentTextField?.text = selectedCountry
+                    self?.submitCountryButton.isEnabled = true
                 }
             }
         case filtersSegueID:
@@ -371,25 +371,25 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
             let navController = segue.destination as? UINavigationController
             let filterController = navController?.viewControllers.first as? MarketFilterController
             filterController?.filtersDictionary = self.filtersDictionary
-            filterController?.onApplyFilters = { filtersDic, normalisedDic in
+            filterController?.onApplyFilters = { [weak self] filtersDic, normalisedDic in
                 print("Filters: --->\n\(normalisedDic)\nFilters: <---")
-                self.filtersDictionary = filtersDic
+                self?.filtersDictionary = filtersDic
                 
-                if let favSelection = self.normalisedFiltersDictionary["favorites"] as? Bool {
-                    self.normalisedFiltersDictionary = normalisedDic
-                    self.normalisedFiltersDictionary["favorites"] = favSelection
+                if let favSelection = self?.normalisedFiltersDictionary["favorites"] as? Bool {
+                    self?.normalisedFiltersDictionary = normalisedDic
+                    self?.normalisedFiltersDictionary["favorites"] = favSelection
                 }
                 else {
-                    self.normalisedFiltersDictionary = normalisedDic
+                    self?.normalisedFiltersDictionary = normalisedDic
                 }
-                self.shouldRefreshData = true
+                self?.shouldRefreshData = true
             }
             
         case cartSegueID:
             
             let destinationVC = segue.destination as? MarketCartController
-            destinationVC?.onDataChanged = {
-                self.shouldRefreshData = true
+            destinationVC?.onDataChanged = { [weak self] in
+                self?.shouldRefreshData = true
             }
             
         default: break

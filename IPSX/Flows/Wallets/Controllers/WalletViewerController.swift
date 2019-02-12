@@ -106,9 +106,9 @@ class WalletViewerController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let editController = segue.destination as? WalletAddController
         editController?.ethereumAddress = ethereumAddress
-        editController?.onAddressEdited = { alias in
-            self.ethereumAddress?.alias = alias
-            self.updatedAlias = alias
+        editController?.onAddressEdited = { [weak self] alias in
+            self?.ethereumAddress?.alias = alias
+            self?.updatedAlias = alias
         }
     }
 

@@ -93,8 +93,8 @@ class DeleteAccountController: UIViewController {
     }
     
     private func observreFieldsState() {
-        passworldRTField.onFieldStateChange = { state in
-            self.saveButton.isEnabled = state
+        passworldRTField.onFieldStateChange = { [weak self] state in
+            self?.saveButton.isEnabled = state
         }
     }
     

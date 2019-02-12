@@ -370,9 +370,9 @@ class EditProfileInfoConstroller: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == countrySelectionID, let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.selectedCountryLabel.text = selectedCountry
-                self.newSelectedCountry = selectedCountry
+            srcController.onCountrySelected = { [weak self] selectedCountry in
+                self?.selectedCountryLabel.text = selectedCountry
+                self?.newSelectedCountry = selectedCountry
             }
             backFromSearch = true
             srcController.dismissOnSelect = true
@@ -384,9 +384,10 @@ class EditProfileInfoConstroller: UIViewController {
         
         if segue.identifier == "DeleteAccountSegueID" {
             let deleteAccController = segue.destination as? DeleteAccountController
-            deleteAccController?.onDismiss = { success in
+            deleteAccController?.onDismiss = { [weak self] success in
+                
                 if success {
-                    self.retrieveUserInfo()
+                    self?.retrieveUserInfo()
                 }
             }
         }

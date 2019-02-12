@@ -185,9 +185,10 @@ extension DashboardHistoryController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCellID") as? DashboardHeaderCell
-        cell?.onTap = { section in
-            self.selectedOrder = self.ordersDatasource[section]
-            DispatchQueue.main.async { self.performSegue(withIdentifier: self.orderSegueID, sender: self) }
+        cell?.onTap = { [weak self] section in
+            guard let weakSelf = self else { return }
+            weakSelf.selectedOrder = weakSelf.ordersDatasource[section]
+            DispatchQueue.main.async { weakSelf.performSegue(withIdentifier: weakSelf.orderSegueID, sender: weakSelf) }
         }
         
         let order = ordersDatasource[section]

@@ -389,15 +389,15 @@ class EditProfileController: UIViewController {
             editMode = company != nil
             companyController?.editMode = editMode
             if editMode { companyController?.company = Company(company: company) }
-            companyController?.onCollectDataComplete = { company in
-                if self.company == nil {
-                    self.companyEdited = false
-                    self.companyCreated = true
-                } else if company != self.company {
-                    self.companyEdited = true
-                    self.saveButton.isEnabled = true
+            companyController?.onCollectDataComplete = { [weak self] company in
+                if self?.company == nil {
+                    self?.companyEdited = false
+                    self?.companyCreated = true
+                } else if company != self?.company {
+                    self?.companyEdited = true
+                    self?.saveButton.isEnabled = true
                 }
-                self.company = company
+                self?.company = company
             }
         }
     }

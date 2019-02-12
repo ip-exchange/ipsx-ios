@@ -122,8 +122,8 @@ class TokenRequestController: UIViewController {
     
     private func observreFieldsState() {
         telegramIDRtextField.validationRegex = RichTextFieldView.validTelegramID
-        telegramIDRtextField.onFieldStateChange = { state in
-            self.telegramIDDoneButton.isEnabled = state
+        telegramIDRtextField.onFieldStateChange = { [weak self] state in
+            self?.telegramIDDoneButton.isEnabled = state
         }
      }
     

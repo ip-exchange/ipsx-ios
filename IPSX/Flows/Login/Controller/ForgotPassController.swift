@@ -135,9 +135,11 @@ class ForgotPassController: UIViewController {
     }
     
     private func observreFieldsState() {
-        emailRichTextView.onFieldStateChange = { state in
-            self.fieldsStateDic["email"] = state
-            self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        emailRichTextView.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["email"] = state
+            weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
     }
     

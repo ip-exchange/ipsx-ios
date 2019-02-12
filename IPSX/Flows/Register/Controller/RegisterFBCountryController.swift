@@ -94,12 +94,14 @@ class RegisterFBCountryController: UIViewController {
         }
         
         if segue.identifier == "SrcSegueID", let srcController = segue.destination as? SearchViewController {
-            srcController.onCountrySelected = { selectedCountry in
-                self.country = selectedCountry
+            srcController.onCountrySelected = { [weak self] selectedCountry in
+                
+                guard let weakSelf = self else { return }
+                weakSelf.country = selectedCountry
                 let countryID = UserManager.shared.getCountryId(countryName: selectedCountry) ?? ""
-                self.userCredentials["country_id"] = countryID
-                self.fieldsStateDic["country_id"] = true
-                self.continueButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+                weakSelf.userCredentials["country_id"] = countryID
+                weakSelf.fieldsStateDic["country_id"] = true
+                weakSelf.continueButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
             }
             
             srcController.dismissOnSelect = true

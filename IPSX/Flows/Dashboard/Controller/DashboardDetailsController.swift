@@ -268,11 +268,11 @@ class DashboardDetailsController: UIViewController {
         if segue.identifier == "ShowrefundSegueID" {
             let dest = segue.destination as? RefundRequestController
             dest?.proxy = currentProxy
-            dest?.onRefundSuccess = {
-                self.currentProxy?.hasRequestedRefund = true
-                self.refundButtonTopConstraint.constant = -100
-                self.refundInfoTopConstraint.constant = 16
-                self.view.layoutIfNeeded()
+            dest?.onRefundSuccess = { [weak self] in
+                self?.currentProxy?.hasRequestedRefund = true
+                self?.refundButtonTopConstraint.constant = -100
+                self?.refundInfoTopConstraint.constant = 16
+                self?.view.layoutIfNeeded()
             }
         }
         if segue.identifier == viewRefundSegue {
@@ -381,12 +381,12 @@ extension DashboardDetailsController: UICollectionViewDataSource {
         if offer?.proxies.count ?? 0 > indexPath.row, let proxy = offer?.proxies[indexPath.row] {
             
             cell.configure(proxy: proxy)
-            cell.onCopy = { packname, packurl in
+            cell.onCopy = { [weak self] packname, packurl in
                 UIPasteboard.general.string = packurl
-                self.openSettingsCenterConstraint.constant = 0
-                self.openSettingsOverlayView.alpha = 1
+                self?.openSettingsCenterConstraint.constant = 0
+                self?.openSettingsOverlayView.alpha = 1
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [], animations: {
-                    self.view.layoutIfNeeded()
+                    self?.view.layoutIfNeeded()
                 })
 
             }

@@ -149,17 +149,21 @@ class WalletAddController: UIViewController {
     }
     
     private func observreFieldsState() {
-        walletNameRichTextField.onFieldStateChange = { state in
-            let curentNameText = self.walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
-            self.fieldsStateDic["walletName"] = state
-            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
-            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && curentNameText != self.ethereumAddress?.alias && curentNameText.count > 0
+        walletNameRichTextField.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            let curentNameText = weakSelf.walletNameRichTextField.contentTextField?.text?.trimLeadingAndTrailingSpaces() ?? ""
+            weakSelf.fieldsStateDic["walletName"] = state
+            weakSelf.doneButton?.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && curentNameText != weakSelf.ethereumAddress?.alias && curentNameText.count > 0
+            weakSelf.saveButton?.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && curentNameText != weakSelf.ethereumAddress?.alias && curentNameText.count > 0
         }
-        ethAddresRichTextField.onFieldStateChange = { state in
-            let curentNameText = self.walletNameRichTextField.contentTextField?.text ?? ""
-            self.fieldsStateDic["ethAddress"] = state
-            self.doneButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address && curentNameText.count > 0
-            self.saveButton?.isEnabled = !self.fieldsStateDic.values.contains(false) && self.ethAddresRichTextField.contentTextField?.text != self.ethereumAddress?.address && curentNameText.count > 0
+        ethAddresRichTextField.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            let curentNameText = weakSelf.walletNameRichTextField.contentTextField?.text ?? ""
+            weakSelf.fieldsStateDic["ethAddress"] = state
+            weakSelf.doneButton?.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && weakSelf.ethAddresRichTextField.contentTextField?.text != weakSelf.ethereumAddress?.address && curentNameText.count > 0
+            weakSelf.saveButton?.isEnabled = !weakSelf.fieldsStateDic.values.contains(false) && weakSelf.ethAddresRichTextField.contentTextField?.text != weakSelf.ethereumAddress?.address && curentNameText.count > 0
         }
     }
     
@@ -301,10 +305,12 @@ class WalletAddController: UIViewController {
     private func presentQRScanner() {
         DispatchQueue.main.async {
             let scannerController = QRScannViewController()
-            scannerController.onCodeFound = { code in
-                self.ethAddresRichTextField.contentTextField?.text = code
-                self.ethAddresRichTextField.refreshStatus()
+            
+            scannerController.onCodeFound = { [weak self] code in
+                self?.ethAddresRichTextField.contentTextField?.text = code
+                self?.ethAddresRichTextField.refreshStatus()
             }
+            
             self.present(scannerController, animated: true) {
             }
         }

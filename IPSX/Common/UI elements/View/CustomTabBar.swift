@@ -28,17 +28,17 @@ class CustomTabBar: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         item1?.selected = false
-        item1?.onTap = {
-            self.onTap?(0)
+        item1?.onTap = { [weak self] in
+            self?.onTap?(0)
         }
-        item2?.onTap = {
-            self.onTap?(1)
+        item2?.onTap = { [weak self] in
+            self?.onTap?(1)
         }
-        item3?.onTap = {
-            self.onTap?(2)
+        item3?.onTap = { [weak self] in
+            self?.onTap?(2)
         }
-        item4?.onTap = {
-            self.onTap?(3)
+        item4?.onTap = { [weak self] in
+            self?.onTap?(3)
         }
     }
     

@@ -242,21 +242,22 @@ extension MarketCartController: UITableViewDataSource {
             cell.configure(offer: offer, editMode: editButton.isSelected)
         }
         
-        cell.onDelete = { offer in
+        cell.onDelete = { [weak self] offer in
             
-            self.performDeleteRequest(offerIds: [offer.id])
+            guard let weakSelf = self else { return }
+            weakSelf.performDeleteRequest(offerIds: [offer.id])
             
-            if let filtered = self.cart?.offers.filter({ $0.id != offer.id }) {
-                self.cart?.offers = filtered
+            if let filtered = weakSelf.cart?.offers.filter({ $0.id != offer.id }) {
+                weakSelf.cart?.offers = filtered
             }
-            let range = NSMakeRange(0, self.tableView.numberOfSections)
+            let range = NSMakeRange(0, weakSelf.tableView.numberOfSections)
             let sections = NSIndexSet(indexesIn: range)
-            self.tableView.reloadSections(sections as IndexSet, with: .automatic)
-            if let items = self.cart?.offers.count, items < 1 {
-                self.editButton.isEnabled = false
-                self.editButton.isSelected = false
+            weakSelf.tableView.reloadSections(sections as IndexSet, with: .automatic)
+            if let items = weakSelf.cart?.offers.count, items < 1 {
+                weakSelf.editButton.isEnabled = false
+                weakSelf.editButton.isSelected = false
             }
-            self.onDataChanged?()
+            weakSelf.onDataChanged?()
         }
         return cell
     }

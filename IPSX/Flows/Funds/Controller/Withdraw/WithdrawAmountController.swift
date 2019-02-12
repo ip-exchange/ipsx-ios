@@ -76,9 +76,11 @@ class WithdrawAmountController: UIViewController {
     }
     
     private func observreFieldsState() {
-        amountView.onFieldStateChange = { state in
-            self.fieldsStateDic["amount"] = state
-            self.nextButton.isEnabled = !self.fieldsStateDic.values.contains(false)
+        amountView.onFieldStateChange = { [weak self] state in
+            
+            guard let weakSelf = self else { return }
+            weakSelf.fieldsStateDic["amount"] = state
+            weakSelf.nextButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
     }
     

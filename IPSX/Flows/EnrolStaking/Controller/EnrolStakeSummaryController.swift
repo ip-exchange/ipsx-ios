@@ -90,9 +90,10 @@ class EnrolStakeSummaryController: UIViewController {
         if segue.identifier == "editStakingsSegueID" {
             let enrolController = segue.destination as? EnrolStakeSubscribeController
             enrolController?.editMode = true
-            enrolController?.onDismiss = { hasUpdatedStaking in
+            enrolController?.onDismiss = { [weak self] hasUpdatedStaking in
+                
                 if hasUpdatedStaking {
-                    self.enrollmentDetails()
+                    self?.enrollmentDetails()
                 }
             }
         } else if segue.identifier == "WebViewSegueID" {
