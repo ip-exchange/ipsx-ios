@@ -26,7 +26,7 @@ struct FilterKeys {
     static let sliderRootkeys = [price, duration, traffic, sla, bandwidth]
     
     //root keys for grouped views
-    static let ip_type    = (root: "ip_type",    first: "4",         second: "6")
+    static let ip_type    = (root: "ip_type",    first: 4,         second: 6)
     static let proxy_type = (root: "proxy_type", first: "dedicated", second: "shared")
     static let offer_type = (root: "offer_type", first: "group",     second: "single")
 
@@ -242,7 +242,7 @@ class MarketFilterController: UIViewController {
     
     private func observeGroupedViews() {
         ipTypeGroupedView.onNewState = { [weak self] activeState, values in
-            var vals: [String] = []
+            var vals: [Int] = []
             if values.first { vals.append(FilterKeys.ip_type.first)}
             if values.second { vals.append(FilterKeys.ip_type.second)}
             self?.updateFiltersDictionary(activeState: activeState, key: FilterKeys.ip_type.root, values: vals)
@@ -316,7 +316,7 @@ class MarketFilterController: UIViewController {
             let max = bandwiths[FilterKeys.bandwidth.max] {
             bandwithRangeView.updateSlider(lower: Double(min) / bandwithRangeView.maxVal, upper: Double(max) / bandwithRangeView.maxVal)
         }
-        if let offertypes = filtersDictionary[FilterKeys.ip_type.root] as? [String] {
+        if let offertypes = filtersDictionary[FilterKeys.ip_type.root] as? [Int] {
             let first = offertypes.contains(FilterKeys.ip_type.first)
             let secound = offertypes.contains(FilterKeys.ip_type.second)
             ipTypeGroupedView.updateSelection(first: first, second: secound)
