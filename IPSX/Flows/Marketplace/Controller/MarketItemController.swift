@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MarketItemController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var alertTopConstraint: NSLayoutConstraint!
@@ -30,6 +29,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var addToCartButton: RoundedButton!
     @IBOutlet weak var favoritesButton: UIButton!
+    @IBOutlet weak var collectionViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var topSeparatorConstraint: NSLayoutConstraint! {
         didSet {
@@ -71,6 +71,10 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     var offer: Offer?
     var onDataChanged: (()->())?
     
+    var deviceWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -84,6 +88,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: separatorView, text: "")
+        collectionViewWidthConstraint.constant = deviceWidth
     }
     
     func configureUI() {
@@ -253,6 +258,19 @@ extension MarketItemController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return offer?.proxies.count ?? 0
+    }
+}
+
+extension MarketItemController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(width: (deviceWidth - 276)/2, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: (deviceWidth - 276)/2, height: 50)
     }
 }
 

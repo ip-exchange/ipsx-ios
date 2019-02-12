@@ -192,7 +192,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-Su-NLW" userLabel="Top Bar">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-Su-NLW" userLabel="Top Bar">
                                 <rect key="frame" x="0.0" y="-6" width="375" height="236"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgMarketitem" translatesAutoresizingMaskIntoConstraints="NO" id="oDB-aL-YP8">
@@ -356,7 +356,7 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="9" minimumInteritemSpacing="0.0" id="gKA-qZ-yZW" customClass="CenteringFlowLayout" customModule="IPSX" customModuleProvider="target">
                                     <size key="itemSize" width="276" height="116"/>
                                     <size key="headerReferenceSize" width="52" height="50"/>
-                                    <size key="footerReferenceSize" width="69" height="50"/>
+                                    <size key="footerReferenceSize" width="52" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -523,12 +523,12 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionHeader" id="d6I-l5-47A">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionHeader" id="d6I-l5-47A">
                                     <rect key="frame" x="0.0" y="0.0" width="52" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionFooter" id="Pgr-aX-N0A">
-                                    <rect key="frame" x="328" y="0.0" width="69" height="122"/>
+                                    <rect key="frame" x="328" y="0.0" width="52" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
@@ -761,6 +761,7 @@
                         <outlet property="cartOverlayView" destination="qoK-WY-LS5" id="jEE-e9-DyK"/>
                         <outlet property="cartOverlayYConstraint" destination="Yuj-3c-5Yw" id="cwP-1x-te4"/>
                         <outlet property="collectionView" destination="91H-v7-tup" id="mWJ-QK-wYE"/>
+                        <outlet property="collectionViewWidthConstraint" destination="EvS-B9-5AQ" id="f1l-Gc-hnT"/>
                         <outlet property="countryLabel" destination="iaD-KF-yzr" id="GKv-i2-8np"/>
                         <outlet property="durationLabel" destination="e5n-iy-Llb" id="Z8X-ai-L6b"/>
                         <outlet property="favoritesButton" destination="dZ2-11-Xgd" id="o9g-Ui-oso"/>
