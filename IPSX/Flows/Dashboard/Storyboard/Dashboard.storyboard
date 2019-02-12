@@ -515,21 +515,21 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wry-z4-0vl">
-                                <rect key="frame" x="-22.666666666666657" y="314" width="420.33333333333326" height="188"/>
+                                <rect key="frame" x="0.0" y="314" width="375" height="188"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="420" id="eAe-0d-pkO"/>
+                                    <constraint firstAttribute="width" constant="375" id="eAe-0d-pkO"/>
                                     <constraint firstAttribute="height" constant="188" id="fAN-Z0-NWk"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="9" minimumInteritemSpacing="0.0" id="PKq-qw-DPf" customClass="CenteringFlowLayout" customModule="IPSX" customModuleProvider="target">
                                     <size key="itemSize" width="276" height="182"/>
-                                    <size key="headerReferenceSize" width="69" height="50"/>
+                                    <size key="headerReferenceSize" width="52" height="50"/>
                                     <size key="footerReferenceSize" width="69" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardtemCell" id="S1m-tV-qjf" customClass="ProxyItemCollectionViewCell" customModule="IPSX" customModuleProvider="target">
-                                        <rect key="frame" x="69" y="3" width="276" height="182"/>
+                                        <rect key="frame" x="52" y="3" width="276" height="182"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="276" height="182"/>
@@ -710,11 +710,11 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionHeader" id="JX7-An-no5">
-                                    <rect key="frame" x="0.0" y="0.0" width="69" height="188"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="52" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CartCollectionFooter" id="blb-G6-j4m">
-                                    <rect key="frame" x="345" y="0.0" width="69" height="188"/>
+                                    <rect key="frame" x="328" y="0.0" width="69" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
@@ -921,6 +921,7 @@
                         <outlet property="addMoreIPsButton" destination="bBd-5K-BZi" id="yAF-xc-2dG"/>
                         <outlet property="backButton" destination="YvN-x4-aRh" id="5mI-FP-jpk"/>
                         <outlet property="collectionView" destination="Wry-z4-0vl" id="J0Y-32-Muu"/>
+                        <outlet property="collectionViewWidthConstraint" destination="eAe-0d-pkO" id="lcQ-Xt-rnr"/>
                         <outlet property="countryLabel" destination="Goi-H2-g7d" id="VYB-OQ-d2W"/>
                         <outlet property="dismissButton" destination="DnW-r2-Tmu" id="SYw-Zh-eVn"/>
                         <outlet property="doubleProgressView" destination="hh6-7f-QLk" id="YrL-SA-qLQ"/>

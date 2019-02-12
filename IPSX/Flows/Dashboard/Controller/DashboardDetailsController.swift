@@ -48,6 +48,7 @@ class DashboardDetailsController: UIViewController {
     
     @IBOutlet weak var refundInfoHolderView: RoundedView!
     @IBOutlet weak var refundInfoTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var collectionViewWidthConstraint: NSLayoutConstraint!
     
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
@@ -65,6 +66,10 @@ class DashboardDetailsController: UIViewController {
     var singleProxyView = false
     
     private var firstProxyLoaded = false
+    
+    var deviceWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
     
     var errorMessage: String? {
         didSet {
@@ -95,6 +100,7 @@ class DashboardDetailsController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         createToastAlert(onTopOf: noOfProxiesLabel, text: "")
+        collectionViewWidthConstraint.constant = deviceWidth
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -390,6 +396,19 @@ extension DashboardDetailsController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return offer?.proxies.count ?? 0
+    }
+}
+
+extension DashboardDetailsController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(width: (deviceWidth - 276)/2, height: 50)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: (deviceWidth - 276)/2, height: 50)
     }
 }
 
