@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class RefundDetailsController: UIViewController {
 
     @IBOutlet weak var refundTitleLabel: UILabel!

@@ -8,9 +8,7 @@
 
 import UIKit
 
-
 class WithdrawSubmitController: UIViewController {
-    
     
     @IBOutlet weak var walletNameLabel: UILabel!
     @IBOutlet weak var walletAddressLabel: UILabel!

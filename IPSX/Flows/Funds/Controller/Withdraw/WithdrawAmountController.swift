@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class WithdrawAmountController: UIViewController {
     
     @IBOutlet weak var amountTextField: UITextField!
@@ -64,7 +63,15 @@ class WithdrawAmountController: UIViewController {
     }
     
     @IBAction func nextStepAction(_ sender: Any) {
-        DispatchQueue.main.async { self.performSegue(withIdentifier: "SubmitWithdrawSegueID", sender: self) }
+        
+        guard let amountDouble = Double(amountTextField.text ?? "") else { return }
+        
+        if amountDouble <= (UserManager.shared.userInfo?.balance ?? 0) {
+            DispatchQueue.main.async { self.performSegue(withIdentifier: "SubmitWithdrawSegueID", sender: self) }
+        }
+        else {
+            self.errorMessage = "Insufficient Balance Error Message".localized
+        }
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -107,6 +114,15 @@ extension WithdrawAmountController: ToastAlertViewPresentable {
             self.toast = toastView
             view.insertSubview(toastView, belowSubview: topBarView)
         }
+    }
+}
+
+extension WithdrawAmountController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+        return newString.count < 15
     }
 }
 

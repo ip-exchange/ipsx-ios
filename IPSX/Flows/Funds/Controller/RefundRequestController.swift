@@ -8,14 +8,12 @@
 
 import UIKit
 
-
 class RefundRequestController: UIViewController {
 
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var refundTitleLabel: UILabel!
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var proxyTitle: UILabel!
-    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var topConstraintOutlet: NSLayoutConstraint! {
