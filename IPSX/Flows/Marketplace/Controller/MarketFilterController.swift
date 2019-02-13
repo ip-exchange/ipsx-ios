@@ -26,7 +26,7 @@ struct FilterKeys {
     static let sliderRootkeys = [price, duration, traffic, sla, bandwidth]
     
     //root keys for grouped views
-    static let ip_type    = (root: "ip_type",    first: 4,         second: 6)
+    static let ip_type    = (root: "ip_type",    first: 4,           second: 6)
     static let proxy_type = (root: "proxy_type", first: "dedicated", second: "shared")
     static let offer_type = (root: "offer_type", first: "group",     second: "single")
 
