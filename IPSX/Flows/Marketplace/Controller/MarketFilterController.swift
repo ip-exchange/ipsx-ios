@@ -31,7 +31,7 @@ struct FilterKeys {
     static let offer_type = (root: "offer_type", first: "group",     second: "single")
 
     //root key for matrix
-    static let features = (root: "features", r1c1: "http(s)", r1c2: "socks5", r2c1: "vpn", r2c2: "shadowsocks")
+    static let features = (root: "features", r1c1: "HTTP(s)", r1c2: "SOCKS5", r2c1: "VPN", r2c2: "Shadowsocks")
     
     static let sortingOptions = [
         (title: "Traffic Descending".localized,  filterKey: "traffic", orderKey: "DESC"),
