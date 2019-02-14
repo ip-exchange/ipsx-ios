@@ -51,16 +51,11 @@ class ForgotPassController: UIViewController {
                 }
                 
             case .failure(let error):
-                switch error {
-                case CustomError.userDeleted:
-                    self.errorMessage = "User Deleted Error Message".localized
-                    
-                case CustomError.notPossible:
-                    self.errorMessage = "Reset Password Not Possible Message".localized
-                    
-                default:
-                    self.errorMessage = "Generic Error Message".localized
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
                 }
+                self.handleError(error, requestType: RequestType.abortDeleteAccount, completionError: completionError)
             }
         })
     }
@@ -197,3 +192,5 @@ extension ForgotPassController: ToastAlertViewPresentable {
         }
     }
 }
+
+extension ForgotPassController: ErrorPresentable {}

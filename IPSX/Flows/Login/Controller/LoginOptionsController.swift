@@ -103,7 +103,11 @@ class LoginOptionsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.fbLogin)
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                self.handleError(error, requestType: RequestType.fbLogin, completionError: completionError)
             }
         })
     }
@@ -121,7 +125,11 @@ class LoginOptionsController: UIViewController {
                     self.performSegue(withIdentifier: "UnwindToLoadingView", sender: nil)
                 }
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.getEthAddress)
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                self.handleError(error, requestType: RequestType.getEthAddress, completionError: completionError)
             }
         })
     }
@@ -137,26 +145,4 @@ extension LoginOptionsController: ToastAlertViewPresentable {
     }
 }
 
-extension LoginOptionsController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch requestType {
-            
-        case RequestType.fbLogin:
-            
-            switch error {
-            case CustomError.notFound:
-                self.errorMessage = "User Not Registered Error Message".localized
-                
-            case CustomError.userDeleted:
-                self.errorMessage = "User Deleted Error Message".localized
-                
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension LoginOptionsController: ErrorPresentable {}

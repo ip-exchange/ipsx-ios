@@ -128,7 +128,15 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             case RequestType.register: customError = CustomError.usernameExists
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
-
+            
+        case 429:
+            
+            switch requestType {
+                
+            case RequestType.fbLogin: customError = CustomError.notFound
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
         case 430:
             
             switch requestType {
@@ -215,26 +223,35 @@ extension ErrorPresentable {
         case CustomError.lockdownAccount:
             
             switch requestType {
-             
+                
             case RequestType.login, RequestType.fbLogin:
-                completionError?("Login Failed Lockdown Error Message" .localized)
+                completionError?("Login Failed Lockdown Error Message".localized)
                 
             default:
                 completionError?("Lockdown Account Error Message".localized)
             }
+            
+        case CustomError.userDeleted: completionError?("User Deleted Error Message".localized)
+            
+        case CustomError.loginFailed: completionError?("Login Failed Error Message".localized)
+            
+        case CustomError.invalidLogin: completionError?("Invalid Login Error Message".localized)
+            
+        case CustomError.loginEmailNotConfirmed: completionError?("Email Not Confirmed Error Message".localized)
 
+        case CustomError.notFound: completionError?("User Not Registered Error Message".localized)
+            
+        case CustomError.notPossible: completionError?("Reset Password Not Possible Message".localized)
+            
         default:
             
             switch requestType {
                 
-            case RequestType.userInfo:
-                completionError?("User Info Error Message".localized)
+            case RequestType.userInfo: completionError?("User Info Error Message".localized)
                 
-            case RequestType.getCompany:
-                completionError?("Get Company Details Error Message".localized)
+            case RequestType.getCompany: completionError?("Get Company Details Error Message".localized)
                 
-            default:
-                completionError?("Generic Error Message".localized)
+            default: completionError?("Generic Error Message".localized)
             }
         }
     }

@@ -75,23 +75,10 @@ class LoginCredentialsControler: UIViewController {
                 
             case .failure(let error):
                 
-                switch error {
-                  
-                case CustomError.loginEmailNotConfirmed:
-                    self.errorMessage = "Email Not Confirmed Error Message".localized
-
-                case CustomError.loginFailed:
-                    self.errorMessage = "Login Failed Error Message".localized
-                    
-                case CustomError.invalidLogin:
-                    self.errorMessage = "Invalid Login Error Message".localized
-                    
-                case CustomError.userDeleted:
-                    self.errorMessage = "User Deleted Error Message".localized
-                    
-                default:
-                    self.errorMessage = "Generic Error Message".localized
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
                 }
+                self.handleError(error, requestType: RequestType.login, completionError: completionError)
             }
         })
     }
@@ -110,8 +97,12 @@ class LoginCredentialsControler: UIViewController {
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "UnwindToLoadingView", sender: nil)
                 }
-            case .failure(_):
-                self.errorMessage = "Generic Error Message".localized
+            case .failure(let error):
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                self.handleError(error, requestType: RequestType.getEthAddress, completionError: completionError)
             }
         })
     }
@@ -256,4 +247,6 @@ extension LoginCredentialsControler: ToastAlertViewPresentable {
         }
     }
 }
+
+extension LoginCredentialsControler: ErrorPresentable {}
 
