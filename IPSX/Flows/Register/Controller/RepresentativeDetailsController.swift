@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class RepresentativeDetailsController: UIViewController {
 
     @IBOutlet weak var companyRTextField: RichTextFieldView!
@@ -62,6 +61,7 @@ class RepresentativeDetailsController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        refreshUI()
         self.doneButton.isEnabled = self.canContinue()
     }
     
@@ -129,6 +129,13 @@ class RepresentativeDetailsController: UIViewController {
             weakSelf.fieldsStateDic["repPhone"] = state
             weakSelf.doneButton.isEnabled = !weakSelf.fieldsStateDic.values.contains(false)
         }
+    }
+    
+    func refreshUI() {
+        
+        companyRTextField.refreshStatus()
+        emailRtextField.refreshStatus()
+        phoneRTextField.refreshStatus()
     }
 
     private func canContinue() -> Bool {
