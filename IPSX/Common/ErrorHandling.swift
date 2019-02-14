@@ -11,7 +11,7 @@ import Foundation
 
 protocol ErrorPresentable {
     
-    func handleError(_ error: Error, requestType: String, completion: (() -> ())?)
+    func handleError(_ error: Error, requestType: String, completionRetry: (() -> ())?, completionError:((String) -> ())?)
 }
 
 public enum CustomError: Error {
@@ -34,6 +34,7 @@ public enum CustomError: Error {
     case notSuccessful
     case fbNoEmailError
     case ipNotSupported
+    case lockdownAccount
     
     public var errorDescription: String? {
         
@@ -152,6 +153,14 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
             
+        case 446:
+            
+            switch requestType {
+                
+            case RequestType.login, RequestType.fbLogin: customError = CustomError.lockdownAccount
+            default: customError = CustomError.statusCodeNOK(statusCode)
+            }
+            
         case 448:
             
             switch requestType {
@@ -159,6 +168,9 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
             case RequestType.login: customError = CustomError.loginFailed
             default: customError = CustomError.statusCodeNOK(statusCode)
             }
+            
+        case 480:
+            customError = CustomError.lockdownAccount
             
         case 491:
             
@@ -183,4 +195,47 @@ func generateCustomError(error: Error, statusCode: Int, responseCode: String, re
         return customError
     }
     return error
+}
+
+extension ErrorPresentable {
+    
+    func handleError(_ error: Error, requestType: String, completionRetry:(() -> ())? = nil, completionError:((String) -> ())? = nil) {
+        
+        switch error {
+            
+        case CustomError.expiredToken:
+            
+            LoginService().getNewAccessToken(errorHandler: { error in
+                completionError?("Generic Error Message".localized)
+                
+            }, successHandler: {
+                completionRetry?()
+            })
+            
+        case CustomError.lockdownAccount:
+            
+            switch requestType {
+             
+            case RequestType.login, RequestType.fbLogin:
+                completionError?("Login Failed Lockdown Error Message" .localized)
+                
+            default:
+                completionError?("Lockdown Account Error Message".localized)
+            }
+
+        default:
+            
+            switch requestType {
+                
+            case RequestType.userInfo:
+                completionError?("User Info Error Message".localized)
+                
+            case RequestType.getCompany:
+                completionError?("Get Company Details Error Message".localized)
+                
+            default:
+                completionError?("Generic Error Message".localized)
+            }
+        }
+    }
 }

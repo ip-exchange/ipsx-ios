@@ -228,9 +228,14 @@ class EditProfileInfoConstroller: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.updateProfile, completion: {
-                    self.updateUserProfile(bodyParams: bodyParams)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.updateUserProfile(bodyParams: bodyParams)
+                }
+                self.handleError(error, requestType: RequestType.updateProfile, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -248,9 +253,14 @@ class EditProfileInfoConstroller: UIViewController {
                 successCompletion()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.getNewUserInfo(successCompletion: successCompletion)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.getNewUserInfo(successCompletion: successCompletion)
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -303,9 +313,14 @@ class EditProfileInfoConstroller: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.retrieveUserInfo()
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -341,9 +356,14 @@ class EditProfileInfoConstroller: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
-                    self.deleteAccount()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.deleteAccount()
+                }
+                self.handleError(error, requestType: RequestType.deleteAccount, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -360,9 +380,14 @@ class EditProfileInfoConstroller: UIViewController {
                 self.retrieveUserInfo()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.abortDeleteAccount, completion: {
-                    self.abortDelete()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.abortDelete()
+                }
+                self.handleError(error, requestType: RequestType.abortDeleteAccount, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -452,31 +477,4 @@ extension EditProfileInfoConstroller: ToastAlertViewPresentable {
         }
     }
 }
-extension EditProfileInfoConstroller: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            
-            switch requestType {
-            case RequestType.userInfo:
-                self.errorMessage = "User Info Error Message".localized
-            case RequestType.getCompany:
-                self.errorMessage = "Get Company Details Error Message".localized
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-            
-        }
-    }
-}
+extension EditProfileInfoConstroller: ErrorPresentable {}

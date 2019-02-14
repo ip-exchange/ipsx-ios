@@ -8,13 +8,11 @@
 
 import UIKit
 
-
 class GenerateAddressController: UIViewController {
 
     @IBOutlet weak var termsOverlayView: UIView!
     @IBOutlet weak var termsOverlayTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var termsOverlayBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var loadingView: CustomLoadingView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var topSeparatorView: UIView!
@@ -65,6 +63,7 @@ class GenerateAddressController: UIViewController {
     }
     
     private func createWaccAdddress() {
+        
         loadingView.startAnimating()
         FundsService().createWaccAddress(completionHandler: { result in
             DispatchQueue.main.async { self.loadingView.stopAnimating() }
@@ -73,9 +72,14 @@ class GenerateAddressController: UIViewController {
                 DispatchQueue.main.async { self.performSegue(withIdentifier: "AddressSegueID", sender: self) }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.createWaccAdddress()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.createWaccAdddress()
+                }
+                self.handleError(error, requestType: RequestType.addWaccAddress, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -111,31 +115,4 @@ extension GenerateAddressController: ToastAlertViewPresentable {
     }
 }
 
-extension GenerateAddressController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-            
-        default:
-            
-            switch requestType {
-            case RequestType.userInfo, RequestType.getEthAddress:
-                self.errorMessage = "Refresh Data Error Message".localized
-            case RequestType.deleteEthAddress:
-                self.errorMessage = "ETH Address Delete Failed Error Message".localized
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-        }
-    }
-}
+extension GenerateAddressController: ErrorPresentable {}
