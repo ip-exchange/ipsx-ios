@@ -119,6 +119,7 @@ class EditProfileController: UIViewController {
                                                object: nil)
     }
     
+    
     @objc func appWillEnterForeground() {
         updateReachabilityInfo()
     }
@@ -160,6 +161,7 @@ class EditProfileController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+        self.toast?.hideToast()
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
