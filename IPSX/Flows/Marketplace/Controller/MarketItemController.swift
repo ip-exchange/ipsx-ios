@@ -208,9 +208,13 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.addToCart, completion: {
-                    self.performAddToCartRequest(offerIds: offerIds)
-                })
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.performAddToCartRequest(offerIds: offerIds)
+                }
+                self.handleError(error, requestType: RequestType.addToCart, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -227,9 +231,13 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.addOrRemoveFavorites, completion: {
-                    self.performAddOrRemovefavoritesRequest(offerId: offerId)
-                })
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.performAddOrRemovefavoritesRequest(offerId: offerId)
+                }
+                self.handleError(error, requestType: RequestType.addOrRemoveFavorites, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -284,23 +292,5 @@ extension MarketItemController: ToastAlertViewPresentable {
     }
 }
 
-extension MarketItemController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension MarketItemController: ErrorPresentable {}
 

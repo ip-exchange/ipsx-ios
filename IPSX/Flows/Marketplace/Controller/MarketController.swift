@@ -200,12 +200,18 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                         self.updateCountryOverlay(visible: false)
                     }
                 case .failure(let error):
-                    self.handleError(error, requestType: RequestType.updateProfile, completion: {
+                    
+                    let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                        self?.errorMessage = errorMessage
+                    }
+                    let completionRetry: (() -> ()) = { [weak self] in
+                        
                         DispatchQueue.main.async {
-                            self.countryRComponent.contentTextField?.text = ""
-                            self.updateCountryOverlay(visible: false)
+                            self?.countryRComponent.contentTextField?.text = ""
+                            self?.updateCountryOverlay(visible: false)
                         }
-                    })
+                    }
+                    self.handleError(error, requestType: RequestType.updateProfile, completionRetry: completionRetry, completionError: completionError)
                 }
             })
          }
@@ -293,9 +299,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOffers, completion: {
-                    self.loadOffers(completion: completion)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.loadOffers(completion: completion)
+                }
+                self.handleError(error, requestType: RequestType.getOffers, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -311,9 +322,14 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
                 UserManager.shared.userInfo = user as? UserInfo
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.retrieveUserInfo()
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -471,23 +487,5 @@ extension MarketController: ToastAlertViewPresentable {
     }
 }
 
-extension MarketController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension MarketController: ErrorPresentable {}
 

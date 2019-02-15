@@ -114,9 +114,14 @@ class MarketCheckoutController: UIViewController {
                 }
 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.placeOrder, completion: {
-                    self.performOrderRequest(ipAddress: ipAddress)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.performOrderRequest(ipAddress: ipAddress)
+                }
+                self.handleError(error, requestType: RequestType.placeOrder, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -143,26 +148,4 @@ extension MarketCheckoutController: ToastAlertViewPresentable {
     }
 }
 
-extension MarketCheckoutController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-            
-        case CustomError.ipNotSupported:
-            self.errorMessage = "IP Not Supported Error Message".localized
-            
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension MarketCheckoutController: ErrorPresentable {}

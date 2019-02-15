@@ -243,6 +243,8 @@ extension ErrorPresentable {
             
         case CustomError.notPossible: completionError?("Reset Password Not Possible Message".localized)
             
+        case CustomError.ipNotSupported: completionError?("IP Not Supported Error Message".localized)
+            
         default:
             
             switch requestType {
