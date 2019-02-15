@@ -143,9 +143,10 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.getEthAddress, completion: {
-                    self.ethAddresses()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.ethAddresses()
+                }
+                self.handleError(error, requestType: RequestType.getEthAddress, completionRetry: completionRetry)
             }
         })
     }
@@ -164,9 +165,10 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.getCompany, completion: {
-                    self.companyDetails()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.companyDetails()
+                }
+                self.handleError(error, requestType: RequestType.getCompany, completionRetry: completionRetry)
             }
         })
     }
@@ -185,9 +187,10 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.getProviderDetails, completion: {
-                    self.providerDetails()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.providerDetails()
+                }
+                self.handleError(error, requestType: RequestType.getProviderDetails, completionRetry: completionRetry)
             }
         })
     }
@@ -206,9 +209,10 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.userInfo()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.userInfo()
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry)
             }
         })
     }
@@ -227,9 +231,10 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.userRoles, completion: {
-                    self.userRoles()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.userRoles()
+                }
+                self.handleError(error, requestType: RequestType.userRoles, completionRetry: completionRetry)
             }
         })
     }
@@ -248,9 +253,10 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.getTokenRequestList, completion: {
-                    self.tokenRequestList()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.tokenRequestList()
+                }
+                self.handleError(error, requestType: RequestType.getTokenRequestList, completionRetry: completionRetry)
             }
         })
     }
@@ -268,9 +274,10 @@ class LoadingViewController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.generalSettings, completion: {
-                    self.generalSettings()
-                })
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.generalSettings()
+                }
+                self.handleError(error, requestType: RequestType.generalSettings, completionRetry: completionRetry)
             }
         })
     }
@@ -295,22 +302,4 @@ extension LoadingViewController: ToastAlertViewPresentable {
     }
 }
 
-extension LoadingViewController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                print("Generic Error Message".localized)
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            print("Generic Error Message".localized)
-        }
-    }
-}
+extension LoadingViewController: ErrorPresentable {}
