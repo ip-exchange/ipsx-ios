@@ -196,9 +196,14 @@ class DashboardDetailsController: UIViewController {
                 DispatchQueue.main.async { completion?() }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOrderOfferProxy, completion: {
-                    self.retrieveOrderOfferProxyDetails(proxyId: proxyId)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.retrieveOrderOfferProxyDetails(proxyId: proxyId)
+                }
+                self.handleError(error, requestType: RequestType.getOrderOfferProxy, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -446,22 +451,4 @@ extension DashboardDetailsController: ToastAlertViewPresentable {
     }
 }
 
-extension DashboardDetailsController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension DashboardDetailsController: ErrorPresentable {}

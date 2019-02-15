@@ -160,9 +160,14 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
                 UserManager.shared.userInfo = user as? UserInfo
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.retrieveUserInfo()
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -178,9 +183,14 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
                 UserManager.shared.roles = userRoles as? [UserRoles]
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userRoles, completion: {
-                    self.userRoles()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.userRoles()
+                }
+                self.handleError(error, requestType: RequestType.userRoles, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -196,9 +206,14 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
                 UserManager.shared.generalSettings = settings as? GeneralSettings
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.generalSettings, completion: {
-                    self.generalSettings()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.generalSettings()
+                }
+                self.handleError(error, requestType: RequestType.generalSettings, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -262,9 +277,14 @@ class DashboardController: UIViewController, UITabBarControllerDelegate {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.getOrders, completion: {
-                    self.loadOrders()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.loadOrders()
+                }
+                self.handleError(error, requestType: RequestType.getOrders, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -388,22 +408,4 @@ extension DashboardController: ToastAlertViewPresentable {
     }
 }
 
-extension DashboardController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension DashboardController: ErrorPresentable {}

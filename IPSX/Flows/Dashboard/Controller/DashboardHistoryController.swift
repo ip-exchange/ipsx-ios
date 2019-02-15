@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class DashboardHistoryController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
@@ -231,22 +230,3 @@ extension DashboardHistoryController: ToastAlertViewPresentable {
     }
 }
 
-extension DashboardHistoryController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
