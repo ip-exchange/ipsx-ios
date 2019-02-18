@@ -86,9 +86,13 @@ class TokenRequestController: UIViewController {
                 }
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.requestTokens, completion: {
-                    self.requestTokens(ethID: ethID, amount: amount)
-                })
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.requestTokens(ethID: ethID, amount: amount)
+                }
+                self.handleError(error, requestType: RequestType.requestTokens, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -308,22 +312,4 @@ extension TokenRequestController: ToastAlertViewPresentable {
     }
 }
 
-extension TokenRequestController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension TokenRequestController: ErrorPresentable {}

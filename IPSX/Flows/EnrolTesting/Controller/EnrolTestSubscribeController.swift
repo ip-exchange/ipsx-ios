@@ -147,9 +147,14 @@ class EnrolTestSubscribeController: UIViewController {
 
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.enrollTesting, completion: {
-                    self.enrollTesting()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.enrollTesting()
+                }
+                self.handleError(error, requestType: RequestType.enrollTesting, completionRetry: completionRetry, completionError: completionError)
             }
         }
     }
@@ -248,22 +253,4 @@ extension EnrolTestSubscribeController: ToastAlertViewPresentable {
 }
 
 
-extension EnrolTestSubscribeController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })            
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension EnrolTestSubscribeController: ErrorPresentable {}

@@ -169,9 +169,14 @@ class RepresentativeDetailsController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completion: {
-                    self.submitCompanyDetails()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.submitCompanyDetails()
+                }
+                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completionRetry: completionRetry, completionError: completionError)
             }
         }
     }
@@ -187,22 +192,4 @@ extension RepresentativeDetailsController: ToastAlertViewPresentable {
     }
 }
 
-extension RepresentativeDetailsController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension RepresentativeDetailsController: ErrorPresentable {}

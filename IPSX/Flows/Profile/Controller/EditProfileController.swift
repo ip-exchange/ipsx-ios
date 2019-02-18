@@ -306,9 +306,14 @@ class EditProfileController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.updateProfile, completion: {
-                    self.updateUserProfile(bodyParams: bodyParams)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.updateUserProfile(bodyParams: bodyParams)
+                }
+                self.handleError(error, requestType: RequestType.updateProfile, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -326,9 +331,14 @@ class EditProfileController: UIViewController {
                 successCompletion()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.getNewUserInfo(successCompletion: successCompletion)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.getNewUserInfo(successCompletion: successCompletion)
+                }
+                self.handleError(error, requestType: RequestType.userInfo, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -348,9 +358,13 @@ class EditProfileController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.getCompany, completion: {
-                    self.getCompanyDetails()
-                })
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.getCompanyDetails()
+                }
+                self.handleError(error, requestType: RequestType.getCompany, completionRetry: completionRetry, completionError: completionError)
             }
             DispatchQueue.main.async { completion?() }
         })
@@ -366,9 +380,14 @@ class EditProfileController: UIViewController {
                 completion(true)
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completion: {
-                    self.submitCompanyDetails(completion: completion)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.submitCompanyDetails(completion: completion)
+                }
+                self.handleError(error, requestType: RequestType.submitLegalPersonDetails, completionRetry: completionRetry, completionError: completionError)
             }
         }
     }
@@ -414,31 +433,4 @@ extension EditProfileController: ToastAlertViewPresentable {
         }
     }
 }
-extension EditProfileController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            
-            switch requestType {
-            case RequestType.userInfo:
-                self.errorMessage = "User Info Error Message".localized
-            case RequestType.getCompany:
-                self.errorMessage = "Get Company Details Error Message".localized
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-            
-        }
-    }
-}
+extension EditProfileController: ErrorPresentable {}

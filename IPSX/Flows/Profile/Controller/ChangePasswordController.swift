@@ -143,9 +143,14 @@ class ChangePasswordController: UIViewController {
                 self.autologin(password: newPassword)
             
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.changePassword, completion: {
-                    self.changePassword(oldPassword: oldPassword, newPassword: newPassword)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.changePassword(oldPassword: oldPassword, newPassword: newPassword)
+                }
+                self.handleError(error, requestType: RequestType.changePassword, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -201,26 +206,4 @@ extension ChangePasswordController: ToastAlertViewPresentable {
     }
 }
 
-extension ChangePasswordController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-            
-        case CustomError.wrongPassword:
-            self.errorMessage = "Wrong Old Password Error Message".localized
-            
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension ChangePasswordController: ErrorPresentable {}

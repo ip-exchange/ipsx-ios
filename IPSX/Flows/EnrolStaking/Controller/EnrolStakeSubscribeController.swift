@@ -177,9 +177,14 @@ class EnrolStakeSubscribeController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.enrollStaking, completion: {
-                    self.enrollStaking()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.enrollStaking()
+                }
+                self.handleError(error, requestType: RequestType.enrollStaking, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -246,22 +251,4 @@ extension EnrolStakeSubscribeController: ToastAlertViewPresentable {
     }
 }
 
-extension EnrolStakeSubscribeController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension EnrolStakeSubscribeController: ErrorPresentable {}

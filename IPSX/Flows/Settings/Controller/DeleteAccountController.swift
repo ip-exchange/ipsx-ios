@@ -124,9 +124,14 @@ class DeleteAccountController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.deleteAccount, completion: {
-                    self.deleteAccount(password: password)
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.deleteAccount(password: password)
+                }
+                self.handleError(error, requestType: RequestType.deleteAccount, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -142,26 +147,4 @@ extension DeleteAccountController: ToastAlertViewPresentable {
     }
 }
 
-extension DeleteAccountController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-            
-        case CustomError.wrongPassword:
-            self.errorMessage = "Wrong Password Error Message".localized
-            
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension DeleteAccountController: ErrorPresentable {}

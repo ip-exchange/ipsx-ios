@@ -203,7 +203,11 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.fbRegister)
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                self.handleError(error, requestType: RequestType.fbRegister, completionError: completionError)
             }
         })
     }
@@ -220,7 +224,11 @@ class RegisterTermsController: UIViewController {
                 self.continueFlow()
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.register)
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                self.handleError(error, requestType: RequestType.register, completionError: completionError)
             }
         })
     }
@@ -279,29 +287,4 @@ class RegisterDoneController: UIViewController {
     }
 }
 
-extension RegisterTermsController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-        
-        switch requestType {
-            
-        case RequestType.fbRegister, RequestType.register:
-            
-            switch error {
-            case CustomError.usernameExists:
-                self.errorMessage = "Username taken error message".localized
-                
-            case CustomError.alreadyExists:
-                self.errorMessage = "User already registered Error Message".localized
-                
-            case CustomError.fbNoEmailError:
-                self.errorMessage = "Facebook Register No Email Error".localized
-                
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-        default:
-            self.errorMessage = "Generic Error Message".localized
-        }
-    }
-}
+extension RegisterTermsController: ErrorPresentable {}

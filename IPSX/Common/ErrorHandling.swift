@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol ErrorPresentable {
     
     func handleError(_ error: Error, requestType: String, completionRetry: (() -> ())?, completionError:((String) -> ())?)
@@ -244,6 +243,26 @@ extension ErrorPresentable {
         case CustomError.notPossible: completionError?("Reset Password Not Possible Message".localized)
             
         case CustomError.ipNotSupported: completionError?("IP Not Supported Error Message".localized)
+            
+        case CustomError.fbNoEmailError: completionError?("Facebook Register No Email Error".localized)
+            
+        case CustomError.usernameExists: completionError?("Username taken error message".localized)
+            
+        case CustomError.wrongPassword: completionError?("Wrong Password Error Message".localized)
+            
+        case CustomError.alreadyExists:
+            
+            switch requestType {
+                
+            case RequestType.fbRegister, RequestType.register:
+                completionError?("User already registered Error Message".localized)
+                
+            case RequestType.addEthAddress:
+                completionError?("ETH Address Already Used Error Message".localized)
+                
+            default:
+                completionError?("Generic Error Message".localized)
+            }
             
         default:
             

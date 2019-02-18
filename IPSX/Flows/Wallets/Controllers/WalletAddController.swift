@@ -242,9 +242,13 @@ class WalletAddController: UIViewController {
                 
             case .failure(let error):
                 
-                self.handleError(error, requestType: RequestType.updateEthAddress, completion: {
-                    self.updateETHaddress(alias: alias, address: address, ethID: ethID)
-                })
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.updateETHaddress(alias: alias, address: address, ethID: ethID)
+                }
+                self.handleError(error, requestType: RequestType.updateEthAddress, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -278,9 +282,14 @@ class WalletAddController: UIViewController {
                 }
                 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.addEthAddress, completion: {
-                    self.addEthAdress()
-                })
+                
+                let completionError: ((String) -> ()) = { [weak self] errorMessage in
+                    self?.errorMessage = errorMessage
+                }
+                let completionRetry: (() -> ()) = { [weak self] in
+                    self?.addEthAdress()
+                }
+                self.handleError(error, requestType: RequestType.addEthAddress, completionRetry: completionRetry, completionError: completionError)
             }
         })
     }
@@ -506,37 +515,6 @@ class FirstWalletDoneController: UIViewController {
         super.viewWillDisappear(animated)
         backgroundImageView.removeParticlesAnimation()
     }
-
 }
 
-extension WalletAddController: ErrorPresentable {
-    
-    func handleError(_ error: Error, requestType: String, completion:(() -> ())? = nil) {
-
-        switch error {
-            
-        case CustomError.expiredToken:
-            
-            LoginService().getNewAccessToken(errorHandler: { error in
-                self.errorMessage = "Generic Error Message".localized
-                
-            }, successHandler: {
-                completion?()
-            })
-        default:
-            
-            switch requestType {
-                
-            case RequestType.updateEthAddress, RequestType.addEthAddress:
-                if let customErr = error as? CustomError, case .alreadyExists = customErr {
-                    self.errorMessage = "ETH Address Already Used Error Message".localized
-                }
-                else {
-                    self.errorMessage = "Generic Error Message".localized
-                }
-            default:
-                self.errorMessage = "Generic Error Message".localized
-            }
-        }
-    }
-}
+extension WalletAddController: ErrorPresentable {}
