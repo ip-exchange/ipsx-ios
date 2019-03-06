@@ -117,7 +117,7 @@ public struct Url {
     public static let pacBaseUrlDEMO = "https://demo.ip.sx/proxy/pac/"
     
     // PROD ENV:
-    public static let basePRODApi    = "https://api.ip.sx/api"
+    public static let basePRODApi    = "https://api-rr8fhm2x1i14.ip.sx/api"
     public static let pacBaseUrlPROD = "https://app.ip.sx/order/proxy/pac/"
 
     public static var baseUrl: String {

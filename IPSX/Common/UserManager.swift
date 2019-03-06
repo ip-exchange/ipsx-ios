@@ -14,7 +14,7 @@ public class UserManager: NSObject {
     private override init() {}
     
     /// CURRENT ENVIRONMENT (DEV / PROD):
-    let environment = Environment.dev
+    let environment = Environment.prod
     
     var userId: String = ""
     var accessToken: String = ""
