@@ -79,6 +79,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
     private var cartItemsCount = 0
     private var favoritesItemsCount = 0
     private var offersLoadedOnLastRequest = 0
+    private var nextPageRequested = false
     
     @IBAction func favButtonAction(_ sender: UIButton) {
         
@@ -166,7 +167,9 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         super.viewDidAppear(animated)
         
-        shouldRefreshData = offersDataSource.count < 1
+        if offersDataSource.count < 1 {
+            shouldRefreshData = true
+        }
         if !UserDefaults.standard.marketTutorialChecked(), !tutorialPresented {
             DispatchQueue.main.async { self.performSegue(withIdentifier: "MarketTutorialSegueID", sender: self) }
             tutorialPresented = true
@@ -270,6 +273,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         MarketplaceService().retrieveOffers(offset: offset, filters: normalisedFiltersDictionary, completionHandler: { result in
             
             DispatchQueue.main.async {
+                self.nextPageRequested = false
                 self.loadingView?.stopAnimating()
                 self.fetchpageActivityIndicator.stopAnimating()
             }
@@ -474,7 +478,25 @@ extension MarketController: UIScrollViewDelegate {
             self.fetchpageActivityIndicator.startAnimating()
             
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.2, execute: {
-                self.loadOffers()
+                if !self.nextPageRequested {
+                    self.nextPageRequested = true
+                    self.loadOffers()
+                }
+            })
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        if isLastCell && offersLoadedOnLastRequest == offersLimitPerRequest {
+            
+            self.fetchpageActivityIndicator.startAnimating()
+            
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5, execute: {
+                if !self.nextPageRequested {
+                    self.nextPageRequested = true
+                    self.loadOffers()
+                }
             })
         }
     }
