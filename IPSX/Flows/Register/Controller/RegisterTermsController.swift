@@ -102,13 +102,11 @@ class RegisterTermsController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
  
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundImageView.createParticlesAnimation()
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -263,13 +261,11 @@ class RegisterDoneController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundImageView.createParticlesAnimation()
         getUserRoles(completionHandler: { _ in })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        backgroundImageView.removeParticlesAnimation()
     }
     
     private func getUserRoles(completionHandler: @escaping (ServiceResult<Any>) -> ()) {

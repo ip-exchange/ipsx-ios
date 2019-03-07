@@ -58,12 +58,10 @@ class LoginOptionsController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundImageView.createParticlesAnimation()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        backgroundImageView.removeParticlesAnimation()
     }
 
     @IBAction func unwindToLoginOptions(segue:UIStoryboardSegue) { }

@@ -30,12 +30,10 @@ class LandingViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundImageView.createParticlesAnimation()
    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        backgroundImageView.removeParticlesAnimation()
     }
     
     func configureUI() {
@@ -51,7 +49,7 @@ class LandingViewController: UIViewController {
         welcomeTopLabel.text = "Welcome to".localized
         registerButton.setTitle("Register".localized, for: .normal)
         loginButton.setTitle("Login".localized, for: .normal)
-        viewMarketplaceButton.setTitle("View or Marketplace".localized, for: .normal)
+        viewMarketplaceButton.setTitle("View on Marketplace".localized, for: .normal)
     }
     
     @IBAction func unwindToLandingConstroller(segue:UIStoryboardSegue) { }

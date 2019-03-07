@@ -166,6 +166,7 @@ class MarketController: UIViewController, UITabBarControllerDelegate {
         
         super.viewDidAppear(animated)
         
+        shouldRefreshData = offersDataSource.count < 1
         if !UserDefaults.standard.marketTutorialChecked(), !tutorialPresented {
             DispatchQueue.main.async { self.performSegue(withIdentifier: "MarketTutorialSegueID", sender: self) }
             tutorialPresented = true
@@ -438,8 +439,10 @@ extension MarketController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.row == (offersDataSource.count - 1) && tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
+        if indexPath.row > (offersDataSource.count - 10) && tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
             isLastCell = true
+        } else {
+            isLastCell = false
         }
     }
 }
@@ -470,7 +473,7 @@ extension MarketController: UIScrollViewDelegate {
             
             self.fetchpageActivityIndicator.startAnimating()
             
-            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.0, execute: {
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.2, execute: {
                 self.loadOffers()
             })
         }

@@ -36,7 +36,6 @@ class LoadingViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundImageView.createParticlesAnimation()
         
         if !ReachabilityManager.shared.isReachable() {
             toast?.showToastAlert("No internet connection".localized, dismissable: false)
@@ -75,7 +74,6 @@ class LoadingViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        backgroundImageView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
     }
     
