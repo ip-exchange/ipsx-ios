@@ -246,7 +246,7 @@ class DashboardDetailsController: UIViewController {
     
     @IBAction func openSettingsAction(_ sender: Any) {
         
-        guard let settingsUrl = URL(string: "App-Prefs:root=WIFI") else {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
             hideOverlay()
             toast?.showToastAlert("Select Valid ETH Wallet Message".localized, type: .error)
             return
