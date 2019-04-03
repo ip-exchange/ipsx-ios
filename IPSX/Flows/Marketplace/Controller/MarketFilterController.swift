@@ -10,11 +10,11 @@ import UIKit
 
 struct FilterKeys {
     
-    static let unavailableOffers = (root: "show_unavailable_offers")
+    static let unavailableOffers = ("show_unavailable_offers")
     
     //root keys for sort and location
     static let sort     = (root: "sort", criteria: "order_by", order: "order", row : "sort_row")
-    static let location = (root: "location")
+    static let location = ("location")
     
     //root keys for sliders
     static let price     = (root: "price",     min: "min_price",     max: "max_price")
@@ -97,9 +97,9 @@ class MarketFilterController: UIViewController {
     fileprivate var selectedCountries:[String] = [] {
         didSet {
             if selectedCountries.count > 0 {
-                filtersDictionary[FilterKeys.location.root] = selectedCountries
+                filtersDictionary[FilterKeys.location] = selectedCountries
             } else {
-                filtersDictionary.removeValue(forKey: FilterKeys.location.root)
+                filtersDictionary.removeValue(forKey: FilterKeys.location)
             }
             worldwideLabel.isHidden = selectedCountries.count > 0
             countriesCollectionView.reloadData()
@@ -186,7 +186,7 @@ class MarketFilterController: UIViewController {
         selectedSortOptionLabel.text = FilterKeys.sortingOptions[defaultSortIndex].title
         sortPickerView.selectRow(defaultSortIndex, inComponent: 0, animated: true)
         filtersDictionary.removeValue(forKey: FilterKeys.sort.root)
-        filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers.root)
+        filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers)
         unavailableOffers.setOn(false, animated: true)
     }
     
@@ -271,18 +271,18 @@ class MarketFilterController: UIViewController {
 
     @IBAction func showUnavailableOffers(_ sender: UISwitch) {
         if sender.isOn {
-            filtersDictionary[FilterKeys.unavailableOffers.root] = sender.isOn
+            filtersDictionary[FilterKeys.unavailableOffers] = sender.isOn
         } else {
-            filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers.root)
+            filtersDictionary.removeValue(forKey: FilterKeys.unavailableOffers)
         }
     }
     
     private func loadFilterValues() {
         
-        if let unavOffers = filtersDictionary[FilterKeys.unavailableOffers.root] as? Bool {
+        if let unavOffers = filtersDictionary[FilterKeys.unavailableOffers] as? Bool {
             unavailableOffers.setOn(unavOffers, animated: false)
         }
-        if let selCountries = filtersDictionary[FilterKeys.location.root] as? [String], selCountries.count > 0 {
+        if let selCountries = filtersDictionary[FilterKeys.location] as? [String], selCountries.count > 0 {
             selectedCountries = selCountries
         }
         if let sortDic = filtersDictionary[FilterKeys.sort.root] as? [String:Any],
