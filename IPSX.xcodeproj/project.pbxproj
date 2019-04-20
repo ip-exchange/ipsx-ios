@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E56567E2D824115DEC8C1C6 /* Pods_IPSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */; };
 		885E0B1221B58B1E001F4DE0 /* DashboardHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885E0B1121B58B1E001F4DE0 /* DashboardHeaderCell.swift */; };
 		885E0B1421B58F5F001F4DE0 /* DashboardDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885E0B1321B58F5F001F4DE0 /* DashboardDetailsController.swift */; };
 		885E0B1621B58F71001F4DE0 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 885E0B1521B58F71001F4DE0 /* Dashboard.storyboard */; };
+		885F56B4226AF35F0094B330 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885F56B3226AF35F0094B330 /* StoreKit.framework */; };
+		885F56B6226AF5C90094B330 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885F56B5226AF5C90094B330 /* IAPHelper.swift */; };
 		A41583B320B6D87B00DEC2BC /* NSNotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41583B220B6D87B00DEC2BC /* NSNotificationName+extensions.swift */; };
 		A43930AF205AAEE800CA7B15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A43930AE205AAEE800CA7B15 /* AppDelegate.swift */; };
 		A43930B6205AAEE800CA7B15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A43930B5205AAEE800CA7B15 /* Assets.xcassets */; };
@@ -67,7 +70,6 @@
 		A4E6AEAB20862E23001787DF /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E6AEAA20862E23001787DF /* RoundedButton.swift */; };
 		A4F04CCC214BCACE0044820A /* ProviderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F04CCB214BCACE0044820A /* ProviderService.swift */; };
 		A4FCA937205BD8F1009FF41B /* String+extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FCA936205BD8F1009FF41B /* String+extenstions.swift */; };
-		D33137537F001C950E0F6155 /* Pods_IPSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CCCFEF20C570D5005FA14F /* Pods_IPSX.framework */; };
 		DDBA148A50FBFBA3A4F69DCF /* Pods_IPSXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 568395446C47337957253B00 /* Pods_IPSXTests.framework */; };
 		EE0C536621A6AA4500D9ED11 /* MarketFilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C536521A6AA4500D9ED11 /* MarketFilterController.swift */; };
 		EE0C536821A6D87C00D9ED11 /* MarketFilterCountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0C536721A6D87C00D9ED11 /* MarketFilterCountryCell.swift */; };
@@ -201,6 +203,8 @@
 		885E0B1121B58B1E001F4DE0 /* DashboardHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderCell.swift; sourceTree = "<group>"; };
 		885E0B1321B58F5F001F4DE0 /* DashboardDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDetailsController.swift; sourceTree = "<group>"; };
 		885E0B1521B58F71001F4DE0 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		885F56B3226AF35F0094B330 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		885F56B5226AF5C90094B330 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		9C7DE1B27104CE04007B742B /* Pods-IPSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-IPSX/Pods-IPSX.release.xcconfig"; sourceTree = "<group>"; };
 		A41583B220B6D87B00DEC2BC /* NSNotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotificationName+extensions.swift"; sourceTree = "<group>"; };
 		A43930AB205AAEE800CA7B15 /* IPSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -391,7 +395,8 @@
 			files = (
 				A45331D120C9468D0038E0E2 /* Pods_IPSX.framework in Frameworks */,
 				EE354FCF20AB1345002A8132 /* WebKit.framework in Frameworks */,
-				D33137537F001C950E0F6155 /* Pods_IPSX.framework in Frameworks */,
+				885F56B4226AF35F0094B330 /* StoreKit.framework in Frameworks */,
+				2E56567E2D824115DEC8C1C6 /* Pods_IPSX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,6 +767,7 @@
 		A4FCA930205BB092009FF41B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				885F56B5226AF5C90094B330 /* IAPHelper.swift */,
 				A44F567E21831C8000F09CB4 /* RequestBuilder.swift */,
 				A47F63C6218357DF00F75F25 /* ErrorHandling.swift */,
 				A4AC761E2099E59800504ED9 /* KeychainWrapper.swift */,
@@ -824,6 +830,7 @@
 		E4ADA5C2E44FF7B123F97D7E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				885F56B3226AF35F0094B330 /* StoreKit.framework */,
 				A4725F202187526400AA79B8 /* IPSXNetworkingFramework.framework */,
 				A44F57362183264300F09CB4 /* CVINetworkingFramework.framework */,
 				A45331CD20C944790038E0E2 /* FacebookLogin.framework */,
@@ -1162,7 +1169,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Cristina Virlan";
 				TargetAttributes = {
 					A43930AA205AAEE800CA7B15 = {
@@ -1170,6 +1177,9 @@
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -1479,6 +1489,7 @@
 				A498E44821A80951005B5E9E /* Proxy.swift in Sources */,
 				A4935045212EE86900482BA5 /* Representative.swift in Sources */,
 				EE0C536A21A6E67F00D9ED11 /* RangeSlider.swift in Sources */,
+				885F56B6226AF5C90094B330 /* IAPHelper.swift in Sources */,
 				A479DC9520A48CAF00D5C601 /* TokenRequest.swift in Sources */,
 				EE12782C21C132790070C92B /* Withdrawal.swift in Sources */,
 				EE1A0546208F650E00522426 /* RoundedView.swift in Sources */,

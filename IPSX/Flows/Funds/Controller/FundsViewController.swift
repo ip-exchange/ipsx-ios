@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import StoreKit
 
 class FundsViewController: UIViewController {
 
@@ -27,6 +27,8 @@ class FundsViewController: UIViewController {
     var toast: ToastAlertView?
     var topConstraint: NSLayoutConstraint?
     var userInfo: UserInfo? { return UserManager.shared.userInfo }
+    
+    var products: [SKProduct] = []
     
     private var totalAmount: String {
         return UserManager.shared.userInfo?.balance?.cleanString ?? "0"
@@ -85,6 +87,16 @@ class FundsViewController: UIViewController {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
         retrieveUserInfo()
+        
+        IPSXProducts.store.requestProducts{ [weak self] success, prods in
+            if success, let valid = prods {
+                self?.products = valid
+                for prod in self?.products ?? [] {
+                    print(prod.localizedTitle)
+                    print(prod.localizedDescription)
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -190,7 +202,25 @@ class FundsViewController: UIViewController {
         self.performSegue(withIdentifier: "WithdrawSegueID", sender: self)
     }
     
+    @IBAction func buyBasic(_ sender: Any) {
+        buyIap(index: 0)
+    }
     
+    @IBAction func buySilver(_ sender: Any) {
+        buyIap(index: 1)
+    }
+    
+    @IBAction func buyGold(_ sender: Any) {
+        buyIap(index: 2)
+    }
+    
+    private func buyIap(index: Int) {
+        guard products.count > index else {
+            toast?.showToastAlert("Purchase not available", autoHideAfter: 5, type: .info, dismissable: true)
+            return
+        }
+        IPSXProducts.store.buyProduct(products[index])
+    }
 }
 
 
