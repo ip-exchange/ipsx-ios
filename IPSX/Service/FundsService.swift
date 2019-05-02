@@ -314,4 +314,50 @@ class FundsService {
             completionHandler(ServiceResult.success(false))
         })
     }
+    
+    func getIPSXRates(completionHandler: @escaping (ServiceResult<Any>) -> ()) {
+        
+        let request = createRequest(requestType: RequestType.getIPSXRates)
+        RequestManager.shared.executeRequest(request: request) { error, data in
+            
+            guard error == nil else {
+                switch error! {
+                    
+                case RequestError.custom(let statusCode, let responseCode):
+                    let customError = generateCustomError(error: error!, statusCode: statusCode, responseCode: responseCode, request: request)
+                    completionHandler(ServiceResult.failure(customError))
+                    return
+                    
+                default:
+                    completionHandler(ServiceResult.failure(error!))
+                    return
+                }
+            }
+            guard let data = data else {
+                completionHandler(ServiceResult.failure(RequestError.noData))
+                return
+            }
+            let json = JSON(data: data)
+            let rates = json.arrayObject as? [[String : Any?]]
+            
+            for rate in rates ?? [] {
+                
+                // Refund with comission is for providers, so refund without comission is for requesters
+                if rate["code"] as? String == "USD" {
+                    
+                    //double check to be sure the refund is for the proxy we want
+                    if let ipsxRate = rate["ipsx"] as? String {
+                        DispatchQueue.main.async {
+                            completionHandler(ServiceResult.success(ipsxRate))
+                        }
+                        return
+                    }
+                }
+            }
+            DispatchQueue.main.async {
+                completionHandler(ServiceResult.success(false))
+            }
+        }
+    }
+
 }

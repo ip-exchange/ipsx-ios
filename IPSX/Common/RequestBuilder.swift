@@ -22,7 +22,8 @@ enum Environment: String {
 struct RequestType {
     
     static let getPublicIP = "getPublicIP"
-    
+    static let getIPSXRates = "getIPSXRates"
+
     static let getCompany = "getCompany"
     static let submitLegalPersonDetails = "submitLegalPersonDetails"
     static let getProviderDetails = "getProviderDetails"
@@ -172,6 +173,8 @@ public struct Url {
         get { return baseUrl + "/privacy-policy?webview=true" }
     }
     
+    public static let ipsxRatesAPI           = "https://api-rr8fhm2x1i14.ip.sx/api/currencies"
+
     public static let publicIPArgs           = "/Users/ip"
     public static let registerArgs           = "/Users"
     public static let fbRegisterArgs         = "/Users/social/register/facebook"
@@ -247,7 +250,11 @@ func createRequest(requestType:String, urlParams: [String: String] = [:], bodyPa
     //Register Requests
         
     case RequestType.getPublicIP:
-        url = Url.baseApi + Url.publicIPArgs
+        url = Url.baseApi + Url.ipsxRatesAPI
+        httpMethod = "GET"
+        
+    case RequestType.getIPSXRates:
+        url = Url.ipsxRatesAPI
         httpMethod = "GET"
         
     case RequestType.register:

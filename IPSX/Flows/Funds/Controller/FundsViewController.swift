@@ -21,6 +21,10 @@ class FundsViewController: UIViewController {
     @IBOutlet weak var amountTopSmallLabel: UILabel!
     @IBOutlet weak var customTabBar: CustomTabBar!
     
+    @IBOutlet weak var tier1PriceLabel: UILabel!
+    @IBOutlet weak var tier2Pricelabel: UILabel!
+    @IBOutlet weak var tier3PriceLabel: UILabel!
+    
     let maxHeaderHeight: CGFloat = 215;
     let minHeaderHeight: CGFloat = 44;
     var previousScrollOffset: CGFloat = 0;
@@ -64,8 +68,16 @@ class FundsViewController: UIViewController {
                                                selector: #selector(appWillEnterForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inappConfirmed), name: .IAPHelperPurchaseNotification, object: inappIdentifier)
+
     }
     
+    var inappIdentifier: String = ""
+    @objc func inappConfirmed() {
+        print(inappIdentifier)
+        //TODO: Parse the Receipt and invoke the API https://app.dev.ip.sx/api/v1/apple/receipt - pass, user_id, email, amount and receipt
+    }
+
     @objc func appWillEnterForeground() {
         updateReachabilityInfo()
     }
@@ -80,14 +92,25 @@ class FundsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: nil)
         updateReachabilityInfo()
         refreshProfileUI()
+        tier1PriceLabel.text = "Get ... IPSX"
+        tier2Pricelabel.text = "Get ... IPSX"
+        tier3PriceLabel.text = "Get ... IPSX"
         tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
-        retrieveUserInfo()
-        
+        retrieveUserInfo() {
+            FundsService().getIPSXRates() { result in
+                switch result {
+                case .success(let rate):
+                    let stringValue = rate as? String ?? "0"
+                    self.updatePrices(rateString: stringValue)
+                case .failure(_): break
+                }
+            }
+        }
         IPSXProducts.store.requestProducts{ [weak self] success, prods in
             if success, let valid = prods {
                 self?.products = valid
@@ -141,6 +164,14 @@ class FundsViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
+    private func updatePrices(rateString: String) {
+        guard let doubleValue = Double(rateString), doubleValue > 0 else { return }
+        let pricePerUsd = Int((1.0 / doubleValue))
+        tier1PriceLabel.text = "Get \(pricePerUsd) IPSX"
+        tier2Pricelabel.text = "Get \(pricePerUsd * 5) IPSX"
+        tier3PriceLabel.text = "Get \(pricePerUsd * 10) IPSX"
+    }
+    
     func refreshProfileUI() {
         
         DispatchQueue.main.async {
@@ -153,23 +184,26 @@ class FundsViewController: UIViewController {
         segue.destination.hidesBottomBarWhenPushed = true
     }
     
-    func retrieveUserInfo() {
+    func retrieveUserInfo(completion: @escaping (() -> ())) {
         
         loadingView?.startAnimating()
-        UserInfoService().retrieveUserInfo(completionHandler: { result in
+        UserInfoService().retrieveUserInfo() { [weak self] result in
             
-            self.loadingView?.stopAnimating()
+            self?.loadingView?.stopAnimating()
             switch result {
             case .success(let user):
                 UserManager.shared.userInfo = user as? UserInfo
-                DispatchQueue.main.async { self.refreshProfileUI() }
+                DispatchQueue.main.async {
+                    self?.refreshProfileUI()
+                    completion()
+                }
 
             case .failure(let error):
-                self.handleError(error, requestType: RequestType.userInfo, completion: {
-                    self.retrieveUserInfo()
-                })
+                self?.handleError(error, requestType: RequestType.userInfo) {
+                    self?.retrieveUserInfo(completion: completion)
+                }
             }
-        })
+        }
     }
     
     func collapseHeader() {
