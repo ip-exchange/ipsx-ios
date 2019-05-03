@@ -74,12 +74,47 @@ class FundsViewController: UIViewController {
     
     var inappIdentifier: String = ""
     @objc func inappConfirmed() {
-        print(inappIdentifier)
-        //TODO: Parse the Receipt and invoke the API https://app.dev.ip.sx/api/v1/apple/receipt - pass, user_id, email, amount and receipt
+
+        var multiplier: Int = 0
+        switch inappIdentifier {
+        case IPSXProducts.Basic: multiplier = 1
+        case IPSXProducts.Silver: multiplier = 5
+        case IPSXProducts.Gold: multiplier = 10
+        default: break
+        }
+        
+        let price = lastPrice * multiplier
+        if price > 0 {
+            //https://github.com/lionheart/in_app_purchase_receipt_verifier
+            //TODO (CC): Parse the Receipt and invoke the API https://app.dev.ip.sx/api/v1/apple/receipt - pass, user_id, email, amount and receipt
+            
+            guard let receiptURL = Bundle.main.appStoreReceiptURL,
+                let data = try? Data(contentsOf: receiptURL) else {
+                    return
+            }
+            
+            let encodedData = data.base64EncodedData(options: [])
+            let url = URL(string: "https://app.dev.ip.sx/api/v1/apple/receipt?price=\(price)&user_id=\(UserManager.shared.userId)&email=\(UserManager.shared.email)")!
+            
+            var request = URLRequest(url: url)
+            request.httpBody = encodedData
+            request.httpMethod = "POST"
+            
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data,
+                    let object = try? JSONSerialization.jsonObject(with: data, options: []),
+                    let json = object as? [String: Any] else {
+                        return
+                }
+                print("response: \(json)")
+            }
+            task.resume()
+        }
     }
 
     @objc func appWillEnterForeground() {
         updateReachabilityInfo()
+        refreshData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -101,16 +136,7 @@ class FundsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         topRootView.createParticlesAnimation()
-        retrieveUserInfo() {
-            FundsService().getIPSXRates() { result in
-                switch result {
-                case .success(let rate):
-                    let stringValue = rate as? String ?? "0"
-                    self.updatePrices(rateString: stringValue)
-                case .failure(_): break
-                }
-            }
-        }
+        refreshData()
         IPSXProducts.store.requestProducts{ [weak self] success, prods in
             if success, let valid = prods {
                 self?.products = valid
@@ -126,6 +152,19 @@ class FundsViewController: UIViewController {
         super.viewWillDisappear(animated)
         topRootView.removeParticlesAnimation()
         NotificationCenter.default.removeObserver(self, name: ReachabilityChangedNotification, object: nil)
+    }
+    
+    private func refreshData() {
+        retrieveUserInfo() {
+            FundsService().getIPSXRates() { result in
+                switch result {
+                case .success(let rate):
+                    let stringValue = rate as? String ?? "0"
+                    self.updatePrices(rateString: stringValue)
+                case .failure(_): break
+                }
+            }
+        }
     }
     
     @objc public func reachabilityChanged(_ note: Notification) {
@@ -164,9 +203,11 @@ class FundsViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
+    private var lastPrice: Int = 0
     private func updatePrices(rateString: String) {
         guard let doubleValue = Double(rateString), doubleValue > 0 else { return }
         let pricePerUsd = Int((1.0 / doubleValue))
+        lastPrice = pricePerUsd
         tier1PriceLabel.text = "Get \(pricePerUsd) IPSX"
         tier2Pricelabel.text = "Get \(pricePerUsd * 5) IPSX"
         tier3PriceLabel.text = "Get \(pricePerUsd * 10) IPSX"

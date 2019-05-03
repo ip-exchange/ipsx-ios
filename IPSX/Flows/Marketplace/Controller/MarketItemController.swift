@@ -44,7 +44,7 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
     @IBAction func alertAction(_ sender: UIButton) {
         
         if sender.titleLabel?.text == "ADD WALLET".localized {
-            performSegue(withIdentifier: createWalletSegue, sender: nil)
+            self.navigationController?.popViewController(animated: true)
         }
         else if sender.titleLabel?.text == "OK".localized {
             performSegue(withIdentifier: "showLandingSegueID", sender: nil)
@@ -101,6 +101,14 @@ class MarketItemController: UIViewController, UIScrollViewDelegate {
         
         if UserManager.shared.roles?.contains(.Requester) == false {
             
+            FundsService().createWaccAddress() { result in
+                UserInfoService().getRoles() { result in
+                    switch result {
+                    case .success(let userRoles): UserManager.shared.roles = userRoles as? [UserRoles]
+                    case .failure(_): break
+                    }
+                }
+            }
             addToCartButton.isEnabled = false
             alertView.isHidden = false
             alertTopConstraint.constant = 7
